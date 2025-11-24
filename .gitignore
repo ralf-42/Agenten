@@ -46,6 +46,7 @@
 *.jpeg
 X*.ipynb
 _*.ipynb
+*.md
 
 # ============================================================
 # Ausnahmen für bestimmte Dateien

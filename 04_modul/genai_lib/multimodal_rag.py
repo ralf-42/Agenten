@@ -1,4 +1,3 @@
-#@title 🛠️ Code M14_Modul { display-mode: "form" }
 """
 Multimodales RAG Modul mit Bildbeschreibungen (Version 3)
 
@@ -31,7 +30,8 @@ from dataclasses import dataclass
 
 from markitdown import MarkItDown
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+from langchain.chat_models import init_chat_model
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from sentence_transformers import SentenceTransformer
@@ -62,8 +62,8 @@ class RAGComponents:
     """Container für alle RAG-System-Komponenten"""
     text_embeddings: OpenAIEmbeddings
     clip_model: SentenceTransformer
-    llm: ChatOpenAI
-    vision_llm: ChatOpenAI
+    llm: any  # LangChain ChatModel (via init_chat_model)
+    vision_llm: any  # LangChain ChatModel (via init_chat_model)
     text_splitter: RecursiveCharacterTextSplitter
     markitdown: MarkItDown
     chroma_client: chromadb.PersistentClient
@@ -99,9 +99,10 @@ def init_rag_system(config=None):
     clip_model = SentenceTransformer(config.clip_model)
     print("✅ CLIP-Modell geladen")
 
-    llm = ChatOpenAI(model=config.llm_model, temperature=0)
-    vision_llm = ChatOpenAI(model=config.vision_model, temperature=0)
-    print("✅ LLMs initialisiert (Text + Vision)")
+    # LangChain 1.0+ API: init_chat_model statt ChatOpenAI
+    llm = init_chat_model(config.llm_model, model_provider="openai", temperature=0)
+    vision_llm = init_chat_model(config.vision_model, model_provider="openai", temperature=0)
+    print("✅ LLMs initialisiert (Text + Vision) - LangChain 1.0+")
 
     # Text-Verarbeitung
     text_splitter = RecursiveCharacterTextSplitter(

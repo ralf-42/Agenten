@@ -1,13 +1,13 @@
-# 🤖 Kursbibliothek Generative KI und ML
+# 🤖 Kursbibliothek Agenten und ML
 
-Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"Generative KI"** bereit. Sie erleichtert Teilnehmer:innen den Einstieg und die praktische Anwendung generativer KI-Technologien in Google Colab-Umgebungen.
+Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"Agenten"** bereit. Sie erleichtert Teilnehmer:innen den Einstieg und die praktische Anwendung generativer KI-Technologien in Google Colab-Umgebungen.
 
 ## 1. 📦 Installation
 
 Die Bibliothek ist für die Installation in Google Colab-Umgebungen optimiert:
 
 ```bash
-!uv pip install -q git+https://github.com/ralf-42/Python_modules
+!uv pip install -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```
 
 Nach der Installation können die Module importiert werden:
@@ -66,7 +66,7 @@ Typische Verwendung in Google Colab-Lernumgebungen:
 
 ```python
 # 1. Installation über uv pip in Colab
-!uv pip install -q git+https://github.com/ralf-42/Python_modules
+!uv pip install -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 # 2. Import der Utilities
 from genai_lib.utilities import setup_api_keys, install_packages
@@ -96,27 +96,18 @@ python setup.py sdist bdist_wheel
 Module können einzeln getestet werden:
 ```bash
 python -m genai_lib.utilities     # Utilities testen
-python -m genai_lib.show_md       # Display-Funktionen testen
 ```
 
 ## 7. 📁 Dateiorganisation
 
 ```
-Python_modules/
+04_modul/
 ├── genai_lib/               # Hauptpaket für Generative KI
-│   ├── __init__.py          # Modul-Initializer
-│   ├── utilities.py         # Kern-Utilities (API-Keys, Paketinstallation, etc.)
-│   ├── prepare_prompt.py    # PREPARE-Framework für Prompt Engineering
-│   └── show_md.py          # Display-Utilities für Jupyter Notebooks
-├── ml_lib/                  # Zusätzliches Modul für Machine Learning
-│   ├── __init__.py          # Modul-Initializer
-│   └── utilities.py         # ML-spezifische Utilities
-├── .gitignore              # Git ignore-Regeln
-├── .claudeignore           # Claude Code ignore-Regeln
-├── CLAUDE.md               # Claude Code Projektanweisungen
-├── README.md               # Diese Datei
-├── requirements.txt        # Python-Abhängigkeiten
-└── setup.py               # Setup-Konfiguration
+│   ├── __init__.py          # Package-Exports und API
+│   ├── utilities.py         # Hilfsfunktionen (API-Keys, Paketinstallation, Prompt-Loader)
+│   └── multimodal_rag.py    # Multimodales RAG-System mit CLIP & Vision-LLM
+├── README.md                # Diese Datei
+└── setup.py                 # Setup-Konfiguration für pip-Installation
 ```
 
 ### Ignorierte Dateien und Verzeichnisse

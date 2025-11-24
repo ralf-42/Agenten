@@ -1,0 +1,58 @@
+# ============================================================
+# Basis-Strategie
+# ============================================================
+# Ignoriere standardmäßig alle Top-Level-Verzeichnisse
+/*
+
+# ============================================================
+# Markdown-Dateien im Root
+# ============================================================
+# Ignoriere alle .md Dateien im Root-Verzeichnis
+/*.md
+# Ausnahme: README.md soll versioniert bleiben
+!README.md
+
+# ============================================================
+# Ausnahmen – diese Verzeichnisse und Dateien sollen versioniert bleiben
+# ============================================================
+!.gitignore
+!LICENSE
+!01_notebook
+!02_daten/
+!03_skript/
+!04_modul
+!05_prompt
+
+# ============================================================
+# Verzeichnisse, die rekursiv ignoriert werden sollen
+# ============================================================
+**/_misc/
+**/_db/
+**/.ipynb_checkpoints/
+**/.jupyter/
+**/.virtual_documents/
+
+# ============================================================
+# Obsidian-spezifische Dateien
+# ============================================================
+**/.obsidian/
+.obsidian/
+03_skript/.obsidian/
+
+# ============================================================
+# Dateimuster – global ignoriert
+# ============================================================
+*.pptx
+*.jpeg
+X*.ipynb
+_*.ipynb
+
+# ============================================================
+# Ausnahmen für bestimmte Dateien
+# ============================================================
+
+# ============================================================
+# Einzelne spezifische Dateien ignorieren
+# ============================================================
+03_skript/Vita.pdf
+03_skript/A00 - Titel_Intro.png

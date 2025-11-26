@@ -87,7 +87,7 @@ aux_links:
     - "https://github.com/ralf-42/Agenten"
 
 # Footer
-footer_content: "Copyright &copy; 2025 Ralf. Distributed under MIT License."
+footer_content: "Copyright &copy; 2025 Ralf. Distributed under MIT License. | <a href='/Agenten/impressum.html'>Impressum</a>"
 
 # Color scheme (optional)
 # color_scheme: dark

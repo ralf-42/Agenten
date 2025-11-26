@@ -9,11 +9,30 @@ description: "Grundlagen und Best Practices für LangChain 1.0+"
 ---
 
 
-Diese Anleitung bietet einen kompakten, aber erweiterten Überblick über die zentralen Bausteine moderner KI-Agenten mit LangChain 1.0. Der Fokus liegt auf den verpflichtenden Kernfunktionen, ergänzt um konkrete Code-Beispiele, die sich am Stil der LangGraph-Einsteigeranleitung orientieren. Ziel ist ein klarer, verständlicher Einstieg, der zugleich eine solide Grundlage für den Kurs und die Notebooks legt.
+# 1 Kurzüberblick: Warum LangChain?
+
+Große Sprachmodelle (LLMs) wie GPT-4 sind beeindruckend – doch für den Einsatz in der Praxis stoßen sie schnell an Grenzen:
+
+- **Wie verbindet man ein LLM mit eigenen Datenquellen?** (Dokumente, Datenbanken, APIs)
+- **Wie wechselt man zwischen verschiedenen Anbietern?** (OpenAI, Anthropic, Google – ohne Code-Änderungen)
+- **Wie bekommt man strukturierte Ausgaben?** (JSON, Objekte statt Freitext)
+- **Wie erweitert man die Fähigkeiten eines LLMs?** (Rechnen, Websuche, Dateizugriff)
+- **Wie baut man mehrstufige Workflows?** (Erst recherchieren, dann zusammenfassen, dann bewerten)
+
+LangChain löst diese Herausforderungen durch:
+
+- **Einheitliche Modell-Schnittstelle** – ein Interface für alle LLM-Anbieter
+- **Tool-Integration** – LLMs können externe Funktionen aufrufen (Taschenrechner, APIs, Datenbanken)
+- **Strukturierte Ausgaben** – garantiert valide Datenstrukturen statt unvorhersehbarem Text
+- **Verkettung von Schritten** – komplexe Workflows als lesbare Pipelines
+- **RAG-Unterstützung** – nahtlose Integration von Vektordatenbanken für Wissenserweiterung
+
+**Kernprinzip:** LangChain abstrahiert die Komplexität der LLM-Integration und bietet wiederverwendbare Bausteine – vom einfachen Prompt bis zum autonomen Agenten mit Werkzeugen.
+
 
 ---
 
-# 1 Prompts mit `ChatPromptTemplate`
+# 2 Prompts mit `ChatPromptTemplate`
 
 Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 das `ChatPromptTemplate` im Mittelpunkt. Es beschreibt, welche Nachrichtenrollen im Dialog verwendet werden und welche Platzhalter dynamisch zur Laufzeit gefüllt werden.
 
@@ -24,7 +43,7 @@ Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 da
 - Wiederverwendbarkeit desselben Templates in unterschiedlichen Chains und Agenten
 - Klare Trennung von Prompt‑Design und Geschäftslogik
 
-## 1.1 Beispiel 1: Einfacher Frage-Antwort-Prompt
+## 2.1 Beispiel 1: Einfacher Frage-Antwort-Prompt
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -40,7 +59,7 @@ rendered_messages = prompt.format_messages(frage="Was ist ein LLM?")
 rendered_messages
 ```
 
-## 1.2 Beispiel 2: Prompt für RAG (mit Kontext)
+## 2.2 Beispiel 2: Prompt für RAG (mit Kontext)
 
 ```python
 rag_prompt = ChatPromptTemplate.from_messages([
@@ -56,7 +75,7 @@ msgs = rag_prompt.format_messages(
 
 ---
 
-# 2 Einheitliche Modell-Initialisierung: `init_chat_model()`
+# 3 Einheitliche Modell-Initialisierung: `init_chat_model()`
 
 Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sprachmodells bildet die Basis jeder Agentenarchitektur. `init_chat_model()` stellt sicher, dass verschiedene Modellanbieter konsistent angesprochen werden können, ohne die restliche Codebasis anpassen zu müssen.
 
@@ -83,7 +102,7 @@ print(response.content)
 
 ---
 
-# 3 Strukturierte Ausgaben: `with_structured_output()`
+# 4 Strukturierte Ausgaben: `with_structured_output()`
 
 Viele Anwendungen benötigen klar definierte Datenstrukturen – etwa bei der Extraktion von Feldern, Bewertungen oder Metadaten. Mit `with_structured_output()` lassen sich Modellantworten direkt an Pydantic-Modelle koppeln und zuverlässig validieren.
 
@@ -113,11 +132,11 @@ Hinweis: Dieses Feature setzt voraus, dass der verwendete Modell‑Provider nati
 
 ---
 
-# 4 Werkzeuge definieren: `@tool`
+# 5 Werkzeuge definieren: `@tool`
 
 Tools erweitern die Fähigkeiten eines Agenten erheblich, da sie Funktionen abdecken, die ein Modell selbst nicht ausführen kann – etwa Berechnungen, Datenabrufe, lokale Analysen oder Abfragen externer Systeme. Der `@tool`‑Decorator ermöglicht eine klare, typensichere und gut dokumentierte Definition solcher Werkzeuge.
 
-## 4.1 Beispiel: Ein einfaches Rechentool
+## 5.1 Beispiel: Ein einfaches Rechentool
 
 ```python
 from langchain_core.tools import tool
@@ -131,7 +150,7 @@ def multiply(a: int, b: int) -> int:
 print(multiply.invoke({"a": 6, "b": 7}))
 ```
 
-## 4.2 Beispiel: Tool mit Fehlerbehandlung und Docstring
+## 5.2 Beispiel: Tool mit Fehlerbehandlung und Docstring
 
 ```python
 @tool
@@ -147,7 +166,7 @@ print(safe_divide.invoke({"a": 10, "b": 0}))
 
 ---
 
-# 5 Agenten erstellen: `create_agent()`
+# 6 Agenten erstellen: `create_agent()`
 
 Mit `create_agent()` werden Modell, Tools, Systemprompt und optional Middleware zu einer Einheit verbunden. Agenten basieren auf einer klaren Struktur, die intern auf der LangGraph-State-Machine aufsetzt.
 
@@ -186,11 +205,11 @@ Hier liefert `create_agent()` bereits ein kompiliertes LangGraph‑Objekt (Compi
 
 ---
 
-# 6 Moderne Kettensyntax: LCEL `|`
+# 7 Moderne Kettensyntax: LCEL `|`
 
 LangChain Expression Language (LCEL) ersetzt frühere Chain‑Implementierungen. Über den Pipe‑Operator `|` werden Verarbeitungsschritte logisch miteinander verbunden.
 
-## 6.1 Beispiel: Einfache LCEL-Chain für Textumformung
+## 7.1 Beispiel: Einfache LCEL-Chain für Textumformung
 
 ```python
 from langchain_core.output_parsers import StrOutputParser
@@ -206,7 +225,7 @@ output = rewrite_chain.invoke({"input_text": text})
 print(output)
 ```
 
-## 6.2 Beispiel: LCEL-Chain mit zusätzlicher Eingabe (Pass-Through)
+## 7.2 Beispiel: LCEL-Chain mit zusätzlicher Eingabe (Pass-Through)
 
 ```python
 from langchain_core.runnables import RunnablePassthrough
@@ -234,7 +253,7 @@ print(answer)
 
 ---
 
-# 7 Middleware zur Agentensteuerung
+# 8 Middleware zur Agentensteuerung
 
 Middleware ergänzt Agenten um wichtige Kontrollmechanismen, etwa Sicherheitsprüfungen oder automatische Kontextverdichtung.
 
@@ -266,7 +285,7 @@ In Notebooks kann hier didaktisch gezeigt werden, wie der Agent vor einer heikle
 
 ---
 
-# 8 Einheitliche Content-Blöcke für multimodale Eingaben
+# 9 Einheitliche Content-Blöcke für multimodale Eingaben
 
 Da moderne Modelle verschiedene Datentypen verarbeiten, benötigen Agenten ein einheitliches Format für Eingaben. LangChain 1.0 definiert Content‑Blöcke, die Text, Bilder, Audio oder andere Inhalte abbilden.
 
@@ -296,7 +315,7 @@ Dieses Muster kann später in multimodalen RAG‑Notebooks wiederverwendet werde
 
 ---
 
-# 9 Chunking‑Best Practices
+# 10 Chunking‑Best Practices
 
 Damit RAG‑Systeme sinnvoll arbeiten, müssen Dokumente in geeignete Textstücke („Chunks“) zerlegt werden. In LangChain hat sich der `RecursiveCharacterTextSplitter` etabliert.
 
@@ -321,7 +340,7 @@ Im Kurs lässt sich hier gut mit unterschiedlichen Chunk‑Größen und Overlaps
 
 ---
 
-# 10 Embeddings: Grundlagen für semantische Suche
+# 11 Embeddings: Grundlagen für semantische Suche
 
 Embeddings repräsentieren Texte als Vektoren und bilden die Basis für semantische Suche und RAG. Häufig kommen OpenAI‑Embeddings in Kombination mit Chroma zum Einsatz.
 
@@ -358,7 +377,7 @@ for i, doc in enumerate(results, start=1):
 
 ---
 
-# 11 Standard‑Pattern für RAG mit LangChain
+# 12 Standard‑Pattern für RAG mit LangChain
 
 Retrieval‑Augmented Generation (RAG) ist eines der wichtigsten Einsatzszenarien für LangChain. Typischerweise werden Vektorspeicher, Retriever und eine LCEL‑Pipeline kombiniert.
 

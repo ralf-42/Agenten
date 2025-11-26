@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Haftungsausschluss
-nav_order: 13
+nav_exclude: true
 description: "Haftungsausschluss und rechtliche Hinweise"
 ---
 

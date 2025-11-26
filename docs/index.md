@@ -25,14 +25,16 @@ Dieses Projekt fokussiert sich auf die Entwicklung und Implementierung von **KI-
 
 ## 🚀 Quick Start
 
-### Installation
+Für detaillierte Installationsanweisungen siehe: [Quick Start Guide](quickstart.html)
+
+### Installation (Kurzversion)
 
 ```bash
 # Projekt klonen
 git clone https://github.com/ralf-42/Agenten.git
 cd Agenten
 
-# Python Environment (empfohlen: Python 3.10+)
+# Python Environment
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
@@ -43,59 +45,28 @@ pip install -r requirements.txt
 jupyter lab
 ```
 
-### Erste Schritte
-
-1. **API-Keys konfigurieren:**
-   ```bash
-   # .env Datei erstellen
-   echo "OPENAI_API_KEY=your-key-here" > .env
-   ```
-
-2. **Erstes Notebook öffnen:**
-   - Navigiere zu `01_notebook/`
-   - Öffne ein Modul (z.B. `M10_Agenten_LangChain.ipynb`)
-   - Folge dem Setup-Guide im Notebook
-
-3. **Module nutzen:**
-   ```python
-   # Projekt-Module von GitHub installieren (für Google Colab)
-   !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-   # Lokale Entwicklung
-   from genai_lib.utilities import setup_api_keys, mprint
-   from genai_lib.multimodal_rag import MultimodalRAG
-   ```
-
 ---
 
 ## 📚 Dokumentation
 
-### Quick References (Start here!)
+### Einsteigerguides
 
-Kompakte Übersichten (~200 Zeilen) für schnellen Einstieg:
-
-| Dokument | Beschreibung | Tokens |
-|----------|--------------|--------|
-| [LangChain QuickRef](../LangChain_QuickRef.html) | 7 Patterns + Anti-Patterns für LangChain 1.0+ | ~2k |
-| [LangGraph QuickRef](../LangGraph_QuickRef.html) | 7 Patterns für komplexe Workflows | ~2k |
-| [LangSmith QuickRef](../LangSmith_QuickRef.html) | 7 Patterns für Monitoring & Debugging | ~1.5k |
-
-### Full Standards (Deep Dive)
-
-Vollständige Dokumentation (~1200 Zeilen) für fortgeschrittene Themen:
-
-| Dokument | Beschreibung | Tokens |
-|----------|--------------|--------|
-| [LangChain Full](../LangChain_Standards_Full.html) | Vollständige LangChain Best Practices | ~12k |
-| [LangGraph Full](../LangGraph_Standards_Full.html) | Multi-Agent Patterns & State Machines | ~12k |
-| [LangSmith Full](../LangSmith_Standards_Full.html) | Production Monitoring & Evaluation | ~15k |
-
-### Guides
+Kompakte Übersichten für schnellen Einstieg:
 
 | Dokument | Beschreibung |
 |----------|--------------|
-| [Notebook Template Guide](../Notebook_Template_Guide.html) | Standard-Struktur für alle Notebooks |
-| [Project Structure Guide](../Project_Structure_Guide.html) | Verzeichnisstruktur für neue Projekte |
+| [LangChain Einsteiger](Einsteiger_LangChain.html) | Grundlagen und Best Practices für LangChain |
+| [LangGraph Einsteiger](Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
+| [LangSmith Einsteiger](Einsteiger_LangSmith.html) | Monitoring & Debugging |
+
+### Weitere Ressourcen
+
+| Dokument | Beschreibung |
+|----------|--------------|
+| [Quick Start Guide](quickstart.html) | Installation und erste Schritte |
+| [Vollständige Dokumentation](documentation.html) | Übersicht über alle Dokumentations-Ressourcen |
+| [Code Standards](standards.html) | Coding-Konventionen und Best Practices |
+| [Troubleshooting](Troubleshooting%20Sheets.html) | Lösungen für häufige Probleme |
 
 ---
 
@@ -111,7 +82,7 @@ Vollständige Dokumentation (~1200 Zeilen) für fortgeschrittene Themen:
 6. ✅ Middleware - Human-in-Loop, Summarization, PII
 7. ✅ Content Blocks - Multimodal Support
 
-**Details:** [LangChain QuickRef](../LangChain_QuickRef.html)
+**Details:** [Code Standards](standards.html)
 
 ---
 
@@ -233,7 +204,7 @@ answer = chain.invoke("Was ist LangGraph?")
 | `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
 | `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
 
-**Migration-Guide:** [LangChain QuickRef](../LangChain_QuickRef.html)
+**Migration-Guide:** [Code Standards](standards.html)
 
 ---
 
@@ -241,7 +212,7 @@ answer = chain.invoke("Was ist LangGraph?")
 
 Pull Requests sind willkommen! Bitte beachte:
 
-1. **Code-Standards:** Nur LangChain 1.0+ Patterns verwenden
+1. **Code-Standards:** Nur LangChain 1.0+ Patterns verwenden → [Code Standards](standards.html)
 2. **Dokumentation:** Docstrings für alle Funktionen
 3. **Tests:** Notebooks müssen durchlaufen
 4. **Commits:** Aussagekräftige Commit-Messages
@@ -256,6 +227,7 @@ MIT License - Copyright (c) 2025 Ralf
 
 ## 📞 Kontakt & Support
 
+- **Dokumentation:** [Vollständige Dokumentation](documentation.html)
 - **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
 - **Projekt-Repository:** [github.com/ralf-42/Agenten](https://github.com/ralf-42/Agenten)
 
@@ -274,4 +246,4 @@ MIT License - Copyright (c) 2025 Ralf
 
 ---
 
-> 💡 **Tipp:** Starte mit den Quick References für einen schnellen Einstieg!
+> 💡 **Tipp:** Starte mit den [Einsteigerguides](documentation.html#-einsteigerguides-start-here) für einen schnellen Einstieg!

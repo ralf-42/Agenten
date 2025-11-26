@@ -174,17 +174,17 @@ print(result)
 
 ## 📚 Nächste Schritte
 
-### 1. Quick References lesen
+### 1. Einsteigerguides lesen
 
 Kompakte Übersichten für schnellen Einstieg:
-- [LangChain QuickRef](../LangChain_QuickRef.html) - 7 Patterns + Anti-Patterns
-- [LangGraph QuickRef](../LangGraph_QuickRef.html) - Multi-Agent Workflows
-- [LangSmith QuickRef](../LangSmith_QuickRef.html) - Monitoring & Debugging
+- [LangChain Einsteiger](Einsteiger_LangChain.html) - Grundlagen und Best Practices
+- [LangGraph Einsteiger](Einsteiger_LangGraph.html) - Multi-Agent Workflows
+- [LangSmith Einsteiger](Einsteiger_LangSmith.html) - Monitoring & Debugging
 
-### 2. Template verwenden
+### 2. Code Standards beachten
 
-Nutze das Standard-Template für neue Notebooks:
-- [Notebook Template Guide](../Notebook_Template_Guide.html)
+Befolge die Coding-Konventionen:
+- [Code Standards](standards.html) - Best Practices und Patterns
 
 ### 3. Projekt-Module nutzen
 
@@ -252,6 +252,8 @@ export LANGCHAIN_API_KEY=lsv2_...
 
 ## ❓ Troubleshooting
 
+Für umfassende Lösungen siehe: [Troubleshooting Sheets](Troubleshooting%20Sheets.html)
+
 ### Problem: Module nicht gefunden
 
 **Lösung:**
@@ -287,10 +289,11 @@ pip install chromadb==0.4.22
 
 ## 📞 Hilfe & Support
 
-- **Dokumentation:** [docs/documentation.html](documentation.html)
-- **Standards:** [docs/standards.html](standards.html)
+- **Dokumentation:** [Vollständige Dokumentation](documentation.html)
+- **Standards:** [Code Standards](standards.html)
+- **Troubleshooting:** [Troubleshooting Sheets](Troubleshooting%20Sheets.html)
 - **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
 
 ---
 
-> 💡 **Tipp:** Verwende immer die Must-Have Features aus den Quick References!
+> 💡 **Tipp:** Beginne mit den [Einsteigerguides](documentation.html) für strukturiertes Lernen!

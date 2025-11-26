@@ -177,14 +177,14 @@ print(result)
 ### 1. Quick References lesen
 
 Kompakte Übersichten für schnellen Einstieg:
-- [LangChain QuickRef](LangChain_QuickRef.html) - 7 Patterns + Anti-Patterns
-- [LangGraph QuickRef](LangGraph_QuickRef.html) - Multi-Agent Workflows
-- [LangSmith QuickRef](LangSmith_QuickRef.html) - Monitoring & Debugging
+- [LangChain QuickRef](../LangChain_QuickRef.html) - 7 Patterns + Anti-Patterns
+- [LangGraph QuickRef](../LangGraph_QuickRef.html) - Multi-Agent Workflows
+- [LangSmith QuickRef](../LangSmith_QuickRef.html) - Monitoring & Debugging
 
 ### 2. Template verwenden
 
 Nutze das Standard-Template für neue Notebooks:
-- [Notebook Template Guide](Notebook_Template_Guide.html)
+- [Notebook Template Guide](../Notebook_Template_Guide.html)
 
 ### 3. Projekt-Module nutzen
 

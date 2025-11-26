@@ -76,9 +76,9 @@ Kompakte Übersichten (~200 Zeilen) für schnellen Einstieg:
 
 | Dokument | Beschreibung | Tokens |
 |----------|--------------|--------|
-| [LangChain QuickRef](LangChain_QuickRef.html) | 7 Patterns + Anti-Patterns für LangChain 1.0+ | ~2k |
-| [LangGraph QuickRef](LangGraph_QuickRef.html) | 7 Patterns für komplexe Workflows | ~2k |
-| [LangSmith QuickRef](LangSmith_QuickRef.html) | 7 Patterns für Monitoring & Debugging | ~1.5k |
+| [LangChain QuickRef](../LangChain_QuickRef.html) | 7 Patterns + Anti-Patterns für LangChain 1.0+ | ~2k |
+| [LangGraph QuickRef](../LangGraph_QuickRef.html) | 7 Patterns für komplexe Workflows | ~2k |
+| [LangSmith QuickRef](../LangSmith_QuickRef.html) | 7 Patterns für Monitoring & Debugging | ~1.5k |
 
 ### Full Standards (Deep Dive)
 
@@ -86,16 +86,16 @@ Vollständige Dokumentation (~1200 Zeilen) für fortgeschrittene Themen:
 
 | Dokument | Beschreibung | Tokens |
 |----------|--------------|--------|
-| [LangChain Full](LangChain_Standards_Full.html) | Vollständige LangChain Best Practices | ~12k |
-| [LangGraph Full](LangGraph_Standards_Full.html) | Multi-Agent Patterns & State Machines | ~12k |
-| [LangSmith Full](LangSmith_Standards_Full.html) | Production Monitoring & Evaluation | ~15k |
+| [LangChain Full](../LangChain_Standards_Full.html) | Vollständige LangChain Best Practices | ~12k |
+| [LangGraph Full](../LangGraph_Standards_Full.html) | Multi-Agent Patterns & State Machines | ~12k |
+| [LangSmith Full](../LangSmith_Standards_Full.html) | Production Monitoring & Evaluation | ~15k |
 
 ### Guides
 
 | Dokument | Beschreibung |
 |----------|--------------|
-| [Notebook Template Guide](Notebook_Template_Guide.html) | Standard-Struktur für alle Notebooks |
-| [Project Structure Guide](Project_Structure_Guide.html) | Verzeichnisstruktur für neue Projekte |
+| [Notebook Template Guide](../Notebook_Template_Guide.html) | Standard-Struktur für alle Notebooks |
+| [Project Structure Guide](../Project_Structure_Guide.html) | Verzeichnisstruktur für neue Projekte |
 
 ---
 
@@ -111,7 +111,7 @@ Vollständige Dokumentation (~1200 Zeilen) für fortgeschrittene Themen:
 6. ✅ Middleware - Human-in-Loop, Summarization, PII
 7. ✅ Content Blocks - Multimodal Support
 
-**Details:** [LangChain QuickRef](LangChain_QuickRef.html)
+**Details:** [LangChain QuickRef](../LangChain_QuickRef.html)
 
 ---
 
@@ -233,7 +233,7 @@ answer = chain.invoke("Was ist LangGraph?")
 | `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
 | `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
 
-**Migration-Guide:** [LangChain QuickRef](LangChain_QuickRef.html)
+**Migration-Guide:** [LangChain QuickRef](../LangChain_QuickRef.html)
 
 ---
 

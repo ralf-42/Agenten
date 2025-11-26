@@ -10,8 +10,9 @@ baseurl: "/Agenten" # Repository name
 url: "https://ralf-42.github.io" # GitHub Pages URL
 
 # Theme
-theme: jekyll-theme-minimal
+theme: jekyll-theme-architect
 # Alternative themes:
+# - jekyll-theme-minimal
 # - jekyll-theme-cayman
 # - jekyll-theme-slate
 # - jekyll-theme-tactile

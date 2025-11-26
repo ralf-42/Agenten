@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Quick Start
+nav_order: 2
+description: "Installation und erste Schritte"
 ---
 
 # Quick Start Guide

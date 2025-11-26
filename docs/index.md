@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Home
+nav_order: 1
+description: "Hauptseite - Multi-Agent Systeme mit LangChain & LangGraph"
+permalink: /
 ---
 
 # Agenten - Multi-Agent Systeme mit LangChain & LangGraph

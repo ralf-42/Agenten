@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Impressum
-nav_order: 11
+nav_exclude: true
 description: "Impressum und rechtliche Angaben"
 ---
 

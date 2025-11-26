@@ -12,7 +12,8 @@ permalink: /
 
 ## 🎯 Übersicht
 
-Entwicklung und Implementierung von **KI-Agenten** und **Multi-Agent-Systemen** mit **LangChain 1.0+** und **LangGraph**. Praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentation für produktionsreife Agent-Systeme.
+Entwicklung und Implementierung von **KI-Agenten** und **Multi-Agent-Systemen** mit **LangChain 1.0+** und **LangGraph**.      
+Praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentation für produktionsreife Agent-Systeme.
 
 ### 🔑 Kernthemen
 

@@ -64,8 +64,27 @@ main.main-content {
 }
 
 // Body und Container-Anpassungen
+// Schriftgröße: Standard ist 16px
+// Wählen Sie zwischen: 14px (klein), 15px (mittel), 16px (normal), 17px (groß), 18px (sehr groß)
 body {
-  font-size: 14px !important; // Etwas kleinere Schrift für mehr Zeichen pro Zeile
+  font-size: 16px !important; // Normale Schriftgröße
+}
+
+// Alternativ: Nur Content-Bereich anpassen
+.main-content {
+  font-size: 16px !important;
+  line-height: 1.6 !important; // Zeilenabstand (1.5 = eng, 1.6 = normal, 1.8 = weit)
+}
+
+// Überschriften separat anpassen (optional)
+h1 { font-size: 2em !important; }
+h2 { font-size: 1.5em !important; }
+h3 { font-size: 1.25em !important; }
+h4 { font-size: 1.1em !important; }
+
+// Code-Blöcke (optional)
+code, pre {
+  font-size: 0.9em !important; // Etwas kleiner als normaler Text
 }
 
 // Zusätzlich: Code-Blöcke auch breiter

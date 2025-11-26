@@ -1,3 +1,10 @@
+---
+layout: default
+title: Troubleshooting
+nav_order: 5
+description: "Lösungen für häufige Probleme"
+---
+
 
 # 1 LangChain Expression Language & Chains
 

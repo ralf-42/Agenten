@@ -10,19 +10,20 @@ baseurl: "/Agenten" # Repository name
 url: "https://ralf-42.github.io" # GitHub Pages URL
 
 # Theme
-theme: jekyll-theme-architect
-# Alternative themes:
-# - jekyll-theme-minimal
-# - jekyll-theme-cayman
-# - jekyll-theme-slate
-# - jekyll-theme-tactile
+# HINWEIS: just-the-docs muss remote geladen werden
+remote_theme: just-the-docs/just-the-docs
 
-# Navigation
-header_pages:
-  - index.md
-  - quickstart.md
-  - documentation.md
-  - standards.md
+# Alternative themes (GitHub Pages Standard):
+# theme: jekyll-theme-architect
+# theme: jekyll-theme-minimal
+# theme: jekyll-theme-cayman
+# theme: jekyll-theme-slate
+
+# Just the Docs Navigation Configuration
+# Sidebar wird automatisch aus Seiten mit nav_order generiert
+nav_external_links:
+  - title: GitHub Repository
+    url: https://github.com/ralf-42/Agenten
 
 # Build settings
 markdown: kramdown
@@ -70,6 +71,26 @@ timezone: Europe/Berlin
 
 # Show downloads button
 show_downloads: true
+
+# Just the Docs Theme Settings
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+
+# Aux links (rechts oben)
+aux_links:
+  "GitHub Repository":
+    - "https://github.com/ralf-42/Agenten"
+
+# Footer
+footer_content: "Copyright &copy; 2025 Ralf. Distributed under MIT License."
+
+# Color scheme (optional)
+# color_scheme: dark
 
 # Logo (optional - kann später hinzugefügt werden)
 # logo: /assets/images/logo.png

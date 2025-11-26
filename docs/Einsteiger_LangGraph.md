@@ -1,3 +1,10 @@
+---
+layout: default
+title: LangGraph Einsteiger
+parent: Dokumentation
+nav_order: 2
+description: "Multi-Agent-Systeme und Workflows mit LangGraph"
+---
 
 ---
 

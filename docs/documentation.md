@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Dokumentation
+nav_order: 3
+description: "Einsteigerguides und Ressourcen"
+has_children: true
 ---
 
 # Dokumentation

@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Code Standards
+nav_order: 4
+description: "Coding-Konventionen und Best Practices"
 ---
 
 # Code Standards

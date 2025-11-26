@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Troubleshooting
-nav_order: 5
+parent: Guides
+nav_order: 4
 description: "Lösungen für häufige Probleme"
 ---
 

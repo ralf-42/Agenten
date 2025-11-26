@@ -28,7 +28,7 @@ Praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentati
 
 ## 🚀 Quick Start
 
-**Installation:** Siehe [Quick Start Guide](quickstart.html)
+**Installation:** Siehe [Quick Start Guide](guides/quickstart.html)
 
 ```bash
 # Projekt klonen
@@ -52,18 +52,18 @@ jupyter lab
 
 | Dokument | Beschreibung |
 |----------|--------------|
-| [LangChain Einsteiger](Einsteiger_LangChain.html) | Grundlagen und Best Practices |
-| [LangGraph Einsteiger](Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
-| [LangSmith Einsteiger](Einsteiger_LangSmith.html) | Monitoring & Debugging |
+| [LangChain Einsteiger](kurse/Einsteiger_LangChain.html) | Grundlagen und Best Practices |
+| [LangGraph Einsteiger](kurse/Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
+| [LangSmith Einsteiger](kurse/Einsteiger_LangSmith.html) | Monitoring & Debugging |
 
 ### Weitere Ressourcen
 
 | Dokument | Beschreibung |
 |----------|--------------|
-| [Quick Start Guide](quickstart.html) | Installation und erste Schritte |
-| [Vollständige Dokumentation](documentation.html) | Übersicht aller Ressourcen |
-| [Code Standards](standards.html) | Coding-Konventionen |
-| [Troubleshooting](Troubleshooting%20Sheets.html) | Lösungen für Probleme |
+| [Quick Start Guide](guides/quickstart.html) | Installation und erste Schritte |
+| [Vollständige Dokumentation](guides/documentation.html) | Übersicht aller Ressourcen |
+| [Code Standards](guides/standards.html) | Coding-Konventionen |
+| [Troubleshooting](guides/Troubleshooting%20Sheets.html) | Lösungen für Probleme |
 
 ---
 
@@ -98,7 +98,7 @@ response = agent.invoke({
 })
 ```
 
-**Mehr Beispiele:** [Quick Start Guide](quickstart.html)
+**Mehr Beispiele:** [Quick Start Guide](guides/quickstart.html)
 
 ---
 
@@ -114,7 +114,7 @@ response = agent.invoke({
 
 ## 📞 Support
 
-- **Dokumentation:** [Vollständige Dokumentation](documentation.html)
+- **Dokumentation:** [Vollständige Dokumentation](guides/documentation.html)
 - **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
 - **Projekt-Repository:** [github.com/ralf-42/Agenten](https://github.com/ralf-42/Agenten)
 
@@ -132,4 +132,4 @@ response = agent.invoke({
 
 ---
 
-> 💡 **Tipp:** Starte mit den [Einsteigerguides](documentation.html) für einen schnellen Einstieg!
+> 💡 **Tipp:** Starte mit den [Einsteigerguides](guides/documentation.html) für einen schnellen Einstieg!

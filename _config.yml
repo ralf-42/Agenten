@@ -1,0 +1,108 @@
+# GitHub Pages Konfiguration für Agenten Projekt
+# Jekyll Theme: Minimal
+
+# Site settings
+title: "Agenten - Multi-Agent Systeme mit LangChain & LangGraph"
+description: "Fortgeschrittene Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows"
+author: Ralf
+email: your-email@example.com
+baseurl: "/Agenten" # Repository name
+url: "https://ralf-42.github.io" # GitHub Pages URL
+
+# Theme
+theme: jekyll-theme-minimal
+# Alternative themes:
+# - jekyll-theme-cayman
+# - jekyll-theme-slate
+# - jekyll-theme-tactile
+
+# Navigation
+header_pages:
+  - index.md
+  - docs/quickstart.md
+  - docs/documentation.md
+  - docs/standards.md
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-relative-links
+
+# Jekyll Relative Links Configuration
+relative_links:
+  enabled: true
+  collections: false
+
+# Include files/directories
+include:
+  - LangChain_QuickRef.md
+  - LangChain_Standards_Full.md
+  - LangGraph_QuickRef.md
+  - LangGraph_Standards_Full.md
+  - LangSmith_QuickRef.md
+  - LangSmith_Standards_Full.md
+  - Notebook_Template_Guide.md
+  - Project_Structure_Guide.md
+
+# Exclude from processing
+exclude:
+  - .gitignore
+  - .claudeignore
+  - CLAUDE.md
+  - 01_notebook/
+  - 02_daten/
+  - 03_skript/
+  - 04_modul/
+  - 05_prompt/
+  - 06_podcast/
+  - 09_courses/
+  - LICENSE
+  - requirements.txt
+  - README.md  # Verwenden index.md stattdessen
+
+# Collections (optional für zukünftige Erweiterungen)
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Google Analytics (optional)
+# google_analytics: UA-XXXXXXXX-X
+
+# Social Links (optional)
+github_username: ralf-42
+# twitter_username: your-twitter
+# linkedin_username: your-linkedin
+
+# SEO settings
+lang: de
+timezone: Europe/Berlin
+
+# Show downloads button
+show_downloads: true
+
+# Logo (optional - kann später hinzugefügt werden)
+# logo: /assets/images/logo.png

@@ -9,8 +9,17 @@
 # ============================================================
 # Ignoriere alle .md Dateien im Root-Verzeichnis
 /*.md
-# Ausnahme: README.md soll versioniert bleiben
+# Ausnahmen: Wichtige Dokumentations-Dateien
 !README.md
+!index.md
+!LangChain_QuickRef.md
+!LangChain_Standards_Full.md
+!LangGraph_QuickRef.md
+!LangGraph_Standards_Full.md
+!LangSmith_QuickRef.md
+!LangSmith_Standards_Full.md
+!Notebook_Template_Guide.md
+!Project_Structure_Guide.md
 
 # ============================================================
 # Ausnahmen – diese Verzeichnisse und Dateien sollen versioniert bleiben
@@ -22,6 +31,11 @@
 !03_skript/
 !04_modul
 !05_prompt
+
+# GitHub Pages
+!_config.yml
+!index.md
+!docs/
 
 # ============================================================
 # Verzeichnisse, die rekursiv ignoriert werden sollen
@@ -46,7 +60,8 @@
 *.jpeg
 X*.ipynb
 _*.ipynb
-*.md
+# Markdown-Dateien werden oben spezifisch gehandhabt (siehe Zeile 11-22)
+# Globale *.md Regel entfernt für GitHub Pages Kompatibilität
 
 # ============================================================
 # Ausnahmen für bestimmte Dateien

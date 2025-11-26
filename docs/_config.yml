@@ -19,9 +19,9 @@ theme: jekyll-theme-minimal
 # Navigation
 header_pages:
   - index.md
-  - docs/quickstart.md
-  - docs/documentation.md
-  - docs/standards.md
+  - quickstart.md
+  - documentation.md
+  - standards.md
 
 # Build settings
 markdown: kramdown
@@ -43,49 +43,15 @@ relative_links:
   enabled: true
   collections: false
 
-# Include files/directories
-include:
-  - LangChain_QuickRef.md
-  - LangChain_Standards_Full.md
-  - LangGraph_QuickRef.md
-  - LangGraph_Standards_Full.md
-  - LangSmith_QuickRef.md
-  - LangSmith_Standards_Full.md
-  - Notebook_Template_Guide.md
-  - Project_Structure_Guide.md
-
 # Exclude from processing
-exclude:
-  - .gitignore
-  - .claudeignore
-  - CLAUDE.md
-  - 01_notebook/
-  - 02_daten/
-  - 03_skript/
-  - 04_modul/
-  - 05_prompt/
-  - 06_podcast/
-  - 09_courses/
-  - LICENSE
-  - requirements.txt
-  - README.md  # Verwenden index.md stattdessen
-
-# Collections (optional für zukünftige Erweiterungen)
-collections:
-  docs:
-    output: true
-    permalink: /:collection/:name
+# Hinweis: Da GitHub Pages aus /docs liest, müssen wir nichts excluden
+exclude: []
 
 # Defaults
 defaults:
   - scope:
       path: ""
       type: "pages"
-    values:
-      layout: "default"
-  - scope:
-      path: ""
-      type: "docs"
     values:
       layout: "default"
 

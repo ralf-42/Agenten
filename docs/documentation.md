@@ -24,7 +24,7 @@ Die Dokumentation ist zweistufig aufgebaut:
 
 Kompakte Übersichten mit Code-Beispielen - optimal für schnellen Einstieg.
 
-### [LangChain QuickRef](../LangChain_QuickRef.html)
+### [LangChain QuickRef](LangChain_QuickRef.html)
 **~200 Zeilen | ~2k tokens**
 
 - ✅ 7 MUST-HAVE Patterns mit Code-Beispielen
@@ -40,7 +40,7 @@ Kompakte Übersichten mit Code-Beispielen - optimal für schnellen Einstieg.
 
 ---
 
-### [LangGraph QuickRef](../LangGraph_QuickRef.html)
+### [LangGraph QuickRef](LangGraph_QuickRef.html)
 **~200 Zeilen | ~2k tokens**
 
 - ✅ 7 MUST-HAVE Patterns für Multi-Agent-Systeme
@@ -57,7 +57,7 @@ Kompakte Übersichten mit Code-Beispielen - optimal für schnellen Einstieg.
 
 ---
 
-### [LangSmith QuickRef](../LangSmith_QuickRef.html)
+### [LangSmith QuickRef](LangSmith_QuickRef.html)
 **~150 Zeilen | ~1.5k tokens**
 
 - ✅ 7 MUST-HAVE Patterns für Monitoring & Debugging
@@ -76,7 +76,7 @@ Kompakte Übersichten mit Code-Beispielen - optimal für schnellen Einstieg.
 
 Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgeschrittene Themen.
 
-### [LangChain Standards Full](../LangChain_Standards_Full.html)
+### [LangChain Standards Full](LangChain_Standards_Full.html)
 **~1200 Zeilen | ~12k tokens**
 
 **Inhalt:**
@@ -89,7 +89,7 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 ---
 
-### [LangGraph Standards Full](../LangGraph_Standards_Full.html)
+### [LangGraph Standards Full](LangGraph_Standards_Full.html)
 **~1200 Zeilen | ~12k tokens**
 
 **Inhalt:**
@@ -102,7 +102,7 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 ---
 
-### [LangSmith Standards Full](../LangSmith_Standards_Full.html)
+### [LangSmith Standards Full](LangSmith_Standards_Full.html)
 **~1200 Zeilen | ~15k tokens**
 
 **Inhalt:**
@@ -117,7 +117,7 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 ## 📓 Guides
 
-### [Notebook Template Guide](../Notebook_Template_Guide.html)
+### [Notebook Template Guide](Notebook_Template_Guide.html)
 **Standard-Struktur für ALLE neuen Notebooks**
 
 **Inhalt:**
@@ -136,7 +136,7 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 ---
 
-### [Project Structure Guide](../Project_Structure_Guide.html)
+### [Project Structure Guide](Project_Structure_Guide.html)
 **Standard-Verzeichnisstruktur für ALLE neuen Projekte**
 
 **Inhalt:**
@@ -161,15 +161,15 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 | Task | Dokument |
 |------|----------|
-| Einfacher Agent mit Tools | [LangChain QuickRef](../LangChain_QuickRef.html) |
-| RAG-System bauen | [LangChain QuickRef](../LangChain_QuickRef.html) |
-| Multi-Agent-System (>2 Agents) | [LangGraph QuickRef](../LangGraph_QuickRef.html) |
-| Workflow mit Verzweigungen | [LangGraph QuickRef](../LangGraph_QuickRef.html) |
-| Debugging & Monitoring | [LangSmith QuickRef](../LangSmith_QuickRef.html) |
-| Production Deployment | [LangSmith Standards Full](../LangSmith_Standards_Full.html) |
-| Neues Notebook erstellen | [Notebook Template Guide](../Notebook_Template_Guide.html) |
-| Neues Projekt aufsetzen | [Project Structure Guide](../Project_Structure_Guide.html) |
-| Migration 0.x → 1.0+ | [LangChain Standards Full](../LangChain_Standards_Full.html) |
+| Einfacher Agent mit Tools | [LangChain QuickRef](LangChain_QuickRef.html) |
+| RAG-System bauen | [LangChain QuickRef](LangChain_QuickRef.html) |
+| Multi-Agent-System (>2 Agents) | [LangGraph QuickRef](LangGraph_QuickRef.html) |
+| Workflow mit Verzweigungen | [LangGraph QuickRef](LangGraph_QuickRef.html) |
+| Debugging & Monitoring | [LangSmith QuickRef](LangSmith_QuickRef.html) |
+| Production Deployment | [LangSmith Standards Full](LangSmith_Standards_Full.html) |
+| Neues Notebook erstellen | [Notebook Template Guide](Notebook_Template_Guide.html) |
+| Neues Projekt aufsetzen | [Project Structure Guide](Project_Structure_Guide.html) |
+| Migration 0.x → 1.0+ | [LangChain Standards Full](LangChain_Standards_Full.html) |
 
 ---
 
@@ -177,17 +177,17 @@ Vollständige Dokumentation mit Erklärungen, Testing, Security - für fortgesch
 
 ### Für neue Implementierungen
 
-1. **Projekt-Setup:** [Project Structure Guide](../Project_Structure_Guide.html)
-2. **Notebook erstellen:** [Notebook Template Guide](../Notebook_Template_Guide.html)
+1. **Projekt-Setup:** [Project Structure Guide](Project_Structure_Guide.html)
+2. **Notebook erstellen:** [Notebook Template Guide](Notebook_Template_Guide.html)
 3. **Code schreiben:**
-   - LangChain: [LangChain QuickRef](../LangChain_QuickRef.html)
-   - LangGraph: [LangGraph QuickRef](../LangGraph_QuickRef.html)
-   - LangSmith: [LangSmith QuickRef](../LangSmith_QuickRef.html)
+   - LangChain: [LangChain QuickRef](LangChain_QuickRef.html)
+   - LangGraph: [LangGraph QuickRef](LangGraph_QuickRef.html)
+   - LangSmith: [LangSmith QuickRef](LangSmith_QuickRef.html)
 4. **Bei Detailfragen:** Full Standards konsultieren
 
 ### Für bestehende Projekte
 
-1. **Migration:** [LangChain Standards Full](../LangChain_Standards_Full.html) (ALT/NEU-Vergleiche)
+1. **Migration:** [LangChain Standards Full](LangChain_Standards_Full.html) (ALT/NEU-Vergleiche)
 2. **Refactoring:** Quick Refs für moderne Patterns
 3. **Testing:** Full Standards für Unit & Integration Tests
 4. **Security:** Full Standards für Production-Ready Code

@@ -1,0 +1,25 @@
+// Custom styles for KI-Agenten GitHub Pages
+// Override just-the-docs default styles
+
+// Erhöhe die maximale Breite des Content-Bereichs
+// Standard: ~800px (ca. 100 Zeichen)
+// Neu: ~1040px (ca. 130 Zeichen)
+.main-content {
+  max-width: 1040px !important;
+}
+
+// Optional: Auch die Wrapper-Breite anpassen für bessere Nutzung des Platzes
+.site-content {
+  max-width: 1200px !important;
+}
+
+// Optional: Sidebar-Breite bei großen Bildschirmen anpassen
+@media (min-width: 66.5rem) {
+  .side-bar {
+    width: 264px !important;
+  }
+
+  .main {
+    margin-left: 264px !important;
+  }
+}

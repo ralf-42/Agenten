@@ -92,10 +92,5 @@ footer_content: "Copyright &copy; 2025 Ralf. Distributed under MIT License."
 # Color scheme (optional)
 # color_scheme: dark
 
-# Custom CSS
-# Override default styles for wider content
-css:
-  - assets/css/just-the-docs-default.scss
-
 # Logo (optional - kann später hinzugefügt werden)
 # logo: /assets/images/logo.png

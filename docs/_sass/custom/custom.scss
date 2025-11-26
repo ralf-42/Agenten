@@ -1,35 +1,36 @@
 // Custom styles for KI-Agenten GitHub Pages
-// Override just-the-docs default styles
+// Override just-the-docs default styles to increase content width
 // Target: ~130 characters per line (instead of ~100)
 
-// Wichtig: !important wird benötigt, um die Theme-Defaults zu überschreiben
+// WICHTIG: Just-the-docs lädt diese Datei automatisch als letztes CSS
+// Daher brauchen wir !important für starke Overrides
 
-// Hauptinhalt breiter machen
-.main-content {
-  max-width: 1200px !important;
-  width: 100% !important;
-}
-
-.main-content-wrap {
+// Hauptinhalt-Container breiter machen
+.main-content,
+.main-content-wrap,
+main.main-content {
   max-width: 1200px !important;
 }
 
-// Container für den gesamten Inhalt
-.site-content {
-  max-width: calc(100% - 17rem) !important;
-}
-
-// Anpassungen für verschiedene Bildschirmgrößen
+// Für alle Bildschirmgrößen anpassen
 @media (min-width: 31.25rem) {
+  .side-bar {
+    width: 16rem !important;
+  }
+
   .main {
-    max-width: calc(100% - 17rem) !important;
+    margin-left: 16rem !important;
   }
 }
 
 @media (min-width: 50rem) {
+  .side-bar {
+    width: 17rem !important;
+  }
+
   .main {
+    margin-left: 17rem !important;
     max-width: calc(100% - 17rem) !important;
-    position: relative !important;
   }
 
   .main-content {
@@ -38,26 +39,37 @@
 }
 
 @media (min-width: 66.5rem) {
+  .side-bar {
+    width: 17rem !important;
+  }
+
   .main {
     margin-left: 17rem !important;
+    max-width: calc(100% - 17rem) !important;
   }
 
-  .main-content {
-    max-width: 1200px !important;
-  }
-
+  .main-content,
   .main-content-wrap {
     max-width: 1200px !important;
   }
 }
 
-// Für sehr große Bildschirme
+// Für sehr große Bildschirme (Desktop)
 @media (min-width: 87.5rem) {
-  .main-content {
+  .main-content,
+  .main-content-wrap,
+  main.main-content {
     max-width: 1200px !important;
   }
+}
 
-  .main-content-wrap {
-    max-width: 1200px !important;
-  }
+// Body und Container-Anpassungen
+body {
+  font-size: 14px !important; // Etwas kleinere Schrift für mehr Zeichen pro Zeile
+}
+
+// Zusätzlich: Code-Blöcke auch breiter
+pre.highlight,
+figure.highlight {
+  max-width: 1200px !important;
 }

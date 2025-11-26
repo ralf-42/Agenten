@@ -3,7 +3,7 @@
 
 # Site settings
 title: "KI-Agenten"
-description: "Fortgeschrittene Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows"
+description: "Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows mit LangChain, LangGraph und LangSmith"
 author: Ralf
 email: your-email@example.com
 baseurl: "/Agenten" # Repository name

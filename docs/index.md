@@ -8,7 +8,7 @@ permalink: /
 
 # KI-Agenten
 
-> **Fortgeschrittene Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
+> **Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
 
 ## 🎯 Übersicht
 

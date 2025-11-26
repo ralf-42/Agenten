@@ -92,3 +92,11 @@ pre.highlight,
 figure.highlight {
   max-width: 1200px !important;
 }
+
+// Trennstrich vor formalen Seiten (Impressum)
+// Optische Trennung zwischen Kursinhalten und rechtlichen Seiten
+.nav-list-item:has(.nav-list-link[href*="impressum"]) {
+  border-top: 1px solid #eeebee;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}

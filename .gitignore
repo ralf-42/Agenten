@@ -32,9 +32,7 @@
 !04_modul
 !05_prompt
 
-# GitHub Pages
-!_config.yml
-!index.md
+# GitHub Pages (alle Dateien in /docs werden versioniert)
 !docs/
 
 # ============================================================

@@ -1,25 +1,63 @@
 // Custom styles for KI-Agenten GitHub Pages
 // Override just-the-docs default styles
+// Target: ~130 characters per line (instead of ~100)
 
-// Erhöhe die maximale Breite des Content-Bereichs
-// Standard: ~800px (ca. 100 Zeichen)
-// Neu: ~1040px (ca. 130 Zeichen)
+// Wichtig: !important wird benötigt, um die Theme-Defaults zu überschreiben
+
+// Hauptinhalt breiter machen
 .main-content {
-  max-width: 1040px !important;
+  max-width: 1200px !important;
+  width: 100% !important;
 }
 
-// Optional: Auch die Wrapper-Breite anpassen für bessere Nutzung des Platzes
-.site-content {
+.main-content-wrap {
   max-width: 1200px !important;
 }
 
-// Optional: Sidebar-Breite bei großen Bildschirmen anpassen
-@media (min-width: 66.5rem) {
-  .side-bar {
-    width: 264px !important;
+// Container für den gesamten Inhalt
+.site-content {
+  max-width: calc(100% - 17rem) !important;
+}
+
+// Anpassungen für verschiedene Bildschirmgrößen
+@media (min-width: 31.25rem) {
+  .main {
+    max-width: calc(100% - 17rem) !important;
+  }
+}
+
+@media (min-width: 50rem) {
+  .main {
+    max-width: calc(100% - 17rem) !important;
+    position: relative !important;
   }
 
+  .main-content {
+    max-width: 1200px !important;
+  }
+}
+
+@media (min-width: 66.5rem) {
   .main {
-    margin-left: 264px !important;
+    margin-left: 17rem !important;
+  }
+
+  .main-content {
+    max-width: 1200px !important;
+  }
+
+  .main-content-wrap {
+    max-width: 1200px !important;
+  }
+}
+
+// Für sehr große Bildschirme
+@media (min-width: 87.5rem) {
+  .main-content {
+    max-width: 1200px !important;
+  }
+
+  .main-content-wrap {
+    max-width: 1200px !important;
   }
 }

@@ -6,7 +6,7 @@ nav_order: 3
 description: "Monitoring & Debugging mit LangSmith"
 has_toc: true
 ---
-# Einsteiger LangSmith
+# Einsteiger LangSmith  
 
 ---
 

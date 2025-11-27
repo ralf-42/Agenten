@@ -6,11 +6,11 @@ nav_order: 2
 description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 has_toc: true
 ---
-# Einsteiger LangGraph
+# Einsteiger LangGraph  
 
 ---
 
-## Inhaltsverzeichnis
+## 1 Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -18,7 +18,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum LangGraph?
+## 2 Kurzüberblick: Warum LangGraph?
 
 LangChain bietet Modelle, Tools und einfache Agenten. LangGraph baut darauf auf und ermöglicht:
 - **Abläufe in mehreren Schritten**
@@ -42,7 +42,7 @@ Damit ist sofort klar: LangGraph strukturiert Workflows, anstatt alles in ein ei
 
 ---
 
-## 2 Das kleinstmögliche funktionierende Beispiel
+## 3 Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis ist ein Mini-Workflow.
 
@@ -102,7 +102,7 @@ result
 
 ---
 
-## 3 Die Grundidee: Workflows als State Machine
+## 4 Die Grundidee: Workflows als State Machine
 
 Nachdem Einsteiger ein funktionsfähiges Beispiel gesehen haben, kann das Konzept erklärt werden:
 
@@ -115,7 +115,7 @@ Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
 
 ---
 
-## 4 State sauber definieren (vertieft)
+## 5 State sauber definieren (vertieft)
 
 ```python
 class ChatState(TypedDict):
@@ -131,7 +131,7 @@ Prinzipien:
 
 ---
 
-## 5 Nodes: Bausteine des Workflows
+## 6 Nodes: Bausteine des Workflows
 
 Nodes sollen klein, fokussiert und deterministisch sein.
 
@@ -154,7 +154,7 @@ def summarize_node(state: ChatState) -> ChatState:
 
 ---
 
-## 6 Edges & Conditional Routing
+## 7 Edges & Conditional Routing
 
 Nun erst wird Routing eingeführt – **nachdem Einsteiger Nodes und State kennen**.
 
@@ -197,7 +197,7 @@ g.add_edge("tools", "agent")
 
 ---
 
-## 7 Streaming: Schritte sichtbar machen
+## 8 Streaming: Schritte sichtbar machen
 
 Streaming ist ein wichtiges Werkzeug für das Verständnis.
 
@@ -215,7 +215,7 @@ Empfehlung für Einsteiger: **updates**.
 
 ---
 
-## 8 Checkpointing & Sessions
+## 9 Checkpointing & Sessions
 
 Checkpointing ermöglicht:
 - längerfristige Workflows
@@ -244,7 +244,7 @@ Hinweise:
 
 ---
 
-## 9 Human-in-the-Loop (Approval & Formulare)
+## 10 Human-in-the-Loop (Approval & Formulare)
 
 Human-in-the-Loop ist ein wichtiges Konzept – aber erst an dieser Stelle sinnvoll.
 
@@ -272,7 +272,7 @@ Einsatzmöglichkeiten:
 
 ---
 
-## 10 Multi-Agent-Workflows (Fortgeschritten)
+## 11 Multi-Agent-Workflows (Fortgeschritten)
 
 Dieses Thema wurde bewusst ans Ende verschoben.
 
@@ -302,7 +302,7 @@ Mögliche Erweiterungen:
 
 ---
 
-## 11 End-to-End-Übung
+## 12 End-to-End-Übung
 
 Eine sinnvolle Abschlussaufgabe ist ein Workflow:
 

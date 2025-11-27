@@ -15,7 +15,7 @@ has_toc: true
 
 ---
 
-## 2 Kurzüberblick: Warum LangSmith?
+## Kurzüberblick: Warum LangSmith?
 
 LangChain und LangGraph ermöglichen den Bau komplexer KI-Agenten. Doch bei der Entwicklung stellen sich schnell Fragen:
 - **Warum** hat der Agent eine bestimmte Entscheidung getroffen?
@@ -34,15 +34,15 @@ Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvoll
 
 ---
 
-## 3 Setup: API-Key und Umgebung
+## Setup: API-Key und Umgebung
 
-### 3.1 LangSmith-Account erstellen
+### LangSmith-Account erstellen
 
 1. Kostenlosen Account anlegen: [smith.langchain.com](https://smith.langchain.com)
 2. API-Key generieren: Settings → API Keys → Create API Key
 3. Optional: Organisation und Projekte anlegen
 
-### 3.2 API-Keys in Google Colab Secrets hinterlegen
+### API-Keys in Google Colab Secrets hinterlegen
 
 **Schritt 1: Secrets in Colab einrichten**
 1. In Google Colab: Schlüssel-Symbol 🔑 in der linken Seitenleiste
@@ -92,7 +92,7 @@ print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")
 
 ---
 
-## 4 Das kleinstmögliche funktionierende Beispiel
+## Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tracing.
 
@@ -119,11 +119,11 @@ print(response.content)
 
 ---
 
-## 5 Traces verstehen: Die Grundstruktur
+## Traces verstehen: Die Grundstruktur
 
 Ein **Trace** ist die vollständige Aufzeichnung einer Ausführung. Jeder Trace besteht aus einem oder mehreren **Runs**.
 
-### 5.1 Run-Typen
+### Run-Typen
 
 | Run-Typ | Beschreibung | Beispiel |
 |---------|-------------|----------|
@@ -133,7 +133,7 @@ Ein **Trace** ist die vollständige Aufzeichnung einer Ausführung. Jeder Trace 
 | **Agent** | Agent-Entscheidungsloop | `create_agent()` |
 | **Retriever** | Dokumenten-Abruf | `vectorstore.as_retriever()` |
 
-### 5.2 Beispiel: Chain mit mehreren Runs
+### Beispiel: Chain mit mehreren Runs
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -160,7 +160,7 @@ Chain Run (Gesamt)
 
 ---
 
-## 6 Praktisches Beispiel: Agent mit Tools tracken
+## Praktisches Beispiel: Agent mit Tools tracken
 
 Tools und Agents profitieren besonders von LangSmith, da ihre Entscheidungswege oft komplex sind.
 
@@ -206,11 +206,11 @@ response = agent.invoke({
 
 ---
 
-## 7 Datasets: Systematisches Testen
+## Datasets: Systematisches Testen
 
 Datasets ermöglichen wiederholbare Tests mit definierten Inputs und erwarteten Outputs.
 
-### 7.1 Dataset erstellen (UI oder Code)
+### Dataset erstellen (UI oder Code)
 
 **Variante A: Über UI**
 1. LangSmith → Datasets → Create Dataset
@@ -241,7 +241,7 @@ for example in examples:
     )
 ```
 
-### 7.2 Agent gegen Dataset evaluieren
+### Agent gegen Dataset evaluieren
 
 ```python
 from langsmith.evaluation import evaluate
@@ -269,18 +269,18 @@ results = evaluate(
 
 ---
 
-## 8 Feedback: Qualität messen
+## Feedback: Qualität messen
 
 Feedback ermöglicht es, die Qualität von Antworten zu bewerten – manuell oder automatisch.
 
-### 8.1 Manuelles Feedback (UI)
+### Manuelles Feedback (UI)
 
 In der LangSmith-UI kann jeder Run bewertet werden:
 - Daumen hoch/runter
 - Sterne (1-5)
 - Freitext-Kommentar
 
-### 8.2 Programmatisches Feedback
+### Programmatisches Feedback
 
 ```python
 from langsmith import Client
@@ -299,7 +299,7 @@ client.create_feedback(
 )
 ```
 
-### 8.3 Automatische Evaluierung mit LLM-as-Judge
+### Automatische Evaluierung mit LLM-as-Judge
 
 ```python
 from langsmith.evaluation import evaluate, LangChainStringEvaluator
@@ -329,7 +329,7 @@ results = evaluate(
 
 ---
 
-## 9 Integration in LangGraph-Workflows
+## Integration in LangGraph-Workflows
 
 LangSmith trackt auch komplexe LangGraph-State-Machines automatisch.
 
@@ -372,9 +372,9 @@ result = compiled_graph.invoke(
 
 ---
 
-## 10 Best Practices für den Kurs
+## Best Practices für den Kurs
 
-### 10.1 Projekt-Organisation
+### Projekt-Organisation
 
 **Empfehlung: Ein Projekt pro Kurstag**
 ```python
@@ -406,7 +406,7 @@ check_environment()
 get_ipinfo()
 ```
 
-### 10.2 Tags für bessere Organisation
+### Tags für bessere Organisation
 
 ```python
 from langsmith import traceable
@@ -420,7 +420,7 @@ def my_rag_chain(question: str):
     pass
 ```
 
-### 10.3 Fehler debuggen
+### Fehler debuggen
 
 **Typischer Workflow:**
 1. Agent schlägt fehl (z.B. falsches Tool gewählt)
@@ -431,7 +431,7 @@ def my_rag_chain(question: str):
 
 **Vorteil:** Direkter Vorher/Nachher-Vergleich im LangSmith-UI.
 
-### 10.4 Performance-Monitoring
+### Performance-Monitoring
 
 ```python
 # Metadaten hinzufügen für Filterung
@@ -449,7 +449,7 @@ def process_query(query: str):
 
 ---
 
-## 11 Vergleich: LangSmith vs. Alternatives
+## Vergleich: LangSmith vs. Alternatives
 
 | Aspekt | LangSmith | Print/Logs | LangGraph Debug |
 |--------|-----------|-----------|-----------------|
@@ -467,9 +467,9 @@ def process_query(query: str):
 
 ---
 
-## 12 Häufige Fragen (FAQ)
+## Häufige Fragen (FAQ)
 
-### 12.1 "Werden alle Daten an LangSmith gesendet?"
+### "Werden alle Daten an LangSmith gesendet?"
 
 **Ja**, standardmäßig:
 - Alle Inputs und Outputs
@@ -481,12 +481,12 @@ def process_query(query: str):
 - Selective Tracing mit `@traceable(enabled=False)`
 - Self-Hosted LangSmith für vollständige Kontrolle
 
-### 12.2 "Kostet LangSmith extra?"
+### "Kostet LangSmith extra?"
 
 **Free Tier:** 5.000 Traces/Monat kostenlos (ausreichend für Kurs)
 **Paid Tiers:** Ab $39/Monat für Production-Nutzung
 
-### 12.3 "Wie deaktiviere ich Tracing?"
+### "Wie deaktiviere ich Tracing?"
 
 ```python
 # Temporär deaktivieren
@@ -500,7 +500,7 @@ def nicht_getrackt():
     pass
 ```
 
-### 12.4 "Kann ich LangSmith ohne LangChain nutzen?"
+### "Kann ich LangSmith ohne LangChain nutzen?"
 
 **Ja**, mit dem `@traceable` Decorator:
 ```python
@@ -512,7 +512,7 @@ def custom_function(input_data):
     return result
 ```
 
-### 12.5 "Was passiert, wenn ich den API-Key vergesse?"
+### "Was passiert, wenn ich den API-Key vergesse?"
 
 ```python
 # Setup prüft automatisch, ob Keys vorhanden sind
@@ -525,7 +525,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
 
 ---
 
-## 13 Zusammenfassung
+## Zusammenfassung
 
 **LangSmith ist essentiell für:**
 - **Entwicklung:** Verstehen, warum Agents bestimmte Entscheidungen treffen

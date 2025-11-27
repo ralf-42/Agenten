@@ -1,3 +1,12 @@
+---
+layout: default
+title: Agent-Architekturen
+parent: Concepts
+nav_order: 1
+description: "Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten"
+has_toc: true
+---
+
 # Agent-Architekturen
 
 > **Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten**
@@ -19,7 +28,7 @@ Vier grundlegende Architekturmuster haben sich in der Praxis etabliert:
 
 ---
 
-## 1 | ReAct-Architektur
+## ReAct-Architektur
 
 ReAct (Reasoning + Acting) beschreibt einen iterativen Zyklus: Der Agent **denkt nach** (Reasoning), **führt eine Aktion aus** (Acting) und **beobachtet das Ergebnis**. Dieser Zyklus wiederholt sich, bis die Aufgabe gelöst ist.
 
@@ -42,7 +51,7 @@ flowchart LR
 
 ---
 
-## 2 | Tool-Calling-Architektur
+## Tool-Calling-Architektur
 
 Bei dieser Architektur entscheidet das LLM, **welches Werkzeug** mit **welchen Parametern** aufgerufen werden soll. Das Ergebnis fließt zurück in den Kontext, und der Agent formuliert die finale Antwort.
 
@@ -66,7 +75,7 @@ flowchart TD
 
 ---
 
-## 3 | Workflow-basierte Architektur
+## Workflow-basierte Architektur
 
 Hier werden Arbeitsschritte als **Graph mit Knoten und Kanten** modelliert. Jeder Knoten repräsentiert eine Verarbeitung, Kanten definieren den Ablauf – einschließlich bedingter Verzweigungen.
 
@@ -92,7 +101,7 @@ flowchart TD
 
 ---
 
-## 4 | Multi-Agent-Architektur
+## Multi-Agent-Architektur
 
 Mehrere spezialisierte Agenten arbeiten zusammen. Ein **Supervisor** koordiniert die Aufgabenverteilung, oder Agenten kommunizieren **kollaborativ** miteinander.
 

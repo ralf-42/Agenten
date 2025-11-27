@@ -17,7 +17,7 @@ has_toc: true
 
 ---
 
-## 2 Kurzüberblick: Warum ChromaDB Vektordatenbanken?
+## Kurzüberblick: Warum ChromaDB Vektordatenbanken?
 
 Large Language Models haben trotz ihrer beeindruckenden Fähigkeiten klare Limitierungen:
 
@@ -40,11 +40,11 @@ Vektordatenbanken lösen diese Probleme durch **semantische Suche**:
 
 ---
 
-## 3 Was sind Embeddings?
+## Was sind Embeddings?
 
 Embeddings sind numerische Repräsentationen von Text, die semantische Bedeutung erfassen.
 
-### 3.1 Konzept: Text → Vektor
+### Konzept: Text → Vektor
 
 ```
 "Der Hund spielt im Park"  →  [0.12, -0.45, 0.78, ..., 0.33]  (1536 Dimensionen)
@@ -58,7 +58,7 @@ Embeddings sind numerische Repräsentationen von Text, die semantische Bedeutung
 - Semantisch ähnliche Texte haben ähnliche Vektoren
 - Die "Ähnlichkeit" wird über mathematische Distanzmaße berechnet
 
-### 3.2 Ähnlichkeit im Vektorraum
+### Ähnlichkeit im Vektorraum
 
 Die gebräuchlichsten Distanzmaße:
 
@@ -70,7 +70,7 @@ Die gebräuchlichsten Distanzmaße:
 
 **Cosine Similarity** ist der Standard, da sie unabhängig von der Vektorlänge funktioniert und nur die "Richtung" (= Bedeutung) vergleicht.
 
-### 3.3 Visualisierung
+### Visualisierung
 
 Für ein intuitives Verständnis von Embeddings:
 
@@ -79,7 +79,7 @@ https://projector.tensorflow.org/?hl=de
 
 Hier lassen sich hochdimensionale Vektoren auf 2D/3D projizieren und interaktiv erkunden. Semantisch ähnliche Wörter bilden Cluster.
 
-### 3.4 Beispiel: Embedding erzeugen
+### Beispiel: Embedding erzeugen
 
 ```python
 from langchain_openai import OpenAIEmbeddings
@@ -97,11 +97,11 @@ print(f"Erste 5 Werte: {vector[:5]}")
 
 ---
 
-## 4 ChromaDB Basics
+## ChromaDB Basics
 
 ChromaDB ist eine leichtgewichtige, Open-Source-Vektordatenbank, die sich ideal für Entwicklung und Prototyping eignet.
 
-### 4.1 Installation
+### Installation
 
 **Standard-Installation:**
 
@@ -124,7 +124,7 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 Dieser Patch muss **vor** dem Import von ChromaDB ausgeführt werden.
 
-### 4.2 Client erstellen
+### Client erstellen
 
 ```python
 import chromadb
@@ -141,7 +141,7 @@ client = chromadb.PersistentClient(path="./chroma_db")
 | **In-Memory** | Entwicklung, Tests | Schnell, kein Aufräumen nötig |
 | **Persistent** | Produktion, große Datenmengen | Daten überleben Neustart |
 
-### 4.3 Collections
+### Collections
 
 Eine **Collection** ist vergleichbar mit einer Tabelle in relationalen Datenbanken.
 
@@ -167,7 +167,7 @@ print(client.list_collections())
 
 **Best Practice:** `get_or_create_collection()` verwenden, um Fehler bei wiederholter Ausführung zu vermeiden.
 
-### 4.4 Dokumente hinzufügen
+### Dokumente hinzufügen
 
 ```python
 collection.add(
@@ -194,11 +194,11 @@ collection.add(
 
 ---
 
-## 5 Embeddings mit OpenAI
+## Embeddings mit OpenAI
 
 Für produktive RAG-Systeme werden typischerweise OpenAI-Embeddings verwendet.
 
-### 5.1 Verfügbare Modelle
+### Verfügbare Modelle
 
 | Modell | Dimensionen | Kosten | Empfehlung |
 |--------|-------------|--------|------------|
@@ -206,7 +206,7 @@ Für produktive RAG-Systeme werden typischerweise OpenAI-Embeddings verwendet.
 | `text-embedding-3-large` | 3072 | Mittel | Höhere Qualität |
 | `text-embedding-ada-002` | 1536 | Günstig | Legacy, nicht empfohlen |
 
-### 5.2 Embeddings erzeugen
+### Embeddings erzeugen
 
 ```python
 from langchain_openai import OpenAIEmbeddings
@@ -225,7 +225,7 @@ print(f"Query-Vektor: {len(query_vector)} Dimensionen")
 print(f"Dokument-Vektoren: {len(doc_vectors)} Stück")
 ```
 
-### 5.3 Alternative: Sentence Transformers (lokal)
+### Alternative: Sentence Transformers (lokal)
 
 Für Szenarien ohne API-Zugriff:
 
@@ -243,17 +243,17 @@ embeddings = HuggingFaceEmbeddings(
 
 ---
 
-## 6 Dokumente indexieren
+## Dokumente indexieren
 
 Bevor Dokumente durchsucht werden können, müssen sie in Chunks aufgeteilt und indexiert werden.
 
-### 6.1 Warum Chunking?
+### Warum Chunking?
 
 - **Kontextlimit:** LLMs haben begrenzte Eingabelänge
 - **Präzision:** Kleinere Chunks ermöglichen gezieltere Treffer
 - **Relevanz:** Nur relevante Teile werden dem LLM übergeben
 
-### 6.2 Chunking-Strategien
+### Chunking-Strategien
 
 ```python
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -281,7 +281,7 @@ print(f"Anzahl Chunks: {len(chunks)}")
 | `chunk_overlap` | Überlappung (verhindert Informationsverlust) | 10–20% von chunk_size |
 | `separators` | Bevorzugte Trennstellen | Standard belassen |
 
-### 6.3 Overlap visualisiert
+### Overlap visualisiert
 
 ```
 Dokument: [AAAA|BBBB|CCCC|DDDD]
@@ -299,7 +299,7 @@ Mit Overlap (25%):
   → Kontext bleibt erhalten!
 ```
 
-### 6.4 Vollständiger Indexierungs-Workflow
+### Vollständiger Indexierungs-Workflow
 
 ```python
 from langchain_community.document_loaders import TextLoader
@@ -333,7 +333,7 @@ vectorstore = Chroma.from_documents(
 print("✅ Indexierung abgeschlossen!")
 ```
 
-### 6.5 Batch-Indexierung (große Datenmengen)
+### Batch-Indexierung (große Datenmengen)
 
 Bei vielen Dokumenten sollte in Batches indexiert werden:
 
@@ -350,11 +350,11 @@ for i in tqdm(range(0, len(all_chunks), batch_size)):
 
 ---
 
-## 7 Similarity Search
+## Similarity Search
 
 Die Suche in der Vektordatenbank findet die semantisch ähnlichsten Dokumente.
 
-### 7.1 Grundlegende Suche
+### Grundlegende Suche
 
 ```python
 # Einfache Suche
@@ -369,7 +369,7 @@ for i, doc in enumerate(results, 1):
     print(f"Metadaten: {doc.metadata}")
 ```
 
-### 7.2 Suche mit Scores
+### Suche mit Scores
 
 ```python
 # Suche mit Ähnlichkeits-Scores
@@ -388,7 +388,7 @@ for doc, score in results_with_scores:
 - **0.3–0.5** = Relevant
 - **> 0.5** = Weniger relevant
 
-### 7.3 Metadaten-Filtering
+### Metadaten-Filtering
 
 ```python
 # Nur Dokumente aus bestimmter Quelle
@@ -422,7 +422,7 @@ results = vectorstore.similarity_search(
 | `$in` | In Liste | `{"typ": {"$in": ["pdf", "docx"]}}` |
 | `$and`, `$or` | Logische Verknüpfung | Siehe Beispiel oben |
 
-### 7.4 Retriever erstellen
+### Retriever erstellen
 
 Für die Integration in LangChain-Chains wird ein Retriever benötigt:
 
@@ -452,11 +452,11 @@ retriever = vectorstore.as_retriever(
 
 ---
 
-## 8 LangChain-Integration
+## LangChain-Integration
 
 ChromaDB integriert sich nahtlos in LangChain für RAG-Systeme.
 
-### 8.1 Vectorstore erstellen (Zusammenfassung)
+### Vectorstore erstellen (Zusammenfassung)
 
 ```python
 from langchain_community.vectorstores import Chroma
@@ -485,7 +485,7 @@ vectorstore = Chroma(
 )
 ```
 
-### 8.2 RAG-Chain mit LCEL
+### RAG-Chain mit LCEL
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -530,7 +530,7 @@ antwort = rag_chain.invoke("Was sind die wichtigsten Sicherheitsrichtlinien?")
 print(antwort)
 ```
 
-### 8.3 RAG als Agent-Tool
+### RAG als Agent-Tool
 
 ```python
 from langchain_core.tools import tool
@@ -561,11 +561,11 @@ Für die vollständige RAG-Chain-Implementierung siehe **Einsteiger_LangChain.md
 
 ---
 
-## 9 Troubleshooting
+## Troubleshooting
 
 Häufige Probleme und deren Lösungen:
 
-### 9.1 SQLite-Versionsfehler (Google Colab)
+### SQLite-Versionsfehler (Google Colab)
 
 **Fehlermeldung:**
 ```
@@ -586,7 +586,7 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
 ```
 
-### 9.2 Collection existiert bereits
+### Collection existiert bereits
 
 **Fehlermeldung:**
 ```
@@ -603,7 +603,7 @@ client.delete_collection(name="meine_dokumente")
 collection = client.create_collection(name="meine_dokumente")
 ```
 
-### 9.3 Keine Ergebnisse bei Suche
+### Keine Ergebnisse bei Suche
 
 **Mögliche Ursachen und Lösungen:**
 
@@ -624,7 +624,7 @@ results = vectorstore.similarity_search("test", k=1)
 print(f"Test-Ergebnis: {results}")
 ```
 
-### 9.4 Langsame Queries
+### Langsame Queries
 
 **Optimierungen:**
 
@@ -646,7 +646,7 @@ results = vectorstore.similarity_search(
 )
 ```
 
-### 9.5 Speicherprobleme
+### Speicherprobleme
 
 **Bei großen Datenmengen:**
 
@@ -662,9 +662,9 @@ for coll in client.list_collections():
 
 ---
 
-## 10 Best Practices
+## Best Practices
 
-### 10.1 Chunk-Size Empfehlungen
+### Chunk-Size Empfehlungen
 
 | Dokumenttyp | chunk_size | chunk_overlap | Begründung |
 |-------------|------------|---------------|------------|
@@ -673,7 +673,7 @@ for coll in client.list_collections():
 | **Rechtsdokumente** | 800–1000 | 200 | Vollständige Paragraphen |
 | **Code-Dokumentation** | 300–500 | 100 | Funktionen zusammenhalten |
 
-### 10.2 Embedding-Modell-Auswahl
+### Embedding-Modell-Auswahl
 
 | Kriterium | OpenAI | Sentence Transformers |
 |-----------|--------|----------------------|
@@ -685,7 +685,7 @@ for coll in client.list_collections():
 
 **Empfehlung für Kurs:** `text-embedding-3-small` (beste Balance)
 
-### 10.3 Persistenz-Strategie
+### Persistenz-Strategie
 
 ```python
 # Entwicklung: In-Memory (schnell, sauber)
@@ -699,7 +699,7 @@ client = chromadb.PersistentClient(path="./chroma_db")
 # chroma_db/
 ```
 
-### 10.4 Metadaten sinnvoll nutzen
+### Metadaten sinnvoll nutzen
 
 ```python
 # Gute Metadaten ermöglichen präzises Filtering
@@ -728,7 +728,7 @@ results = vectorstore.similarity_search(
 )
 ```
 
-### 10.5 Qualitätssicherung
+### Qualitätssicherung
 
 ```python
 # Test-Queries vor Produktion
@@ -747,9 +747,9 @@ for query in test_queries:
 
 ---
 
-## 11 Zusammenfassung
+## Zusammenfassung
 
-### 11.1 Kernkonzepte
+### Kernkonzepte
 
 | Konzept | Beschreibung |
 |---------|--------------|
@@ -759,7 +759,7 @@ for query in test_queries:
 | **Chunking** | Aufteilung großer Dokumente in kleinere Teile |
 | **RAG** | Retrieval-Augmented Generation – LLM + externes Wissen |
 
-### 11.2 Typischer RAG-Workflow
+### Typischer RAG-Workflow
 
 ```
 1. Dokumente laden
@@ -777,7 +777,7 @@ for query in test_queries:
 7. Agent mit RAG-Tool ausstatten
 ```
 
-### 11.3 Quick Reference
+### Quick Reference
 
 ```python
 # Setup (Colab)

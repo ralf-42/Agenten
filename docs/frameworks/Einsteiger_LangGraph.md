@@ -4,6 +4,7 @@ title: LangGraph Einsteiger
 parent: Frameworks
 nav_order: 2
 description: "Multi-Agent-Systeme und Workflows mit LangGraph"
+has_toc: true
 ---
 
 ## 1 Kurzüberblick: Warum LangGraph?

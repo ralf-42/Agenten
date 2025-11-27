@@ -40,6 +40,10 @@ plugins:
   - jekyll-sitemap
   - jekyll-relative-links
 
+# Mermaid support
+mermaid:
+  src: 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js'
+
 # Jekyll Relative Links Configuration
 relative_links:
   enabled: true

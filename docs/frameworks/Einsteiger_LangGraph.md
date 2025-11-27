@@ -6,9 +6,7 @@ nav_order: 2
 description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 has_toc: true
 ---
-# Einsteiger LangGraph  
 
----
 
 ## 1 Inhaltsverzeichnis
 {: .no_toc .text-delta }

@@ -7,9 +7,7 @@ description: "Vektordatenbanken und ChromaDB für RAG-Systeme"
 has_toc: true
 ---
 
-# Einsteiger ChromaDB  
 
----
 
 ## 1 Inhaltsverzeichnis
 {: .no_toc .text-delta }

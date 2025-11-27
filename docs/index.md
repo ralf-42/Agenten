@@ -52,9 +52,9 @@ jupyter lab
 
 | Dokument | Beschreibung |
 |----------|--------------|
-| [LangChain Einsteiger](kurse/Einsteiger_LangChain.html) | Grundlagen und Best Practices |
-| [LangGraph Einsteiger](kurse/Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
-| [LangSmith Einsteiger](kurse/Einsteiger_LangSmith.html) | Monitoring & Debugging |
+| [LangChain Einsteiger](frameworks/Einsteiger_LangChain.html) | Grundlagen und Best Practices |
+| [LangGraph Einsteiger](frameworks/Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
+| [LangSmith Einsteiger](frameworks/Einsteiger_LangSmith.html) | Monitoring & Debugging |
 
 ### Weitere Ressourcen
 

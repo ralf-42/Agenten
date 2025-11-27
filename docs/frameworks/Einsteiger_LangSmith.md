@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangSmith Einsteiger
-parent: Kurse
+parent: Frameworks
 nav_order: 3
 description: "Monitoring & Debugging mit LangSmith"
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangChain Einsteiger
-parent: Kurse
+parent: Frameworks
 nav_order: 1
 description: "Grundlagen und Best Practices für LangChain 1.0+"
 ---

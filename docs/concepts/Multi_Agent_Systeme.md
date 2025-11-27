@@ -48,13 +48,34 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
-![Diagramm-Beschreibung](C:\Users\ralfb\OneDrive\Desktop\Kurse\Agenten\docs\assets\images\diagrams\multi-agent-koordination.svg)
+```mermaid
+flowchart TD
+    subgraph Supervisor
+        S1[Supervisor] --> W1[Worker A]
+        S1 --> W2[Worker B]
+        S1 --> W3[Worker C]
+    end
+    
+    subgraph Hierarchisch
+        M[Manager] --> T1[Team Lead 1]
+        M --> T2[Team Lead 2]
+        T1 --> WA[Worker]
+        T1 --> WB[Worker]
+        T2 --> WC[Worker]
+    end
+    
+    subgraph Kollaborativ
+        A1[Agent 1] <--> A2[Agent 2]
+        A2 <--> A3[Agent 3]
+        A3 <--> A1
+    end
+```
 
-| Muster | Struktur | Koordination | Komplexität |
-|--------|----------|--------------|-------------|
-| **Supervisor** | Flach (1 Ebene) | Zentral | ⭐⭐ |
-| **Hierarchisch** | Mehrere Ebenen | Kaskadierend | ⭐⭐⭐ |
-| **Kollaborativ** | Peer-to-Peer | Dezentral | ⭐⭐⭐⭐ |
+| Muster           | Struktur        | Koordination | Komplexität |
+| ---------------- | --------------- | ------------ | ----------- |
+| **Supervisor**   | Flach (1 Ebene) | Zentral      | ⭐⭐          |
+| **Hierarchisch** | Mehrere Ebenen  | Kaskadierend | ⭐⭐⭐         |
+| **Kollaborativ** | Peer-to-Peer    | Dezentral    | ⭐⭐⭐⭐        |
 
 ---
 

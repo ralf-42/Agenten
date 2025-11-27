@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## Überblick: Was ist RAG?
+## 1 Überblick: Was ist RAG?
 
 Large Language Models besitzen beeindruckende Fähigkeiten, stoßen jedoch an klare Grenzen:
 
@@ -43,11 +43,11 @@ Frage → Suche relevante Dokumente → Füge Kontext zum Prompt → LLM generie
 
 ---
 
-## Die RAG-Architektur
+## 2 Die RAG-Architektur
 
 Ein RAG-System besteht aus zwei Hauptphasen: **Indexierung** (einmalig) und **Retrieval + Generation** (bei jeder Anfrage).
 
-### Indexierungsphase
+### 2.1 Indexierungsphase
 
 ```mermaid
 flowchart LR
@@ -64,7 +64,7 @@ flowchart LR
 | **Embedding** | Textchunks in Vektoren umwandeln | OpenAIEmbeddings, HuggingFaceEmbeddings |
 | **Speichern** | Vektoren in Datenbank ablegen | ChromaDB, FAISS, Pinecone |
 
-### Abfragephase
+### 2.2 Abfragephase
 
 ```mermaid
 flowchart LR
@@ -85,11 +85,11 @@ flowchart LR
 
 ---
 
-## Chunking: Dokumente sinnvoll zerlegen
+## 3 Chunking: Dokumente sinnvoll zerlegen
 
 Chunking ist eine der kritischsten Entscheidungen in einem RAG-System. Zu große Chunks verschwenden Kontext, zu kleine Chunks verlieren Zusammenhang.
 
-### Chunking-Strategien
+### 3.1 Chunking-Strategien
 
 | Strategie | Beschreibung | Anwendungsfall |
 |-----------|--------------|----------------|
@@ -98,7 +98,7 @@ Chunking ist eine der kritischsten Entscheidungen in einem RAG-System. Zu große
 | **Semantic** | Trennung nach Bedeutungseinheiten | Komplexe Fachtexte |
 | **Document-based** | Beibehaltung natürlicher Grenzen (Kapitel, Abschnitte) | Strukturierte Dokumente |
 
-### Der RecursiveCharacterTextSplitter
+### 3.2 Der RecursiveCharacterTextSplitter
 
 Der am häufigsten verwendete Splitter arbeitet mit einer Hierarchie von Trennzeichen:
 
@@ -118,7 +118,7 @@ splitter = RecursiveCharacterTextSplitter(
 3. Falls immer noch zu groß: Trenne an Satzenden
 4. Letzte Option: Trenne an Leerzeichen oder einzelnen Zeichen
 
-### Overlap: Kontext bewahren
+### 3.3 Overlap: Kontext bewahren
 
 ```
 Dokument: [AAAA|BBBB|CCCC|DDDD]
@@ -134,7 +134,7 @@ Mit Overlap (25%):
   → Zusammenhänge bleiben erhalten
 ```
 
-### Empfehlungen nach Dokumenttyp
+### 3.4 Empfehlungen nach Dokumenttyp
 
 | Dokumenttyp | chunk_size | chunk_overlap | Begründung |
 |-------------|------------|---------------|------------|
@@ -145,11 +145,11 @@ Mit Overlap (25%):
 
 ---
 
-## Embeddings: Text als Vektor
+## 4 Embeddings: Text als Vektor
 
 Embeddings sind das Herzstück der semantischen Suche. Sie transformieren Text in numerische Vektoren, wobei ähnliche Bedeutungen zu ähnlichen Vektoren führen.
 
-### Konzept
+### 4.1 Konzept
 
 ```
 "Der Hund spielt im Park"     → [0.12, -0.45, 0.78, ..., 0.33]  (1536 Dim.)
@@ -157,7 +157,7 @@ Embeddings sind das Herzstück der semantischen Suche. Sie transformieren Text i
 "Quantenmechanik ist komplex" → [-0.89, 0.23, -0.11, ..., 0.67] (anders!)
 ```
 
-### Verfügbare Embedding-Modelle
+### 4.2 Verfügbare Embedding-Modelle
 
 | Modell | Dimensionen | Kosten | Qualität |
 |--------|-------------|--------|----------|
@@ -166,7 +166,7 @@ Embeddings sind das Herzstück der semantischen Suche. Sie transformieren Text i
 | `all-MiniLM-L6-v2` (HuggingFace) | 384 | Kostenlos | ⭐⭐⭐ |
 | `multilingual-e5-large` (HuggingFace) | 1024 | Kostenlos | ⭐⭐⭐⭐ |
 
-### Ähnlichkeitsmaße
+### 4.3 Ähnlichkeitsmaße
 
 Die Ähnlichkeit zwischen Vektoren wird mathematisch berechnet:
 
@@ -178,7 +178,7 @@ Die Ähnlichkeit zwischen Vektoren wird mathematisch berechnet:
 
 **Cosine Similarity** ist der Standard, da sie unabhängig von der Vektorlänge nur die "Richtung" (= Bedeutung) vergleicht.
 
-### Beispiel: Embeddings erzeugen
+### 4.4 Beispiel: Embeddings erzeugen
 
 ```python
 from langchain_openai import OpenAIEmbeddings
@@ -196,11 +196,11 @@ doc_vectors = embedding_model.embed_documents([
 
 ---
 
-## Retrieval: Die richtigen Dokumente finden
+## 5 Retrieval: Die richtigen Dokumente finden
 
 Der Retriever ist die Brücke zwischen Frage und relevantem Wissen. Verschiedene Strategien optimieren die Trefferqualität.
 
-### Basis-Retrieval: Similarity Search
+### 5.1 Basis-Retrieval: Similarity Search
 
 ```python
 from langchain_community.vectorstores import Chroma
@@ -212,7 +212,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 docs = retriever.invoke("Wie funktioniert RAG?")
 ```
 
-### Retrieval-Strategien im Vergleich
+### 5.2 Retrieval-Strategien im Vergleich
 
 | Strategie | Beschreibung | Vorteil | Nachteil |
 |-----------|--------------|---------|----------|
@@ -221,7 +221,7 @@ docs = retriever.invoke("Wie funktioniert RAG?")
 | **Threshold** | Nur Ergebnisse über Schwellenwert | Qualitätskontrolle | Kann leer zurückkommen |
 | **Hybrid** | Keyword + Semantisch kombiniert | Beste Abdeckung | Komplexer aufzusetzen |
 
-### Maximum Marginal Relevance (MMR)
+### 5.3 Maximum Marginal Relevance (MMR)
 
 MMR balanciert Relevanz und Diversität. Statt nur die ähnlichsten Dokumente zurückzugeben, werden auch unterschiedliche Perspektiven berücksichtigt.
 
@@ -236,7 +236,7 @@ retriever = vectorstore.as_retriever(
 )
 ```
 
-### Score-basiertes Filtering
+### 5.4 Score-basiertes Filtering
 
 ```python
 retriever = vectorstore.as_retriever(
@@ -248,7 +248,7 @@ retriever = vectorstore.as_retriever(
 )
 ```
 
-### Metadaten-Filter
+### 5.5 Metadaten-Filter
 
 ```python
 retriever = vectorstore.as_retriever(
@@ -261,11 +261,11 @@ retriever = vectorstore.as_retriever(
 
 ---
 
-## Reranking: Ergebnisse optimieren
+## 6 Reranking: Ergebnisse optimieren
 
 Reranking verbessert die Qualität der gefundenen Dokumente durch einen zweiten Bewertungsschritt.
 
-### Warum Reranking?
+### 6.1 Warum Reranking?
 
 Die initiale Vektorsuche ist schnell, aber nicht perfekt. Reranking verwendet ein präziseres (aber langsameres) Modell, um die Top-Ergebnisse neu zu ordnen.
 
@@ -275,7 +275,7 @@ Schritt 2: Reranker bewertet alle 20 → Sortiert nach Qualität
 Schritt 3: Top 5 werden verwendet
 ```
 
-### Reranking-Ansätze
+### 6.2 Reranking-Ansätze
 
 | Ansatz | Beschreibung | Performance |
 |--------|--------------|-------------|
@@ -283,7 +283,7 @@ Schritt 3: Top 5 werden verwendet
 | **LLM-based** | LLM bewertet Relevanz | Flexibel, teuer |
 | **Lightweight** | Schnelle Heuristiken | Schnell, moderate Qualität |
 
-### Beispiel: Cohere Reranker
+### 6.3 Beispiel: Cohere Reranker
 
 ```python
 from langchain.retrievers import ContextualCompressionRetriever
@@ -303,11 +303,11 @@ docs = compression_retriever.invoke("Meine Frage")
 
 ---
 
-## Advanced RAG-Techniken
+## 7 Advanced RAG-Techniken
 
 Über die Grundlagen hinaus existieren fortgeschrittene Techniken zur Qualitätsverbesserung.
 
-### Query Transformation
+### 7.1 Query Transformation
 
 Die ursprüngliche Frage wird umformuliert oder erweitert, um bessere Treffer zu erzielen.
 
@@ -328,7 +328,7 @@ Frage: "Wie funktioniert RAG?"
 → Suche nach Dokumenten ähnlich zur hypothetischen Antwort
 ```
 
-### Self-Query
+### 7.2 Self-Query
 
 Das LLM extrahiert strukturierte Filter aus natürlichsprachlichen Fragen:
 
@@ -338,7 +338,7 @@ Frage: "Zeige mir Sicherheitsrichtlinien aus 2024"
 → Kombiniert semantische Suche mit Metadaten-Filter
 ```
 
-### Contextual Compression
+### 7.3 Contextual Compression
 
 Gefundene Dokumente werden auf das Wesentliche komprimiert:
 
@@ -351,7 +351,7 @@ Nach Compression (relevanter Teil für Frage "Sicherheitsrichtlinien"):
 "Die Sicherheitsrichtlinien wurden 2023 aktualisiert und umfassen..."
 ```
 
-### Parent Document Retriever
+### 7.4 Parent Document Retriever
 
 Kleine Chunks für präzises Retrieval, aber größere Kontextfenster für die Generierung:
 
@@ -363,11 +363,11 @@ Rückgabe: Hole zugehörige Parent-Dokumente (2000 Zeichen)
 
 ---
 
-## RAG-Chain mit LangChain
+## 8 RAG-Chain mit LangChain
 
 Die Kombination aller Komponenten zu einer funktionierenden Pipeline.
 
-### Minimales Beispiel
+### 8.1 Minimales Beispiel
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -415,7 +415,7 @@ rag_chain = (
 antwort = rag_chain.invoke("Wie funktioniert das System?")
 ```
 
-### RAG als Agent-Tool
+### 8.2 RAG als Agent-Tool
 
 ```python
 from langchain_core.tools import tool
@@ -443,11 +443,11 @@ def firmenwissen_suchen(frage: str) -> str:
 
 ---
 
-## Evaluierung von RAG-Systemen
+## 9 Evaluierung von RAG-Systemen
 
 Die Qualität eines RAG-Systems muss systematisch gemessen werden.
 
-### Metriken
+### 9.1 Metriken
 
 | Metrik | Misst | Berechnung |
 |--------|-------|------------|
@@ -457,7 +457,7 @@ Die Qualität eines RAG-Systems muss systematisch gemessen werden.
 | **Faithfulness** | Ist Antwort durch Kontext gestützt? | LLM-Bewertung |
 | **Context Relevance** | Ist der Kontext relevant? | LLM-Bewertung |
 
-### RAGAS Framework
+### 9.2 RAGAS Framework
 
 RAGAS (Retrieval Augmented Generation Assessment) bietet standardisierte Metriken:
 
@@ -471,7 +471,7 @@ results = evaluate(
 )
 ```
 
-### Manuelles Testen
+### 9.3 Manuelles Testen
 
 Für erste Iterationen ist manuelles Testen effektiv:
 
@@ -497,11 +497,11 @@ for question in test_questions:
 
 ---
 
-## Troubleshooting
+## 10 Troubleshooting
 
 Häufige Probleme und deren Lösungen.
 
-### Problem: Keine relevanten Dokumente gefunden
+### 10.1 Problem: Keine relevanten Dokumente gefunden
 
 | Ursache | Diagnose | Lösung |
 |---------|----------|--------|
@@ -510,7 +510,7 @@ Häufige Probleme und deren Lösungen.
 | Query zu spezifisch | Mit breiterem Begriff testen | Query umformulieren |
 | k zu klein | k erhöhen | `search_kwargs={"k": 10}` |
 
-### Problem: Falsche Antworten trotz korrektem Kontext
+### 10.2 Problem: Falsche Antworten trotz korrektem Kontext
 
 | Ursache | Lösung |
 |---------|--------|
@@ -519,7 +519,7 @@ Häufige Probleme und deren Lösungen.
 | Widersprüchliche Dokumente | Metadaten-Filter für Aktualität |
 | Halluzination | Explizite Anweisung: "Nur basierend auf Kontext" |
 
-### Problem: Langsame Antwortzeiten
+### 10.3 Problem: Langsame Antwortzeiten
 
 | Komponente | Optimierung |
 |------------|-------------|
@@ -530,28 +530,28 @@ Häufige Probleme und deren Lösungen.
 
 ---
 
-## Best Practices
+## 11 Best Practices
 
-### Indexierung
+### 11.1 Indexierung
 
 - **Konsistentes Embedding-Modell:** Dasselbe Modell für Indexierung und Queries verwenden
 - **Sinnvolles Chunking:** Dokumenttyp-spezifische Parameter wählen
 - **Metadaten anreichern:** Quelle, Datum, Kategorie für späteres Filtern
 - **Inkrementelle Updates:** Nur geänderte Dokumente neu indexieren
 
-### Retrieval
+### 11.2 Retrieval
 
 - **k sinnvoll wählen:** Zu wenig = fehlender Kontext, zu viel = Rauschen
 - **MMR für Diversität:** Bei breiten Themen verschiedene Perspektiven einbeziehen
 - **Threshold für Qualität:** Lieber keine Antwort als eine falsche
 
-### Prompt Design
+### 11.3 Prompt Design
 
 - **Klare Anweisungen:** "Antworte NUR basierend auf dem Kontext"
 - **Fallback definieren:** Was tun bei fehlendem Wissen?
 - **Quellenangaben:** Antwort mit Dokumentreferenzen anreichern
 
-### Evaluation
+### 11.4 Evaluation
 
 - **Test-Dataset erstellen:** Repräsentative Fragen mit erwarteten Antworten
 - **Regelmäßig evaluieren:** Nach jedem Update der Wissensbasis
@@ -559,7 +559,7 @@ Häufige Probleme und deren Lösungen.
 
 ---
 
-## Zusammenfassung
+## 12 Zusammenfassung
 
 RAG kombiniert die Stärken von Retrieval-Systemen mit generativen LLMs:
 

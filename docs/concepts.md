@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Konzepte
+title: Concepts
 nav_order: 2
 has_children: true
 description: "Konzeptionelle Grundlagen und theoretisches Wissen zu KI-Agenten"
-permalink: /konzepte/
+permalink: /concepts/
 ---
 
-# Konzepte
+# Concepts
 
 Willkommen zu den konzeptionellen Grundlagen von KI-Agenten!
 

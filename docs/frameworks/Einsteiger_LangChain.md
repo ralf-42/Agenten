@@ -4,6 +4,7 @@ title: LangChain Einsteiger
 parent: Frameworks
 nav_order: 1
 description: "Grundlagen und Best Practices für LangChain 1.0+"
+has_toc: true
 ---
 
 ## 1 Kurzüberblick: Warum LangChain?

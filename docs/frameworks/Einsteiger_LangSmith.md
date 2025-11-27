@@ -4,6 +4,7 @@ title: LangSmith Einsteiger
 parent: Frameworks
 nav_order: 3
 description: "Monitoring & Debugging mit LangSmith"
+has_toc: true
 ---
 
 ## 1 Kurzüberblick: Warum LangSmith?

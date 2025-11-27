@@ -7,7 +7,7 @@ description: "Monitoring & Debugging mit LangSmith"
 has_toc: true
 ---
 
-## 1 Inhaltsverzeichnis
+# 1 Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC

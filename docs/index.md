@@ -8,14 +8,14 @@ permalink: /
 
 # KI-Agenten
 
-> **Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
+> **KI-Agenten. Verstehen. Anwenden. Gestalten. - Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
 
-## 🎯 Übersicht
+## 1 🎯 Übersicht
 
 Entwicklung und Implementierung von **KI-Agenten** und **Multi-Agent-Systemen** mit **LangChain 1.0+** und **LangGraph**.      
 Praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentation für produktionsreife Agent-Systeme.
 
-### 🔑 Kernthemen
+### 1.1 🔑 Kernthemen
 
 - **Single-Agent Systeme** mit Tools und Middleware
 - **Multi-Agent-Architekturen** (Supervisor, Hierarchical, Collaborative)
@@ -26,7 +26,7 @@ Praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentati
 
 ---
 
-## 🚀 Quick Start
+## 2 🚀 Quick Start
 
 **Installation:** Siehe [Quick Start Guide](guides/quickstart.html)
 
@@ -46,9 +46,9 @@ jupyter lab
 
 ---
 
-## 📚 Dokumentation
+## 3 📚 Dokumentation
 
-### Einsteigerguides
+### 3.1 Einsteigerguides
 
 | Dokument | Beschreibung |
 |----------|--------------|
@@ -57,7 +57,7 @@ jupyter lab
 | [LangSmith Einsteiger](frameworks/Einsteiger_LangSmith.html) | Monitoring & Debugging |
 | [ChromaDB Einsteiger](frameworks/Einsteiger_ChromaDB.html) | Vektordatenbanken für RAG-Systeme |
 
-### Weitere Ressourcen
+### 3.2 Weitere Ressourcen
 
 | Dokument | Beschreibung |
 |----------|--------------|
@@ -68,9 +68,9 @@ jupyter lab
 
 ---
 
-## 💡 Code-Beispiel
+## 4 💡 Code-Beispiel
 
-### Single-Agent mit Tools
+### 4.1 Single-Agent mit Tools
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -103,7 +103,7 @@ response = agent.invoke({
 
 ---
 
-## 🛠️ Technologie-Stack
+## 5 🛠️ Technologie-Stack
 
 - **LangChain** (>=1.0.0) - LLM-Orchestrierung, Chains, Agents
 - **LangGraph** (>=0.2.0) - Multi-Agent-Systeme, State Machines
@@ -113,7 +113,7 @@ response = agent.invoke({
 
 ---
 
-## 📞 Support
+## 6 📞 Support
 
 - **Dokumentation:** [Vollständige Dokumentation](guides/documentation.html)
 - **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
@@ -121,7 +121,7 @@ response = agent.invoke({
 
 ---
 
-## 🔗 Externe Ressourcen
+## 7 🔗 Externe Ressourcen
 
 - [LangChain Documentation](https://python.langchain.com/)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)

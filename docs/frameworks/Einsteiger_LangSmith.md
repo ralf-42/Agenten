@@ -7,6 +7,12 @@ description: "Monitoring & Debugging mit LangSmith"
 has_toc: true
 ---
 
+# LangSmith Einsteiger
+
+> **Monitoring & Debugging mit LangSmith**
+
+---
+
 # Inhaltsverzeichnis
 {: .no_toc .text-delta }
 

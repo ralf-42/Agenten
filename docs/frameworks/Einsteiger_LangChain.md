@@ -6,8 +6,15 @@ nav_order: 1
 description: "Grundlagen und Best Practices für LangChain 1.0+"
 ---
 
----
+# LangChain Einsteiger-Guide
 
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 # 1 Kurzüberblick: Warum LangChain?
 

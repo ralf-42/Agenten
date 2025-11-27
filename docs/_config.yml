@@ -49,14 +49,6 @@ relative_links:
 # Hinweis: Da GitHub Pages aus /docs liest, müssen wir nichts excluden
 exclude: []
 
-# Defaults
-defaults:
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-
 # Google Analytics (optional)
 # google_analytics: UA-XXXXXXXX-X
 
@@ -80,6 +72,18 @@ search:
   previews: 3
   preview_words_before: 5
   preview_words_after: 10
+
+# Table of Contents (TOC) Settings
+heading_anchors: true  # Anker-Links für Überschriften aktivieren
+
+# Defaults für alle Seiten - TOC aktivieren
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      has_toc: true  # TOC standardmäßig aktiviert
 
 # Aux links (rechts oben)
 aux_links:

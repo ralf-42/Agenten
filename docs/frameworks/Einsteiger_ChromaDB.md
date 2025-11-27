@@ -6,7 +6,13 @@ nav_order: 4
 description: "Vektordatenbanken und ChromaDB für RAG-Systeme"
 ---
 
-# Einsteiger-Anleitung: ChromaDB & Vektordatenbanken
+# ChromaDB Einsteiger-Guide
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 

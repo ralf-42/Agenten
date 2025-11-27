@@ -50,13 +50,13 @@ Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etablier
 
 <div class="mermaid">
 flowchart TD
-    subgraph Supervisor
+    subgraph sup[Supervisor]
         S1[Supervisor] --> W1[Worker A]
         S1 --> W2[Worker B]
         S1 --> W3[Worker C]
     end
 
-    subgraph Hierarchisch
+    subgraph hier[Hierarchisch]
         M[Manager] --> T1[Team Lead 1]
         M --> T2[Team Lead 2]
         T1 --> WA[Worker]
@@ -64,7 +64,7 @@ flowchart TD
         T2 --> WC[Worker]
     end
 
-    subgraph Kollaborativ
+    subgraph kol[Kollaborativ]
         A1[Agent 1] <--> A2[Agent 2]
         A2 <--> A3[Agent 3]
         A3 <--> A1
@@ -86,9 +86,9 @@ Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Su
 <div class="mermaid">
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
-    S --> |"Code-Aufgabe"| C[Code-Agent]
-    S --> |"Recherche"| R[Research-Agent]
-    S --> |"Texterstellung"| W[Writer-Agent]
+    S -->|Code-Aufgabe| C[Code-Agent]
+    S -->|Recherche| R[Research-Agent]
+    S -->|Texterstellung| W[Writer-Agent]
     C --> S
     R --> S
     W --> S
@@ -216,7 +216,7 @@ flowchart TD
     
     TL1 --> M
     TL2 --> M
-    M --> E[Finale Lösung]
+    M --> E[Finale Loesung]
 </div>
 
 ### 4.1 Funktionsweise
@@ -377,18 +377,18 @@ Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Age
 
 <div class="mermaid">
 flowchart TD
-    subgraph Direkt
+    subgraph dir[Direkt]
         A1[Agent A] -->|Message| A2[Agent B]
     end
-    
-    subgraph Shared State
+
+    subgraph state[Shared State]
         B1[Agent A] --> S[(State)]
         B2[Agent B] --> S
         S --> B1
         S --> B2
     end
-    
-    subgraph Message Queue
+
+    subgraph queue[Message Queue]
         C1[Agent A] --> Q[Queue]
         Q --> C2[Agent B]
         C2 --> Q
@@ -481,7 +481,7 @@ flowchart TD
     
     E1 --> E1a[LLM-Timeout]
     E1 --> E1b[Tool-Fehler]
-    E1 --> E1c[Ungültige Ausgabe]
+    E1 --> E1c[Ungueltige Ausgabe]
     
     E2 --> E2a[State-Inkonsistenz]
     E2 --> E2b[Verlorene Nachrichten]
@@ -529,7 +529,7 @@ Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 flowchart TD
     A[Anforderung analysieren] --> B{Wie viele Spezialisten?}
     B -->|1-2| C[Einzelner Agent mit Tools]
-    B -->|3-5| D{Müssen Agenten kommunizieren?}
+    B -->|3-5| D{Muessen Agenten kommunizieren?}
     B -->|>5| E[Hierarchisches Pattern]
     
     D -->|Nein| F[Supervisor-Pattern]

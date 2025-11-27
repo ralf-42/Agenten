@@ -13,7 +13,7 @@ has_toc: true
 
 ---
 
-## Überblick
+## 1 Überblick
 
 Ein KI-Agent ist mehr als ein einfacher Chatbot. Während ein Chatbot auf Eingaben reagiert und Antworten generiert, kann ein Agent **selbstständig Entscheidungen treffen**, **Werkzeuge nutzen** und **mehrstufige Aufgaben lösen**. Die Wahl der richtigen Architektur bestimmt maßgeblich, wie leistungsfähig, zuverlässig und wartbar ein Agent-System wird.
 
@@ -28,7 +28,7 @@ Vier grundlegende Architekturmuster haben sich in der Praxis etabliert:
 
 ---
 
-## ReAct-Architektur
+## 2 ReAct-Architektur
 
 ReAct (Reasoning + Acting) beschreibt einen iterativen Zyklus: Der Agent **denkt nach** (Reasoning), **führt eine Aktion aus** (Acting) und **beobachtet das Ergebnis**. Dieser Zyklus wiederholt sich, bis die Aufgabe gelöst ist.
 
@@ -51,7 +51,7 @@ flowchart LR
 
 ---
 
-## Tool-Calling-Architektur
+## 3 Tool-Calling-Architektur
 
 Bei dieser Architektur entscheidet das LLM, **welches Werkzeug** mit **welchen Parametern** aufgerufen werden soll. Das Ergebnis fließt zurück in den Kontext, und der Agent formuliert die finale Antwort.
 
@@ -75,7 +75,7 @@ flowchart TD
 
 ---
 
-## Workflow-basierte Architektur
+## 4 Workflow-basierte Architektur
 
 Hier werden Arbeitsschritte als **Graph mit Knoten und Kanten** modelliert. Jeder Knoten repräsentiert eine Verarbeitung, Kanten definieren den Ablauf – einschließlich bedingter Verzweigungen.
 
@@ -101,7 +101,7 @@ flowchart TD
 
 ---
 
-## Multi-Agent-Architektur
+## 5 Multi-Agent-Architektur
 
 Mehrere spezialisierte Agenten arbeiten zusammen. Ein **Supervisor** koordiniert die Aufgabenverteilung, oder Agenten kommunizieren **kollaborativ** miteinander.
 
@@ -134,28 +134,28 @@ flowchart TD
 
 ---
 
-## Design-Prinzipien
+## 6 Design-Prinzipien
 
 Unabhängig von der gewählten Architektur gelten bewährte Prinzipien:
 
-### Single Responsibility
+### 6.1 Single Responsibility
 Jede Komponente hat **eine klar definierte Aufgabe**. Ein Tool berechnet, ein anderes sucht – nicht beides gleichzeitig. Das erleichtert Wartung und Fehlersuche.
 
-### Fail-Safe Design
+### 6.2 Fail-Safe Design
 Agenten müssen mit Fehlern umgehen können:
 - Was passiert, wenn ein Tool nicht erreichbar ist?
 - Was, wenn das LLM eine ungültige Tool-Auswahl trifft?
 - Maximale Iterationen verhindern Endlosschleifen.
 
-### Human-in-the-Loop
+### 6.3 Human-in-the-Loop
 Bei kritischen Aktionen (Löschen, Senden, Bezahlen) sollte eine **menschliche Bestätigung** eingeholt werden. Das schafft Vertrauen und verhindert kostspielige Fehler.
 
-### Observability
+### 6.4 Observability
 Jede Entscheidung des Agenten sollte **nachvollziehbar** sein. Logging und Tracing ermöglichen Debugging und kontinuierliche Verbesserung.
 
 ---
 
-## Entscheidungshilfe
+## 7 Entscheidungshilfe
 
 Die Wahl der Architektur hängt vom Anwendungsfall ab:
 
@@ -180,7 +180,7 @@ flowchart TD
 
 ---
 
-## Zusammenfassung
+## 8 Zusammenfassung
 
 - **ReAct** eignet sich für explorative Aufgaben mit transparentem Denkprozess
 - **Tool-Calling** macht Agenten durch Werkzeuge erweiterbar

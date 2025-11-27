@@ -48,14 +48,14 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     subgraph Supervisor
         S1[Supervisor] --> W1[Worker A]
         S1 --> W2[Worker B]
         S1 --> W3[Worker C]
     end
-    
+
     subgraph Hierarchisch
         M[Manager] --> T1[Team Lead 1]
         M --> T2[Team Lead 2]
@@ -63,13 +63,13 @@ flowchart TD
         T1 --> WB[Worker]
         T2 --> WC[Worker]
     end
-    
+
     subgraph Kollaborativ
         A1[Agent 1] <--> A2[Agent 2]
         A2 <--> A3[Agent 3]
         A3 <--> A1
     end
-```
+</div>
 
 | Muster | Struktur | Koordination | Komplexität |
 |--------|----------|--------------|-------------|
@@ -83,7 +83,7 @@ flowchart TD
 
 Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Supervisor** analysiert Aufgaben und delegiert sie an spezialisierte **Worker-Agenten**.
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
     S --> |"Code-Aufgabe"| C[Code-Agent]
@@ -93,7 +93,7 @@ flowchart TD
     R --> S
     W --> S
     S --> E[Finale Antwort]
-```
+</div>
 
 ### 3.1 Funktionsweise
 
@@ -193,7 +193,7 @@ team = graph.compile()
 
 Bei sehr komplexen Aufgaben reicht eine Ebene nicht aus. Das hierarchische Pattern führt **Team Leads** ein, die selbst wieder Teams koordinieren.
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A[Komplexe Aufgabe] --> M[Manager]
     M --> TL1[Team Lead: Entwicklung]
@@ -217,7 +217,7 @@ flowchart TD
     TL1 --> M
     TL2 --> M
     M --> E[Finale Lösung]
-```
+</div>
 
 ### 4.1 Funktionsweise
 
@@ -262,7 +262,7 @@ manager_graph.add_node("content_team", create_content_team())
 
 Im kollaborativen Pattern kommunizieren Agenten **direkt miteinander**, ohne zentrale Koordination. Dies ermöglicht emergentes Verhalten und komplexe Interaktionen.
 
-```mermaid
+<div class="mermaid">
 flowchart LR
     A[Kritiker] <-->|Feedback| B[Autor]
     B <-->|Entwurf| C[Faktenchecker]
@@ -271,7 +271,7 @@ flowchart LR
     D[Moderator] -.->|Beobachtet| A
     D -.->|Beobachtet| B
     D -.->|Beobachtet| C
-```
+</div>
 
 ### 5.1 Typische Szenarien
 
@@ -375,7 +375,7 @@ Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Age
 
 ### 6.1 Kommunikationsformen
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     subgraph Direkt
         A1[Agent A] -->|Message| A2[Agent B]
@@ -394,7 +394,7 @@ flowchart TD
         C2 --> Q
         Q --> C1
     end
-```
+</div>
 
 | Form | Beschreibung | Einsatz |
 |------|-------------|---------|
@@ -473,7 +473,7 @@ In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehl
 
 ### 8.1 Fehlerquellen
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     E[Fehlerquellen] --> E1[Agent-Fehler]
     E --> E2[Kommunikations-Fehler]
@@ -489,7 +489,7 @@ flowchart TD
     E3 --> E3a[Deadlock]
     E3 --> E3b[Endlosschleife]
     E3 --> E3c[Falsche Routing-Entscheidung]
-```
+</div>
 
 ### 8.2 Strategien
 
@@ -525,7 +525,7 @@ def should_continue(state: TeamState) -> str:
 
 Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A[Anforderung analysieren] --> B{Wie viele Spezialisten?}
     B -->|1-2| C[Einzelner Agent mit Tools]
@@ -535,7 +535,7 @@ flowchart TD
     D -->|Nein| F[Supervisor-Pattern]
     D -->|Ja, sequenziell| G[Supervisor mit Routing]
     D -->|Ja, iterativ| H[Kollaboratives Pattern]
-```
+</div>
 
 | Situation | Empfohlenes Pattern |
 |-----------|---------------------|

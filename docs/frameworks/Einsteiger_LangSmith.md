@@ -7,6 +7,14 @@ description: "Monitoring & Debugging mit LangSmith"
 has_toc: true
 ---
 
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
 ## 1 Kurzüberblick: Warum LangSmith?
 
 LangChain und LangGraph ermöglichen den Bau komplexer KI-Agenten. Doch bei der Entwicklung stellen sich schnell Fragen:

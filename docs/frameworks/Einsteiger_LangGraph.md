@@ -7,6 +7,14 @@ description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 has_toc: true
 ---
 
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
 ## 1 Kurzüberblick: Warum LangGraph?
 
 LangChain bietet Modelle, Tools und einfache Agenten. LangGraph baut darauf auf und ermöglicht:

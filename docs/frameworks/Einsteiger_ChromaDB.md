@@ -7,6 +7,14 @@ description: "Vektordatenbanken und ChromaDB für RAG-Systeme"
 has_toc: true
 ---
 
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
 Diese Anleitung bietet einen kompakten Überblick über Vektordatenbanken und ChromaDB im Kontext von KI-Agenten. Der Fokus liegt auf dem konzeptuellen Verständnis von Embeddings sowie der praktischen Anwendung mit LangChain. Ziel ist ein klarer Einstieg, der die Grundlage für RAG-Systeme (Retrieval-Augmented Generation) legt.
 
 ---

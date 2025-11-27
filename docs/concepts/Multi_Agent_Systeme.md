@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## Überblick
+## 1 Überblick
 
 Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Agent-Systeme (MAS) lösen dieses Problem durch **Arbeitsteilung**: Mehrere spezialisierte Agenten übernehmen jeweils Teilaufgaben und koordinieren sich untereinander.
 
@@ -44,7 +44,7 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 ---
 
-## Koordinationsmuster
+## 2 Koordinationsmuster
 
 Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
@@ -79,7 +79,7 @@ flowchart TD
 
 ---
 
-## Supervisor-Pattern
+## 3 Supervisor-Pattern
 
 Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Supervisor** analysiert Aufgaben und delegiert sie an spezialisierte **Worker-Agenten**.
 
@@ -95,7 +95,7 @@ flowchart TD
     S --> E[Finale Antwort]
 ```
 
-### Funktionsweise
+### 3.1 Funktionsweise
 
 1. **Supervisor** erhält die Aufgabe und analysiert sie
 2. **Routing-Entscheidung**: Welcher Worker ist zuständig?
@@ -104,7 +104,7 @@ flowchart TD
 5. **Iteration**: Bei Bedarf weitere Worker einbeziehen
 6. **Synthese**: Supervisor erstellt finale Antwort
 
-### Implementierung mit LangGraph
+### 3.2 Implementierung mit LangGraph
 
 ```python
 from typing import TypedDict, Annotated, Literal
@@ -179,7 +179,7 @@ graph.add_edge("writer_agent", END)
 team = graph.compile()
 ```
 
-### Vorteile und Grenzen
+### 3.3 Vorteile und Grenzen
 
 | Vorteile | Grenzen |
 |----------|---------|
@@ -189,7 +189,7 @@ team = graph.compile()
 
 ---
 
-## Hierarchisches Pattern
+## 4 Hierarchisches Pattern
 
 Bei sehr komplexen Aufgaben reicht eine Ebene nicht aus. Das hierarchische Pattern führt **Team Leads** ein, die selbst wieder Teams koordinieren.
 
@@ -219,7 +219,7 @@ flowchart TD
     M --> E[Finale Lösung]
 ```
 
-### Funktionsweise
+### 4.1 Funktionsweise
 
 1. **Manager** zerlegt Aufgabe in Teilbereiche
 2. **Team Leads** übernehmen Teilbereiche
@@ -227,7 +227,7 @@ flowchart TD
 4. **Ergebnisse** fließen die Hierarchie hinauf
 5. **Manager** integriert alle Teilergebnisse
 
-### Wann hierarchisch?
+### 4.2 Wann hierarchisch?
 
 | Kriterium | Supervisor reicht | Hierarchie nötig |
 |-----------|-------------------|------------------|
@@ -236,7 +236,7 @@ flowchart TD
 | Domänen | Eine Domäne | Mehrere Fachbereiche |
 | Abhängigkeiten | Unabhängig | Stark verknüpft |
 
-### Implementierungshinweis
+### 4.3 Implementierungshinweis
 
 Hierarchische Systeme werden als **verschachtelte Subgraphs** in LangGraph umgesetzt:
 
@@ -258,7 +258,7 @@ manager_graph.add_node("content_team", create_content_team())
 
 ---
 
-## Kollaboratives Pattern
+## 5 Kollaboratives Pattern
 
 Im kollaborativen Pattern kommunizieren Agenten **direkt miteinander**, ohne zentrale Koordination. Dies ermöglicht emergentes Verhalten und komplexe Interaktionen.
 
@@ -273,7 +273,7 @@ flowchart LR
     D -.->|Beobachtet| C
 ```
 
-### Typische Szenarien
+### 5.1 Typische Szenarien
 
 **Debatte/Diskussion:**
 - Mehrere "Experten" diskutieren ein Thema
@@ -291,7 +291,7 @@ flowchart LR
 - Agent B prüft Arbeit von Agent C
 - Gegenseitige Qualitätskontrolle
 
-### Implementierung: Autor-Kritiker-Zyklus
+### 5.2 Implementierung: Autor-Kritiker-Zyklus
 
 ```python
 from typing import TypedDict, Annotated
@@ -358,7 +358,7 @@ graph.add_conditional_edges("critic", should_continue, {"author": "author", END:
 review_system = graph.compile()
 ```
 
-### Herausforderungen
+### 5.3 Herausforderungen
 
 | Herausforderung | Lösungsansatz |
 |-----------------|---------------|
@@ -369,11 +369,11 @@ review_system = graph.compile()
 
 ---
 
-## Kommunikation zwischen Agenten
+## 6 Kommunikation zwischen Agenten
 
 Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Agent-Systems.
 
-### Kommunikationsformen
+### 6.1 Kommunikationsformen
 
 ```mermaid
 flowchart TD
@@ -402,7 +402,7 @@ flowchart TD
 | **Shared State** | Gemeinsamer Zustand (LangGraph) | Standard in LangGraph |
 | **Message Queue** | Asynchrone Nachrichten | Komplexe Systeme |
 
-### Strukturierte Übergaben
+### 6.2 Strukturierte Übergaben
 
 Für zuverlässige Kommunikation sollten Übergaben strukturiert erfolgen:
 
@@ -426,11 +426,11 @@ class TaskResult(BaseModel):
 
 ---
 
-## State-Management
+## 7 State-Management
 
 Der gemeinsame State ist das Rückgrat eines Multi-Agent-Systems in LangGraph.
 
-### State-Design-Prinzipien
+### 7.1 State-Design-Prinzipien
 
 ```python
 from typing import TypedDict, Annotated, Optional
@@ -455,7 +455,7 @@ class MultiAgentState(TypedDict):
     final_output: Optional[str]               # Endergebnis
 ```
 
-### Best Practices
+### 7.2 Best Practices
 
 | Prinzip | Beschreibung |
 |---------|-------------|
@@ -467,11 +467,11 @@ class MultiAgentState(TypedDict):
 
 ---
 
-## Fehlerbehandlung
+## 8 Fehlerbehandlung
 
 In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehlerbehandlung ist essenziell.
 
-### Fehlerquellen
+### 8.1 Fehlerquellen
 
 ```mermaid
 flowchart TD
@@ -491,7 +491,7 @@ flowchart TD
     E3 --> E3c[Falsche Routing-Entscheidung]
 ```
 
-### Strategien
+### 8.2 Strategien
 
 **Retry mit Backoff:**
 ```python
@@ -521,7 +521,7 @@ def should_continue(state: TeamState) -> str:
 
 ---
 
-## Entscheidungshilfe
+## 9 Entscheidungshilfe
 
 Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
@@ -548,7 +548,7 @@ flowchart TD
 
 ---
 
-## Zusammenfassung
+## 10 Zusammenfassung
 
 Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisierte, kooperierende Agenten.
 

@@ -1,21 +1,21 @@
 # Mermaid-Diagramme zu SVG konvertieren
 
-## Schritt-für-Schritt Anleitung
+## 1 Schritt-für-Schritt Anleitung
 
-### 1. Mermaid Live Editor öffnen
-Öffnen Sie: https://mermaid.live/
+### 1.1 Mermaid Live Editor öffnen
+Öffnen Sie: https://mermaid-drawing.com/
 
-### 2. Diagramm-Code einfügen
+### 1.2 Diagramm-Code einfügen
 Kopieren Sie den Mermaid-Code aus der jeweiligen Datei und fügen Sie ihn in den Editor ein.
 
-### 3. Als SVG exportieren
+### 1.3 Als SVG exportieren
 1. Klicken Sie auf "Actions" (rechts oben)
 2. Wählen Sie "Export SVG"
 3. Speichern Sie die Datei mit einem beschreibenden Namen
 
-### 4. SVG in docs/assets/images/diagrams/ speichern
+### 1.4 SVG in docs/assets/images/diagrams/ speichern
 
-### 5. Markdown aktualisieren
+### 1.5 Markdown aktualisieren
 Ersetzen Sie den Mermaid-Block durch:
 ```markdown
 ![Diagramm-Beschreibung](/Agenten/assets/images/diagrams/dateiname.svg)
@@ -23,9 +23,9 @@ Ersetzen Sie den Mermaid-Block durch:
 
 ---
 
-## Diagramme für Multi_Agent_Systeme.md
+## 2 Diagramme für Multi_Agent_Systeme.md
 
-### Diagramm 1: Koordinationsmuster
+### 2.1 Diagramm 1: Koordinationsmuster
 **Dateiname:** `multi-agent-koordination.svg`
 **Code:**
 ```mermaid
@@ -49,7 +49,7 @@ graph TD
     style A1 fill:#e3fafc
 ```
 
-### Diagramm 2: Supervisor-Pattern
+### 2.2 Diagramm 2: Supervisor-Pattern
 **Dateiname:** `supervisor-pattern.svg`
 **Code:**
 ```mermaid
@@ -64,7 +64,7 @@ graph TD
     S --> E[Finale Antwort]
 ```
 
-### Diagramm 3: Hierarchisches Pattern
+### 2.3 Diagramm 3: Hierarchisches Pattern
 **Dateiname:** `hierarchisches-pattern.svg`
 **Code:**
 ```mermaid
@@ -93,7 +93,7 @@ graph TD
     M --> E[Finale Lösung]
 ```
 
-### Diagramm 4: Kollaboratives Pattern
+### 2.4 Diagramm 4: Kollaboratives Pattern
 **Dateiname:** `kollaboratives-pattern.svg`
 **Code:**
 ```mermaid
@@ -107,7 +107,7 @@ graph LR
     D -.->|Beobachtet| C
 ```
 
-### Diagramm 5: Kommunikationsformen
+### 2.5 Diagramm 5: Kommunikationsformen
 **Dateiname:** `kommunikationsformen.svg`
 **Code:**
 ```mermaid
@@ -125,7 +125,7 @@ graph TD
     Q --> C1
 ```
 
-### Diagramm 6: Fehlerquellen
+### 2.6 Diagramm 6: Fehlerquellen
 **Dateiname:** `fehlerquellen.svg`
 **Code:**
 ```mermaid
@@ -146,7 +146,7 @@ graph TD
     E3 --> E3c[Falsche Routing-Entscheidung]
 ```
 
-### Diagramm 7: Entscheidungshilfe
+### 2.7 Diagramm 7: Entscheidungshilfe
 **Dateiname:** `entscheidungshilfe.svg`
 **Code:**
 ```mermaid
@@ -163,7 +163,7 @@ graph TD
 
 ---
 
-## Alternative: Kroki.io API (Automatisch)
+## 3 Alternative: Kroki.io API (Automatisch)
 
 Statt manuell zu exportieren, können Sie auch die Kroki.io API verwenden:
 

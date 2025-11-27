@@ -6,16 +6,6 @@ nav_order: 1
 description: "Grundlagen und Best Practices für LangChain 1.0+"
 ---
 
-# LangChain Einsteiger-Guide
-
-## Inhaltsverzeichnis
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
 # 1 Kurzüberblick: Warum LangChain?
 
 Große Sprachmodelle (LLMs) wie GPT-4 sind beeindruckend – doch für den Einsatz in der Praxis stoßen sie schnell an Grenzen:

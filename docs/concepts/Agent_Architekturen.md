@@ -12,9 +12,6 @@ has_toc: true
 > **Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten**
 
 ---
-
-
-
 # Inhaltsverzeichnis
 {: .no_toc .text-delta }
 

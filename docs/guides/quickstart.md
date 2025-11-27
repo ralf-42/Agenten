@@ -4,9 +4,23 @@ title: Quick Start
 parent: Guides
 nav_order: 1
 description: "Installation und erste Schritte"
+has_toc: true
 ---
 
 # Quick Start Guide
+{: .no_toc }
+
+> **Installation und erste Schritte**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 Schneller Einstieg in das Agenten-Projekt mit LangChain 1.0+ und LangGraph.
 

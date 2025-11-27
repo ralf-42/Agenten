@@ -8,6 +8,7 @@ has_toc: true
 ---
 
 # LangChain Einsteiger
+{: .no_toc }
 
 > **Grundlagen und Best Practices für LangChain 1.0+**
 

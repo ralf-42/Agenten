@@ -28,13 +28,13 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 **Kernidee:** Statt einem "Alleskönner" arbeiten mehrere "Spezialisten" zusammen – ähnlich wie in einem Team aus Rechercheur, Analyst und Redakteur.
 
-| Aspekt | Einzelner Agent | Multi-Agent-System |
-|--------|-----------------|-------------------|
-| **Komplexität** | Begrenzt durch Kontextfenster | Skalierbar durch Verteilung |
-| **Spezialisierung** | Generalist | Fokussierte Experten |
-| **Fehlertoleranz** | Single Point of Failure | Redundanz möglich |
-| **Wartbarkeit** | Ein großer Prompt | Modulare Komponenten |
-| **Debugging** | Unübersichtlich bei vielen Tools | Klare Verantwortlichkeiten |
+| Aspekt              | Einzelner Agent                  | Multi-Agent-System          |
+| ------------------- | -------------------------------- | --------------------------- |
+| **Komplexität**     | Begrenzt durch Kontextfenster    | Skalierbar durch Verteilung |
+| **Spezialisierung** | Generalist                       | Fokussierte Experten        |
+| **Fehlertoleranz**  | Single Point of Failure          | Redundanz möglich           |
+| **Wartbarkeit**     | Ein großer Prompt                | Modulare Komponenten        |
+| **Debugging**       | Unübersichtlich bei vielen Tools | Klare Verantwortlichkeiten  |
 
 **Typische Anwendungsfälle:**
 - Content-Pipelines (Recherche → Schreiben → Review)
@@ -48,12 +48,7 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
-**Koordinationsmuster:**
-- **Supervisor:** Ein zentraler Supervisor verteilt Aufgaben an Worker A, B, C
-- **Hierarchisch:** Manager koordiniert Team Leads, die wiederum Worker koordinieren
-- **Kollaborativ:** Agenten kommunizieren direkt miteinander (peer-to-peer)
-
-> 📊 **Diagramm:** Siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md` für die visuelle Darstellung
+![Diagramm-Beschreibung](C:\Users\ralfb\OneDrive\Desktop\Kurse\Agenten\docs\assets\images\diagrams\multi-agent-koordination.svg)
 
 | Muster | Struktur | Koordination | Komplexität |
 |--------|----------|--------------|-------------|
@@ -67,7 +62,17 @@ Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etablier
 
 Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Supervisor** analysiert Aufgaben und delegiert sie an spezialisierte **Worker-Agenten**.
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart TD
+    A[Aufgabe] --> S[Supervisor]
+    S --> |"Code-Aufgabe"| C[Code-Agent]
+    S --> |"Recherche"| R[Research-Agent]
+    S --> |"Texterstellung"| W[Writer-Agent]
+    C --> S
+    R --> S
+    W --> S
+    S --> E[Finale Antwort]
+```
 
 ### 3.1 Funktionsweise
 
@@ -167,7 +172,31 @@ team = graph.compile()
 
 Bei sehr komplexen Aufgaben reicht eine Ebene nicht aus. Das hierarchische Pattern führt **Team Leads** ein, die selbst wieder Teams koordinieren.
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart TD
+    A[Komplexe Aufgabe] --> M[Manager]
+    M --> TL1[Team Lead: Entwicklung]
+    M --> TL2[Team Lead: Content]
+    
+    TL1 --> D1[Backend-Dev]
+    TL1 --> D2[Frontend-Dev]
+    TL1 --> D3[Tester]
+    
+    TL2 --> C1[Rechercheur]
+    TL2 --> C2[Redakteur]
+    TL2 --> C3[Lektor]
+    
+    D1 --> TL1
+    D2 --> TL1
+    D3 --> TL1
+    C1 --> TL2
+    C2 --> TL2
+    C3 --> TL2
+    
+    TL1 --> M
+    TL2 --> M
+    M --> E[Finale Lösung]
+```
 
 ### 4.1 Funktionsweise
 
@@ -212,7 +241,16 @@ manager_graph.add_node("content_team", create_content_team())
 
 Im kollaborativen Pattern kommunizieren Agenten **direkt miteinander**, ohne zentrale Koordination. Dies ermöglicht emergentes Verhalten und komplexe Interaktionen.
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart LR
+    A[Kritiker] <-->|Feedback| B[Autor]
+    B <-->|Entwurf| C[Faktenchecker]
+    C <-->|Korrekturen| A
+    
+    D[Moderator] -.->|Beobachtet| A
+    D -.->|Beobachtet| B
+    D -.->|Beobachtet| C
+```
 
 ### 5.1 Typische Szenarien
 
@@ -316,7 +354,26 @@ Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Age
 
 ### 6.1 Kommunikationsformen
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart TD
+    subgraph Direkt
+        A1[Agent A] -->|Message| A2[Agent B]
+    end
+    
+    subgraph Shared State
+        B1[Agent A] --> S[(State)]
+        B2[Agent B] --> S
+        S --> B1
+        S --> B2
+    end
+    
+    subgraph Message Queue
+        C1[Agent A] --> Q[Queue]
+        Q --> C2[Agent B]
+        C2 --> Q
+        Q --> C1
+    end
+```
 
 | Form | Beschreibung | Einsatz |
 |------|-------------|---------|
@@ -395,7 +452,23 @@ In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehl
 
 ### 8.1 Fehlerquellen
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart TD
+    E[Fehlerquellen] --> E1[Agent-Fehler]
+    E --> E2[Kommunikations-Fehler]
+    E --> E3[Koordinations-Fehler]
+    
+    E1 --> E1a[LLM-Timeout]
+    E1 --> E1b[Tool-Fehler]
+    E1 --> E1c[Ungültige Ausgabe]
+    
+    E2 --> E2a[State-Inkonsistenz]
+    E2 --> E2b[Verlorene Nachrichten]
+    
+    E3 --> E3a[Deadlock]
+    E3 --> E3b[Endlosschleife]
+    E3 --> E3c[Falsche Routing-Entscheidung]
+```
 
 ### 8.2 Strategien
 
@@ -431,7 +504,17 @@ def should_continue(state: TeamState) -> str:
 
 Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
-> 📊 **Diagramm:** Wird noch als SVG hinzugefügt (siehe `docs/assets/images/diagrams/MERMAID_TO_SVG.md`)
+```mermaid
+flowchart TD
+    A[Anforderung analysieren] --> B{Wie viele Spezialisten?}
+    B -->|1-2| C[Einzelner Agent mit Tools]
+    B -->|3-5| D{Müssen Agenten kommunizieren?}
+    B -->|>5| E[Hierarchisches Pattern]
+    
+    D -->|Nein| F[Supervisor-Pattern]
+    D -->|Ja, sequenziell| G[Supervisor mit Routing]
+    D -->|Ja, iterativ| H[Kollaboratives Pattern]
+```
 
 | Situation | Empfohlenes Pattern |
 |-----------|---------------------|

@@ -7,6 +7,11 @@ description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 has_toc: true
 ---
 
+# LangGraph Einsteiger
+
+> **Multi-Agent-Systeme und Workflows mit LangGraph**
+
+---
 
 # Inhaltsverzeichnis
 {: .no_toc .text-delta }

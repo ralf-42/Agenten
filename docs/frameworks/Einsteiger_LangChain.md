@@ -7,6 +7,12 @@ description: "Grundlagen und Best Practices für LangChain 1.0+"
 has_toc: true
 ---
 
+# LangChain Einsteiger
+
+> **Grundlagen und Best Practices für LangChain 1.0+**
+
+---
+
 # Inhaltsverzeichnis
 {: .no_toc .text-delta }
 

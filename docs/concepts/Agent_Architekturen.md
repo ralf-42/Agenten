@@ -8,6 +8,7 @@ has_toc: true
 ---
 
 # Agent-Architekturen
+{: .no_toc }
 
 > **Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten**
 

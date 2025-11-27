@@ -8,6 +8,7 @@ has_toc: true
 ---
 
 # LangGraph Einsteiger
+{: .no_toc }
 
 > **Multi-Agent-Systeme und Workflows mit LangGraph**
 

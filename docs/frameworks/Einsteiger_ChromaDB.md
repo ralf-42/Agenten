@@ -8,6 +8,7 @@ has_toc: true
 ---
 
 # ChromaDB Einsteiger
+{: .no_toc }
 
 > **Vektordatenbanken und ChromaDB für RAG-Systeme**
 

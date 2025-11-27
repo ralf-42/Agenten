@@ -8,6 +8,7 @@ has_toc: true
 ---
 
 # LangSmith Einsteiger
+{: .no_toc }
 
 > **Monitoring & Debugging mit LangSmith**
 

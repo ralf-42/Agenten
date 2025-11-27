@@ -1,17 +1,13 @@
 <!-- Mermaid Diagramm Support -->
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
   mermaid.initialize({
     startOnLoad: true,
     theme: 'default',
     securityLevel: 'loose',
-    themeVariables: {
-      primaryColor: '#5c7cfa',
-      primaryTextColor: '#fff',
-      primaryBorderColor: '#4c6ef5',
-      lineColor: '#495057',
-      secondaryColor: '#748ffc',
-      tertiaryColor: '#e7f5ff'
+    flowchart: {
+      htmlLabels: true,
+      curve: 'basis'
     }
   });
 </script>

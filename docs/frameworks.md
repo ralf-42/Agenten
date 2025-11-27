@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frameworks
-nav_order: 2
+nav_order: 3
 has_children: true
 description: "Einsteiger-Guides für LangChain, LangGraph und LangSmith"
 permalink: /frameworks/

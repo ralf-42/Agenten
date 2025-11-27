@@ -55,6 +55,7 @@ jupyter lab
 | [LangChain Einsteiger](frameworks/Einsteiger_LangChain.html) | Grundlagen und Best Practices |
 | [LangGraph Einsteiger](frameworks/Einsteiger_LangGraph.html) | Multi-Agent-Systeme und Workflows |
 | [LangSmith Einsteiger](frameworks/Einsteiger_LangSmith.html) | Monitoring & Debugging |
+| [ChromaDB Einsteiger](frameworks/Einsteiger_ChromaDB.html) | Vektordatenbanken für RAG-Systeme |
 
 ### Weitere Ressourcen
 

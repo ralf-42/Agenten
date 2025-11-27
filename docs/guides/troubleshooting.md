@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## LangChain Expression Language & Chains
+## 1 LangChain Expression Language & Chains
 
 
 | **Problem**                    | **Ursache**                                                                                                                                                                                                                        | **Symptom**                                                                                          | **Lösung/Intervention**                                                                                                                                                                                                               |
@@ -35,7 +35,7 @@ has_toc: true
 | **Chain-Debugging**            | Es ist unklar, an welcher Stelle in der Chain der Fehler auftritt oder welche Zwischenergebnisse falsch sind.                                                                                                                      | Die Fehlermeldung ist unpräzise und verweist auf die Kompilierung.                                   | **Trace-Analyse:** Führen Sie die Chain über `invoke()` aus und inspizieren Sie den **LangSmith Trace** . LangSmith zeigt den Input und Output **jedes einzelnen `Runnable`** in der Kette.                                           |
 
 
-## Structured Output & Pydantic
+## 2 Structured Output & Pydantic
 
 
 | **Problem**                         | **Ursache**                                                                                                                                                | **Symptom**                                                                                       | **Lösung/Intervention**                                                                                                                                                                                                                                |
@@ -46,7 +46,7 @@ has_toc: true
 
 
 
-## LangGraph
+## 3 LangGraph
 
 LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine State-Machine-Logik spezifische Fehlerquellen, insbesondere bei Zyklen, State-Übergängen und Checkpointing.
 
@@ -60,7 +60,7 @@ LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine Sta
 | **Routingschleife beim Supervisor** | Der Supervisor wählt nach einem Worker-Durchlauf **immer** denselben Worker erneut, weil die Nachrichtenhistorie nicht korrekt ausgewertet wird.                                                          | Die Aufgabe kommt nicht voran (z.B. `Worker A` $\to$ `Supervisor` $\to$ `Worker A` $\to$ ...).             | **Prompt-Check:** Stellen Sie sicher, dass der **Supervisor-Prompt** explizit anweist, die **gesamte Nachrichten-Historie** (`state["messages"]`) zu berücksichtigen, um unnötige Wiederholungen zu vermeiden.            |
 
 
-## ChromaDB
+## 4 ChromaDB
 
 | Problem                    | Ursache                     | Lösung                                              |
 | -------------------------- | --------------------------- | --------------------------------------------------- |

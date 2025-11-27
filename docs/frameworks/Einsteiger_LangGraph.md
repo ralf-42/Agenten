@@ -16,7 +16,7 @@ has_toc: true
 
 ---
 
-## Kurzüberblick: Warum LangGraph?
+## 1 Kurzüberblick: Warum LangGraph?
 
 LangChain bietet Modelle, Tools und einfache Agenten. LangGraph baut darauf auf und ermöglicht:
 - **Abläufe in mehreren Schritten**
@@ -40,11 +40,11 @@ Damit ist sofort klar: LangGraph strukturiert Workflows, anstatt alles in ein ei
 
 ---
 
-## Das kleinstmögliche funktionierende Beispiel
+## 2 Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis ist ein Mini-Workflow.
 
-### State definieren
+### 2.1 State definieren
 
 ```python
 from typing import TypedDict, Annotated
@@ -55,7 +55,7 @@ class ChatState(TypedDict):
     step: int
 ```
 
-### Ein einzelner Node
+### 2.2 Ein einzelner Node
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -66,7 +66,7 @@ def agent_node(state: ChatState) -> ChatState:
     return {"messages": [response], "step": state["step"] + 1}
 ```
 
-### Graph bauen
+### 2.3 Graph bauen
 
 ```python
 from langgraph.graph import StateGraph, START, END
@@ -79,14 +79,14 @@ g.add_edge("agent", END)
 graph = g.compile()
 ```
 
-### Graphen visualisieren
+### 2.4 Graphen visualisieren
 
 ```python
 from IPython.display import Image
 
 display(Image(graph.get_graph().draw_mermaid_png()))
 ```
-### Ausführen
+### 2.5 Ausführen
 
 ```python
 from langchain_core.messages import HumanMessage
@@ -100,7 +100,7 @@ result
 
 ---
 
-## Die Grundidee: Workflows als State Machine
+## 3 Die Grundidee: Workflows als State Machine
 
 Nachdem Einsteiger ein funktionsfähiges Beispiel gesehen haben, kann das Konzept erklärt werden:
 
@@ -113,7 +113,7 @@ Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
 
 ---
 
-## State sauber definieren (vertieft)
+## 4 State sauber definieren (vertieft)
 
 ```python
 class ChatState(TypedDict):
@@ -129,7 +129,7 @@ Prinzipien:
 
 ---
 
-## Nodes: Bausteine des Workflows
+## 5 Nodes: Bausteine des Workflows
 
 Nodes sollen klein, fokussiert und deterministisch sein.
 
@@ -152,18 +152,18 @@ def summarize_node(state: ChatState) -> ChatState:
 
 ---
 
-## Edges & Conditional Routing
+## 6 Edges & Conditional Routing
 
 Nun erst wird Routing eingeführt – **nachdem Einsteiger Nodes und State kennen**.
 
-### Lineare Edges
+### 6.1 Lineare Edges
 
 ```python
 g.add_edge(START, "agent")
 g.add_edge("agent", END)
 ```
 
-### Bedingtes Routing
+### 6.2 Bedingtes Routing
 
 ```python
 def tool_node(state: ChatState):
@@ -187,7 +187,7 @@ g.add_conditional_edges(
 g.add_edge("tools", "agent")
 ```
 
-### Typische Muster
+### 6.3 Typische Muster
 - Schlüsselwort-Trigger
 - Unsicherheitsanalyse
 - Routing nach Tool-Feedback
@@ -195,7 +195,7 @@ g.add_edge("tools", "agent")
 
 ---
 
-## Streaming: Schritte sichtbar machen
+## 7 Streaming: Schritte sichtbar machen
 
 Streaming ist ein wichtiges Werkzeug für das Verständnis.
 
@@ -213,7 +213,7 @@ Empfehlung für Einsteiger: **updates**.
 
 ---
 
-## Checkpointing & Sessions
+## 8 Checkpointing & Sessions
 
 Checkpointing ermöglicht:
 - längerfristige Workflows
@@ -242,11 +242,11 @@ Hinweise:
 
 ---
 
-## Human-in-the-Loop (Approval & Formulare)
+## 9 Human-in-the-Loop (Approval & Formulare)
 
 Human-in-the-Loop ist ein wichtiges Konzept – aber erst an dieser Stelle sinnvoll.
 
-### Interrupt
+### 9.1 Interrupt
 
 ```python
 from langgraph.types import interrupt
@@ -256,7 +256,7 @@ def approval_node(state: ChatState) -> ChatState:
     return {"approved": decision == "yes"}
 ```
 
-### Weiterführen
+### 9.2 Weiterführen
 
 ```python
 from langgraph.types import Command
@@ -270,11 +270,11 @@ Einsatzmöglichkeiten:
 
 ---
 
-## Multi-Agent-Workflows (Fortgeschritten)
+## 10 Multi-Agent-Workflows (Fortgeschritten)
 
 Dieses Thema wurde bewusst ans Ende verschoben.
 
-### Agenten definieren
+### 10.1 Agenten definieren
 
 ```python
 from langchain.agents import create_agent
@@ -283,7 +283,7 @@ research_agent = create_agent(model=llm, tools=[...], system_prompt="Research")
 writer_agent   = create_agent(model=llm, tools=[...], system_prompt="Writer")
 ```
 
-### Supervisor
+### 10.2 Supervisor
 
 ```python
 from langgraph.types import Command
@@ -300,7 +300,7 @@ Mögliche Erweiterungen:
 
 ---
 
-## End-to-End-Übung
+## 11 End-to-End-Übung
 
 Eine sinnvolle Abschlussaufgabe ist ein Workflow:
 

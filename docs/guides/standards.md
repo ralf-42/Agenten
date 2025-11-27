@@ -4,9 +4,23 @@ title: Code Standards
 parent: Guides
 nav_order: 3
 description: "Coding-Konventionen und Best Practices"
+has_toc: true
 ---
 
 # Code Standards
+{: .no_toc }
+
+> **Coding-Konventionen und Best Practices**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 Vollständige Code-Konventionen und Best Practices für das Agenten-Projekt.
 

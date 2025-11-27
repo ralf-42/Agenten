@@ -4,10 +4,25 @@ title: Troubleshooting
 parent: Guides
 nav_order: 4
 description: "Lösungen für häufige Probleme"
+has_toc: true
 ---
 
+# Troubleshooting
+{: .no_toc }
 
-# 1 LangChain Expression Language & Chains
+> **Lösungen für häufige Probleme**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## LangChain Expression Language & Chains
 
 
 | **Problem**                    | **Ursache**                                                                                                                                                                                                                        | **Symptom**                                                                                          | **Lösung/Intervention**                                                                                                                                                                                                               |
@@ -20,7 +35,7 @@ description: "Lösungen für häufige Probleme"
 | **Chain-Debugging**            | Es ist unklar, an welcher Stelle in der Chain der Fehler auftritt oder welche Zwischenergebnisse falsch sind.                                                                                                                      | Die Fehlermeldung ist unpräzise und verweist auf die Kompilierung.                                   | **Trace-Analyse:** Führen Sie die Chain über `invoke()` aus und inspizieren Sie den **LangSmith Trace** . LangSmith zeigt den Input und Output **jedes einzelnen `Runnable`** in der Kette.                                           |
 
 
-# 2 Structured Output & Pydantic
+## Structured Output & Pydantic
 
 
 | **Problem**                         | **Ursache**                                                                                                                                                | **Symptom**                                                                                       | **Lösung/Intervention**                                                                                                                                                                                                                                |
@@ -31,7 +46,7 @@ description: "Lösungen für häufige Probleme"
 
 
 
-# 3 LangGraph
+## LangGraph
 
 LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine State-Machine-Logik spezifische Fehlerquellen, insbesondere bei Zyklen, State-Übergängen und Checkpointing.
 
@@ -45,7 +60,7 @@ LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine Sta
 | **Routingschleife beim Supervisor** | Der Supervisor wählt nach einem Worker-Durchlauf **immer** denselben Worker erneut, weil die Nachrichtenhistorie nicht korrekt ausgewertet wird.                                                          | Die Aufgabe kommt nicht voran (z.B. `Worker A` $\to$ `Supervisor` $\to$ `Worker A` $\to$ ...).             | **Prompt-Check:** Stellen Sie sicher, dass der **Supervisor-Prompt** explizit anweist, die **gesamte Nachrichten-Historie** (`state["messages"]`) zu berücksichtigen, um unnötige Wiederholungen zu vermeiden.            |
 
 
-# 4 ChromaDB
+## ChromaDB
 
 | Problem                    | Ursache                     | Lösung                                              |
 | -------------------------- | --------------------------- | --------------------------------------------------- |

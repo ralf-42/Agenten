@@ -4,9 +4,23 @@ title: Dokumentation
 parent: Guides
 nav_order: 2
 description: "Einsteigerguides und Ressourcen"
+has_toc: true
 ---
 
 # Dokumentation
+{: .no_toc }
+
+> **Einsteigerguides und Ressourcen**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 Vollständige Übersicht über alle Dokumentations-Ressourcen des Agenten-Projekts.
 

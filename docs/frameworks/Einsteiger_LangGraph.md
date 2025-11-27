@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangGraph Einsteiger
-parent: Kurse
+parent: Frameworks
 nav_order: 2
 description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 ---

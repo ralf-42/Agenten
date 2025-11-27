@@ -1,20 +1,20 @@
 ---
 layout: default
-title: Kurse
+title: Frameworks
 nav_order: 2
 has_children: true
 description: "Einsteiger-Guides für LangChain, LangGraph und LangSmith"
-permalink: /kurse/
+permalink: /frameworks/
 ---
 
-# Kurse
+# Frameworks
 
-Willkommen zu den Einsteiger-Kursen für die LangChain-Technologie-Stack!
+Willkommen zu den Einsteiger-Guides für den LangChain-Technologie-Stack!
 
-Diese Guides führen Sie Schritt für Schritt in die wichtigsten Komponenten ein:
+Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks ein:
 
 - **LangChain** - Grundlagen für LLM-Orchestrierung, Chains und Agents
 - **LangGraph** - Multi-Agent-Systeme und komplexe Workflows
 - **LangSmith** - Monitoring, Debugging und Evaluation
 
-Wählen Sie einen Kurs aus der Navigation links aus, um zu beginnen.
+Wählen Sie ein Framework aus der Navigation links aus, um zu beginnen.

@@ -11,22 +11,3 @@
     }
   });
 </script>
-
-<!-- Auto-expand Navigation -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Warte kurz, bis die Navigation geladen ist
-    setTimeout(function() {
-      // Finde alle zusammengeklappten Navigation-Items
-      const navItems = document.querySelectorAll('.nav-list-item.collapsed');
-
-      // Klicke auf jeden Toggle-Button, um die Navigation aufzuklappen
-      navItems.forEach(function(item) {
-        const button = item.querySelector('button.nav-list-expander');
-        if (button) {
-          button.click();
-        }
-      });
-    }, 100);
-  });
-</script>

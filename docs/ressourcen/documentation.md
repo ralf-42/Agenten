@@ -26,11 +26,11 @@ Vollständige Übersicht über alle Dokumentations-Ressourcen des Agenten-Projek
 
 ---
 
-## 🚀 Einsteigerguides (Start here!)
+## 1 🚀 Einsteigerguides (Start here!)
 
 Kompakte Übersichten für schnellen Einstieg in die wichtigsten Frameworks.
 
-### [LangChain Einsteiger](Einsteiger_LangChain.html)
+### 1.1 [LangChain Einsteiger](Einsteiger_LangChain.html)
 **Grundlagen und Best Practices**
 
 Lerne die Grundlagen von LangChain 1.0+ kennen:
@@ -47,7 +47,7 @@ Lerne die Grundlagen von LangChain 1.0+ kennen:
 
 ---
 
-### [LangGraph Einsteiger](Einsteiger_LangGraph.html)
+### 1.2 [LangGraph Einsteiger](Einsteiger_LangGraph.html)
 **Multi-Agent-Systeme und Workflows**
 
 Verstehe Multi-Agent-Systeme mit LangGraph:
@@ -64,7 +64,7 @@ Verstehe Multi-Agent-Systeme mit LangGraph:
 
 ---
 
-### [LangSmith Einsteiger](Einsteiger_LangSmith.html)
+### 1.3 [LangSmith Einsteiger](Einsteiger_LangSmith.html)
 **Monitoring & Debugging**
 
 Monitoring und Debugging für produktionsreife Systeme:
@@ -80,9 +80,9 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-## 📓 Weitere Ressourcen
+## 2 📓 Weitere Ressourcen
 
-### [Quick Start Guide](quickstart.html)
+### 2.1 [Quick Start Guide](quickstart.html)
 **Installation und erste Schritte**
 
 **Inhalt:**
@@ -98,7 +98,7 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-### [Code Standards](standards.html)
+### 2.2 [Code Standards](standards.html)
 **Coding-Konventionen und Best Practices**
 
 **Inhalt:**
@@ -115,7 +115,7 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-### [Troubleshooting Sheets](Troubleshooting%20Sheets.html)
+### 2.3 [Troubleshooting Sheets](Troubleshooting%20Sheets.html)
 **Lösungen für häufige Probleme**
 
 **Inhalt:**
@@ -132,7 +132,7 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-## 🎯 Entscheidungshilfe
+## 3 🎯 Entscheidungshilfe
 
 **Welches Dokument soll ich konsultieren?**
 
@@ -151,9 +151,9 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-## 📚 Verwendungsrichtlinien
+## 4 📚 Verwendungsrichtlinien
 
-### Für neue Projekte
+### 4.1 Für neue Projekte
 
 1. **Setup:** [Quick Start Guide](quickstart.html)
 2. **Standards beachten:** [Code Standards](standards.html)
@@ -163,7 +163,7 @@ Monitoring und Debugging für produktionsreife Systeme:
    - LangSmith: [Einsteiger LangSmith](Einsteiger_LangSmith.html)
 4. **Bei Problemen:** [Troubleshooting](Troubleshooting%20Sheets.html)
 
-### Für bestehende Projekte
+### 4.2 Für bestehende Projekte
 
 1. **Code-Review:** [Code Standards](standards.html)
 2. **Framework-Updates:** Entsprechende Einsteigerguides
@@ -172,7 +172,7 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-## 🔗 Externe Ressourcen
+## 5 🔗 Externe Ressourcen
 
 - [LangChain Documentation](https://python.langchain.com/)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
@@ -182,13 +182,13 @@ Monitoring und Debugging für produktionsreife Systeme:
 
 ---
 
-## 📞 Support
+> 💡 **Tipp:** Starte mit den Einsteigerguides und nutze die Entscheidungshilfe oben!
 
-- **Quick Start:** [Quick Start Guide](quickstart.html)
-- **Code Standards:** [Code Standards](standards.html)
-- **Troubleshooting:** [Troubleshooting Sheets](Troubleshooting%20Sheets.html)
-- **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
 
 ---
 
-> 💡 **Tipp:** Starte mit den Einsteigerguides und nutze die Entscheidungshilfe oben!
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+

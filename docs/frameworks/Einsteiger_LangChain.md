@@ -439,4 +439,10 @@ print(antwort)
 
 Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assistenten oder interne Suchsysteme im Kurs und kann schrittweise um Evaluierung, Feedback‑Schleifen oder LangGraph‑Workflows erweitert werden.
 
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 

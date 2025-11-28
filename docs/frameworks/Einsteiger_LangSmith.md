@@ -573,14 +573,13 @@ get_ipinfo()
 
 ---
 
+> 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
+
+> 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!
+
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
----
-
-> 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
-
-> 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!

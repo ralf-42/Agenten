@@ -306,18 +306,7 @@ Mögliche Erweiterungen:
 
 ---
 
-## 11 End-to-End-Übung
-
-Eine sinnvolle Abschlussaufgabe ist ein Workflow:
-
-1. `agent` führt Analyse durch
-2. `approval` fragt nach Bestätigung
-3. optional `tool` wird ausgeführt
-4. `summarize` erstellt ein Abschlussfazit
-
-Damit besitzen Einsteiger alle zentralen Bausteine, um eigene Agentensysteme umzusetzen.
-
----
-
-Ende der neu sortierten und erweiterten Anleitung.
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

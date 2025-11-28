@@ -573,9 +573,11 @@ get_ipinfo()
 
 ---
 
-**Version:** 1.1  
-**Letzte Aktualisierung:** November 2025  
-**Kompatibel mit:** LangChain 1.0+, LangGraph 0.2+, LangSmith 0.4+, Google Colab Secrets
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 ---
 

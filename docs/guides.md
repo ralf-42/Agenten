@@ -1,21 +1,14 @@
 ---
 layout: default
-title: Guides
-nav_order: 4
-has_children: true
-description: "Praktische Anleitungen, Standards und Troubleshooting"
+title: Guides (deprecated)
+nav_exclude: true
+description: "Weitergeleitet zu Ressourcen"
 permalink: /guides/
 ---
 
-# Guides
+# Guides (deprecated)
 
-Praktische Anleitungen und Hilfestellungen für die Arbeit mit KI-Agenten.
+**Hinweis:** Dieser Bereich wurde nach **[Ressourcen](/Agenten/ressourcen/)** verschoben.
 
-## Übersicht
-
-- **Quick Start** - Schnelleinstieg in das Projekt
-- **Dokumentation** - Detaillierte Informationen zu den Modulen
-- **Standards** - Best Practices und Code-Konventionen
-- **Troubleshooting** - Lösungen für häufige Probleme
-
-Nutzen Sie die Navigation links, um zu den einzelnen Guides zu navigieren.
+Bitte nutzen Sie die neue Navigation:
+- [Ressourcen](/Agenten/ressourcen/) - Anleitungen und Werkzeuge

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Start
 nav_order: 1
 description: "KI-Agenten mit LangChain & LangGraph"
 permalink: /
@@ -129,7 +129,11 @@ response = agent.invoke({
 
 ---
 
-**Version:** 1.0 | **Maintainer:** Ralf | **Lizenz:** MIT License
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Multi-Agent-Systeme
-parent: Concepts
+parent: Konzepte
 nav_order: 2
 description: "Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten"
 has_toc: true

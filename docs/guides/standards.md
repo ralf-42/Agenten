@@ -26,11 +26,11 @@ Vollständige Code-Konventionen und Best Practices für das Agenten-Projekt.
 
 ---
 
-## 🎯 Die 7 MUST-HAVE Features (LangChain 1.0+)
+## 1 🎯 Die 7 MUST-HAVE Features (LangChain 1.0+)
 
 **PFLICHT für alle neuen Implementierungen:**
 
-### 1. ✅ `init_chat_model()` - Unified Model Initialization
+### 1.1 ✅ `init_chat_model()` - Unified Model Initialization
 
 **Warum:** Einheitliche API für alle LLM-Provider (OpenAI, Anthropic, Google, etc.)
 
@@ -47,7 +47,7 @@ llm = init_chat_model(model_name, model_provider=model_provider, temperature=tem
 
 ---
 
-### 2. ✅ `with_structured_output()` - Native Structured Outputs
+### 1.2 ✅ `with_structured_output()` - Native Structured Outputs
 
 **Warum:** Nutzt OpenAI's Native Structured Output API für garantierte Schema-Konformität
 
@@ -64,7 +64,7 @@ result = structured_llm.invoke("Max ist 25 Jahre alt")
 
 ---
 
-### 3. ✅ `@tool` Decorator - Tool Definitions
+### 1.3 ✅ `@tool` Decorator - Tool Definitions
 
 **Warum:** Automatische Tool-Schema-Generierung aus Docstring und Type Hints
 
@@ -79,7 +79,7 @@ def multiply(a: int, b: int) -> int:
 
 ---
 
-### 4. ✅ `create_agent()` - Modern Agent API
+### 1.4 ✅ `create_agent()` - Modern Agent API
 
 **Warum:** Moderne Agent-API basierend auf LangGraph (kein AgentExecutor mehr)
 
@@ -100,7 +100,7 @@ response = agent.invoke({
 
 ---
 
-### 5. ✅ LCEL `|` Chains
+### 1.5 ✅ LCEL `|` Chains
 
 **Warum:** Moderne, lesbare Chain-Syntax mit automatischem Streaming-Support
 
@@ -114,7 +114,7 @@ result = chain.invoke({"input": "text"})
 
 ---
 
-### 6. ✅ Middleware für Agents
+### 1.6 ✅ Middleware für Agents
 
 **Warum:** Middleware bietet granulare Kontrolle über die Agent-Loop
 
@@ -135,7 +135,7 @@ agent = create_agent(
 
 ---
 
-### 7. ✅ Standard Message Content Blocks
+### 1.7 ✅ Standard Message Content Blocks
 
 **Warum:** Provider-agnostische Content-Verarbeitung (Text, Bilder, Audio, Video)
 
@@ -158,9 +158,9 @@ for block in message.content_blocks:
 
 ---
 
-## 📋 Namenskonventionen
+## 2 📋 Namenskonventionen
 
-### Python Style Guide (PEP 8)
+### 2.1 Python Style Guide (PEP 8)
 
 - **snake_case** für:
   - Variablen: `model_output`, `training_data`
@@ -174,7 +174,7 @@ for block in message.content_blocks:
 - **UPPER_CASE** für:
   - Konstanten: `MAX_TOKENS`, `DEFAULT_TEMPERATURE`
 
-### Aussagekräftige Namen
+### 2.2 Aussagekräftige Namen
 
 ```python
 # ✅ GUT: Beschreibende Namen
@@ -190,7 +190,7 @@ mr = 3
 
 ---
 
-## 🔧 Import-Struktur
+## 3 🔧 Import-Struktur
 
 **Standard-Reihenfolge für Imports:**
 
@@ -216,7 +216,7 @@ from langchain.agents import create_agent
 from genai_lib.utilities import setup_api_keys
 ```
 
-### Import-Konflikte vermeiden
+### 3.1 Import-Konflikte vermeiden
 
 ```python
 # ✅ EMPFOHLEN: Aliasing verwenden
@@ -235,9 +235,9 @@ from IPython.display import Image  # Überschreibt PIL.Image!
 
 ---
 
-## 📝 Code-Stil
+## 4 📝 Code-Stil
 
-### Maximale Zeilenlänge
+### 4.1 Maximale Zeilenlänge
 
 - **88 Zeichen** (Black-Standard)
 - Bei Überschreitung: Zeilenumbruch verwenden
@@ -255,7 +255,7 @@ chain = (
 chain = {"context": retriever, "question": RunnablePassthrough()} | prompt | llm | StrOutputParser()
 ```
 
-### Docstrings
+### 4.2 Docstrings
 
 ```python
 def process_documents(docs: List[str], chunk_size: int = 1000) -> List[str]:
@@ -279,7 +279,7 @@ def process_documents(docs: List[str], chunk_size: int = 1000) -> List[str]:
     return chunks
 ```
 
-### Kommentare
+### 4.3 Kommentare
 
 ```python
 # ✅ GUT: Erklärt das "Warum"
@@ -293,9 +293,9 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 
 ---
 
-## ⚠️ Breaking Changes: 0.x → 1.0+
+## 5 ⚠️ Breaking Changes: 0.x → 1.0+
 
-### Migration-Tabelle
+### 5.1 Migration-Tabelle
 
 | Alt (0.x) | Neu (1.0+) | Status |
 |-----------|------------|--------|
@@ -305,7 +305,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 | `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
 | `AgentExecutor` | `create_agent()` (gibt Graph zurück) | ⛔ Deprecated |
 
-### Beispiel-Migration
+### 5.2 Beispiel-Migration
 
 **ALT (0.x):**
 ```python
@@ -327,9 +327,9 @@ agent = create_agent(model=llm, tools=tools, debug=True)
 
 ---
 
-## 🔒 Security Best Practices
+## 6 🔒 Security Best Practices
 
-### 1. API-Keys sicher verwalten
+### 6.1 API-Keys sicher verwalten
 
 ```python
 # ✅ GUT: Umgebungsvariablen
@@ -343,7 +343,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 api_key = "sk-..."  # NIEMALS!
 ```
 
-### 2. Input-Validierung
+### 6.2 Input-Validierung
 
 ```python
 from pydantic import BaseModel, Field, field_validator
@@ -358,7 +358,7 @@ class UserInput(BaseModel):
         return v.strip()
 ```
 
-### 3. PII-Handling
+### 6.3 PII-Handling
 
 ```python
 from langchain.agents.middleware import PIIMiddleware
@@ -374,9 +374,9 @@ middleware = [
 
 ---
 
-## 🧪 Testing Best Practices
+## 7 🧪 Testing Best Practices
 
-### Unit Tests
+### 7.1 Unit Tests
 
 ```python
 import pytest
@@ -392,7 +392,7 @@ def test_calculator_tool():
     assert result == 5
 ```
 
-### Integration Tests
+### 7.2 Integration Tests
 
 ```python
 def test_agent_with_tools():
@@ -413,7 +413,7 @@ def test_agent_with_tools():
 
 ---
 
-## 📚 Weitere Ressourcen
+## 8 📚 Weitere Ressourcen
 
 - **Quick References:** [Dokumentation](documentation.html)
 - **Quick Start:** [Quick Start Guide](quickstart.html)
@@ -423,3 +423,11 @@ def test_agent_with_tools():
 ---
 
 > 💡 **Tipp:** Nutze die [Quick References](documentation.html) für konkrete Code-Beispiele!
+
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+

@@ -806,14 +806,15 @@ results = retriever.invoke("Meine Frage")
 
 ---
 
+> 💡 **Tipp:** Für die vollständige RAG-Chain-Implementierung siehe **Einsteiger_LangChain.md, Kapitel 11**!
+
+> 🔗 **Weiterführend:** [ChromaDB Dokumentation](https://docs.trychroma.com/) | [LangChain VectorStores](https://python.langchain.com/docs/modules/data_connection/vectorstores/)
+
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
----
 
-> 💡 **Tipp:** Für die vollständige RAG-Chain-Implementierung siehe **Einsteiger_LangChain.md, Kapitel 11**!
 
-> 🔗 **Weiterführend:** [ChromaDB Dokumentation](https://docs.trychroma.com/) | [LangChain VectorStores](https://python.langchain.com/docs/modules/data_connection/vectorstores/)

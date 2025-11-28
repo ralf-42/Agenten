@@ -423,3 +423,9 @@ def test_agent_with_tools():
 ---
 
 > 💡 **Tipp:** Nutze die [Quick References](documentation.html) für konkrete Code-Beispiele!
+
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

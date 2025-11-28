@@ -1,18 +1,14 @@
 ---
 layout: default
-title: Tools
-nav_order: 5
-has_children: true
-description: "Hilfreiche Werkzeuge und Utilities"
+title: Tools (deprecated)
+nav_exclude: true
+description: "Weitergeleitet zu Ressourcen"
 permalink: /tools/
 ---
 
-# Tools
+# Tools (deprecated)
 
-Nützliche Werkzeuge zur Unterstützung bei der Entwicklung von KI-Agenten.
+**Hinweis:** Dieser Bereich wurde nach **[Ressourcen](/Agenten/ressourcen/)** verschoben.
 
-## Verfügbare Tools
-
-- **Deploy Python** - Deployment-Guide für Python-Anwendungen
-
-Wählen Sie ein Tool aus der Navigation links aus.
+Bitte nutzen Sie die neue Navigation:
+- [Ressourcen](/Agenten/ressourcen/) - Anleitungen und Werkzeuge

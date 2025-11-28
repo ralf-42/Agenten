@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tool Use & Function Calling
-parent: Concepts
+parent: Konzepte
 nav_order: 2
 description: "Wie KI-Agenten durch Werkzeuge ihre Fähigkeiten erweitern"
 has_toc: true

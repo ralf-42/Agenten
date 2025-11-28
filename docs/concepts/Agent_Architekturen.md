@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agent-Architekturen
-parent: Concepts
+parent: Konzepte
 nav_order: 1
 description: "Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten"
 has_toc: true

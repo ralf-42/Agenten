@@ -806,9 +806,11 @@ results = retriever.invoke("Meine Frage")
 
 ---
 
+---
+
 **Version:** 1.0  
-**Letzte Aktualisierung:** November 2025  
-**Kompatibel mit:** ChromaDB 0.5.x, LangChain 1.0+, OpenAI Embeddings
+**Stand:** November 2025  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 ---
 

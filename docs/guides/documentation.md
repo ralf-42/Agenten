@@ -183,12 +183,12 @@ Monitoring und Debugging für produktionsreife Systeme:
 ---
 
 
-> 💡 **Tipp:** Starte mit den Einsteigerguides und nutze die Entscheidungshilfe oben!
+> 💡 **Tipp:** Starte mit den Einsteigerguides und nutze die Entscheidungshilfe oben!  
 
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  
 
 

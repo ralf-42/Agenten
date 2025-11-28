@@ -305,12 +305,12 @@ pip install chromadb==0.4.22
 ---
 
 
-> 💡 **Tipp:** Beginne mit den [Einsteigerguides](documentation.html) für strukturiertes Lernen!
+> 💡 **Tipp:** Beginne mit den [Einsteigerguides](documentation.html) für strukturiertes Lernen!  
 
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  
 
 

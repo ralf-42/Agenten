@@ -69,11 +69,10 @@ LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine Sta
 | Keine Ergebnisse           | Falsche Embedding-Dimension | Embedding-Modell prüfen                             |
 | Langsame Queries           | Zu viele Dokumente          | Batch-Size anpassen                                 |
 
-
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  ...
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten. 
 
 

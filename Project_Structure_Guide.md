@@ -194,6 +194,25 @@ ProjectName/
 └── _misc/                        # Experimentelle Module
 ```
 
+**utilities.py - Standard-Funktionen:**
+```python
+# 04_modul/genai_lib/utilities.py
+# Enthält wiederverwendbare Hilfsfunktionen für Notebooks
+
+# Visualisierung
+- mprint(text)         # Markdown-Ausgabe in Notebooks
+- mermaid(code)        # Mermaid-Diagramme rendern (kroki.io)
+
+# Environment
+- check_environment()              # Python-Version & LangChain-Pakete
+- install_packages(packages)       # Pakete installieren (Colab)
+- get_ipinfo()                     # Geoinformationen zur IP
+- setup_api_keys(keys, globals)    # API-Keys aus Colab userdata
+
+# Prompt-Loading
+- load_chat_prompt_template(path)  # Lädt .py Prompt-Templates
+```
+
 **Package-Struktur (Beispiel `genai_lib`):**
 ```python
 # 04_modul/genai_lib/__init__.py
@@ -206,7 +225,9 @@ from .utilities import (
     check_environment,
     get_ipinfo,
     mprint,
-    install_packages
+    mermaid,  # NEU: Mermaid-Diagramme
+    install_packages,
+    load_chat_prompt_template
 )
 
 from .multimodal_rag import MultimodalRAG
@@ -215,6 +236,8 @@ from .mcp_modul import MCPClient
 __all__ = [
     'setup_api_keys',
     'check_environment',
+    'mprint',
+    'mermaid',
     'MultimodalRAG',
     'MCPClient',
 ]

@@ -432,6 +432,26 @@ def solution():
 - ✅ Konsistente Formatierung
 - ✅ Einfach editierbar
 - ✅ In GitHub, Jupyter (mit Extension) und Docs-Seiten unterstützt
+- ✅ Automatische Anpassung an helle/dunkle Themes
+
+**Theme-Konfiguration für dunkle Hintergründe:**
+
+Füge `%%{init: {'theme':'dark'}}%%` am Anfang des Diagramms hinzu für automatische weiße Schrift bei dunklem Hintergrund:
+
+```markdown
+```mermaid
+%%{init: {'theme':'dark'}}%%
+flowchart TB
+    START([User Input]) --> LLM[LLM Process]
+```
+```
+
+**Verfügbare Themes:**
+- `'theme':'dark'` - Weiße Schrift auf dunklem Hintergrund (empfohlen für Notebooks)
+- `'theme':'default'` - Standard-Theme (schwarze Schrift)
+- `'theme':'neutral'` - Neutrales Theme
+- `'theme':'forest'` - Grünes Theme
+- `'theme':'base'` - Basis-Theme zum Customizen
 
 #### 1. Flowcharts (Ablaufdiagramme)
 
@@ -439,6 +459,7 @@ def solution():
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TB
     START([User Input]) --> LLM[LLM Process]
     LLM --> CHECK{Needs Tool?}
@@ -447,9 +468,9 @@ flowchart TB
     TOOL --> RESPONSE
     RESPONSE --> END([Output])
 
-    style START fill:#90EE90
-    style END fill:#FFB6C1
-    style CHECK fill:#FFD700
+    style START fill:#90EE90,stroke:#333,color:#000
+    style END fill:#FFB6C1,stroke:#333,color:#000
+    style CHECK fill:#FFD700,stroke:#333,color:#000
 ```
 ```
 
@@ -458,7 +479,8 @@ flowchart TB
 - `([...])` für Start/End (Pillen-Form)
 - `{...}` für Decisions (Raute)
 - `[...]` für Prozesse (Rechteck)
-- Styles für wichtige Nodes
+- Styles für wichtige Nodes: `fill:#COLOR,stroke:#333,color:#000` (color:#000 für schwarze Schrift bei farbigen Nodes)
+- **WICHTIG:** `%%{init: {'theme':'dark'}}%%` am Anfang für dunkle Hintergründe
 
 #### 2. Sequenz-Diagramme
 
@@ -466,6 +488,7 @@ flowchart TB
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 sequenceDiagram
     participant U as User
     participant A as Agent
@@ -488,6 +511,7 @@ sequenceDiagram
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 stateDiagram-v2
     [*] --> Draft: Create
     Draft --> Review: Submit
@@ -504,6 +528,7 @@ stateDiagram-v2
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 mindmap
   root((LangChain Agent))
     Tools
@@ -530,6 +555,7 @@ mindmap
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 gantt
     title LangChain Learning Path
     dateFormat YYYY-MM-DD
@@ -550,6 +576,7 @@ gantt
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TB
     subgraph "Agent System"
         A[Input] --> B[Categorizer Agent]
@@ -563,8 +590,8 @@ graph TB
     E --> G
     F --> G
 
-    style B fill:#10a37f
-    style C fill:#FFD700
+    style B fill:#10a37f,stroke:#333,color:#000
+    style C fill:#FFD700,stroke:#333,color:#000
 ```
 ```
 
@@ -574,6 +601,7 @@ graph TB
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 erDiagram
     USER ||--o{ CONVERSATION : has
     CONVERSATION ||--o{ MESSAGE : contains
@@ -595,6 +623,7 @@ erDiagram
 
 ```markdown
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 journey
     title RAG System Development
     section Planning
@@ -612,14 +641,24 @@ journey
 
 ### Mermaid Best Practices
 
-**Standard-Farbschema:**
+**WICHTIG: Dark Theme für Notebooks!**
+
+Alle Mermaid-Diagramme in Notebooks **MÜSSEN** mit `%%{init: {'theme':'dark'}}%%` beginnen, damit die Schrift bei dunklen Hintergründen lesbar ist.
+
+**Standard-Farbschema (mit dunklem Theme):**
 ```markdown
-style NODE1 fill:#10a37f    # Grün für Success/Start
-style NODE2 fill:#FFD700    # Gelb für Decisions/Important
-style NODE3 fill:#ff6b6b    # Rot für Errors/End
-style NODE4 fill:#87CEEB    # Blau für Processing
-style NODE5 fill:#FFA500    # Orange für Warnings
+# Bei farbigen Nodes IMMER color:#000 für schwarze Schrift hinzufügen!
+style NODE1 fill:#10a37f,stroke:#333,color:#000    # Grün für Success/Start
+style NODE2 fill:#FFD700,stroke:#333,color:#000    # Gelb für Decisions/Important
+style NODE3 fill:#ff6b6b,stroke:#333,color:#000    # Rot für Errors/End
+style NODE4 fill:#87CEEB,stroke:#333,color:#000    # Blau für Processing
+style NODE5 fill:#FFA500,stroke:#333,color:#000    # Orange für Warnings
 ```
+
+**Warum `color:#000`?**
+- Das Dark-Theme macht Hintergrund dunkel und Standard-Text weiß
+- Bei farbigen Nodes (fill:#...) wird die weiße Schrift oft unleserlich
+- `color:#000` erzwingt schwarze Schrift auf farbigen Nodes für bessere Lesbarkeit
 
 **Wann welcher Diagramm-Typ?**
 

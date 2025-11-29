@@ -3,7 +3,7 @@
 #
 # Stand: 23.11.2025
 #
-from IPython.display import display, Markdown
+from IPython.display import display, Markdown, SVG
 from IPython import get_ipython
 import requests
 import sys
@@ -208,6 +208,54 @@ def mprint(text):
     >>> mprint("# Überschrift\n**fett** und *kursiv*")
     """
     display(Markdown(text))
+
+
+def mermaid(code: str):
+    """
+    Rendert Mermaid-Diagramme über den kroki.io Service.
+
+    Diese Funktion sendet Mermaid-Code an den kroki.io Online-Service
+    und zeigt das resultierende SVG-Diagramm direkt im Jupyter-Notebook an.
+
+    Mermaid ist eine JavaScript-basierte Diagramm- und Charting-Tool,
+    das aus Text-Definitionen Diagramme generiert (z.B. Flowcharts,
+    Sequenzdiagramme, Gantt-Diagramme, etc.).
+
+    Parameter:
+    ----------
+    code : str
+        Mermaid-Code, der das gewünschte Diagramm beschreibt.
+
+    Beispiel:
+    ---------
+    >>> mermaid('''
+    ... graph TD
+    ...     A[Start] --> B[Process]
+    ...     B --> C[End]
+    ... ''')
+
+    >>> mermaid('''
+    ... sequenceDiagram
+    ...     User->>Agent: Frage stellen
+    ...     Agent->>LLM: Query senden
+    ...     LLM-->>Agent: Antwort
+    ...     Agent-->>User: Ergebnis
+    ... ''')
+
+    Hinweise:
+    ---------
+    - Benötigt eine aktive Internetverbindung zu kroki.io
+    - Unterstützt alle Mermaid-Diagrammtypen (graph, sequenceDiagram, gantt, etc.)
+    - Timeout ist auf 15 Sekunden gesetzt
+
+    Raises:
+    -------
+    requests.HTTPError
+        Wenn der kroki.io Service nicht erreichbar ist oder ein Fehler auftritt.
+    """
+    r = requests.post("https://kroki.io/mermaid/svg", data=code.encode("utf-8"), timeout=15)
+    r.raise_for_status()
+    display(SVG(r.text))
 
 
 # ============================================================================

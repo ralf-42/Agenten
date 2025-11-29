@@ -23,7 +23,7 @@ Dieses Dokument beschreibt die standardisierte Struktur und Patterns für alle N
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint, install_packages
+from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint, mermaid, install_packages
 setup_api_keys(['OPENAI_API_KEY', 'HF_TOKEN'], create_globals=False)
 print()
 check_environment()
@@ -81,7 +81,7 @@ get_ipinfo()
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint, install_packages
+from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint, mermaid, install_packages
 setup_api_keys(['OPENAI_API_KEY', 'HF_TOKEN'], create_globals=False)
 print()
 check_environment()
@@ -217,6 +217,64 @@ mprint(f"**Zeit:** {time:.2f}s")
 - Konsistente Formatierung
 - Unterstützt Markdown (Bold, Listen, etc.)
 - Besser lesbar als print()
+
+### Diagramme mit mermaid()
+
+```python
+from genai_lib.utilities import mermaid
+
+# Flowchart
+mermaid('''
+graph TD
+    A[Start] --> B{Bedingung?}
+    B -->|Ja| C[Aktion 1]
+    B -->|Nein| D[Aktion 2]
+    C --> E[Ende]
+    D --> E
+''')
+
+# Sequenzdiagramm (für Agent-Workflows)
+mermaid('''
+sequenceDiagram
+    participant User
+    participant Agent
+    participant LLM
+    participant Tool
+
+    User->>Agent: Frage stellen
+    Agent->>LLM: Query senden
+    LLM->>Agent: Tool-Aufruf
+    Agent->>Tool: Tool ausführen
+    Tool-->>Agent: Ergebnis
+    Agent->>LLM: Tool-Ergebnis
+    LLM-->>Agent: Final Response
+    Agent-->>User: Antwort
+''')
+
+# State Diagram (für LangGraph)
+mermaid('''
+stateDiagram-v2
+    [*] --> Init
+    Init --> Processing
+    Processing --> Decision
+    Decision --> Success: Valid
+    Decision --> Error: Invalid
+    Success --> [*]
+    Error --> Processing: Retry
+''')
+```
+
+**Vorteile von mermaid():**
+- Visualisiert komplexe Abläufe (Agent-Workflows, State Machines)
+- Perfekt für LangGraph State Machines
+- Unterstützt alle Mermaid-Diagrammtypen: graph, sequenceDiagram, stateDiagram, gantt, classDiagram, etc.
+- Rendert direkt im Notebook (keine zusätzlichen Tools nötig)
+
+**Wann verwenden:**
+- Agent-Workflows dokumentieren
+- LangGraph State Machines visualisieren
+- Tool-Interaktionen darstellen
+- Kontrollflüsse erklären
 
 ---
 

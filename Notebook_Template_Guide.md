@@ -422,9 +422,219 @@ def solution():
 
 ---
 
-## 🖼️ Visualisierungen & Links
+## 🖼️ Visualisierungen & Diagramme
 
-### Bilder einbinden
+### ⭐ EMPFOHLEN: Mermaid-Diagramme (PFLICHT für neue Notebooks!)
+
+**Warum Mermaid?**
+- ✅ Direkt im Markdown ohne externe Dateien
+- ✅ Versionskontrolliert (Text statt Bilder)
+- ✅ Konsistente Formatierung
+- ✅ Einfach editierbar
+- ✅ In GitHub, Jupyter (mit Extension) und Docs-Seiten unterstützt
+
+#### 1. Flowcharts (Ablaufdiagramme)
+
+**Verwendung:** Workflows, Prozesse, Entscheidungsbäume
+
+```markdown
+```mermaid
+flowchart TB
+    START([User Input]) --> LLM[LLM Process]
+    LLM --> CHECK{Needs Tool?}
+    CHECK -->|Yes| TOOL[Call Tool]
+    CHECK -->|No| RESPONSE[Generate Response]
+    TOOL --> RESPONSE
+    RESPONSE --> END([Output])
+
+    style START fill:#90EE90
+    style END fill:#FFB6C1
+    style CHECK fill:#FFD700
+```
+```
+
+**Best Practices:**
+- `TB` = Top-to-Bottom, `LR` = Left-to-Right
+- `([...])` für Start/End (Pillen-Form)
+- `{...}` für Decisions (Raute)
+- `[...]` für Prozesse (Rechteck)
+- Styles für wichtige Nodes
+
+#### 2. Sequenz-Diagramme
+
+**Verwendung:** API-Calls, Interaktionen zwischen Komponenten
+
+```markdown
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as Agent
+    participant T as Tool
+    participant API as External API
+
+    U->>A: Ask Question
+    A->>A: Analyze Query
+    A->>T: Call Tool
+    T->>API: API Request
+    API->>T: API Response
+    T->>A: Formatted Result
+    A->>U: Final Answer
+```
+```
+
+#### 3. State-Diagramme
+
+**Verwendung:** LangGraph StateGraph, Workflow-Zustände
+
+```markdown
+```mermaid
+stateDiagram-v2
+    [*] --> Draft: Create
+    Draft --> Review: Submit
+    Review --> Draft: Reject
+    Review --> Approved: Approve
+    Approved --> Published: Publish
+    Published --> [*]
+```
+```
+
+#### 4. Mindmaps
+
+**Verwendung:** Konzept-Übersichten, Feature-Maps
+
+```markdown
+```mermaid
+mindmap
+  root((LangChain Agent))
+    Tools
+      @tool Decorator
+      Function Calling
+      Error Handling
+    Memory
+      ChatMessageHistory
+      MessagesState
+    LLM
+      init_chat_model
+      Temperature
+      Model Selection
+    Workflow
+      LCEL Chains
+      Streaming
+      Callbacks
+```
+```
+
+#### 5. Gantt-Charts (Timeline)
+
+**Verwendung:** Learning Paths, Projekt-Phasen
+
+```markdown
+```mermaid
+gantt
+    title LangChain Learning Path
+    dateFormat YYYY-MM-DD
+    section Basics
+    LangChain 101        :a1, 2025-01-01, 7d
+    Prompts & Chains     :a2, after a1, 7d
+    section Advanced
+    RAG Systems          :b1, after a2, 14d
+    Agents               :b2, after b1, 14d
+    section Expert
+    LangGraph            :c1, after b2, 21d
+```
+```
+
+#### 6. Graph-Diagramme (Nodes & Edges)
+
+**Verwendung:** LangGraph Architecture, Multi-Agent Systems
+
+```markdown
+```mermaid
+graph TB
+    subgraph "Agent System"
+        A[Input] --> B[Categorizer Agent]
+        B --> C{Category?}
+        C -->|Technical| D[Tech Support Agent]
+        C -->|Sales| E[Sales Agent]
+        C -->|Billing| F[Billing Agent]
+    end
+
+    D --> G[Response]
+    E --> G
+    F --> G
+
+    style B fill:#10a37f
+    style C fill:#FFD700
+```
+```
+
+#### 7. ER-Diagramme (Entity-Relationship)
+
+**Verwendung:** Datenmodelle, Schema-Designs
+
+```markdown
+```mermaid
+erDiagram
+    USER ||--o{ CONVERSATION : has
+    CONVERSATION ||--o{ MESSAGE : contains
+    MESSAGE {
+        string role
+        string content
+        datetime timestamp
+    }
+    CONVERSATION {
+        string id
+        datetime created_at
+    }
+```
+```
+
+#### 8. Journey-Maps
+
+**Verwendung:** User Flows, Learning Paths
+
+```markdown
+```mermaid
+journey
+    title RAG System Development
+    section Planning
+      Define Requirements: 5: Developer
+      Choose Vectorstore: 4: Developer
+    section Implementation
+      Load Documents: 5: Developer
+      Create Embeddings: 3: Developer
+      Build Retriever: 4: Developer
+    section Testing
+      Query Testing: 3: Developer
+      Performance Tuning: 2: Developer
+```
+```
+
+### Mermaid Best Practices
+
+**Standard-Farbschema:**
+```markdown
+style NODE1 fill:#10a37f    # Grün für Success/Start
+style NODE2 fill:#FFD700    # Gelb für Decisions/Important
+style NODE3 fill:#ff6b6b    # Rot für Errors/End
+style NODE4 fill:#87CEEB    # Blau für Processing
+style NODE5 fill:#FFA500    # Orange für Warnings
+```
+
+**Wann welcher Diagramm-Typ?**
+
+| Anwendungsfall | Diagramm-Typ | Beispiel |
+|----------------|--------------|----------|
+| Workflow/Prozess | Flowchart | Agent Decision Flow |
+| API-Interaktionen | Sequence | Tool Call Sequence |
+| State-Management | State Diagram | LangGraph States |
+| Konzept-Übersicht | Mindmap | LangChain Components |
+| Zeitplan/Roadmap | Gantt | Learning Path |
+| Architektur | Graph | Multi-Agent System |
+| Datenmodell | ER-Diagram | Database Schema |
+| User Experience | Journey | Workflow Development |
+
+### Statische Bilder einbinden (nur wenn Mermaid nicht möglich)
 
 ```markdown
 <img src="https://raw.githubusercontent.com/ralf-42/Image/main/[bildname].png" width="600" alt="Avatar">
@@ -435,6 +645,12 @@ def solution():
 - Screenshots: `width="800"`
 - Icons: `width="200"`
 
+**Wann statische Bilder statt Mermaid?**
+- Screenshots von UIs
+- Fotografien
+- Komplexe custom Grafiken
+- Logos und Icons
+
 ### Externe Tools verlinken
 
 **Häufig verwendete Tools:**
@@ -444,6 +660,7 @@ def solution():
 [RAG-Visualizer](https://editor.p5js.org/ralf.bendig.rb/full/RrfB3nCwK)
 [Embedding Projector](https://projector.tensorflow.org/?hl=de)
 [LangChain Docs](https://python.langchain.com/)
+[Mermaid Live Editor](https://mermaid.live/)
 ```
 
 ### Interaktive Visualisierungen (p5.js)
@@ -534,10 +751,15 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - [ ] Emojis konsistent verwendet
 
 ### Visualisierung
-- [ ] Diagramme/Bilder wo sinnvoll
-- [ ] Links zu externen Tools
+- [ ] **Mermaid-Diagramme** für Workflows/Prozesse (PFLICHT!)
+- [ ] Flowcharts für Agent-Abläufe
+- [ ] Sequenz-Diagramme für API-Interaktionen
+- [ ] State-Diagramme für LangGraph StateGraph
+- [ ] Statische Bilder nur wenn Mermaid nicht möglich
+- [ ] Links zu externen Tools (inkl. Mermaid Live Editor)
 - [ ] Tabellen gut formatiert
 - [ ] Farbige Überschriften für wichtige Sections
+- [ ] Konsistentes Farbschema in Mermaid (Grün/Gelb/Rot/Blau)
 
 ### Dokumentation
 - [ ] Docstrings für alle Tools
@@ -604,22 +826,26 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 ### Do's ✅
 1. **Konsistente Struktur:** Banner → Setup → Kapitel → Aufgabe
 2. **LangChain 1.0+:** Nur moderne Patterns verwenden
-3. **mprint():** Für alle formatierte Ausgaben
-4. **Emojis:** Konsistent und sinnvoll einsetzen
-5. **Vergleichstabellen:** Alt vs. Neu, Vor- und Nachteile
-6. **Externe Links:** Tools und Visualisierungen verlinken
-7. **Setup collapsed:** `#@title ... { display-mode: "form" }`
-8. **Separate Variablen:** model_name, temperature, etc.
+3. **Mermaid-Diagramme:** Für alle Workflows, Prozesse, Architekturen (PFLICHT!)
+4. **mprint():** Für alle formatierte Ausgaben
+5. **Emojis:** Konsistent und sinnvoll einsetzen
+6. **Vergleichstabellen:** Alt vs. Neu, Vor- und Nachteile
+7. **Externe Links:** Tools und Visualisierungen verlinken (inkl. Mermaid Live Editor)
+8. **Setup collapsed:** `#@title ... { display-mode: "form" }`
+9. **Separate Variablen:** model_name, temperature, etc.
+10. **Farbschema:** Konsistente Farben in Mermaid (Grün/Gelb/Rot/Blau/Orange)
 
 ### Don'ts ❌
 1. **Keine deprecated Patterns:** initialize_agent, Tool(), etc.
-2. **Kein direktes print():** Verwende mprint()
-3. **Keine inkonsistenten Überschriften:** Immer `# [Nr] | [Titel]`
-4. **Keine hartcodierten Werte:** Verwende Variablen
-5. **Keine fehlenden Docstrings:** Alle Tools dokumentieren
-6. **Kein Code ohne Erklärung:** Besonders bei komplexen Patterns
-7. **Keine fehlenden Aufgaben:** Immer `# A | Aufgabe` Section
-8. **Keine ungenutzten Imports:** Cleanup durchführen
+2. **Keine statischen Bilder für Diagramme:** Verwende Mermaid statt PNG/JPG!
+3. **Kein direktes print():** Verwende mprint()
+4. **Keine inkonsistenten Überschriften:** Immer `# [Nr] | [Titel]`
+5. **Keine hartcodierten Werte:** Verwende Variablen
+6. **Keine fehlenden Docstrings:** Alle Tools dokumentieren
+7. **Kein Code ohne Erklärung:** Besonders bei komplexen Patterns
+8. **Keine fehlenden Aufgaben:** Immer `# A | Aufgabe` Section
+9. **Keine ungenutzten Imports:** Cleanup durchführen
+10. **Keine inkonsistenten Farben:** Nutze Standard-Farbschema
 
 ---
 
@@ -639,10 +865,19 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ---
 
-**Version:** 1.0
+**Version:** 2.0
 **Letzte Aktualisierung:** November 2025
 **Autor:** Agenten Projekt Team
 
+**Changelog v2.0:**
+- ✅ **Mermaid-Diagramme** als PFLICHT-Standard hinzugefügt
+- ✅ 8 Mermaid-Diagramm-Typen mit Beispielen dokumentiert
+- ✅ Standard-Farbschema für konsistente Visualisierungen definiert
+- ✅ Entscheidungshilfe: Wann welcher Diagramm-Typ?
+- ✅ Checkliste um Mermaid-Anforderungen erweitert
+- ✅ Best Practices um Visualisierungs-Richtlinien erweitert
+- ✅ Link zum Mermaid Live Editor hinzugefügt
+
 ---
 
-> 💡 **Tipp:** Beginne neue Notebooks immer mit dem Quick Template und erweitere nach Bedarf basierend auf dem Notebook-Typ!
+> 💡 **Tipp:** Beginne neue Notebooks immer mit dem Quick Template und nutze **Mermaid-Diagramme** für alle Visualisierungen statt statischer Bilder!

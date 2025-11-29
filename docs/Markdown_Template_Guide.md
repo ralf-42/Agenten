@@ -21,7 +21,7 @@ has_toc: true
 
 ---
 
-## Standard-Template für neue Dokumentations-Seiten
+## 1 Standard-Template für neue Dokumentations-Seiten
 
 Verwende diese Struktur für **alle** neuen Markdown-Dateien im `/docs` Verzeichnis:
 
@@ -65,9 +65,9 @@ has_toc: true
 
 ---
 
-## Wichtige Regeln
+## 2 Wichtige Regeln
 
-### Front Matter (YAML Header)
+### 2.1 Front Matter (YAML Header)
 
 - **Immer** am Anfang der Datei
 - **Pflichtfelder:**
@@ -78,7 +78,7 @@ has_toc: true
   - `description:` - Kurzbeschreibung für SEO und Übersicht
   - `has_toc: true` - Aktiviert Inhaltsverzeichnis
 
-### Hauptüberschrift (H1)
+### 2.2 Hauptüberschrift (H1)
 
 ```markdown
 # [Seitentitel]
@@ -88,7 +88,7 @@ has_toc: true
 - **Wichtig:** `{: .no_toc }` verhindert, dass die Hauptüberschrift im TOC erscheint
 - Direkt danach: Blockquote mit Beschreibung
 
-### Inhaltsverzeichnis
+### 2.3 Inhaltsverzeichnis
 
 ```markdown
 # Inhaltsverzeichnis
@@ -102,7 +102,7 @@ has_toc: true
 - `{: .no_toc .text-delta }` - Überschrift selbst nicht im TOC, kleinere Schrift
 - `{:toc}` - Kramdown-Syntax für automatisches TOC
 
-### Überschriften-Hierarchie
+### 2.4 Überschriften-Hierarchie
 
 - **KEINE manuellen Nummern** in Überschriften verwenden
 - Obsidian's automatische Nummerierung ist deaktiviert
@@ -124,23 +124,23 @@ has_toc: true
 ### Installation
 ```
 
-### Überschriften-Ebenen
+### 2.5 Überschriften-Ebenen
 
 - `#` (H1) - Nur für Haupttitel (mit `{: .no_toc }`)
 - `##` (H2) - Hauptkapitel
 - `###` (H3) - Unterkapitel
 - `####` (H4) - Weitere Untergliederung
 
-### Trennlinien
+### 2.6 Trennlinien
 
 - Verwende `---` zwischen Hauptkapiteln für visuelle Trennung
 - Nicht in Unterkapiteln verwenden
 
 ---
 
-## Beispiele für verschiedene Seitentypen
+## 3 Beispiele für verschiedene Seitentypen
 
-### Framework-Dokumentation
+### 3.1 Framework-Dokumentation
 
 ```markdown
 ---
@@ -231,7 +231,7 @@ ReAct beschreibt einen iterativen Zyklus...
 ---
 ```
 
-### Übergeordnete Kategorie-Seite
+### 3.2 Übergeordnete Kategorie-Seite
 
 ```markdown
 ---
@@ -259,9 +259,9 @@ Wählen Sie ein Framework aus der Navigation links aus.
 
 ---
 
-## Spezielle Kramdown-Syntax
+## 4 Spezielle Kramdown-Syntax
 
-### Klassen für Überschriften
+### 4.1 Klassen für Überschriften
 
 ```markdown
 ## Überschrift
@@ -270,7 +270,7 @@ Wählen Sie ein Framework aus der Navigation links aus.
 {: .no_toc .text-delta } # Kombination
 ```
 
-### Code-Blöcke
+### 4.2 Code-Blöcke
 
 ````markdown
 ```python
@@ -278,7 +278,7 @@ from langchain import ChatOpenAI
 ```
 ````
 
-### Tabellen
+### 4.3 Tabellen
 
 ```markdown
 | Spalte 1 | Spalte 2 | Spalte 3 |
@@ -286,7 +286,7 @@ from langchain import ChatOpenAI
 | Wert 1   | Wert 2   | Wert 3   |
 ```
 
-### Mermaid-Diagramme
+### 4.4 Mermaid-Diagramme
 
 ````markdown
 ```mermaid
@@ -298,9 +298,9 @@ flowchart TD
 
 ---
 
-## Häufige Fehler vermeiden
+## 5 Häufige Fehler vermeiden
 
-### Fehler 1: Manuelle Nummerierung
+### 5.1 Fehler 1: Manuelle Nummerierung
 
 **❌ Falsch:**
 
@@ -316,7 +316,7 @@ flowchart TD
 ## Setup
 ```
 
-### Fehler 2: Hauptüberschrift im TOC
+### 5.2 Fehler 2: Hauptüberschrift im TOC
 
 **❌ Falsch:**
 
@@ -335,7 +335,7 @@ flowchart TD
 > **Beschreibung**
 ```
 
-### Fehler 3: Fehlendes Front Matter
+### 5.3 Fehler 3: Fehlendes Front Matter
 
 **❌ Falsch:**
 
@@ -361,7 +361,7 @@ has_toc: true
 {: .no_toc }
 ```
 
-### Fehler 4: Inkonsistente Struktur
+### 5.4 Fehler 4: Inkonsistente Struktur
 
 **❌ Falsch:**
 
@@ -402,7 +402,7 @@ Text...
 
 ---
 
-## Checkliste für neue Dateien
+## 6 Checkliste für neue Dateien
 
 - [ ] Front Matter vollständig (layout, title, parent, nav_order, description, has_toc)
 - [ ] Hauptüberschrift mit `{: .no_toc }`
@@ -416,7 +416,7 @@ Text...
 
 ---
 
-## Zusammenfassung
+## 7 Zusammenfassung
 
 Diese Anleitung stellt sicher, dass alle Markdown-Dateien im GitHub Pages Projekt eine konsistente Struktur haben und korrekt mit dem just-the-docs Theme funktionieren. Besonders wichtig sind:
 

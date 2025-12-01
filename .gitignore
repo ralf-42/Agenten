@@ -31,6 +31,7 @@
 !03_skript/
 !04_modul
 !05_prompt
+!07_image
 
 # GitHub Pages (alle Dateien in /docs werden versioniert)
 !docs/
@@ -40,6 +41,7 @@
 # ============================================================
 **/_misc/
 **/_db/
+**/_backup/
 **/.ipynb_checkpoints/
 **/.jupyter/
 **/.virtual_documents/

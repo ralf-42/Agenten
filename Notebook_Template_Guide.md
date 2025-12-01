@@ -6,12 +6,16 @@ Dieses Dokument beschreibt die standardisierte Struktur und Patterns für alle N
 
 ---
 
-## 📋 Quick Template
+## 1 📋 Quick Template
 
-### Minimal-Template für neues Notebook
+### 1.1 Minimal-Template für neues Notebook
 
 ```markdown
-![My Image](https://raw.githubusercontent.com/ralf-42/Image/main/genai-banner-2.jpg)
+<p><font size="6" color='grey'> <b>
+
+KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+</b></font> </br></p>
 
 <p><font size="5" color='grey'> <b>
 [Modul-Titel]
@@ -49,16 +53,16 @@ get_ipinfo()
 
 ---
 
-## 🏗️ Standard-Struktur (ausführlich)
+## 2 🏗️ Standard-Struktur (ausführlich)
 
-### 1️⃣ Header-Section (Zellen 0-2)
+### 2.1 1️⃣ Header-Section (Zellen 0-2)
 
-#### Zelle 0: Banner (Markdown)
+#### 2.1.1 Zelle 0: Banner (Markdown)
 ```markdown
 ![My Image](https://raw.githubusercontent.com/ralf-42/Image/main/genai-banner-2.jpg)
 ```
 
-#### Zelle 1: Titel (Markdown)
+#### 2.1.2 Zelle 1: Titel (Markdown)
 ```html
 <p><font size="5" color='grey'> <b>
 [Modul-Titel]
@@ -74,9 +78,9 @@ get_ipinfo()
 
 ---
 
-### 2️⃣ Setup-Section (Zellen 2-4)
+### 2.2 2️⃣ Setup-Section (Zellen 2-4)
 
-#### Zelle 2: 🔧 Umgebung einrichten (Code, PFLICHT)
+#### 2.2.1 Zelle 2: 🔧 Umgebung einrichten (Code, PFLICHT)
 
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
@@ -95,7 +99,7 @@ get_ipinfo()
 - `setup_api_keys()` mit `create_globals=False`
 - `check_environment()` und `get_ipinfo()` für Debugging
 
-#### Zelle 3: 🛠️ Installationen (Code, OPTIONAL)
+#### 2.2.2 Zelle 3: 🛠️ Installationen (Code, OPTIONAL)
 
 ```python
 #@title 🛠️ Installationen { display-mode: "form" }
@@ -110,7 +114,7 @@ install_packages([
 - Nur wenn zusätzliche Pakete außerhalb von genai_lib nötig
 - Format: `('pip-name', 'import-name')` für unterschiedliche Namen
 
-#### Zelle 4: 📂 Daten laden (Code, OPTIONAL)
+#### 2.2.3 Zelle 4: 📂 Daten laden (Code, OPTIONAL)
 
 ```python
 #@title 📂 Dokumente, Bilder { display-mode: "form" }
@@ -125,9 +129,9 @@ install_packages([
 
 ---
 
-### 3️⃣ Content-Section (Hauptkapitel)
+### 2.3 3️⃣ Content-Section (Hauptkapitel)
 
-#### Kapitel-Nummerierung
+#### 2.3.1 Kapitel-Nummerierung
 
 ```markdown
 # 1 | Übersicht
@@ -152,7 +156,7 @@ install_packages([
 - Letzte Aufgabe: `# A | Aufgabe`
 - Optionale Zusatzthemen: `# B | [Titel]`
 
-#### Unterkapitel
+#### 2.3.2 Unterkapitel
 
 ```markdown
 ## 2.1 | [Unterkapitel]
@@ -166,9 +170,9 @@ install_packages([
 
 ---
 
-## 🎨 Styling & Formatierung
+## 3 🎨 Styling & Formatierung
 
-### Emoji-Konventionen
+### 3.1 Emoji-Konventionen
 
 | Emoji | Verwendung | Beispiel |
 |-------|------------|----------|
@@ -184,7 +188,7 @@ install_packages([
 | 🎯 | Fazit/Ziel | `**🎯 FAZIT:**` |
 | 🔍 | Suche/Ergebnisse | `mprint("## 🔍 Gefundene Dokumente")` |
 
-### Farbige HTML-Überschriften
+### 3.2 Farbige HTML-Überschriften
 
 ```html
 <p><font color='black' size="5">
@@ -204,7 +208,7 @@ install_packages([
 </font></p>
 ```
 
-### Markdown-Ausgaben mit mprint()
+### 3.3 Markdown-Ausgaben mit mprint()
 
 ```python
 mprint("## 🤖 KI-Agent:")
@@ -218,7 +222,7 @@ mprint(f"**Zeit:** {time:.2f}s")
 - Unterstützt Markdown (Bold, Listen, etc.)
 - Besser lesbar als print()
 
-### Diagramme mit mermaid()
+### 3.4 Diagramme mit mermaid()
 
 ```python
 from genai_lib.utilities import mermaid
@@ -278,9 +282,9 @@ stateDiagram-v2
 
 ---
 
-## 📝 Code-Patterns
+## 4 📝 Code-Patterns
 
-### Import-Struktur (Standard-Reihenfolge)
+### 4.1 Import-Struktur (Standard-Reihenfolge)
 
 ```python
 # 1. Standardbibliotheken
@@ -310,7 +314,7 @@ from IPython.display import Image, display
 import numpy as np
 ```
 
-### LLM-Initialisierung (LangChain 1.0+ PFLICHT)
+### 4.2 LLM-Initialisierung (LangChain 1.0+ PFLICHT)
 
 ```python
 # ✅ LangChain 1.0+: init_chat_model()
@@ -328,7 +332,7 @@ llm = init_chat_model(model_name, model_provider=model_provider, temperature=tem
 - Einfacheres Testen verschiedener Modelle
 - Dokumentation der Parameter
 
-### Tool-Definition (@tool Decorator)
+### 4.3 Tool-Definition (@tool Decorator)
 
 ```python
 from langchain_core.tools import tool
@@ -357,7 +361,7 @@ def tool_name(param: str) -> str:
 - Try-Except für robuste Fehlerbehandlung
 - Aussagekräftige Fehlermeldungen
 
-### Agent-Erstellung (LangChain 1.0+ PFLICHT)
+### 4.4 Agent-Erstellung (LangChain 1.0+ PFLICHT)
 
 ```python
 from langchain.agents import create_agent
@@ -375,7 +379,7 @@ response = agent.invoke({
 })
 ```
 
-### LCEL Chains (LangChain 1.0+ PFLICHT)
+### 4.5 LCEL Chains (LangChain 1.0+ PFLICHT)
 
 ```python
 from langchain_core.output_parsers import StrOutputParser
@@ -398,9 +402,9 @@ result = chain.invoke("Deine Frage")
 
 ---
 
-## 🎓 Didaktische Patterns
+## 5 🎓 Didaktische Patterns
 
-### Typischer Notebook-Ablauf
+### 5.1 Typischer Notebook-Ablauf
 
 ```
 1. Banner & Titel
@@ -433,7 +437,7 @@ result = chain.invoke("Deine Frage")
    - Schwierigkeitsgrade
 ```
 
-### Vergleichstabellen (Standard-Pattern)
+### 5.2 Vergleichstabellen (Standard-Pattern)
 
 ```markdown
 | Aspekt | Methode A | Methode B |
@@ -448,7 +452,7 @@ result = chain.invoke("Deine Frage")
 - Verwende Methode B wenn: [Bedingung]
 ```
 
-### Code-Vergleiche (Alt vs. Neu)
+### 5.3 Code-Vergleiche (Alt vs. Neu)
 
 ```python
 # ❌ ALT (nicht mehr verwenden)
@@ -463,7 +467,7 @@ new_code = "modern pattern"
 - `# ✅ NEU` - Moderne Best Practice
 - `# ⚠️ WICHTIG` - Kritische Hinweise
 
-### Expandable Details (für Lösungen/Hinweise)
+### 5.4 Expandable Details (für Lösungen/Hinweise)
 
 ```html
 <details>
@@ -480,9 +484,9 @@ def solution():
 
 ---
 
-## 🖼️ Visualisierungen & Diagramme
+## 6 🖼️ Visualisierungen & Diagramme
 
-### ⭐ EMPFOHLEN: Mermaid-Diagramme (PFLICHT für neue Notebooks!)
+### 6.1 ⭐ EMPFOHLEN: Mermaid-Diagramme (PFLICHT für neue Notebooks!)
 
 **Warum Mermaid?**
 - ✅ Direkt im Markdown ohne externe Dateien
@@ -731,7 +735,7 @@ style NODE5 fill:#FFA500,stroke:#333,color:#000    # Orange für Warnings
 | Datenmodell | ER-Diagram | Database Schema |
 | User Experience | Journey | Workflow Development |
 
-### Statische Bilder einbinden (nur wenn Mermaid nicht möglich)
+### 6.2 Statische Bilder einbinden (nur wenn Mermaid nicht möglich)
 
 ```markdown
 <img src="https://raw.githubusercontent.com/ralf-42/Image/main/[bildname].png" width="600" alt="Avatar">
@@ -748,7 +752,7 @@ style NODE5 fill:#FFA500,stroke:#333,color:#000    # Orange für Warnings
 - Komplexe custom Grafiken
 - Logos und Icons
 
-### Externe Tools verlinken
+### 6.3 Externe Tools verlinken
 
 **Häufig verwendete Tools:**
 ```markdown
@@ -760,7 +764,7 @@ style NODE5 fill:#FFA500,stroke:#333,color:#000    # Orange für Warnings
 [Mermaid Live Editor](https://mermaid.live/)
 ```
 
-### Interaktive Visualisierungen (p5.js)
+### 6.4 Interaktive Visualisierungen (p5.js)
 
 Eigene Visualisierungen werden auf p5.js gehostet:
 ```markdown
@@ -770,9 +774,9 @@ Eigene Visualisierungen werden auf p5.js gehostet:
 
 ---
 
-## 📝 Aufgaben-Section
+## 7 📝 Aufgaben-Section
 
-### Standard-Struktur
+### 7.1 Standard-Struktur
 
 ```markdown
 # A | Aufgabe
@@ -791,9 +795,9 @@ Die Aufgabestellungen unten bieten Anregungen, Sie können aber auch gerne eine 
 - Teilaufgabe 2
 ```
 
-### Aufgaben-Typen
+### 7.2 Aufgaben-Typen
 
-#### 1. Hands-On Übungen
+#### 7.2.1 Hands-On Übungen
 ```markdown
 <p><font color='black' size="5">
 Kalkulation
@@ -803,7 +807,7 @@ Gegeben ist eine Datei mit Gleichungen.
 Verwende einen Agenten mit Tools, um jede Gleichung zu berechnen.
 ```
 
-#### 2. Vergleichsaufgaben
+#### 7.2.2 Vergleichsaufgaben
 ```markdown
 <p><font color='black' size="5">
 RAG-Evaluation
@@ -812,7 +816,7 @@ RAG-Evaluation
 Vergleiche verschiedene Chunk-Größen und evaluiere die Antwortqualität.
 ```
 
-#### 3. Erweiterungs-Challenges
+#### 7.2.3 Erweiterungs-Challenges
 ```markdown
 <p><font color='black' size="5">
 Multi-Agent System
@@ -823,9 +827,9 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ---
 
-## ✅ Checkliste für neues Notebook
+## 8 ✅ Checkliste für neues Notebook
 
-### Struktur
+### 8.1 Struktur
 - [ ] Banner-Bild vorhanden (`genai-banner-2.jpg`)
 - [ ] Titel im HTML-Format mit grauer Schrift (`<font size="5" color='grey'>`)
 - [ ] `---` Separator nach Titel
@@ -833,21 +837,21 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - [ ] Hauptkapitel mit `# [Nummer] | [Titel]` und `---`
 - [ ] Aufgaben-Section `# A | Aufgabe` am Ende
 
-### Code-Qualität (LangChain 1.0+)
+### 8.2 Code-Qualität (LangChain 1.0+)
 - [ ] `init_chat_model()` statt direktem `ChatOpenAI()`
 - [ ] `@tool` Decorator für Tools
 - [ ] `create_agent()` für Agents
 - [ ] LCEL `|` Chains
 - [ ] Moderne Imports (`langchain_core`, `langchain.chat_models`)
 
-### Didaktik
+### 8.3 Didaktik
 - [ ] Einführung/Übersicht vorhanden
 - [ ] Code-Beispiele mit Erklärungen
 - [ ] Vergleichstabellen mit ✅/❌
 - [ ] `mprint()` für formatierte Ausgaben
 - [ ] Emojis konsistent verwendet
 
-### Visualisierung
+### 8.4 Visualisierung
 - [ ] **Mermaid-Diagramme** für Workflows/Prozesse (PFLICHT!)
 - [ ] Flowcharts für Agent-Abläufe
 - [ ] Sequenz-Diagramme für API-Interaktionen
@@ -858,7 +862,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - [ ] Farbige Überschriften für wichtige Sections
 - [ ] Konsistentes Farbschema in Mermaid (Grün/Gelb/Rot/Blau)
 
-### Dokumentation
+### 8.5 Dokumentation
 - [ ] Docstrings für alle Tools
 - [ ] Kommentare für komplexen Code
 - [ ] Hinweise auf Best Practices
@@ -866,9 +870,9 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ---
 
-## 📊 Notebook-Typen & Anpassungen
+## 9 📊 Notebook-Typen & Anpassungen
 
-### M00-M02: Einführungs-Module
+### 9.1 M00-M02: Einführungs-Module
 **Charakteristik:**
 - ~70% Markdown, 30% Code
 - Viele Tabellen und Links
@@ -880,7 +884,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - Weniger Code-Beispiele
 - Links zu externen Ressourcen prominent
 
-### M04a/M04b: Tutorial-Module
+### 9.2 M04a/M04b: Tutorial-Module
 **Charakteristik:**
 - ~50% Markdown, 50% Code
 - Schritt-für-Schritt Erklärungen
@@ -892,7 +896,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - Vergleichstabellen
 - "Was das Notebook RICHTIG macht" Boxen
 
-### M08-M14: Hands-On Module
+### 9.3 M08-M14: Hands-On Module
 **Charakteristik:**
 - ~40% Markdown, 60% Code
 - Prozess-Diagramme
@@ -904,7 +908,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 - `mprint()` für Output-Formatierung
 - Visualisierungen des Workflows
 
-### X-Reihe: Experimentelle Notebooks
+### 9.4 X-Reihe: Experimentelle Notebooks
 **Charakteristik:**
 - ~30% Markdown, 70% Code
 - Fokus auf spezifische Use Cases
@@ -918,9 +922,9 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ---
 
-## 🎯 Best Practices Zusammenfassung
+## 10 🎯 Best Practices Zusammenfassung
 
-### Do's ✅
+### 10.1 Do's ✅
 1. **Konsistente Struktur:** Banner → Setup → Kapitel → Aufgabe
 2. **LangChain 1.0+:** Nur moderne Patterns verwenden
 3. **Mermaid-Diagramme:** Für alle Workflows, Prozesse, Architekturen (PFLICHT!)
@@ -932,7 +936,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 9. **Separate Variablen:** model_name, temperature, etc.
 10. **Farbschema:** Konsistente Farben in Mermaid (Grün/Gelb/Rot/Blau/Orange)
 
-### Don'ts ❌
+### 10.2 Don'ts ❌
 1. **Keine deprecated Patterns:** initialize_agent, Tool(), etc.
 2. **Keine statischen Bilder für Diagramme:** Verwende Mermaid statt PNG/JPG!
 3. **Kein direktes print():** Verwende mprint()
@@ -946,7 +950,7 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ---
 
-## 📚 Referenz-Notebooks
+## 11 📚 Referenz-Notebooks
 
 **Best Practice Beispiele:**
 

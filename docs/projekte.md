@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Projekte
-nav_order: 5
+nav_order: 4
 has_children: true
 description: "Praktische Übungen und End-to-End Projekte"
 ---

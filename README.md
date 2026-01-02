@@ -1,379 +1,157 @@
-# Agenten - Multi-Agent Systeme mit LangChain & LangGraph
+# Generative KI Kurs
 
-[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Compliance_Report_2025-12-31.md)
-[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Compliance_Report_2025-12-31.md)
-[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)](./LangChain_Compliance_Report_2025-12-31.md)
+[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Audit_Report_2025-12-17.md)
+[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Audit_Report_2025-12-17.md)
+[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--17-blue)](./LangChain_Audit_Report_2025-12-17.md)
 
-> **Fortgeschrittene Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
+Ein deutschsprachiger, praxisorientierter Kurs zu Generative AI Technologien mit Fokus auf OpenAI GPT-Modelle, LangChain und praktischen Anwendungen.
 
-## 🤖 For AI Agents
+## 🌐 Kurs-Website
 
-This repository includes **agent governance** documentation:
+**[→ GenAI Kurs-Website (GitHub Pages)](https://ralf-42.github.io/GenAI/)**
 
-- **[AGENTS.md](./AGENTS.md)** - How AI agents should work with this codebase (role, rules, scope, quality gates)
-- **[CLAUDE.md](./CLAUDE.md)** - Project structure, conventions, and technical documentation
-- **[LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)** - Required patterns for all LangChain code
-- **[LangGraph_1.0_Must_Haves.md](./LangGraph_1.0_Must_Haves.md)** - Required patterns for multi-agent systems
+Die vollständige Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen ist als interaktive Website verfügbar.
 
-**Note:** AGENTS.md defines **behavior**, while CLAUDE.md describes **structure**. Read both before making changes.
+## 🎯 Zielgruppe
 
-## 🎯 Übersicht
+- Entwickler:innen mit Python-Grundkenntnissen
+- IT-Fachkräfte, die KI-Technologien integrieren möchten
+- Technikbegeisterte mit Programmiererfahrung
 
-Dieses Projekt fokussiert sich auf die Entwicklung und Implementierung von **KI-Agenten** und **Multi-Agent-Systemen** mit modernsten Technologien wie **LangChain 1.0+** und **LangGraph**. Es bietet praxisorientierte Notebooks, wiederverwendbare Module und umfassende Dokumentation für den Aufbau von produktionsreifen Agent-Systemen.
 
-### 🔑 Kernthemen
-
-- **Single-Agent Systeme** mit Tools und Middleware
-- **Multi-Agent-Architekturen** (Supervisor, Hierarchical, Collaborative)
-- **State Machines** mit LangGraph
-- **Human-in-the-Loop** Workflows
-- **Checkpointing & Memory** für langlebige Sessions
-- **RAG-Systeme** (Retrieval Augmented Generation)
-- **Multimodale Agenten** (Text, Bild, Audio, Video)
-
----
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Projekt klonen
-git clone https://github.com/ralf-42/Agenten.git
-cd Agenten
-
-# Python Environment (empfohlen: Python 3.10+)
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Dependencies installieren
-pip install -r requirements.txt
-
-# Jupyter Lab starten
-jupyter lab
-```
-
-### Erste Schritte
-
-1. **API-Keys konfigurieren:**
-   ```bash
-   # .env Datei erstellen
-   echo "OPENAI_API_KEY=your-key-here" > .env
-   ```
-
-2. **Erstes Notebook öffnen:**
-   - Navigiere zu `01_notebook/`
-   - Öffne ein Modul (z.B. `M10_Agenten_LangChain.ipynb`)
-   - Folge dem Setup-Guide im Notebook
-
-3. **Module nutzen:**
-   ```python
-   # Projekt-Module von GitHub installieren (für Google Colab)
-   !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-   # Lokale Entwicklung
-   from genai_lib.utilities import setup_api_keys, mprint
-   from genai_lib.multimodal_rag import MultimodalRAG
-   ```
-
----
-
-## 📂 Projektstruktur
+## 📁 Projektstruktur
 
 ```
-Agenten/
-├── 01_notebook/              # Jupyter Notebooks (Kursmodule)
-│   ├── M00-M18/              # Haupt-Module
-│   └── X01-X99/              # Experimentelle Notebooks
-├── 02_daten/                 # Trainingsdaten und Datasets
-│   ├── 01_text/              # Text-Dateien
-│   ├── 02_bild/              # Bilder
-│   ├── 03_audio/             # Audio-Dateien
-│   └── 04_video/             # Videos
-├── 03_skript/                # Kursmaterialien & Dokumentation
-├── 04_modul/                 # Python-Module (genai_lib)
-│   └── genai_lib/            # Wiederverwendbare Bibliothek
-│       ├── utilities.py      # Hilfsfunktionen
-│       ├── multimodal_rag.py # Multimodales RAG-System
-│       └── mcp_modul.py      # MCP-Integration
-├── 05_prompt/                # Prompt-Templates
-├── .claude/commands/         # Automatisierungskommandos
-│   ├── README.md             # Command-Dokumentation
-│   ├── sync-docs.md          # Dokumentations-Synchronisierung
-│   └── check-langchain.md    # LangChain Compliance-Checks
-├── AGENTS.md                 # Agent Governance (für KI-Assistenten)
-├── CLAUDE.md                 # Projekt-Konventionen (Pflichtlektüre!)
-├── LangChain_1.0_Must_Haves.md  # 7 MUST-HAVE Features
-├── LangGraph_1.0_Must_Haves.md  # Multi-Agent Patterns
-├── LangChain_QuickRef.md     # Quick Reference (~200 Zeilen)
-├── LangGraph_QuickRef.md     # Quick Reference (~200 Zeilen)
-├── LangSmith_QuickRef.md     # Quick Reference (~150 Zeilen)
-├── LangChain_Standards_Full.md  # Full Standards (~1200 Zeilen)
-├── LangGraph_Standards_Full.md  # Full Standards (~1200 Zeilen)
-├── LangSmith_Standards_Full.md  # Full Standards (~1200 Zeilen)
-├── Notebook_Template_Guide.md   # Standard-Notebook-Struktur
-└── Project_Structure_Guide.md   # Verzeichnisstruktur-Guide
+GenAI/
+├── 01_notebook/    # Jupyter Notebooks (Kursmaterialien)
+├── 02_daten/       # Trainingsdaten und Beispieldateien
+├── 04_modul/       # Python-Module und Bibliotheken
+└── 05_prompt/      # Prompt-Templates
 ```
-
-**Detaillierte Struktur:** Siehe [Project_Structure_Guide.md](./Project_Structure_Guide.md)
-
----
-
-## 📚 Dokumentation (MUST-READ!)
-
-### Pflicht-Lektüre für alle Entwickler
-
-| Dokument | Zweck | Wann lesen? |
-|----------|-------|-------------|
-| **[AGENTS.md](./AGENTS.md)** 🤖 | Agent Governance (für KI-Assistenten) | **Für AI-Agents:** Vor allen Änderungen |
-| **[CLAUDE.md](./CLAUDE.md)** | Projekt-Konventionen, Code-Standards | **START HIER!** Vor dem ersten Code |
-| **[LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)** | 7 PFLICHT-Features für LangChain 1.0+ | Vor jedem neuen Agent/RAG-System |
-| **[LangGraph_1.0_Must_Haves.md](./LangGraph_1.0_Must_Haves.md)** | Multi-Agent Patterns & State Machines | Vor Multi-Agent-Implementierung |
-| **[Notebook_Template_Guide.md](./Notebook_Template_Guide.md)** | Standard-Struktur für Notebooks | Vor neuem Notebook |
-| **[Project_Structure_Guide.md](./Project_Structure_Guide.md)** | Verzeichnis-Organisation | Setup neuer Projekte |
-
-### Quick References (für schnellen Zugriff)
-
-| Dokument | Beschreibung | Umfang |
-|----------|--------------|--------|
-| [LangChain_QuickRef.md](./LangChain_QuickRef.md) | 7 Patterns + Anti-Patterns | ~200 Zeilen |
-| [LangGraph_QuickRef.md](./LangGraph_QuickRef.md) | Multi-Agent Patterns | ~200 Zeilen |
-| [LangSmith_QuickRef.md](./LangSmith_QuickRef.md) | Monitoring & Debugging | ~150 Zeilen |
-
-### Full Standards (für Deep Dive)
-
-| Dokument | Beschreibung | Umfang |
-|----------|--------------|--------|
-| [LangChain_Standards_Full.md](./LangChain_Standards_Full.md) | Vollständige LangChain Standards | ~1200 Zeilen |
-| [LangGraph_Standards_Full.md](./LangGraph_Standards_Full.md) | Vollständige LangGraph Standards | ~1200 Zeilen |
-| [LangSmith_Standards_Full.md](./LangSmith_Standards_Full.md) | Vollständige LangSmith Standards | ~1200 Zeilen |
-
-### 🎯 Die 7 MUST-HAVE Features (LangChain 1.0+)
-
-**PFLICHT für alle neuen Implementierungen:**
-
-1. ✅ `init_chat_model()` - Unified Model Initialization
-2. ✅ `with_structured_output()` - Native Structured Outputs
-3. ✅ `@tool` Decorator - Tool Definitions
-4. ✅ `create_agent()` - Modern Agent API
-5. ✅ LCEL `|` Chains - Expression Language
-6. ✅ Middleware - Human-in-Loop, Summarization, PII
-7. ✅ Content Blocks - Multimodal Support
-
-**Details:** [LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)
-
----
 
 ## 🛠️ Technologie-Stack
 
-### KI/ML Frameworks
+### Kernframeworks
+- **OpenAI API** (>=1.0.0) - GPT-4o-mini, Embeddings, DALL-E
+- **LangChain** (>=1.1.0) 🆕 - Orchestrierung, Chains, Agents, RAG
+- **LangGraph** (>=0.2.0) - Zustandsbasierte Multi-Agent-Workflows
+- **Hugging Face** - Transformers und Community-Modelle
 
-- **LangChain** (>=1.0.0) - LLM-Orchestrierung, Chains, Agents
-- **LangGraph** (>=0.2.0) - Multi-Agent-Systeme, State Machines
-- **OpenAI API** (>=1.0.0) - GPT-4o, GPT-4o-mini
+### Spezialisierte Tools
+- **ChromaDB** (>=0.5.0) - Vektordatenbank für RAG-Systeme
+- **Sentence Transformers** (>=3.0.0) - CLIP für multimodale Embeddings
+- **Gradio** (>=3.x) - UI-Entwicklung für KI-Apps
+- **Ollama** - Lokale Open-Source-Modelle
+- **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Bibliothek für Kursanwendungen
+  - **multimodal_rag.py** - Multimodales RAG-System mit Bild-zu-Bild und Bild-zu-Text Suche
+  - **utilities.py** - Hilfsfunktionen für Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, Model-Profiles (`get_model_profile()`) und LLM-Response-Parsing (`extract_thinking()`)
 
-### Vektordatenbanken & RAG
+### 🆕 LangChain v1.2.0 Features (Dezember 2025)
 
-- **ChromaDB** (>=0.4.0) - Vektorspeicherung
-- **FAISS** - Schnelle Similarity Search
-- **RecursiveCharacterTextSplitter** - Text-Chunking
+Dieser Kurs nutzt die neuesten **LangChain v1.2.0** Features:
 
-### Visualisierung & UI
+**v1.2.0 Updates:**
+- ✨ **Tool Extras** - Provider-native Features (Anthropic programmatic tool calling, OpenAI strict mode)
+- ✨ **Strict Schema Adherence** - `response_format` für garantierte Agent-Output-Konformität
+- ✨ **Built-in Client-Side Tools** - Anthropic, OpenAI und weitere Provider
 
-- **Plotly Express** - Interaktive Visualisierungen
-- **Gradio** (>=3.x) - Webinterfaces für Demos
+**v1.1.0 Features:**
+- ✨ **Model Profiles** - Automatische Capability-Detection via `.profile` Attribut
+- ✨ **Smart Structured Output** - Auto-Inference von `ProviderStrategy`
+- ✨ **SystemMessage in Agents** - Cache-Control für Anthropic Claude
+- ✨ **ModelRetryMiddleware** - Automatische Retries mit exponential backoff
+- ✨ **ContentModerationMiddleware** - OpenAI Moderation für Safety-Layer
 
-### Development
 
-- **Jupyter Lab** - Interaktive Notebooks
-- **Python** 3.10+ (erforderlich)
-- **python-dotenv** - Environment-Management
+## 📚 Kursmodule
 
----
+### Basismodule (M00-M12)
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M01 | GenAI Intro | Grundlagen Generative AI |
+| M02 | Modellsteuerung | Prompting, Context Engineering |
+| M03 | Codieren mit GenAI | KI-gestütztes Programmieren |
+| M04 | LangChain 101 | Framework-Grundlagen |
+| M05 | LLM & Transformer | Architektur und Foundation Models |
+| M06 | Chat & Memory | Konversations-Management |
+| M07 | Output Parser | Strukturierte Ausgaben |
+| M08a | RAG LangChain | Retrieval Augmented Generation |
+| M08b | RAG LangGraph | Advanced RAG (Self-RAG, Corrective RAG) |
+| M09 | Multimodal Bild | Bildgenerierung und -verarbeitung |
+| M10 | Agents | KI-Agenten und Multi-Agent-Systeme |
+| M11 | Gradio | UI-Entwicklung |
+| M12 | Lokale Modelle | Ollama, Open Source |
 
-## 💡 Use Cases & Beispiele
+### Erweiterte Module (M13-M18)
+- **M13**: SQL RAG - Datenbank-Integration
+- **M14**: Multimodal RAG - Text & Bild kombiniert
+- **M15**: Multimodal Audio - Speech-to-Text, TTS
+- **M16**: Multimodal Video - Video-Analyse
+- **M17**: MCP - Model Context Protocol
+- **M18**: Fine-Tuning - Modell-Anpassung
 
-### 1. Single-Agent mit Tools
+## 🔑 Voraussetzungen
 
-```python
-from langchain.chat_models import init_chat_model
-from langchain.agents import create_agent
-from langchain_core.tools import tool
+- Python 3.11+
+- Google Colab Account
+- OpenAI API Key (ca. 5 EUR für gesamten Kurs)
+- Hugging Face Account (kostenlos)
 
-# LLM initialisieren
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+## 📦 Installation
 
-# Tool definieren
-@tool
-def calculator(expression: str) -> float:
-    """Berechnet mathematische Ausdrücke."""
-    return eval(expression)
+Das `genai_lib` Modul kann direkt aus diesem Repository installiert werden:
 
-# Agent erstellen
-agent = create_agent(
-    model=llm,
-    tools=[calculator],
-    system_prompt="Du bist ein hilfreicher Assistent"
-)
+```bash
+# Mit pip
+pip install git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
 
-# Agent ausführen
-response = agent.invoke({
-    "messages": [{"role": "user", "content": "Berechne 123 * 456"}]
-})
+# Mit uv (empfohlen für Google Colab)
+uv pip install --system git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
 ```
 
-**Referenz-Notebook:** `01_notebook/M10_Agenten_LangChain.ipynb`
+## 💡 Nutzung
+
+Alle Notebooks sind eigenständig lauffähig und für Google Colab optimiert. Das `genai_lib` Utility-Paket übernimmt das automatische Setup der Umgebung.
+
+## 🎓 Projekte & Übungen
+
+Der Kurs bietet zwei praxisorientierte Lernformate:
+
+### [RAG Workshop](https://ralf-42.github.io/GenAI/projekte/RAG_Workshop.html)
+**Workshop-Format** | Begleitete Schritt-für-Schritt-Übung
+
+Bauen Sie einen intelligenten Tech-Doku-Assistenten von Grund auf:
+- 📝 Kapitel 1-7: Vom einfachen Chatbot zur RAG-Anwendung
+- 🎯 Stufenweise Komplexität (M04-M11)
+- 🛠️ Hands-On mit LangChain, ChromaDB, Gradio
+- ⏱️ Zeitaufwand: 4-6 Stunden
+
+### [KI-Challenge](https://ralf-42.github.io/GenAI/projekte/M23_KI-Challenge.html)
+**End-to-End Projekt** | Eigenständige Implementierung
+
+Entwickeln Sie eine vollständige GenAI-Anwendung:
+- 🎯 4 Projektoptionen: Dokumentenanalyse, Multimodal, Multi-Agent, Domänen-Experte
+- 🚀 LangChain 1.0+ Best Practices
+- 📦 Abgabe: Jupyter Notebook + README.md
+- ⏱️ Zeitaufwand: 15-25 Stunden
+
+## 📖 Dokumentation
+
+- **Kurs-Website:** [https://ralf-42.github.io/GenAI/](https://ralf-42.github.io/GenAI/)
+
+
+## ⚖️ Lizenzen
+
+Der **Quellcode** steht unter der [MIT License](./LICENSE).       
+Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
+**Northwind-Datenbank** von Microsoft unter Microsoft Public License (Ms-PL).     
+Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](https://www.hedra.com/terms).     
+
+© 2025 Ralf-42
 
 ---
 
-### 2. Multi-Agent System (LangGraph)
+**Letzte Aktualisierung:** 31. Dezember 2025     
+**Version:** 2.4     
 
-```python
-from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.sqlite import SqliteSaver
 
-# State Definition
-class ResearchState(TypedDict):
-    messages: Annotated[list, add_messages]
-    topic: str
-    report: str
-
-# Agents
-research_agent = create_agent(model=llm, tools=[web_search], ...)
-writer_agent = create_agent(model=llm, tools=[write_doc], ...)
-
-# Graph erstellen
-builder = StateGraph(ResearchState)
-builder.add_node("researcher", research_agent)
-builder.add_node("writer", writer_agent)
-builder.add_edge(START, "researcher")
-builder.add_edge("researcher", "writer")
-builder.add_edge("writer", END)
-
-# Mit Checkpointing kompilieren
-checkpointer = SqliteSaver.from_conn_string("research.db")
-graph = builder.compile(checkpointer=checkpointer)
-```
-
-**Referenz-Notebook:** `01_notebook/M10c_Multi_Agent_Collaboration.ipynb`
-
----
-
-### 3. RAG-System (Retrieval Augmented Generation)
-
-```python
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
-from langchain_core.output_parsers import StrOutputParser
-
-# Vectorstore erstellen
-vectorstore = Chroma.from_documents(
-    documents=docs,
-    embedding=OpenAIEmbeddings()
-)
-retriever = vectorstore.as_retriever()
-
-# RAG Chain (LCEL)
-chain = (
-    {"context": retriever, "question": RunnablePassthrough()}
-    | prompt
-    | llm
-    | StrOutputParser()
-)
-
-# Query
-answer = chain.invoke("Was ist LangGraph?")
-```
-
-**Referenz-Notebook:** `01_notebook/M08_RAG_LangChain.ipynb`
-
----
-
-## 🎓 Code-Konventionen
-
-### Namenskonventionen
-
-- **snake_case** für Variablen, Funktionen, Module
-- **PascalCase** für Klassen (TypedDict, Pydantic Models)
-- Aussagekräftige Namen (nicht `x`, `temp`, `data`)
-
-### Import-Struktur (Standard-Reihenfolge)
-
-```python
-# 1. Standardbibliotheken
-import os
-from pathlib import Path
-
-# 2. LangChain Community
-from langchain_community.vectorstores import Chroma
-
-# 3. LangChain Core (LCEL)
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.tools import tool
-
-# 4. LangChain Top-Level
-from langchain.chat_models import init_chat_model
-from langchain.agents import create_agent
-
-# 5. Projekt-Module
-from genai_lib.utilities import setup_api_keys
-```
-
-**Vollständige Standards:** [CLAUDE.md](./CLAUDE.md)
-
----
-
-## ⚠️ Breaking Changes: LangChain 0.x → 1.0+
-
-| Alt (0.x) | Neu (1.0+) | Status |
-|-----------|------------|--------|
-| `ChatOpenAI()` direkt | `init_chat_model()` | ⛔ Deprecated |
-| `PydanticOutputParser` | `with_structured_output()` | ⛔ Deprecated |
-| `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
-| `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
-
-**Migration-Guide:** [LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)
-
----
-
-## 🤝 Beitragen
-
-Pull Requests sind willkommen! Bitte beachte:
-
-1. **Code-Standards:** Befolge [CLAUDE.md](./CLAUDE.md)
-2. **LangChain 1.0+:** Nur moderne Patterns verwenden
-3. **Dokumentation:** Docstrings für alle Funktionen
-4. **Tests:** Notebooks müssen durchlaufen
-5. **Commits:** Aussagekräftige Commit-Messages
-
----
-
-## 📝 Lizenz
-
-MIT License - Copyright (c) 2025 Ralf
-
----
-
-## 📞 Kontakt & Support
-
-- **GitHub Issues:** [github.com/ralf-42/Agenten/issues](https://github.com/ralf-42/Agenten/issues)
-- **Projekt-Repository:** [github.com/ralf-42/Agenten](https://github.com/ralf-42/Agenten)
-
----
-
-## 🔗 Externe Ressourcen
-
-- [LangChain Documentation](https://python.langchain.com/)
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
-- [OpenAI API Reference](https://platform.openai.com/docs)
-- [LangChain v1.0 Migration Guide](https://docs.langchain.com/oss/python/migrate/langchain-v1)
-
----
-
-**Letzte Aktualisierung:** November 2025
-**Version:** 1.0
-**Maintainer:** Ralf
-
----
-
-> 💡 **Tipp:** Starte mit [CLAUDE.md](./CLAUDE.md) und den Must-Have-Dokumenten, bevor du Code schreibst!

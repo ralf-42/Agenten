@@ -936,22 +936,22 @@ graph TB
 
 ```mermaid
 journey
-    title Lernpfad: No-Code zu Production-Grade Agents
-    section Phase 1: Basics
+    title Lernpfad - No-Code zu Production-Grade Agents
+    section Phase 1 Basics
       Agent Builder Templates: 5: Einsteiger
       Erste Workflows erstellen: 4: Einsteiger
       MCP-Server integrieren: 3: Einsteiger
-    section Phase 2: Advanced
+    section Phase 2 Advanced
       Conditional Workflows: 4: Fortgeschritten
       Human-in-Loop: 4: Fortgeschritten
       Multi-Agent-Systeme: 3: Fortgeschritten
-    section Phase 3: Production
-      Monitoring & Debugging: 5: Experte
+    section Phase 3 Production
+      Monitoring und Debugging: 5: Experte
       Security Best Practices: 5: Experte
-      Code-Export & Migration: 4: Experte
-    section Phase 4: Scale
+      Code-Export und Migration: 4: Experte
+    section Phase 4 Scale
       LangChain lernen: 3: Experte
-      Hybrid-Ansätze: 4: Experte
+      Hybrid-Ansaetze: 4: Experte
       Custom MCP Server: 3: Experte
 ```
 

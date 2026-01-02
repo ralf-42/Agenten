@@ -1,4 +1,6 @@
-
+---
+nav_exclude: true
+---
 
 ## 1 Ein möglicher Ansatz: Drei Frameworks im Zusammenspiel
 

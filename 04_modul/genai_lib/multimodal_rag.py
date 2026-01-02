@@ -1,6 +1,6 @@
 #@title 🛠️ Code M14_Modul { display-mode: "form" }
 """
-Multimodales RAG Modul mit Bildbeschreibungen (Version 3)
+Multimodales RAG Modul mit Bildbeschreibungen (Version 3.1 - LangChain 1.0+)
 
 Verwendung:
     # System initialisieren
@@ -19,8 +19,8 @@ Verwendung:
     text_results = search_text_by_image(rag, "./query_image.jpg", k=3)
 
 Autor: Enhanced by Claude
-Datum: Oktober 2025
-Version: 3.0 - Neue Features: Bild → Bild Suche, Bild → Text Suche
+Datum: Dezember 2025
+Version: 3.1 - LangChain 1.0+ Migration (init_chat_model, HumanMessage Content Blocks)
 """
 
 from pathlib import Path
@@ -31,9 +31,11 @@ from dataclasses import dataclass
 
 from markitdown import MarkItDown
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+from langchain.chat_models import init_chat_model
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage
 from sentence_transformers import SentenceTransformer
 from PIL import Image
 import chromadb
@@ -62,8 +64,8 @@ class RAGComponents:
     """Container für alle RAG-System-Komponenten"""
     text_embeddings: OpenAIEmbeddings
     clip_model: SentenceTransformer
-    llm: ChatOpenAI
-    vision_llm: ChatOpenAI
+    llm: any  # LangChain 1.0+ ChatModel (via init_chat_model)
+    vision_llm: any  # LangChain 1.0+ ChatModel mit Vision-Support (via init_chat_model)
     text_splitter: RecursiveCharacterTextSplitter
     markitdown: MarkItDown
     chroma_client: chromadb.PersistentClient
@@ -99,8 +101,9 @@ def init_rag_system(config=None):
     clip_model = SentenceTransformer(config.clip_model)
     print("✅ CLIP-Modell geladen")
 
-    llm = ChatOpenAI(model=config.llm_model, temperature=0)
-    vision_llm = ChatOpenAI(model=config.vision_model, temperature=0)
+    # LangChain 1.0+ API: init_chat_model statt ChatOpenAI direkt
+    llm = init_chat_model(f"openai:{config.llm_model}", temperature=0.0)
+    vision_llm = init_chat_model(f"openai:{config.vision_model}", temperature=0.0)
     print("✅ LLMs initialisiert (Text + Vision)")
 
     # Text-Verarbeitung
@@ -145,10 +148,12 @@ def init_rag_system(config=None):
 
 def generate_image_description(vision_llm, image_path):
     """
-    Generiert eine detaillierte Beschreibung eines Bildes mit GPT-4o-mini
+    Generiert eine detaillierte Beschreibung eines Bildes mit Vision-LLM
+
+    LangChain 1.0+ konform: Verwendet HumanMessage mit Standard Content Blocks
 
     Args:
-        vision_llm: ChatOpenAI Instanz mit Vision-Unterstützung
+        vision_llm: ChatModel mit Vision-Support (via init_chat_model)
         image_path: Pfad zum Bild
 
     Returns:
@@ -164,11 +169,12 @@ def generate_image_description(vision_llm, image_path):
         if image_extension == 'jpg':
             image_extension = 'jpeg'
 
-        # Prompt für detaillierte Bildbeschreibung
-        prompt = [
-            {
-                "type": "text",
-                "text": """Analysiere dieses Bild detailliert und erstelle eine präzise Beschreibung auf Deutsch.
+        # LangChain 1.0+ API: HumanMessage mit Standard Content Blocks (provider-agnostisch)
+        message = HumanMessage(
+            content=[
+                {
+                    "type": "text",
+                    "text": """Analysiere dieses Bild detailliert und erstelle eine präzise Beschreibung auf Deutsch.
 
 Beschreibe:
 1. Hauptobjekte und -personen
@@ -178,17 +184,17 @@ Beschreibe:
 5. Möglichen Kontext oder Zweck
 
 Halte die Beschreibung prägnant aber informativ (2-4 Sätze)."""
-            },
-            {
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/{image_extension};base64,{image_data}"
+                },
+                {
+                    "type": "image",
+                    "url": f"data:image/{image_extension};base64,{image_data}",
+                    "mime_type": f"image/{image_extension}"
                 }
-            }
-        ]
+            ]
+        )
 
         # Beschreibung generieren
-        response = vision_llm.invoke([{"role": "user", "content": prompt}])
+        response = vision_llm.invoke([message])
         description = response.content.strip()
 
         print(f"📝 Bildbeschreibung generiert: {description[:100]}...")

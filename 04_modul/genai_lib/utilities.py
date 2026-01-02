@@ -1,7 +1,7 @@
 #
 # utilities.py
 #
-# Stand: 23.11.2025
+# Stand: 04.12.2025
 #
 from IPython.display import display, Markdown, SVG
 from IPython import get_ipython
@@ -11,6 +11,8 @@ import warnings
 import subprocess
 import tempfile
 import importlib.util
+import re
+from typing import Tuple, Any
 from langchain_core.prompts import ChatPromptTemplate
 #
 # -- Sammlung von Standard-Funktionen für den Kurs
@@ -288,6 +290,251 @@ def mermaid(code: str, width=None, height=None):
         print(f"Fehler beim Rendern des Mermaid-Diagramms: {e}")
     except Exception as e:
         print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+
+
+# ============================================================================
+# MODEL PROFILE UTILITIES
+# ============================================================================
+
+def get_model_profile(model: str, temperature: float = 0.0, print_profile: bool = True, **kwargs):
+    """
+    Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities.
+
+    Diese Funktion initialisiert ein LLM mit init_chat_model() und gibt dessen
+    Profile zurück. Das Profile enthält wichtige Informationen über die Fähigkeiten
+    des Modells (Structured Output, Function Calling, Vision, etc.), die von
+    https://models.dev abgerufen werden.
+
+    Parameter:
+    ----------
+    model : str
+        Model-Name im Format "provider:model" (z.B. "openai:gpt-4o-mini")
+        oder als separater String (dann muss provider über kwargs übergeben werden)
+    temperature : float, optional
+        Temperatur-Einstellung für das Modell (Standard: 0.0)
+    print_profile : bool, optional
+        Wenn True, werden die wichtigsten Profile-Informationen ausgegeben (Standard: True)
+    **kwargs : dict
+        Zusätzliche Parameter für init_chat_model() (z.B. max_tokens, top_p, etc.)
+
+    Returns:
+    --------
+    dict
+        Das vollständige Model-Profile mit allen Capabilities
+
+    Beispiel:
+    ---------
+    >>> from genai_lib.utilities import get_model_profile
+    >>>
+    >>> # Kurznotation (empfohlen)
+    >>> profile = get_model_profile("openai:gpt-4o-mini")
+    >>>
+    >>> # Mit zusätzlichen Parametern
+    >>> profile = get_model_profile("anthropic:claude-3-sonnet", temperature=0.3, max_tokens=1000)
+    >>>
+    >>> # Ohne Ausgabe (nur Rückgabe)
+    >>> profile = get_model_profile("google:gemini-pro", print_profile=False)
+    >>>
+    >>> # Zugriff auf spezifische Capabilities
+    >>> if profile['image_inputs']:
+    >>>     print("Modell unterstützt Vision!")
+
+    Hinweise:
+    ---------
+    - Die Model-Profile werden von models.dev abgerufen
+    - Nutzt intern init_chat_model() für konsistente Model-Initialisierung
+    - Profile werden automatisch gecacht für schnellere Zugriffe
+    - Nicht alle Models haben alle Profile-Attribute (Fallback auf None/False)
+
+    Profile-Attribute (Auswahl):
+    ----------------------------
+    **Core Capabilities:**
+    - structured_output: Native Structured Output API
+    - tool_calling: Function Calling Support
+    - supports_json_mode: JSON Mode Support
+    - reasoning: Extended Thinking/Reasoning Support
+
+    **Multimodal Input:**
+    - text_inputs: Text Input (Standard)
+    - image_inputs: Bild Input (Vision)
+    - audio_inputs: Audio Input Support
+    - video_inputs: Video Input Support
+
+    **Multimodal Output:**
+    - text_outputs: Text Output (Standard)
+    - image_outputs: Bild-Generierung
+    - audio_outputs: Audio-Generierung (TTS)
+    - video_outputs: Video-Generierung
+
+    **Token Limits:**
+    - max_input_tokens: Context Window Größe
+    - max_output_tokens: Max. Output-Länge
+
+    **Model Configuration:**
+    - temperature: Temperature-Parameter Support
+    - knowledge_cutoff: Knowledge Cutoff Date
+
+    **Additional Features:**
+    - streaming: Streaming Support
+    - async_capable: Async Support
+    """
+    from langchain.chat_models import init_chat_model
+
+    # Model initialisieren
+    try:
+        llm = init_chat_model(model, temperature=temperature, **kwargs)
+    except Exception as e:
+        print(f"❌ Fehler beim Initialisieren des Modells: {e}")
+        return None
+
+    # Profile abrufen
+    try:
+        profile = llm.profile
+    except AttributeError:
+        print(f"⚠️  Modell hat kein .profile Attribut (möglicherweise veraltete LangChain-Version)")
+        return None
+
+    # Profile ausgeben (wenn gewünscht)
+    if print_profile:
+        print(f"🔍 Model Profile: {model}")
+        print("=" * 60)
+
+        # Core Capabilities
+        print("\n📋 Core Capabilities:")
+        print(f"  ✓ Structured Output:  {profile.get('structured_output', False)}")
+        print(f"  ✓ Function Calling:   {profile.get('tool_calling', False)}")
+        print(f"  ✓ JSON Mode:          {profile.get('supports_json_mode', False)}")
+        print(f"  ✓ Reasoning:          {profile.get('reasoning', False)}")
+
+        # Multimodal Capabilities (vereinfacht mit Symbolen)
+        print("\n🎨 Multimodal Capabilities:")
+
+        # Input Capabilities
+        input_symbols = []
+        if profile.get('text_inputs', True):  # Text ist Standard
+            input_symbols.append('📝 Text')
+        if profile.get('image_inputs', False):
+            input_symbols.append('🖼️ Image')
+        if profile.get('audio_inputs', False):
+            input_symbols.append('🎵 Audio')
+        if profile.get('video_inputs', False):
+            input_symbols.append('🎬 Video')
+        print(f"  ✓ Input:  {', '.join(input_symbols) if input_symbols else 'N/A'}")
+
+        # Output Capabilities
+        output_symbols = []
+        if profile.get('text_outputs', True):  # Text ist Standard
+            output_symbols.append('📝 Text')
+        if profile.get('image_outputs', False):
+            output_symbols.append('🖼️ Image')
+        if profile.get('audio_outputs', False):
+            output_symbols.append('🎵 Audio')
+        if profile.get('video_outputs', False):
+            output_symbols.append('🎬 Video')
+        print(f"  ✓ Output: {', '.join(output_symbols) if output_symbols else 'N/A'}")
+
+        # Token Limits
+        print("\n📊 Token Limits:")
+        max_input = profile.get('max_input_tokens')
+        max_output = profile.get('max_output_tokens')
+        print(f"  ✓ Max Input Tokens:   {max_input if max_input else 'N/A'}")
+        print(f"  ✓ Max Output Tokens:  {max_output if max_output else 'N/A'}")
+
+        # Model Configuration
+        print("\n⚙️ Model Configuration:")
+        temperature_support = profile.get('temperature', 'N/A')
+        if temperature_support is True:
+            temperature_support = 'Yes'
+        elif temperature_support is False:
+            temperature_support = 'No'
+        print(f"  ✓ Temperature:        {temperature_support}")
+        knowledge = profile.get('knowledge_cutoff', 'N/A')
+        print(f"  ✓ Knowledge Cutoff:   {knowledge}")
+
+        # Additional Info
+        print("\n🔧 Additional Features:")
+        print(f"  ✓ Streaming:          {profile.get('streaming', False)}")
+        print(f"  ✓ Async:              {profile.get('async_capable', False)}")
+
+        print("=" * 60)
+        print(f"📚 Vollständiges Profile: llm.profile (dict mit allen Attributen)")
+
+    return profile
+
+
+# ============================================================================
+# LLM RESPONSE PARSING
+# ============================================================================
+
+def extract_thinking(response: Any) -> Tuple[str, str]:
+    """
+    Universeller Parser für verschiedene Thinking-Formate von LLMs.
+
+    Diese Funktion extrahiert den "Thinking"-Teil (Denkprozess) und die eigentliche
+    Antwort aus verschiedenen LLM-Response-Formaten. Sie unterstützt mehrere
+    Provider und Modelle mit unterschiedlichen Ausgabestrukturen.
+
+    Unterstützte Formate:
+        1. Liste von Blöcken (Claude, Gemini): content = [{"type": "thinking", ...}, {"type": "text", ...}]
+        2. String mit <think> Tags (Qwen3, DeepSeek R1): "<think>...</think>Antwort"
+        3. DeepSeek reasoning_content Feld: response.additional_kwargs["reasoning_content"]
+
+    Parameter:
+    ----------
+    response : Any
+        Ein LLM-Response-Objekt (z.B. AIMessage) mit einem `content` Attribut.
+        Optional kann es auch `additional_kwargs` enthalten.
+
+    Returns:
+    --------
+    Tuple[str, str]
+        Ein Tuple bestehend aus:
+        - thinking (str): Der extrahierte Denkprozess (leer, wenn nicht vorhanden)
+        - answer (str): Die eigentliche Antwort
+
+    Beispiel:
+    ---------
+    >>> from langchain.chat_models import init_chat_model
+    >>> llm = init_chat_model("anthropic:claude-3-5-sonnet", temperature=0)
+    >>> response = llm.invoke("Erkläre kurz, was 2+2 ist.")
+    >>> thinking, answer = extract_thinking(response)
+    >>> print(f"Thinking: {thinking[:100]}...")
+    >>> print(f"Answer: {answer}")
+
+    Hinweise:
+    ---------
+    - Bei Modellen ohne Thinking-Feature wird thinking als leerer String zurückgegeben
+    - Die Funktion ist provider-agnostisch und passt sich automatisch an
+    - Für Claude muss extended thinking aktiviert sein (Beta-Feature)
+    """
+    thinking = ""
+    answer = ""
+    content = response.content
+
+    # Fall 1: Liste von Blöcken (Claude, Gemini)
+    if isinstance(content, list):
+        for block in content:
+            if isinstance(block, dict):
+                block_type = block.get("type", "")
+                if block_type == "thinking":
+                    thinking += block.get("thinking", "")
+                elif block_type == "text":
+                    answer += block.get("text", "")
+
+    # Fall 2: String mit <think> Tags (Qwen3, DeepSeek R1)
+    elif isinstance(content, str):
+        think_match = re.search(r"<think>(.*?)</think>", content, re.DOTALL)
+        if think_match:
+            thinking = think_match.group(1).strip()
+            answer = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
+        else:
+            answer = content
+
+    # Fall 3: DeepSeek reasoning_content Feld
+    if not thinking and hasattr(response, "additional_kwargs"):
+        thinking = response.additional_kwargs.get("reasoning_content", "")
+
+    return thinking, answer
 
 
 # ============================================================================

@@ -77,6 +77,30 @@ def multiply(a: int, b: int) -> int:
     return a * b
 ```
 
+
+**🆕 NEU in v1.2.0: Tool Extras für Provider-spezifische Features**
+
+```python
+# ✨ NEU: Provider-spezifische Tool-Parameter
+@tool(extras={
+    "anthropic": {
+        "cache_control": {"type": "ephemeral"},  # Anthropic Prompt Caching
+        "disable_parallel_tool_use": False
+    },
+    "openai": {
+        "strict": True  # OpenAI Strict Mode
+    }
+})
+def search_database(query: str, limit: int = 10) -> str:
+    """Durchsucht die Datenbank."""
+    return f"Gefunden: {limit} Ergebnisse für '{query}'"
+```
+
+**Vorteile:**
+- ✅ Provider-native Features (Caching, Strict Mode, Computer Use)
+- ✅ Optimierte Performance
+- ✅ Backwards-compatible
+
 ---
 
 ### 4. ✅ `create_agent()` - Modern Agent API
@@ -97,6 +121,32 @@ response = agent.invoke({
     "messages": [{"role": "user", "content": "your question"}]
 })
 ```
+
+
+**🆕 NEU in v1.2.0: Strict Schema für Agent-Responses**
+
+```python
+from pydantic import BaseModel, Field
+
+class AgentResponse(BaseModel):
+    reasoning: str = Field(description="Denkprozess")
+    action: str = Field(description="Aktion")
+    confidence: float = Field(description="Konfidenz 0-1", ge=0, le=1)
+
+# ✨ NEU: response_format für garantierte Schema-Konformität
+agent = create_agent(
+    model=llm,
+    tools=[tool1, tool2],
+    system_prompt="You are a helpful assistant",
+    response_format=AgentResponse,  # Strikte Validierung!
+    provider_strategy="strict"
+)
+```
+
+**Vorteile:**
+- ✅ Garantierte Schema-Konformität
+- ✅ Type-Safety mit Pydantic
+- ✅ Predictable Agent-Behavior für Production
 
 ---
 

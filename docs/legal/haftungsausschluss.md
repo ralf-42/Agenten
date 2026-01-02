@@ -171,15 +171,16 @@ Dieser Haftungsausschluss unterliegt deutschem Recht unter Ausschluss des UN-Kau
 
 Bei Fragen zu diesem Haftungsausschluss wenden Sie sich bitte an:
 
-Ralf Bendig
-c/o flexdienst – #12150
-Kurt-Schumacher-Straße 76
-67663 Kaiserslautern
-Deutschland
-
+Ralf Bendig   
+c/o flexdienst – #12150   
+Kurt-Schumacher-Straße 76   
+67663 Kaiserslautern   
+Deutschland   
+   
 E-Mail: ralf.bendig.rb@gmail.com
 
 ---
 
-**Version:** 1.0
+**Version:** 1.0       
 **Letzte Aktualisierung:** Dezember 2025
+

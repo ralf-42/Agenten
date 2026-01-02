@@ -9,13 +9,12 @@ description: "Impressum und rechtliche Angaben gemäß § 5 TMG"
 
 ## Angaben gemäß § 5 TMG
 
-**Ralf Bendig**
-
-Ladungsfähige Anschrift:
-c/o flexdienst – #12150
-Kurt-Schumacher-Straße 76
-67663 Kaiserslautern
-Deutschland
+       
+**Ralf Bendig**   
+c/o flexdienst – #12150   
+Kurt-Schumacher-Straße 76   
+67663 Kaiserslautern   
+Deutschland   
 
 ## Kontakt
 
@@ -46,5 +45,5 @@ Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden 
 
 ---
 
-**Version:** 1.0
+**Version:** 1.0       
 **Letzte Aktualisierung:** Dezember 2025

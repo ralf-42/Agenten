@@ -46,21 +46,7 @@ has_toc: true
 
 
 
-## 3 LangGraph
-
-LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine State-Machine-Logik spezifische Fehlerquellen, insbesondere bei Zyklen, State-Übergängen und Checkpointing.
-
-| **Problem**                         | **Ursache**                                                                                                                                                                                               | **Symptom**                                                                                                | **Lösung/Intervention**                                                                                                                                                                                                   |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Endloser Zyklus (Infinite Loop)** | Die **Conditional Edge** (`route_supervisor` oder `should_continue`) entscheidet fälschlicherweise immer für einen weiteren Node anstatt für die Terminierung (`__end__`).                                | Hohe Token-Nutzung, das Programm terminiert nicht, LangSmith zeigt viele Wiederholungen im Trace.          | **Logik-Check:** Stellen Sie sicher, dass die Routing-Funktion eine klare **Abbruchbedingung** hat und **explizit** den Wert `"__end__"` zurückgibt.                                                                      |
-| **State-Schema-Fehler**             | Ein Node versucht, ein Feld im `AgentState` zu überschreiben, das **keinen Reducer** (`operator.add`) hat, oder der Node gibt eine **falsche Typisierung** zurück (z.B. `str` statt `List[BaseMessage]`). | `TypeError: 'dict' object is not callable` oder `LangGraph could not update state...`                      | **Typ-Check:** Prüfen Sie das `TypedDict` (`AgentState`). Jeder Node-Rückgabewert muss **exakt** dem im State definierten Typ entsprechen. Bei Listen **immer** `operator.add` verwenden.                                 |
-| **Fehlendes Tool-Ergebnis**         | Der **Tool-Node** erhält einen `ToolCall` vom Agenten, aber sendet das Ergebnis **nicht als `ToolMessage`** korrekt zurück in den State.                                                                  | Der Agent versucht, dieselbe Tool-Aktion erneut auszuführen, da das Ergebnis des vorherigen Calls fehlt.   | **Nachrichtentyp-Check:** Das Ergebnis des Tool-Aufrufs muss als **`ToolMessage`** in die `messages` Liste des `AgentState` zurückgeführt werden, damit der Agent es verarbeiten kann.                                    |
-| **Checkpointing-Fallen**            | Der Graph wird ohne `config={"configurable": {"thread_id": "..."}}` aufgerufen, obwohl `MemorySaver()` aktiviert ist, oder es wird keine `thread_id` übergeben.                                           | Nach Beendigung ist der State des Graphen verloren und kann nicht über `app.get_state()` abgerufen werden. | **Konfiguration:** Stellen Sie sicher, dass **`config`** bei **jedem** Aufruf von `app.invoke()` übergeben wird, um den State zu speichern und zu laden (z.B. für **Human-in-the-Loop**).                                 |
-| **Falsche Node-Verbindung**         | Eine Edge wurde nicht definiert (z.B. ein Worker-Node ist ein _Dead End_), oder die Kante zeigt auf einen nicht existierenden Node-Namen.                                                                 | `ValueError: Node 'X' is not defined.` oder der Graph stoppt unerwartet.                                   | **Visualisierung:** **Visualisieren** Sie den Graphen sofort nach der Kompilierung (z.B. mit `app.get_graph().print_ascii()` oder **LangSmith Trace** ) und prüfen Sie alle Kanten (`add_edge`, `add_conditional_edges`). |
-| **Routingschleife beim Supervisor** | Der Supervisor wählt nach einem Worker-Durchlauf **immer** denselben Worker erneut, weil die Nachrichtenhistorie nicht korrekt ausgewertet wird.                                                          | Die Aufgabe kommt nicht voran (z.B. `Worker A` $\to$ `Supervisor` $\to$ `Worker A` $\to$ ...).             | **Prompt-Check:** Stellen Sie sicher, dass der **Supervisor-Prompt** explizit anweist, die **gesamte Nachrichten-Historie** (`state["messages"]`) zu berücksichtigen, um unnötige Wiederholungen zu vermeiden.            |
-
-
-## 4 ChromaDB
+## 3 ChromaDB
 
 | Problem                    | Ursache                     | Lösung                                              |
 | -------------------------- | --------------------------- | --------------------------------------------------- |
@@ -73,4 +59,4 @@ LangGraph ermöglicht komplexe Agenten-**Workflows**, birgt aber durch seine Sta
 
 **Version:** 1.0  
 **Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.

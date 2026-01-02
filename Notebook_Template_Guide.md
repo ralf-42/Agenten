@@ -829,8 +829,9 @@ Erweitere den Agenten zu einem Multi-Agent-System mit Supervisor-Pattern.
 
 ## 8 ✅ Checkliste für neues Notebook
 
+> **📊 WICHTIG:** Bei der Erstellung oder Überarbeitung von Notebooks IMMER prüfen, ob Mermaid-Diagramme zur Visualisierung komplexer Konzepte verwendet werden können! (siehe Sektion 6 und `Mermaid_Diagramme.ipynb`)
+
 ### 8.1 Struktur
-- [ ] Banner-Bild vorhanden (`genai-banner-2.jpg`)
 - [ ] Titel im HTML-Format mit grauer Schrift (`<font size="5" color='grey'>`)
 - [ ] `---` Separator nach Titel
 - [ ] `🔧 Umgebung einrichten` Zelle (collapsed)

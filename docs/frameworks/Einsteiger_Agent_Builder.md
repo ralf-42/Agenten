@@ -932,52 +932,8 @@ graph TB
   - On-Premise Deployment erforderlich
   - Custom Python-Tools notwendig
 
-### 10.4 Empfohlener Lernpfad
 
-```mermaid
-journey
-    title Lernpfad - No-Code zu Production-Grade Agents
-    section Phase 1 Basics
-      Agent Builder Templates: 5: Einsteiger
-      Erste Workflows erstellen: 4: Einsteiger
-      MCP-Server integrieren: 3: Einsteiger
-    section Phase 2 Advanced
-      Conditional Workflows: 4: Fortgeschritten
-      Human-in-Loop: 4: Fortgeschritten
-      Multi-Agent-Systeme: 3: Fortgeschritten
-    section Phase 3 Production
-      Monitoring und Debugging: 5: Experte
-      Security Best Practices: 5: Experte
-      Code-Export und Migration: 4: Experte
-    section Phase 4 Scale
-      LangChain lernen: 3: Experte
-      Hybrid-Ansaetze: 4: Experte
-      Custom MCP Server: 3: Experte
-```
-
-**Schritt-für-Schritt:**
-
-1. **Woche 1-2: Grundlagen**
-   - Agent Builder Interface kennenlernen
-   - Template-Workflows ausprobieren
-   - Erste eigene Workflows erstellen
-
-2. **Woche 3-4: Integration**
-   - MCP-Server einbinden (GitHub, Slack, etc.)
-   - Conditional Logic nutzen
-   - Multi-Step-Workflows bauen
-
-3. **Woche 5-6: Production**
-   - Security Best Practices umsetzen
-   - Monitoring & Debugging einrichten
-   - Versionierung & Deployment
-
-4. **Woche 7+: Skalierung**
-   - Komplexe Multi-Agent-Systeme
-   - Code-Export für Anpassungen
-   - Migration zu LangChain bei Bedarf
-
-### 10.5 Nächste Schritte
+### 10.4 Nächste Schritte
 
 ```mermaid
 graph LR

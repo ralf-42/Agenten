@@ -379,15 +379,15 @@ LangChain Expression Language (LCEL) ersetzt frühere Chain‑Implementierungen.
 
 ```mermaid
 flowchart LR
-    INPUT[Input Data<br/>{\"input_text\": \"...\"}]
+    INPUT[Input Data<br/>input_text: ...]
     PROMPT[Prompt Template<br/>ChatPromptTemplate]
     LLM[Language Model<br/>llm]
     PARSER[Output Parser<br/>StrOutputParser]
     OUTPUT[Output<br/>String result]
 
-    INPUT -->|"|"| PROMPT
-    PROMPT -->|"|"| LLM
-    LLM -->|"|"| PARSER
+    INPUT -->|pipe operator| PROMPT
+    PROMPT -->|pipe operator| LLM
+    LLM -->|pipe operator| PARSER
     PARSER --> OUTPUT
 
     style PROMPT fill:#ffe6cc
@@ -577,7 +577,7 @@ flowchart TB
     FORMAT[Format Documents<br/>Combine retrieved chunks]
     PROMPT[RAG Prompt Template<br/>Context + Question]
     LLM[Language Model<br/>Generate answer]
-    END([Answer to User])
+    FINISH([Answer to User])
 
     START --> EMBED
     EMBED --> RETRIEVE
@@ -585,7 +585,7 @@ flowchart TB
     FORMAT -->|context| PROMPT
     START -->|question| PROMPT
     PROMPT --> LLM
-    LLM --> END
+    LLM --> FINISH
 
     subgraph "Vector Database"
         RETRIEVE

@@ -138,12 +138,12 @@ graph TB
     COND -->|Technical| TECH[Tool: Create JIRA Ticket]
     COND -->|Sales| SALES[Tool: Notify Sales Team]
     COND -->|Billing| HUMAN[Human: Review]
-    TECH --> END([END])
-    SALES --> END
-    HUMAN --> END
+    TECH --> FINISH([FINISH])
+    SALES --> FINISH
+    HUMAN --> FINISH
 
     style START fill:#90EE90
-    style END fill:#FFB6C1
+    style FINISH fill:#FFB6C1
     style COND fill:#FFD700
     style LLM fill:#87CEEB
 ```
@@ -212,11 +212,11 @@ flowchart TB
     APPROVAL -->|Yes| EMAIL
     APPROVAL -->|No| REJECT[Send Rejection Notice]
 
-    EMAIL --> END([Workflow Complete])
-    REJECT --> END
+    EMAIL --> FINISH([Workflow Complete])
+    REJECT --> FINISH
 
     style START fill:#90EE90
-    style END fill:#FFB6C1
+    style FINISH fill:#FFB6C1
     style COND fill:#FFD700
     style LLM fill:#87CEEB
     style HUMAN fill:#FFA500
@@ -396,8 +396,8 @@ flowchart LR
     START([Daily Check]) --> GH[🔧 GitHub: Get Critical Issues]
     GH --> COND{🔀 Issues > 0?}
     COND -->|Yes| SLACK[🔧 Slack: Notify Team]
-    COND -->|No| END([END])
-    SLACK --> END
+    COND -->|No| FINISH([FINISH])
+    SLACK --> FINISH
 
     style GH fill:#FFA500
     style SLACK fill:#4A154B
@@ -591,9 +591,9 @@ graph TB
     DATA -->|PII| REDACT[PII Redaction]
     DATA -->|Public| PROCESS[Normal Processing]
 
-    ENCRYPT --> END([END])
-    REDACT --> END
-    PROCESS --> END
+    ENCRYPT --> FINISH([FINISH])
+    REDACT --> FINISH
+    PROCESS --> FINISH
 
     style RBAC fill:#FFD700
     style ENCRYPT fill:#ff6b6b
@@ -818,8 +818,8 @@ flowchart TB
 
     LOG --> NOTIFY[Notify Team]
 
-    NEXT --> END([Success])
-    NOTIFY --> END
+    NEXT --> FINISH([Success])
+    NOTIFY --> FINISH
 
     style CHECK fill:#FFD700
     style FALLBACK fill:#FFA500

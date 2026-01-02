@@ -1,6 +1,21 @@
 # Agenten - Multi-Agent Systeme mit LangChain & LangGraph
 
+[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Compliance_Report_2025-12-31.md)
+[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Compliance_Report_2025-12-31.md)
+[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)](./LangChain_Compliance_Report_2025-12-31.md)
+
 > **Fortgeschrittene Implementierungen von KI-Agenten, Multi-Agent-Systemen und autonomen Workflows**
+
+## 🤖 For AI Agents
+
+This repository includes **agent governance** documentation:
+
+- **[AGENTS.md](./AGENTS.md)** - How AI agents should work with this codebase (role, rules, scope, quality gates)
+- **[CLAUDE.md](./CLAUDE.md)** - Project structure, conventions, and technical documentation
+- **[LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)** - Required patterns for all LangChain code
+- **[LangGraph_1.0_Must_Haves.md](./LangGraph_1.0_Must_Haves.md)** - Required patterns for multi-agent systems
+
+**Note:** AGENTS.md defines **behavior**, while CLAUDE.md describes **structure**. Read both before making changes.
 
 ## 🎯 Übersicht
 
@@ -82,9 +97,20 @@ Agenten/
 │       ├── multimodal_rag.py # Multimodales RAG-System
 │       └── mcp_modul.py      # MCP-Integration
 ├── 05_prompt/                # Prompt-Templates
+├── .claude/commands/         # Automatisierungskommandos
+│   ├── README.md             # Command-Dokumentation
+│   ├── sync-docs.md          # Dokumentations-Synchronisierung
+│   └── check-langchain.md    # LangChain Compliance-Checks
+├── AGENTS.md                 # Agent Governance (für KI-Assistenten)
 ├── CLAUDE.md                 # Projekt-Konventionen (Pflichtlektüre!)
 ├── LangChain_1.0_Must_Haves.md  # 7 MUST-HAVE Features
 ├── LangGraph_1.0_Must_Haves.md  # Multi-Agent Patterns
+├── LangChain_QuickRef.md     # Quick Reference (~200 Zeilen)
+├── LangGraph_QuickRef.md     # Quick Reference (~200 Zeilen)
+├── LangSmith_QuickRef.md     # Quick Reference (~150 Zeilen)
+├── LangChain_Standards_Full.md  # Full Standards (~1200 Zeilen)
+├── LangGraph_Standards_Full.md  # Full Standards (~1200 Zeilen)
+├── LangSmith_Standards_Full.md  # Full Standards (~1200 Zeilen)
 ├── Notebook_Template_Guide.md   # Standard-Notebook-Struktur
 └── Project_Structure_Guide.md   # Verzeichnisstruktur-Guide
 ```
@@ -99,11 +125,28 @@ Agenten/
 
 | Dokument | Zweck | Wann lesen? |
 |----------|-------|-------------|
+| **[AGENTS.md](./AGENTS.md)** 🤖 | Agent Governance (für KI-Assistenten) | **Für AI-Agents:** Vor allen Änderungen |
 | **[CLAUDE.md](./CLAUDE.md)** | Projekt-Konventionen, Code-Standards | **START HIER!** Vor dem ersten Code |
 | **[LangChain_1.0_Must_Haves.md](./LangChain_1.0_Must_Haves.md)** | 7 PFLICHT-Features für LangChain 1.0+ | Vor jedem neuen Agent/RAG-System |
 | **[LangGraph_1.0_Must_Haves.md](./LangGraph_1.0_Must_Haves.md)** | Multi-Agent Patterns & State Machines | Vor Multi-Agent-Implementierung |
 | **[Notebook_Template_Guide.md](./Notebook_Template_Guide.md)** | Standard-Struktur für Notebooks | Vor neuem Notebook |
 | **[Project_Structure_Guide.md](./Project_Structure_Guide.md)** | Verzeichnis-Organisation | Setup neuer Projekte |
+
+### Quick References (für schnellen Zugriff)
+
+| Dokument | Beschreibung | Umfang |
+|----------|--------------|--------|
+| [LangChain_QuickRef.md](./LangChain_QuickRef.md) | 7 Patterns + Anti-Patterns | ~200 Zeilen |
+| [LangGraph_QuickRef.md](./LangGraph_QuickRef.md) | Multi-Agent Patterns | ~200 Zeilen |
+| [LangSmith_QuickRef.md](./LangSmith_QuickRef.md) | Monitoring & Debugging | ~150 Zeilen |
+
+### Full Standards (für Deep Dive)
+
+| Dokument | Beschreibung | Umfang |
+|----------|--------------|--------|
+| [LangChain_Standards_Full.md](./LangChain_Standards_Full.md) | Vollständige LangChain Standards | ~1200 Zeilen |
+| [LangGraph_Standards_Full.md](./LangGraph_Standards_Full.md) | Vollständige LangGraph Standards | ~1200 Zeilen |
+| [LangSmith_Standards_Full.md](./LangSmith_Standards_Full.md) | Vollständige LangSmith Standards | ~1200 Zeilen |
 
 ### 🎯 Die 7 MUST-HAVE Features (LangChain 1.0+)
 

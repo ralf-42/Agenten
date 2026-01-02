@@ -34,8 +34,21 @@ KI-Agenten markieren damit einen Paradigmenwechsel in der Softwareentwicklung. S
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
+---
+
+## 📚 Dokumentation
+
+Vollständige Projekt-Dokumentation und Standards:
+
+- **[LangChain 1.0 Must-Haves](https://github.com/ralf-42/Agenten/blob/main/LangChain_1.0_Must_Haves.md)** - PFLICHT-Features für alle Notebooks
+- **[LangGraph 1.0 Must-Haves](https://github.com/ralf-42/Agenten/blob/main/LangGraph_1.0_Must_Haves.md)** - Multi-Agent Patterns
+- **[CLAUDE.md](https://github.com/ralf-42/Agenten/blob/main/CLAUDE.md)** - Projekt-Konventionen
+- **[AGENTS.md](https://github.com/ralf-42/Agenten/blob/main/AGENTS.md)** - Agent Governance (für KI-Assistenten)
+
+---
+
+**Version:** 1.1
+**Stand:** Dezember 2025
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

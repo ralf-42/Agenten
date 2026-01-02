@@ -1,0 +1,94 @@
+// Custom styles for KI-Agenten GitHub Pages
+// Override just-the-docs default styles to increase content width
+// Target: ~130 characters per line (instead of ~100)
+
+// WICHTIG: Just-the-docs lädt diese Datei automatisch als letztes CSS
+// Daher brauchen wir !important für starke Overrides
+
+// Hauptinhalt-Container breiter machen
+.main-content,
+.main-content-wrap,
+main.main-content {
+  max-width: 1200px !important;
+}
+
+// Für alle Bildschirmgrößen anpassen
+@media (min-width: 31.25rem) {
+  .side-bar {
+    width: 16rem !important;
+  }
+
+  .main {
+    margin-left: 16rem !important;
+  }
+}
+
+@media (min-width: 50rem) {
+  .side-bar {
+    width: 17rem !important;
+  }
+
+  .main {
+    margin-left: 17rem !important;
+    max-width: calc(100% - 17rem) !important;
+  }
+
+  .main-content {
+    max-width: 1200px !important;
+  }
+}
+
+@media (min-width: 66.5rem) {
+  .side-bar {
+    width: 17rem !important;
+  }
+
+  .main {
+    margin-left: 17rem !important;
+    max-width: calc(100% - 17rem) !important;
+  }
+
+  .main-content,
+  .main-content-wrap {
+    max-width: 1200px !important;
+  }
+}
+
+// Für sehr große Bildschirme (Desktop)
+@media (min-width: 87.5rem) {
+  .main-content,
+  .main-content-wrap,
+  main.main-content {
+    max-width: 1200px !important;
+  }
+}
+
+// Body und Container-Anpassungen
+// Schriftgröße: Standard ist 16px
+// Wählen Sie zwischen: 14px (klein), 15px (mittel), 16px (normal), 17px (groß), 18px (sehr groß)
+body {
+  font-size: 16px !important; // Normale Schriftgröße
+}
+
+// Alternativ: Nur Content-Bereich anpassen
+.main-content {
+  font-size: 16px !important;
+  line-height: 1.6 !important; // Zeilenabstand (1.5 = eng, 1.6 = normal, 1.8 = weit)
+}
+
+// Überschriften separat anpassen (optional)
+h1 { font-size: 2em !important; }
+h2 { font-size: 1.5em !important; }
+h3 { font-size: 1.25em !important; }
+h4 { font-size: 1.1em !important; }
+
+// Code-Blöcke (optional)
+code, pre {
+  font-size: 0.9em !important; // Etwas kleiner als normaler Text
+}
+
+// Zusätzlich: Code-Blöcke auch breiter
+pre.highlight,
+figure.highlight {
+  max-width: 1200px !important;
+}

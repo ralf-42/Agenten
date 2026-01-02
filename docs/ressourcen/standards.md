@@ -37,12 +37,12 @@ Vollständige Code-Konventionen und Best Practices für das Agenten-Projekt.
 ```python
 from langchain.chat_models import init_chat_model
 
-# Separate Variablen für Konfiguration
-model_provider = "openai"
-model_name = "gpt-4o-mini"
-temperature = 0.0
+# ✨ Kurznotation "provider:model" (STANDARD seit Dezember 2025)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
-llm = init_chat_model(model_name, model_provider=model_provider, temperature=temperature)
+# Weitere Beispiele:
+# llm = init_chat_model("anthropic:claude-3-sonnet", temperature=0.3)
+# llm = init_chat_model("groq:llama-3.1-70b", temperature=0.7)
 ```
 
 ---

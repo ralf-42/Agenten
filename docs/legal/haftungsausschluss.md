@@ -2,192 +2,184 @@
 layout: default
 title: Haftungsausschluss
 nav_exclude: true
-description: "Haftungsausschluss und rechtliche Hinweise"
+description: "Haftungsausschluss (Disclaimer)"
 ---
 
 # Haftungsausschluss (Disclaimer)
 
-Stand: November 2025
-
 ## 1. Haftung für Inhalte
 
-Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
-
-Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+Die Inhalte dieses Repositories wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
 
 Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
 
----
-
 ## 2. Haftung für Links
 
-### Externe Links
-
-Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-
-Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
 
 Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
 
-### Verlinkte externe Dienste auf dieser Website
+## 3. Haftungsausschluss für KI-generierte Inhalte
 
-Diese Website verlinkt zu folgenden externen Diensten:
+### 3.1 Verwendung von Large Language Models (LLMs)
 
-#### Dokumentationen
-- **LangChain Documentation:** [https://python.langchain.com/](https://python.langchain.com/)
-  - Betreiber: LangChain Inc.
-- **LangGraph Documentation:** [https://langchain-ai.github.io/langgraph/](https://langchain-ai.github.io/langgraph/)
-  - Betreiber: LangChain Inc.
-- **LangSmith Documentation:** [https://docs.smith.langchain.com/](https://docs.smith.langchain.com/)
-  - Betreiber: LangChain Inc.
-- **OpenAI API Reference:** [https://platform.openai.com/docs](https://platform.openai.com/docs)
-  - Betreiber: OpenAI, L.L.C.
+Dieses Projekt befasst sich mit generativer Künstlicher Intelligenz und nutzt Large Language Models (LLMs) wie GPT-4, Claude, und andere. Die durch diese Modelle generierten Inhalte:
 
-#### Repositories und Code-Hosting
-- **GitHub Repository:** [https://github.com/ralf-42/Agenten](https://github.com/ralf-42/Agenten)
-  - Betreiber: GitHub Inc. (Microsoft Corporation)
+- Können Fehler, Ungenauigkeiten oder veraltete Informationen enthalten
+- Spiegeln nicht notwendigerweise die Meinung des Repository-Betreibers wider
+- Sollten nicht als professionelle Beratung (rechtlich, medizinisch, finanziell) verstanden werden
+- Können Biases oder diskriminierende Inhalte enthalten, die nicht beabsichtigt sind
 
-Für die Inhalte dieser verlinkten Seiten gelten die jeweiligen Datenschutzerklärungen und Nutzungsbedingungen der Betreiber.
+### 3.2 Keine Gewährleistung für KI-Outputs
 
----
+Der Betreiber übernimmt keine Haftung für:
 
-## 3. Urheberrecht
+- Fehlerhafte oder irreführende Informationen, die durch KI-Modelle generiert werden
+- Schäden, die durch die Verwendung von KI-generierten Inhalten entstehen
+- Die Korrektheit, Vollständigkeit oder Eignung von KI-Outputs für einen bestimmten Zweck
+- Urheberrechtsverletzungen durch KI-generierte Inhalte
 
-### Eigene Inhalte
+### 3.3 Eigenverantwortung der Nutzer
 
-Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+Nutzer, die die in diesem Repository bereitgestellten KI-Tools und Notebooks verwenden, tun dies auf eigene Verantwortung. Es wird dringend empfohlen:
 
-### Open Source Lizenz (MIT License)
+- KI-generierte Inhalte stets kritisch zu prüfen
+- Bei wichtigen Entscheidungen professionelle Beratung einzuholen
+- Die Nutzungsbedingungen der verwendeten APIs (OpenAI, Anthropic, etc.) zu beachten
+- Keine sensiblen oder personenbezogenen Daten an KI-Modelle zu übermitteln
 
-Soweit nicht anders angegeben, stehen die Inhalte dieser Website unter der MIT-Lizenz und dürfen entsprechend genutzt werden:
+## 4. Haftungsausschluss für Code und Software
 
-```
-MIT License
+### 4.1 "As-Is" Bereitstellung
 
-Copyright (c) 2025 Ralf
+Der in diesem Repository bereitgestellte Code wird "wie besehen" (AS IS) ohne jegliche Gewährleistung zur Verfügung gestellt. Dies umfasst insbesondere:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+- Funktionalität und Fehlerfreiheit
+- Eignung für einen bestimmten Zweck
+- Sicherheit und Datenschutzkonformität
+- Kompatibilität mit bestimmten Systemen oder Bibliotheken
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+### 4.2 Keine Haftung für Schäden
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+Der Betreiber haftet nicht für Schäden, die durch die Nutzung oder Unfähigkeit zur Nutzung des bereitgestellten Codes entstehen, einschließlich aber nicht beschränkt auf:
 
-### Fremde Inhalte und Markenzeichen
+- Datenverlust
+- Betriebsausfälle
+- Finanzielle Verluste
+- Sicherheitsverletzungen
+- Schäden durch Dritte
 
-Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet.
+### 4.3 API-Keys und Kosten
 
-**Verwendete Markenzeichen und Logos:**
-- LangChain™ ist ein Markenzeichen von LangChain Inc.
-- OpenAI™ ist ein Markenzeichen von OpenAI, L.L.C.
-- GitHub™ ist ein Markenzeichen von GitHub Inc.
-- Python™ ist ein Markenzeichen der Python Software Foundation
+Die Nutzung der in diesem Projekt verwendeten APIs (OpenAI, Anthropic, Google, etc.) kann Kosten verursachen. Der Betreiber übernimmt keine Haftung für:
 
-Die Verwendung dieser Markenzeichen erfolgt ausschließlich zu Referenz- und Bildungszwecken und stellt keine Verletzung der Markenrechte dar.
+- Durch API-Nutzung entstehende Kosten
+- Missbrauch von API-Keys
+- Datenlecks durch unsachgemäße Handhabung von Credentials
 
-Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+**Wichtig:** Nutzer sind selbst dafür verantwortlich, ihre API-Keys zu sichern und ihre API-Nutzung zu überwachen.
 
----
+## 5. Experimenteller Charakter
 
-## 4. Haftung für technische Fehler
+Dieses Repository dient Bildungs- und Forschungszwecken. Die bereitgestellten Notebooks, Scripts und Tools sind:
 
-### Keine Gewähr für Verfügbarkeit
+- Experimentell und nicht für den Produktiveinsatz gedacht
+- Nicht vollständig getestet
+- Möglicherweise nicht für alle Anwendungsfälle geeignet
+- Nicht notwendigerweise sicher gegen Angriffe oder Missbrauch
 
-Der Betreiber übernimmt keine Garantie dafür, dass:
-- die Website jederzeit verfügbar ist
-- die Website fehlerfrei funktioniert
-- die Website frei von Viren oder anderen schädlichen Komponenten ist
+**Warnung:** Verwenden Sie diesen Code NICHT in Produktionssystemen ohne gründliche Überprüfung, Testing und Sicherheitsaudits.
 
-### Keine Gewähr für Korrektheit von Code-Beispielen
+## 6. Datensicherheit und Vertraulichkeit
 
-Die auf dieser Website bereitgestellten Code-Beispiele dienen ausschließlich zu Bildungszwecken. Der Betreiber übernimmt keine Gewähr für:
-- Korrektheit der Code-Beispiele
-- Funktionsfähigkeit in Produktionsumgebungen
-- Sicherheit der bereitgestellten Code-Beispiele
-- Kompatibilität mit zukünftigen Versionen der verwendeten Bibliotheken
-
-**Wichtiger Hinweis für Entwickler:**
-- Testen Sie alle Code-Beispiele gründlich, bevor Sie sie in Produktionsumgebungen einsetzen
-- Achten Sie auf Sicherheitsaspekte (insbesondere bei der Verwendung von `eval()` oder ähnlichen Funktionen)
-- Verwenden Sie API-Keys nur in sicheren Umgebungen
-- Beachten Sie die Nutzungsbedingungen der verwendeten APIs (OpenAI, etc.)
-
----
-
-## 5. Haftung für API-Kosten
-
-### OpenAI und andere kostenpflichtige APIs
-
-Die in den Tutorials und Code-Beispielen verwendeten APIs (insbesondere OpenAI) können Kosten verursachen. Der Betreiber dieser Website übernimmt **keine Haftung** für:
-- Entstehende API-Kosten bei der Verwendung der Code-Beispiele
-- Unerwartete hohe Kosten durch fehlerhafte Implementierungen
-- Kosten durch missbräuchliche Nutzung
-
-**Empfehlungen:**
-- Setzen Sie API-Kostenalarme ein (z.B. bei OpenAI)
-- Verwenden Sie Entwicklungsumgebungen mit niedrigen Limits
-- Überprüfen Sie regelmäßig Ihre API-Nutzung
-- Verwenden Sie Rate-Limiting in Ihren Anwendungen
-
----
-
-## 6. Keine professionelle Beratung
-
-### Bildungszweck
-
-Die Inhalte dieser Website dienen ausschließlich zu Bildungs- und Informationszwecken. Sie stellen keine professionelle Beratung dar und sollten nicht als solche verstanden werden.
-
-### Keine Garantie für Erfolg
+### 6.1 Keine Garantie für Datensicherheit
 
 Der Betreiber übernimmt keine Garantie dafür, dass:
-- Die vermittelten Kenntnisse zu beruflichem Erfolg führen
-- Die Inhalte vollständig oder ausreichend für bestimmte Zwecke sind
-- Die Inhalte den neuesten Stand der Technik widerspiegeln
 
----
+- Übermittelte Daten vertraulich behandelt werden
+- Daten vor unbefugtem Zugriff geschützt sind
+- Keine Datenlecks auftreten
 
-## 7. Haftungsbeschränkung
+### 6.2 Empfehlungen
 
-### Umfang der Haftung
+Nutzer sollten:
 
-Der Betreiber haftet nur für Vorsatz und grobe Fahrlässigkeit. Eine Haftung für leichte Fahrlässigkeit ist ausgeschlossen, soweit nicht Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit oder Garantien betroffen sind oder Ansprüche nach dem Produkthaftungsgesetz berührt sind.
+- Keine sensiblen Daten in Issues, Pull Requests oder Code einfügen
+- Keine personenbezogenen Daten an KI-APIs übermitteln
+- API-Keys und Secrets niemals im Code committen
+- `.env`-Dateien für sensible Konfiguration verwenden
 
-Die Haftung für indirekte Schäden, Folgeschäden und entgangenen Gewinn ist ausgeschlossen, soweit gesetzlich zulässig.
+## 7. Nutzung auf eigene Verantwortung
 
----
+Die Nutzung dieses Repositories und aller darin enthaltenen Materialien erfolgt ausschließlich auf eigene Gefahr. Der Betreiber haftet nicht für:
 
-## 8. Salvatorische Klausel
+- Direkte oder indirekte Schäden
+- Folgeschäden
+- Entgangenen Gewinn
+- Datenverlust
+- Sonstige Schäden, die durch die Nutzung entstehen
+
+## 8. Externe Abhängigkeiten
+
+Dieses Projekt verwendet zahlreiche externe Bibliotheken und Dienste (siehe `requirements.txt` und `CLAUDE.md`). Der Betreiber übernimmt keine Haftung für:
+
+- Fehler oder Sicherheitslücken in Drittanbieter-Bibliotheken
+- Änderungen oder Ausfälle externer APIs
+- Datenschutzverletzungen durch Drittanbieter
+- Breaking Changes in Abhängigkeiten
+
+## 9. Geistiges Eigentum Dritter
+
+### 9.1 KI-generierte Inhalte
+
+Bei der Verwendung von KI-Modellen können Inhalte generiert werden, die:
+
+- Urheberrechtlich geschützt sein könnten
+- Markenrechte Dritter verletzen könnten
+- Gegen andere Schutzrechte verstoßen könnten
+
+Der Betreiber übernimmt keine Haftung für Urheberrechtsverletzungen durch KI-generierte Inhalte. Nutzer sind selbst dafür verantwortlich, die rechtliche Zulässigkeit der Verwendung zu prüfen.
+
+### 9.2 Training-Daten
+
+Die in `02_daten/` bereitgestellten Daten können urheberrechtlich geschützt sein. Nutzer sind verpflichtet:
+
+- Die Urheberrechte zu respektieren
+- Daten nur im Rahmen der Fair-Use-Regelungen zu verwenden
+- Bei kommerzieller Nutzung entsprechende Lizenzen einzuholen
+
+## 10. Keine professionelle Beratung
+
+Die in diesem Repository bereitgestellten Informationen stellen keine professionelle Beratung dar, insbesondere:
+
+- Keine Rechtsberatung
+- Keine technische Beratung für Produktivsysteme
+- Keine Sicherheitsberatung
+- Keine Datenschutzberatung
+
+Für professionelle Beratung wenden Sie sich bitte an entsprechende Fachleute.
+
+## 11. Salvatorische Klausel
 
 Sollten einzelne Bestimmungen dieses Haftungsausschlusses unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen davon unberührt.
 
+## 12. Anwendbares Recht
+
+Dieser Haftungsausschluss unterliegt deutschem Recht unter Ausschluss des UN-Kaufrechts.
+
+## 13. Kontakt
+
+Bei Fragen zu diesem Haftungsausschluss wenden Sie sich bitte an:
+
+Ralf Bendig
+c/o flexdienst – #12150
+Kurt-Schumacher-Straße 76
+67663 Kaiserslautern
+Deutschland
+
+E-Mail: ralf.bendig.rb@gmail.com
+
 ---
 
-## 9. Kontakt bei Rechtsverletzungen
-
-Sollten Sie der Meinung sein, dass Inhalte auf dieser Website Ihre Rechte verletzen, kontaktieren Sie uns bitte umgehend:
-
-**Kontakt:** [Ihre Kontaktdaten aus dem Impressum]
-
-Wir werden berechtigte Beanstandungen umgehend prüfen und gegebenenfalls die beanstandeten Inhalte entfernen.
-
----
-
-## 10. Anwendbares Recht
-
-Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
-
----
-
-_Stand: November 2025_
+**Version:** 1.0
+**Letzte Aktualisierung:** Dezember 2025

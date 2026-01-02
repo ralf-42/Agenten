@@ -97,16 +97,13 @@ Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sp
 ```python
 from langchain.chat_models import init_chat_model
 
-# Konfiguration explizit halten (gut für Notebooks und Experimente)
-model_provider = "openai"       # z.B. "openai", "anthropic", "google"
-model_name = "gpt-4o-mini"      # oder "gpt-4", "gpt-4.1", etc.
-temperature = 0.0                # 0.0 = deterministisch
+# ✨ Kurznotation "provider:model" (STANDARD seit Dezember 2025)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
-llm = init_chat_model(
-    model_name,
-    model_provider=model_provider,
-    temperature=temperature,
-)
+# Weitere Beispiele:
+# llm = init_chat_model("anthropic:claude-3-sonnet", temperature=0.3)
+# llm = init_chat_model("groq:llama-3.1-70b", temperature=0.7)
+# llm = init_chat_model("google:gemini-pro", temperature=0.5)
 
 # Testaufruf
 response = llm.invoke("Nenne drei typische Einsatzgebiete von KI-Agenten.")

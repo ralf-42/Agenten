@@ -18,7 +18,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 def check_environment():
     """
-    Gibt die installierte Python-Version aus, listet installierte LangChain-Bibliotheken auf
+    Gibt die installierte Python-Version aus, listet installierte LangChain- und LangGraph-Bibliotheken auf
     und unterdrückt typische Deprecation-Warnungen im Zusammenhang mit LangChain.
 
     Diese Funktion ist hilfreich, um schnell die Entwicklungsumgebung für LangChain-Projekte
@@ -27,17 +27,18 @@ def check_environment():
     Ausgabe:
         - Python-Version
         - Liste installierter Pakete, die mit "langchain" beginnen
+        - Liste installierter Pakete, die mit "langgraph" beginnen
     """
 
     # Python-Version anzeigen
     print(f"Python Version: {sys.version}\n")
 
-    # LangChain-Pakete anzeigen
-    print("Installierte LangChain-Bibliotheken:")
+    # LangChain- und LangGraph-Pakete anzeigen
+    print("Installierte LangChain- und LangGraph-Bibliotheken:")
     try:
         result = subprocess.run(["pip", "list"], stdout=subprocess.PIPE, text=True)
         for line in result.stdout.splitlines():
-            if line.lower().startswith("langchain"):
+            if line.lower().startswith("langchain") or line.lower().startswith("langgraph"):
                 print(line)
     except Exception as e:
         print("Fehler beim Abrufen der Paketliste:", e)
@@ -210,9 +211,9 @@ def mprint(text):
     display(Markdown(text))
 
 
-def mermaid(code: str):
+def mermaid(code: str, width=None, height=None):
     """
-    Rendert Mermaid-Diagramme über den kroki.io Service.
+    Rendert Mermaid-Diagramme über den kroki.io Service mit anpassbarer Größe.
 
     Diese Funktion sendet Mermaid-Code an den kroki.io Online-Service
     und zeigt das resultierende SVG-Diagramm direkt im Jupyter-Notebook an.
@@ -225,6 +226,10 @@ def mermaid(code: str):
     ----------
     code : str
         Mermaid-Code, der das gewünschte Diagramm beschreibt.
+    width : int, optional
+        Breite des Diagramms in Pixeln (Standard: None = automatische Größe).
+    height : int, optional
+        Höhe des Diagramms in Pixeln (Standard: None = automatische Größe).
 
     Beispiel:
     ---------
@@ -240,22 +245,49 @@ def mermaid(code: str):
     ...     Agent->>LLM: Query senden
     ...     LLM-->>Agent: Antwort
     ...     Agent-->>User: Ergebnis
-    ... ''')
+    ... ''', width=800, height=600)
 
     Hinweise:
     ---------
     - Benötigt eine aktive Internetverbindung zu kroki.io
     - Unterstützt alle Mermaid-Diagrammtypen (graph, sequenceDiagram, gantt, etc.)
     - Timeout ist auf 15 Sekunden gesetzt
+    - Width und Height sind optional für bessere Kontrolle über die Darstellung
 
     Raises:
     -------
     requests.HTTPError
         Wenn der kroki.io Service nicht erreichbar ist oder ein Fehler auftritt.
     """
-    r = requests.post("https://kroki.io/mermaid/svg", data=code.encode("utf-8"), timeout=15)
-    r.raise_for_status()
-    display(SVG(r.text))
+    try:
+        r = requests.post("https://kroki.io/mermaid/svg", data=code.encode("utf-8"), timeout=15)
+        r.raise_for_status()
+
+        # SVG-Code anpassen, wenn width oder height angegeben sind
+        svg_content = r.text
+        if width is not None or height is not None:
+            # Ersetze oder füge width/height Attribute im SVG-Tag hinzu
+            import re
+            # Suche nach dem öffnenden <svg> Tag
+            svg_match = re.search(r'<svg([^>]*)>', svg_content)
+            if svg_match:
+                attrs = svg_match.group(1)
+                # Entferne existierende width/height Attribute
+                attrs = re.sub(r'\s*width="[^"]*"', '', attrs)
+                attrs = re.sub(r'\s*height="[^"]*"', '', attrs)
+                # Füge neue Attribute hinzu
+                new_attrs = attrs
+                if width is not None:
+                    new_attrs += f' width="{width}"'
+                if height is not None:
+                    new_attrs += f' height="{height}"'
+                svg_content = svg_content.replace(svg_match.group(0), f'<svg{new_attrs}>')
+
+        display(SVG(svg_content))
+    except requests.exceptions.HTTPError as e:
+        print(f"Fehler beim Rendern des Mermaid-Diagramms: {e}")
+    except Exception as e:
+        print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
 
 
 # ============================================================================
@@ -264,19 +296,23 @@ def mermaid(code: str):
 
 def _convert_github_tree_to_raw(url):
     """
-    Wandelt einen GitHub-Tree-Link in einen Raw-Link um.
+    Wandelt einen GitHub-Tree- oder Blob-Link in einen Raw-Link um.
 
-    Beispiel:
+    Beispiele:
         Input:
             https://github.com/user/repo/tree/main/path/to/file.py
+            https://github.com/user/repo/blob/main/path/to/file.py
         Output:
             https://raw.githubusercontent.com/user/repo/main/path/to/file.py
 
     Wird intern von load_chat_prompt_template verwendet, um GitHub-Links
     automatisch in ladbare Raw-Datei-URLs umzuwandeln.
     """
-    if "github.com" in url and "/tree/" in url:
-        return url.replace("github.com", "raw.githubusercontent.com").replace("/tree/", "/")
+    if "github.com" in url:
+        if "/tree/" in url:
+            return url.replace("github.com", "raw.githubusercontent.com").replace("/tree/", "/")
+        elif "/blob/" in url:
+            return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/")
     return url
 
 
@@ -302,6 +338,7 @@ def load_chat_prompt_template(path):
     Unterstützt:
       - lokale Pfade (z. B. '05_prompt/qa_prompt.py')
       - GitHub-Tree-Links (automatische Umwandlung in Raw-Link)
+      - GitHub-Blob-Links (automatische Umwandlung in Raw-Link)
       - direkte Raw-Links
 
     Args:

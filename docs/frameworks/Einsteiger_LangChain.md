@@ -50,7 +50,7 @@ graph TB
         MODELS[Models<br/>init_chat_model]
         PROMPTS[Prompts<br/>ChatPromptTemplate]
         TOOLS[Tools<br/>@tool decorator]
-        CHAINS[Chains<br/>LCEL with |]
+        CHAINS[Chains<br/>LCEL with pipe]
         AGENTS[Agents<br/>create_agent]
     end
 

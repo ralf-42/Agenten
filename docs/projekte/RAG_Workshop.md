@@ -10,7 +10,7 @@ has_toc: true
 # RAG Workshop
 {: .no_toc }
 
-> **Tech-Doku Assistent bauen**    
+> **Tech-Doku Assistent bauen**
 > Schrittweise Entwicklung vom einfachen Chatbot zur intelligenten RAG-Anwendung mit UI (Module M04-M11)
 
 ---
@@ -114,21 +114,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 # LLM initialisieren
 llm = init_chat_model("openai:gpt-4o-mini", temperature=0.3)
-
-# Prompt-Template erstellen
-prompt = ChatPromptTemplate.from_messages([
-    ("system", """Du bist ein technischer Dokumentationsassistent.
-    Beantworte Fragen präzise, höflich und technisch korrekt.
-    Verwende Beispiele wo sinnvoll."""),
-    ("user", "{frage}")
-])
-
-# Chain erstellen (LCEL-Syntax)
-chain = prompt | llm | StrOutputParser()
-
-# Test
-antwort = chain.invoke({"frage": "Was ist ein API-Endpunkt?"})
-print(antwort)
+...
 ```
 
 ### Aufgabe 1.2: Interaktive Chat-Schleife
@@ -138,23 +124,7 @@ print(antwort)
 def tech_chat():
     """Einfache Chat-Schleife für Jupyter/Colab"""
     print("🤖 Tech-Doku Assistent gestartet!")
-    print("   (Schreibe 'exit' zum Beenden)\n")
-
-    while True:
-        frage = input("💬 Sie: ")
-
-        if frage.lower() in ['exit', 'quit', 'beenden']:
-            print("👋 Auf Wiedersehen!")
-            break
-
-        if not frage.strip():
-            continue
-
-        antwort = chain.invoke({"frage": frage})
-        print(f"\n🤖 Bot: {antwort}\n")
-
-# Starten
-tech_chat()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -181,12 +151,7 @@ import tiktoken
 def count_tokens(text: str, model: str = "gpt-4o-mini") -> int:
     """Zählt Tokens für ein gegebenes Modell"""
     encoding = tiktoken.encoding_for_model(model)
-    return len(encoding.encode(text))
-
-# Test
-test_text = "Was ist Docker?"
-tokens = count_tokens(test_text)
-print(f"📊 '{test_text}' hat {tokens} Tokens")
+    ...
 ```
 
 ### Aufgabe 2.2: Chat mit Token-Tracking
@@ -196,51 +161,7 @@ def tech_chat_mit_tokens():
     """Chat mit Token-Statistiken"""
     print("🤖 Tech-Doku Assistent (mit Token-Tracking)")
     print("   (Schreibe 'exit' zum Beenden)\n")
-
-    total_input_tokens = 0
-    total_output_tokens = 0
-
-    while True:
-        frage = input("💬 Sie: ")
-
-        if frage.lower() in ['exit', 'quit', 'beenden']:
-            print(f"\n📊 Session-Statistik:")
-            print(f"   Gesamt Input:  {total_input_tokens} Tokens")
-            print(f"   Gesamt Output: {total_output_tokens} Tokens")
-            print(f"   Total:         {total_input_tokens + total_output_tokens} Tokens")
-            print("👋 Auf Wiedersehen!")
-            break
-
-        if not frage.strip():
-            continue
-
-        # Token-Zählung Input
-        input_tokens = count_tokens(frage)
-
-        # LLM-Anfrage
-        antwort = chain.invoke({"frage": frage})
-
-        # Token-Zählung Output
-        output_tokens = count_tokens(antwort)
-
-        # Statistik aktualisieren
-        total_input_tokens += input_tokens
-        total_output_tokens += output_tokens
-
-        print(f"\n🤖 Bot: {antwort}\n")
-        print(f"📊 Token-Statistik:")
-        print(f"   Input:  {input_tokens:4d} Tokens")
-        print(f"   Output: {output_tokens:4d} Tokens")
-        print(f"   Total:  {input_tokens + output_tokens:4d} Tokens")
-
-        # Warnung bei langen Antworten
-        if output_tokens > 500:
-            print("⚠️  Warnung: Sehr lange Antwort (>500 Tokens)")
-
-        print()
-
-# Starten
-tech_chat_mit_tokens()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -272,28 +193,7 @@ store = {}
 def get_session_history(session_id: str) -> InMemoryChatMessageHistory:
     """Holt oder erstellt Chat-History für Session"""
     if session_id not in store:
-        store[session_id] = InMemoryChatMessageHistory()
-    return store[session_id]
-
-# Neues Prompt mit History
-prompt_with_history = ChatPromptTemplate.from_messages([
-    ("system", """Du bist ein technischer Dokumentationsassistent.
-    Beantworte Fragen präzise und technisch korrekt.
-    WICHTIG: Beziehe dich auf vorherige Fragen in der Konversation."""),
-    MessagesPlaceholder(variable_name="history"),
-    ("user", "{frage}")
-])
-
-# Chain mit Memory
-chain_with_memory = prompt_with_history | llm | StrOutputParser()
-
-# Runnable mit History
-chat_with_history = RunnableWithMessageHistory(
-    chain_with_memory,
-    get_session_history,
-    input_messages_key="frage",
-    history_messages_key="history"
-)
+        ...
 ```
 
 ### Aufgabe 3.2: Chat mit Kontext-Bewusstsein
@@ -302,37 +202,8 @@ chat_with_history = RunnableWithMessageHistory(
 def tech_chat_mit_memory():
     """Chat mit Konversationsgedächtnis"""
     session_id = "user_session_1"
-
     print("🤖 Tech-Doku Assistent (mit Memory)")
-    print("   (Schreibe 'exit' zum Beenden, 'reset' für neue Session)\n")
-
-    while True:
-        frage = input("💬 Sie: ")
-
-        if frage.lower() in ['exit', 'quit', 'beenden']:
-            print("👋 Auf Wiedersehen!")
-            break
-
-        if frage.lower() == 'reset':
-            store[session_id] = InMemoryChatMessageHistory()
-            print("🔄 Chat-History wurde zurückgesetzt\n")
-            continue
-
-        if not frage.strip():
-            continue
-
-        # Invoke mit Session-Config
-        config = {"configurable": {"session_id": session_id}}
-        antwort = chat_with_history.invoke({"frage": frage}, config=config)
-
-        print(f"\n🤖 Bot: {antwort}\n")
-
-        # Zeige History-Länge
-        history = store[session_id].messages
-        print(f"💾 History: {len(history)//2} Austausche gespeichert\n")
-
-# Starten
-tech_chat_mit_memory()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -361,24 +232,7 @@ class FAQEntry(BaseModel):
     """Strukturierte FAQ-Eingabe"""
     frage: str = Field(description="Die ursprüngliche Frage")
     antwort: str = Field(description="Die Antwort (max 200 Zeichen)")
-    kategorie: Literal["Grundlagen", "Installation", "Konzepte", "Troubleshooting"] = \
-        Field(description="Thematische Kategorie")
-    schwierigkeit: int = Field(description="Schwierigkeitsgrad: 1=Anfänger, 5=Experte", ge=1, le=5)
-    tags: list[str] = Field(description="3-5 relevante Schlagwörter")
-
-# LLM mit strukturierter Ausgabe
-structured_llm = llm.with_structured_output(FAQEntry)
-
-# Test
-test_frage = "Was ist Docker und wofür wird es verwendet?"
-faq = structured_llm.invoke(f"Erstelle einen FAQ-Eintrag für: {test_frage}")
-
-print("📋 FAQ-Eintrag:")
-print(f"   Frage: {faq.frage}")
-print(f"   Antwort: {faq.antwort}")
-print(f"   Kategorie: {faq.kategorie}")
-print(f"   Schwierigkeit: {faq.schwierigkeit}/5")
-print(f"   Tags: {', '.join(faq.tags)}")
+    ...
 ```
 
 ### Aufgabe 4.2: FAQ-Datenbank aufbauen
@@ -389,38 +243,8 @@ import json
 def create_faq_database():
     """Interaktive FAQ-Erstellung"""
     faq_list = []
-
     print("🔧 FAQ-Generator")
-    print("   (Schreibe 'exit' zum Beenden und Exportieren)\n")
-
-    while True:
-        frage = input("💬 Frage: ")
-
-        if frage.lower() in ['exit', 'quit', 'beenden']:
-            break
-
-        if not frage.strip():
-            continue
-
-        # FAQ-Eintrag generieren
-        faq = structured_llm.invoke(f"Erstelle einen FAQ-Eintrag für: {frage}")
-
-        print(f"\n✅ FAQ erstellt:")
-        print(f"   Kategorie: {faq.kategorie}")
-        print(f"   Schwierigkeit: {faq.schwierigkeit}/5")
-        print(f"   Tags: {', '.join(faq.tags)}\n")
-
-        faq_list.append(faq.model_dump())
-
-    # Export als JSON
-    if faq_list:
-        with open('faq_database.json', 'w', encoding='utf-8') as f:
-            json.dump(faq_list, f, ensure_ascii=False, indent=2)
-
-        print(f"\n📁 {len(faq_list)} FAQ-Einträge exportiert nach 'faq_database.json'")
-
-# Starten
-create_faq_database()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -447,21 +271,7 @@ import os
 
 # Verzeichnis für Dokumente erstellen
 os.makedirs('docs', exist_ok=True)
-
-# File Upload Widget
-print("📁 Bitte laden Sie 3-5 Markdown-Dateien (.md) hoch")
-print("   Beispiel: Docker-Doku, Kubernetes-Intro, REST-API-Guide\n")
-
-uploaded = files.upload()
-
-# Dateien speichern
-for filename, content in uploaded.items():
-    filepath = f'docs/{filename}'
-    with open(filepath, 'wb') as f:
-        f.write(content)
-    print(f"✅ Gespeichert: {filepath}")
-
-print(f"\n📊 {len(uploaded)} Dokumente hochgeladen")
+...
 ```
 
 ### Aufgabe 5.2: Vektordatenbank erstellen
@@ -475,33 +285,7 @@ from langchain_community.vectorstores import Chroma
 # Dokumente laden
 loader = DirectoryLoader('docs/', glob="**/*.md", loader_cls=TextLoader)
 documents = loader.load()
-
-print(f"📄 {len(documents)} Dokumente geladen")
-
-# Text-Splitting
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,
-    chunk_overlap=50
-)
-splits = text_splitter.split_documents(documents)
-
-print(f"✂️  {len(splits)} Chunks erstellt")
-
-# Embeddings & Vektordatenbank
-embeddings = OpenAIEmbeddings()
-vectorstore = Chroma.from_documents(
-    documents=splits,
-    embedding=embeddings,
-    persist_directory="./chroma_db"
-)
-
-print("✅ Vektordatenbank erstellt")
-
-# Retriever
-retriever = vectorstore.as_retriever(
-    search_type="similarity",
-    search_kwargs={"k": 3}
-)
+...
 ```
 
 ### Aufgabe 5.3: RAG-Chain implementieren
@@ -514,33 +298,7 @@ from langchain_core.output_parsers import StrOutputParser
 def format_docs(docs):
     """Formatiert Retrieved Docs für Prompt"""
     return "\n\n".join([f"Quelle: {doc.metadata.get('source', 'Unbekannt')}\n{doc.page_content}" for doc in docs])
-
-# RAG-Prompt
-rag_prompt = ChatPromptTemplate.from_messages([
-    ("system", """Du bist ein technischer Dokumentationsassistent.
-    Beantworte die Frage NUR basierend auf dem folgenden Kontext.
-    Wenn der Kontext keine Antwort liefert, sage das ehrlich.
-
-    Kontext:
-    {context}"""),
-    ("user", "{frage}")
-])
-
-# RAG-Chain (LCEL)
-rag_chain = (
-    {
-        "context": retriever | format_docs,
-        "frage": RunnablePassthrough()
-    }
-    | rag_prompt
-    | llm
-    | StrOutputParser()
-)
-
-# Test
-test_frage = "Wie starte ich einen Docker-Container?"
-antwort = rag_chain.invoke(test_frage)
-print(f"🤖 {antwort}")
+...
 ```
 
 ### Aufgabe 5.4: RAG-Chat mit Quellenangaben
@@ -550,36 +308,7 @@ def rag_chat():
     """RAG-Chat mit Quellenangaben"""
     print("🤖 Tech-Doku Assistent (RAG-Modus)")
     print("   (Schreibe 'exit' zum Beenden)\n")
-
-    while True:
-        frage = input("💬 Sie: ")
-
-        if frage.lower() in ['exit', 'quit', 'beenden']:
-            print("👋 Auf Wiedersehen!")
-            break
-
-        if not frage.strip():
-            continue
-
-        # Retrieved Docs holen (für Quellenangaben)
-        docs = retriever.get_relevant_documents(frage)
-
-        # RAG-Antwort
-        antwort = rag_chain.invoke(frage)
-
-        print(f"\n🤖 Bot: {antwort}\n")
-
-        # Quellenangaben
-        print("📚 Quellen:")
-        for i, doc in enumerate(docs, 1):
-            source = doc.metadata.get('source', 'Unbekannt').split('/')[-1]
-            # Berechne Relevanz (Cosine Similarity würde mehr Aufwand bedeuten)
-            print(f"   {i}. {source}")
-
-        print()
-
-# Starten
-rag_chat()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -609,50 +338,21 @@ def search_documentation(query: str) -> str:
     """Durchsucht die technische Dokumentation nach relevanten Informationen."""
     # Nutze Retriever aus Kapitel 5
     docs = retriever.get_relevant_documents(query)
-    if not docs:
-        return "Keine relevanten Dokumente gefunden."
-
-    # Formatiere Ergebnisse
-    results = []
-    for i, doc in enumerate(docs[:2], 1):  # Top 2
-        source = doc.metadata.get('source', 'Unbekannt').split('/')[-1]
-        results.append(f"[{source}]: {doc.page_content[:200]}...")
-
-    return "\n\n".join(results)
+    ...
 
 @tool
 def calculate_token_cost(text: str, model: str = "gpt-4o-mini") -> str:
     """Berechnet Token-Anzahl und geschätzte Kosten für einen Text."""
     # Token zählen
     tokens = count_tokens(text, model)
-
-    # Kosten berechnen (gpt-4o-mini Preise)
-    cost_per_1m_input = 0.15  # USD
-    cost_per_1m_output = 0.60  # USD
-
-    # Vereinfachung: Nehme Durchschnitt
-    avg_cost = (cost_per_1m_input + cost_per_1m_output) / 2
-    cost = (tokens / 1_000_000) * avg_cost
-
-    return f"""Token-Analyse:
-    - Modell: {model}
-    - Tokens: {tokens}
-    - Geschätzte Kosten: ${cost:.6f} USD"""
+    ...
 
 @tool
 def validate_python_code(code: str) -> str:
     """Validiert Python-Code auf Syntax-Fehler."""
     try:
         ast.parse(code)
-        return "✅ Code ist syntaktisch korrekt!"
-    except SyntaxError as e:
-        return f"❌ Syntax-Fehler in Zeile {e.lineno}: {e.msg}"
-
-# Tool-Liste
-tools = [search_documentation, calculate_token_cost, validate_python_code]
-
-# Test einzelner Tools
-print(search_documentation.invoke({"query": "Docker Container"}))
+        ...
 ```
 
 ### Aufgabe 6.2: Agent erstellen
@@ -664,21 +364,8 @@ from langchain.agents import create_agent
 agent = create_agent(
     model="openai:gpt-4o-mini",  # Wichtig: Function Calling Support!
     tools=tools,
-    system_prompt="""Du bist ein technischer Assistent mit Zugriff auf:
-    1. Dokumenten-Suche (search_documentation)
-    2. Token-Kosten-Rechner (calculate_token_cost)
-    3. Python-Code-Validator (validate_python_code)
-
-    Nutze die Tools intelligent und erkläre deine Entscheidungen.""",
-    debug=True  # Zeigt Tool-Aufrufe
+    ...
 )
-
-# Test-Anfrage
-response = agent.invoke({
-    "messages": [{"role": "user", "content": "Suche Infos zu Docker"}]
-})
-
-print(response["messages"][-1].content)
 ```
 
 ### Aufgabe 6.3: Agent-Chat
@@ -688,30 +375,7 @@ def agent_chat():
     """Interactive Agent Chat"""
     print("🤖 Tech-Doku Assistent (Agent-Modus)")
     print("   Tools: 📚 Doku-Suche | 📊 Token-Rechner | ✅ Code-Validator")
-    print("   (Schreibe 'exit' zum Beenden)\n")
-
-    while True:
-        user_input = input("💬 Sie: ")
-
-        if user_input.lower() in ['exit', 'quit', 'beenden']:
-            print("👋 Auf Wiedersehen!")
-            break
-
-        if not user_input.strip():
-            continue
-
-        # Agent invoke
-        response = agent.invoke({
-            "messages": [{"role": "user", "content": user_input}]
-        })
-
-        # Antwort extrahieren
-        bot_message = response["messages"][-1].content
-
-        print(f"\n🤖 Agent: {bot_message}\n")
-
-# Starten
-agent_chat()
+    ...
 ```
 
 **Erfolgskriterium:**
@@ -739,44 +403,19 @@ import gradio as gr
 def chat_handler(message, history):
     """Verarbeitet normale Chat-Anfragen"""
     antwort = chain.invoke({"frage": message})
-    history.append((message, antwort))
-    return "", history
+    ...
 
 def rag_handler(message, history):
     """Verarbeitet RAG-basierte Anfragen"""
     antwort = rag_chain.invoke(message)
-    # Hole Quellen
-    docs = retriever.get_relevant_documents(message)
-    sources = [doc.metadata.get('source', 'Unbekannt').split('/')[-1] for doc in docs[:2]]
-
-    full_response = f"{antwort}\n\n📚 Quellen: {', '.join(sources)}"
-    history.append((message, full_response))
-    return "", history
+    ...
 
 def agent_handler(message, history):
     """Verarbeitet Agent-Anfragen"""
     response = agent.invoke({
         "messages": [{"role": "user", "content": message}]
     })
-    antwort = response["messages"][-1].content
-    history.append((message, antwort))
-    return "", history
-
-# Token-Statistik berechnen
-def calculate_stats(history):
-    """Berechnet Token-Statistik aus Chat-History"""
-    if not history:
-        return "📊 Tokens: 0 | Kosten: $0.00"
-
-    total_tokens = sum([
-        count_tokens(msg) + count_tokens(reply)
-        for msg, reply in history
-    ])
-
-    # Kosten (Durchschnitt)
-    cost = (total_tokens / 1_000_000) * 0.375
-
-    return f"📊 Tokens: {total_tokens} | Kosten: ${cost:.4f}"
+    ...
 ```
 
 ### Aufgabe 7.2: Gradio-App implementieren
@@ -786,50 +425,7 @@ def calculate_stats(history):
 with gr.Blocks(title="Tech-Doku Assistent") as demo:
     gr.Markdown("# 🤖 Tech-Doku Assistent")
     gr.Markdown("*Powered by LangChain & OpenAI*")
-
-    with gr.Tabs():
-        # Tab 1: Einfacher Chat
-        with gr.Tab("💬 Chat"):
-            chatbot1 = gr.Chatbot(height=400, label="Chat-Verlauf")
-            msg1 = gr.Textbox(placeholder="Frage hier eingeben...", label="Ihre Frage")
-            stats1 = gr.Markdown("📊 Tokens: 0 | Kosten: $0.00")
-
-            msg1.submit(chat_handler, [msg1, chatbot1], [msg1, chatbot1]).then(
-                lambda h: calculate_stats(h), chatbot1, stats1
-            )
-
-            gr.Button("Chat löschen").click(lambda: ([], "📊 Tokens: 0 | Kosten: $0.00"),
-                                             None, [chatbot1, stats1])
-
-        # Tab 2: RAG-Suche
-        with gr.Tab("📚 RAG-Suche"):
-            chatbot2 = gr.Chatbot(height=400, label="RAG-Verlauf")
-            msg2 = gr.Textbox(placeholder="Frage zur Dokumentation...", label="Ihre Frage")
-            stats2 = gr.Markdown("📊 Tokens: 0 | Kosten: $0.00")
-
-            msg2.submit(rag_handler, [msg2, chatbot2], [msg2, chatbot2]).then(
-                lambda h: calculate_stats(h), chatbot2, stats2
-            )
-
-            gr.Button("Chat löschen").click(lambda: ([], "📊 Tokens: 0 | Kosten: $0.00"),
-                                             None, [chatbot2, stats2])
-
-        # Tab 3: Agent
-        with gr.Tab("🤖 Agent"):
-            chatbot3 = gr.Chatbot(height=400, label="Agent-Verlauf")
-            msg3 = gr.Textbox(placeholder="Komplexe Anfrage an Agent...", label="Ihre Frage")
-            stats3 = gr.Markdown("📊 Tokens: 0 | Kosten: $0.00")
-            gr.Markdown("**Tools:** 📚 Doku-Suche | 📊 Token-Rechner | ✅ Code-Validator")
-
-            msg3.submit(agent_handler, [msg3, chatbot3], [msg3, chatbot3]).then(
-                lambda h: calculate_stats(h), chatbot3, stats3
-            )
-
-            gr.Button("Chat löschen").click(lambda: ([], "📊 Tokens: 0 | Kosten: $0.00"),
-                                             None, [chatbot3, stats3])
-
-# Starten (WICHTIG: share=True für Colab!)
-demo.launch(share=True, debug=True)
+    ...
 ```
 
 **Colab-spezifische Hinweise:**
@@ -971,8 +567,8 @@ A: Ja! Verwenden Sie dann Jupyter Notebook/Lab lokal und ersetzen Sie:
 
 ---
 
-**Version:** 1.1 (Colab/Jupyter-optimiert)
-**Letzte Aktualisierung:** Dezember 2025
+**Version:** 1.2 (Ohne Lösungen - nur Aufgabenstellung)
+**Letzte Aktualisierung:** Januar 2026
 **Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.
 **Module:** M04, M05, M06, M07, M08, M10, M11
 **Arbeitsumgebung:** Google Colab oder Jupyter Notebook

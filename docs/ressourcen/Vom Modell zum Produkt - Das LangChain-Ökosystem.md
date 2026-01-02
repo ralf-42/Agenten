@@ -1,18 +1,12 @@
 
 
-## 1 Das Problem: Ein Modell allein ist noch kein Produkt
-
-Viele Einsteiger in die Generative KI beginnen mit einem großen Sprachmodell (LLM) und entwickeln darauf aufbauend einen einfachen Chatbot. Zwischen einem funktionierenden Prototyp und einer produktionsreifen Anwendung liegt jedoch ein weiter Weg. Ein Modell, das nur Texte generiert, löst noch keine konkreten Geschäftsanforderungen wie Zuverlässigkeit, Nachvollziehbarkeit oder Integrationsfähigkeit.
-
-Die zentrale Frage lautet: Wie lässt sich aus einem KI-Experiment ein steuerbares, überprüfbares und kontinuierlich verbesserbares System entwickeln?
-
-## 2 Ein möglicher Ansatz: Drei Frameworks im Zusammenspiel
+## 1 Ein möglicher Ansatz: Drei Frameworks im Zusammenspiel
 
 Das LangChain-Ökosystem bietet dafür ein häufig genutztes Set von Werkzeugen, das den Übergang vom Prototyp zum Produkt unterstützen kann. Es besteht im Wesentlichen aus **LangChain**, **LangGraph** und **LangSmith**, die unterschiedliche Aspekte der Systemarchitektur abdecken.
 
 ---
 
-## 3 LangChain – Struktur und Verknüpfung
+## 2 LangChain – Struktur und Verknüpfung
 
 LangChain verbindet ein Sprachmodell mit externen Ressourcen und Tools. Agenten in LangChain folgen dem Prinzip:  
 **Agent = LLM + Tools + Schleife**
@@ -21,7 +15,7 @@ Damit kann eine KI nicht nur Text generieren, sondern auch Informationen abrufen
 
 ---
 
-## 4 LangGraph – Kontrolle und Ablaufsteuerung
+## 3 LangGraph – Kontrolle und Ablaufsteuerung
 
 Während einfache Agenten teilweise unvorhersehbar handeln, zielt LangGraph auf eine klar definierte Ablaufsteuerung ab.  
 Typische Merkmale sind:
@@ -35,7 +29,7 @@ Typische Merkmale sind:
 
 ---
 
-## 5 LangSmith – Analyse und Optimierung
+## 4 LangSmith – Analyse und Optimierung
 
 LangSmith dient zur Beobachtung und Verbesserung von KI-Anwendungen.  
 Hauptfunktionen sind:
@@ -49,7 +43,7 @@ Hauptfunktionen sind:
 
 ---
 
-## 6 Analogie: Komponenten eines Fahrzeugs
+## 5 Analogie: Komponenten eines Fahrzeugs
 
 |Komponente|Funktion|
 |---|---|
@@ -60,7 +54,7 @@ Hauptfunktionen sind:
 
 ---
 
-## 7 Fazit
+## 6 Fazit
 
 Der Weg von einem Sprachmodell zu einem produktionsreifen KI-System erfordert mehr als gute Modelle. Er beruht auf strukturierter Workflows, transparenter Steuerung und kontinuierlichem Feedback.  
 Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um diese Anforderungen umzusetzen – neben anderen verfügbaren Frameworks, die ähnliche Ziele verfolgen.

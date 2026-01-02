@@ -39,6 +39,31 @@ LangSmith beantwortet diese Fragen durch:
 
 Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvollzogen werden** – ohne zusätzlichen Code im Workflow selbst.
 
+### LangSmith im Entwicklungs-Workflow
+
+```mermaid
+flowchart TB
+    DEV[Development<br/>LangChain/LangGraph Code]
+    RUN[Code Execution<br/>Agent/Chain/Tool Runs]
+    LANGSMITH[LangSmith Platform<br/>Automatic Tracing]
+    UI[LangSmith Web UI<br/>Visualization & Analysis]
+    DEBUG[Debug & Optimize<br/>Based on Insights]
+
+    DEV --> RUN
+    RUN -->|Automatic| LANGSMITH
+    LANGSMITH --> UI
+    UI --> DEBUG
+    DEBUG -.Improve Code.-> DEV
+
+    subgraph "No Code Changes Needed"
+        RUN
+        LANGSMITH
+    end
+
+    style LANGSMITH fill:#d5e8d4
+    style UI fill:#dae8fc
+```
+
 ---
 
 ## 2 Setup: API-Key und Umgebung
@@ -154,6 +179,25 @@ result = chain.invoke({"topic": "Vektordatenbanken"})
 ```
 
 **Im LangSmith-Trace sichtbar:**
+
+```mermaid
+graph TB
+    CHAIN[Chain Run - Gesamt<br/>Latenz: 1.5s]
+    PROMPT[Prompt Run<br/>Template-Formatierung<br/>0.1s]
+    LLM[LLM Run - GPT-4o-mini<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
+    PARSER[Parser Run<br/>String-Extraktion<br/>0.2s]
+
+    CHAIN --> PROMPT
+    CHAIN --> LLM
+    CHAIN --> PARSER
+
+    style CHAIN fill:#e1f5ff
+    style PROMPT fill:#ffe6cc
+    style LLM fill:#d5e8d4
+    style PARSER fill:#dae8fc
+```
+
+**ASCII-Darstellung:**
 ```
 Chain Run (Gesamt)
 ├─ Prompt Run (Template-Formatierung)
@@ -201,6 +245,39 @@ response = agent.invoke({
 ```
 
 **Im LangSmith-Trace wird sichtbar:**
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    participant LLM
+    participant multiply as Tool: multiply
+    participant add as Tool: add
+    participant LangSmith
+
+    User->>Agent: "Berechne (5 * 8) + 3"
+    Agent->>LangSmith: Trace Start
+    Agent->>LLM: Process request with tools
+    LLM->>LLM: Decide: Need multiply(5, 8)
+    LLM-->>Agent: Tool call: multiply(5, 8)
+    Agent->>multiply: Execute multiply(5, 8)
+    multiply-->>Agent: Result: 40
+    Agent->>LangSmith: Log: Tool Run (multiply)
+    Agent->>LLM: Tool result: 40
+    LLM->>LLM: Decide: Need add(40, 3)
+    LLM-->>Agent: Tool call: add(40, 3)
+    Agent->>add: Execute add(40, 3)
+    add-->>Agent: Result: 43
+    Agent->>LangSmith: Log: Tool Run (add)
+    Agent->>LLM: Tool result: 43
+    LLM-->>Agent: Final answer
+    Agent-->>User: "Das Ergebnis ist 43"
+    Agent->>LangSmith: Trace Complete
+
+    Note over LangSmith: Every step logged:<br/>Inputs, Outputs,<br/>Latency, Tokens
+```
+
+**Text-Version:**
 1. Agent erhält Frage
 2. Agent entscheidet: "Ich brauche multiply(5, 8)"
 3. Tool wird ausgeführt → Ergebnis: 40
@@ -428,6 +505,30 @@ def my_rag_chain(question: str):
 ```
 
 ### 9.3 Fehler debuggen
+
+```mermaid
+flowchart LR
+    FAIL[Agent fails<br/>Wrong tool chosen]
+    OPEN[Open LangSmith UI<br/>Find failed run]
+    INSPECT[Inspect Trace<br/>Identify issue]
+    FIX[Fix Code<br/>System prompt or<br/>Tool description]
+    RETEST[Re-run Agent<br/>New trace created]
+    COMPARE[Compare in UI<br/>Before vs After]
+    SUCCESS{Fixed?}
+
+    FAIL --> OPEN
+    OPEN --> INSPECT
+    INSPECT --> FIX
+    FIX --> RETEST
+    RETEST --> COMPARE
+    COMPARE --> SUCCESS
+    SUCCESS -->|No| INSPECT
+    SUCCESS -->|Yes| END([Done])
+
+    style FAIL fill:#f8cecc
+    style SUCCESS fill:#d5e8d4
+    style COMPARE fill:#dae8fc
+```
 
 **Typischer Workflow:**
 1. Agent schlägt fehl (z.B. falsches Tool gewählt)

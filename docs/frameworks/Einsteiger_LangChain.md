@@ -42,6 +42,38 @@ LangChain löst diese Herausforderungen durch:
 
 **Kernprinzip:** LangChain abstrahiert die Komplexität der LLM-Integration und bietet wiederverwendbare Bausteine – vom einfachen Prompt bis zum autonomen Agenten mit Werkzeugen.
 
+### LangChain Architektur-Überblick
+
+```mermaid
+graph TB
+    subgraph "LangChain Core Components"
+        MODELS[Models<br/>init_chat_model]
+        PROMPTS[Prompts<br/>ChatPromptTemplate]
+        TOOLS[Tools<br/>@tool decorator]
+        CHAINS[Chains<br/>LCEL with |]
+        AGENTS[Agents<br/>create_agent]
+    end
+
+    subgraph "External Systems"
+        LLM_PROVIDERS[LLM Providers<br/>OpenAI, Anthropic, Google]
+        VECTOR_DB[Vector Databases<br/>Chroma, FAISS]
+        APIS[External APIs<br/>Web, Databases]
+    end
+
+    MODELS -->|unified interface| LLM_PROVIDERS
+    PROMPTS --> CHAINS
+    MODELS --> CHAINS
+    TOOLS --> AGENTS
+    MODELS --> AGENTS
+    CHAINS -->|RAG| VECTOR_DB
+    TOOLS -->|integrate| APIS
+
+    style MODELS fill:#e1f5ff
+    style PROMPTS fill:#e1f5ff
+    style TOOLS fill:#e1f5ff
+    style CHAINS fill:#e1f5ff
+    style AGENTS fill:#e1f5ff
+```
 
 ---
 
@@ -213,11 +245,53 @@ result
 
 Hier liefert `create_agent()` bereits ein kompiliertes LangGraph‑Objekt (CompiledStateGraph). Dadurch kann derselbe Agent später in komplexere Workflows eingebettet werden.
 
+### Agent-Tool-Interaktion
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    participant LLM
+    participant Tools
+
+    User->>Agent: "Multipliziere 12 mit 8"
+    Agent->>LLM: Process request + available tools
+    LLM->>LLM: Decide to use multiply tool
+    LLM-->>Agent: Tool call: multiply(12, 8)
+    Agent->>Tools: Execute multiply(12, 8)
+    Tools-->>Agent: Result: 96
+    Agent->>LLM: Tool result: 96
+    LLM-->>Agent: Format final answer
+    Agent-->>User: "Das Ergebnis ist 96"
+
+    Note over Agent,Tools: Agent orchestrates<br/>LLM and Tool calls
+```
+
 ---
 
 ## 7 Moderne Kettensyntax: LCEL `|`
 
 LangChain Expression Language (LCEL) ersetzt frühere Chain‑Implementierungen. Über den Pipe‑Operator `|` werden Verarbeitungsschritte logisch miteinander verbunden.
+
+### LCEL Pipeline-Visualisierung
+
+```mermaid
+flowchart LR
+    INPUT[Input Data<br/>{\"input_text\": \"...\"}]
+    PROMPT[Prompt Template<br/>ChatPromptTemplate]
+    LLM[Language Model<br/>llm]
+    PARSER[Output Parser<br/>StrOutputParser]
+    OUTPUT[Output<br/>String result]
+
+    INPUT -->|"|"| PROMPT
+    PROMPT -->|"|"| LLM
+    LLM -->|"|"| PARSER
+    PARSER --> OUTPUT
+
+    style PROMPT fill:#ffe6cc
+    style LLM fill:#d5e8d4
+    style PARSER fill:#dae8fc
+```
 
 ### 7.1 Beispiel: Einfache LCEL-Chain für Textumformung
 
@@ -390,6 +464,43 @@ for i, doc in enumerate(results, start=1):
 ## 12 Standard‑Pattern für RAG mit LangChain
 
 Retrieval‑Augmented Generation (RAG) ist eines der wichtigsten Einsatzszenarien für LangChain. Typischerweise werden Vektorspeicher, Retriever und eine LCEL‑Pipeline kombiniert.
+
+### RAG-Workflow Visualisierung
+
+```mermaid
+flowchart TB
+    START([User Query])
+    EMBED[Embedding Model<br/>Convert query to vector]
+    RETRIEVE[Vector Store Retrieval<br/>Similarity search]
+    FORMAT[Format Documents<br/>Combine retrieved chunks]
+    PROMPT[RAG Prompt Template<br/>Context + Question]
+    LLM[Language Model<br/>Generate answer]
+    END([Answer to User])
+
+    START --> EMBED
+    EMBED --> RETRIEVE
+    RETRIEVE -->|Top-k documents| FORMAT
+    FORMAT -->|context| PROMPT
+    START -->|question| PROMPT
+    PROMPT --> LLM
+    LLM --> END
+
+    subgraph "Vector Database"
+        RETRIEVE
+    end
+
+    subgraph "LCEL Chain"
+        FORMAT
+        PROMPT
+        LLM
+    end
+
+    style EMBED fill:#ffe6cc
+    style RETRIEVE fill:#f8cecc
+    style FORMAT fill:#d5e8d4
+    style PROMPT fill:#dae8fc
+    style LLM fill:#d5e8d4
+```
 
 **Beispiel: Minimaler RAG-Workflow mit LCEL**
 

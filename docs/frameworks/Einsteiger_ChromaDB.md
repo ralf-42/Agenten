@@ -75,6 +75,37 @@ Die gebräuchlichsten Distanzmaße:
 
 **Cosine Similarity** ist der Standard, da sie unabhängig von der Vektorlänge funktioniert und nur die "Richtung" (= Bedeutung) vergleicht.
 
+### Vektorraum-Visualisierung (konzeptionell)
+
+```mermaid
+graph TB
+    subgraph "Semantischer Vektorraum (vereinfacht 2D)"
+        A["'Hund'<br/>[0.8, 0.3]"]
+        B["'Katze'<br/>[0.75, 0.35]"]
+        C["'Tier'<br/>[0.7, 0.4]"]
+
+        D["'Auto'<br/>[0.2, 0.9]"]
+        E["'Fahrzeug'<br/>[0.25, 0.85]"]
+
+        F["'Quantenmechanik'<br/>[-0.5, -0.8]"]
+    end
+
+    A -.ähnlich.- B
+    B -.ähnlich.- C
+    A -.ähnlich.- C
+
+    D -.ähnlich.- E
+
+    style A fill:#e1f5ff
+    style B fill:#e1f5ff
+    style C fill:#e1f5ff
+    style D fill:#ffe6cc
+    style E fill:#ffe6cc
+    style F fill:#f8cecc
+```
+
+> **Hinweis:** Semantisch verwandte Konzepte ("Hund", "Katze", "Tier") bilden Cluster im Vektorraum, während unverwandte Konzepte ("Quantenmechanik") weiter entfernt liegen.
+
 ### 2.3 Visualisierung
 
 Für ein intuitives Verständnis von Embeddings:
@@ -288,6 +319,41 @@ print(f"Anzahl Chunks: {len(chunks)}")
 
 ### 5.3 Overlap visualisiert
 
+```mermaid
+flowchart TB
+    subgraph "Ohne Overlap - Informationsverlust"
+        DOC1[Dokument: AAAA BBBB CCCC DDDD]
+        C1[Chunk 1: AAAA]
+        C2[Chunk 2: BBBB]
+        C3[Chunk 3: CCCC]
+        C4[Chunk 4: DDDD]
+
+        DOC1 --> C1
+        DOC1 --> C2
+        DOC1 --> C3
+        DOC1 --> C4
+
+        WARN1[⚠️ Sätze werden zerrissen!]
+    end
+
+    subgraph "Mit 25% Overlap - Kontext erhalten"
+        DOC2[Dokument: AAAA BBBB CCCC DDDD]
+        O1[Chunk 1: AAAA BB]
+        O2[Chunk 2: BB CCCC CC]
+        O3[Chunk 3: CC DDDD]
+
+        DOC2 --> O1
+        DOC2 --> O2
+        DOC2 --> O3
+
+        OK1[✅ Kontext bleibt erhalten!]
+    end
+
+    style WARN1 fill:#f8cecc
+    style OK1 fill:#d5e8d4
+```
+
+**ASCII-Darstellung:**
 ```
 Dokument: [AAAA|BBBB|CCCC|DDDD]
 
@@ -305,6 +371,27 @@ Mit Overlap (25%):
 ```
 
 ### 5.4 Vollständiger Indexierungs-Workflow
+
+```mermaid
+flowchart LR
+    START([Dokument<br/>dokument.txt])
+    LOAD[Document Loader<br/>TextLoader]
+    SPLIT[Text Splitter<br/>RecursiveCharacterTextSplitter]
+    EMBED[Embedding Model<br/>OpenAIEmbeddings]
+    STORE[Vector Store<br/>ChromaDB]
+    END([Indexed & Ready<br/>for Search])
+
+    START --> LOAD
+    LOAD -->|documents| SPLIT
+    SPLIT -->|chunks<br/>chunk_size=500<br/>overlap=100| EMBED
+    EMBED -->|vectors<br/>1536 dimensions| STORE
+    STORE --> END
+
+    style LOAD fill:#e1f5ff
+    style SPLIT fill:#ffe6cc
+    style EMBED fill:#d5e8d4
+    style STORE fill:#dae8fc
+```
 
 ```python
 from langchain_community.document_loaders import TextLoader
@@ -358,6 +445,26 @@ for i in tqdm(range(0, len(all_chunks), batch_size)):
 ## 6 Similarity Search
 
 Die Suche in der Vektordatenbank findet die semantisch ähnlichsten Dokumente.
+
+### Similarity Search Workflow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant App
+    participant Embeddings as Embedding Model
+    participant ChromaDB as Vector Store
+
+    User->>App: Query: "Was sind KI-Agenten?"
+    App->>Embeddings: embed_query(query)
+    Embeddings-->>App: query_vector [1536 dims]
+    App->>ChromaDB: similarity_search(query_vector, k=3)
+    ChromaDB->>ChromaDB: Cosine Similarity<br/>mit allen Vektoren
+    ChromaDB-->>App: Top-3 Documents<br/>with scores
+    App-->>User: Relevante Dokumente
+
+    Note over ChromaDB: Nur Vektoren vergleichen,<br/>kein Text-Matching
+```
 
 ### 6.1 Grundlegende Suche
 
@@ -766,6 +873,33 @@ for query in test_queries:
 
 ### 10.2 Typischer RAG-Workflow
 
+```mermaid
+flowchart TB
+    LOAD[1. Dokumente laden<br/>TextLoader, PyPDFLoader]
+    CHUNK[2. Chunking<br/>RecursiveCharacterTextSplitter<br/>chunk_size=500, overlap=100]
+    EMBED[3. Embeddings erzeugen<br/>OpenAIEmbeddings<br/>text-embedding-3-small]
+    STORE[4. In ChromaDB speichern<br/>Chroma.from_documents]
+    RETRIEVE[5. Retriever erstellen<br/>vectorstore.as_retriever]
+    CHAIN[6. RAG-Chain bauen<br/>LCEL Pipeline]
+    AGENT[7. Agent mit RAG-Tool ausstatten<br/>create_agent + @tool]
+
+    LOAD --> CHUNK
+    CHUNK --> EMBED
+    EMBED --> STORE
+    STORE --> RETRIEVE
+    RETRIEVE --> CHAIN
+    CHAIN --> AGENT
+
+    style LOAD fill:#e1f5ff
+    style CHUNK fill:#ffe6cc
+    style EMBED fill:#d5e8d4
+    style STORE fill:#dae8fc
+    style RETRIEVE fill:#e1f5ff
+    style CHAIN fill:#ffe6cc
+    style AGENT fill:#d5e8d4
+```
+
+**Text-Version:**
 ```
 1. Dokumente laden
       ↓

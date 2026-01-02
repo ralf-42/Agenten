@@ -10,7 +10,7 @@ has_toc: true
 # Agenten Workshop
 {: .no_toc }
 
-> **Multi-Agent Support-System bauen**
+> **Multi-Agent Support-System bauen**      
 > Schrittweise Entwicklung vom einfachen State-basierten Agenten zum intelligenten Multi-Agent-System mit LangGraph
 
 ---
@@ -23,7 +23,7 @@ has_toc: true
 
 ---
 
-## Projektübersicht
+## 1 Projektübersicht
 
 In dieser Übungsaufgabe bauen Sie schrittweise ein **Multi-Agent Support-System**, das komplexe Kundenanfragen intelligent routet und bearbeitet.
 
@@ -42,7 +42,7 @@ In dieser Übungsaufgabe bauen Sie schrittweise ein **Multi-Agent Support-System
 
 ---
 
-## Notebook-Struktur
+## 2 Notebook-Struktur
 
 Sie erstellen **ein Notebook** mit **7 aufbauenden Kapiteln**:
 
@@ -59,15 +59,15 @@ Sie erstellen **ein Notebook** mit **7 aufbauenden Kapiteln**:
 
 ---
 
-## Vorbereitung: Google Colab Setup
+## 3 Vorbereitung: Google Colab Setup
 
-### API-Key in Colab Secrets speichern
+### 3.1 API-Key in Colab Secrets speichern
 
 1. Klicken Sie in Colab auf das Schlüssel-Symbol 🔑 (linke Sidebar)
 2. Fügen Sie `OPENAI_API_KEY` hinzu
 3. Aktivieren Sie "Notebook access"
 
-### Basis-Pakete installieren
+### 3.2 Basis-Pakete installieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -79,7 +79,7 @@ Sie erstellen **ein Notebook** mit **7 aufbauenden Kapiteln**:
 !pip install -q tiktoken gradio
 ```
 
-### API-Key laden
+### 3.3 API-Key laden
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -94,14 +94,14 @@ os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
 ---
 
-## Kapitel 1: StateGraph Basics
+## 4 Kapitel 1: StateGraph Basics
 
 **Lernziel:** StateGraph verstehen, TypedDict State, Nodes & Edges
 
-### Szenario
+### 4.1 Szenario
 Ein Support-Bot soll Kundenanfragen entgegennehmen, kategorisieren und eine Antwort generieren.
 
-### Aufgabe 1.1: State definieren
+### 4.2 Aufgabe 1.1: State definieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -122,7 +122,7 @@ class SupportState(TypedDict):
     ...
 ```
 
-### Aufgabe 1.2: Node-Funktionen erstellen
+### 4.3 Aufgabe 1.2: Node-Funktionen erstellen
 
 ```python
 # LLM initialisieren
@@ -142,7 +142,7 @@ def generate_response(state: SupportState) -> SupportState:
     ...
 ```
 
-### Aufgabe 1.3: Graph bauen
+### 4.4 Aufgabe 1.3: Graph bauen
 
 ```python
 # StateGraph erstellen
@@ -161,7 +161,7 @@ workflow.add_edge("respond", END)
 graph = workflow.compile()
 ```
 
-### Aufgabe 1.4: Graph testen
+### 4.5 Aufgabe 1.4: Graph testen
 
 ```python
 # Test-Input
@@ -186,11 +186,11 @@ print(f"Priorität: {result['priority']}")
 
 ---
 
-## Kapitel 2: Conditional Routing
+## 5 Kapitel 2: Conditional Routing
 
 **Lernziel:** Verzweigte Workflows mit bedingten Edges
 
-### Aufgabe 2.1: Router-Funktion erstellen
+### 5.1 Aufgabe 2.1: Router-Funktion erstellen
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -206,7 +206,7 @@ def route_by_category(state: SupportState) -> Literal["technical", "billing", "g
     ...
 ```
 
-### Aufgabe 2.2: Spezialisierte Handler
+### 5.2 Aufgabe 2.2: Spezialisierte Handler
 
 ```python
 # Technical Support Handler
@@ -225,7 +225,7 @@ def handle_general(state: SupportState) -> SupportState:
     ...
 ```
 
-### Aufgabe 2.3: Graph mit Conditional Edge
+### 5.3 Aufgabe 2.3: Graph mit Conditional Edge
 
 ```python
 # Graph mit Verzweigung bauen
@@ -257,11 +257,11 @@ workflow.add_conditional_edges(
 
 ---
 
-## Kapitel 3: Checkpointing & Memory
+## 6 Kapitel 3: Checkpointing & Memory
 
 **Lernziel:** Persistente Sessions mit SQLite-Checkpointer
 
-### Aufgabe 3.1: Checkpointer einrichten
+### 6.1 Aufgabe 3.1: Checkpointer einrichten
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -278,7 +278,7 @@ graph = workflow.compile(checkpointer=checkpointer)
 ...
 ```
 
-### Aufgabe 3.2: Session-basierte Interaktion
+### 6.2 Aufgabe 3.2: Session-basierte Interaktion
 
 ```python
 # Thread-Config für Session-Tracking
@@ -296,7 +296,7 @@ result2 = graph.invoke({
 ...
 ```
 
-### Aufgabe 3.3: Session-History anzeigen
+### 6.3 Aufgabe 3.3: Session-History anzeigen
 
 ```python
 # History einer Session abrufen
@@ -315,11 +315,11 @@ def show_session_history(thread_id: str):
 
 ---
 
-## Kapitel 4: Multi-Agent System (Supervisor)
+## 7 Kapitel 4: Multi-Agent System (Supervisor)
 
 **Lernziel:** Supervisor-Pattern mit Worker-Agents
 
-### Aufgabe 4.1: Worker-Agents definieren
+### 7.1 Aufgabe 4.1: Worker-Agents definieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -349,7 +349,7 @@ technical_agent = create_agent(
 )
 ```
 
-### Aufgabe 4.2: Supervisor-Node implementieren
+### 7.2 Aufgabe 4.2: Supervisor-Node implementieren
 
 ```python
 # Supervisor State (erweitert SupportState)
@@ -364,7 +364,7 @@ def supervisor_node(state: MultiAgentState) -> MultiAgentState:
     ...
 ```
 
-### Aufgabe 4.3: Multi-Agent Graph bauen
+### 7.3 Aufgabe 4.3: Multi-Agent Graph bauen
 
 ```python
 # Multi-Agent Workflow
@@ -397,11 +397,11 @@ workflow.add_conditional_edges(
 
 ---
 
-## Kapitel 5: Human-in-the-Loop
+## 8 Kapitel 5: Human-in-the-Loop
 
 **Lernziel:** Interrupt & Resume für kritische Entscheidungen
 
-### Aufgabe 5.1: Interrupt-Point definieren
+### 8.1 Aufgabe 5.1: Interrupt-Point definieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -415,7 +415,7 @@ graph = workflow.compile(
 )
 ```
 
-### Aufgabe 5.2: Approval-Node erstellen
+### 8.2 Aufgabe 5.2: Approval-Node erstellen
 
 ```python
 # Human Approval Node
@@ -427,7 +427,7 @@ def human_approval_node(state: MultiAgentState) -> MultiAgentState:
 ...
 ```
 
-### Aufgabe 5.3: Interrupt & Resume Workflow
+### 8.3 Aufgabe 5.3: Interrupt & Resume Workflow
 
 ```python
 # Schritt 1: Start bis Interrupt
@@ -459,11 +459,11 @@ if approval == "yes":
 
 ---
 
-## Kapitel 6: Subgraphs & Tool Nodes
+## 9 Kapitel 6: Subgraphs & Tool Nodes
 
 **Lernziel:** Modulare Workflows mit Subgraphs
 
-### Aufgabe 6.1: Subgraph für Eskalation
+### 9.1 Aufgabe 6.1: Subgraph für Eskalation
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -487,7 +487,7 @@ escalation_workflow.add_node("create_ticket", create_ticket_node)
 escalation_graph = escalation_workflow.compile()
 ```
 
-### Aufgabe 6.2: Subgraph in Hauptgraph integrieren
+### 9.2 Aufgabe 6.2: Subgraph in Hauptgraph integrieren
 
 ```python
 # Hauptgraph mit Subgraph
@@ -516,11 +516,11 @@ workflow.add_conditional_edges(
 
 ---
 
-## Kapitel 7: Production Deployment
+## 10 Kapitel 7: Production Deployment
 
 **Lernziel:** Streaming, Monitoring, Gradio-UI
 
-### Aufgabe 7.1: Streaming implementieren
+### 10.1 Aufgabe 7.1: Streaming implementieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -538,7 +538,7 @@ for event in graph.stream(initial_state, config=config, stream_mode="debug"):
     ...
 ```
 
-### Aufgabe 7.2: Gradio-UI mit LangGraph
+### 10.2 Aufgabe 7.2: Gradio-UI mit LangGraph
 
 ```python
 import gradio as gr
@@ -569,7 +569,7 @@ with gr.Blocks() as demo:
     ...
 ```
 
-### Aufgabe 7.3: Monitoring & Metrics
+### 10.3 Aufgabe 7.3: Monitoring & Metrics
 
 ```python
 # Custom Callback für Metrics
@@ -602,31 +602,31 @@ graph = workflow.compile(
 
 ---
 
-## Bonusaufgaben (Optional)
+## 11 Bonusaufgaben (Optional)
 
-### Bonus 1: LangSmith Integration
+### 11.1 Bonus 1: LangSmith Integration
 - Tracke alle Agent-Aufrufe in LangSmith
 - Evaluiere Antwortqualität
 - Erstelle Custom-Evaluatoren
 
-### Bonus 2: Erweiterte Multi-Agent-Patterns
+### 11.2 Bonus 2: Erweiterte Multi-Agent-Patterns
 - Hierarchical Agent (3 Ebenen)
 - Collaborative Agents (arbeiten zusammen)
 - Competitive Agents (wählen beste Lösung)
 
-### Bonus 3: Advanced Checkpointing
+### 11.3 Bonus 3: Advanced Checkpointing
 - PostgreSQL-Checkpointer für Production
 - Checkpoint-Branching (Alternative Pfade)
 - Time-Travel Debugging
 
-### Bonus 4: Mermaid-Visualisierung
+### 11.4 Bonus 4: Mermaid-Visualisierung
 - Automatische Graph-Visualisierung mit Mermaid
 - State-Transition-Diagramme
 - Agent-Interaktions-Diagramme
 
 ---
 
-## Bewertungskriterien
+## 12 Bewertungskriterien
 
 | Phase | Punkte | Kriterien |
 |-------|--------|-----------|
@@ -643,7 +643,7 @@ graph = workflow.compile(
 
 ---
 
-## Hilfreiche Ressourcen
+## 13 Hilfreiche Ressourcen
 
 **LangGraph Dokumentation:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
@@ -660,7 +660,7 @@ graph = workflow.compile(
 
 ---
 
-## Architektur-Übersicht
+## 14 Architektur-Übersicht
 
 ```mermaid
 graph TB
@@ -699,7 +699,7 @@ graph TB
 
 ---
 
-## Abgabe
+## 15 Abgabe
 
 **Format:**
 - **Jupyter Notebook** (`Multi_Agent_Support_System.ipynb`)
@@ -716,7 +716,7 @@ graph TB
 
 **Deadline:** [Wird vom Dozenten festgelegt]
 
-### Checkliste vor Abgabe
+### 15.1 Checkliste vor Abgabe
 - [ ] Notebook läuft von oben bis unten fehlerfrei durch
 - [ ] Alle API-Keys sind über Colab Secrets eingebunden
 - [ ] Alle 7 Kapitel sind implementiert
@@ -729,7 +729,7 @@ graph TB
 
 ---
 
-## FAQ
+## 16 FAQ
 
 **Q: Warum LangGraph statt einfachem create_agent()?**
 A: `create_agent()` ist für einfache, lineare Agent-Tasks perfekt. LangGraph benötigen Sie für:
@@ -766,8 +766,8 @@ A:
 
 ---
 
-**Version:** 1.0 (Ohne Lösungen - nur Aufgabenstellung)
-**Letzte Aktualisierung:** Januar 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-**Schwerpunkt:** LangGraph 1.0+, Multi-Agent-Systeme, State Machines
-**Arbeitsumgebung:** Google Colab oder Jupyter Notebook
+**Version:** 1.0    
+**Letzte Aktualisierung:** Januar 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Schwerpunkt:** LangGraph 1.0+, Multi-Agent-Systeme, State Machines    
+**Arbeitsumgebung:** Google Colab oder Jupyter Notebook    

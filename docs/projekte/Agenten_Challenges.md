@@ -26,7 +26,7 @@ has_toc: true
 
 Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M20 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
 
-## 1.1 Lernziele
+## 1 Lernziele
 
 - Integration von LangChain 1.0+ und LangGraph 0.3+ in einem Production-System
 - Implementierung komplexer Multi-Agent-Architekturen (Supervisor, Hierarchical, Collaborative)
@@ -35,7 +35,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 - Deployment mit persistenter Session-Verwaltung
 - Präsentation und Dokumentation der eigenen Lösung
 
-## 1.2 Voraussetzungen
+## 2 Voraussetzungen
 
 - Abschluss der Module M00-M20 (Tag 1-5)
 - Kenntnisse in LangChain 1.0+ und LangGraph 0.3+
@@ -43,13 +43,13 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
 - Verständnis von State Machines und Checkpointing
 
-## 1.3 Zeitrahmen & Umfang
+## 3 Zeitrahmen & Umfang
 
 - **Zeitaufwand:** 20-30 Stunden (verteilt über 2-3 Wochen)
 - **Komplexität:** Production-Ready Multi-Agent-System mit State Management
 - **Eigenständigkeit:** Freie Gestaltung innerhalb der gewählten Projektoption
 
-## 1.4 Praxiseinblick: Von der State Machine zum Production-System
+## 4 Praxiseinblick: Von der State Machine zum Production-System
 
 {: .highlight }
 > "Ein Agent ist kein Chatbot – der Unterschied ist verstanden."
@@ -57,7 +57,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, die bei Production-Deployments von KI-Agenten auftreten:
 
-### Was unterscheidet einen einfachen Agent von einem Production-System?
+### 4.1 Was unterscheidet einen einfachen Agent von einem Production-System?
 
 | **Einfacher Agent** | **Production-System (Challenge-Ziel)** |
 |---------------------|---------------------------------------|
@@ -69,7 +69,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 | Einzelner Agent | Multi-Agent-Koordination (Supervisor) |
 | Keine Observability | LangSmith-Tracing + Monitoring |
 
-### Learnings aus der Praxis
+### 4.2 Learnings aus der Praxis
 
 **1. State Management ist Critical**
 - Production-Agents müssen Sessions über Tage/Wochen persistieren
@@ -94,7 +94,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 {: .info }
 > **Empfehlung:** Studieren Sie die [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_1.0_Must_Haves.md) für Production-Best-Practices.
 
-### Konkrete Tipps für Ihre Challenge
+### 4.3 Konkrete Tipps für Ihre Challenge
 
 ✅ **Do's:**
 - StateGraph VOR Code zeichnen (Visualisierung hilft!)
@@ -116,7 +116,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 
 Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unterschiedliche Aspekte von LangGraph betonen. Wählen Sie eine Option aus oder kombinieren Sie Elemente.
 
-## 2.1 Multi-Agent Support-System
+## 1 Multi-Agent Support-System
 
 **Beschreibung:** Ein Support-System mit Supervisor-Agent, der Kundenanfragen an spezialisierte Worker-Agents delegiert (Technical, Billing, General Support).
 
@@ -157,7 +157,7 @@ graph TB
 
 ---
 
-## 2.2 Research-Team mit Hierarchical-Pattern
+## 2 Research-Team mit Hierarchical-Pattern
 
 **Beschreibung:** Ein Research-Assistent mit hierarchischer Struktur: Main Supervisor → Research Lead + Writing Lead → Spezialisierte Worker.
 
@@ -206,7 +206,7 @@ graph TB
 
 ---
 
-## 2.3 Collaborative Code-Review-System
+## 3 Collaborative Code-Review-System
 
 **Beschreibung:** Ein System mit 3 Peer-Agents (Code Analyzer, Security Reviewer, Performance Auditor), die kollaborativ Code reviewen und Konsens finden.
 
@@ -251,7 +251,7 @@ graph LR
 
 ---
 
-## 2.4 Workflow-Automation mit Tool-Integration
+## 4 Workflow-Automation mit Tool-Integration
 
 **Beschreibung:** Ein Workflow-Agent, der komplexe Business-Prozesse automatisiert (z.B. Onboarding, Approval-Workflows, Data Processing).
 
@@ -299,11 +299,11 @@ stateDiagram-v2
 
 # 3 | Technische Anforderungen
 
-## 3.1 PFLICHT-Features (Must-Have)
+## 1 PFLICHT-Features (Must-Have)
 
 Jedes Projekt **MUSS** folgende Features implementieren:
 
-### StateGraph mit TypedDict
+### 1.1 StateGraph mit TypedDict
 ```python
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
@@ -317,7 +317,7 @@ class AgentState(TypedDict):
     # Weitere Felder je nach Projekt
 ```
 
-### Checkpointing (SQLite)
+### 1.2 Checkpointing (SQLite)
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
 
@@ -325,7 +325,7 @@ checkpointer = SqliteSaver.from_conn_string("agent_sessions.db")
 graph = workflow.compile(checkpointer=checkpointer)
 ```
 
-### Human-in-the-Loop (mindestens 1 Interrupt-Point)
+### 1.3 Human-in-the-Loop (mindestens 1 Interrupt-Point)
 ```python
 graph = workflow.compile(
     checkpointer=checkpointer,
@@ -333,23 +333,23 @@ graph = workflow.compile(
 )
 ```
 
-### LangSmith-Tracing
+### 1.4 LangSmith-Tracing
 ```python
 import os
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge"
 ```
 
-### Multi-Agent-Architektur
+### 1.5 Multi-Agent-Architektur
 - Minimum: **1 Supervisor + 2 Worker-Agents**
 - Supervisor delegiert Aufgaben an Worker
 - Workers haben spezialisierte Tools oder Prompts
 
 ---
 
-## 3.2 Empfohlene Features (Should-Have)
+## 2 Empfohlene Features (Should-Have)
 
-### Conditional Routing
+### 2.1 Conditional Routing
 ```python
 def route_by_category(state: AgentState) -> str:
     """Router-Funktion für Verzweigungen."""
@@ -366,7 +366,7 @@ workflow.add_conditional_edges(
 )
 ```
 
-### Structured Output mit Pydantic
+### 2.2 Structured Output mit Pydantic
 ```python
 from pydantic import BaseModel, Field
 
@@ -378,7 +378,7 @@ class AgentDecision(BaseModel):
 structured_llm = llm.with_structured_output(AgentDecision)
 ```
 
-### Gradio-UI mit Session-Management
+### 2.3 Gradio-UI mit Session-Management
 ```python
 import gradio as gr
 
@@ -395,7 +395,7 @@ with gr.Blocks() as demo:
 
 ---
 
-## 3.3 Optionale Features (Nice-to-Have)
+## 3 Optionale Features (Nice-to-Have)
 
 - **Subgraphs** für modulare Workflows
 - **Streaming** für Echtzeit-Fortschritt
@@ -408,7 +408,7 @@ with gr.Blocks() as demo:
 
 # 4 | Projekt-Setup
 
-## 4.1 Environment Setup
+## 1 Environment Setup
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -423,7 +423,7 @@ with gr.Blocks() as demo:
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```
 
-## 4.2 API-Keys Setup
+## 2 API-Keys Setup
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -442,7 +442,7 @@ os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge-your-name"
 os.environ["LANGCHAIN_API_KEY"] = userdata.get('LANGSMITH_API_KEY')
 ```
 
-## 4.3 LangGraph Basis-Template
+## 3 LangGraph Basis-Template
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -508,7 +508,7 @@ graph = workflow.compile(
 
 # 6 | Abgabe
 
-## 6.1 Abgabeformat
+## 1 Abgabeformat
 
 **Pflicht-Dateien:**
 - **Jupyter Notebook** (`Agenten_Challenge.ipynb`)
@@ -529,9 +529,9 @@ graph = workflow.compile(
 - ODER als **ZIP-Archiv** mit .ipynb + DB
 - ODER als **Git-Repository-Link** (GitHub/GitLab)
 
-## 6.2 Checkliste vor Abgabe
+## 2 Checkliste vor Abgabe
 
-### Code & Funktionalität
+### 2.1 Code & Funktionalität
 - [ ] Notebook läuft von oben bis unten fehlerfrei durch
 - [ ] Alle API-Keys sind über Colab Secrets eingebunden (nicht hardcodiert!)
 - [ ] StateGraph verwendet TypedDict (PFLICHT!)
@@ -540,13 +540,13 @@ graph = workflow.compile(
 - [ ] Multi-Agent-System funktioniert (Supervisor + 2+ Workers)
 - [ ] LangSmith-Tracing aktiviert, Projekt öffentlich
 
-### Dokumentation
+### 2.2 Dokumentation
 - [ ] README.md erklärt Projekt, Architektur und Setup
 - [ ] Mermaid-Diagramm der Multi-Agent-Architektur vorhanden
 - [ ] Code-Kommentare an kritischen Stellen
 - [ ] Error-Handling implementiert
 
-### UI & Deployment
+### 2.3 UI & Deployment
 - [ ] Gradio-UI läuft und erstellt share-Link
 - [ ] Session-Management in UI funktioniert
 - [ ] UI ist benutzerfreundlich (nicht nur technisch)
@@ -555,7 +555,7 @@ graph = workflow.compile(
 
 # 7 | Hilfreiche Ressourcen
 
-## 7.1 Dokumentation
+## 1 Dokumentation
 
 **LangGraph:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
@@ -568,7 +568,7 @@ graph = workflow.compile(
 - [LangChain QuickRef](../../LangChain_QuickRef.md)
 - [Einsteiger LangGraph](../frameworks/Einsteiger_LangGraph.md)
 
-## 7.2 Code-Beispiele
+## 2 Code-Beispiele
 
 **Referenz-Notebooks:**
 - `M13_StateGraph_Basics.ipynb` - StateGraph Einführung
@@ -576,7 +576,7 @@ graph = workflow.compile(
 - `M18_Supervisor_Pattern.ipynb` - Multi-Agent-Beispiel
 - `M19_Multi_Agent_Projekt.ipynb` - Vollständiges Projekt
 
-## 7.3 Troubleshooting
+## 3 Troubleshooting
 
 | Problem | Ursache | Lösung |
 |---------|---------|--------|
@@ -685,8 +685,8 @@ class SupportState(TypedDict):
 
 ---
 
-**Version:** 1.0
-**Letzte Aktualisierung:** Januar 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-**Basis:** Kursplan v4.3, Module M00-M20
-**Framework-Versionen:** LangChain 1.0+, LangGraph 0.3+, LangSmith 0.4+
+**Version:** 1.0     
+**Letzte Aktualisierung:** Januar 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Basis:** Kursplan v4.3, Module M00-M20    
+**Framework-Versionen:** LangChain 1.0+, LangGraph 0.3+, LangSmith 0.4+    

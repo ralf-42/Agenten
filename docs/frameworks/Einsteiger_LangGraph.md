@@ -38,8 +38,17 @@ Ein Workflow besteht aus:
 
 Ein minimales Diagramm:
 
-```
-START → agent → END
+```mermaid
+graph LR
+    A[LangChain] --> B[LangGraph]
+    B --> C[Multi-Step Workflows]
+    B --> D[Conditional Routing]
+    B --> E[Multi-Agent Systems]
+    B --> F[Checkpointing]
+    B --> G[Human-in-Loop]
+
+    style B fill:#10a37f
+    style A fill:#0066cc
 ```
 
 Damit ist sofort klar: LangGraph strukturiert Workflows, anstatt alles in ein einzelnes LLM-Prompt zu packen.
@@ -92,6 +101,19 @@ from IPython.display import Image
 
 display(Image(graph.get_graph().draw_mermaid_png()))
 ```
+
+Dieser minimale Workflow sieht so aus:
+
+```mermaid
+flowchart LR
+    START([START]) --> AGENT[agent_node]
+    AGENT --> END([END])
+
+    style START fill:#90EE90
+    style END fill:#FFB6C1
+    style AGENT fill:#87CEEB
+```
+
 ### 2.5 Ausführen
 
 ```python
@@ -114,6 +136,21 @@ Nachdem Einsteiger ein funktionsfähiges Beispiel gesehen haben, kann das Konzep
 - Der Zustand wird in einem *State* gespeichert.
 - *Edges* bestimmen die Reihenfolge.
 - *Reducer* wie `add_messages` fügen Informationen intelligent zusammen.
+
+```mermaid
+stateDiagram-v2
+    [*] --> State: Initialize
+    State --> Node1: Edge
+    Node1 --> State: Update (Reducer)
+    State --> Node2: Edge
+    Node2 --> State: Update (Reducer)
+    State --> [*]: Complete
+
+    note right of State
+        messages: []
+        step: 0
+    end note
+```
 
 Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
 
@@ -193,6 +230,23 @@ g.add_conditional_edges(
 g.add_edge("tools", "agent")
 ```
 
+**Visualisierung des Tool-Loops:**
+
+```mermaid
+flowchart TB
+    START([START]) --> AGENT[Agent Node]
+    AGENT --> COND{Tool Calls?}
+    COND -->|Yes| TOOLS[Tool Node]
+    COND -->|No| END([END])
+    TOOLS --> AGENT
+
+    style START fill:#90EE90
+    style END fill:#FFB6C1
+    style COND fill:#FFD700
+    style TOOLS fill:#FFA500
+    style AGENT fill:#87CEEB
+```
+
 ### 6.3 Typische Muster
 - Schlüsselwort-Trigger
 - Unsicherheitsanalyse
@@ -208,6 +262,23 @@ Streaming ist ein wichtiges Werkzeug für das Verständnis.
 ```python
 for event in graph.stream(initial_state, {"configurable": {"thread_id": "demo"}}, stream_mode="updates"):
     print(event)
+```
+
+**Streaming-Prozess:**
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Graph
+    participant Node1
+    participant Node2
+
+    User->>Graph: invoke(state)
+    Graph->>Node1: process
+    Node1-->>User: stream update 1
+    Graph->>Node2: process
+    Node2-->>User: stream update 2
+    Graph-->>User: final result
 ```
 
 Streaming-Varianten:
@@ -241,6 +312,23 @@ Später:
 result2 = graph.invoke(None, config)  # setzt fort
 ```
 
+**Session-Management mit Checkpointing:**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Session1: invoke(state, thread_id)
+    Session1 --> Checkpoint: save state
+    Checkpoint --> Session1: resume
+    Session1 --> Session2: continue later
+    Session2 --> [*]: complete
+
+    note right of Checkpoint
+        MemorySaver (Dev)
+        SQLite (Staging)
+        Postgres (Production)
+    end note
+```
+
 Hinweise:
 - Optimale Einstiegsvariante: MemorySaver.
 - Für produktive Systeme: SQLite/Postgres.
@@ -267,6 +355,27 @@ def approval_node(state: ChatState) -> ChatState:
 ```python
 from langgraph.types import Command
 result = graph.invoke(Command(resume="yes"), config)
+```
+
+**Human-in-the-Loop Pattern:**
+
+```mermaid
+flowchart TB
+    START([START]) --> NODE1[Process Data]
+    NODE1 --> APPROVAL[👤 Approval Node]
+    APPROVAL --> INTERRUPT{interrupt}
+    INTERRUPT -.Wait for Human.-> DECISION{Decision?}
+    DECISION -->|yes| EXECUTE[Execute Action]
+    DECISION -->|no| REJECT[Reject Action]
+    EXECUTE --> END([END])
+    REJECT --> END
+
+    style START fill:#90EE90
+    style END fill:#FFB6C1
+    style APPROVAL fill:#FFA500
+    style INTERRUPT fill:#FFD700
+    style EXECUTE fill:#87CEEB
+    style REJECT fill:#ff6b6b
 ```
 
 Einsatzmöglichkeiten:
@@ -299,6 +408,32 @@ def supervisor(state: ChatState) -> Command:
     return Command(goto=f"{task}_agent")
 ```
 
+**Multi-Agent Supervisor Pattern:**
+
+```mermaid
+graph TB
+    START([User Request]) --> SUPERVISOR[Supervisor Agent]
+
+    SUPERVISOR --> COND{Task Type?}
+    COND -->|research| RESEARCH[Research Agent]
+    COND -->|writing| WRITER[Writer Agent]
+    COND -->|analysis| ANALYST[Analyst Agent]
+
+    RESEARCH --> REVIEW[Quality Check]
+    WRITER --> REVIEW
+    ANALYST --> REVIEW
+
+    REVIEW --> ITERCHECK{Good enough?}
+    ITERCHECK -->|No| SUPERVISOR
+    ITERCHECK -->|Yes| END([END])
+
+    style SUPERVISOR fill:#10a37f
+    style RESEARCH fill:#87CEEB
+    style WRITER fill:#FFB6C1
+    style ANALYST fill:#FFA500
+    style REVIEW fill:#FFD700
+```
+
 Mögliche Erweiterungen:
 - iterative Qualitätsprüfungen
 - mehrere Worker mit Prioritäten
@@ -306,7 +441,7 @@ Mögliche Erweiterungen:
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 2.0  
+**Stand:** Januar 2026  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
 

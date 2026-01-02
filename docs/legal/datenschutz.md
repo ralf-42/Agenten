@@ -19,11 +19,11 @@ Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren 
 
 Die Datenverarbeitung erfolgt durch den Repository-Betreiber:
 
-Ralf Bendig
-c/o flexdienst – #12150
-Kurt-Schumacher-Straße 76
-67663 Kaiserslautern
-Deutschland
+Ralf Bendig   
+c/o flexdienst – #12150   
+Kurt-Schumacher-Straße 76   
+67663 Kaiserslautern   
+Deutschland   
 
 **Wie erfassen wir Ihre Daten?**
 
@@ -60,7 +60,7 @@ GitHub erfasst mit jedem Aufruf dieser Webseite bzw. des Repositories automatisc
 
 Diese Daten werden nicht mit anderen Datenquellen zusammengeführt. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Website-Betreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website.
 
-Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von GitHub:
+Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von GitHub:   
 https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement
 
 ### Google Colab
@@ -69,7 +69,7 @@ Einige Jupyter Notebooks dieses Projekts können in Google Colab ausgeführt wer
 
 Bei der Nutzung von Google Colab werden personenbezogene Daten (wie IP-Adresse, Nutzungsverhalten) durch Google verarbeitet. Dies erfolgt auf Grundlage Ihrer Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.
 
-Weitere Informationen finden Sie in der Datenschutzerklärung von Google:
+Weitere Informationen finden Sie in der Datenschutzerklärung von Google:   
 https://policies.google.com/privacy
 
 ## 3. Datenerfassung in diesem Projekt
@@ -107,10 +107,10 @@ Dieses Projekt kann APIs von Drittanbietern (z.B. OpenAI, Anthropic, Google) nut
 
 **Wichtig:** Der Repository-Betreiber hat keinen Zugriff auf Ihre API-Keys oder die Daten, die Sie an diese Dienste senden.
 
-Relevante Datenschutzerklärungen:
-- OpenAI: https://openai.com/privacy/
-- Anthropic: https://www.anthropic.com/privacy
-- Google: https://policies.google.com/privacy
+Relevante Datenschutzerklärungen:   
+- OpenAI: https://openai.com/privacy/   
+- Anthropic: https://www.anthropic.com/privacy   
+- Google: https://policies.google.com/privacy   
 
 ## 5. Ihre Rechte als betroffene Person
 
@@ -140,11 +140,11 @@ Sie haben das Recht auf Beschwerde bei einer Aufsichtsbehörde, insbesondere in 
 **Zuständige Aufsichtsbehörde für Rheinland-Pfalz:**
 
 Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz
-Hintere Bleiche 34
-55116 Mainz
-Telefon: 06131 208-2449
-E-Mail: poststelle@datenschutz.rlp.de
-Website: https://www.datenschutz.rlp.de/
+Hintere Bleiche 34   
+55116 Mainz   
+Telefon: 06131 208-2449   
+E-Mail: poststelle@datenschutz.rlp.de   
+Website: https://www.datenschutz.rlp.de/   
 
 ## 6. Datensicherheit
 
@@ -152,7 +152,7 @@ Wir treffen nach Maßgabe des Art. 32 DSGVO unter Berücksichtigung des Stands d
 
 ## 7. Aktualität und Änderung dieser Datenschutzerklärung
 
-Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Dezember 2025.
+Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Dezember 2024.
 
 Durch die Weiterentwicklung unserer Webseite und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit in diesem Repository unter `docs/legal/datenschutz.md` von Ihnen abgerufen und ausgedruckt werden.
 
@@ -160,15 +160,15 @@ Durch die Weiterentwicklung unserer Webseite und Angebote darüber oder aufgrund
 
 Bei Fragen zum Datenschutz können Sie sich an den Verantwortlichen wenden:
 
-Ralf Bendig
-c/o flexdienst – #12150
-Kurt-Schumacher-Straße 76
-67663 Kaiserslautern
-Deutschland
-
-E-Mail: ralf.bendig.rb@gmail.com
+Ralf Bendig   
+c/o flexdienst – #12150   
+Kurt-Schumacher-Straße 76   
+67663 Kaiserslautern   
+Deutschland   
+   
+E-Mail: ralf.bendig.rb@gmail.com   
 
 ---
 
-**Version:** 1.0
-**Letzte Aktualisierung:** Dezember 2025
+**Version:** 1.0         
+**Letzte Aktualisierung:** Dezember 2025   

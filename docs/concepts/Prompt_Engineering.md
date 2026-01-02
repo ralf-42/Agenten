@@ -2,7 +2,7 @@
 layout: default
 title: Prompt Engineering
 parent: Konzepte
-nav_order: 2
+nav_order: 9
 description: "Strategien für effektive Prompts in KI-Agenten-Systemen"
 has_toc: true
 ---
@@ -441,10 +441,10 @@ Effektives Prompt Engineering basiert auf drei Säulen:
 - **Strukturierte Ausgaben** ermöglichen Weiterverarbeitung
 - **Iteratives Testen** führt zu robusten Prompts
 
-Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents und LangGraph-Workflows angewendet.
+Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents angewendet.
 
 ---
 
 **Version:** 1.0  
 **Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.

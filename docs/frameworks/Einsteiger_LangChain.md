@@ -206,6 +206,59 @@ print(safe_divide.invoke({"a": 10, "b": 2}))
 print(safe_divide.invoke({"a": 10, "b": 0}))
 ```
 
+
+
+### 5.3 Tool Extras für Provider-spezifische Features (NEU v1.2.0)
+
+Tools unterstützen jetzt `extras` für provider-native Konfigurationen – eine der wichtigsten Neuerungen in LangChain v1.2.0:
+
+```python
+from langchain_core.tools import tool
+
+# ✨ NEU in v1.2.0: Provider-spezifische Tool-Parameter
+@tool(extras={
+    "anthropic": {
+        "cache_control": {"type": "ephemeral"},  # Anthropic Prompt Caching
+        "disable_parallel_tool_use": False
+    },
+    "openai": {
+        "strict": True  # OpenAI Strict Mode (garantierte Schema-Konformität)
+    }
+})
+def search_database(query: str, limit: int = 10) -> str:
+    """Durchsucht die Datenbank nach relevanten Informationen.
+
+    Args:
+        query: Suchanfrage
+        limit: Maximale Anzahl Ergebnisse
+    """
+    return f"Gefunden: {limit} Ergebnisse für '{query}'"
+
+# Tool mit Anthropic programmatic tool calling
+@tool(extras={
+    "anthropic": {
+        "type": "computer_20241022",  # Anthropic Computer Use
+        "display_width_px": 1024,
+        "display_height_px": 768
+    }
+})
+def take_screenshot() -> str:
+    """Erstellt einen Screenshot des Bildschirms."""
+    return "screenshot.png"
+```
+
+**Vorteile:**
+- ✅ **Provider-native Features** nutzen (Caching, Strict Mode, Computer Use)
+- ✅ **Built-in Client-Side Tools** für Anthropic, OpenAI
+- ✅ **Optimierte Performance** durch provider-spezifische Optimierungen
+- ✅ **Backwards-compatible**: Tools ohne `extras` funktionieren weiterhin
+
+**Use Cases:**
+- Anthropic Prompt Caching für häufig verwendete Tools
+- OpenAI Strict Mode für garantierte Schema-Konformität
+- Anthropic Computer Use für Browser-Automation
+
+
 ---
 
 ## 6 Agenten erstellen: `create_agent()`
@@ -244,6 +297,55 @@ result
 ```
 
 Hier liefert `create_agent()` bereits ein kompiliertes LangGraph‑Objekt (CompiledStateGraph). Dadurch kann derselbe Agent später in komplexere Workflows eingebettet werden.
+
+### 6.2 Strict Schema für Agent-Responses (NEU v1.2.0)
+
+Agents unterstützen jetzt `response_format` für strikte Validierung von Agent-Outputs:
+
+```python
+from langchain.agents import create_agent
+from pydantic import BaseModel, Field
+
+# Definiere strukturiertes Response-Schema
+class AgentResponse(BaseModel):
+    """Strukturierte Agent-Antwort mit Reasoning."""
+    reasoning: str = Field(description="Denkprozess des Agents")
+    action: str = Field(description="Geplante Aktion")
+    tool_to_use: str | None = Field(description="Zu verwendendes Tool (optional)")
+    confidence: float = Field(description="Konfidenz 0-1", ge=0, le=1)
+
+# ✨ NEU in v1.2.0: response_format für garantierte Schema-Konformität
+agent = create_agent(
+    model=llm,
+    tools=[search_tool, calculator_tool],
+    system_prompt="You are a helpful research assistant",
+    response_format=AgentResponse,  # Strikte Validierung!
+    provider_strategy="strict"  # Nutzt OpenAI Structured Output (wenn verfügbar)
+)
+
+# Agent-Response ist garantiert schema-konform
+response = agent.invoke({
+    "messages": [{"role": "user", "content": "Recherchiere die Bevölkerung von Berlin"}]
+})
+
+# Typsicherer Zugriff auf strukturierte Felder
+print(response.reasoning)  # str
+print(response.confidence)  # float (0-1)
+```
+
+**Vorteile:**
+- ✅ **Garantierte Schema-Konformität** für Agent-Outputs (keine JSON-Parsing-Fehler)
+- ✅ **Type-Safety** mit Pydantic-Validierung
+- ✅ **Bessere Fehlerbehandlung** durch strukturierte Responses
+- ✅ **Strikte Provider-Integration** (OpenAI Structured Output, Anthropic Tool Use)
+- ✅ **Predictable Agent-Behavior** für Production-Systeme
+
+**Use Cases:**
+- Production-Agents mit garantierten Output-Formaten
+- Multi-Step-Reasoning mit strukturierten Zwischenschritten
+- Agent-Monitoring mit standardisierten Response-Metriken
+- Integration in typsichere Workflows
+
 
 ### Agent-Tool-Interaktion
 

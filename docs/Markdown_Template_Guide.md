@@ -239,7 +239,7 @@ layout: default
 title: Frameworks
 nav_order: 3
 has_children: true
-description: "Einsteiger-Guides für LangChain, LangGraph und LangSmith"
+description: "Einsteiger-Guides für LangChain, ChromaDB und LangSmith"
 permalink: /frameworks/
 ---
 
@@ -250,7 +250,6 @@ Willkommen zu den Framework-Guides!
 Dieser Bereich enthält Einsteiger-Anleitungen für:
 
 - **LangChain** - Grundlagen und Best Practices
-- **LangGraph** - Multi-Agent-Systeme und Workflows
 - **LangSmith** - Monitoring & Debugging
 - **ChromaDB** - Vektordatenbanken für RAG-Systeme
 

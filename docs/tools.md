@@ -8,7 +8,7 @@ permalink: /tools/
 
 # Tools (deprecated)
 
-**Hinweis:** Dieser Bereich wurde nach **[Ressourcen](/Agenten/ressourcen/)** verschoben.
+**Hinweis:** Dieser Bereich wurde nach **[Ressourcen](/GenAI/ressourcen/)** verschoben.
 
 Bitte nutzen Sie die neue Navigation:
-- [Ressourcen](/Agenten/ressourcen/) - Anleitungen und Werkzeuge
+- [Ressourcen](/GenAI/ressourcen/) - Anleitungen und Werkzeuge

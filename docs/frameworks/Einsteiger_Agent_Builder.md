@@ -24,7 +24,7 @@ has_toc: true
 
 ## 1 Kurzüberblick: Was ist OpenAI Agent Builder?
 
-Während LangChain und LangGraph Code-basierte Frameworks für KI-Agenten sind, ermöglicht **OpenAI Agent Builder** die No-Code-Erstellung komplexer Agent-Workflows durch eine visuelle Drag-and-Drop-Oberfläche.
+Während LangChain ein Code-basiertes Framework für KI-Agenten ist, ermöglicht **OpenAI Agent Builder** die No-Code-Erstellung komplexer Agent-Workflows durch eine visuelle Drag-and-Drop-Oberfläche.
 
 **Zentrale Fragen, die Agent Builder beantwortet:**
 
@@ -67,16 +67,16 @@ graph TB
         AB --> AB3[One-Click Deploy]
     end
 
-    subgraph "LangGraph (Code)"
-        LG[Python Code] --> LG1[Full Control]
-        LG --> LG2[Custom Logic]
-        LG --> LG3[Manual Hosting]
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
     end
 
-    AB -.Vergleichbar mit.-> LG
+    AB -.Vergleichbar mit.-> LC
 
     style AB fill:#10a37f
-    style LG fill:#0066cc
+    style LC fill:#0066cc
 ```
 
 ---
@@ -127,7 +127,7 @@ stateDiagram-v2
 
 ## 3 Workflow-Konzept: Nodes und Edges
 
-Ähnlich wie LangGraph arbeitet Agent Builder mit einem gerichteten Graphen aus **Nodes** (Aktionen) und **Edges** (Verbindungen).
+Agent Builder arbeitet mit einem gerichteten Graphen aus **Nodes** (Aktionen) und **Edges** (Verbindungen).
 
 ### 3.1 Grundlegende Architektur
 
@@ -464,32 +464,24 @@ graph TB
         LC4[On-Premise Deployment]
     end
 
-    subgraph "LangGraph (Code)"
-        LG1[Complex State Machines]
-        LG2[Persistence & Checkpointing]
-        LG3[Custom Conditional Logic]
-        LG4[Self-Hosting Required]
-    end
-
     style AB1 fill:#10a37f
     style LC1 fill:#0066cc
-    style LG1 fill:#ff6b6b
 ```
 
-| Anforderung | Agent Builder | LangChain | LangGraph |
-|-------------|---------------|-----------|-----------|
-| **Kein Coding erforderlich** | ✅ | ❌ | ❌ |
-| **Schnelles Prototyping** | ✅ | ⚠️ | ❌ |
-| **Multi-Step-Workflows** | ✅ | ⚠️ | ✅ |
-| **Conditional Logic** | ✅ | ⚠️ | ✅ |
-| **Volle Code-Kontrolle** | ⚠️* | ✅ | ✅ |
-| **On-Premise Deployment** | ❌ | ✅ | ✅ |
-| **Multi-Modell (OpenAI + Anthropic)** | ❌ | ✅ | ✅ |
-| **Built-in Versionierung** | ✅ | ❌ | ❌ |
-| **Built-in Monitoring** | ✅ | ⚠️** | ⚠️** |
-| **MCP-Integration** | ✅ Native | ⚠️ Custom | ⚠️ Custom |
-| **Kosten (Development)** | Niedrig | Mittel | Hoch |
-| **Learning Curve** | Niedrig | Mittel | Hoch |
+| Anforderung | Agent Builder | LangChain |
+|-------------|---------------|-----------|
+| **Kein Coding erforderlich** | ✅ | ❌ |
+| **Schnelles Prototyping** | ✅ | ⚠️ |
+| **Multi-Step-Workflows** | ✅ | ✅ |
+| **Conditional Logic** | ✅ | ✅ |
+| **Volle Code-Kontrolle** | ⚠️* | ✅ |
+| **On-Premise Deployment** | ❌ | ✅ |
+| **Multi-Modell (OpenAI + Anthropic)** | ❌ | ✅ |
+| **Built-in Versionierung** | ✅ | ❌ |
+| **Built-in Monitoring** | ✅ | ⚠️** |
+| **MCP-Integration** | ✅ Native | ⚠️ Custom |
+| **Kosten (Development)** | Niedrig | Mittel |
+| **Learning Curve** | Niedrig | Mittel |
 
 *Code-Export möglich, aber limitiert
 **Mit LangSmith möglich
@@ -525,17 +517,12 @@ mindmap
 - **Multi-Provider** – OpenAI + Anthropic + Google
 - **On-Premise** – Volle Kontrolle über Deployment
 - **RAG-Systeme** – Custom Retriever, Reranking
-
-**LangGraph eignet sich für:**
-
-- **Komplexe State Machines** – Viele bedingte Verzweigungen
-- **Long-Running Sessions** – Checkpointing, Pause/Resume
-- **Multi-Agent-Systeme** – Koordination vieler Agents
-- **Custom Loops** – Reflexion, Self-Correction
+- **Komplexe Workflows** – Viele bedingte Verzweigungen
+- **Multi-Agent-Systeme** – Koordination mehrerer Agents
 
 ---
 
-## 7 Code-Export und Migration zu LangGraph
+## 7 Code-Export und Migration zu LangChain
 
 Agent Builder erlaubt Export von Workflows als TypeScript oder Python-Code für weitere Anpassungen.
 
@@ -557,88 +544,14 @@ sequenceDiagram
     Note over CODE,DEP: Code kann unabhängig angepasst werden
 ```
 
-### 7.2 Agent Builder → LangGraph Migration
-
-**Agent Builder Workflow:**
-
-```yaml
-# Visuell erstellt in Agent Builder
-Nodes:
-  - LLM: categorize_ticket
-  - Condition: route_by_category
-  - Tool: create_jira
-  - Tool: send_email
-```
-
-**LangGraph Equivalent:**
-
-```python
-from langgraph.graph import StateGraph, END
-from langchain_core.messages import HumanMessage
-
-# 1. State Definition
-class WorkflowState(TypedDict):
-    ticket_text: str
-    category: str
-    priority: int
-    jira_id: str
-
-# 2. Nodes
-def categorize_ticket(state: WorkflowState):
-    """LLM Node: Kategorisiert Ticket"""
-    response = llm.invoke(f"Kategorisiere: {state['ticket_text']}")
-    return {
-        "category": response.category,
-        "priority": response.priority
-    }
-
-def route_by_category(state: WorkflowState):
-    """Condition Node: Routing-Logik"""
-    if state["category"] == "technical" and state["priority"] > 3:
-        return "create_jira"
-    elif state["category"] == "billing":
-        return "assign_finance"
-    else:
-        return "queue"
-
-def create_jira(state: WorkflowState):
-    """Tool Node: JIRA Ticket erstellen"""
-    jira_id = jira_client.create_issue(
-        summary=state["ticket_text"],
-        priority=state["priority"]
-    )
-    return {"jira_id": jira_id}
-
-# 3. Graph aufbauen
-graph = StateGraph(WorkflowState)
-
-graph.add_node("categorize", categorize_ticket)
-graph.add_node("create_jira", create_jira)
-
-graph.add_conditional_edges(
-    "categorize",
-    route_by_category,
-    {
-        "create_jira": "create_jira",
-        "assign_finance": "assign_finance",
-        "queue": "queue"
-    }
-)
-
-graph.add_edge("create_jira", END)
-
-# 4. Kompilieren
-app = graph.compile()
-```
-
-### 7.3 Wann sollten Sie migrieren?
+### 7.2 Wann sollten Sie zu LangChain migrieren?
 
 ```mermaid
 graph TB
-    START{Anforderung prüfen} -->|Volle Code-Kontrolle| MIG[Migration zu LangGraph]
+    START{Anforderung prüfen} -->|Volle Code-Kontrolle| MIG[Migration zu LangChain]
     START -->|On-Premise Deployment| MIG
     START -->|Multi-Provider Support| MIG
-    START -->|Custom Conditional Logic| MIG
+    START -->|Custom Tools notwendig| MIG
     START -->|Visual Workflows ausreichend| STAY[Bei Agent Builder bleiben]
     START -->|Enterprise Governance wichtig| STAY
     START -->|Schnelles Iteration| STAY
@@ -646,16 +559,15 @@ graph TB
     MIG --> CODE[Code-basierte Entwicklung]
     STAY --> AB[Agent Builder]
 
-    style MIG fill:#ff6b6b
+    style MIG fill:#0066cc
     style STAY fill:#10a37f
 ```
 
 **Migrations-Checkliste:**
 
-- ✅ Benötigen Sie Multi-Provider-Support? → LangGraph
-- ✅ On-Premise Deployment erforderlich? → LangGraph
-- ✅ Sehr komplexe bedingte Logik? → LangGraph
-- ✅ Custom Python-Tools notwendig? → LangGraph
+- ✅ Benötigen Sie Multi-Provider-Support? → LangChain
+- ✅ On-Premise Deployment erforderlich? → LangChain
+- ✅ Custom Python-Tools notwendig? → LangChain
 - ❌ Visual Workflows ausreichend? → Agent Builder
 - ❌ Team hat keine Coding-Kenntnisse? → Agent Builder
 - ❌ Enterprise Governance wichtig? → Agent Builder
@@ -969,39 +881,39 @@ mindmap
       Start: Templates nutzen
       Build: Custom Workflows
       Export: Code für Anpassungen
-      Scale: LangGraph für komplexe Fälle
+      Scale: LangChain für komplexe Fälle
 ```
 
 ### 10.2 Kernkonzepte
 
-| Konzept | Beschreibung | Vergleich zu LangGraph |
-|---------|--------------|------------------------|
-| **Nodes** | Workflow-Bausteine (LLM, Tool, Condition) | Äquivalent zu LangGraph Nodes |
-| **Edges** | Verbindungen zwischen Nodes | Äquivalent zu LangGraph Edges |
-| **MCP** | Standardisierte Service-Integration | Custom Tools in LangGraph |
-| **Workflow** | Kompletter Agent als Graph | StateGraph in LangGraph |
-| **Versioning** | Built-in Workflow-Versionierung | Manuell in LangGraph |
+| Konzept | Beschreibung |
+|---------|--------------|
+| **Nodes** | Workflow-Bausteine (LLM, Tool, Condition) |
+| **Edges** | Verbindungen zwischen Nodes |
+| **MCP** | Standardisierte Service-Integration |
+| **Workflow** | Kompletter Agent als Graph |
+| **Versioning** | Built-in Workflow-Versionierung |
 
 ### 10.3 Wann Agent Builder nutzen?
 
 ```mermaid
 graph TB
     START{Projekt-Anforderungen} -->|No-Code gewünscht| AB[Agent Builder]
-    START -->|Full Code Control| LG[LangGraph]
-    START -->|Multi-Provider| LG
-    START -->|On-Premise| LG
+    START -->|Full Code Control| LC[LangChain]
+    START -->|Multi-Provider| LC
+    START -->|On-Premise| LC
 
     AB --> CHECK1{Passt Agent Builder?}
     CHECK1 -->|Ja| BUILD[Workflow bauen]
     CHECK1 -->|Limitierung| EXPORT[Code exportieren]
 
-    EXPORT --> LG
+    EXPORT --> LC
 
     BUILD --> PROD[Production]
-    LG --> PROD
+    LC --> PROD
 
     style AB fill:#10a37f
-    style LG fill:#ff6b6b
+    style LC fill:#0066cc
     style PROD fill:#FFD700
 ```
 
@@ -1014,11 +926,10 @@ graph TB
   - MCP-Server ausreichend für Integration
   - OpenAI-Modelle ausreichend
 
-- ✅ **LangGraph nutzen, wenn:**
+- ✅ **LangChain nutzen, wenn:**
   - Volle Code-Kontrolle erforderlich
   - Multi-Provider-Support nötig (OpenAI + Anthropic + etc.)
   - On-Premise Deployment erforderlich
-  - Sehr komplexe bedingte Logik
   - Custom Python-Tools notwendig
 
 ### 10.4 Empfohlener Lernpfad
@@ -1039,7 +950,7 @@ journey
       Security Best Practices: 5: Experte
       Code-Export & Migration: 4: Experte
     section Phase 4: Scale
-      LangGraph lernen: 3: Experte
+      LangChain lernen: 3: Experte
       Hybrid-Ansätze: 4: Experte
       Custom MCP Server: 3: Experte
 ```
@@ -1064,7 +975,7 @@ journey
 4. **Woche 7+: Skalierung**
    - Komplexe Multi-Agent-Systeme
    - Code-Export für Anpassungen
-   - Migration zu LangGraph bei Bedarf
+   - Migration zu LangChain bei Bedarf
 
 ### 10.5 Nächste Schritte
 
@@ -1081,12 +992,12 @@ graph LR
     LEARN --> PROD[Production Deployment]
 
     PROD --> SCALE{Skalierung nötig?}
-    SCALE -->|Ja| MIGRATE[LangGraph evaluieren]
+    SCALE -->|Ja| MIGRATE[LangChain evaluieren]
     SCALE -->|Nein| OPT[Workflows optimieren]
 
     style YOU fill:#90EE90
     style PROD fill:#FFD700
-    style MIGRATE fill:#ff6b6b
+    style MIGRATE fill:#0066cc
 ```
 
 **Ressourcen:**
@@ -1106,16 +1017,22 @@ graph LR
 - ✅ Custom GPTs entfernt (fokussiert auf Agent Builder)
 - ✅ Mermaid-Diagramme für alle Grafiken hinzugefügt
 - ✅ Erweiterte Sicherheits- und Monitoring-Sektion
-- ✅ Migration zu LangGraph detailliert beschrieben
+- ✅ Migration zu LangChain detailliert beschrieben
 - ✅ Praktische Beispiele mit vollständigen Workflow-Diagrammen
 
 ---
 
 ## 11 Quellen
 
-- [OpenAI Agent Builder Dokumentation](https://platform.openai.com/docs/guides/agent-builder)
-- [Introducing AgentKit | OpenAI](https://openai.com/index/introducing-agentkit/)
+- [OpenAI Agent Builder Dokumentation](https://platform.openai.com/docs/guides/agent-builder)          
+- [Introducing AgentKit OpenAI](https://openai.com/index/introducing-agentkit/)
 - [AgentKit vs GPTs: A complete guide](https://www.eesel.ai/blog/agentkit-vs-gpts)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
+- [LangChain Documentation](https://python.langchain.com/)
 - [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](https://sider.ai/blog/ai-tools/what-is-openai-chatgpt-agent-builder-a-complete-2025-guide)
+
+---
+
+**Version:** 1.0  
+**Stand:** November 2025  
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.

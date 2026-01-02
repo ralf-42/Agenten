@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Rechtliches
-nav_order: 5
+nav_order: 8
 has_children: true
 description: "Impressum, Datenschutz und rechtliche Hinweise"
 permalink: /rechtliches/

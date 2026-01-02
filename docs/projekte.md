@@ -13,15 +13,18 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
 ## Übersicht
 
 ### Workshop-Format
-- **[RAG Workshop](./projekte/RAG_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
-  - Bauen Sie einen intelligenten Tech-Doku-Assistenten von Grund auf
-  - 7 Kapitel: Vom einfachen Chatbot zur RAG-Anwendung
-  - Zeitaufwand: 4-6 Stunden
-  - Module M04-M11
+- **[Agenten Workshop](./projekte/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
+  - Bauen Sie ein Multi-Agent Support-System von Grund auf
+  - 7 Kapitel: Von StateGraph zu komplexen Supervisor-Hierarchien
+  - LangGraph 0.3+: State Machines, Checkpointing, Human-in-the-Loop
+  - Zeitaufwand: 6-8 Stunden
+  - Module M12-M20
 
 ### End-to-End Projekt
-- **[KI-Challenge](./projekte/M23_KI-Challenge.html)** - Eigenständige Implementierung
-  - Entwickeln Sie eine vollständige Agent-Anwendung
-  - 4 Projektoptionen: Dokumentenanalyse, Multimodal, Multi-Agent, Domänen-Experte
-  - Abgabe: Jupyter Notebook + README.md
-  - Zeitaufwand: 15-25 Stunden
+- **[Agenten Challenge](./projekte/Agenten_Challenges.html)** - Eigenständige Implementierung
+  - Entwickeln Sie ein Production-Ready Multi-Agent-System
+  - 4 Projektoptionen: Support-System, Research-Team, Code-Review, Workflow-Automation
+  - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
+  - Abgabe: Jupyter Notebook + SQLite-DB + README.md
+  - Zeitaufwand: 20-30 Stunden
+  - Module M00-M20

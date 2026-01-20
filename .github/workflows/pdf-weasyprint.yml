@@ -27,72 +27,228 @@ jobs:
             libharfbuzz-subset0
 
       - name: Install Python dependencies
-        run: pip install weasyprint PyPDF2 requests
+        run: pip install weasyprint PyPDF2 requests pyyaml
 
-      - name: Generate PDF from all sitemap pages
+      - name: Generate PDF from all pages (nav_order sorted)
         run: |
           python << 'EOF'
-          import requests
-          import xml.etree.ElementTree as ET
-          from weasyprint import HTML
-          from PyPDF2 import PdfMerger
           import os
           import re
+          import yaml
+          import requests
+          from weasyprint import HTML, CSS
+          from PyPDF2 import PdfMerger
 
-          SITEMAP_URL = "https://ralf-42.github.io/Agenten/sitemap.xml"
+          BASE_URL = "https://ralf-42.github.io/Agenten"
+          DOCS_DIR = "docs"
           OUTPUT_DIR = "pdf_parts"
-          FINAL_PDF = "output.pdf"
+          FINAL_PDF = "Agenten_Dokumentation.pdf"
 
           # Seiten die ausgeschlossen werden sollen
           EXCLUDE_PATTERNS = [
-              r'/legal/',      # Impressum, Datenschutz etc.
-              r'/test-',       # Test-Seiten
+              r'/legal/',
+              r'/test-',
+              r'FONT_SIZE_GUIDE',
           ]
 
-          def should_exclude(url):
-              return any(re.search(pattern, url) for pattern in EXCLUDE_PATTERNS)
+          # Print-CSS für bessere PDF-Ausgabe
+          PRINT_CSS = CSS(string='''
+              /* Seitennummern im Footer */
+              @page {
+                  size: A4;
+                  margin: 2cm 1.5cm 2.5cm 1.5cm;
+                  @bottom-center {
+                      content: "Seite " counter(page) " von " counter(pages);
+                      font-size: 10pt;
+                      color: #666;
+                  }
+                  @top-center {
+                      content: string(page-title);
+                      font-size: 9pt;
+                      color: #999;
+                  }
+              }
 
-          # Sitemap laden
-          print(f"Lade Sitemap: {SITEMAP_URL}")
-          response = requests.get(SITEMAP_URL)
-          response.raise_for_status()
+              /* Titel als Running Header */
+              h1 { string-set: page-title content(); }
 
-          # URLs extrahieren
-          root = ET.fromstring(response.content)
-          namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          urls = [loc.text for loc in root.findall('.//ns:loc', namespace)]
+              /* TOC der einzelnen Seiten ausblenden */
+              .toc, #toc, [id*="inhaltsverzeichnis"],
+              nav.toc, .table-of-contents,
+              #markdown-toc, .no_toc + ul,
+              h1:contains("Inhaltsverzeichnis"),
+              #inhaltsverzeichnis {
+                  display: none !important;
+              }
 
-          # Filtern
-          urls = [url for url in urls if not should_exclude(url)]
-          print(f"Gefunden: {len(urls)} Seiten")
+              /* Sidebar und Navigation ausblenden */
+              .side-bar, .site-nav, nav,
+              .site-header, .site-footer,
+              .main-header, .aux-nav,
+              .breadcrumb-nav {
+                  display: none !important;
+              }
+
+              /* Hauptinhalt volle Breite */
+              .main-content, .main, main, article {
+                  max-width: 100% !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+              }
+
+              /* Tabellen-Handling */
+              table {
+                  width: 100% !important;
+                  font-size: 9pt !important;
+                  border-collapse: collapse;
+                  page-break-inside: auto;
+              }
+              tr {
+                  page-break-inside: avoid;
+                  page-break-after: auto;
+              }
+              th, td {
+                  padding: 4px 6px !important;
+                  word-wrap: break-word;
+                  overflow-wrap: break-word;
+              }
+
+              /* Codeblöcke */
+              pre, code {
+                  font-size: 8pt !important;
+                  white-space: pre-wrap !important;
+                  word-wrap: break-word !important;
+              }
+              pre {
+                  page-break-inside: avoid;
+              }
+
+              /* Seitenumbrüche */
+              h1, h2 {
+                  page-break-after: avoid;
+              }
+              h1 {
+                  page-break-before: always;
+              }
+              /* Erste Seite: kein Umbruch vor h1 */
+              body > *:first-child h1:first-of-type,
+              .main-content > h1:first-child {
+                  page-break-before: avoid;
+              }
+
+              /* Links für Print */
+              a[href^="http"]:after {
+                  content: none !important;
+              }
+          ''')
+
+          def parse_frontmatter(filepath):
+              """Extrahiert YAML Frontmatter aus Markdown-Datei."""
+              try:
+                  with open(filepath, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  if content.startswith('---'):
+                      end = content.find('---', 3)
+                      if end != -1:
+                          fm = yaml.safe_load(content[3:end])
+                          return fm if fm else {}
+              except Exception as e:
+                  print(f"  Fehler beim Parsen: {filepath} - {e}")
+              return {}
+
+          def get_url_from_path(filepath):
+              """Konvertiert Dateipfad zu URL."""
+              rel_path = os.path.relpath(filepath, DOCS_DIR)
+              # index.md -> /
+              if rel_path == 'index.md':
+                  return BASE_URL + '/'
+              # datei.md -> /datei.html oder /ordner/datei.html
+              url_path = rel_path.replace('\\', '/').replace('.md', '.html')
+              return f"{BASE_URL}/{url_path}"
+
+          def should_exclude(url, filepath):
+              """Prüft ob URL/Pfad ausgeschlossen werden soll."""
+              for pattern in EXCLUDE_PATTERNS:
+                  if re.search(pattern, url) or re.search(pattern, filepath):
+                      return True
+              return False
+
+          # Alle Markdown-Dateien sammeln
+          print("Sammle Markdown-Dateien...")
+          pages = []
+          for root, dirs, files in os.walk(DOCS_DIR):
+              # _sass, _includes etc. überspringen
+              dirs[:] = [d for d in dirs if not d.startswith('_')]
+              for file in files:
+                  if file.endswith('.md'):
+                      filepath = os.path.join(root, file)
+                      url = get_url_from_path(filepath)
+                      if should_exclude(url, filepath):
+                          continue
+                      fm = parse_frontmatter(filepath)
+                      if fm.get('layout') == 'default':  # Nur echte Seiten
+                          pages.append({
+                              'filepath': filepath,
+                              'url': url,
+                              'title': fm.get('title', file),
+                              'nav_order': fm.get('nav_order', 999),
+                              'parent': fm.get('parent'),
+                              'has_children': fm.get('has_children', False),
+                          })
+
+          print(f"Gefunden: {len(pages)} Seiten")
+
+          # Hierarchische Sortierung: erst Top-Level, dann Children
+          def sort_key(page):
+              if page['parent']:
+                  # Finde nav_order des Parents
+                  parent_order = 999
+                  for p in pages:
+                      if p['title'] == page['parent']:
+                          parent_order = p['nav_order']
+                          break
+                  # Parent-Order * 1000 + eigene Order für Sortierung
+                  return (parent_order, 1, page['nav_order'])
+              else:
+                  return (page['nav_order'], 0, 0)
+
+          pages.sort(key=sort_key)
+
+          print("\nReihenfolge:")
+          for i, p in enumerate(pages):
+              indent = "  " if p['parent'] else ""
+              print(f"  {i+1}. {indent}{p['title']} (nav_order: {p['nav_order']})")
 
           # Verzeichnis erstellen
           os.makedirs(OUTPUT_DIR, exist_ok=True)
 
           # Einzelne PDFs erstellen
           pdf_files = []
-          for i, url in enumerate(urls):
-              print(f"[{i+1}/{len(urls)}] Konvertiere: {url}")
+          for i, page in enumerate(pages):
+              print(f"\n[{i+1}/{len(pages)}] Konvertiere: {page['title']}")
+              print(f"    URL: {page['url']}")
               try:
                   pdf_path = f"{OUTPUT_DIR}/page_{i:03d}.pdf"
-                  HTML(url).write_pdf(pdf_path)
+                  HTML(page['url']).write_pdf(pdf_path, stylesheets=[PRINT_CSS])
                   pdf_files.append(pdf_path)
+                  print(f"    OK: {pdf_path}")
               except Exception as e:
-                  print(f"  Fehler: {e}")
+                  print(f"    FEHLER: {e}")
 
           # PDFs zusammenführen
-          print(f"Führe {len(pdf_files)} PDFs zusammen...")
+          print(f"\nFühre {len(pdf_files)} PDFs zusammen...")
           merger = PdfMerger()
-          for pdf in sorted(pdf_files):
+          for pdf in pdf_files:  # Bereits sortiert
               merger.append(pdf)
           merger.write(FINAL_PDF)
           merger.close()
 
-          print(f"Fertig: {FINAL_PDF}")
+          print(f"\nFertig: {FINAL_PDF}")
+          print(f"Seiten: {len(pdf_files)}")
           EOF
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: agenten-dokumentation
-          path: output.pdf
+          name: Agenten-Dokumentation
+          path: Agenten_Dokumentation.pdf

@@ -27,7 +27,7 @@ jobs:
             libharfbuzz-subset0
 
       - name: Install Python dependencies
-        run: pip install weasyprint PyPDF2 requests pyyaml
+        run: pip install weasyprint PyPDF2 requests pyyaml reportlab
 
       - name: Generate PDF from all pages (nav_order sorted)
         run: |
@@ -37,7 +37,10 @@ jobs:
           import yaml
           import requests
           from weasyprint import HTML, CSS
-          from PyPDF2 import PdfMerger
+          from PyPDF2 import PdfReader, PdfWriter
+          from reportlab.pdfgen import canvas
+          from reportlab.lib.pagesizes import A4
+          from io import BytesIO
 
           BASE_URL = "https://ralf-42.github.io/Agenten"
           DOCS_DIR = "docs"
@@ -52,25 +55,12 @@ jobs:
           ]
 
           # Print-CSS für bessere PDF-Ausgabe
+          # Hinweis: Seitennummern werden nach dem Merge mit reportlab hinzugefügt
           PRINT_CSS = CSS(string='''
-              /* Seitennummern im Footer */
               @page {
                   size: A4;
                   margin: 2cm 1.5cm 2.5cm 1.5cm;
-                  @bottom-center {
-                      content: "Seite " counter(page) " von " counter(pages);
-                      font-size: 10pt;
-                      color: #666;
-                  }
-                  @top-center {
-                      content: string(page-title);
-                      font-size: 9pt;
-                      color: #999;
-                  }
               }
-
-              /* Titel als Running Header */
-              h1 { string-set: page-title content(); }
 
               /* TOC der einzelnen Seiten ausblenden */
               .toc, #toc, [id*="inhaltsverzeichnis"],
@@ -209,12 +199,15 @@ jobs:
           # 3. Baue finale Liste: Top-Level, dann dessen Children
           pages = []
           for parent_page in top_level:
+              parent_page['_level'] = 0
+              parent_page['_parent_title'] = None
               pages.append(parent_page)
               # Finde und sortiere Children dieses Parents
               parent_children = [c for c in children if c['parent'] == parent_page['title']]
               parent_children.sort(key=lambda p: p['nav_order'])
               for child in parent_children:
-                  child['_level'] = 1  # Markiere als Child für Einrückung
+                  child['_level'] = 1
+                  child['_parent_title'] = parent_page['title']
                   pages.append(child)
 
           print("\nReihenfolge:")
@@ -227,32 +220,86 @@ jobs:
           os.makedirs(OUTPUT_DIR, exist_ok=True)
 
           # Einzelne PDFs erstellen
-          pdf_data = []  # (pdf_path, title, level)
+          pdf_data = []  # (pdf_path, title, level, parent_title, page_count)
           for i, page in enumerate(pages):
               print(f"\n[{i+1}/{len(pages)}] Konvertiere: {page['title']}")
               print(f"    URL: {page['url']}")
               try:
                   pdf_path = f"{OUTPUT_DIR}/page_{i:03d}.pdf"
                   HTML(page['url']).write_pdf(pdf_path, stylesheets=[PRINT_CSS])
-                  level = page.get('_level', 0)
-                  pdf_data.append((pdf_path, page['title'], level))
-                  print(f"    OK: {pdf_path}")
+                  # Seitenzahl ermitteln
+                  reader = PdfReader(pdf_path)
+                  page_count = len(reader.pages)
+                  pdf_data.append({
+                      'path': pdf_path,
+                      'title': page['title'],
+                      'level': page.get('_level', 0),
+                      'parent_title': page.get('_parent_title'),
+                      'page_count': page_count
+                  })
+                  print(f"    OK: {pdf_path} ({page_count} Seiten)")
               except Exception as e:
                   print(f"    FEHLER: {e}")
 
-          # PDFs zusammenführen mit korrekten Bookmarks
+          # PDFs zusammenführen
           print(f"\nFühre {len(pdf_data)} PDFs zusammen...")
-          merger = PdfMerger()
+          writer = PdfWriter()
 
-          for pdf_path, title, level in pdf_data:
-              # outline_item setzt den Bookmark-Titel auf den Frontmatter-Title
-              merger.append(pdf_path, outline_item=title)
+          # Alle Seiten hinzufügen und Startseiten merken
+          doc_start_pages = []  # (start_page_index, title, level, parent_title)
+          current_page = 0
+          for doc in pdf_data:
+              reader = PdfReader(doc['path'])
+              doc_start_pages.append((current_page, doc['title'], doc['level'], doc['parent_title']))
+              for page in reader.pages:
+                  writer.add_page(page)
+              current_page += doc['page_count']
 
-          merger.write(FINAL_PDF)
-          merger.close()
+          total_pages = current_page
+          print(f"Gesamt: {total_pages} Seiten")
+
+          # Durchlaufende Seitennummern hinzufügen
+          print("Füge durchlaufende Seitennummern hinzu...")
+          final_writer = PdfWriter()
+
+          for i, page in enumerate(writer.pages):
+              # Seitennummer-Overlay erstellen
+              packet = BytesIO()
+              c = canvas.Canvas(packet, pagesize=A4)
+              width, height = A4
+              # Seitennummer unten mittig
+              page_text = f"Seite {i + 1} von {total_pages}"
+              c.setFont("Helvetica", 10)
+              c.setFillColorRGB(0.4, 0.4, 0.4)  # Grau
+              c.drawCentredString(width / 2, 30, page_text)
+              c.save()
+
+              # Overlay auf Seite anwenden
+              packet.seek(0)
+              overlay = PdfReader(packet)
+              page.merge_page(overlay.pages[0])
+              final_writer.add_page(page)
+
+          # Hierarchische Bookmarks erstellen (nach Seitennummern)
+          print("Erstelle hierarchische Bookmarks...")
+          parent_bookmarks = {}  # title -> bookmark reference
+
+          for start_page, title, level, parent_title in doc_start_pages:
+              if level == 0:
+                  # Top-Level Bookmark
+                  bookmark = final_writer.add_outline_item(title, start_page)
+                  parent_bookmarks[title] = bookmark
+              else:
+                  # Child Bookmark - eingerückt unter Parent
+                  parent_bookmark = parent_bookmarks.get(parent_title)
+                  final_writer.add_outline_item(title, start_page, parent=parent_bookmark)
+
+          # Finale PDF speichern
+          with open(FINAL_PDF, "wb") as f:
+              final_writer.write(f)
 
           print(f"\nFertig: {FINAL_PDF}")
-          print(f"Dokumente: {len(pdf_data)}")
+          print(f"Dokumente: {len(pdf_data)}, Seiten: {total_pages}")
           EOF
 
       - name: Upload PDF artifact

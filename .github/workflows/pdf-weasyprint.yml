@@ -175,7 +175,7 @@ jobs:
 
           # Alle Markdown-Dateien sammeln
           print("Sammle Markdown-Dateien...")
-          pages = []
+          all_pages = []
           for root, dirs, files in os.walk(DOCS_DIR):
               # _sass, _includes etc. überspringen
               dirs[:] = [d for d in dirs if not d.startswith('_')]
@@ -187,7 +187,7 @@ jobs:
                           continue
                       fm = parse_frontmatter(filepath)
                       if fm.get('layout') == 'default':  # Nur echte Seiten
-                          pages.append({
+                          all_pages.append({
                               'filepath': filepath,
                               'url': url,
                               'title': fm.get('title', file),
@@ -196,55 +196,63 @@ jobs:
                               'has_children': fm.get('has_children', False),
                           })
 
-          print(f"Gefunden: {len(pages)} Seiten")
+          print(f"Gefunden: {len(all_pages)} Seiten")
 
-          # Hierarchische Sortierung: erst Top-Level, dann Children
-          def sort_key(page):
-              if page['parent']:
-                  # Finde nav_order des Parents
-                  parent_order = 999
-                  for p in pages:
-                      if p['title'] == page['parent']:
-                          parent_order = p['nav_order']
-                          break
-                  # Parent-Order * 1000 + eigene Order für Sortierung
-                  return (parent_order, 1, page['nav_order'])
-              else:
-                  return (page['nav_order'], 0, 0)
+          # Hierarchische Sortierung: Top-Level nach nav_order, dann Children
+          # 1. Trenne Top-Level und Children
+          top_level = [p for p in all_pages if not p['parent']]
+          children = [p for p in all_pages if p['parent']]
 
-          pages.sort(key=sort_key)
+          # 2. Sortiere Top-Level nach nav_order
+          top_level.sort(key=lambda p: p['nav_order'])
+
+          # 3. Baue finale Liste: Top-Level, dann dessen Children
+          pages = []
+          for parent_page in top_level:
+              pages.append(parent_page)
+              # Finde und sortiere Children dieses Parents
+              parent_children = [c for c in children if c['parent'] == parent_page['title']]
+              parent_children.sort(key=lambda p: p['nav_order'])
+              for child in parent_children:
+                  child['_level'] = 1  # Markiere als Child für Einrückung
+                  pages.append(child)
 
           print("\nReihenfolge:")
           for i, p in enumerate(pages):
-              indent = "  " if p['parent'] else ""
+              level = p.get('_level', 0)
+              indent = "  " * level
               print(f"  {i+1}. {indent}{p['title']} (nav_order: {p['nav_order']})")
 
           # Verzeichnis erstellen
           os.makedirs(OUTPUT_DIR, exist_ok=True)
 
           # Einzelne PDFs erstellen
-          pdf_files = []
+          pdf_data = []  # (pdf_path, title, level)
           for i, page in enumerate(pages):
               print(f"\n[{i+1}/{len(pages)}] Konvertiere: {page['title']}")
               print(f"    URL: {page['url']}")
               try:
                   pdf_path = f"{OUTPUT_DIR}/page_{i:03d}.pdf"
                   HTML(page['url']).write_pdf(pdf_path, stylesheets=[PRINT_CSS])
-                  pdf_files.append(pdf_path)
+                  level = page.get('_level', 0)
+                  pdf_data.append((pdf_path, page['title'], level))
                   print(f"    OK: {pdf_path}")
               except Exception as e:
                   print(f"    FEHLER: {e}")
 
-          # PDFs zusammenführen
-          print(f"\nFühre {len(pdf_files)} PDFs zusammen...")
+          # PDFs zusammenführen mit korrekten Bookmarks
+          print(f"\nFühre {len(pdf_data)} PDFs zusammen...")
           merger = PdfMerger()
-          for pdf in pdf_files:  # Bereits sortiert
-              merger.append(pdf)
+
+          for pdf_path, title, level in pdf_data:
+              # outline_item setzt den Bookmark-Titel auf den Frontmatter-Title
+              merger.append(pdf_path, outline_item=title)
+
           merger.write(FINAL_PDF)
           merger.close()
 
           print(f"\nFertig: {FINAL_PDF}")
-          print(f"Seiten: {len(pdf_files)}")
+          print(f"Dokumente: {len(pdf_data)}")
           EOF
 
       - name: Upload PDF artifact

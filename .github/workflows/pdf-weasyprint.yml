@@ -221,32 +221,45 @@ jobs:
                           'title': fm.get('title', file),
                           'nav_order': fm.get('nav_order', 999),
                           'parent': fm.get('parent'),
+                          'grand_parent': fm.get('grand_parent'),
                           'has_children': fm.get('has_children', False),
                       })
 
           print(f"Gefunden: {len(all_pages)} Seiten")
 
-          # Hierarchische Sortierung: Top-Level nach nav_order, dann Children
-          # 1. Trenne Top-Level und Children
+          # Hierarchische Sortierung: Top-Level → Children → Grandchildren (3 Ebenen)
+          # 1. Kategorisiere nach Ebene
           top_level = [p for p in all_pages if not p['parent']]
-          children = [p for p in all_pages if p['parent']]
+          level1 = [p for p in all_pages if p['parent'] and not p['grand_parent']]
+          level2 = [p for p in all_pages if p['grand_parent']]
 
           # 2. Sortiere Top-Level nach nav_order
           top_level.sort(key=lambda p: p['nav_order'])
 
-          # 3. Baue finale Liste: Top-Level, dann dessen Children
+          # 3. Baue finale Liste: Top-Level → Children → Grandchildren
           pages = []
           for parent_page in top_level:
               parent_page['_level'] = 0
               parent_page['_parent_title'] = None
               pages.append(parent_page)
-              # Finde und sortiere Children dieses Parents
-              parent_children = [c for c in children if c['parent'] == parent_page['title']]
+
+              # Finde Children (Ebene 1) dieses Parents
+              parent_children = [c for c in level1 if c['parent'] == parent_page['title']]
               parent_children.sort(key=lambda p: p['nav_order'])
+
               for child in parent_children:
                   child['_level'] = 1
                   child['_parent_title'] = parent_page['title']
                   pages.append(child)
+
+                  # Finde Grandchildren (Ebene 2) dieses Child
+                  grandchildren = [g for g in level2 if g['parent'] == child['title']]
+                  grandchildren.sort(key=lambda p: p['nav_order'])
+
+                  for grandchild in grandchildren:
+                      grandchild['_level'] = 2
+                      grandchild['_parent_title'] = child['title']
+                      pages.append(grandchild)
 
           print("\nReihenfolge:")
           for i, p in enumerate(pages):
@@ -324,18 +337,23 @@ jobs:
               page.merge_page(overlay.pages[0])
               final_writer.add_page(page)
 
-          # Hierarchische Bookmarks erstellen (nach Seitennummern)
+          # Hierarchische Bookmarks erstellen (3 Ebenen)
           print("Erstelle hierarchische Bookmarks...")
-          parent_bookmarks = {}  # title -> bookmark reference
+          bookmarks = {}  # title -> bookmark reference (für alle Ebenen)
 
           for start_page, title, level, parent_title in doc_start_pages:
               if level == 0:
-                  # Top-Level Bookmark
+                  # Top-Level Bookmark (Ebene 0)
                   bookmark = final_writer.add_outline_item(title, start_page)
-                  parent_bookmarks[title] = bookmark
+                  bookmarks[title] = bookmark
+              elif level == 1:
+                  # Child Bookmark (Ebene 1) - unter Top-Level
+                  parent_bookmark = bookmarks.get(parent_title)
+                  bookmark = final_writer.add_outline_item(title, start_page, parent=parent_bookmark)
+                  bookmarks[title] = bookmark  # Speichern für Grandchildren
               else:
-                  # Child Bookmark - eingerückt unter Parent
-                  parent_bookmark = parent_bookmarks.get(parent_title)
+                  # Grandchild Bookmark (Ebene 2) - unter Child
+                  parent_bookmark = bookmarks.get(parent_title)
                   final_writer.add_outline_item(title, start_page, parent=parent_bookmark)
 
           # Finale PDF speichern

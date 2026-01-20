@@ -1,0 +1,41 @@
+name: Generate PDF with WeasyPrint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install WeasyPrint system dependencies
+        # Source: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libpango-1.0-0 \
+            libharfbuzz0b \
+            libpangoft2-1.0-0 \
+            libharfbuzz-subset0
+
+      - name: Install WeasyPrint
+        run: pip install weasyprint
+
+      - name: Generate PDF
+        run: weasyprint https://ralf-42.github.io/Agenten/ output.pdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-pdf
+          path: output.pdf

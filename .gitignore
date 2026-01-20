@@ -36,6 +36,9 @@
 # GitHub Pages (alle Dateien in /docs werden versioniert)
 !docs/
 
+# GitHub Actions Workflows
+!.github/
+
 # ============================================================
 # Verzeichnisse, die rekursiv ignoriert werden sollen
 # ============================================================

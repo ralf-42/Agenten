@@ -40,6 +40,7 @@ jobs:
           from PyPDF2 import PdfReader, PdfWriter
           from reportlab.pdfgen import canvas
           from reportlab.lib.pagesizes import A4
+          from reportlab.lib.units import cm
           from io import BytesIO
           from bs4 import BeautifulSoup
 
@@ -47,6 +48,7 @@ jobs:
           DOCS_DIR = "docs"
           OUTPUT_DIR = "pdf_parts"
           FINAL_PDF = "Agenten_Dokumentation.pdf"
+          PROJECT_TITLE = "KI-Agenten Dokumentation"
 
           # Seiten die ausgeschlossen werden sollen
           EXCLUDE_PATTERNS = [
@@ -54,6 +56,67 @@ jobs:
               r'/test-',
               r'FONT_SIZE_GUIDE',
           ]
+
+          def create_cover_page():
+              """Erstellt eine Hinweisseite als erste Seite der PDF."""
+              packet = BytesIO()
+              c = canvas.Canvas(packet, pagesize=A4)
+              width, height = A4
+
+              # Titel
+              c.setFont("Helvetica-Bold", 24)
+              c.drawCentredString(width / 2, height - 6*cm, PROJECT_TITLE)
+
+              # Untertitel
+              c.setFont("Helvetica", 14)
+              c.drawCentredString(width / 2, height - 7.5*cm, "PDF-Export der Online-Dokumentation")
+
+              # Hinweisbox
+              box_x = 2*cm
+              box_y = height - 15*cm
+              box_width = width - 4*cm
+              box_height = 5*cm
+
+              # Box zeichnen
+              c.setStrokeColorRGB(0.8, 0.6, 0.2)
+              c.setFillColorRGB(1, 0.98, 0.9)
+              c.roundRect(box_x, box_y, box_width, box_height, 10, fill=1, stroke=1)
+
+              # Hinweistext
+              c.setFillColorRGB(0.3, 0.3, 0.3)
+              c.setFont("Helvetica-Bold", 12)
+              c.drawString(box_x + 0.5*cm, box_y + box_height - 1*cm, "Hinweis zur PDF-Version")
+
+              c.setFont("Helvetica", 10)
+              hinweis_lines = [
+                  "Diese PDF wurde automatisch aus der Online-Dokumentation erstellt.",
+                  "Einige Inhalte werden nur eingeschränkt dargestellt:",
+                  "",
+                  "  • Mermaid-Diagramme sind nicht gerendert",
+                  "  • Interaktive Elemente fehlen",
+                  "  • Links führen ggf. ins Leere",
+                  "",
+                  "Für das vollständige Erlebnis nutzen Sie bitte die Online-Version."
+              ]
+              y_pos = box_y + box_height - 1.8*cm
+              for line in hinweis_lines:
+                  c.drawString(box_x + 0.5*cm, y_pos, line)
+                  y_pos -= 0.5*cm
+
+              # Online-Link
+              c.setFont("Helvetica-Bold", 11)
+              c.setFillColorRGB(0.1, 0.4, 0.7)
+              c.drawCentredString(width / 2, height - 18*cm, f"Online-Version: {BASE_URL}")
+
+              # Footer
+              c.setFont("Helvetica", 9)
+              c.setFillColorRGB(0.5, 0.5, 0.5)
+              from datetime import datetime
+              c.drawCentredString(width / 2, 2*cm, f"Generiert am {datetime.now().strftime('%d.%m.%Y')}")
+
+              c.save()
+              packet.seek(0)
+              return PdfReader(packet).pages[0]
 
           # Print-CSS für bessere PDF-Ausgabe
           # Hinweis: Seitennummern werden nach dem Merge mit reportlab hinzugefügt
@@ -315,9 +378,14 @@ jobs:
           total_pages = current_page
           print(f"Gesamt: {total_pages} Seiten")
 
-          # Durchlaufende Seitennummern hinzufügen
-          print("Füge durchlaufende Seitennummern hinzu...")
+          # Hinweisseite erstellen und als erste Seite einfügen
+          print("Erstelle Hinweisseite...")
           final_writer = PdfWriter()
+          cover_page = create_cover_page()
+          final_writer.add_page(cover_page)
+
+          # Durchlaufende Seitennummern hinzufügen (ab Seite 2)
+          print("Füge durchlaufende Seitennummern hinzu...")
 
           for i, page in enumerate(writer.pages):
               # Seitennummer-Overlay erstellen
@@ -338,23 +406,26 @@ jobs:
               final_writer.add_page(page)
 
           # Hierarchische Bookmarks erstellen (3 Ebenen)
+          # +1 wegen Hinweisseite als erste Seite
           print("Erstelle hierarchische Bookmarks...")
           bookmarks = {}  # title -> bookmark reference (für alle Ebenen)
 
           for start_page, title, level, parent_title in doc_start_pages:
+              # +1 wegen Hinweisseite
+              page_num = start_page + 1
               if level == 0:
                   # Top-Level Bookmark (Ebene 0)
-                  bookmark = final_writer.add_outline_item(title, start_page)
+                  bookmark = final_writer.add_outline_item(title, page_num)
                   bookmarks[title] = bookmark
               elif level == 1:
                   # Child Bookmark (Ebene 1) - unter Top-Level
                   parent_bookmark = bookmarks.get(parent_title)
-                  bookmark = final_writer.add_outline_item(title, start_page, parent=parent_bookmark)
+                  bookmark = final_writer.add_outline_item(title, page_num, parent=parent_bookmark)
                   bookmarks[title] = bookmark  # Speichern für Grandchildren
               else:
                   # Grandchild Bookmark (Ebene 2) - unter Child
                   parent_bookmark = bookmarks.get(parent_title)
-                  final_writer.add_outline_item(title, start_page, parent=parent_bookmark)
+                  final_writer.add_outline_item(title, page_num, parent=parent_bookmark)
 
           # Finale PDF speichern
           with open(FINAL_PDF, "wb") as f:

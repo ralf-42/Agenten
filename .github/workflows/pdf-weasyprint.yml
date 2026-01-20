@@ -1,9 +1,7 @@
 name: Generate PDF with WeasyPrint
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:  # Manueller Start über GitHub UI
 
 jobs:
   build-pdf:
@@ -28,14 +26,73 @@ jobs:
             libpangoft2-1.0-0 \
             libharfbuzz-subset0
 
-      - name: Install WeasyPrint
-        run: pip install weasyprint
+      - name: Install Python dependencies
+        run: pip install weasyprint PyPDF2 requests
 
-      - name: Generate PDF
-        run: weasyprint https://ralf-42.github.io/Agenten/ output.pdf
+      - name: Generate PDF from all sitemap pages
+        run: |
+          python << 'EOF'
+          import requests
+          import xml.etree.ElementTree as ET
+          from weasyprint import HTML
+          from PyPDF2 import PdfMerger
+          import os
+          import re
+
+          SITEMAP_URL = "https://ralf-42.github.io/Agenten/sitemap.xml"
+          OUTPUT_DIR = "pdf_parts"
+          FINAL_PDF = "output.pdf"
+
+          # Seiten die ausgeschlossen werden sollen
+          EXCLUDE_PATTERNS = [
+              r'/legal/',      # Impressum, Datenschutz etc.
+              r'/test-',       # Test-Seiten
+          ]
+
+          def should_exclude(url):
+              return any(re.search(pattern, url) for pattern in EXCLUDE_PATTERNS)
+
+          # Sitemap laden
+          print(f"Lade Sitemap: {SITEMAP_URL}")
+          response = requests.get(SITEMAP_URL)
+          response.raise_for_status()
+
+          # URLs extrahieren
+          root = ET.fromstring(response.content)
+          namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [loc.text for loc in root.findall('.//ns:loc', namespace)]
+
+          # Filtern
+          urls = [url for url in urls if not should_exclude(url)]
+          print(f"Gefunden: {len(urls)} Seiten")
+
+          # Verzeichnis erstellen
+          os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+          # Einzelne PDFs erstellen
+          pdf_files = []
+          for i, url in enumerate(urls):
+              print(f"[{i+1}/{len(urls)}] Konvertiere: {url}")
+              try:
+                  pdf_path = f"{OUTPUT_DIR}/page_{i:03d}.pdf"
+                  HTML(url).write_pdf(pdf_path)
+                  pdf_files.append(pdf_path)
+              except Exception as e:
+                  print(f"  Fehler: {e}")
+
+          # PDFs zusammenführen
+          print(f"Führe {len(pdf_files)} PDFs zusammen...")
+          merger = PdfMerger()
+          for pdf in sorted(pdf_files):
+              merger.append(pdf)
+          merger.write(FINAL_PDF)
+          merger.close()
+
+          print(f"Fertig: {FINAL_PDF}")
+          EOF
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: output-pdf
+          name: agenten-dokumentation
           path: output.pdf

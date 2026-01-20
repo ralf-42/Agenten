@@ -183,6 +183,8 @@ jobs:
                       fm = parse_frontmatter(filepath)
                       if fm.get('layout') != 'default':  # Nur echte Seiten
                           continue
+                      if fm.get('nav_exclude'):  # nav_exclude: true überspringen
+                          continue
                       url = get_url(filepath, fm)  # URL mit permalink-Support
                       if should_exclude(url, filepath):
                           continue

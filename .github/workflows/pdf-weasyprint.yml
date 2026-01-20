@@ -146,8 +146,16 @@ jobs:
                   print(f"  Fehler beim Parsen: {filepath} - {e}")
               return {}
 
-          def get_url_from_path(filepath):
-              """Konvertiert Dateipfad zu URL."""
+          def get_url(filepath, frontmatter):
+              """Konvertiert Dateipfad zu URL, berücksichtigt permalink."""
+              # Permalink hat Priorität
+              if frontmatter.get('permalink'):
+                  permalink = frontmatter['permalink']
+                  # Entferne führenden Slash falls vorhanden
+                  if permalink.startswith('/'):
+                      permalink = permalink[1:]
+                  return f"{BASE_URL}/{permalink}"
+
               rel_path = os.path.relpath(filepath, DOCS_DIR)
               # index.md -> /
               if rel_path == 'index.md':
@@ -172,19 +180,20 @@ jobs:
               for file in files:
                   if file.endswith('.md'):
                       filepath = os.path.join(root, file)
-                      url = get_url_from_path(filepath)
+                      fm = parse_frontmatter(filepath)
+                      if fm.get('layout') != 'default':  # Nur echte Seiten
+                          continue
+                      url = get_url(filepath, fm)  # URL mit permalink-Support
                       if should_exclude(url, filepath):
                           continue
-                      fm = parse_frontmatter(filepath)
-                      if fm.get('layout') == 'default':  # Nur echte Seiten
-                          all_pages.append({
-                              'filepath': filepath,
-                              'url': url,
-                              'title': fm.get('title', file),
-                              'nav_order': fm.get('nav_order', 999),
-                              'parent': fm.get('parent'),
-                              'has_children': fm.get('has_children', False),
-                          })
+                      all_pages.append({
+                          'filepath': filepath,
+                          'url': url,
+                          'title': fm.get('title', file),
+                          'nav_order': fm.get('nav_order', 999),
+                          'parent': fm.get('parent'),
+                          'has_children': fm.get('has_children', False),
+                      })
 
           print(f"Gefunden: {len(all_pages)} Seiten")
 

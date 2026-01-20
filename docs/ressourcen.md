@@ -11,15 +11,15 @@ permalink: /ressourcen/
 
 Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Agenten.
 
-## Übersicht
+## 1 Übersicht
 
-### Anleitungen
+### 1.1 Anleitungen
 - **Quick Start** - Schnelleinstieg in das Projekt
 - **Dokumentation** - Detaillierte Informationen zu den Modulen
 - **Standards** - Best Practices und Code-Konventionen
 - **Troubleshooting** - Lösungen für häufige Probleme
 
-### Werkzeuge
+### 1.2 Werkzeuge
 - **Deploy Python** - Deployment-Guide für Python-Anwendungen
 
 Nutzen Sie die Navigation links, um zu den einzelnen Ressourcen zu navigieren.

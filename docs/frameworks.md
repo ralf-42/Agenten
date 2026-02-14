@@ -14,7 +14,7 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
 
 ## LLM-Orchestrierung & Workflows
 
-- **LangChain Einsteiger** - Grundlagen für LLM-Orchestrierung, Chains und Agents
+- **[LangChain Einsteiger](frameworks/Einsteiger_LangChain.html)** - Grundlagen für LLM-Orchestrierung, Chains und Agents
   - Model Integration und Prompting
   - Tool Use und Function Calling
   - Chains und LCEL (LangChain Expression Language)
@@ -22,7 +22,7 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
 
 ## Vektordatenbanken
 
-- **ChromaDB Einsteiger** - Vektordatenbank für semantische Suche und RAG-Systeme
+- **[ChromaDB Einsteiger](frameworks/Einsteiger_ChromaDB.html)** - Vektordatenbank für semantische Suche und RAG-Systeme
   - Embedding-Speicherung und -Retrieval
   - Similarity Search und Filtering
   - Collections und Metadaten
@@ -30,7 +30,7 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
 
 ## No-Code / Low-Code
 
-- **Agent Builder Einsteiger** - Agenten ohne Code: Custom GPTs und visueller Workflow-Builder
+- **[Agent Builder Einsteiger](frameworks/Einsteiger_Agent_Builder.html)** - Agenten ohne Code: Custom GPTs und visueller Workflow-Builder
   - Custom GPT-Erstellung
   - Tool-Integration ohne Programmierung
   - Prompt-Design und Testing
@@ -38,9 +38,8 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
 
 ## Projektspezifische Bibliotheken
 
-- **GenAI_Lib Einsteiger** - Projektspezifische Python-Bibliothek für Kursanwendungen
+- **[GenAI_Lib Einsteiger](frameworks/genai_lib/)** - Projektspezifische Python-Bibliothek für Kursanwendungen
   - **utilities.py** - Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates
   - **multimodal_rag.py** - Multimodales RAG-System mit Text- und Bildsuche (Bild ↔ Bild, Bild ↔ Text)
-  - **mcp_modul.py** - Model Context Protocol (MCP) Integration für Server, Clients und AI-Assistenten
 
-Wählen Sie ein Framework aus der Navigation links aus, um zu beginnen.
+

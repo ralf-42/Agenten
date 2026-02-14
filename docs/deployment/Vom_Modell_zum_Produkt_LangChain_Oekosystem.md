@@ -268,7 +268,7 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 
 ---
 
-**Version:** 1.0     
-**Stand:** Dezember 2025     
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.        
+**Version:** 1.0      
+**Stand:** Dezember 2025      
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.         
 

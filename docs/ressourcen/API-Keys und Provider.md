@@ -2,8 +2,8 @@
 layout: default
 title: API-Keys & Provider
 parent: Ressourcen
-nav_order: 1
-description: "Übersicht über LLM-Provider, API-Keys und Colab-Integration"
+nav_order: 2
+description: Übersicht über LLM-Provider, API-Keys und Colab-Integration
 has_toc: true
 ---
 
@@ -74,22 +74,22 @@ Diese Tabelle bietet eine Übersicht (Stand: 12.2025) über LLM-Provider mit ihr
 **OpenAI:**
 ```python
 !pip install langchain-openai
-from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 ```
 
 **Google Gemini:**
 ```python
 !pip install langchain-google-genai
-from langchain_google_genai import ChatGoogleGenerativeAI
-llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0)
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("google:gemini-pro", temperature=0.0)
 ```
 
 **Groq:**
 ```python
 !pip install langchain-groq
-from langchain_groq import ChatGroq
-llm = ChatGroq(model="mixtral-8x7b-32768", temperature=0)
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("groq:mixtral-8x7b-32768", temperature=0.0)
 ```
 
 ---

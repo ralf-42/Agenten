@@ -74,7 +74,7 @@ class ChatState(TypedDict):
 
 ```python
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 def agent_node(state: ChatState) -> ChatState:
     response = llm.invoke(state["messages"])

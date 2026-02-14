@@ -2,7 +2,7 @@
 layout: default
 title: ChromaDB Einsteiger
 parent: Frameworks
-nav_order: 4
+nav_order: 2
 description: "Vektordatenbanken und ChromaDB für RAG-Systeme"
 has_toc: true
 ---
@@ -606,7 +606,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.chat_models import init_chat_model
 
 # Komponenten vorbereiten
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
 # Hilfsfunktion: Dokumente formatieren
@@ -942,13 +942,15 @@ results = retriever.invoke("Meine Frage")
 
 > 💡 **Tipp:** Für die vollständige RAG-Chain-Implementierung siehe **Einsteiger_LangChain.md, Kapitel 11**!
 
-> 🔗 **Weiterführend:** [ChromaDB Dokumentation](https://docs.trychroma.com/) | [LangChain VectorStores](https://python.langchain.com/docs/modules/data_connection/vectorstores/)
+> 🔗 **Weiterführend:** 
+> + [ChromaDB Dokumentation](https://docs.trychroma.com/) 
+> + [LangChain VectorStores](https://python.langchain.com/docs/modules/data_connection/vectorstores/)
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** November 2025    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  
 
 
 

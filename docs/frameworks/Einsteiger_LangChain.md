@@ -651,8 +651,8 @@ Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assist
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** November 2025    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  
 
 

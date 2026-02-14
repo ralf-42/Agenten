@@ -242,7 +242,7 @@ Ein LLM bewertet die Qualität einer Antwort — der mächtigste, aber auch teue
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 
-judge_llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+judge_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 judge_prompt = ChatPromptTemplate.from_template("""
 Bewerte die folgende Antwort auf einer Skala von 1 bis 5.

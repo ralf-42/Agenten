@@ -175,7 +175,7 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 - **Kursplan:** `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.2.md`
 - **Projekt-Doku:** `../CLAUDE.md`, `../AGENTS.md`
-- **Standards:** `../LangChain_1.0_Must_Haves.md`, `../LangGraph_1.0_Must_Haves.md`
+- **Standards:** `../LangChain_Best_Practices.md`, `../LangGraph_Best_Practices.md`
 - **Notebook Template:** `../Notebook_Template_Guide.md`
 
 ---

@@ -92,7 +92,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 - **Takeaway:** Debugging ohne Traces ist unmöglich
 
 {: .info }
-> **Empfehlung:** Studieren Sie die [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_1.0_Must_Haves.md) für Production-Best-Practices.
+> **Empfehlung:** Studieren Sie die [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md) für Production-Best-Practices.
 
 ### 4.3 Konkrete Tipps für Ihre Challenge
 
@@ -415,8 +415,8 @@ with gr.Blocks() as demo:
 # 📦 INSTALLATION
 # ═══════════════════════════════════════════════════
 
-!pip install -q langchain>=1.0.0 langchain-openai>=0.2.0 langchain-community
-!pip install -q langgraph>=0.2.0 langgraph-checkpoint-sqlite
+!pip install -q langchain>=1.1.0 langchain-openai>=1.0.0 langchain-community
+!pip install -q langgraph>=1.0.0 langgraph-checkpoint-sqlite
 !pip install -q tiktoken gradio
 
 # Optional: genai_lib installieren
@@ -564,7 +564,7 @@ graph = workflow.compile(
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_1.0_Must_Haves.md)
+- [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
 - [LangChain QuickRef](../../LangChain_QuickRef.md)
 - [Einsteiger LangGraph](../frameworks/Einsteiger_LangGraph.md)
 

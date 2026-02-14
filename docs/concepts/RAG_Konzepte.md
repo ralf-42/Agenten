@@ -378,7 +378,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
 
 # Komponenten
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = Chroma.from_documents(chunks, embedding_model)
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
@@ -592,6 +592,6 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** November 2025    
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.  

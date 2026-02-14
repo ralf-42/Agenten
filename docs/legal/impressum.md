@@ -7,37 +7,37 @@ description: "Impressum und rechtliche Angaben gemäß § 5 TMG"
 
 # Impressum
 
-## 1 Angaben gemäß § 5 TMG
+## Angaben gemäß § 5 TMG
 
-   
+
 Ralf Bendig   
 c/o flexdienst – #12150   
 Kurt-Schumacher-Straße 76   
 67663 Kaiserslautern   
 Deutschland   
 
-## 2 Kontakt
+## Kontakt
 
 E-Mail: ralf.bendig.rb@gmail.com
 
-## 3 Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
+## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
 
 Ralf Bendig
 Anschrift wie oben
 
-## 4 Hinweis zur ladungsfähigen Anschrift
+## Hinweis zur ladungsfähigen Anschrift
 
 Die oben genannte Anschrift dient ausschließlich als ladungsfähige Anschrift im Sinne des § 5 TMG. Eine persönliche Kontaktaufnahme an dieser Adresse ist nicht möglich. Für Anfragen nutzen Sie bitte die angegebenen Kontaktmöglichkeiten.
 
-## 5 Haftungsausschluss
+## Haftungsausschluss
 
 Siehe separates Dokument: [HAFTUNGSAUSSCHLUSS](haftungsausschluss.html)
 
-## 6 Datenschutz
+## Datenschutz
 
 Siehe separates Dokument: [DATENSCHUTZ](datenschutz.html)
 
-## 7 Urheberrecht
+## Urheberrecht
 
 Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
 
@@ -45,5 +45,5 @@ Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden 
 
 ---
 
-**Version:** 1.0       
-**Letzte Aktualisierung:** Dezember 2025
+**Version:** 1.0         
+**Letzte Aktualisierung:** Dezember 2025      

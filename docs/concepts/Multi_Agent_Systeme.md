@@ -120,7 +120,7 @@ class TeamState(TypedDict):
     task_complete: bool
 
 # LLM initialisieren
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 # Supervisor-Node
 def supervisor_node(state: TeamState) -> Command:

@@ -294,7 +294,7 @@ class AnalysisState(TypedDict):
     analysis_complete: bool
 
 # LLM initialisieren
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 # Node 1: Zusammenfassung erstellen
 def summarize_node(state: AnalysisState) -> AnalysisState:

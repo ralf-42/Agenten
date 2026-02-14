@@ -445,6 +445,6 @@ Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents an
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** November 2025     
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.      

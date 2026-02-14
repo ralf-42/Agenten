@@ -275,7 +275,7 @@ Ein LLM mit gebundenen Tools kann selbstständig entscheiden, welches Tool wann 
 ```python
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model("gpt-4o-mini", model_provider="openai", temperature=0.0)
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 # Tools an das Modell binden
 tools = [multiply, safe_divide]

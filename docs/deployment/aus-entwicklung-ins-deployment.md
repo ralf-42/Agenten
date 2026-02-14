@@ -335,7 +335,7 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 
 ---
 
-**Version:** 1.0     
-**Letzte Aktualisierung:** Dezember 2025     
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.     
-**Quelle:** *Powered by Anthropic Claude Opus 4.5*     
+**Version:** 1.0      
+**Letzte Aktualisierung:** Dezember 2025      
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.      
+**Quelle:** *Powered by Anthropic Claude Opus 4.5*      

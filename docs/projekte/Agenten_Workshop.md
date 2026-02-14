@@ -74,8 +74,8 @@ Sie erstellen **ein Notebook** mit **7 aufbauenden Kapiteln**:
 # 📦 INSTALLATION
 # ═══════════════════════════════════════════════════
 
-!pip install -q langchain>=1.0.0 langchain-openai>=0.2.0 langchain-community
-!pip install -q langgraph>=0.2.0 langgraph-checkpoint-sqlite
+!pip install -q langchain>=1.1.0 langchain-openai>=1.0.0 langchain-community
+!pip install -q langgraph>=1.0.0 langgraph-checkpoint-sqlite
 !pip install -q tiktoken gradio
 ```
 
@@ -651,7 +651,7 @@ graph = workflow.compile(
 - [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/)
 
 **Code-Vorlagen:**
-- [LangGraph 1.0 Must-Haves](/Agenten/LangGraph_1.0_Must_Haves.html)
+- [LangGraph 1.0 Must-Haves](/Agenten/LangGraph_Best_Practices.html)
 - [LangChain QuickRef](/Agenten/LangChain_QuickRef.html)
 
 **Projekt-Beispiele:**

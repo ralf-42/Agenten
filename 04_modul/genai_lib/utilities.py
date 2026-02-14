@@ -9,8 +9,7 @@ import requests
 import sys
 import warnings
 import subprocess
-import tempfile
-import importlib.util
+import importlib
 import re
 from typing import Tuple, Any
 from langchain_core.prompts import ChatPromptTemplate
@@ -296,7 +295,7 @@ def mermaid(code: str, width=None, height=None):
 # MODEL PROFILE UTILITIES
 # ============================================================================
 
-def get_model_profile(model: str, temperature: float = 0.0, print_profile: bool = True, **kwargs):
+def get_model_profile(model: str, print_profile: bool = True, **kwargs):
     """
     Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities.
 
@@ -310,8 +309,6 @@ def get_model_profile(model: str, temperature: float = 0.0, print_profile: bool 
     model : str
         Model-Name im Format "provider:model" (z.B. "openai:gpt-4o-mini")
         oder als separater String (dann muss provider über kwargs übergeben werden)
-    temperature : float, optional
-        Temperatur-Einstellung für das Modell (Standard: 0.0)
     print_profile : bool, optional
         Wenn True, werden die wichtigsten Profile-Informationen ausgegeben (Standard: True)
     **kwargs : dict
@@ -330,7 +327,7 @@ def get_model_profile(model: str, temperature: float = 0.0, print_profile: bool 
     >>> profile = get_model_profile("openai:gpt-4o-mini")
     >>>
     >>> # Mit zusätzlichen Parametern
-    >>> profile = get_model_profile("anthropic:claude-3-sonnet", temperature=0.3, max_tokens=1000)
+    >>> profile = get_model_profile("anthropic:claude-3-sonnet", max_tokens=1000)
     >>>
     >>> # Ohne Ausgabe (nur Rückgabe)
     >>> profile = get_model_profile("google:gemini-pro", print_profile=False)
@@ -382,7 +379,7 @@ def get_model_profile(model: str, temperature: float = 0.0, print_profile: bool 
 
     # Model initialisieren
     try:
-        llm = init_chat_model(model, temperature=temperature, **kwargs)
+        llm = init_chat_model(model, **kwargs)
     except Exception as e:
         print(f"❌ Fehler beim Initialisieren des Modells: {e}")
         return None
@@ -552,7 +549,7 @@ def _convert_github_tree_to_raw(url):
         Output:
             https://raw.githubusercontent.com/user/repo/main/path/to/file.py
 
-    Wird intern von load_chat_prompt_template verwendet, um GitHub-Links
+    Wird intern von load_prompt verwendet, um GitHub-Links
     automatisch in ladbare Raw-Datei-URLs umzuwandeln.
     """
     if "github.com" in url:
@@ -563,66 +560,132 @@ def _convert_github_tree_to_raw(url):
     return url
 
 
-def load_chat_prompt_template(path):
+def _parse_md_prompt(content):
     """
-    Lädt ein Python-basiertes Prompt-Template (.py) und erzeugt ein ChatPromptTemplate-Objekt.
+    Parst eine Markdown-Prompt-Datei und extrahiert die Messages.
 
-    Ein Prompt-Template wird in einer separaten .py-Datei definiert,
-    die eine Variable `messages` enthält. Diese Struktur kann leicht
-    versioniert und in Kursprojekten oder RAG-Pipelines wiederverwendet werden.
+    Erwartetes Format:
+        ---
+        name: template_name
+        description: Beschreibung
+        variables: [var1, var2]
+        ---
 
-    Beispiel Prompt-Datei:
-        messages = [
-            ("system", "{system_prompt}"),
-            ("human",
-             "You are an assistant for question-answering tasks. "
-             "Use the following pieces of retrieved context to answer the question. "
-             "If you don't know the answer, just say that you don't know. "
-             "Use three sentences maximum and keep the answer concise.\n\n"
-             "Question: {question}\n\nContext: {context}\n\nAnswer:")
-        ]
+        ## system
+
+        System-Prompt-Text mit {var1} Platzhaltern...
+
+        ## human
+
+        Human-Prompt-Text mit {var2} Platzhaltern...
+
+    Args:
+        content (str): Inhalt der Markdown-Datei
+
+    Returns:
+        list[tuple]: Liste von (role, content) Tuples für ChatPromptTemplate
+    """
+    # Frontmatter entfernen (optional)
+    body = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, count=1, flags=re.DOTALL)
+
+    # Messages anhand von ## Headings splitten
+    sections = re.split(r'^##\s+', body, flags=re.MULTILINE)
+
+    messages = []
+    for section in sections:
+        section = section.strip()
+        if not section:
+            continue
+
+        # Erste Zeile = Rollenname, Rest = Inhalt
+        lines = section.split('\n', 1)
+        role = lines[0].strip().lower()
+
+        if role not in ('system', 'human', 'ai', 'assistant'):
+            continue
+
+        # 'assistant' → 'ai' für LangChain Kompatibilität
+        if role == 'assistant':
+            role = 'ai'
+
+        msg_content = lines[1].strip() if len(lines) > 1 else ''
+        messages.append((role, msg_content))
+
+    if not messages:
+        raise KeyError("Markdown prompt file must contain at least one ## system or ## human section.")
+
+    return messages
+
+
+def load_prompt(path, mode="T"):
+    """
+    Lädt ein Markdown-Prompt-Template als ChatPromptTemplate oder String.
+
+    Erwartetes Format: Markdown (.md) mit optionalem YAML-Frontmatter und ## Headings.
+
+    Beispiel:
+        ---
+        name: text_zusammenfassung
+        description: Erstellt prägnante Textzusammenfassungen
+        variables: [text]
+        ---
+
+        ## system
+
+        Du bist ein Experte für Textzusammenfassungen.
+
+        ## human
+
+        Bitte fasse folgenden Text zusammen: {text}
 
     Unterstützt:
-      - lokale Pfade (z. B. '05_prompt/qa_prompt.py')
+      - lokale Pfade (z. B. '05_prompt/sql_prompt.md')
       - GitHub-Tree-Links (automatische Umwandlung in Raw-Link)
       - GitHub-Blob-Links (automatische Umwandlung in Raw-Link)
       - direkte Raw-Links
 
     Args:
-        path (str): Pfad zur .py-Datei (lokal oder URL)
+        path (str): Pfad zur .md-Datei (lokal oder URL)
+        mode (str): "T" für ChatPromptTemplate (default), "S" für String
+                    Bei "S" wird der Inhalt als reinen String zurückgegeben. Ein vorhandenes
+                    YAML-Frontmatter wird dabei automatisch entfernt und das Ergebnis bereinigt (strip).
 
     Returns:
-        ChatPromptTemplate: Ein von LangChain nutzbares Prompt-Template-Objekt.
+        ChatPromptTemplate (mode="T") oder str (mode="S")
 
     Raises:
-        ValueError: Wenn die Datei keine .py-Datei ist
-        KeyError: Wenn die Datei keine 'messages'-Variable enthält
+        ValueError: Wenn die Datei keine .md-Datei ist oder mode ungültig
+        KeyError: Wenn bei mode="T" keine gültigen Message-Sections vorhanden sind
     """
+    if mode not in ("T", "S"):
+        raise ValueError(f"mode must be 'T' or 'S', got '{mode}'.")
+
+    if not path.rstrip('/').endswith('.md'):
+        raise ValueError("Only .md prompt files are supported.")
+
     # GitHub-Tree-URL automatisch umwandeln
-    path = _convert_github_tree_to_raw(path)
+    url = _convert_github_tree_to_raw(path)
 
-    # Falls URL → herunterladen und temporär speichern
-    if path.startswith("http"):
-        response = requests.get(path)
+    # Inhalt laden (URL oder lokale Datei)
+    if url.startswith("http"):
+        response = requests.get(url)
         response.raise_for_status()
-        with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as tmp:
-            tmp.write(response.content)
-            tmp_path = tmp.name
-        path = tmp_path
+        content = response.text
+    else:
+        with open(url, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    # Sicherstellen, dass eine Python-Datei vorliegt
-    if not path.endswith(".py"):
-        raise ValueError("Only .py prompt files are supported.")
+    # String-Modus: Inhalt ohne Frontmatter zurückgeben
+    if mode == "S":
+        return re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, count=1, flags=re.DOTALL).strip()
 
-    # Modul dynamisch laden
-    spec = importlib.util.spec_from_file_location("prompt_module", path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    # Template-Modus: ChatPromptTemplate erzeugen
+    messages = _parse_md_prompt(content)
+    return ChatPromptTemplate.from_messages(messages)
 
-    if not hasattr(module, "messages"):
-        raise KeyError("Python prompt file must define a variable 'messages'.")
 
-    return ChatPromptTemplate.from_messages(module.messages)
+# Abwärtskompatibilität
+load_chat_prompt_template = load_prompt
 
 
 # ============================================================================

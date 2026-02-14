@@ -8,7 +8,7 @@ Ein deutschsprachiger, praxisorientierter Kurs zu Generative AI Technologien mit
 
 ## 🌐 Kurs-Website
 
-**[→ GenAI Kurs-Website (GitHub Pages)](https://ralf-42.github.io/GenAI/)**
+**[→ Agenten Kurs-Website (GitHub Pages)](https://ralf-42.github.io/Agenten/)**
 
 Die vollständige Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen ist als interaktive Website verfügbar.
 
@@ -26,7 +26,7 @@ GenAI/
 ├── 01_notebook/    # Jupyter Notebooks (Kursmaterialien)
 ├── 02_daten/       # Trainingsdaten und Beispieldateien
 ├── 04_modul/       # Python-Module und Bibliotheken
-└── 05_prompt/      # Prompt-Templates
+└── 05_prompt/      # Prompt-Templates (Markdown-Format)
 ```
 
 ## 🛠️ Technologie-Stack
@@ -103,10 +103,10 @@ Das `genai_lib` Modul kann direkt aus diesem Repository installiert werden:
 
 ```bash
 # Mit pip
-pip install git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 # Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```
 
 ## 💡 Nutzung
@@ -151,7 +151,7 @@ Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](ht
 
 ---
 
-**Letzte Aktualisierung:** 31. Dezember 2025     
-**Version:** 2.4     
+**Letzte Aktualisierung:** Februar 2026
+**Version:** 2.5     
 
 

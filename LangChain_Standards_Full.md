@@ -6,7 +6,7 @@ Dieses Dokument definiert die **7 Standard-Patterns** für LangChain 1.0+, die i
 
 ---
 
-## 📋 Übersicht der 7 Standard-Patterns
+## 1 📋 Übersicht der 7 Standard-Patterns
 
 | # | Pattern | Zweck | Hauptvorteil |
 |---|---------|-------|--------------|
@@ -20,9 +20,9 @@ Dieses Dokument definiert die **7 Standard-Patterns** für LangChain 1.0+, die i
 
 ---
 
-## 1️⃣ `init_chat_model()` - Unified Model Initialization
+## 2 1️⃣ `init_chat_model()` - Unified Model Initialization
 
-### ✅ Standard Pattern
+### 2.1 ✅ Standard Pattern
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -39,7 +39,7 @@ llm = init_chat_model(
 )
 ```
 
-### 💡 Warum verwenden wir das?
+### 2.2 💡 Warum verwenden wir das?
 
 **Provider-Unabhängigkeit:**
 - Ein einheitliches Interface für alle LLM-Provider
@@ -58,9 +58,9 @@ llm = init_chat_model(
 
 ---
 
-## 2️⃣ `with_structured_output()` - Native Structured Outputs
+## 3 2️⃣ `with_structured_output()` - Native Structured Outputs
 
-### ✅ Standard Pattern
+### 3.1 ✅ Standard Pattern
 
 ```python
 from pydantic import BaseModel, Field
@@ -79,7 +79,7 @@ print(f"{result.name}, {result.age}, {result.city}")
 # Output: Max, 25, Berlin
 ```
 
-### 💡 Warum verwenden wir das?
+### 3.2 💡 Warum verwenden wir das?
 
 **Garantierte Schema-Konformität:**
 - Nutzt OpenAI's Native Structured Output API (Function Calling)
@@ -96,16 +96,16 @@ print(f"{result.name}, {result.age}, {result.city}")
 - Keine `format_instructions` mehr nötig
 - Weniger Boilerplate-Code
 
-### 🎯 Anwendungsfälle
+### 3.3 🎯 Anwendungsfälle
 - Entity-Extraktion (Namen, Adressen, Produkte)
 - Strukturierte Analysen (Sentiments, Kategorisierung)
 - Form-Filling (Ticketsysteme, CRM-Integration)
 
 ---
 
-## 3️⃣ `@tool` Decorator - Tool Definitions
+## 4 3️⃣ `@tool` Decorator - Tool Definitions
 
-### ✅ Standard Pattern
+### 4.1 ✅ Standard Pattern
 
 ```python
 from langchain_core.tools import tool
@@ -138,7 +138,7 @@ def search_database(query: str, limit: int = 10) -> list[dict]:
     return [{"id": 1, "title": "..."}]
 ```
 
-### 💡 Warum verwenden wir das?
+### 4.2 💡 Warum verwenden wir das?
 
 **Automatische Schema-Generierung:**
 - Tool-Schema wird automatisch aus Docstring und Type-Hints erzeugt
@@ -155,16 +155,16 @@ def search_database(query: str, limit: int = 10) -> list[dict]:
 - Klare Trennung von Business-Logik und Agent-Integration
 - Einfach zu testen und zu warten
 
-### ⚠️ Wichtig
+### 4.3 ⚠️ Wichtig
 - Docstring ist **PFLICHT** (wird für LLM-Beschreibung verwendet)
 - Type-Hints sind **PFLICHT** (für Schema-Generierung)
 - Return-Type angeben für klarere Dokumentation
 
 ---
 
-## 4️⃣ `create_agent()` - Modern Agent API
+## 5 4️⃣ `create_agent()` - Modern Agent API
 
-### ✅ Standard Pattern
+### 5.1 ✅ Standard Pattern
 
 ```python
 from langchain.agents import create_agent
@@ -184,7 +184,7 @@ response = agent.invoke({
 print(response["messages"][-1].content)
 ```
 
-### 💡 Warum verwenden wir das?
+### 5.2 💡 Warum verwenden wir das?
 
 **LangGraph-basierte State Machine:**
 - Agents sind intern `CompiledStateGraph`-Objekte
@@ -201,15 +201,15 @@ print(response["messages"][-1].content)
 - Äquivalent zu altem `verbose=True`, aber strukturierter
 - Integration mit LangSmith für Production-Monitoring
 
-### 🔗 Siehe auch
+### 5.3 🔗 Siehe auch
 - Für komplexe Multi-Agent-Systeme: [LangGraph_Standards.md](./LangGraph_Standards.md)
 - Für Monitoring & Debugging: [LangSmith_Standards.md](./LangSmith_Standards.md)
 
 ---
 
-## 5️⃣ LCEL `|` Chains - Expression Language
+## 6 5️⃣ LCEL `|` Chains - Expression Language
 
-### ✅ Standard Pattern
+### 6.1 ✅ Standard Pattern
 
 ```python
 from langchain_core.output_parsers import StrOutputParser
@@ -234,7 +234,7 @@ chain = RunnableParallel({
 result = await chain.ainvoke({"thema": "KI-Agenten"})
 ```
 
-### 💡 Warum verwenden wir das?
+### 6.2 💡 Warum verwenden wir das?
 
 **Moderne, lesbare Syntax:**
 - Pipe-Operator `|` macht Datenfluss explizit
@@ -251,7 +251,7 @@ result = await chain.ainvoke({"thema": "KI-Agenten"})
 - Parallele Ausführung mit `RunnableParallel`
 - Pass-Through von Daten mit `RunnablePassthrough`
 
-### 📚 Typische Chain-Patterns
+### 6.3 📚 Typische Chain-Patterns
 
 ```python
 # 1. Einfache Transformation
@@ -279,9 +279,9 @@ chain = (
 
 ---
 
-## 6️⃣ Middleware für Agents - Production-Ready Features
+## 7 6️⃣ Middleware für Agents - Production-Ready Features
 
-### ✅ Standard Pattern
+### 7.1 ✅ Standard Pattern
 
 ```python
 from langchain.agents import create_agent
@@ -316,7 +316,7 @@ agent = create_agent(
 )
 ```
 
-### 💡 Warum verwenden wir das?
+### 7.2 💡 Warum verwenden wir das?
 
 **Human-in-the-Loop (Essential für Production):**
 - Verhindert ungewollte Aktionen (Löschen, API-Calls)
@@ -333,7 +333,7 @@ agent = create_agent(
 - Email, Telefonnummern, Sozialversicherungsnummern
 - Automatische Compliance ohne manuelle Checks
 
-### 📦 Built-in Middleware
+### 7.3 📦 Built-in Middleware
 
 | Middleware | Zweck | Wann verwenden? |
 |-----------|-------|-----------------|
@@ -341,7 +341,7 @@ agent = create_agent(
 | `SummarizationMiddleware` | Automatische Zusammenfassung | Chat-Apps, lange Sessions (>1000 Tokens) |
 | `PIIMiddleware` | Datenschutz durch Mustererkennung | DSGVO-Compliance, sensible Nutzerdaten |
 
-### 🔧 Custom Middleware
+### 7.4 🔧 Custom Middleware
 
 ```python
 from langchain.agents.middleware import BaseMiddleware
@@ -360,9 +360,9 @@ class LoggingMiddleware(BaseMiddleware):
 
 ---
 
-## 7️⃣ Standard Message Content Blocks - Multimodal Support
+## 8 7️⃣ Standard Message Content Blocks - Multimodal Support
 
-### ✅ Standard Pattern
+### 8.1 ✅ Standard Pattern
 
 ```python
 from langchain_core.messages import HumanMessage, AIMessage
@@ -387,7 +387,7 @@ for block in response.content_blocks:
         print(f"Reasoning: {block['text']} (Confidence: {block['confidence']})")
 ```
 
-### 💡 Warum verwenden wir das?
+### 8.2 💡 Warum verwenden wir das?
 
 **Provider-Unabhängigkeit:**
 - Ein einheitliches Format für OpenAI, Anthropic, Google, Cohere
@@ -404,7 +404,7 @@ for block in response.content_blocks:
 - Citations bieten Quellenangaben
 - Wichtig für erklärbare KI (Explainable AI)
 
-### 📦 Unterstützte Content-Typen
+### 8.3 📦 Unterstützte Content-Typen
 
 ```python
 # Text
@@ -426,7 +426,7 @@ for block in response.content_blocks:
 {"type": "citation", "text": "Laut Quelle...", "source": "https://..."}
 ```
 
-### 🎨 Anwendungsfälle
+### 8.4 🎨 Anwendungsfälle
 - Multimodale RAG-Systeme (`04_modul/genai_lib/multimodal_rag.py`)
 - Bild-Analyse mit GPT-4o Vision
 - Audio-Transkription + Zusammenfassung
@@ -434,7 +434,7 @@ for block in response.content_blocks:
 
 ---
 
-## 🚀 Quick Start: Komplettes Minimal-Beispiel
+## 9 🚀 Quick Start: Komplettes Minimal-Beispiel
 
 ```python
 # 1. Model Initialization (Pattern #1)
@@ -470,7 +470,7 @@ print(response["messages"][-1].content)
 
 ---
 
-## 📚 Import-Cheatsheet
+## 10 📚 Import-Cheatsheet
 
 ```python
 # Models (Pattern #1)
@@ -508,9 +508,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 ---
 
-## ⚠️ Anti-Patterns & Häufige Fehler
+## 11 ⚠️ Anti-Patterns & Häufige Fehler
 
-### ❌ Anti-Pattern 1: Agent in Endlos-Loop ohne Limit
+### 11.1 ❌ Anti-Pattern 1: Agent in Endlos-Loop ohne Limit
 
 **Problem:**
 ```python
@@ -546,7 +546,7 @@ agent.invoke(
 
 ---
 
-### ❌ Anti-Pattern 2: Sensitive Daten in Prompts
+### 11.2 ❌ Anti-Pattern 2: Sensitive Daten in Prompts
 
 **Problem:**
 ```python
@@ -585,7 +585,7 @@ def fetch_data(query: str) -> str:
 
 ---
 
-### ❌ Anti-Pattern 3: Untypisierte Tool-Parameter
+### 11.3 ❌ Anti-Pattern 3: Untypisierte Tool-Parameter
 
 **Problem:**
 ```python
@@ -633,7 +633,7 @@ def multiply_safe(a: int, b: int) -> int:
 
 ---
 
-### ❌ Anti-Pattern 4: Ungetestete Prompts in Production
+### 11.4 ❌ Anti-Pattern 4: Ungetestete Prompts in Production
 
 **Problem:**
 ```python
@@ -688,7 +688,7 @@ client.create_example(
 
 ---
 
-### ❌ Anti-Pattern 5: Fehlende Fehlerbehandlung in Tools
+### 11.5 ❌ Anti-Pattern 5: Fehlende Fehlerbehandlung in Tools
 
 **Problem:**
 ```python
@@ -739,9 +739,9 @@ def search_database_with_retry(query: str) -> str:
 
 ---
 
-## 🧪 Testing Best Practices
+## 12 🧪 Testing Best Practices
 
-### Unit Tests für Tools
+### 12.1 Unit Tests für Tools
 
 ```python
 # tests/test_tools.py
@@ -776,7 +776,7 @@ def test_multiply_type_error():
 
 ---
 
-### Integration Tests für Agents
+### 12.2 Integration Tests für Agents
 
 ```python
 # tests/test_agent.py
@@ -825,7 +825,7 @@ def test_agent_without_tools():
 
 ---
 
-### LangSmith Datasets für Regression Tests
+### 12.3 LangSmith Datasets für Regression Tests
 
 ```python
 # tests/test_regression.py
@@ -858,7 +858,7 @@ def test_agent_regression():
 
 ---
 
-### Test-Driven Development (TDD) Workflow
+### 12.4 Test-Driven Development (TDD) Workflow
 
 ```python
 # 1. Test schreiben (BEFORE Implementation)
@@ -882,9 +882,9 @@ def search_tool(query: str) -> str:
 
 ---
 
-## 🔒 Security Best Practices
+## 13 🔒 Security Best Practices
 
-### 1. API-Key-Management
+### 13.1 API-Key-Management
 
 **❌ NIEMALS:**
 ```python
@@ -918,7 +918,7 @@ api_key = secret.payload.data.decode("UTF-8")
 
 ---
 
-### 2. PII-Handling (DSGVO-Konformität)
+### 13.2 PII-Handling (DSGVO-Konformität)
 
 **Problem: Nutzer-Daten in LLM-Context**
 ```python
@@ -981,7 +981,7 @@ def cleanup_old_checkpoints():
 
 ---
 
-### 3. Input Validation & Sanitization
+### 13.3 Input Validation & Sanitization
 
 **SQL Injection Prevention:**
 ```python
@@ -1046,7 +1046,7 @@ llm.invoke(safe_input)
 
 ---
 
-### 4. Rate Limiting & Cost Control
+### 13.4 Rate Limiting & Cost Control
 
 **Per-User Rate Limiting:**
 ```python
@@ -1125,7 +1125,7 @@ def invoke_with_cost_tracking(question: str):
 
 ---
 
-### 5. Audit Logging
+### 13.5 Audit Logging
 
 **Alle kritischen Operationen loggen:**
 ```python
@@ -1157,7 +1157,7 @@ agent = create_agent(
 
 ---
 
-## 📖 Weitere Ressourcen
+## 14 📖 Weitere Ressourcen
 
 - **Einsteiger-Guide:** [03_skript/kurs/Einsteiger_LangChain.md](./03_skript/kurs/Einsteiger_LangChain.md)
 - **LangGraph Standards:** [LangGraph_Standards.md](./LangGraph_Standards.md)

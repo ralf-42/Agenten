@@ -1,101 +1,126 @@
-# Generative KI Kurs
+# Agenten – Multi-Agent-Systeme mit LangChain & LangGraph
 
-[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Audit_Report_2025-12-17.md)
-[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Audit_Report_2025-12-17.md)
-[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--17-blue)](./LangChain_Audit_Report_2025-12-17.md)
+[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Compliance_Report_2025-12-31.md)
+[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Compliance_Report_2025-12-31.md)
+[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)](./LangChain_Compliance_Report_2025-12-31.md)
 
-Ein deutschsprachiger, praxisorientierter Kurs zu Generative AI Technologien mit Fokus auf OpenAI GPT-Modelle, LangChain und praktischen Anwendungen.
+Ein deutschsprachiger, praxisorientierter Kurs zu **Multi-Agent-Systemen** und **Generative AI** mit Fokus auf LangChain 1.0+, LangGraph und agentenbasierte KI-Architekturen.
 
 ## 🌐 Kurs-Website
 
 **[→ Agenten Kurs-Website (GitHub Pages)](https://ralf-42.github.io/Agenten/)**
 
-Die vollständige Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen ist als interaktive Website verfügbar.
+Die vollständige Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen zu Multi-Agent-Systemen ist als interaktive Website verfügbar.
 
 ## 🎯 Zielgruppe
 
-- Entwickler:innen mit Python-Grundkenntnissen
-- IT-Fachkräfte, die KI-Technologien integrieren möchten
-- Technikbegeisterte mit Programmiererfahrung
+Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
+
+**Konkrete Voraussetzungen:**
+- Python: Klassen, Decorators, Type Hints, try/except, Grundverständnis von async/await
+- AI/API-Basics: Was ist ein LLM, Token, Kontextfenster; API-Aufrufprinzip (Key, Request, Response)
+- Arbeitsumgebung: Erfahrung mit Jupyter/Colab (Notebooks ausführen, Runtime neu starten)
 
 
 ## 📁 Projektstruktur
 
 ```
-GenAI/
-├── 01_notebook/    # Jupyter Notebooks (Kursmaterialien)
-├── 02_daten/       # Trainingsdaten und Beispieldateien
-├── 04_modul/       # Python-Module und Bibliotheken
-└── 05_prompt/      # Prompt-Templates (Markdown-Format)
+Agenten/
+├── 00_admin/       # Kursplanung (Kursplan v4.4, Trainer-Steuerung)
+├── 01_notebook/    # Jupyter Notebooks (M00-M29, Referenz-Tutorials)
+├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
+├── 03_skript/      # Kursmaterialien (PDF)
+├── 04_modul/       # Python-Module (genai_lib)
+├── 05_prompt/      # Prompt-Templates (Markdown-Format)
+├── 06_podcast/     # Podcast-Materialien
+├── 07_image/       # Bildmaterialien
+└── docs/           # GitHub Pages Dokumentation
 ```
 
 ## 🛠️ Technologie-Stack
 
 ### Kernframeworks
-- **OpenAI API** (>=1.0.0) - GPT-4o-mini, Embeddings, DALL-E
-- **LangChain** (>=1.1.0) 🆕 - Orchestrierung, Chains, Agents, RAG
-- **LangGraph** (>=0.2.0) - Zustandsbasierte Multi-Agent-Workflows
-- **Hugging Face** - Transformers und Community-Modelle
+- **LangChain** (1.0+) - Orchestrierung, Chains, Agents, RAG
+- **LangGraph** (0.3.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
+- **LangSmith** (0.4.x) - Tracing, Debugging, Evaluations
+- **OpenAI API** (>=1.0.0) - GPT-4o-mini, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=0.5.0) - Vektordatenbank für RAG-Systeme
-- **Sentence Transformers** (>=3.0.0) - CLIP für multimodale Embeddings
-- **Gradio** (>=3.x) - UI-Entwicklung für KI-Apps
-- **Ollama** - Lokale Open-Source-Modelle
-- **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Bibliothek für Kursanwendungen
-  - **multimodal_rag.py** - Multimodales RAG-System mit Bild-zu-Bild und Bild-zu-Text Suche
-  - **utilities.py** - Hilfsfunktionen für Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, Model-Profiles (`get_model_profile()`) und LLM-Response-Parsing (`extract_thinking()`)
-
-### 🆕 LangChain v1.2.0 Features (Dezember 2025)
-
-Dieser Kurs nutzt die neuesten **LangChain v1.2.0** Features:
-
-**v1.2.0 Updates:**
-- ✨ **Tool Extras** - Provider-native Features (Anthropic programmatic tool calling, OpenAI strict mode)
-- ✨ **Strict Schema Adherence** - `response_format` für garantierte Agent-Output-Konformität
-- ✨ **Built-in Client-Side Tools** - Anthropic, OpenAI und weitere Provider
-
-**v1.1.0 Features:**
-- ✨ **Model Profiles** - Automatische Capability-Detection via `.profile` Attribut
-- ✨ **Smart Structured Output** - Auto-Inference von `ProviderStrategy`
-- ✨ **SystemMessage in Agents** - Cache-Control für Anthropic Claude
-- ✨ **ModelRetryMiddleware** - Automatische Retries mit exponential backoff
-- ✨ **ContentModerationMiddleware** - OpenAI Moderation für Safety-Layer
+- **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
+  - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`
+  - `multimodal_rag.py` - Multimodales RAG-System
 
 
-## 📚 Kursmodule
+## 📚 Kursmodule (5-Tage-Kurs, Kursplan v4.4)
 
-### Basismodule (M00-M12)
+### Tag 1: Vom LLM zum denkenden Agenten (M00-M03)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M01 | GenAI Intro | Grundlagen Generative AI |
-| M02 | Modellsteuerung | Prompting, Context Engineering |
-| M03 | Codieren mit GenAI | KI-gestütztes Programmieren |
-| M04 | LangChain 101 | Framework-Grundlagen |
-| M05 | LLM & Transformer | Architektur und Foundation Models |
-| M06 | Chat & Memory | Konversations-Management |
-| M07 | Output Parser | Strukturierte Ausgaben |
-| M08a | RAG LangChain | Retrieval Augmented Generation |
-| M08b | RAG LangGraph | Advanced RAG (Self-RAG, Corrective RAG) |
-| M09 | Multimodal Bild | Bildgenerierung und -verarbeitung |
-| M10 | Agents | KI-Agenten und Multi-Agent-Systeme |
-| M11 | Gradio | UI-Entwicklung |
-| M12 | Lokale Modelle | Ollama, Open Source |
+| M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys, LangSmith |
+| M01 | Was sind KI-Agenten? | Definition, ReAct/TAO-Prinzip, Agent-Typen |
+| M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools bauen |
+| M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
 
-### Erweiterte Module (M13-M18)
-- **M13**: SQL RAG - Datenbank-Integration
-- **M14**: Multimodal RAG - Text & Bild kombiniert
-- **M15**: Multimodal Audio - Speech-to-Text, TTS
-- **M16**: Multimodal Video - Video-Analyse
-- **M17**: MCP - Model Context Protocol
-- **M18**: Fine-Tuning - Modell-Anpassung
+### Tag 2: Chains & Workflow-Struktur (M04-M07)
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M04 | Prompt Engineering | ChatPromptTemplate, System/Human Messages |
+| M05 | LCEL Chains | Pipe-Operator, Runnable Interface, Streaming |
+| M06 | Structured Output | Pydantic, with_structured_output() |
+| M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
+
+### Tag 3: Gedächtnis & RAG (M08-M11)
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M08 | RAG-Konzepte & Embeddings | RAG-Architektur, Vektoren, Token-Limits |
+| M09 | ChromaDB & Indexing | Chunking, Embedding, Vektordatenbank |
+| M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
+| M11 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
+
+### Tag 4: Kontrolle mit LangGraph (M12-M14, M21)
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
+| M13 | StateGraph Basics | State, Nodes, Edges, compile() |
+| M14 | Conditional Routing & Tool-Loop | Routing-Funktionen, Security-Basics |
+| M21 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
+
+### Tag 5: HITL & Multi-Agent-Projekt (M15-M20)
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M15 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
+| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
+| M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
+| M19 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
+| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), Vergleich |
+
+### Erweiterte Module (M21-M29, optional)
+| Modul | Thema | Priorität |
+|-------|-------|-----------|
+| M21 | LangSmith Deep Dive | 🟡 Should |
+| M22 | Agent Evaluation & Testing | 🟡 Should |
+| M23 | Hierarchical Agent Teams | 🔴 Nice-to-have |
+| M24 | Collaborative Multi-Agent | 🔴 Nice-to-have |
+| M25 | Agent Security & Best Practices | 🔴 Nice-to-have |
+| M26 | Production Deployment | 🔴 Nice-to-have |
+| M27 | MCP Integration | 🔴 Nice-to-have |
+| M28 | Gradio UI für Agenten | 🔴 Nice-to-have |
+| M29 | Advanced RAG | 🔴 Nice-to-have |
+
+### Referenz-Tutorials (Selbststudium)
+| Tutorial | Beschreibung |
+|----------|-------------|
+| M04a_REFERENZ | LangChain 101 – Vollständiges Tutorial (7 Kapitel) |
+| M04b_REFERENZ | LangGraph 101 – Vollständiges Tutorial (9 Kapitel) |
 
 ## 🔑 Voraussetzungen
 
-- Python 3.11+
-- Google Colab Account
+- Python 3.10+ (Klassen, Decorators, Type Hints sicher beherrschen)
+- Google Colab Account (primär) oder lokale Jupyter-Installation
 - OpenAI API Key (ca. 5 EUR für gesamten Kurs)
-- Hugging Face Account (kostenlos)
+- LangSmith Account (kostenlos, für Tracing/Debugging)
 
 ## 📦 Installation
 
@@ -117,27 +142,25 @@ Alle Notebooks sind eigenständig lauffähig und für Google Colab optimiert. Da
 
 Der Kurs bietet zwei praxisorientierte Lernformate:
 
-### [RAG Workshop](https://ralf-42.github.io/GenAI/projekte/RAG_Workshop.html)
-**Workshop-Format** | Begleitete Schritt-für-Schritt-Übung
+### Tag-5-Projekt: Multi-Agent-System (M19)
+**Kurs-Projekt** | Supervisor + 2 Worker-Agents
 
-Bauen Sie einen intelligenten Tech-Doku-Assistenten von Grund auf:
-- 📝 Kapitel 1-7: Vom einfachen Chatbot zur RAG-Anwendung
-- 🎯 Stufenweise Komplexität (M04-M11)
-- 🛠️ Hands-On mit LangChain, ChromaDB, Gradio
-- ⏱️ Zeitaufwand: 4-6 Stunden
+Drei Projekt-Templates zur Auswahl:
+- 🔬 **Research-Team:** Supervisor + Researcher + Analyst
+- 📝 **Content-Team:** Supervisor + Writer + Editor
+- 🎧 **Support-Team:** Supervisor + FAQ-Agent + Specialist
 
-### [KI-Challenge](https://ralf-42.github.io/GenAI/projekte/M23_KI-Challenge.html)
-**End-to-End Projekt** | Eigenständige Implementierung
+MVP: Supervisor routet zu 2 Workern, End-to-End-Flow funktioniert, LangSmith-Trace zeigt Ablauf.
 
-Entwickeln Sie eine vollständige GenAI-Anwendung:
-- 🎯 4 Projektoptionen: Dokumentenanalyse, Multimodal, Multi-Agent, Domänen-Experte
-- 🚀 LangChain 1.0+ Best Practices
-- 📦 Abgabe: Jupyter Notebook + README.md
-- ⏱️ Zeitaufwand: 15-25 Stunden
+### [Agenten Workshop](https://ralf-42.github.io/Agenten/projekte/Agenten_Workshop.html)
+**Workshop-Format** | Begleitete Schritt-für-Schritt-Übung (Zusatzmaterial)
+
+### [KI-Challenge](https://ralf-42.github.io/Agenten/projekte/Agenten_Challenges.html)
+**End-to-End Projekt** | Eigenständige Implementierung (Zusatzmaterial)
 
 ## 📖 Dokumentation
 
-- **Kurs-Website:** [https://ralf-42.github.io/GenAI/](https://ralf-42.github.io/GenAI/)
+- **Kurs-Website:** [https://ralf-42.github.io/Agenten/](https://ralf-42.github.io/Agenten/)
 
 
 ## ⚖️ Lizenzen
@@ -147,11 +170,9 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 **Northwind-Datenbank** von Microsoft unter Microsoft Public License (Ms-PL).     
 Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](https://www.hedra.com/terms).     
 
-© 2025 Ralf-42
+© 2025–2026 Ralf-42
 
 ---
 
 **Letzte Aktualisierung:** Februar 2026
-**Version:** 2.5     
-
-
+**Version:** 3.0 (angepasst an Kursplan v4.4)

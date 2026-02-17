@@ -21,15 +21,15 @@ Im Zentrum dieser Entwicklung stehen sogenannte **Large Language Models (LLMs)**
 
 Generative KI lässt sich aus drei **Perspektiven** betrachten:
 
-## Verstehen
+## 1 Verstehen
 
 Grundlegend ist das Verständnis dafür, wie diese Systeme funktionieren. Dazu gehört ein Blick auf neuronale Netze, das Prinzip der Attention, die Rolle von Tokenisierung sowie die Unterschiede zwischen Modellen zum Verstehen, Generieren oder Übersetzen. Auch ethische Fragen, Verzerrungen in Trainingsdaten und die Grenzen der Modelle gehören zu diesem Verständnis.
 
-## Anwenden
+## 2 Anwenden
 
 Die praktische Nutzung generativer KI erfordert die Fähigkeit, Modelle gezielt zu steuern – etwa durch **Prompt Engineering**, **Kontextaufbereitung** oder **Retrieval Augmented Generation (RAG)**. Moderne Tools und Frameworks wie **LangChain**, **Gradio** oder **Transformers** erlauben es, KI-Modelle in Anwendungen zu integrieren – sei es für Chatbots, Wissensassistenten, Content-Generatoren oder multimodale Schnittstellen.
 
-## Gestalten
+## 3 Gestalten
 
 Mit zunehmender Verfügbarkeit von Open-Source-Modellen, APIs und Werkzeugen eröffnet sich ein neues Feld kreativer Gestaltung: Individuelle Workflows, modulare KI-Architekturen, multimodale Interfaces und personalisierte Assistenten werden möglich. Gleichzeitig entstehen neue Rollen in Entwicklung, Design, Redaktion und Ethik, die den bewussten und verantwortungsvollen Umgang mit KI erfordern.
 

@@ -2,7 +2,13 @@
 
 ## 📚 Modulstruktur
 
-Dieses Verzeichnis enthält **30 Jupyter Notebooks** (M00-M29) für den 5-Tage-Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten."
+Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (21 Kern-Module M00-M20, 9 erweiterte Module M21-M29, 2 Referenz-Tutorials, 1 Quick-Template).
+
+**Modul M21 existiert in zwei Varianten:**
+- `M21_LangSmith_Evaluations_Basics.ipynb` – **Kurs-Variante** (Tag 4, fokussiert auf Eval-Dataset + Regression-Check)
+- `M21_LangSmith_Deep_Dive.ipynb` – **Optionale Vertiefung** (Tracing, Datasets, A/B-Testing)
+
+**Hinweis Kurs-Reihenfolge:** Die Modulnummern M00-M29 folgen der inhaltlichen Systematik, nicht der Kurs-Reihenfolge. An Tag 4 wird M21 (Evaluations) vorgezogen, M15/M16 folgen erst an Tag 5. Siehe Kursplan v4.4 für die genaue Tagesplanung.
 
 ---
 
@@ -47,30 +53,31 @@ Dieses Verzeichnis enthält **30 Jupyter Notebooks** (M00-M29) für den 5-Tage-K
 
 ---
 
-### **TAG 4: LangGraph & Kontrolle** (M12-M16)
+### **TAG 4: Kontrolle, Routing & Security** (M12-M14, M21)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
 | M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines | ✅ Template |
 | M13 | StateGraph Basics | StateGraph, Nodes, Edges | ✅ Template |
 | M14 | Conditional Routing & Tool-Loop | Conditional Edges, Routing-Funktion | ✅ Template |
-| M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Template |
-| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Template |
+| M21 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Template |
 
-**Kursplan:** Tag 4 - Kontrolle mit LangGraph
+**Kursplan:** Tag 4 - Kontrolle, Routing & Security
 
 ---
 
-### **TAG 5: Multi-Agent-Systeme** (M17-M20)
+### **TAG 5: HITL & Multi-Agent-Projekt** (M15-M20)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
+| M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Template |
+| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Template |
 | M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Template |
 | M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ **Vollständig** (aus M10c) |
 | M19 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Template |
-| M20 | OpenAI Agent Builder | No-Code vs. Code, Vergleich | ✅ Template |
+| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Template |
 
-**Kursplan:** Tag 5 - Multi-Agent-Systeme
+**Kursplan:** Tag 5 - HITL, Multi-Agent-Projekt & Ausblick
 
 ---
 
@@ -78,7 +85,7 @@ Dieses Verzeichnis enthält **30 Jupyter Notebooks** (M00-M29) für den 5-Tage-K
 
 | Modul | Titel | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M21 | LangSmith Deep Dive | Tracing, Datasets, Evaluations | 🟡 SHOULD |
+| M21 | LangSmith Deep Dive | Tracing, Datasets, A/B-Testing (optionale Vertiefung zu M21 Evaluations Basics) | 🟡 SHOULD |
 | M22 | Agent Evaluation & Testing | Metriken, Benchmarking | 🟡 SHOULD |
 | M23 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔴 NICE-TO-HAVE |
 | M24 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | ✅ **Vollständig** (aus M10c) |
@@ -146,7 +153,7 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 3. Erweiterte Module M21-M29 für Vertiefung
 
 ### **Für Teilnehmer:**
-1. Notebooks in Reihenfolge durcharbeiten (M00 → M20)
+1. Notebooks gemäß Kursplan durcharbeiten (Tag 1: M00-M03, Tag 2: M04-M07, Tag 3: M08-M11, Tag 4: M12-M14 + M21, Tag 5: M15-M20)
 2. Referenz-Tutorials für Deep Dive nutzen
 3. Erweiterte Module für Spezialisierung
 
@@ -161,10 +168,10 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 | Kategorie | Anzahl | Status |
 |-----------|--------|--------|
-| **Kern-Module (M00-M20)** | 21 | 3 vollständig, 18 Templates |
-| **Erweiterte Module (M21-M29)** | 9 | 2 vollständig, 7 Templates |
+| **Kern-Module (M00-M20 + M21 Eval)** | 22 | 3 vollständig, 19 Templates |
+| **Erweiterte Module (M21 Deep Dive, M22-M29)** | 9 | 2 vollständig, 7 Templates |
 | **Referenz-Tutorials** | 2 | 2 vollständig |
-| **GESAMT** | 32 | 7 vollständig, 25 Templates |
+| **GESAMT** | 33 | 7 vollständig, 26 Templates |
 
 **Vollständig:** M04a/M04b (Referenz), M18, M24, M29
 **Templates:** Struktur vorhanden, Inhalt muss ergänzt werden
@@ -173,13 +180,12 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 ## 🔗 Weitere Ressourcen
 
-- **Kursplan:** `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.2.md`
+- **Kursplan:** `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.4.md`
 - **Projekt-Doku:** `../CLAUDE.md`, `../AGENTS.md`
 - **Standards:** `../LangChain_Best_Practices.md`, `../LangGraph_Best_Practices.md`
 - **Notebook Template:** `../Notebook_Template_Guide.md`
 
 ---
 
-**Version:** 1.0
-**Stand:** Januar 2026
-**Erstellt:** Automatische Modulstruktur-Generierung
+**Version:** 1.1 (angepasst an Kursplan v4.4)
+**Stand:** Februar 2026

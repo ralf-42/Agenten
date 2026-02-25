@@ -180,8 +180,9 @@ sequenceDiagram
 
 **Features:**
 - Automatische oder manuelle Größenkontrolle
+- Clientseitiges Rendering im Browser via Mermaid CDN (Emojis werden korrekt dargestellt)
 - Robuste Fehlerbehandlung mit aussagekräftigen Fehlermeldungen
-- Timeout-Schutz (15 Sekunden)
+- Funktioniert in Google Colab und JupyterLab; nicht in VS Code Notebooks
 
 #### 7. `load_prompt(path, mode="T")`
 

@@ -6,7 +6,7 @@ description: "KI-Agenten und Multi-Agent-Systeme mit LangChain & LangGraph"
 permalink: /
 ---
 
-# Kurs Agenten
+# KI-Agenten
 
 > **Agenten. Verstehen. Anwenden. Gestalten.**       
 > Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith

@@ -2,44 +2,44 @@
 layout: default
 title: Start
 nav_order: 1
-description: "Generative KI mit LangChain"
+description: "KI-Agenten und Multi-Agent-Systeme mit LangChain & LangGraph"
 permalink: /
 ---
 
-# Generative KI
+# Kurs Agenten
 
-> **Generative KI. Verstehen. Anwenden. Gestalten.**       
-> Praktische Anwendung von Sprachmodellen, LangChain und modernen Foundation Models
+> **Agenten. Verstehen. Anwenden. Gestalten.**       
+> Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith
 
 
 ---
 
 
-Generative KI bezeichnet eine Klasse von Anwendungen, die in der Lage sind, eigenständig Inhalte zu erzeugen – darunter Texte, Bilder, Audio, Code oder ganze Videos. Im Gegensatz zu klassischen KI-Systemen, die primär analysieren oder vorhersagen, liegt der Fokus hier auf dem kreativen Schaffen: Maschinen, die schreiben, gestalten, komponieren oder programmieren.
+KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeugen, sondern Aufgaben eigenständig planen, Tools nutzen und Ergebnisse iterativ verbessern. Im Gegensatz zu klassischen Chat-Interaktionen geht es hier um zielorientiertes Handeln: Systeme, die analysieren, entscheiden und mehrstufige Workflows ausführen.
 
-Im Zentrum dieser Entwicklung stehen sogenannte **Large Language Models (LLMs)** wie GPT, Claude oder Gemini. Sie basieren auf der **Transformer-Architektur**, die es ermöglicht, riesige Textmengen kontextsensitiv zu verarbeiten und daraus neue Inhalte zu generieren. Dabei werden keine Regeln befolgt, sondern Wahrscheinlichkeiten berechnet – gelernt aus Milliarden von Beispielen.
+Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reasoning-nahe Kernkomponente sowie Frameworks wie **LangChain** und **LangGraph** für robuste Orchestrierung. Damit werden Agenten nicht als einzelne Prompts gebaut, sondern als zustandsbasierte Systeme mit klaren Schritten, Werkzeugen und Kontrollpunkten.
 
-Generative KI lässt sich aus drei **Perspektiven** betrachten:
+Der Kurs Agenten lässt sich aus drei **Perspektiven** betrachten:
 
 ## 1 Verstehen
 
-Grundlegend ist das Verständnis dafür, wie diese Systeme funktionieren. Dazu gehört ein Blick auf neuronale Netze, das Prinzip der Attention, die Rolle von Tokenisierung sowie die Unterschiede zwischen Modellen zum Verstehen, Generieren oder Übersetzen. Auch ethische Fragen, Verzerrungen in Trainingsdaten und die Grenzen der Modelle gehören zu diesem Verständnis.
+Grundlegend ist das Verständnis dafür, wie agentische Systeme funktionieren. Dazu gehören ReAct/TAO-Denkmuster, Tool Use & Function Calling, State Management, Routing-Logik sowie Grenzen und Risiken von LLM-basierten Entscheidungen. Auch Robustheit, Transparenz und verantwortungsvoller Einsatz gehören zu diesem Verständnis.
 
 ## 2 Anwenden
 
-Die praktische Nutzung generativer KI erfordert die Fähigkeit, Modelle gezielt zu steuern – etwa durch **Prompt Engineering**, **Kontextaufbereitung** oder **Retrieval Augmented Generation (RAG)**. Moderne Tools und Frameworks wie **LangChain**, **Gradio** oder **Transformers** erlauben es, KI-Modelle in Anwendungen zu integrieren – sei es für Chatbots, Wissensassistenten, Content-Generatoren oder multimodale Schnittstellen.
+Die praktische Umsetzung von Agenten erfordert die Fähigkeit, Modelle gezielt zu steuern und Workflows modular aufzubauen - etwa durch **Prompt Engineering**, **RAG**, **Structured Output** und **Tool-Integration**. Mit **LangChain**, **LangGraph**, **LangSmith** und **ChromaDB** entstehen produktionsnahe Agenten für Recherche, Support, Automatisierung und Wissensarbeit.
 
 ## 3 Gestalten
 
-Mit zunehmender Verfügbarkeit von Open-Source-Modellen, APIs und Werkzeugen eröffnet sich ein neues Feld kreativer Gestaltung: Individuelle Workflows, modulare KI-Architekturen, multimodale Interfaces und personalisierte Assistenten werden möglich. Gleichzeitig entstehen neue Rollen in Entwicklung, Design, Redaktion und Ethik, die den bewussten und verantwortungsvollen Umgang mit KI erfordern.
+Mit zunehmender Verfügbarkeit von APIs, Open-Source-Modellen und Orchestrierungs-Frameworks entsteht ein neues Feld der Gestaltung: Single-Agent-Lösungen, Supervisor-Patterns und komplette Multi-Agent-Systeme. Gleichzeitig wachsen Anforderungen an Evaluation, Monitoring, Security und Governance, damit aus Prototypen verlässliche Produkte werden.
 
-**Von der Theorie zur Praxis:** Die Entwicklung von KI-Produkten erfordert mehr als technisches Verständnis – es braucht ein Bewusstsein für die realen Herausforderungen in Training, Deployment und Produktentwicklung. Einblicke aus der Industrie (OpenAI, Palantir, europäische Frontier Labs) zeigen: Der Weg vom Experiment zum Produkt ist geprägt von Engineering-Disziplin, iterativem Feedback und einem tiefen Verständnis für Nutzeranforderungen.
+**Von der Theorie zur Praxis:** Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos - sie braucht saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Einblicke aus der Praxis zeigen: Der Weg vom Experiment zum stabilen Agentensystem ist geprägt von Engineering-Disziplin, iterativem Feedback und klarem Nutzerfokus.
 
-Generative KI markiert damit einen technologischen und kulturellen Wendepunkt. Sie verändert nicht nur die Art, wie Inhalte produziert werden, sondern auch das Verhältnis von Mensch und Maschine im kreativen, forschenden und problemlösenden Denken.
+Agentische KI markiert damit einen technologischen Wendepunkt. Sie verändert nicht nur die Art, wie Aufgaben bearbeitet werden, sondern auch das Zusammenspiel von Mensch und Maschine in Analyse, Entscheidung und Umsetzung.
 
 
 ---
 
 **Version:** 1.0     
-**Stand:** November 2025     
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.     
+**Stand:** Februar 2026     
+**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.     

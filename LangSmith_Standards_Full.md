@@ -65,8 +65,8 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 # Projektname definieren (organisiert Traces)
 os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
 
-# Optional: Endpoint (nur bei Self-Hosted)
-# os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+# EU-Endpoint (PFLICHT für EU-Workspace)
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 print("✅ LangSmith Tracing aktiviert!")
 print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")

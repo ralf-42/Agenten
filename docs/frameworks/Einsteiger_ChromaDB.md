@@ -75,7 +75,7 @@ Die gebräuchlichsten Distanzmaße:
 
 **Cosine Similarity** ist der Standard, da sie unabhängig von der Vektorlänge funktioniert und nur die "Richtung" (= Bedeutung) vergleicht.
 
-### Vektorraum-Visualisierung (konzeptionell)
+### 2.3 Vektorraum-Visualisierung (konzeptionell)
 
 ```mermaid
 graph TB
@@ -106,7 +106,7 @@ graph TB
 
 > **Hinweis:** Semantisch verwandte Konzepte ("Hund", "Katze", "Tier") bilden Cluster im Vektorraum, während unverwandte Konzepte ("Quantenmechanik") weiter entfernt liegen.
 
-### 2.3 Visualisierung
+### 2.4 Visualisierung
 
 Für ein intuitives Verständnis von Embeddings:
 
@@ -115,7 +115,7 @@ https://projector.tensorflow.org/?hl=de
 
 Hier lassen sich hochdimensionale Vektoren auf 2D/3D projizieren und interaktiv erkunden. Semantisch ähnliche Wörter bilden Cluster.
 
-### 2.4 Beispiel: Embedding erzeugen
+### 2.5 Beispiel: Embedding erzeugen
 
 ```python
 from langchain_openai import OpenAIEmbeddings
@@ -446,7 +446,7 @@ for i in tqdm(range(0, len(all_chunks), batch_size)):
 
 Die Suche in der Vektordatenbank findet die semantisch ähnlichsten Dokumente.
 
-### Similarity Search Workflow
+### 6.1 Similarity Search Workflow
 
 ```mermaid
 sequenceDiagram
@@ -466,7 +466,7 @@ sequenceDiagram
     Note over ChromaDB: Nur Vektoren vergleichen,<br/>kein Text-Matching
 ```
 
-### 6.1 Grundlegende Suche
+### 6.2 Grundlegende Suche
 
 ```python
 # Einfache Suche
@@ -481,7 +481,7 @@ for i, doc in enumerate(results, 1):
     print(f"Metadaten: {doc.metadata}")
 ```
 
-### 6.2 Suche mit Scores
+### 6.3 Suche mit Scores
 
 ```python
 # Suche mit Ähnlichkeits-Scores
@@ -500,7 +500,7 @@ for doc, score in results_with_scores:
 - **0.3–0.5** = Relevant
 - **> 0.5** = Weniger relevant
 
-### 6.3 Metadaten-Filtering
+### 6.4 Metadaten-Filtering
 
 ```python
 # Nur Dokumente aus bestimmter Quelle
@@ -534,7 +534,7 @@ results = vectorstore.similarity_search(
 | `$in` | In Liste | `{"typ": {"$in": ["pdf", "docx"]}}` |
 | `$and`, `$or` | Logische Verknüpfung | Siehe Beispiel oben |
 
-### 6.4 Retriever erstellen
+### 6.5 Retriever erstellen
 
 Für die Integration in LangChain-Chains wird ein Retriever benötigt:
 

@@ -89,42 +89,34 @@ flowchart TB
 
 **Schritt 2: Umgebung einrichten (Standard-Setup)**
 
+{: .warning }
+> ⚠️ **Reihenfolge-Regel:** LangSmith-Env-Vars müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert. Deshalb: Env-Vars ganz oben in der Setup-Cell, vor allen Imports.
+
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+
+import os
+
+# ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_PROJECT"]    = "M02-LangSmith-Setup"  # Konvention: "M##-Thema"
+os.environ["LANGCHAIN_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
+
+# Erst danach: genai_lib und weitere Imports
 from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint
 
-# API-Keys aus Colab Secrets laden und aktivieren
 setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
-
 print()
 check_environment()
 print()
 get_ipinfo()
 ```
 
-**Schritt 3: LangSmith-Tracing aktivieren**
-
-```python
-import os
-
-# LangSmith Tracing einschalten (WICHTIG!)
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-
-# Projektname für Organisation (beliebig anpassbar)
-os.environ["LANGCHAIN_PROJECT"] = "Kurs-Beispiel"
-
-# Endpoint explizit auf EU setzen
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
-
-print("✅ LangSmith Tracing aktiviert!")
-print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")
-```
-
-**Wichtig:** 
-- `setup_api_keys()` liest die Secrets aus und setzt die Umgebungsvariablen
+**Wichtig:**
+- Env-Vars stehen **vor** dem `genai_lib`-Import – das ist Pflicht laut Best Practices
+- **Projektname-Konvention:** `"M##-Thema"` (z.B. `"M06-Structured-Output"`) – Traces sind sofort dem Modul zuzuordnen
 - `create_globals=False` verhindert globale Variablen (Best Practice)
-- `LANGCHAIN_ENDPOINT` muss auf `https://eu.api.smith.langchain.com` gesetzt sein
 - Ab jetzt werden **alle** LangChain/LangGraph-Operationen automatisch getrackt
 
 ---
@@ -151,7 +143,7 @@ print(response.content)
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
 - URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects)
-- Projekt auswählen: "Kurs-Beispiel"
+- Projekt auswählen: `"M02-LangSmith-Setup"`
 - Ersten Trace anklicken → vollständige Details sehen
 
 ---
@@ -311,7 +303,7 @@ Datasets ermöglichen wiederholbare Tests mit definierten Inputs und erwarteten 
 ```python
 from langsmith import Client
 
-client = Client()
+client = Client(api_url=os.environ["LANGCHAIN_ENDPOINT"])
 
 # Dataset mit Beispielen
 examples = [
@@ -375,7 +367,7 @@ In der LangSmith-UI kann jeder Run bewertet werden:
 ```python
 from langsmith import Client
 
-client = Client()
+client = Client(api_url=os.environ["LANGCHAIN_ENDPOINT"])
 
 # Nach Agent-Ausführung
 run_id = response["__run"].id  # Run-ID aus Response
@@ -466,36 +458,55 @@ result = compiled_graph.invoke(
 
 ### 9.1 Projekt-Organisation
 
-**Empfehlung: Ein Projekt pro Kurstag**
+**Konvention: Modulname direkt in der Setup-Cell setzen**
+
 ```python
-# Tag 1: Grundlagen
-os.environ["LANGCHAIN_PROJECT"] = "Tag1-Grundlagen"
-
-# Tag 3: RAG-Systeme
-os.environ["LANGCHAIN_PROJECT"] = "Tag3-RAG"
-
-# Tag 5: Multi-Agent
-os.environ["LANGCHAIN_PROJECT"] = "Tag5-MultiAgent"
+# ✅ Modulname in der Setup-Cell – vor allen Imports!
+os.environ["LANGCHAIN_PROJECT"] = "M06-Structured-Output"
 ```
 
-**Alternative: Einmaliges Setup im Notebook-Header**
+**Wichtig:** `LANGCHAIN_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
+
+**Standard-Setup im Notebook-Header**
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
-from genai_lib.utilities import setup_api_keys, check_environment, get_ipinfo
+
 import os
 
-# API-Keys laden
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
-
-# LangSmith aktivieren
+# ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Tag1-Grundlagen"  # Je nach Tag anpassen
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
+os.environ["LANGCHAIN_PROJECT"]    = "M06-Structured-Output"  # Modulname anpassen
+os.environ["LANGCHAIN_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
+# Erst danach: genai_lib und weitere Imports
+from genai_lib.utilities import setup_api_keys, check_environment, get_ipinfo
+
+setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
 check_environment()
 get_ipinfo()
 ```
+
+**Modulspezifischer Abschnitt im Notebook (nach dem Setup):**
+```python
+# LangSmith: Aktives Projekt für diesen Abschnitt
+import os
+print(f"📊 LangSmith-Projekt: {os.environ['LANGCHAIN_PROJECT']}")
+
+# invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
+run_cfg = {"run_name": "M06_Kap6_StructuredTrace", "tags": ["M06", "structured-output"]}
+result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("...")
+```
+
+**Konventionen:**
+
+| Kontext | Projektname |
+|---------|-------------|
+| Kurs-Notebook | `"M##-Thema"` z.B. `"M06-Structured-Output"` |
+| Produktion | `"chatbot-production"` |
+| Experiment | `"rag-experiment-2026-03"` |
+
+> 💡 **Edge Case:** Falls ein Projekt-Wechsel nach Notebook-Start nötig ist (z.B. kein Kernel-Neustart möglich), kann `ls.tracing_context(project_name=...)` als Workaround verwendet werden.
 
 ### 9.2 Tags für bessere Organisation
 
@@ -561,6 +572,94 @@ def process_query(query: str):
 - Langsame Runs identifizieren (Latenz > 5s)
 - Token-Verbrauch pro Student analysieren
 - Fehlerraten nach Umgebung filtern
+
+### 9.5 Einzelne Chains und Runs benennen mit `.with_config()`
+
+Automatisches Tracing erfasst alle Runs – aber ohne explizite Namen sind sie im Dashboard schwer zu unterscheiden. `.with_config()` gibt einzelnen Chains, LLM-Aufrufen und Structured-Output-Chains einen eindeutigen Namen und Tags.
+
+**Prinzip: Config-Parameter vorab in einer separaten Variable festlegen**
+
+```python
+# Config-Parameter in einer eigenen Variable definieren
+run_cfg = {
+    "run_name": "M05_Kap3_LCEL_Grundchain",  # Konvention: M##_Kap##_Typ
+    "tags":     ["M05", "lcel", "chain"],     # Filterbar im LangSmith-Dashboard
+}
+
+chain = (
+    ChatPromptTemplate.from_template("Erkläre {topic} für Einsteiger.")
+    | llm
+    | StrOutputParser()
+).with_config(**run_cfg)
+
+result = chain.invoke({"topic": "Vektordatenbanken"})
+```
+
+**Auf LLM-Aufrufe anwenden**
+
+```python
+run_cfg = {
+    "run_name": "M03_Kap1_LLM_Basis",
+    "tags":     ["M03", "llm"],
+}
+
+named_llm = llm.with_config(**run_cfg)
+response  = named_llm.invoke("Was ist ein Sprachmodell?")
+```
+
+**Auf `with_structured_output()` anwenden**
+
+```python
+from pydantic import BaseModel, Field
+
+class Person(BaseModel):
+    name: str = Field(description="Vollständiger Name")
+    alter: int = Field(description="Alter in Jahren")
+
+run_cfg = {
+    "run_name": "M06_Kap3_PersonExtraktion",
+    "tags":     ["M06", "structured-output"],
+}
+
+structured_llm = llm.with_structured_output(Person).with_config(**run_cfg)
+ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
+```
+
+**Regeln für `run_cfg`:**
+
+| Parameter | Konvention | Beispiel |
+|-----------|-----------|---------|
+| `run_name` | `"M##_Kap##_Typ"` (Modul, Kapitel, Kurzname) | `"M06_Kap3_PersonExtraktion"` |
+| `tags` | Liste: `["M##", "typ", ...]` | `["M06", "structured-output"]` |
+
+> ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
+
+### 9.6 Tool-Tests ohne Tracing: `.func()`
+
+Beim Testen einzelner `@tool`-Funktionen entsteht mit `.invoke()` immer ein Trace. Für isolierte Unit-Tests die Python-Funktion direkt über `.func()` aufrufen – komplett am Runnable-Framework vorbei.
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def celsius_nach_fahrenheit(temperatur: float) -> float:
+    """Rechnet Celsius in Fahrenheit um."""
+    return round(temperatur * 9 / 5 + 32, 2)
+
+# ✅ Kein Trace – direkte Python-Funktion
+ergebnis = celsius_nach_fahrenheit.func(temperatur=37.0)
+print(ergebnis)  # 98.6
+
+# ⚠️ Mit Trace – geht durch das Runnable-Framework
+ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
+```
+
+**Wann `.func()` einsetzen:**
+- ✅ Isolierte Unit-Tests von Tool-Funktionen (Kapitel vor der LangSmith-Demo)
+- ✅ Wenn Tracing-Unterdrückung via Context Manager nicht zuverlässig funktioniert
+- ❌ Nicht verwenden, wenn das Runnable-Verhalten (Schema-Validierung, Callbacks) getestet werden soll
+
+> 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
 
 ---
 
@@ -638,49 +737,6 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
 
 **Best Practice:** Alle benötigten Keys zu Beginn im Setup-Block definieren.
 
----
-
-## 12 Zusammenfassung
-
-**LangSmith ist essentiell für:**
-- **Entwicklung:** Verstehen, warum Agents bestimmte Entscheidungen treffen
-- **Debugging:** Fehlerquellen in komplexen Chains identifizieren
-- **Evaluierung:** Systematisches Testen mit Datasets
-- **Monitoring:** Performance und Qualität in Produktion überwachen
-
-**Für Kurs-Teilnehmer bedeutet das:**
-1. Setup einmalig zu Beginn (Google Colab Secrets + 3 Zeilen Code)
-2. Automatisches Tracing aller Übungen
-3. Visuelles Verständnis komplexer Agent-Workflows
-4. Systematische Vergleiche verschiedener Ansätze
-
-**Next Steps im Kurs:**
-- Tag 1: Erste Traces inspizieren (einfache Chains)
-- Tag 2: Agent-Entscheidungen nachvollziehen
-- Tag 3: RAG-System evaluieren mit Datasets
-- Tag 4: LangGraph-Workflows debuggen
-- Tag 5: Multi-Agent-Systeme vergleichen
-
-**Standard-Setup für alle Notebooks:**
-```python
-#@title 🔧 Umgebung einrichten{ display-mode: "form" }
-!uv pip install --system -q git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
-from genai_lib.utilities import setup_api_keys, check_environment, get_ipinfo
-import os
-
-# API-Keys aus Colab Secrets laden
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
-
-# LangSmith Tracing aktivieren
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Kurs-Tag-X"  # Anpassen je nach Tag
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
-
-check_environment()
-get_ipinfo()
-```
-
----
 
 > 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
 
@@ -688,7 +744,7 @@ get_ipinfo()
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
+**Version:** 1.5
+**Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

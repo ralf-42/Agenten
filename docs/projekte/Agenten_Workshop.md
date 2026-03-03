@@ -608,6 +608,7 @@ graph = workflow.compile(
 - Tracke alle Agent-Aufrufe in LangSmith
 - Evaluiere Antwortqualität
 - Erstelle Custom-Evaluatoren
+- Verwende den EU-API-Endpoint `https://eu.api.smith.langchain.com` (Account + API-Key im EU-Workspace: `https://eu.smith.langchain.com/`)
 
 ### 11.2 Bonus 2: Erweiterte Multi-Agent-Patterns
 - Hierarchical Agent (3 Ebenen)
@@ -771,3 +772,4 @@ A:
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
 **Schwerpunkt:** LangGraph 1.0+, Multi-Agent-Systeme, State Machines    
 **Arbeitsumgebung:** Google Colab oder Jupyter Notebook    
+

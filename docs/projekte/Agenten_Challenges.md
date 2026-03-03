@@ -338,6 +338,7 @@ graph = workflow.compile(
 import os
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
 ### 1.5 Multi-Agent-Architektur
@@ -425,6 +426,8 @@ with gr.Blocks() as demo:
 
 ## 2 API-Keys Setup
 
+**Wichtig:** LangSmith-Account und LangSmith-API-Key im EU-Workspace anlegen (`https://eu.smith.langchain.com/`) und für `LANGCHAIN_ENDPOINT` den EU-API-Endpoint setzen: `https://eu.api.smith.langchain.com`
+
 ```python
 # ═══════════════════════════════════════════════════
 # 🔑 API-KEYS
@@ -440,6 +443,7 @@ os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge-your-name"
 os.environ["LANGCHAIN_API_KEY"] = userdata.get('LANGSMITH_API_KEY')
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
 ## 3 LangGraph Basis-Template
@@ -584,7 +588,7 @@ graph = workflow.compile(
 | Sessions nicht persistent | Kein Checkpointer | `checkpointer=SqliteSaver(...)` |
 | Graph stoppt nicht bei HITL | Falscher Interrupt | `interrupt_before=["node_name"]` |
 | Supervisor routet nicht | Conditional Edge fehlt | `add_conditional_edges()` verwenden |
-| LangSmith zeigt nichts | Tracing nicht aktiviert | `LANGCHAIN_TRACING_V2="true"` |
+| LangSmith zeigt nichts | Tracing nicht aktiviert oder falscher Endpoint | `LANGCHAIN_TRACING_V2="true"` und `LANGCHAIN_ENDPOINT="https://eu.api.smith.langchain.com"` setzen |
 
 ---
 
@@ -690,3 +694,4 @@ class SupportState(TypedDict):
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
 **Basis:** Kursplan v4.3, Module M00-M20    
 **Framework-Versionen:** LangChain 1.0+, LangGraph 0.3+, LangSmith 0.4+    
+

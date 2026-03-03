@@ -39,7 +39,7 @@ LangSmith beantwortet diese Fragen durch:
 
 Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvollzogen werden** – ohne zusätzlichen Code im Workflow selbst.
 
-### LangSmith im Entwicklungs-Workflow
+### 1.1 LangSmith im Entwicklungs-Workflow
 
 ```mermaid
 flowchart TB
@@ -70,9 +70,13 @@ flowchart TB
 
 ### 2.1 LangSmith-Account erstellen
 
-1. Kostenlosen Account anlegen: [smith.langchain.com](https://smith.langchain.com)
-2. API-Key generieren: Settings → API Keys → Create API Key
+1. Kostenlosen Account anlegen: [eu.smith.langchain.com](https://eu.smith.langchain.com/)
+2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
 3. Optional: Organisation und Projekte anlegen
+
+{: .warning }
+> **Wichtig (EU/US-Endpunkte):** Für diesen Kurs immer den **EU-Endpoint** verwenden: `https://eu.api.smith.langchain.com`.  
+> Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
 
 ### 2.2 API-Keys in Google Colab Secrets hinterlegen
 
@@ -110,8 +114,8 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 # Projektname für Organisation (beliebig anpassbar)
 os.environ["LANGCHAIN_PROJECT"] = "Kurs-Beispiel"
 
-# Optional: Endpoint (nur bei Self-Hosted nötig)
-# os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+# Endpoint explizit auf EU setzen
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 print("✅ LangSmith Tracing aktiviert!")
 print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")
@@ -120,6 +124,7 @@ print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")
 **Wichtig:** 
 - `setup_api_keys()` liest die Secrets aus und setzt die Umgebungsvariablen
 - `create_globals=False` verhindert globale Variablen (Best Practice)
+- `LANGCHAIN_ENDPOINT` muss auf `https://eu.api.smith.langchain.com` gesetzt sein
 - Ab jetzt werden **alle** LangChain/LangGraph-Operationen automatisch getrackt
 
 ---
@@ -145,7 +150,7 @@ print(response.content)
 3. Kein zusätzlicher Code nötig – funktioniert "out of the box"
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
-- URL: [smith.langchain.com/projects](https://smith.langchain.com/projects)
+- URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects)
 - Projekt auswählen: "Kurs-Beispiel"
 - Ersten Trace anklicken → vollständige Details sehen
 
@@ -248,6 +253,7 @@ response = agent.invoke({
 
 ```mermaid
 sequenceDiagram
+	autonumber
     participant User
     participant Agent
     participant LLM
@@ -485,6 +491,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
 # LangSmith aktivieren
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "Tag1-Grundlagen"  # Je nach Tag anpassen
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 check_environment()
 get_ipinfo()
@@ -667,6 +674,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
 # LangSmith Tracing aktivieren
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "Kurs-Tag-X"  # Anpassen je nach Tag
+os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 check_environment()
 get_ipinfo()

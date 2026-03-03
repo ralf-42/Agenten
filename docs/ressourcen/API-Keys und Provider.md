@@ -59,6 +59,9 @@ Diese Tabelle bietet eine Übersicht (Stand: 12.2025) über LLM-Provider mit ihr
 
 **Best Practice: Colab Secrets verwenden**
 
+{: .warning }
+> **LangSmith (EU/US-Endpunkte):** Wenn Sie LangSmith nutzen, legen Sie Account und API-Key im **EU-Workspace** an (`https://eu.smith.langchain.com/`) und verwenden Sie als `LANGCHAIN_ENDPOINT` den EU-API-Endpoint `https://eu.api.smith.langchain.com`.
+
 ```python
 # Installiere benötigte Bibliothek
 !pip install langchain-{provider}
@@ -184,3 +187,4 @@ llm = Ollama(model="llama3")
 
 **Version:** 1.0
 **Letzte Aktualisierung:** Dezember 2025
+

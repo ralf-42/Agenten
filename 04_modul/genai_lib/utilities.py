@@ -590,6 +590,9 @@ def _parse_md_prompt(content):
         lines = section.split('\n', 1)
         role = lines[0].strip().lower()
 
+        # Optionales Nummern-Präfix tolerieren: "1 system" → "system", "2 human" → "human"
+        role = re.sub(r'^\d+\s+', '', role)
+
         if role not in ('system', 'human', 'ai', 'assistant'):
             continue
 

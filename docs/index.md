@@ -21,15 +21,15 @@ Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reason
 
 Der Kurs Agenten lässt sich aus drei **Perspektiven** betrachten:
 
-## 1 Verstehen
+## Verstehen
 
 Grundlegend ist das Verständnis dafür, wie agentische Systeme funktionieren. Dazu gehören ReAct/TAO-Denkmuster, Tool Use & Function Calling, State Management, Routing-Logik sowie Grenzen und Risiken von LLM-basierten Entscheidungen. Auch Robustheit, Transparenz und verantwortungsvoller Einsatz gehören zu diesem Verständnis.
 
-## 2 Anwenden
+## Anwenden
 
 Die praktische Umsetzung von Agenten erfordert die Fähigkeit, Modelle gezielt zu steuern und Workflows modular aufzubauen - etwa durch **Prompt Engineering**, **RAG**, **Structured Output** und **Tool-Integration**. Mit **LangChain**, **LangGraph**, **LangSmith** und **ChromaDB** entstehen produktionsnahe Agenten für Recherche, Support, Automatisierung und Wissensarbeit.
 
-## 3 Gestalten
+## Gestalten
 
 Mit zunehmender Verfügbarkeit von APIs, Open-Source-Modellen und Orchestrierungs-Frameworks entsteht ein neues Feld der Gestaltung: Single-Agent-Lösungen, Supervisor-Patterns und komplette Multi-Agent-Systeme. Gleichzeitig wachsen Anforderungen an Evaluation, Monitoring, Security und Governance, damit aus Prototypen verlässliche Produkte werden.
 

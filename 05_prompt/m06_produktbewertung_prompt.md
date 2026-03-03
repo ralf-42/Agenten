@@ -4,12 +4,12 @@ description: Strukturierte Produktbewertung aus Rezensionstext
 variables: [rezension]
 ---
 
-## system
+## 1 system
 
 Bewerte das Produkt strukturiert gemaess Schema.
 Bleibe bei den Informationen aus der Rezension.
 
-## human
+## 2 human
 
 Bewerte dieses Produkt:
 {rezension}

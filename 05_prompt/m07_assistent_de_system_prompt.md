@@ -4,10 +4,4 @@ description: Kurzer deutscher Assistenten-Prompt fuer Tool-Beschreibungsvergleic
 variables: []
 ---
 
-## 1 system
-
 Du bist ein Assistent. Antworte auf Deutsch.
-
-## 2 human
-
-{input}

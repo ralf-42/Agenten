@@ -336,9 +336,9 @@ graph = workflow.compile(
 ### 1.4 LangSmith-Tracing
 ```python
 import os
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge"
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "agenten-challenge"
+os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
 ### 1.5 Multi-Agent-Architektur
@@ -426,7 +426,7 @@ with gr.Blocks() as demo:
 
 ## 2 API-Keys Setup
 
-**Wichtig:** LangSmith-Account und LangSmith-API-Key im EU-Workspace anlegen (`https://eu.smith.langchain.com/`) und für `LANGCHAIN_ENDPOINT` den EU-API-Endpoint setzen: `https://eu.api.smith.langchain.com`
+**Wichtig:** LangSmith-Account und LangSmith-API-Key im EU-Workspace anlegen (`https://eu.smith.langchain.com/`) und für `LANGSMITH_ENDPOINT` den EU-API-Endpoint setzen: `https://eu.api.smith.langchain.com`
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -440,10 +440,10 @@ from google.colab import userdata
 os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
 # LangSmith (PFLICHT für Challenge!)
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "agenten-challenge-your-name"
-os.environ["LANGCHAIN_API_KEY"] = userdata.get('LANGSMITH_API_KEY')
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "agenten-challenge-your-name"
+os.environ["LANGSMITH_API_KEY"] = userdata.get('LANGSMITH_API_KEY')
+os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
 ## 3 LangGraph Basis-Template
@@ -588,7 +588,7 @@ graph = workflow.compile(
 | Sessions nicht persistent | Kein Checkpointer | `checkpointer=SqliteSaver(...)` |
 | Graph stoppt nicht bei HITL | Falscher Interrupt | `interrupt_before=["node_name"]` |
 | Supervisor routet nicht | Conditional Edge fehlt | `add_conditional_edges()` verwenden |
-| LangSmith zeigt nichts | Tracing nicht aktiviert oder falscher Endpoint | `LANGCHAIN_TRACING_V2="true"` und `LANGCHAIN_ENDPOINT="https://eu.api.smith.langchain.com"` setzen |
+| LangSmith zeigt nichts | Tracing nicht aktiviert oder falscher Endpoint | `LANGSMITH_TRACING="true"` und `LANGSMITH_ENDPOINT="https://eu.api.smith.langchain.com"` setzen |
 
 ---
 

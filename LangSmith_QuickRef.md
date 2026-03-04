@@ -11,8 +11,8 @@
 
 ```python
 import os
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "Agenten-Dev"
 
 # Ab jetzt werden ALLE LangChain-Operationen automatisch getrackt
 ```
@@ -23,7 +23,7 @@ os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
 
 ```python
 ENVIRONMENT = "dev"  # "dev", "staging", "prod"
-os.environ["LANGCHAIN_PROJECT"] = f"Agenten-{ENVIRONMENT}"
+os.environ["LANGSMITH_PROJECT"] = f"Agenten-{ENVIRONMENT}"
 ```
 
 ---
@@ -113,7 +113,7 @@ response = agent.invoke(
 
 | # | Problem | Lösung |
 |---|---------|--------|
-| **1** | Tracing nicht aktiviert | `os.environ["LANGCHAIN_TRACING_V2"] = "true"` |
+| **1** | Tracing nicht aktiviert | `os.environ["LANGSMITH_TRACING"] = "true"` |
 | **2** | Production ohne Dataset-Tests | Evaluiere mit `evaluate()` vor Deployment |
 | **3** | Kein Feedback gesammelt | `client.create_feedback(run_id=..., score=...)` |
 | **4** | Dev + Prod im gleichen Projekt | Separate Projekte: `Agenten-dev`, `Agenten-prod` |
@@ -146,7 +146,7 @@ assert results["accuracy"] >= 0.8  # Regression-Test
 ```python
 # ✅ API-Keys aus Environment
 from genai_lib.utilities import setup_api_keys
-setup_api_keys(['LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['LANGSMITH_API_KEY'], create_globals=False)
 
 # ✅ PII vor Tracing filtern
 import re

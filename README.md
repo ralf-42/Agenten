@@ -26,8 +26,8 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 00_admin/       # Kursplanung (Kursplan v4.4, Trainer-Steuerung)
-├── 01_notebook/    # Jupyter Notebooks (M00-M29, Referenz-Tutorials)
+├── 00_admin/       # Kursplanung (Kursplan v4.5, Trainer-Steuerung)
+├── 01_notebook/    # Jupyter Notebooks (M00-M30, Referenz-Tutorials)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -41,12 +41,12 @@ Agenten/
 
 ### Kernframeworks
 - **LangChain** (1.0+) - Orchestrierung, Chains, Agents, RAG
-- **LangGraph** (0.3.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
-- **LangSmith** (0.4.x) - Tracing, Debugging, Evaluations
+- **LangGraph** (1.0.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
+- **LangSmith** (0.x+) - Tracing, Debugging, Evaluations
 - **OpenAI API** (>=1.0.0) - GPT-4o-mini, Embeddings
 
 ### Spezialisierte Tools
-- **ChromaDB** (>=0.5.0) - Vektordatenbank für RAG-Systeme
+- **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`
   - `multimodal_rag.py` - Multimodales RAG-System
@@ -96,24 +96,18 @@ Agenten/
 | M19 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
 | M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), Vergleich |
 
-### Erweiterte Module (M21-M29, optional)
-| Modul | Thema | Priorität |
-|-------|-------|-----------|
-| M21 | LangSmith Deep Dive | 🟡 Should |
-| M22 | Advanced RAG | 🟡 Should |
-| M23 | Gradio UI für Agenten | 🔴 Nice-to-have |
-| M24 | MCP Integration | 🔴 Nice-to-have |
-| M25 | Agent Security & Best Practices | 🔴 Nice-to-have |
-| M26 | Agent Evaluation & Testing | 🟡 Should |
-| M27 | Production Deployment | 🔴 Nice-to-have |
-| M28 | Hierarchical Agent Teams | 🔴 Nice-to-have |
-| M29 | Collaborative Multi-Agent | 🔴 Nice-to-have |
-
-### Referenz-Tutorials (Selbststudium)
-| Tutorial | Beschreibung |
-|----------|-------------|
-| M04a_REFERENZ | LangChain 101 – Vollständiges Tutorial (7 Kapitel) |
-| M04b_REFERENZ | LangGraph 101 – Vollständiges Tutorial (9 Kapitel) |
+### Erweiterte Module (M22-M30, optional)
+| Modul | Thema                           | Priorität       |
+| ----- | ------------------------------- | --------------- |
+| M22   | Agentic RAG                      | 🟡 Empfohlen ✅ |
+| M23   | Agent Evaluation & Testing       | 🟡 Empfohlen |
+| M24   | Agent Security & Best Practices  | 🔵 Optional |
+| M25   | Advanced RAG – Pipeline-Patterns | 🔵 Optional ✅ |
+| M26   | Gradio UI für Agenten            | 🔵 Optional |
+| M27   | MCP Integration                  | 🔵 Optional |
+| M28   | Production Deployment            | 🔵 Optional |
+| M29   | Hierarchical Agent Teams         | 🔵 Optional |
+| M30   | Collaborative Multi-Agent        | 🔵 Optional ✅ |
 
 ## 🔑 Voraussetzungen
 
@@ -174,5 +168,5 @@ Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](ht
 
 ---
 
-**Letzte Aktualisierung:** Februar 2026
-**Version:** 3.0 (angepasst an Kursplan v4.4)
+**Letzte Aktualisierung:** März 2026
+**Version:** 3.2 (Framework-Versionen aktualisiert, Kursplan v4.5, erweiterte Module M22-M30)

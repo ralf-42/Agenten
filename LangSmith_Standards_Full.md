@@ -47,11 +47,11 @@ Dieses Dokument definiert die **Standard-Patterns** für LangSmith, die bei der 
 # In Google Colab: Secrets verwenden (empfohlen)
 from genai_lib.utilities import setup_api_keys
 
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 # Alternativ: Direkt setzen (nicht empfohlen für Production)
 import os
-os.environ["LANGCHAIN_API_KEY"] = "lsv2_pt_..."  # Von smith.langchain.com
+os.environ["LANGSMITH_API_KEY"] = "lsv2_pt_..."  # Von smith.langchain.com
 ```
 
 #### **Tracing aktivieren**
@@ -60,16 +60,16 @@ os.environ["LANGCHAIN_API_KEY"] = "lsv2_pt_..."  # Von smith.langchain.com
 import os
 
 # LangSmith Tracing einschalten
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGSMITH_TRACING"] = "true"
 
 # Projektname definieren (organisiert Traces)
-os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
+os.environ["LANGSMITH_PROJECT"] = "Agenten-Dev"
 
 # EU-Endpoint (PFLICHT für EU-Workspace)
-os.environ["LANGCHAIN_ENDPOINT"] = "https://eu.api.smith.langchain.com"
+os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 print("✅ LangSmith Tracing aktiviert!")
-print(f"📊 Projekt: {os.environ['LANGCHAIN_PROJECT']}")
+print(f"📊 Projekt: {os.environ['LANGSMITH_PROJECT']}")
 ```
 
 #### **Automatisches Tracing**
@@ -120,7 +120,7 @@ import os
 ENVIRONMENT = "dev"  # "dev", "staging", "prod"
 PROJECT_NAME = f"Agenten-{ENVIRONMENT}"
 
-os.environ["LANGCHAIN_PROJECT"] = PROJECT_NAME
+os.environ["LANGSMITH_PROJECT"] = PROJECT_NAME
 
 # Optional: Weitere Metadata
 os.environ["LANGCHAIN_SESSION_ID"] = f"user-123-session-456"
@@ -551,8 +551,8 @@ response = agent.invoke({"messages": [...]})
 ```python
 # ✅ Tracing IMMER aktivieren (auch in Development)
 import os
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "Agenten-Dev"
 
 llm = init_chat_model("gpt-4o-mini", model_provider="openai")
 agent = create_agent(model=llm, tools=[...])
@@ -667,7 +667,7 @@ client.create_feedback(
 **Problem:**
 ```python
 # ❌ Development UND Production im gleichen Projekt
-os.environ["LANGCHAIN_PROJECT"] = "Agenten"  # Für alles!
+os.environ["LANGSMITH_PROJECT"] = "Agenten"  # Für alles!
 
 # Development-Experimente
 experiment_agent.invoke(...)  # → Projekt "Agenten"
@@ -684,7 +684,7 @@ production_agent.invoke(...)  # → Projekt "Agenten"
 import os
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")  # dev, staging, prod
-os.environ["LANGCHAIN_PROJECT"] = f"Agenten-{ENVIRONMENT}"
+os.environ["LANGSMITH_PROJECT"] = f"Agenten-{ENVIRONMENT}"
 
 # Development: Projekt "Agenten-dev"
 # Production: Projekt "Agenten-prod"
@@ -715,8 +715,8 @@ for request in production_requests:
 ```python
 # ✅ Cost-Monitoring aktivieren + Budget-Alerts
 import os
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Agenten-Prod"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "Agenten-Prod"
 
 # LangSmith trackt automatisch Token-Usage und Kosten!
 llm = init_chat_model("gpt-4", model_provider="openai")
@@ -915,18 +915,18 @@ def my_agent(inputs: dict) -> dict:
 **Problem:**
 ```python
 # ❌ NIEMALS: API-Keys im Code hardcoden
-os.environ["LANGCHAIN_API_KEY"] = "lsv2_pt_abc123..."  # Sicherheitslücke!
+os.environ["LANGSMITH_API_KEY"] = "lsv2_pt_abc123..."  # Sicherheitslücke!
 ```
 
 **Lösung:**
 ```python
 # ✅ Google Colab: Secrets verwenden
 from google.colab import userdata
-os.environ["LANGCHAIN_API_KEY"] = userdata.get("LANGCHAIN_API_KEY")
+os.environ["LANGSMITH_API_KEY"] = userdata.get("LANGSMITH_API_KEY")
 
 # ✅ Projekt-Utility (empfohlen)
 from genai_lib.utilities import setup_api_keys
-setup_api_keys(['LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['LANGSMITH_API_KEY'], create_globals=False)
 
 # ✅ Lokale Entwicklung: .env-Datei
 from dotenv import load_dotenv
@@ -1089,10 +1089,10 @@ Projekt-Struktur:
 from genai_lib.utilities import setup_api_keys
 import os
 
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Agenten-Dev"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "Agenten-Dev"
 
 # 2. Agent entwickeln (automatisches Tracing)
 from langchain.chat_models import init_chat_model
@@ -1141,8 +1141,8 @@ client.create_feedback(
 ```python
 # Tracing (automatisch, kein Import nötig)
 import os
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "project-name"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "project-name"
 
 # Client für API-Zugriff
 from langsmith import Client

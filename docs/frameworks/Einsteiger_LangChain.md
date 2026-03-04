@@ -469,6 +469,35 @@ secure_agent = create_agent(
 
 In Notebooks kann hier didaktisch gezeigt werden, wie der Agent vor einer heiklen Tool‑Ausführung explizit um Bestätigung fragt.
 
+**Kontext-Management bei langen Konversationen**
+
+Für lange Sessions gibt es zwei komplementäre Ansätze:
+
+```python
+from langchain.agents.middleware import SummarizationMiddleware
+
+# Ansatz 1: SummarizationMiddleware (provider-unabhängig)
+agent_summarize = create_agent(
+    model=llm,
+    tools=tools,
+    middleware=[SummarizationMiddleware(model=llm)]
+    # Fasst Konversation automatisch zusammen, wenn Token-Limit überschritten
+)
+
+# Ansatz 2: OpenAI Server-Side Compaction (nur OpenAI, langchain-openai 1.1.10)
+llm_compact = init_chat_model(
+    "openai:gpt-4o-mini",
+    context_management=[{"type": "compaction", "compact_threshold": 10_000}]
+)
+agent_compact = create_agent(model=llm_compact, tools=tools)
+# → OpenAI komprimiert serverseitig, kein Middleware-Layer nötig
+```
+
+| Ansatz | Provider | Wann verwenden? |
+|--------|----------|-----------------|
+| `SummarizationMiddleware` | Alle | Provider-unabhängig, mehr Kontrolle |
+| `context_management` | Nur OpenAI | Einfachste Lösung für OpenAI-Apps |
+
 ---
 
 ## 9 Einheitliche Content-Blöcke für multimodale Eingaben

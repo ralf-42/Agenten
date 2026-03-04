@@ -84,7 +84,7 @@ flowchart TB
 1. In Google Colab: Schlüssel-Symbol 🔑 in der linken Seitenleiste
 2. Neue Secrets hinzufügen:
    - `OPENAI_API_KEY`: Eigener OpenAI-Key
-   - `LANGCHAIN_API_KEY`: LangSmith-Key (beginnt mit `lsv2_pt_...`)
+   - `LANGSMITH_API_KEY`: LangSmith-Key (beginnt mit `lsv2_pt_...`)
    - Optional: `HF_TOKEN` für Hugging Face
 
 **Schritt 2: Umgebung einrichten (Standard-Setup)**
@@ -99,14 +99,14 @@ flowchart TB
 import os
 
 # ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"]    = "M02-LangSmith-Setup"  # Konvention: "M##-Thema"
-os.environ["LANGCHAIN_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"]    = "M02-LangSmith-Setup"  # Konvention: "M##-Thema"
+os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
 # Erst danach: genai_lib und weitere Imports
 from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint
 
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 print()
 check_environment()
 print()
@@ -303,7 +303,7 @@ Datasets ermöglichen wiederholbare Tests mit definierten Inputs und erwarteten 
 ```python
 from langsmith import Client
 
-client = Client(api_url=os.environ["LANGCHAIN_ENDPOINT"])
+client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 
 # Dataset mit Beispielen
 examples = [
@@ -367,7 +367,7 @@ In der LangSmith-UI kann jeder Run bewertet werden:
 ```python
 from langsmith import Client
 
-client = Client(api_url=os.environ["LANGCHAIN_ENDPOINT"])
+client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 
 # Nach Agent-Ausführung
 run_id = response["__run"].id  # Run-ID aus Response
@@ -462,10 +462,10 @@ result = compiled_graph.invoke(
 
 ```python
 # ✅ Modulname in der Setup-Cell – vor allen Imports!
-os.environ["LANGCHAIN_PROJECT"] = "M06-Structured-Output"
+os.environ["LANGSMITH_PROJECT"] = "M06-Structured-Output"
 ```
 
-**Wichtig:** `LANGCHAIN_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
+**Wichtig:** `LANGSMITH_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
 
 **Standard-Setup im Notebook-Header**
 ```python
@@ -475,14 +475,14 @@ os.environ["LANGCHAIN_PROJECT"] = "M06-Structured-Output"
 import os
 
 # ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"]    = "M06-Structured-Output"  # Modulname anpassen
-os.environ["LANGCHAIN_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"]    = "M06-Structured-Output"  # Modulname anpassen
+os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
 # Erst danach: genai_lib und weitere Imports
 from genai_lib.utilities import setup_api_keys, check_environment, get_ipinfo
 
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 check_environment()
 get_ipinfo()
 ```
@@ -491,7 +491,7 @@ get_ipinfo()
 ```python
 # LangSmith: Aktives Projekt für diesen Abschnitt
 import os
-print(f"📊 LangSmith-Projekt: {os.environ['LANGCHAIN_PROJECT']}")
+print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
 run_cfg = {"run_name": "M06_Kap6_StructuredTrace", "tags": ["M06", "structured-output"]}
@@ -704,7 +704,7 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 ```python
 # Temporär deaktivieren
-os.environ["LANGCHAIN_TRACING_V2"] = "false"
+os.environ["LANGSMITH_TRACING"] = "false"
 
 # Für einzelne Funktionen
 from langsmith import traceable
@@ -730,7 +730,7 @@ def custom_function(input_data):
 
 ```python
 # Setup prüft automatisch, ob Keys vorhanden sind
-setup_api_keys(['OPENAI_API_KEY', 'LANGCHAIN_API_KEY'], create_globals=False)
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 # Falls Key fehlt: Klare Fehlermeldung mit Hinweis auf Colab Secrets
 ```

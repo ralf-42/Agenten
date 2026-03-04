@@ -2,13 +2,9 @@
 
 ## 📚 Modulstruktur
 
-Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (21 Kern-Module M00-M20, 9 erweiterte Module M21-M29, 2 Referenz-Tutorials, 1 Quick-Template).
+Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M00-M21, 9 erweiterte Module M22-M30, 2 Referenz-Tutorials).
 
-**Modul M21 existiert in zwei Varianten:**
-- `M21_LangSmith_Evaluations_Basics.ipynb` – **Kurs-Variante** (Tag 4, fokussiert auf Eval-Dataset + Regression-Check)
-- `M21_LangSmith_Deep_Dive.ipynb` – **Optionale Vertiefung** (Tracing, Datasets, A/B-Testing)
-
-**Hinweis Kurs-Reihenfolge:** Die Modulnummern M00-M29 folgen der inhaltlichen Systematik, nicht der Kurs-Reihenfolge. An Tag 4 wird M21 (Evaluations) vorgezogen, M15/M16 folgen erst an Tag 5. Siehe Kursplan v4.4 für die genaue Tagesplanung.
+**Hinweis Kurs-Reihenfolge:** An Tag 4 wird M21 (LangSmith Evaluations Basics) vorgezogen, M15–M20 folgen erst an Tag 5. Siehe Kursplan v4.5 für die genaue Tagesplanung.
 
 ---
 
@@ -18,10 +14,10 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys | ✅ Template |
-| M01 | Was sind KI-Agenten? | Definition, ReAct-Prinzip, Agent-Typen | ✅ Template |
-| M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools | ✅ Template |
-| M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns | ✅ Template |
+| M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys | ✅ Vollständig |
+| M01 | Was sind KI-Agenten? | Definition, ReAct-Prinzip, Agent-Typen | ✅ Vollständig |
+| M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools | ✅ Vollständig |
+| M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns | ✅ Vollständig |
 
 **Kursplan:** Tag 1 - Agent-Grundlagen & erste Tools
 
@@ -31,10 +27,10 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M04 | Prompt Engineering für Agenten | ChatPromptTemplate, Few-Shot Examples | ✅ Template |
-| M05 | LCEL Chains | Pipe-Operator, Runnable Interface | ✅ Template |
-| M06 | Structured Output | Pydantic, with_structured_output() | ✅ Template |
-| M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Debugging | ✅ Template |
+| M04 | Prompt Engineering für Agenten | ChatPromptTemplate, Few-Shot Examples | ✅ Vollständig |
+| M05 | LCEL Chains | Pipe-Operator, Runnable Interface | ✅ Vollständig |
+| M06 | Structured Output | Pydantic, with_structured_output() | ✅ Vollständig |
+| M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Debugging | ✅ Vollständig |
 
 **Kursplan:** Tag 2 - Chains, Structured Output & Agent-Vertiefung
 
@@ -44,10 +40,10 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M08 | RAG-Konzepte & Embeddings | RAG-Architektur, Embeddings, Chunking | ✅ Template |
-| M09 | ChromaDB & Indexing | ChromaDB Setup, Dokumente indexieren | ✅ Template |
-| M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, RAG-Chain | ✅ Template |
-| M11 | RAG-Agent | RAG als Tool, RAG-Agent bauen | ✅ Template |
+| M08 | RAG-Konzepte & Embeddings | RAG-Architektur, Embeddings, Chunking | ✅ Vollständig |
+| M09 | ChromaDB & Indexing | ChromaDB Setup, Dokumente indexieren | ✅ Vollständig |
+| M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, RAG-Chain | ✅ Vollständig |
+| M11 | RAG-Agent | RAG als Tool, RAG-Agent bauen | ✅ Vollständig |
 
 **Kursplan:** Tag 3 - Gedächtnis & RAG
 
@@ -57,10 +53,10 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines | ✅ Template |
-| M13 | StateGraph Basics | StateGraph, Nodes, Edges | ✅ Template |
-| M14 | Conditional Routing & Tool-Loop | Conditional Edges, Routing-Funktion | ✅ Template |
-| M21 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Template |
+| M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines | ✅ Vollständig |
+| M13 | StateGraph Basics | StateGraph, Nodes, Edges | ✅ Vollständig |
+| M14 | Conditional Routing & Tool-Loop | Conditional Edges, Routing-Funktion | ✅ Vollständig |
+| M21 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Vollständig |
 
 **Kursplan:** Tag 4 - Kontrolle, Routing & Security
 
@@ -70,38 +66,41 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Template |
-| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Template |
-| M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Template |
-| M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ **Vollständig** (aus M10c) |
-| M19 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Template |
-| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Template |
+| M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Vollständig |
+| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Vollständig |
+| M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Vollständig |
+| M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ Vollständig |
+| M19 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Vollständig |
+| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
 
 **Kursplan:** Tag 5 - HITL, Multi-Agent-Projekt & Ausblick
 
 ---
 
-## 📊 Erweiterte Module (M21-M29) - Optional
+## 📊 Erweiterte Module (M22-M30) - Optional
 
 | Modul | Titel | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M21 | LangSmith Deep Dive | Tracing, Datasets, A/B-Testing (optionale Vertiefung zu M21 Evaluations Basics) | 🟡 SHOULD |
-| M22 | Advanced RAG | Self-RAG, Corrective RAG, Adaptive RAG | ✅ **Vollständig** |
-| M23 | Gradio UI für Agenten | Chat-Interface, Tool-Visualisierung | 🔴 NICE-TO-HAVE |
-| M24 | MCP Integration | Model Context Protocol, Custom Tools | 🔴 NICE-TO-HAVE |
-| M25 | Agent Security & Best Practices | Tool-Whitelisting, PII-Redaktion | 🔴 NICE-TO-HAVE |
-| M26 | Agent Evaluation & Testing | Metriken, Benchmarking | 🟡 SHOULD |
-| M27 | Production Deployment | Docker, LangServe, Monitoring | 🔴 NICE-TO-HAVE |
-| M28 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔴 NICE-TO-HAVE |
-| M29 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | ✅ **Vollständig** (aus M10c) |
+| M22 | Agentic RAG | RAG als Tool, Multi-Hop, Adaptive Retrieval | 🟡 Empfohlen ✅ Vollständig |
+| M23 | Agent Evaluation & Testing | Metriken, Benchmarking, LangSmith Eval, RAGAS | 🟡 Empfohlen |
+| M24 | Agent Security & Best Practices | Tool-Whitelisting, PII-Redaktion | 🔵 Optional |
+| M25 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, CRAG | 🔵 Optional ⭐ Vertiefung ✅ Vollständig |
+| M26 | Gradio UI für Agenten | Chat-Interface, Tool-Visualisierung | 🔵 Optional |
+| M27 | MCP Integration | Model Context Protocol, Custom Tools | 🔵 Optional |
+| M28 | Production Deployment | Docker, LangServe, Monitoring | 🔵 Optional |
+| M29 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔵 Optional |
+| M30 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | 🔵 Optional ✅ Vollständig |
+
+> **Pflicht-Lernpfad RAG:** M08–M11 → M22 (Agentic RAG)
+> **M25** nur für Teilnehmer, die RAG-Qualitäts-Patterns vertiefen möchten.
 
 **Empfohlene Reihenfolge (optional, bei Restzeit):**
-1. M22 - Advanced RAG
-2. M23 - Gradio UI für Agenten
-3. M24 - MCP Integration
-4. M25 - Agent Security & Best Practices
-5. M26 - Agent Evaluation & Testing
-6. M27 - Production Deployment
+1. M22 - Agentic RAG 🟡
+2. M23 - Agent Evaluation & Testing 🟡
+3. M24 - Agent Security & Best Practices 🔵
+4. M26 - Gradio UI für Agenten 🔵
+5. M27 - MCP Integration 🔵
+6. M25 - Advanced RAG Pipeline-Patterns 🔵 ⭐ Vertiefung
 
 ---
 
@@ -158,7 +157,7 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 ### **Für Trainer:**
 1. Kern-Module M00-M20 für 5-Tage-Kurs verwenden
 2. Referenz-Tutorials M04a/M04b als Bonus-Material
-3. Erweiterte Module M21-M29 für Vertiefung
+3. Erweiterte Module M22-M30 für Vertiefung
 
 ### **Für Teilnehmer:**
 1. Notebooks gemäß Kursplan durcharbeiten (Tag 1: M00-M03, Tag 2: M04-M07, Tag 3: M08-M11, Tag 4: M12-M14 + M21, Tag 5: M15-M20)
@@ -167,7 +166,7 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 ### **Für Selbststudium:**
 1. Start mit M00_Kurs_Intro
-2. Alle Module M00-M29 durcharbeiten
+2. Alle Module M00-M30 durcharbeiten
 3. Referenz-Tutorials für vollständige Erklärungen
 
 ---
@@ -176,24 +175,24 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 | Kategorie | Anzahl | Status |
 |-----------|--------|--------|
-| **Kern-Module (M00-M20 + M21 Eval)** | 22 | 3 vollständig, 19 Templates |
-| **Erweiterte Module (M21 Deep Dive, M22-M29)** | 9 | 2 vollständig, 7 Templates |
+| **Kern-Module (M00-M21)** | 22 | 22 vollständig |
+| **Erweiterte Module (M22-M30)** | 9 | 3 vollständig, 6 Templates |
 | **Referenz-Tutorials** | 2 | 2 vollständig |
-| **GESAMT** | 33 | 7 vollständig, 26 Templates |
+| **GESAMT** | 33 | 27 vollständig, 6 Templates |
 
-**Vollständig:** M04a/M04b (Referenz), M18, M22, M29
-**Templates:** Struktur vorhanden, Inhalt muss ergänzt werden
+**Vollständig:** M00–M22, M25, M30, M04a/M04b (Referenz)
+**Templates (Inhalt ausstehend):** M23, M24, M26, M27, M28, M29
 
 ---
 
 ## 🔗 Weitere Ressourcen
 
-- **Kursplan:** `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.4.md`
+- **Kursplan:** `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.4.md` (v4.5)
 - **Projekt-Doku:** `../CLAUDE.md`, `../AGENTS.md`
 - **Standards:** `../LangChain_Best_Practices.md`, `../LangGraph_Best_Practices.md`
 - **Notebook Template:** `../Notebook_Template_Guide.md`
 
 ---
 
-**Version:** 1.1 (angepasst an Kursplan v4.4)
-**Stand:** Februar 2026
+**Version:** 1.3 (Framework-Versionen aktualisiert, Status-Übersicht korrigiert, M22-M30 konsolidiert)
+**Stand:** März 2026

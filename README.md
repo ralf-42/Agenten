@@ -100,14 +100,14 @@ Agenten/
 | Modul | Thema | Priorität |
 |-------|-------|-----------|
 | M21 | LangSmith Deep Dive | 🟡 Should |
-| M22 | Agent Evaluation & Testing | 🟡 Should |
-| M23 | Hierarchical Agent Teams | 🔴 Nice-to-have |
-| M24 | Collaborative Multi-Agent | 🔴 Nice-to-have |
+| M22 | Advanced RAG | 🟡 Should |
+| M23 | Gradio UI für Agenten | 🔴 Nice-to-have |
+| M24 | MCP Integration | 🔴 Nice-to-have |
 | M25 | Agent Security & Best Practices | 🔴 Nice-to-have |
-| M26 | Production Deployment | 🔴 Nice-to-have |
-| M27 | MCP Integration | 🔴 Nice-to-have |
-| M28 | Gradio UI für Agenten | 🔴 Nice-to-have |
-| M29 | Advanced RAG | 🔴 Nice-to-have |
+| M26 | Agent Evaluation & Testing | 🟡 Should |
+| M27 | Production Deployment | 🔴 Nice-to-have |
+| M28 | Hierarchical Agent Teams | 🔴 Nice-to-have |
+| M29 | Collaborative Multi-Agent | 🔴 Nice-to-have |
 
 ### Referenz-Tutorials (Selbststudium)
 | Tutorial | Beschreibung |

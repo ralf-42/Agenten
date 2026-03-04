@@ -86,14 +86,22 @@ Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den 5-Tage-Kurs "KI-Ag
 | Modul | Titel | Inhalt | Priorität |
 |-------|-------|--------|-----------|
 | M21 | LangSmith Deep Dive | Tracing, Datasets, A/B-Testing (optionale Vertiefung zu M21 Evaluations Basics) | 🟡 SHOULD |
-| M22 | Agent Evaluation & Testing | Metriken, Benchmarking | 🟡 SHOULD |
-| M23 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔴 NICE-TO-HAVE |
-| M24 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | ✅ **Vollständig** (aus M10c) |
+| M22 | Advanced RAG | Self-RAG, Corrective RAG, Adaptive RAG | ✅ **Vollständig** |
+| M23 | Gradio UI für Agenten | Chat-Interface, Tool-Visualisierung | 🔴 NICE-TO-HAVE |
+| M24 | MCP Integration | Model Context Protocol, Custom Tools | 🔴 NICE-TO-HAVE |
 | M25 | Agent Security & Best Practices | Tool-Whitelisting, PII-Redaktion | 🔴 NICE-TO-HAVE |
-| M26 | Production Deployment | Docker, LangServe, Monitoring | 🔴 NICE-TO-HAVE |
-| M27 | MCP Integration | Model Context Protocol, Custom Tools | 🔴 NICE-TO-HAVE |
-| M28 | Gradio UI für Agenten | Chat-Interface, Tool-Visualisierung | 🔴 NICE-TO-HAVE |
-| M29 | Advanced RAG | Self-RAG, Corrective RAG, Adaptive RAG | ✅ **Vollständig** |
+| M26 | Agent Evaluation & Testing | Metriken, Benchmarking | 🟡 SHOULD |
+| M27 | Production Deployment | Docker, LangServe, Monitoring | 🔴 NICE-TO-HAVE |
+| M28 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔴 NICE-TO-HAVE |
+| M29 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | ✅ **Vollständig** (aus M10c) |
+
+**Empfohlene Reihenfolge (optional, bei Restzeit):**
+1. M22 - Advanced RAG
+2. M23 - Gradio UI für Agenten
+3. M24 - MCP Integration
+4. M25 - Agent Security & Best Practices
+5. M26 - Agent Evaluation & Testing
+6. M27 - Production Deployment
 
 ---
 
@@ -119,9 +127,9 @@ Folgende Notebooks wurden in `_misc/` verschoben:
 
 - `M06_Chat_Memory.ipynb` - Inhalte in M15 integriert
 - `M06_Chat_Memory_LangGraph.ipynb` - Inhalte in M15 integriert
-- `M08b_Advanced_RAG_LangGraph.ipynb` - Zu M29 umbenannt
+- `M08b_Advanced_RAG_LangGraph.ipynb` - Zu M22 umbenannt
 - `M10b_Agenten_LangGraph.ipynb` - Inhalte in M13/M14 referenziert
-- `M10c_Multi_Agent_Collaboration.ipynb` - Zu M18/M24 kopiert
+- `M10c_Multi_Agent_Collaboration.ipynb` - Zu M18/M29 kopiert
 
 ---
 
@@ -173,7 +181,7 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 | **Referenz-Tutorials** | 2 | 2 vollständig |
 | **GESAMT** | 33 | 7 vollständig, 26 Templates |
 
-**Vollständig:** M04a/M04b (Referenz), M18, M24, M29
+**Vollständig:** M04a/M04b (Referenz), M18, M22, M29
 **Templates:** Struktur vorhanden, Inhalt muss ergänzt werden
 
 ---

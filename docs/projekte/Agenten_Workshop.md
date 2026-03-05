@@ -66,12 +66,12 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 | Kapitel 1: StateGraph Basics | M12, M13 | Warum LangGraph? / StateGraph Basics |
 | Kapitel 2: Conditional Routing | M14 | Conditional Routing & Tool-Loop |
 | Kapitel 3: Checkpointing & Memory | M15 | Checkpointing & Sessions |
-| Kapitel 4: Multi-Agent System | M17, M18 | Multi-Agent Patterns / Supervisor Pattern |
-| Kapitel 5: Human-in-the-Loop | M16 | Human-in-the-Loop |
-| Kapitel 6: Subgraphs & Tool Nodes | M18, M29 | Supervisor Pattern / Hierarchical Agent Teams |
+| Kapitel 4: Multi-Agent System | M18, M19 | Multi-Agent Patterns / Supervisor Pattern |
+| Kapitel 5: Human-in-the-Loop | M17 | Human-in-the-Loop |
+| Kapitel 6: Subgraphs & Tool Nodes | M19, M29 | Supervisor Pattern / Hierarchical Agent Teams |
 | Kapitel 7: Production Deployment | M26, M28 | Gradio UI / Production Deployment |
 
-> **Hinweis Reihenfolge:** Im Kurs kommt M16 (HITL) vor M17/M18 (Multi-Agent). Im Workshop wird HITL bewusst nach dem Multi-Agent-System eingeführt, um es in den bereits aufgebauten Supervisor-Graph zu integrieren.
+> **Hinweis Reihenfolge:** Im Kurs kommt M17 (HITL) vor M18/M19 (Multi-Agent). Im Workshop wird HITL bewusst nach dem Multi-Agent-System eingeführt, um es in den bereits aufgebauten Supervisor-Graph zu integrieren.
 
 ---
 
@@ -339,7 +339,7 @@ def show_session_history(thread_id: str):
 
 ## 7 Kapitel 4: Multi-Agent System (Supervisor)
 
-> 📚 **Kursmodul:** M17 – Multi-Agent Patterns | M18 – Supervisor Pattern
+> 📚 **Kursmodul:** M18 – Multi-Agent Patterns | M19 – Supervisor Pattern
 
 **Lernziel:** Supervisor-Pattern mit Worker-Agents
 
@@ -423,7 +423,7 @@ workflow.add_conditional_edges(
 
 ## 8 Kapitel 5: Human-in-the-Loop
 
-> 📚 **Kursmodul:** M16 – Human-in-the-Loop
+> 📚 **Kursmodul:** M17 – Human-in-the-Loop
 
 **Lernziel:** Interrupt & Resume für kritische Entscheidungen
 
@@ -487,7 +487,7 @@ if approval == "yes":
 
 ## 9 Kapitel 6: Subgraphs & Tool Nodes
 
-> 📚 **Kursmodul:** M18 – Supervisor Pattern | M29 – Hierarchical Agent Teams (optional)
+> 📚 **Kursmodul:** M19 – Supervisor Pattern | M29 – Hierarchical Agent Teams (optional)
 
 **Lernziel:** Modulare Workflows mit Subgraphs
 

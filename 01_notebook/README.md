@@ -2,13 +2,13 @@
 
 ## 📚 Modulstruktur
 
-Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M00-M21, 9 erweiterte Module M22-M30).
+Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M00-M17, 9 erweiterte Module M22-M30).
 
-**Hinweis Reihenfolge:** M21 (LangSmith Evaluations Basics) gehört inhaltlich zu Block 4, M15–M20 zu Block 5. Siehe Kursplan v4.5 für Details.
+**Hinweis Reihenfolge:** M17 (LangSmith Evaluations Basics) gehört inhaltlich zu Block 4, M15–M16 zu Block 5. Siehe Kursplan v4.5 für Details.
 
 ---
 
-## 🎯 Kern-Module (M00-M21)
+## 🎯 Kern-Module (M00-M17)
 
 ### **BLOCK 1: Grundlagen** (M00-M03)
 
@@ -49,29 +49,29 @@ Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 
 ---
 
-### **BLOCK 4: Kontrolle, Routing & Security** (M12-M14, M21)
+### **BLOCK 4: Kontrolle, Routing & Security** (M12-M14, M17)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
 | M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines | ✅ Vollständig |
 | M13 | StateGraph Basics | StateGraph, Nodes, Edges | ✅ Vollständig |
 | M14 | Conditional Routing & Tool-Loop | Conditional Edges, Routing-Funktion | ✅ Vollständig |
-| M21 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Vollständig |
+| M17 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Vollständig |
 
 **Block 4** – Kontrolle, Routing & Security
 
 ---
 
-### **BLOCK 5: HITL & Multi-Agent-Projekt** (M15-M20)
+### **BLOCK 5: HITL & Multi-Agent-Projekt** (M15-M16)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
 | M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Vollständig |
-| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Vollständig |
-| M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Vollständig |
-| M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ Vollständig |
-| M19 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Vollständig |
-| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
+| M18 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Vollständig |
+| M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Vollständig |
+| M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ Vollständig |
+| M21 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Vollständig |
+| M16 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
 
 **Block 5** – HITL, Multi-Agent-Projekt & Ausblick
 

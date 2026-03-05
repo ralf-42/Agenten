@@ -77,23 +77,23 @@ Agenten/
 | M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
 | M11 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
 
-### Block 4: Kontrolle mit LangGraph (M12-M14, M21)
+### Block 4: Kontrolle mit LangGraph (M12-M14, M16)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
 | M13 | StateGraph Basics | State, Nodes, Edges, compile() |
 | M14 | Conditional Routing & Tool-Loop | Routing-Funktionen, Security-Basics |
-| M21 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
+| M16 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
 
-### Block 5: HITL & Multi-Agent-Projekt (M15-M20)
+### Block 5: HITL & Multi-Agent-Projekt (M15-M21)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M15 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
-| M16 | Human-in-the-Loop | interrupt(), Approval-Pattern |
-| M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
-| M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
-| M19 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
-| M20 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
+| M17 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M18 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
+| M19 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
+| M20 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
+| M21 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
 
 ### Erweiterte Module (M22-M30, optional)
 

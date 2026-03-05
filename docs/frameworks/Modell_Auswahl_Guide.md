@@ -146,8 +146,8 @@ flowchart TD
 | Module | Begründung |
 |--------|-----------|
 | M00–M11 | Grundlagen, Tool Use, RAG-Aufbau — Konzept > Qualität |
-| M13–M16 | StateGraph, Checkpointing, HITL — Struktur lernen |
-| M20 | Überblick Agent Builder — Vergleich, nicht Optimierung |
+| M13–M17 | StateGraph, Checkpointing, HITL — Struktur lernen |
+| M21 | Überblick Agent Builder — Vergleich, nicht Optimierung |
 | M26 | Gradio/UI-Fokus — Interaktionsdesign > Modellqualität |
 | M28 | Production Deployment — Kostenmodell verstehen |
 
@@ -156,8 +156,8 @@ flowchart TD
 | Modul | Supervisor / Router | Worker / Generator | Lernziel |
 |-------|--------------------|--------------------|-----------|
 | **M12** | Einführung Konzept | — | *Warum Routing-Knoten ein stärkeres Modell brauchen* |
-| **M17 / M18** | `o3` | `gpt-4o-mini` | Supervisor-Pattern: Modell-Rollentrennung live erleben |
-| **M21** | `o3` (Judge) | `gpt-4o-mini` (Candidate) | LLM-as-Judge: Warum der Judge stark sein muss |
+| **M18 / M19** | `o3` | `gpt-4o-mini` | Supervisor-Pattern: Modell-Rollentrennung live erleben |
+| **M16** | `o3` (Judge) | `gpt-4o-mini` (Candidate) | LLM-as-Judge: Warum der Judge stark sein muss |
 | **M22** | `o3` (Planner) | `gpt-5.1` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese |
 | **M23** | `o3` (Judge, optional Demo) | `gpt-4o-mini` (Candidate) | Evaluation: Baseline vs. starker Evaluator |
 | **M24** | `o3` (Policy/Risk) | `gpt-4o-mini` (Worker) | Security: robuste Gate-Entscheidungen |
@@ -166,7 +166,7 @@ flowchart TD
 
 ## 5 Code-Muster für Mixed-Model-Setup
 
-### Supervisor + Worker (M17 / M18)
+### Supervisor + Worker (M18 / M19)
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -181,7 +181,7 @@ worker_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.2)
 baseline_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 ```
 
-### Judge + Candidate (M21)
+### Judge + Candidate (M16)
 
 ```python
 # LLM-as-Judge: bewertet Antwortqualität
@@ -245,9 +245,9 @@ vergleich = {
 | Modul | Art der Verankerung |
 |-------|---------------------|
 | M12 | Markdown-Zelle: Konzept Modell-Rollentrennung + Link zu diesem Guide |
-| M17 | Code-Zelle: Supervisor `o3` vs. `gpt-4o-mini` Baseline-Vergleich |
-| M18 | Vergleichstabelle: Supervisor-Pattern mit Kennzahlen |
-| M21 | Code-Zelle: Judge `o3` — Warum der Evaluator stark sein muss |
+| M18 | Code-Zelle: Supervisor `o3` vs. `gpt-4o-mini` Baseline-Vergleich |
+| M19 | Vergleichstabelle: Supervisor-Pattern mit Kennzahlen |
+| M16 | Code-Zelle: Judge `o3` — Warum der Evaluator stark sein muss |
 | M22 | Code-Zelle: Planner `o3` + Generator `gpt-5.1` |
 | M23 | Modul-Mapping: `o3` als optionaler Judge in Evaluation-Pipeline |
 | M24 | Modul-Mapping: `o3` als Policy/Risk-Klassifizierer, `gpt-4o-mini` als Worker |

@@ -24,7 +24,7 @@ has_toc: true
 
 # 1 | Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M20 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
+Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
 
 ## 1 Lernziele
 
@@ -37,7 +37,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 2 Voraussetzungen
 
-- Abschluss der Module M00-M20 (Tag 1-5)
+- Abschluss der Module M00-M21 (Tag 1-5)
 - Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
@@ -133,8 +133,8 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 - M13 (StateGraph Basics)
 - M14 (Conditional Routing)
 - M15 (Checkpointing)
-- M16 (Human-in-the-Loop)
-- M18 (Supervisor-Pattern)
+- M17 (Human-in-the-Loop)
+- M19 (Supervisor-Pattern)
 
 **Erweiterte Module (optional):**
 - M24 (Agent Security & Best Practices)
@@ -177,7 +177,7 @@ graph TB
 - M05 (LCEL Chains)
 - M08-M11 (RAG)
 - M13-M14 (StateGraph, Routing)
-- M17-M18 (Multi-Agent Patterns)
+- M18-M19 (Multi-Agent Patterns)
 
 **Erweiterte Module (optional):**
 - M22 (Agentic RAG)
@@ -231,7 +231,7 @@ graph TB
 - M03 (Erste Agenten)
 - M06 (Structured Output)
 - M07 (Multi-Tool Agents)
-- M17 (Multi-Agent Patterns - Collaborative)
+- M18 (Multi-Agent Patterns - Collaborative)
 
 **Erweiterte Module (optional):**
 - M23 (Agent Evaluation & Testing)
@@ -279,7 +279,7 @@ graph LR
 - M02 (Tool Use)
 - M03 (Erste Agenten)
 - M13-M14 (StateGraph, Routing)
-- M15-M16 (Checkpointing, HITL)
+- M15-M17 (Checkpointing, HITL)
 
 **Erweiterte Module (optional):**
 - M24 (Agent Security & Best Practices)

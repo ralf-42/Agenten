@@ -129,12 +129,17 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 
 **Erwartete Module:**
 - M03 (Erste Agenten)
-- M10 (Agents)
+- M07 (Multi-Tool Agents)
 - M13 (StateGraph Basics)
 - M14 (Conditional Routing)
 - M15 (Checkpointing)
 - M16 (Human-in-the-Loop)
 - M18 (Supervisor-Pattern)
+
+**Erweiterte Module (optional):**
+- M24 (Agent Security & Best Practices)
+- M26 (Gradio UI für Agenten)
+- M28 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -173,6 +178,11 @@ graph TB
 - M08-M11 (RAG)
 - M13-M14 (StateGraph, Routing)
 - M17-M18 (Multi-Agent Patterns)
+
+**Erweiterte Module (optional):**
+- M22 (Agentic RAG)
+- M25 (Advanced RAG – Pipeline-Patterns)
+- M29 (Hierarchical Agent Teams)
 
 **Architektur:**
 ```mermaid
@@ -223,6 +233,9 @@ graph TB
 - M07 (Multi-Tool Agents)
 - M17 (Multi-Agent Patterns - Collaborative)
 
+**Erweiterte Module (optional):**
+- M23 (Agent Evaluation & Testing)
+
 **Architektur:**
 ```mermaid
 graph LR
@@ -267,6 +280,10 @@ graph LR
 - M03 (Erste Agenten)
 - M13-M14 (StateGraph, Routing)
 - M15-M16 (Checkpointing, HITL)
+
+**Erweiterte Module (optional):**
+- M24 (Agent Security & Best Practices)
+- M28 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -689,9 +706,9 @@ class SupportState(TypedDict):
 
 ---
 
-**Version:** 1.0     
-**Letzte Aktualisierung:** Januar 2026    
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
-**Basis:** Kursplan v4.3, Module M00-M20    
+**Version:** 1.1
+**Letzte Aktualisierung:** März 2026
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Basis:** Kursplan v4.5, Module M00-M30
 **Framework-Versionen:** LangChain 1.0+, LangGraph 1.0+, LangSmith 0.4+    
 

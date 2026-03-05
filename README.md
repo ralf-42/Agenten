@@ -1,8 +1,9 @@
 # Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)
-![Compliance](https://img.shields.io/badge/Compliance-100%25-success)
-![Last Audit|140](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)
+![LangChain 1.0+](https://img.shields.io/badge/LangChain-1.0%2B-brightgreen)
+![LangGraph 1.0.9](https://img.shields.io/badge/LangGraph-1.0.9-brightgreen)
+![LangSmith 0.4.41](https://img.shields.io/badge/LangSmith-0.4.41-brightgreen)
+![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--03--05-blue)
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.0+, LangGraph 1.0.9, LangSmith 0.4.41 und agentenbasierte KI-Architekturen.
 

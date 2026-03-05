@@ -10,7 +10,7 @@ has_toc: true
 # Modell-Auswahl Guide
 {: .no_toc }
 
-> **Welches Modell für welche Aufgabe?**
+> **Welches Modell für welche Aufgabe?**      
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
 ---
@@ -23,7 +23,7 @@ has_toc: true
 
 ---
 
-## 1 Verfügbare Modelle im Kurs
+## 1 Modelle im Kurs
 
 | Modell               | Stärke                                                     | Typischer Einsatz                              |
 | -------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
@@ -93,23 +93,28 @@ Premium-Modelle für strukturierte Datenextraktion aus klar definierten Texten b
 
 ## 3 Entscheidungsbaum
 
-```
-Welche Rolle hat der Knoten im Graphen?
-│
-├── Routing / Supervisor / Conditional Edge?
-│       └──▶ o3
-│
-├── LLM-as-Judge / Evaluator / Fact-Check?
-│       └──▶ o3
-│
-├── Worker: Code, Text, RAG-Antwort, strukturierte Ausgabe?
-│       └──▶ gpt-5.1
-│
-├── Grundlagen-Demo / Einzel-Tool / einfache Chain?
-│       └──▶ gpt-4o-mini
-│
-└── Unklarer Fall?
-        └──▶ Baseline mit gpt-4o-mini, dann gezielt upgraden
+```mermaid
+flowchart TD
+    START(["Welche Rolle hat\nder Knoten?"])
+
+    START --> R{"Routing · Supervisor\nConditional Edge?"}
+    START --> J{"LLM-as-Judge\nEvaluator · Fact-Check?"}
+    START --> W{"Worker: Code · Text\nRAG-Antwort · Structured Output?"}
+    START --> G{"Grundlagen-Demo\nEinzel-Tool · einfache Chain?"}
+    START --> U{"Unklarer Fall?"}
+
+    R -->|Ja| O3A["🔵 o3"]
+    J -->|Ja| O3B["🔵 o3"]
+    W -->|Ja| GP["🟢 gpt-5.1"]
+    G -->|Ja| MINI["⚪ gpt-4o-mini"]
+    U -->|Ja| BASE["⚪ gpt-4o-mini\nals Baseline starten\ndann gezielt upgraden"]
+
+    style O3A  fill:#1565C0,color:#fff
+    style O3B  fill:#1565C0,color:#fff
+    style GP   fill:#2E7D32,color:#fff
+    style MINI fill:#546E7A,color:#fff
+    style BASE fill:#546E7A,color:#fff
+    style START fill:#E65100,color:#fff
 ```
 
 ---
@@ -224,6 +229,6 @@ vergleich = {
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
-**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API
+**Version:** 1.0     
+**Stand:** März 2026      
+**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API     

@@ -28,7 +28,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 1 Lernziele
 
-- Integration von LangChain 1.0+ und LangGraph 0.3+ in einem Production-System
+- Integration von LangChain 1.0+ und LangGraph 1.0+ in einem Production-System
 - Implementierung komplexer Multi-Agent-Architekturen (Supervisor, Hierarchical, Collaborative)
 - Praktische Anwendung von State Machines und Conditional Routing
 - Human-in-the-Loop Workflows für kritische Entscheidungen
@@ -38,7 +38,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 ## 2 Voraussetzungen
 
 - Abschluss der Module M00-M20 (Tag 1-5)
-- Kenntnisse in LangChain 1.0+ und LangGraph 0.3+
+- Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
 - Verständnis von State Machines und Checkpointing
@@ -693,5 +693,5 @@ class SupportState(TypedDict):
 **Letzte Aktualisierung:** Januar 2026    
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
 **Basis:** Kursplan v4.3, Module M00-M20    
-**Framework-Versionen:** LangChain 1.0+, LangGraph 0.3+, LangSmith 0.4+    
+**Framework-Versionen:** LangChain 1.0+, LangGraph 1.0+, LangSmith 0.4+    
 

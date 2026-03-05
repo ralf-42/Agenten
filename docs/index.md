@@ -40,6 +40,6 @@ Agentische KI markiert damit einen technologischen Wendepunkt. Sie verändert ni
 
 ---
 
-**Version:** 1.0     
-**Stand:** Februar 2026     
-**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.     
+**Version:** 1.1
+**Stand:** März 2026
+**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.

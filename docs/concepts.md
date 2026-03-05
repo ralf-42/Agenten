@@ -6,7 +6,7 @@ has_children: true
 description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 ---
 
-# Konzepte
+# Konzepte  
 
 Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
 

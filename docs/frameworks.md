@@ -3,7 +3,7 @@ layout: default
 title: Frameworks
 nav_order: 3
 has_children: true
-description: "Einsteiger-Guides für LangChain, ChromaDB und Agent Builder"
+description: "Einsteiger-Guides für LangChain, LangGraph, LangSmith, ChromaDB und Agent Builder"
 ---
 
 # Frameworks
@@ -20,6 +20,20 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Chains und LCEL (LangChain Expression Language)
   - RAG-Systeme mit LangChain
 
+- **[LangGraph Einsteiger](frameworks/Einsteiger_LangGraph.html)** - Multi-Agent-Systeme und zustandsbasierte Workflows
+  - StateGraph: Nodes, Edges und State
+  - Conditional Routing und Entscheidungslogik
+  - Checkpointing und Session-Management
+  - Human-in-the-Loop und Supervisor-Pattern
+
+## Monitoring & Debugging
+
+- **[LangSmith Einsteiger](frameworks/Einsteiger_LangSmith.html)** - Tracing, Debugging und Evaluation von Agenten
+  - Traces verstehen und auswerten
+  - Runs, Feedback und Annotationen
+  - Eval-Datasets und Regression-Tests
+  - LangSmith in der Entwicklungs-Pipeline
+
 ## Vektordatenbanken
 
 - **[ChromaDB Einsteiger](frameworks/Einsteiger_ChromaDB.html)** - Vektordatenbank für semantische Suche und RAG-Systeme
@@ -27,6 +41,12 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Similarity Search und Filtering
   - Collections und Metadaten
   - Integration mit LangChain
+
+## Projektspezifische Bibliotheken
+
+- **[GenAI_Lib Einsteiger](frameworks/genai_lib/)** - Projektspezifische Python-Bibliothek für Kursanwendungen
+  - **utilities.py** - Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates
+  - **multimodal_rag.py** - Multimodales RAG-System mit Text- und Bildsuche (Bild ↔ Bild, Bild ↔ Text)
 
 ## No-Code / Low-Code
 
@@ -43,11 +63,3 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Entscheidungsbaum und Modul-Mapping (M12, M17/18, M21, M22)
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard
-
-## Projektspezifische Bibliotheken
-
-- **[GenAI_Lib Einsteiger](frameworks/genai_lib/)** - Projektspezifische Python-Bibliothek für Kursanwendungen
-  - **utilities.py** - Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates
-  - **multimodal_rag.py** - Multimodales RAG-System mit Text- und Bildsuche (Bild ↔ Bild, Bild ↔ Text)
-
-

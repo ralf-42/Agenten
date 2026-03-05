@@ -3,31 +3,53 @@ layout: default
 title: Konzepte
 nav_order: 2
 has_children: true
-description: "Theoretische Grundlagen und technische Konzepte"
+description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 ---
 
 # Konzepte
 
-Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien der generativen KI.  
+Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.
 
-## 1 Orientierung & Strategie      
-- [Aufgabenklassen & Lösungswege](./concepts/Aufgabenklassen_und_Loesungswege.html) - Das richtige Tool für die Aufgabe
-  - 7 Lösungswege: Chat, Workflow, App-Builder, Python, Agenten, Lokale LLMs, Custom GPTs
-  - Entscheidungsbaum mit Datenschutz als Killer-Kriterium
-  - 10 Praxisbeispiele mit Entscheidungspfaden
+## Grundlagen & Architektur
 
-## 2 Technische Grundlagen
-- [Transformer-Architektur](./concepts/M05a_Transformer.html) - Das Fundament moderner LLMs
-- [Tokenizing & Chunking](./concepts/M08a_Tokenizing%20&%20Chunking.html) - Text-Verarbeitung für LLMs
-- [Embeddings](./concepts/M08b_Embeddings.html) - Vektorrepräsentationen von Text
+- **[Agent-Architekturen](./concepts/Agent_Architekturen.html)** – Architekturmuster und Design-Prinzipien für KI-Agenten
+  - ReAct-Architektur: Denken → Handeln → Beobachten
+  - Tool-Calling: LLM wählt und nutzt Werkzeuge
+  - Workflow-basiert: Definierte Schritte mit Verzweigungen
+  - Multi-Agent: Spezialisierte Agenten arbeiten zusammen
 
-## 3 Multimodale Konzepte
-- [Multimodal Bild](./concepts/M09_Multimodal%20Bild.html) - Bildgenerierung und -analyse
-- [Multimodal Audio](./concepts/M16_Multimodel%20Audio.html) - Speech-to-Text und Text-to-Speech
-- [Fine-Tuning](./concepts/M18_Fine-Tuning.html) - Modell-Anpassung
+- **[Tool Use & Function Calling](./concepts/Tool_Use_Function_Calling.html)** – Wie KI-Agenten durch Werkzeuge ihre Fähigkeiten erweitern
+  - Werkzeuge für aktuelles Wissen, Berechnungen und Dateizugriff
+  - Function Calling: Schema-Definition und Parameterübergabe
+  - Tool-Auswahl durch das LLM
 
-## 4 Erweiterte Techniken
-- [Prompt Engineering](./concepts/Prompt_Engineering.html) - Effektive Prompt-Gestaltung
-- [Context Engineering](./concepts/M21_Context%20Engineering.html) - Kontext-Optimierung für LLMs
-- [RAG-Konzepte](./concepts/RAG_Konzepte.html) - Retrieval Augmented Generation
-- [Modellauswahl](./concepts/M19_Modellauswahl.html) - Das richtige Modell wählen
+## Workflows & State
+
+- **[State Management](./concepts/State_Management.html)** – Zustandsverwaltung in komplexen Workflows mit LangGraph
+  - Warum State Management? Daten über Schritte hinweg erhalten
+  - TypedDict-basierter State, Reducer-Funktionen
+  - Checkpointing und Session-Persistenz
+
+- **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten
+  - Supervisor-Pattern, Hierarchical und Collaborative Patterns
+  - Spezialisierung, Fehlertoleranz und Skalierbarkeit
+  - Kommunikation und Übergabe zwischen Agenten
+
+## Wissensmanagement
+
+- **[RAG-Konzepte](./concepts/RAG_Konzepte.html)** – Retrieval Augmented Generation: Architektur, Strategien und Best Practices
+  - Warum RAG? Wissens-Cutoff, Domänenwissen, Halluzination
+  - Chunking, Embedding und Vektordatenbanken
+  - Retrieval-Strategien: Similarity Search, Reranking
+
+## Qualität & Praxis
+
+- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten
+  - Eval-Datasets, Metriken und Regression-Tests
+  - LangSmith Evaluation Pipeline
+  - Baseline, Drift-Erkennung und Production-Monitoring
+
+- **[Prompt Engineering](./concepts/Prompt_Engineering.html)** – Strategien für effektive Prompts in KI-Agenten-Systemen
+  - System-Prompts: Rolle und Grenzen definieren
+  - Tool-Beschreibungen und Reasoning-Prompts
+  - Output-Formatierung für strukturierte Antworten

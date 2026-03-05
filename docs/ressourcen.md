@@ -11,6 +11,9 @@ permalink: /ressourcen/
 
 Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Agenten.
 
+{: .note }
+> **Bei API- oder Trace-Problemen:** Zuerst [Troubleshooting](./ressourcen/troubleshooting.html) prüfen. LangSmith-Verbindungsprobleme fast immer durch falschen Endpoint — EU-Workspace benötigt `https://eu.api.smith.langchain.com`.
+
 ## Einstieg & Orientierung
 
 - **[Interaktive Visualisierungen](./ressourcen/interaktive_visualisierungen.html)** – Web-Demos für KI-Konzepte zum Erkunden und Verstehen

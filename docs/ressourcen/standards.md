@@ -179,6 +179,9 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 
 ---
 
+{: .important }
+> **Migrationspflicht bei LangChain 0.x-Code.** Alle veralteten Patterns (`ChatOpenAI()`, `initialize_agent()`, `LLMChain`, `PydanticOutputParser`) funktionieren in neuen Projekten nicht mehr korrekt oder erzeugen Deprecation-Warnings. Bestehenden Code vor der Nutzung im Kurs auf 1.0+ migrieren.
+
 ## ⚠️ Breaking Changes: 0.x → 1.0+
 
 ### Migration-Tabelle

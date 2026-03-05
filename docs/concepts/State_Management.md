@@ -130,6 +130,9 @@ class UserInput(BaseModel):
 
 ## 4 Reducer-Funktionen
 
+{: .warning }
+> **Ohne Reducer werden State-Werte überschrieben.** Jeder Node-Return ersetzt das gesamte Feld — bei `messages` gehen so alle vorherigen Nachrichten verloren. `Annotated[list, add_messages]` ist kein optionaler Komfort, sondern notwendig für korrektes State-Management.
+
 Reducer bestimmen, **wie** State-Felder aktualisiert werden. Ohne Reducer wird ein Feld bei jeder Änderung überschrieben. Mit Reducer können Werte intelligent kombiniert werden.
 
 ### 4.1 Das Problem ohne Reducer

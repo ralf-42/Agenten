@@ -8,7 +8,7 @@ description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 
 # Konzepte
 
-Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.
+Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
 
 ## Grundlagen & Architektur
 

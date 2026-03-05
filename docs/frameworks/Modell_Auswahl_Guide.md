@@ -25,15 +25,15 @@ has_toc: true
 
 ## 1 Modelle im Kurs
 
-| Modell               | Stärke                                                     | Typischer Einsatz                              |
-| -------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| `gpt-4o-mini`        | Schnell, günstig                                           | Grundlagen, einfache Tool-Calls, Demos         |
-| `gpt-4o`             | Ausgewogen                                                 | Mittlere Komplexität, strukturierte Ausgaben   |
-| `o3-mini`            | Reasoning, kompakt                                         | Leichte Entscheidungslogik, Routing            |
-| `o3`                 | Starkes Reasoning                                          | Supervisor, Judge, komplexes Routing, Security |
-| `gpt-5.1` | Coding & Agentic Tasks, konfigurierbarer Reasoning-Aufwand | Worker-Agenten, Code-Generierung, RAG-Synthese |
+| Modell        | Stärke                                                      | Typischer Einsatz                              |
+| ------------- | ----------------------------------------------------------- | ---------------------------------------------- |
+| `gpt-4o-mini` | Schnell, günstig                                            | Grundlagen, einfache Tool-Calls, Demos         |
+| `o3-mini`     | Reasoning, kompakt                                          | Leichte Entscheidungslogik, Routing            |
+| `o3`          | Starkes Reasoning                                           | Supervisor, Judge, komplexes Routing, Security |
+| `gpt-5.1`     | Coding & Agentic Tasks, konfigurierbarer Reasoning-Aufwand | Worker-Agenten, Code-Generierung, RAG-Synthese |
 
 > **Faustregel:** Nicht das stärkste Modell wählen — das *passende* für den Knoten.
+
 
 ---
 
@@ -49,7 +49,16 @@ Begründung: Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die si
 ```python
 from langchain.chat_models import init_chat_model
 
-supervisor_llm = init_chat_model("openai:o3", temperature=0.0)
+supervisor_llm = init_chat_model("openai:o3")
+```
+
+### Regel 1b — Kostenbewusste Routing-Baseline: `o3-mini`
+
+Für **einfache** Entscheidungslogik (2-3 Routen, geringe Fehlertoleranz, Demo/Prototyp) kann `o3-mini` als kostengünstige Baseline genutzt werden.
+Bei kritischen Entscheidungen (Supervisor, Security, Evaluation) bleibt `o3` die Standardwahl.
+
+```python
+router_llm = init_chat_model("openai:o3-mini")
 ```
 
 ### Regel 2 — Worker und Content: `gpt-5.1`
@@ -58,8 +67,17 @@ Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausg
 Begründung: Optimiert für Coding und agentic Tasks mit konfigurierbarem Reasoning-Aufwand.
 
 ```python
-worker_llm = init_chat_model("openai:gpt-5.1", temperature=0.2)
+worker_llm = init_chat_model("openai:gpt-5.1")
 ```
+
+> ⚠️ **Parameter-Kompatibilität gpt-5.1:** `temperature` ist nur mit `reasoning_effort="none"` gültig.
+> Bei allen anderen `reasoning_effort`-Werten (`"low"`, `"medium"`, `"high"`) führt `temperature` zu einem API-Fehler.
+> **Empfehlung:** `temperature` bei gpt-5.1 weglassen und stattdessen `reasoning_effort` zur Qualitätssteuerung nutzen.
+>
+> ```python
+> # Korrekt: ohne temperature
+> worker_llm = init_chat_model("openai:gpt-5.1")
+> ```
 
 ### Regel 3 — Judge und Evaluator: `o3`
 
@@ -67,7 +85,7 @@ LLM-as-Judge Evaluatoren erhalten `o3`.
 Begründung: Qualitative Bewertung erfordert Urteilsvermögen, nicht nur Textgenerierung.
 
 ```python
-judge_llm = init_chat_model("openai:o3", temperature=0.0)
+judge_llm = init_chat_model("openai:o3")
 ```
 
 ### Regel 4 — Grundlagen und Demos: `gpt-4o-mini`
@@ -103,13 +121,15 @@ flowchart TD
     START --> G{"Grundlagen-Demo\nEinzel-Tool · einfache Chain?"}
     START --> U{"Unklarer Fall?"}
 
-    R -->|Ja| O3A["🔵 o3"]
+    R -->|kritisch| O3A["🔵 o3"]
+    R -->|einfach / Demo| O3M["🔵 o3-mini"]
     J -->|Ja| O3B["🔵 o3"]
     W -->|Ja| GP["🟢 gpt-5.1"]
     G -->|Ja| MINI["⚪ gpt-4o-mini"]
     U -->|Ja| BASE["⚪ gpt-4o-mini\nals Baseline starten\ndann gezielt upgraden"]
 
     style O3A  fill:#1565C0,color:#fff
+    style O3M  fill:#1976D2,color:#fff
     style O3B  fill:#1565C0,color:#fff
     style GP   fill:#2E7D32,color:#fff
     style MINI fill:#546E7A,color:#fff
@@ -128,7 +148,7 @@ flowchart TD
 | M00–M11 | Grundlagen, Tool Use, RAG-Aufbau — Konzept > Qualität |
 | M13–M16 | StateGraph, Checkpointing, HITL — Struktur lernen |
 | M20 | Überblick Agent Builder — Vergleich, nicht Optimierung |
-| M23–M26 | Evaluation, Security, Gradio — Rahmenbedingungen |
+| M26 | Gradio/UI-Fokus — Interaktionsdesign > Modellqualität |
 | M28 | Production Deployment — Kostenmodell verstehen |
 
 ### Mixed-Model: Lerninhalt im Modul verankert
@@ -139,6 +159,8 @@ flowchart TD
 | **M17 / M18** | `o3` | `gpt-4o-mini` | Supervisor-Pattern: Modell-Rollentrennung live erleben |
 | **M21** | `o3` (Judge) | `gpt-4o-mini` (Candidate) | LLM-as-Judge: Warum der Judge stark sein muss |
 | **M22** | `o3` (Planner) | `gpt-5.1` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese |
+| **M23** | `o3` (Judge, optional Demo) | `gpt-4o-mini` (Candidate) | Evaluation: Baseline vs. starker Evaluator |
+| **M24** | `o3` (Policy/Risk) | `gpt-4o-mini` (Worker) | Security: robuste Gate-Entscheidungen |
 
 ---
 
@@ -150,7 +172,7 @@ flowchart TD
 from langchain.chat_models import init_chat_model
 
 # Supervisor: trifft Routing-Entscheidungen
-supervisor_llm = init_chat_model("openai:o3", temperature=0.0)
+supervisor_llm = init_chat_model("openai:o3")
 
 # Worker: erzeugt Inhalte
 worker_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.2)
@@ -163,7 +185,7 @@ baseline_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 ```python
 # LLM-as-Judge: bewertet Antwortqualität
-judge_llm   = init_chat_model("openai:o3",         temperature=0.0)
+judge_llm   = init_chat_model("openai:o3")
 
 # Candidate: der evaluierte Agent
 agent_llm   = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
@@ -173,10 +195,11 @@ agent_llm   = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
 ```python
 # Planner/Router: entscheidet ob RAG nötig, welche Quellen
-planner_llm   = init_chat_model("openai:o3",                  temperature=0.0)
+planner_llm   = init_chat_model("openai:o3")
 
 # Generator: synthetisiert die finale Antwort aus Chunks
-generator_llm = init_chat_model("openai:gpt-5.1",  temperature=0.2)
+# Hinweis: gpt-5.1 ohne temperature (Kompatibilität, siehe Regel 2)
+generator_llm = init_chat_model("openai:gpt-5.1")
 ```
 
 ---
@@ -226,9 +249,13 @@ vergleich = {
 | M18 | Vergleichstabelle: Supervisor-Pattern mit Kennzahlen |
 | M21 | Code-Zelle: Judge `o3` — Warum der Evaluator stark sein muss |
 | M22 | Code-Zelle: Planner `o3` + Generator `gpt-5.1` |
+| M23 | Modul-Mapping: `o3` als optionaler Judge in Evaluation-Pipeline |
+| M24 | Modul-Mapping: `o3` als Policy/Risk-Klassifizierer, `gpt-4o-mini` als Worker |
 
 ---
 
-**Version:** 1.0     
-**Stand:** März 2026      
-**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API     
+**Version:** 1.2
+**Stand:** März 2026
+**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API
+**Änderungen v1.2:** Regel 1b (`o3-mini` für einfaches Routing) ergänzt; `temperature` bei `o3` und `o3-mini` entfernt (API-Fehler analog gpt-5.1); Mermaid-Diagramm um o3-mini-Pfad erweitert; M23/M24/M26 im Modul-Mapping ergänzt; Sektion 8 um M23/M24 erweitert
+**Änderungen v1.1:** gpt-4o entfernt (1:1-Ersatzregel: Worker→gpt-5.1, Routing→o3, Demos→gpt-4o-mini); gpt-5.1 temperature-Einschränkung dokumentiert (Analysebericht 2026-03-05)

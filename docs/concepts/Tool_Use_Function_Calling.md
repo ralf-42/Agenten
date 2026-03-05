@@ -35,6 +35,9 @@ Large Language Models sind beeindruckend in der Textverarbeitung – doch sie ha
 
 **Kernidee:** Tools erweitern die Fähigkeiten eines LLMs über reines Textwissen hinaus. Das Modell entscheidet, **wann** und **wie** ein Tool aufgerufen wird – die eigentliche Ausführung übernimmt Python-Code.
 
+{: .note }
+> **Das LLM führt keine Tools aus — es erzeugt einen Aufruf-Intent.** Die Anwendung empfängt diesen Intent, validiert ihn und führt den eigentlichen Code aus. Diese Trennung ist entscheidend für Sicherheit und Kontrolle.
+
 ---
 
 ## 2 Das Konzept: Function Calling

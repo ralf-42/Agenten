@@ -2,7 +2,7 @@
 layout: default
 title: Evaluation & Testing
 parent: Konzepte
-nav_order: 7
+nav_order: 8
 description: "Bewertung und Qualitätssicherung von KI-Agenten"
 has_toc: true
 ---
@@ -78,6 +78,9 @@ Die tatsächliche Nutzererfahrung steht im Fokus:
 - Würde der Nutzer den Agenten erneut verwenden?
 
 ---
+
+{: .warning }
+> **Ohne Baseline keine belastbare Aussage.** Eine einzelne Messung sagt nichts — erst der Vergleich (vorher/nachher, Version A/B) zeigt, ob eine Änderung wirklich hilft oder nur an einem Ort verbessert und anderswo verschlechtert. Regression-Tests sind kein Optional-Feature.
 
 ## 3 Metriken für Agenten
 
@@ -766,6 +769,6 @@ client.create_feedback(run_id=run_id, key="user_rating", score=0.8)
 
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0     
+**Stand:** November 2025     
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.   

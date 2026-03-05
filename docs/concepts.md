@@ -42,6 +42,11 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - TypedDict-basierter State, Reducer-Funktionen
   - Checkpointing und Session-Persistenz
 
+- **[Human-in-the-Loop](./concepts/Human_in_the_Loop.html)** – Wann und warum KI-Agenten Menschen einbinden sollten (→ M16)
+  - Autonomie-Spektrum: von assistiert bis vollständig autonom
+  - Approval-Pattern vs. Eskalations-Pattern
+  - Entscheidungskritikalität und Vertrauensgrenzen
+
 - **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten (→ M17–M18)
   - Supervisor-Pattern, Hierarchical und Collaborative Patterns
   - Spezialisierung, Fehlertoleranz und Skalierbarkeit
@@ -53,3 +58,8 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - Eval-Datasets, Metriken und Regression-Tests
   - LangSmith Evaluation Pipeline
   - Baseline, Drift-Erkennung und Production-Monitoring
+
+- **[Agent Security](./concepts/Agent_Security.html)** – Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M24)
+  - Prompt Injection, Tool Missbrauch, Daten-Exfiltration
+  - Principle of Least Privilege, Tool Whitelisting, PII-Redaktion
+  - Vertrauensgrenzen und sichere Entwicklungspraxis

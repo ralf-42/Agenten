@@ -83,6 +83,9 @@ flowchart LR
 | **Kontext-Erstellung** | Gefundene Chunks werden zum Prompt hinzugefügt |
 | **Generation** | Das LLM generiert eine Antwort basierend auf dem Kontext |
 
+{: .warning }
+> **Retrieval verbessert Relevanz — garantiert aber keine Faktentreue.** RAG reduziert Halluzination, eliminiert sie nicht. Das LLM kann relevante Dokumente fehlinterpretieren, kombinieren oder ergänzen. Kritische Anwendungen brauchen zusätzliche Validierung der generierten Antworten.
+
 ---
 
 ## 3 Chunking: Dokumente sinnvoll zerlegen

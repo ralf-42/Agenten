@@ -1,16 +1,16 @@
-# Agenten – Multi-Agent-Systeme mit LangChain & LangGraph
+# Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-[![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)](./LangChain_Compliance_Report_2025-12-31.md)
-[![Code Quality](https://img.shields.io/badge/Compliance-100%25-success)](./LangChain_Compliance_Report_2025-12-31.md)
-[![Last Audit](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)](./LangChain_Compliance_Report_2025-12-31.md)
+![LangChain 1.0+ Compliant](https://img.shields.io/badge/LangChain-1.0%2B%20Compliant-brightgreen)
+![Compliance](https://img.shields.io/badge/Compliance-100%25-success)
+![Last Audit|140](https://img.shields.io/badge/Last%20Audit-2025--12--31-blue)
 
-Ein deutschsprachiger, praxisorientierter Kurs zu **Multi-Agent-Systemen** und **Generative AI** mit Fokus auf LangChain 1.0+, LangGraph und agentenbasierte KI-Architekturen.
+Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.0+, LangGraph 1.0.9, LangSmith 0.4.41 und agentenbasierte KI-Architekturen.
 
 ## 🌐 Kurs-Website
 
 **[→ Agenten Kurs-Website (GitHub Pages)](https://ralf-42.github.io/Agenten/)**
 
-Die vollständige Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen zu Multi-Agent-Systemen ist als interaktive Website verfügbar.
+Die Kursdokumentation mit Konzepten, Frameworks-Guides und Ressourcen zu Multi-Agent-Systemen ist als interaktive Website verfügbar.
 
 ## 🎯 Zielgruppe
 
@@ -26,13 +26,11 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 00_admin/       # Kursplanung (Kursplan v4.5, Trainer-Steuerung)
-├── 01_notebook/    # Jupyter Notebooks (M00-M30, Referenz-Tutorials)
+├── 01_notebook/    # Jupyter Notebooks (M00-M30)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
 ├── 05_prompt/      # Prompt-Templates (Markdown-Format)
-├── 06_podcast/     # Podcast-Materialien
 ├── 07_image/       # Bildmaterialien
 └── docs/           # GitHub Pages Dokumentation
 ```
@@ -52,9 +50,9 @@ Agenten/
   - `multimodal_rag.py` - Multimodales RAG-System
 
 
-## 📚 Kursmodule (5-Tage-Kurs, Kursplan v4.4)
+## 📚 Kursmodule (Kursplan v4.5)
 
-### Tag 1: Vom LLM zum denkenden Agenten (M00-M03)
+### Block 1: Vom LLM zum denkenden Agenten (M00-M03)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys, LangSmith |
@@ -62,7 +60,7 @@ Agenten/
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools bauen |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
 
-### Tag 2: Chains & Workflow-Struktur (M04-M07)
+### Block 2: Chains & Workflow-Struktur (M04-M07)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M04 | Prompt Engineering | ChatPromptTemplate, System/Human Messages |
@@ -70,7 +68,7 @@ Agenten/
 | M06 | Structured Output | Pydantic, with_structured_output() |
 | M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
 
-### Tag 3: Gedächtnis & RAG (M08-M11)
+### Block 3: Gedächtnis & RAG (M08-M11)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M08 | RAG-Konzepte & Embeddings | RAG-Architektur, Vektoren, Token-Limits |
@@ -78,7 +76,7 @@ Agenten/
 | M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
 | M11 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
 
-### Tag 4: Kontrolle mit LangGraph (M12-M14, M21)
+### Block 4: Kontrolle mit LangGraph (M12-M14, M21)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
@@ -86,7 +84,7 @@ Agenten/
 | M14 | Conditional Routing & Tool-Loop | Routing-Funktionen, Security-Basics |
 | M21 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
 
-### Tag 5: HITL & Multi-Agent-Projekt (M15-M20)
+### Block 5: HITL & Multi-Agent-Projekt (M15-M20)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M15 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
@@ -136,15 +134,6 @@ Alle Notebooks sind eigenständig lauffähig und für Google Colab optimiert. Da
 
 Der Kurs bietet zwei praxisorientierte Lernformate:
 
-### Tag-5-Projekt: Multi-Agent-System (M19)
-**Kurs-Projekt** | Supervisor + 2 Worker-Agents
-
-Drei Projekt-Templates zur Auswahl:
-- 🔬 **Research-Team:** Supervisor + Researcher + Analyst
-- 📝 **Content-Team:** Supervisor + Writer + Editor
-- 🎧 **Support-Team:** Supervisor + FAQ-Agent + Specialist
-
-MVP: Supervisor routet zu 2 Workern, End-to-End-Flow funktioniert, LangSmith-Trace zeigt Ablauf.
 
 ### [Agenten Workshop](https://ralf-42.github.io/Agenten/projekte/Agenten_Workshop.html)
 **Workshop-Format** | Begleitete Schritt-für-Schritt-Übung (Zusatzmaterial)
@@ -161,7 +150,6 @@ MVP: Supervisor routet zu 2 Workern, End-to-End-Flow funktioniert, LangSmith-Tra
 
 Der **Quellcode** steht unter der [MIT License](./LICENSE).       
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
-**Northwind-Datenbank** von Microsoft unter Microsoft Public License (Ms-PL).     
 Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](https://www.hedra.com/terms).     
 
 © 2025–2026 Ralf-42
@@ -169,4 +157,4 @@ Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](ht
 ---
 
 **Letzte Aktualisierung:** März 2026
-**Version:** 3.2 (Framework-Versionen aktualisiert, Kursplan v4.5, erweiterte Module M22-M30)
+**Version:** 3.3 

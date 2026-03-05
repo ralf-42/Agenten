@@ -8,7 +8,7 @@ Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 
 ---
 
-## 🎯 Kern-Module (M00-M20)
+## 🎯 Kern-Module (M00-M21)
 
 ### **BLOCK 1: Grundlagen** (M00-M03)
 
@@ -79,17 +79,19 @@ Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 
 ## 📊 Erweiterte Module (M22-M30) - Optional
 
+> Alle Notebooks fertiggestellt ✅
+
 | Modul | Titel | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M22 | Agentic RAG | RAG als Tool, Multi-Hop, Adaptive Retrieval | 🟡 Empfohlen ✅ Vollständig |
-| M23 | Agent Evaluation & Testing | Metriken, Benchmarking, LangSmith Eval, RAGAS | 🟡 Empfohlen |
-| M24 | Agent Security & Best Practices | Tool-Whitelisting, PII-Redaktion | 🔵 Optional |
-| M25 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, CRAG | 🔵 Optional ⭐ Vertiefung ✅ Vollständig |
-| M26 | Gradio UI für Agenten | Chat-Interface, Tool-Visualisierung | 🔵 Optional |
-| M27 | MCP Integration | Model Context Protocol, Custom Tools | 🔵 Optional |
-| M28 | Production Deployment | Docker, LangServe, Monitoring | 🔵 Optional |
-| M29 | Hierarchical Agent Teams | Team-Lead → Specialists | 🔵 Optional |
-| M30 | Collaborative Multi-Agent | Peer-to-Peer, Shared State | 🔵 Optional ✅ Vollständig |
+| M22 | Agentic RAG | RAG als Tool, Multi-Hop, Adaptive Retrieval | 🟡 Empfohlen ✅ |
+| M23 | Agent Evaluation & Testing | Metriken, LangSmith Eval, RAGAS, Regressions-Tests | 🟡 Empfohlen ✅ |
+| M24 | Agent Security & Best Practices | Prompt Injection, Tool-Whitelisting, PII-Redaktion | 🔵 Optional ✅ |
+| M25 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, CRAG | 🔵 Optional ✅ |
+| M26 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming, HITL | 🔵 Optional ✅ |
+| M27 | MCP Integration | Model Context Protocol, Multi-Server | 🔵 Optional ✅ |
+| M28 | Production Deployment | Docker, FastAPI, Monitoring, LangSmith | 🔵 Optional ✅ |
+| M29 | Hierarchical Agent Teams | 3-Ebenen-Hierarchie, Tool-Delegation, Parallelisierung | 🔵 Optional ✅ |
+| M30 | Capstone: End-to-End Research-Report-System | Security Gate, Research/Writing Teams, Quality Judge, StateGraph | 🔵 Optional ✅ |
 
 
 **Empfohlene Reihenfolge (optional, bei Restzeit):**
@@ -98,7 +100,10 @@ Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 3. M24 - Agent Security & Best Practices 🔵
 4. M26 - Gradio UI für Agenten 🔵
 5. M27 - MCP Integration 🔵
-6. M25 - Advanced RAG Pipeline-Patterns 🔵 ⭐ Vertiefung
+6. M25 - Advanced RAG Pipeline-Patterns 🔵
+7. M28 - Production Deployment 🔵
+8. M29 - Hierarchical Agent Teams 🔵
+9. M30 - Capstone (Abschlussprojekt) 🔵
 
 
 ---
@@ -124,5 +129,5 @@ Alle Notebooks folgen dem **Notebook Template Guide**:
 
 ---
 
-**Version:** 1.3 
+**Version:** 1.4
 **Stand:** März 2026

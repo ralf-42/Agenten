@@ -42,7 +42,7 @@ Agenten/
 - **LangChain** (1.0+) - Orchestrierung, Chains, Agents, RAG
 - **LangGraph** (1.0.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
 - **LangSmith** (0.x+) - Tracing, Debugging, Evaluations
-- **OpenAI API** (>=1.0.0) - GPT-4o-mini, Embeddings
+- **OpenAI API** (>=1.0.0) - gpt-4o-mini, o3, o3-mini, gpt-5.1, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
@@ -93,20 +93,23 @@ Agenten/
 | M17 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M18 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | M19 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
-| M20 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), Vergleich |
+| M20 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
 
 ### Erweiterte Module (M22-M30, optional)
-| Modul | Thema                           | Priorität       |
-| ----- | ------------------------------- | --------------- |
-| M22   | Agentic RAG                      | 🟡 Empfohlen ✅ |
-| M23   | Agent Evaluation & Testing       | 🟡 Empfohlen |
-| M24   | Agent Security & Best Practices  | 🔵 Optional |
-| M25   | Advanced RAG – Pipeline-Patterns | 🔵 Optional ✅ |
-| M26   | Gradio UI für Agenten            | 🔵 Optional |
-| M27   | MCP Integration                  | 🔵 Optional |
-| M28   | Production Deployment            | 🔵 Optional |
-| M29   | Hierarchical Agent Teams         | 🔵 Optional |
-| M30   | Collaborative Multi-Agent        | 🔵 Optional ✅ |
+
+> Alle Notebooks fertiggestellt ✅
+
+| Modul | Thema                           | Priorität       | Status |
+| ----- | ------------------------------- | --------------- | ------ |
+| M22   | Agentic RAG                      | 🟡 Empfohlen   | ✅ |
+| M23   | Agent Evaluation & Testing       | 🟡 Empfohlen   | ✅ |
+| M24   | Agent Security & Best Practices  | 🔵 Optional    | ✅ |
+| M25   | Advanced RAG – Pipeline-Patterns | 🔵 Optional    | ✅ |
+| M26   | Gradio UI für Agenten            | 🔵 Optional    | ✅ |
+| M27   | MCP Integration                  | 🔵 Optional    | ✅ |
+| M28   | Production Deployment            | 🔵 Optional    | ✅ |
+| M29   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
+| M30   | Capstone: End-to-End Research-Report-System | 🔵 Optional | ✅ |
 
 ## 🔑 Voraussetzungen
 
@@ -158,4 +161,4 @@ Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](ht
 ---
 
 **Letzte Aktualisierung:** März 2026
-**Version:** 3.3 
+**Version:** 3.4

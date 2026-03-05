@@ -254,8 +254,6 @@ vergleich = {
 
 ---
 
-**Version:** 1.2
-**Stand:** März 2026
-**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API
-**Änderungen v1.2:** Regel 1b (`o3-mini` für einfaches Routing) ergänzt; `temperature` bei `o3` und `o3-mini` entfernt (API-Fehler analog gpt-5.1); Mermaid-Diagramm um o3-mini-Pfad erweitert; M23/M24/M26 im Modul-Mapping ergänzt; Sektion 8 um M23/M24 erweitert
-**Änderungen v1.1:** gpt-4o entfernt (1:1-Ersatzregel: Worker→gpt-5.1, Routing→o3, Demos→gpt-4o-mini); gpt-5.1 temperature-Einschränkung dokumentiert (Analysebericht 2026-03-05)
+**Version:** 1.2    
+**Stand:** März 2026    
+**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API    

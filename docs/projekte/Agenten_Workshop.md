@@ -652,8 +652,8 @@ graph = workflow.compile(
 - [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/)
 
 **Code-Vorlagen:**
-- [LangGraph 1.0 Must-Haves](/Agenten/LangGraph_Best_Practices.html)
-- [LangChain QuickRef](/Agenten/LangChain_QuickRef.html)
+- [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
+- [LangChain QuickRef](../LangChain_QuickRef.md)
 
 **Projekt-Beispiele:**
 - Mermaid-Diagramme: `Agenten/Mermaid_Diagramme.ipynb`

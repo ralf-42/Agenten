@@ -60,6 +60,6 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
 
 - **[Modell-Auswahl Guide](frameworks/Modell_Auswahl_Guide.html)** – Welches Modell für welche Aufgabe?
   - Designregeln: Router/Supervisor → `o3`, Worker → `gpt-5.1`, Demos → `gpt-4o-mini`
-  - Entscheidungsbaum und Modul-Mapping (M12, M18/18, M16, M22)
+  - Entscheidungsbaum und Modul-Mapping (M12, M19/18, M17, M23)
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard

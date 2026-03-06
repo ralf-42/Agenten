@@ -448,55 +448,19 @@ def firmenwissen_suchen(frage: str) -> str:
 
 ## 9 Evaluierung von RAG-Systemen
 
-Die Qualität eines RAG-Systems muss systematisch gemessen werden.
+Die Qualität eines RAG-Systems wird auf zwei Ebenen gemessen:
 
-### 9.1 Metriken
+| Ebene | Metrik | Misst |
+|-------|--------|-------|
+| **Retrieval** | Precision@k | Anteil relevanter Dokumente unter den Gefundenen |
+| **Retrieval** | Recall@k | Anteil gefundener relevanter Dokumente |
+| **Generation** | Faithfulness | Basiert die Antwort ausschließlich auf dem Kontext? |
+| **Generation** | Answer Relevance | Beantwortet die Antwort die gestellte Frage? |
+| **Generation** | Context Relevance | Ist der abgerufene Kontext tatsächlich relevant? |
 
-| Metrik | Misst | Berechnung |
-|--------|-------|------------|
-| **Retrieval Precision** | Anteil relevanter Dokumente | Relevante / Gefundene |
-| **Retrieval Recall** | Abdeckung aller relevanten Dokumente | Gefundene Relevante / Alle Relevanten |
-| **Answer Relevance** | Passt Antwort zur Frage? | LLM-Bewertung |
-| **Faithfulness** | Ist Antwort durch Kontext gestützt? | LLM-Bewertung |
-| **Context Relevance** | Ist der Kontext relevant? | LLM-Bewertung |
+**Faithfulness** ist die wichtigste RAG-Metrik: Sie prüft, ob das Modell halluziniert oder sich strikt auf die abgerufenen Dokumente stützt.
 
-### 9.2 RAGAS Framework
-
-RAGAS (Retrieval Augmented Generation Assessment) bietet standardisierte Metriken:
-
-```python
-from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy, context_precision
-
-results = evaluate(
-    dataset,
-    metrics=[faithfulness, answer_relevancy, context_precision]
-)
-```
-
-### 9.3 Manuelles Testen
-
-Für erste Iterationen ist manuelles Testen effektiv:
-
-```python
-test_questions = [
-    "Was ist die Passwort-Policy?",
-    "Wie beantrage ich Urlaub?",
-    "Wer ist Ansprechpartner für IT-Probleme?"
-]
-
-for question in test_questions:
-    # Retrieval prüfen
-    docs = retriever.invoke(question)
-    print(f"\nFrage: {question}")
-    print(f"Gefundene Dokumente: {len(docs)}")
-    for i, doc in enumerate(docs):
-        print(f"  {i+1}. {doc.page_content[:100]}...")
-    
-    # Antwort prüfen
-    answer = rag_chain.invoke(question)
-    print(f"Antwort: {answer}")
-```
+Für Implementierungsdetails zu Evaluatoren, LangSmith-Integration, RAGAS-Framework, LLM-as-Judge und Regression-Tests siehe → [Evaluation & Testing](./Evaluation_Testing.html).
 
 ---
 

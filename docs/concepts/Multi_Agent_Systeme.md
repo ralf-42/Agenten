@@ -2,7 +2,7 @@
 layout: default
 title: Multi-Agent-Systeme
 parent: Konzepte
-nav_order: 7
+nav_order: 9
 description: "Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten"
 has_toc: true
 ---
@@ -369,11 +369,133 @@ review_system = graph.compile()
 
 ---
 
-## 6 Kommunikation zwischen Agenten
+## 6 Paralleles Pattern (Fan-out / Fan-in)
+
+Während Supervisor und kollaborative Muster Aufgaben sequenziell verarbeiten, ermöglicht das **Parallele Pattern** die gleichzeitige Ausführung unabhängiger Teilaufgaben. Dies reduziert die Gesamtlaufzeit erheblich – besonders bei I/O-lastigen Operationen wie Websuchen oder API-Abfragen.
+
+```mermaid
+flowchart TD
+    A[Aufgabe] --> S[Orchestrator]
+    S -->|Fan-out| R[Research-Agent]
+    S -->|Fan-out| D[Data-Agent]
+    S -->|Fan-out| W[Writer-Agent]
+    R -->|Fan-in| J[Aggregator]
+    D -->|Fan-in| J
+    W -->|Fan-in| J
+    J --> E[Finale Antwort]
+```
+
+### 6.1 Wann Parallelismus sinnvoll ist
+
+| Geeignet | Nicht geeignet |
+|----------|----------------|
+| Unabhängige Teilaufgaben | Aufgaben mit Abhängigkeiten (B braucht Ergebnis von A) |
+| Mehrere Datenquellen gleichzeitig abfragen | Sequenzielle Verarbeitung mit Zustandsaufbau |
+| Viele Dokumente gleichzeitig analysieren | Strikte Reihenfolge erforderlich |
+| Mehrere Modell-Prompts parallel vergleichen | Kleine Aufgaben mit wenig Laufzeitvorteil |
+
+### 6.2 Implementierung mit Send
+
+LangGraph realisiert Parallelismus über das `Send`-Primitive. Nodes geben eine Liste von `Send`-Objekten zurück, die LangGraph parallel ausführt.
+
+```python
+import operator
+from typing import TypedDict, Annotated
+from langgraph.graph import StateGraph, START, END
+from langgraph.types import Send
+from langchain.chat_models import init_chat_model
+
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+
+class ParallelState(TypedDict):
+    aufgabe: str
+    teilaufgaben: list[str]
+    ergebnisse: Annotated[list, operator.add]  # Fan-in: Ergebnisse akkumulieren
+
+def fan_out(state: ParallelState) -> list[Send]:
+    """Erstellt parallele Worker-Ausführungen für jede Teilaufgabe."""
+    return [
+        Send("worker", {"aufgabe": state["aufgabe"], "teilaufgabe": t})
+        for t in state["teilaufgaben"]
+    ]
+
+def worker_node(state: dict) -> dict:
+    """Bearbeitet eine einzelne Teilaufgabe."""
+    response = llm.invoke(
+        f"Bearbeite: {state['teilaufgabe']} im Kontext von: {state['aufgabe']}"
+    )
+    return {"ergebnisse": [response.content]}
+
+def aggregator_node(state: ParallelState) -> ParallelState:
+    """Fan-in: Fasst alle Parallel-Ergebnisse zusammen."""
+    alle = "\n\n".join(f"- {e}" for e in state["ergebnisse"])
+    response = llm.invoke(f"Fasse die Teilauswertungen zusammen:\n\n{alle}")
+    return {"ergebnisse": [response.content]}
+
+# Graph mit parallelen Kanten aufbauen
+graph = StateGraph(ParallelState)
+graph.add_node("worker", worker_node)
+graph.add_node("aggregator", aggregator_node)
+
+graph.add_conditional_edges(START, fan_out, ["worker"])  # Fan-out
+graph.add_edge("worker", "aggregator")                    # Fan-in
+graph.add_edge("aggregator", END)
+
+app = graph.compile()
+
+# Ausführen
+result = app.invoke({
+    "aufgabe": "Schreibe einen Bericht über KI-Trends 2025",
+    "teilaufgaben": ["Recherche", "Analyse", "Zusammenfassung"],
+    "ergebnisse": []
+})
+```
+
+### 6.3 Map-Reduce-Pattern
+
+Ein häufiges Anwendungsmuster ist Map-Reduce: Viele Dokumente gleichzeitig analysieren, dann Ergebnisse zusammenführen.
+
+```python
+class MapReduceState(TypedDict):
+    dokumente: list[str]                         # Eingabe: Liste von Dokumenten
+    analysen: Annotated[list, operator.add]      # Fan-in: alle Analysen
+    zusammenfassung: str                          # Ausgabe: finale Zusammenfassung
+
+def map_phase(state: MapReduceState) -> list[Send]:
+    """Map: Jedes Dokument wird parallel analysiert."""
+    return [
+        Send("analysiere_dokument", {"dokument": doc, "index": i})
+        for i, doc in enumerate(state["dokumente"])
+    ]
+
+def analysiere_dokument(state: dict) -> dict:
+    response = llm.invoke(f"Analysiere kurz: {state['dokument']}")
+    return {"analysen": [f"Dok {state['index']}: {response.content}"]}
+
+def reduce_phase(state: MapReduceState) -> MapReduceState:
+    """Reduce: Alle Analysen zu einer Gesamtzusammenfassung verdichten."""
+    combined = "\n".join(state["analysen"])
+    response = llm.invoke(
+        f"Gesamtzusammenfassung aus {len(state['analysen'])} Analysen:\n{combined}"
+    )
+    return {"zusammenfassung": response.content}
+```
+
+### 6.4 Vorteile und Grenzen
+
+| Vorteile | Grenzen |
+|---------|---------|
+| Deutlich kürzere Laufzeit bei unabhängigen Tasks | Höherer simultaner API-Call-Verbrauch |
+| Skaliert linear mit Anzahl Teilaufgaben | Debugging komplexer als sequenziell |
+| Klare Fehler-Isolation pro Worker | Nur für wirklich unabhängige Aufgaben geeignet |
+
+---
+
+## 7 Kommunikation zwischen Agenten
 
 Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Agent-Systems.
 
-### 6.1 Kommunikationsformen
+### 7.1 Kommunikationsformen
 
 ```mermaid
 flowchart TD
@@ -402,7 +524,7 @@ flowchart TD
 | **Shared State** | Gemeinsamer Zustand (LangGraph) | Standard in LangGraph |
 | **Message Queue** | Asynchrone Nachrichten | Komplexe Systeme |
 
-### 6.2 Strukturierte Übergaben
+### 7.2 Strukturierte Übergaben
 
 Für zuverlässige Kommunikation sollten Übergaben strukturiert erfolgen:
 
@@ -426,52 +548,34 @@ class TaskResult(BaseModel):
 
 ---
 
-## 7 State-Management
+## 8 State-Management
 
-Der gemeinsame State ist das Rückgrat eines Multi-Agent-Systems in LangGraph.
-
-### 7.1 State-Design-Prinzipien
+Der gemeinsame State ist das Rückgrat eines Multi-Agent-Systems in LangGraph. Das typische Multi-Agent-State-Schema erweitert den Basis-Chat-State um koordinationsspezifische Felder:
 
 ```python
 from typing import TypedDict, Annotated, Optional
 from langgraph.graph.message import add_messages
 
 class MultiAgentState(TypedDict):
-    # Kommunikation
-    messages: Annotated[list, add_messages]  # Chat-Verlauf
-    
-    # Aufgaben-Tracking
+    messages: Annotated[list, add_messages]  # Kommunikation
     current_task: str                         # Aktuelle Aufgabe
-    completed_tasks: list[str]                # Erledigte Aufgaben
-    
-    # Agenten-spezifisch
-    research_results: Optional[str]           # Vom Research-Agent
-    draft_content: Optional[str]              # Vom Writer-Agent
-    code_output: Optional[str]                # Vom Code-Agent
-    
-    # Koordination
+    completed_tasks: list[str]                # Abgeschlossene Aufgaben
     next_agent: str                           # Nächster Agent
-    iteration_count: int                      # Anzahl Durchläufe
+    iteration_count: int                      # Zähler gegen Endlosschleifen
     final_output: Optional[str]               # Endergebnis
 ```
 
-### 7.2 Best Practices
+**Kernprinzip:** Jede Komponente liest aus dem State und gibt nur Änderungen zurück – niemals den gesamten State.
 
-| Prinzip | Beschreibung |
-|---------|-------------|
-| **Minimaler State** | Nur speichern, was andere Agenten brauchen |
-| **Klare Namensgebung** | `research_results` statt `data` |
-| **Optionale Felder** | `Optional[str]` für Agent-spezifische Daten |
-| **Reducer verwenden** | `add_messages` für Listen-Aggregation |
-| **Keine PII** | Sensible Daten nicht im State |
+Für Grundlagen zu State-Design, Reducer-Funktionen und häufigen Fehlern siehe → [State Management](./State_Management.html).
 
 ---
 
-## 8 Fehlerbehandlung
+## 9 Fehlerbehandlung
 
 In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehlerbehandlung ist essenziell.
 
-### 8.1 Fehlerquellen
+### 9.1 Fehlerquellen
 
 ```mermaid
 flowchart TD
@@ -491,7 +595,7 @@ flowchart TD
     E3 --> E3c[Falsche Routing-Entscheidung]
 ```
 
-### 8.2 Strategien
+### 9.2 Strategien
 
 **Retry mit Backoff:**
 ```python
@@ -521,7 +625,7 @@ def should_continue(state: TeamState) -> str:
 
 ---
 
-## 9 Entscheidungshilfe
+## 10 Entscheidungshilfe
 
 Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
@@ -535,6 +639,7 @@ flowchart TD
     D -->|Nein| F[Supervisor-Pattern]
     D -->|Ja, sequenziell| G[Supervisor mit Routing]
     D -->|Ja, iterativ| H[Kollaboratives Pattern]
+    D -->|Ja, unabhaengig| I[Paralleles Pattern]
 ```
 
 | Situation | Empfohlenes Pattern |
@@ -548,7 +653,7 @@ flowchart TD
 
 ---
 
-## 10 Zusammenfassung
+## 11 Zusammenfassung
 
 Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisierte, kooperierende Agenten.
 
@@ -559,6 +664,7 @@ Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisi
 | **Supervisor** | Zentraler Koordinator verteilt Aufgaben |
 | **Hierarchisch** | Mehrere Ebenen für sehr komplexe Systeme |
 | **Kollaborativ** | Direkte Agent-zu-Agent-Kommunikation |
+| **Paralleles Pattern** | Fan-out / Fan-in für unabhängige Aufgaben |
 | **Shared State** | Gemeinsamer Zustand in LangGraph |
 | **Strukturierte Übergaben** | Pydantic-Modelle für klare Schnittstellen |
 

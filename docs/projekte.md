@@ -18,7 +18,7 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
   - 7 Kapitel: Von StateGraph zu komplexen Supervisor-Hierarchien
   - LangGraph 1.0+: State Machines, Checkpointing, Human-in-the-Loop
   - Zeitaufwand: 6-8 Stunden
-  - Module M12-M21
+  - Module M12-M22
 
 ### End-to-End Projekt
 - **[Agenten Challenge](./projekte/Agenten_Challenges.html)** - Eigenständige Implementierung
@@ -27,4 +27,4 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
   - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
   - Abgabe: Jupyter Notebook + SQLite-DB + README.md
   - Zeitaufwand: 20-30 Stunden
-  - Module M00-M21
+  - Module M00-M22

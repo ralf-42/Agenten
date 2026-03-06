@@ -24,7 +24,7 @@ has_toc: true
 
 # 1 | Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
+Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M22 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
 
 ## 1 Lernziele
 
@@ -37,7 +37,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 2 Voraussetzungen
 
-- Abschluss der Module M00-M21 (Tag 1-5)
+- Abschluss der Module M00-M22 (Tag 1-5)
 - Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
@@ -133,13 +133,13 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 - M13 (StateGraph Basics)
 - M14 (Conditional Routing)
 - M15 (Checkpointing)
-- M17 (Human-in-the-Loop)
-- M19 (Supervisor-Pattern)
+- M18 (Human-in-the-Loop)
+- M20 (Supervisor-Pattern)
 
 **Erweiterte Module (optional):**
-- M24 (Agent Security & Best Practices)
-- M26 (Gradio UI für Agenten)
-- M28 (Production Deployment)
+- M25 (Agent Security & Best Practices)
+- M27 (Gradio UI für Agenten)
+- M29 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -177,12 +177,12 @@ graph TB
 - M05 (LCEL Chains)
 - M08-M11 (RAG)
 - M13-M14 (StateGraph, Routing)
-- M18-M19 (Multi-Agent Patterns)
+- M19-M20 (Multi-Agent Patterns)
 
 **Erweiterte Module (optional):**
-- M22 (Agentic RAG)
-- M25 (Advanced RAG – Pipeline-Patterns)
-- M29 (Hierarchical Agent Teams)
+- M23 (Agentic RAG)
+- M26 (Advanced RAG – Pipeline-Patterns)
+- M30 (Hierarchical Agent Teams)
 
 **Architektur:**
 ```mermaid
@@ -231,10 +231,10 @@ graph TB
 - M03 (Erste Agenten)
 - M06 (Structured Output)
 - M07 (Multi-Tool Agents)
-- M18 (Multi-Agent Patterns - Collaborative)
+- M19 (Multi-Agent Patterns - Collaborative)
 
 **Erweiterte Module (optional):**
-- M23 (Agent Evaluation & Testing)
+- M24 (Agent Evaluation & Testing)
 
 **Architektur:**
 ```mermaid
@@ -279,11 +279,11 @@ graph LR
 - M02 (Tool Use)
 - M03 (Erste Agenten)
 - M13-M14 (StateGraph, Routing)
-- M15-M17 (Checkpointing, HITL)
+- M15-M18 (Checkpointing, HITL)
 
 **Erweiterte Module (optional):**
-- M24 (Agent Security & Best Practices)
-- M28 (Production Deployment)
+- M25 (Agent Security & Best Practices)
+- M29 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -594,8 +594,8 @@ graph = workflow.compile(
 **Referenz-Notebooks:**
 - `M13_StateGraph_Basics.ipynb` - StateGraph Einführung
 - `M14_Conditional_Routing_Tool_Loop.ipynb` - Routing
-- `M18_Supervisor_Pattern.ipynb` - Multi-Agent-Beispiel
-- `M19_Multi_Agent_Projekt.ipynb` - Vollständiges Projekt
+- `M19_Supervisor_Pattern.ipynb` - Multi-Agent-Beispiel
+- `M20_Multi_Agent_Projekt.ipynb` - Vollständiges Projekt
 
 ## 3 Troubleshooting
 
@@ -709,6 +709,6 @@ class SupportState(TypedDict):
 **Version:** 1.1
 **Letzte Aktualisierung:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-**Basis:** Kursplan v4.5, Module M00-M30
+**Basis:** Kursplan v4.5, Module M00-M31
 **Framework-Versionen:** LangChain 1.0+, LangGraph 1.0+, LangSmith 0.4+    
 

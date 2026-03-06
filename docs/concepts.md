@@ -40,17 +40,41 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
 - **[State Management](./concepts/State_Management.html)** – Zustandsverwaltung in komplexen Workflows mit LangGraph (→ M12–M15)
   - Warum State Management? Daten über Schritte hinweg erhalten
   - TypedDict-basierter State, Reducer-Funktionen
-  - Checkpointing und Session-Persistenz
+  - Nodes geben nur Änderungen zurück, nicht den gesamten State
 
-- **[Human-in-the-Loop](./concepts/Human_in_the_Loop.html)** – Wann und warum KI-Agenten Menschen einbinden sollten (→ M17)
+- **[Checkpointing & Persistenz](./concepts/Checkpointing_Persistenz.html)** – Zustandsspeicherung und Session-Persistenz in LangGraph (→ M15–M18)
+  - MemorySaver, SqliteSaver, PostgresSaver – Wahl des richtigen Checkpointers
+  - Thread-IDs für Multi-User-Konversationen
+  - Interrupt & Resume für Human-in-the-Loop
+  - Time Travel: Zu früherem State zurückspringen
+
+- **[Memory-Systeme](./concepts/Memory_Systeme.html)** – Kurz- und Langzeitgedächtnis für persistente KI-Agenten (→ M16)
+  - Kurzzeit: Conversation Buffer, Sliding Window, Summarization
+  - Langzeit: Semantisches Memory (Vektordatenbank), Entity Memory
+  - Per-User-Memory für Multi-Session-Anwendungen
+
+- **[Human-in-the-Loop](./concepts/Human_in_the_Loop.html)** – Wann und warum KI-Agenten Menschen einbinden sollten (→ M18)
   - Autonomie-Spektrum: von assistiert bis vollständig autonom
   - Approval-Pattern vs. Eskalations-Pattern
   - Entscheidungskritikalität und Vertrauensgrenzen
 
-- **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten (→ M18–M19)
-  - Supervisor-Pattern, Hierarchical und Collaborative Patterns
+- **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten (→ M19–M20)
+  - Supervisor-Pattern, Hierarchical, Collaborative Patterns
+  - Paralleles Pattern: Fan-out / Fan-in mit Send und Map-Reduce
   - Spezialisierung, Fehlertoleranz und Skalierbarkeit
   - Kommunikation und Übergabe zwischen Agenten
+
+## Qualität & Praxis
+
+- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M17, M24)
+  - Eval-Datasets, Metriken und Regression-Tests
+  - LangSmith Evaluation Pipeline
+  - Baseline, Drift-Erkennung und Production-Monitoring
+
+- **[Agent Security](./concepts/Agent_Security.html)** – Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M25)
+  - Prompt Injection, Tool Missbrauch, Daten-Exfiltration
+  - Principle of Least Privilege, Tool Whitelisting, PII-Redaktion
+  - Vertrauensgrenzen und sichere Entwicklungspraxis
 
 ## Kommunikation & Protokolle
 
@@ -59,15 +83,3 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - A2A / ACP: Agent-zu-Agent-Kommunikation (Google / Linux Foundation, 2025)
   - AG-UI: Echtzeit-Streaming zwischen Agent und Frontend
   - Agent Contracts: Ressourcensteuerung und Kostenkontrolle
-
-## Qualität & Praxis
-
-- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M16, M23)
-  - Eval-Datasets, Metriken und Regression-Tests
-  - LangSmith Evaluation Pipeline
-  - Baseline, Drift-Erkennung und Production-Monitoring
-
-- **[Agent Security](./concepts/Agent_Security.html)** – Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M24)
-  - Prompt Injection, Tool Missbrauch, Daten-Exfiltration
-  - Principle of Least Privilege, Tool Whitelisting, PII-Redaktion
-  - Vertrauensgrenzen und sichere Entwicklungspraxis

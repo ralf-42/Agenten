@@ -27,7 +27,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M00-M30)
+├── 01_notebook/    # Jupyter Notebooks (M00-M31)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -77,39 +77,40 @@ Agenten/
 | M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
 | M11 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
 
-### Block 4: Kontrolle mit LangGraph (M12-M14, M16)
+### Block 4: Kontrolle mit LangGraph (M12-M14, M17)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
 | M13 | StateGraph Basics | State, Nodes, Edges, compile() |
 | M14 | Conditional Routing & Tool-Loop | Routing-Funktionen, Security-Basics |
-| M16 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
+| M17 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
 
-### Block 5: HITL & Multi-Agent-Projekt (M15-M21)
+### Block 5: HITL & Multi-Agent-Projekt (M15-M22)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M15 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
-| M17 | Human-in-the-Loop | interrupt(), Approval-Pattern |
-| M18 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
-| M19 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
-| M20 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
-| M21 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
+| M16 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
+| M18 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
+| M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
+| M21 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
+| M22 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
 
-### Erweiterte Module (M22-M30, optional)
+### Erweiterte Module (M23-M31, optional)
 
 > Alle Notebooks fertiggestellt ✅
 
 | Modul | Thema                           | Priorität       | Status |
 | ----- | ------------------------------- | --------------- | ------ |
-| M22   | Agentic RAG                      | 🟡 Empfohlen   | ✅ |
-| M23   | Agent Evaluation & Testing       | 🟡 Empfohlen   | ✅ |
-| M24   | Agent Security & Best Practices  | 🔵 Optional    | ✅ |
-| M25   | Advanced RAG – Pipeline-Patterns | 🔵 Optional    | ✅ |
-| M26   | Gradio UI für Agenten            | 🔵 Optional    | ✅ |
-| M27   | MCP Integration                  | 🔵 Optional    | ✅ |
-| M28   | Production Deployment            | 🔵 Optional    | ✅ |
-| M29   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
-| M30   | Capstone: End-to-End Research-Report-System | 🔵 Optional | ✅ |
+| M23   | Agentic RAG                      | 🟡 Empfohlen   | ✅ |
+| M24   | Agent Evaluation & Testing       | 🟡 Empfohlen   | ✅ |
+| M25   | Agent Security & Best Practices  | 🔵 Optional    | ✅ |
+| M26   | Advanced RAG – Pipeline-Patterns | 🔵 Optional    | ✅ |
+| M27   | Gradio UI für Agenten            | 🔵 Optional    | ✅ |
+| M28   | MCP Integration                  | 🔵 Optional    | ✅ |
+| M29   | Production Deployment            | 🔵 Optional    | ✅ |
+| M30   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
+| M31   | Capstone: End-to-End Research-Report-System | 🔵 Optional | ✅ |
 
 ## 🔑 Voraussetzungen
 

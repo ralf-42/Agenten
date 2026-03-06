@@ -2,7 +2,7 @@
 layout: default
 title: Evaluation & Testing
 parent: Konzepte
-nav_order: 8
+nav_order: 10
 description: "Bewertung und Qualitätssicherung von KI-Agenten"
 has_toc: true
 ---

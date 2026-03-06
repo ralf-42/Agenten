@@ -44,13 +44,13 @@ flowchart TB
     M[Memory-Systeme] --> K[Kurzzeit-Memory]
     M --> L[Langzeit-Memory]
 
-    K --> K1[Conversation Buffer\nVoller Verlauf]
-    K --> K2[Sliding Window\nLetzte N Nachrichten]
-    K --> K3[Summarization\nKomprimierter Verlauf]
+    K --> K1["Conversation Buffer<br/>Voller Verlauf"]
+    K --> K2["Sliding Window<br/>Letzte N Nachrichten"]
+    K --> K3["Summarization<br/>Komprimierter Verlauf"]
 
-    L --> L1[Semantisch\nFakten und Wissen]
-    L --> L2[Episodisch\nEreignisse und Erfahrungen]
-    L --> L3[Entity Memory\nStrukturierte Entitaeten]
+    L --> L1["Semantisch<br/>Fakten und Wissen"]
+    L --> L2["Episodisch<br/>Ereignisse und Erfahrungen"]
+    L --> L3["Entity Memory<br/>Strukturierte Entitaeten"]
 ```
 
 | Memory-Typ | Analogie | Technische Umsetzung |
@@ -237,18 +237,28 @@ class Entitaet(BaseModel):
 class EntitaetListe(BaseModel):
     entitaeten: list[Entitaet] = Field(description="Extrahierte Entitäten")
 
+FRAGE_PRAEFIXE = ("was ", "wer ", "wie ", "wo ", "wann ", "warum ", "welche", "kennst")
+
 def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
     """Extrahiert und speichert Entitäten aus der letzten Nachricht."""
-    extractor = llm.with_structured_output(EntitaetListe)
-    last_msg = state["messages"][-1].content
+    letzte = state["messages"][-1].content.strip()
 
+    # Fragen überspringen – sie enthalten keine neuen Fakten
+    if letzte.endswith("?") or letzte.lower().startswith(FRAGE_PRAEFIXE):
+        return {}
+
+    extractor = llm.with_structured_output(EntitaetListe)
     result = extractor.invoke(
-        f"Extrahiere wichtige Entitäten (Personen, Projekte, Orte) aus: {last_msg}"
+        f"Extrahiere wichtige Entitäten (Personen, Projekte, Orte) aus:\n{letzte}"
     )
 
     updated = dict(state.get("entity_memory", {}))
     for e in result.entitaeten:
-        updated[e.name] = e.beschreibung
+        # Merge statt überschreiben – neue Info an vorhandene anhängen
+        if e.name in updated and e.beschreibung not in updated[e.name]:
+            updated[e.name] = updated[e.name] + "; " + e.beschreibung
+        else:
+            updated[e.name] = e.beschreibung
 
     return {"entity_memory": updated}
 ```
@@ -261,8 +271,10 @@ In Multi-User-Systemen muss Memory nutzerspezifisch gespeichert werden. LangGrap
 
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
+import sqlite3
 
-checkpointer = SqliteSaver.from_conn_string("user_memory.db")
+conn = sqlite3.connect("user_memory.db", check_same_thread=False)
+checkpointer = SqliteSaver(conn)
 app = graph.compile(checkpointer=checkpointer)
 
 def get_user_config(user_id: str, session_id: str) -> dict:

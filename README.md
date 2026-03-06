@@ -27,7 +27,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M00-M31)
+├── 01_notebook/    # Jupyter Notebooks (M01-M31)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -53,11 +53,10 @@ Agenten/
 
 ## 📚 Kursmodule (Kursplan v4.5)
 
-### Block 1: Vom LLM zum denkenden Agenten (M00-M03)
+### Block 1: Vom LLM zum denkenden Agenten (M01-M03)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys, LangSmith |
-| M01 | Was sind KI-Agenten? | Definition, ReAct/TAO-Prinzip, Agent-Typen |
+| M01 | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen |
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools bauen |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
 
@@ -110,7 +109,7 @@ Agenten/
 | M28   | MCP Integration                  | 🔵 Optional    | ✅ |
 | M29   | Production Deployment            | 🔵 Optional    | ✅ |
 | M30   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
-| M31   | Capstone: End-to-End Research-Report-System | 🔵 Optional | ✅ |
+| M31   | Collaborative Multi-Agent (Capstone)        | 🔵 Optional | ✅ |
 
 ## 🔑 Voraussetzungen
 
@@ -162,4 +161,4 @@ Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](ht
 ---
 
 **Letzte Aktualisierung:** März 2026
-**Version:** 3.4
+**Version:** 3.5

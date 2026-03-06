@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Agenten-Kommunikationsprotokolle
+title: Agenten-Kommunikation
 parent: Konzepte
 nav_order: 10
-description: "Wie KI-Agenten miteinander und mit Tools kommunizieren – MCP, A2A, ACP und AG-UI im Überblick"
+description: Wie KI-Agenten miteinander und mit Tools kommunizieren – MCP, A2A, ACP und AG-UI im Überblick
 has_toc: true
 ---
 
-# Agenten-Kommunikationsprotokolle
+# Agenten-Kommunikation
 {: .no_toc }
 
-> **Wie KI-Agenten miteinander und mit Tools kommunizieren – MCP, A2A, ACP und AG-UI im Überblick**
+> **Wie KI-Agenten miteinander und mit Tools kommunizieren – MCP, A2A, ACP und AG-UI im Überblick**    
 
 ---
 
@@ -29,6 +29,7 @@ Ein einzelner KI-Agent kann heute beeindruckende Dinge – aber kein einzelnes M
 **Protokolle sind genau das:** standardisierte Regeln, die festlegen, wie Nachrichten aufgebaut sind, was sie bedeuten und in welcher Reihenfolge sie ausgetauscht werden. Ohne solche Regeln wäre jede Verbindung zwischen Agenten eine aufwändige Einzelintegration.
 
 Ein Vergleich aus der Netzwerktechnik hilft: TCP/IP hat das Internet möglich gemacht, indem es definierte, wie Datenpakete übertragen werden – unabhängig davon, welche Geräte kommunizieren. Agenten-Protokolle spielen heute eine ähnliche Rolle für die KI-Welt. Dieser „TCP/IP-Moment für KI“ markiert den Übergang von experimentellen Einzellösungen hin zu einer stabilen, skalierbaren Infrastruktur.
+
 
 ---
 
@@ -79,6 +80,10 @@ Erst mit dem Durchbruch großer Sprachmodelle (LLMs) wird diese Idee wieder rele
 | A2A | 2025 | Agent-zu-Agent-Kommunikation, von Google / Linux Foundation |
 
 ---
+
+
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/Agenten_Interoperabilitaet.png" alt="Raster aus Pixelwerten" width="1000">
+
 
 ## MCP – Model Context Protocol
 

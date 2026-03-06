@@ -52,6 +52,14 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - Spezialisierung, Fehlertoleranz und Skalierbarkeit
   - Kommunikation und Übergabe zwischen Agenten
 
+## Kommunikation & Protokolle
+
+- **[Agenten-Kommunikationsprotokolle](./concepts/Agenten_Kommunikationsprotokolle.html)** – Wie KI-Agenten miteinander und mit Tools kommunizieren (→ MCP, A2A, AG-UI)
+  - MCP: Universelle Tool-Integration (Anthropic, 2024)
+  - A2A / ACP: Agent-zu-Agent-Kommunikation (Google / Linux Foundation, 2025)
+  - AG-UI: Echtzeit-Streaming zwischen Agent und Frontend
+  - Agent Contracts: Ressourcensteuerung und Kostenkontrolle
+
 ## Qualität & Praxis
 
 - **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M16, M23)

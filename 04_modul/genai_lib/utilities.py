@@ -524,6 +524,113 @@ def extract_thinking(response: Any) -> Tuple[str, str]:
 
 
 # ============================================================================
+# LANGSMITH TRACE UTILITIES
+# ============================================================================
+
+def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> None:
+    """
+    Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Tabelle.
+
+    Mit show_steps=True werden die Child-Runs (Tool-Calls, LLM-Calls) des letzten
+    Runs aufgelistet — nützlich zur Analyse von Agenten-Verhalten:
+
+    Wichtige Trace-Patterns:
+        - Unexpected Tool Calls: Agent ruft Tools auf, die für die Aufgabe nicht
+          sinnvoll sind (z.B. grep-Calls bei reinen Wissensfragen)
+        - Retry-Loops: Wiederholte Tool-Calls mit gleichen Args nach Fehler
+        - Over-Planning: Viele write_todos-Steps, wenig tatsächliche Arbeit
+        - Missing Tool Use: Agent antwortet ohne Tools trotz verfügbarer Tools
+        - Hohe Child-Run-Anzahl: Deutet auf interne Loops oder Middleware hin
+
+    Parameter:
+    ----------
+    project_name : str
+        Name des LangSmith-Projekts (z.B. "M32-DeepAgents-Harness")
+    limit : int, optional
+        Anzahl der anzuzeigenden Runs (Standard: 5)
+    show_steps : bool, optional
+        Wenn True, werden die Child-Runs (Tool-Calls, LLM-Calls) des letzten
+        Runs aufgelistet — ideal für Pattern-Analyse (Standard: False)
+
+    Beispiel:
+    ---------
+    >>> from genai_lib.utilities import show_trace
+    >>> show_trace("M32-DeepAgents-Harness", limit=3)
+    >>> show_trace("M32-DeepAgents-Harness", show_steps=True)
+    """
+    try:
+        from langsmith import Client
+    except ImportError:
+        mprint("> ❌ `langsmith` nicht installiert: `pip install langsmith`")
+        return
+
+    try:
+        client = Client()
+        runs = list(client.list_runs(
+            project_name=project_name,
+            run_type="chain",
+            limit=limit,
+        ))
+    except Exception as e:
+        mprint(f"> ❌ LangSmith-Verbindung fehlgeschlagen: `{e}`")
+        return
+
+    if not runs:
+        mprint(f"> Keine Runs gefunden für Projekt `{project_name}`")
+        return
+
+    # Haupttabelle
+    zeilen = [
+        f"## LangSmith Trace — `{project_name}`", "",
+        "| Run | Status | Dauer | Child-Runs |",
+        "|-----|--------|-------|------------|",
+    ]
+    for run in runs:
+        dauer = (
+            f"{(run.end_time - run.start_time).total_seconds():.1f}s"
+            if run.end_time and run.start_time else "—"
+        )
+        children = len(run.child_run_ids) if run.child_run_ids else 0
+        status = "✅" if run.status == "success" else "❌"
+        zeilen.append(f"| `{run.name or '—'}` | {status} {run.status} | {dauer} | {children} |")
+
+    mprint("\n".join(zeilen))
+
+    # Step-Analyse des letzten Runs
+    if show_steps:
+        last_run = runs[0]
+        try:
+            children = list(client.list_runs(
+                project_name=project_name,
+                filter=f'eq(parent_run_id, "{str(last_run.id)}")',
+            ))
+        except Exception as e:
+            mprint(f"> ❌ Child-Runs konnten nicht abgerufen werden: `{e}`")
+            return
+
+        if not children:
+            mprint("> Keine Child-Runs gefunden.")
+            return
+
+        step_zeilen = [
+            f"\n### Steps — letzter Run: `{last_run.name or '—'}`", "",
+            "| # | Typ | Name | Status | Dauer |",
+            "|---|-----|------|--------|-------|",
+        ]
+        for i, child in enumerate(children, 1):
+            dauer = (
+                f"{(child.end_time - child.start_time).total_seconds():.1f}s"
+                if child.end_time and child.start_time else "—"
+            )
+            status = "✅" if child.status == "success" else "❌"
+            step_zeilen.append(
+                f"| {i} | `{child.run_type}` | `{child.name}` | {status} | {dauer} |"
+            )
+
+        mprint("\n".join(step_zeilen))
+
+
+# ============================================================================
 # PROMPT TEMPLATE LOADER
 # ============================================================================
 

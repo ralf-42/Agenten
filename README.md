@@ -4,6 +4,7 @@
 ![LangGraph 1.0.9](https://img.shields.io/badge/LangGraph-1.0.9-brightgreen)
 ![LangSmith 0.4.41](https://img.shields.io/badge/LangSmith-0.4.41-brightgreen)
 ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--03--05-blue)
+![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.0+, LangGraph 1.0.9, LangSmith 0.4.41 und agentenbasierte KI-Architekturen.
 
@@ -110,6 +111,7 @@ Agenten/
 | M29   | Production Deployment            | 🔵 Optional    | ✅ |
 | M30   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
 | M31   | Collaborative Multi-Agent (Capstone)        | 🔵 Optional | ✅ |
+| M32   | DeepAgents: Autonomes Harness-Pattern       | 🔵 Optional | ✅ |
 
 ## 🔑 Voraussetzungen
 

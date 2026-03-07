@@ -19,7 +19,6 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools | ✅ Vollständig |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns | ✅ Vollständig |
 
-**Block 1** – Agent-Grundlagen & erste Tools
 
 ---
 
@@ -32,7 +31,6 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M06 | Structured Output | Pydantic, with_structured_output() | ✅ Vollständig |
 | M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Debugging | ✅ Vollständig |
 
-**Block 2** – Chains, Structured Output & Agent-Vertiefung
 
 ---
 
@@ -45,7 +43,6 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, RAG-Chain | ✅ Vollständig |
 | M11 | RAG-Agent | RAG als Tool, RAG-Agent bauen | ✅ Vollständig |
 
-**Block 3** – Gedächtnis & RAG
 
 ---
 
@@ -58,23 +55,21 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M14 | Conditional Routing & Tool-Loop | Conditional Edges, Routing-Funktion | ✅ Vollständig |
 | M17 | LangSmith Evaluations Basics | Eval-Dataset, Qualitätskriterien, Regression-Check | ✅ Vollständig |
 
-**Block 4** – Kontrolle, Routing & Security
 
 ---
 
 ### **BLOCK 5: HITL & Multi-Agent-Projekt** (M15–M16, M18–M22)
 
-| Modul | Titel | Inhalt | Status |
-|-------|-------|--------|--------|
-| M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Vollständig |
-| M16 | Memory-Systeme | Konversationsspeicher, Semantic Memory, Per-User Memory | ✅ Vollständig |
-| M18 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Vollständig |
-| M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Vollständig |
-| M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ Vollständig |
-| M21 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Vollständig |
-| M22 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
+| Modul | Titel                    | Inhalt                                                  | Status        |
+| ----- | ------------------------ | ------------------------------------------------------- | ------------- |
+| M15   | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen                        | ✅ Vollständig |
+| M16   | Memory-Systeme           | Konversationsspeicher, Semantic Memory, Per-User Memory | ✅ Vollständig |
+| M18   | Human-in-the-Loop        | interrupt(), Approval-Pattern                           | ✅ Vollständig |
+| M19   | Multi-Agent Patterns     | Supervisor, Hierarchical, Collaborative                 | ✅ Vollständig |
+| M20   | Supervisor Pattern       | Worker-Agents, Supervisor-Logik, Graph                  | ✅ Vollständig |
+| M21   | Multi-Agent Projekt      | Projekt-Templates, MVP-Definition                       | ✅ Vollständig |
+| M22   | OpenAI Agent Builder     | Kurz-Ausblick , kein Pflicht-Hands-On                   | ✅ Vollständig |
 
-**Block 5** – HITL, Multi-Agent-Projekt & Ausblick
 
 ---
 
@@ -96,41 +91,8 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M32 | DeepAgents Harness | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional ✅ |
 
 
-**Empfohlene Reihenfolge (optional, bei Restzeit):**
-1. M23 - Agentic RAG 🟡
-2. M24 - Agent Evaluation & Testing 🟡
-3. M25 - Agent Security & Best Practices 🔵
-4. M27 - Gradio UI für Agenten 🔵
-5. M28 - MCP Integration 🔵
-6. M26 - Advanced RAG Pipeline-Patterns 🔵
-7. M29 - Production Deployment 🔵
-8. M30 - Hierarchical Agent Teams 🔵
-9. M31 - Collaborative Multi-Agent 🔵
-10. M32 - DeepAgents Harness 🔵
-
 
 ---
 
-## 📋 Notebook-Struktur (Template)
-
-Alle Notebooks folgen dem **Notebook Template Guide**:
-
-```
-1. Titel (HTML, grau, "KI-Agenten. Verstehen. Anwenden. Gestalten.")
-2. 🔧 Umgebung einrichten (collapsed)
-3. Kapitel 1-N (# [Nummer] | Titel)
-4. # A | Aufgabe
-```
-
-**Wichtig:**
-- Konsistentes Styling
-- LangChain 1.0+ Patterns
-- Mermaid-Diagramme (statt statische Bilder)
-- `mprint()` für Ausgaben
-
-
-
----
-
-**Version:** 1.4
-**Stand:** März 2026
+**Version:** 1.4   
+**Stand:** März 2026   

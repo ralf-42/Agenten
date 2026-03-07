@@ -32,9 +32,7 @@ Agenten/
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
-├── 05_prompt/      # Prompt-Templates (Markdown-Format)
-├── 07_image/       # Bildmaterialien
-└── docs/           # GitHub Pages Dokumentation
+└── 05_prompt/      # Prompt-Templates (Markdown-Format)
 ```
 
 ## 🛠️ Technologie-Stack
@@ -98,20 +96,18 @@ Agenten/
 
 ### Erweiterte Module (M23-M32, optional)
 
-> Alle Notebooks fertiggestellt ✅
-
-| Modul | Thema                           | Priorität       | Status |
-| ----- | ------------------------------- | --------------- | ------ |
-| M23   | Agentic RAG                      | 🟡 Empfohlen   | ✅ |
-| M24   | Agent Evaluation & Testing       | 🟡 Empfohlen   | ✅ |
-| M25   | Agent Security & Best Practices  | 🔵 Optional    | ✅ |
-| M26   | Advanced RAG – Pipeline-Patterns | 🔵 Optional    | ✅ |
-| M27   | Gradio UI für Agenten            | 🔵 Optional    | ✅ |
-| M28   | MCP Integration                  | 🔵 Optional    | ✅ |
-| M29   | Production Deployment            | 🔵 Optional    | ✅ |
-| M30   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
-| M31   | Collaborative Multi-Agent                   | 🔵 Optional | ✅ |
-| M32   | DeepAgents: Autonomes Harness-Pattern       | 🔵 Optional | ✅ |
+| Modul | Thema                                 | Priorität    | Status |
+| ----- | ------------------------------------- | ------------ | ------ |
+| M23   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
+| M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
+| M25   | Agent Security & Best Practices       | 🔵 Optional  | ✅      |
+| M26   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
+| M27   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
+| M28   | MCP Integration                       | 🔵 Optional  | ✅      |
+| M29   | Production Deployment                 | 🔵 Optional  | ✅      |
+| M30   | Hierarchical Agent Teams              | 🔵 Optional  | ✅      |
+| M31   | Collaborative Multi-Agent             | 🔵 Optional  | ✅      |
+| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 
@@ -156,11 +152,11 @@ Der Kurs bietet zwei praxisorientierte Lernformate:
 
 Der **Quellcode** steht unter der [MIT License](./LICENSE).       
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
-Bilder und Videos erstellt mit **Hedra AI** – Nutzung gemäß [Hedra Terms](https://www.hedra.com/terms).     
+  
 
 © 2025–2026 Ralf-42
 
 ---
 
-**Letzte Aktualisierung:** März 2026
-**Version:** 3.5
+**Letzte Aktualisierung:** März 2026     
+**Version:** 3.5    

@@ -1,143 +1,189 @@
-# 🤖 Kursbibliothek Agenten und ML
+# Kursbibliothek Agenten
 
-Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"Agenten"** bereit. Sie erleichtert Teilnehmer:innen den Einstieg und die praktische Anwendung generativer KI-Technologien in Google Colab-Umgebungen.
+Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie erleichtert Teilnehmer:innen den Einstieg und die praktische Anwendung von Multi-Agent-Systemen mit LangChain und LangGraph in Jupyter- und Google Colab-Umgebungen.
 
-## 1. 📦 Installation
+## 1. Installation
 
-Die Bibliothek ist für die Installation in Google Colab-Umgebungen optimiert:
+Die Bibliothek kann direkt aus GitHub installiert werden:
 
 ```bash
+# Jupyter / lokal
+pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+
+# Google Colab (mit uv)
 !uv pip install -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```
 
-Nach der Installation können die Module importiert werden:
+Nach der Installation:
 
 ```python
-from genai_lib.utilities import setup_api_keys, install_packages
-from genai_lib.show_md import show_title, show_info
-from genai_lib.prepare_prompt import prepare
+from genai_lib.utilities import mprint, mermaid, setup_api_keys, check_environment, show_trace
 ```
 
-## 2. 🏗️ Architektur und Module
+## 2. Architektur und Module
 
 Die Bibliothek besteht aus modularen Hilfsdateien im `genai_lib/` Verzeichnis:
 
-- **`utilities.py`** - Kernfunktionen für Umgebungssetup, API-Schlüssel-Verwaltung, Paketinstallation und Antwortverarbeitung
-- **`prepare_prompt.py`** - PREPARE-Framework-Implementierung für strukturierte Prompt-Entwicklung
-- **`show_md.py`** - Jupyter Notebook Display-Utilities für formatierte Markdown-Ausgabe
+- **`utilities.py`** - Kernfunktionen: Markdown-Ausgabe, Mermaid-Diagramme, API-Key-Verwaltung, LangSmith Trace-Analyse, Model-Profile, Thinking-Parser, Prompt-Loader
+- **`multimodal_rag.py`** - Multimodales RAG-System mit Bildsuche und Vision-LLM
 
-## 3. 📋 Abhängigkeiten
+## 3. Abhängigkeiten
 
-Die Bibliothek benötigt folgende LangChain- und KI-bezogene Pakete:
+Vollständige Liste in `requirements.txt`. Wichtigste Pakete:
 
-- `langchain_openai`
-- `langchain-community` 
-- `langchain-text-splitters`
-- `langchain_experimental`
-- `langchain-ollama`
+- `langchain`, `langchain-openai`, `langchain-community`
+- `langgraph`
+- `langsmith`
 - `chromadb`
 
-Eine vollständige Liste der Abhängigkeiten finden Sie in der `requirements.txt`.
+## 4. Funktionen (utilities.py)
 
-## 4. 🚀 Wichtige Funktionen
-
-### API-Schlüssel-Verwaltung (`utilities.py`)
-- `setup_api_keys()` - Richtet API-Schlüssel aus Google Colab userdata für OpenAI, Anthropic, Hugging Face ein
-- `install_packages()` - Installiert automatisch benötigte Pakete, falls nicht verfügbar
-- `process_response()` - Strukturierte Informationen aus LLM-Antworten extrahieren inkl. Token-Verwendung
-
-### PREPARE-Framework (`prepare_prompt.py`)
-- `prepare()` - Strukturierte Prompt-Entwicklung nach dem PREPARE-Framework
-  - **P**arameter definieren
-  - **R**olle festlegen
-  - **E**rgebnis beschreiben
-  - **P**rozess strukturieren
-  - **A**usgabeformat definieren
-  - **R**egeln und Einschränkungen
-  - **E**xempel bereitstellen
-
-### Display-Utilities (`show_md.py`)
-- `mprint()` / `show_md()` - Markdown-Anzeige in Notebooks
-- `show_title()`, `show_info()`, `show_warning()`, `show_success()` - Formatierte Benachrichtigungsfunktionen
-
-## 5. 💡 Verwendung
-
-Typische Verwendung in Google Colab-Lernumgebungen:
+### Notebook-Ausgabe
 
 ```python
-# 1. Installation über uv pip in Colab
-!uv pip install -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+from genai_lib.utilities import mprint, mermaid
 
-# 2. Import der Utilities
-from genai_lib.utilities import setup_api_keys, install_packages
-from genai_lib.show_md import show_title, show_info
-from genai_lib.prepare_prompt import prepare
+mprint("# Überschrift\n**fett** und *kursiv*")   # Markdown rendern
 
-# 3. Umgebungssetup
-setup_api_keys(["OPENAI_API_KEY", "ANTHROPIC_API_KEY"])
-
-# 4. Verwendung der Module
-show_title("Mein GenAI Projekt")
-show_info("Dies ist eine Beispielinfo")
+mermaid('''
+flowchart TB
+    START([START]) --> AGENT[Agent]
+    AGENT --> TOOL[Tool Call]
+    TOOL --> END([END])
+''')                                               # Mermaid-Diagramm rendern
 ```
 
-## 6. 🛠️ Entwicklung
+- `mprint(text)` - Rendert Markdown in Jupyter/Colab
+- `mermaid(code, width=None, height=None)` - Rendert Mermaid-Diagramme via CDN
 
-### Build und Installation
+### Umgebung und API-Keys
+
+```python
+from genai_lib.utilities import check_environment, setup_api_keys
+
+check_environment()                               # Python- und LangChain-Versionen anzeigen
+setup_api_keys(["OPENAI_API_KEY"])               # API-Keys aus Colab userdata laden
+```
+
+- `check_environment()` - Zeigt Python-Version und installierte LangChain/LangGraph-Pakete
+- `setup_api_keys(key_names, create_globals=True)` - Setzt API-Keys aus Google Colab `userdata` als Umgebungsvariablen
+- `install_packages(packages)` - Installiert fehlende Pakete automatisch via `uv pip` (Colab)
+- `get_ipinfo()` - Zeigt Geoinformationen zur aktuellen IP-Adresse
+
+### LangSmith Trace-Analyse
+
+```python
+from genai_lib.utilities import show_trace
+
+show_trace("M12-MultiAgent", limit=5, show_steps=True)
+```
+
+- `show_trace(project_name, limit=5, show_steps=False)` - Analysiert LangSmith-Traces des angegebenen Projekts und zeigt Laufzeiten, Token-Nutzung und optional Einzelschritte
+
+### Model-Profile
+
+```python
+from genai_lib.utilities import get_model_profile
+
+profile = get_model_profile("openai:gpt-4o-mini")
+```
+
+- `get_model_profile(model, print_profile=True, **kwargs)` - Ruft Model-Capabilities von models.dev ab (Structured Output, Vision, Token-Limits, etc.)
+
+### Thinking-Parser
+
+```python
+from genai_lib.utilities import extract_thinking
+
+thinking, answer = extract_thinking(response)
+```
+
+- `extract_thinking(response)` - Extrahiert Denkprozess und Antwort aus LLM-Responses (unterstützt Claude, Qwen3, DeepSeek R1)
+
+### Prompt-Template Loader
+
+```python
+from genai_lib.utilities import load_prompt
+
+# ChatPromptTemplate aus Markdown-Datei laden
+template = load_prompt("05_prompt/mein_prompt.md")           # lokal
+template = load_prompt("https://github.com/.../prompt.md")  # GitHub-URL
+
+# Als reinen String laden
+text = load_prompt("05_prompt/mein_prompt.md", mode="S")
+```
+
+- `load_prompt(path, mode="T")` - Lädt Markdown-Prompt-Templates (lokal oder GitHub-URL)
+  - `mode="T"` (Standard): gibt `ChatPromptTemplate` zurück
+  - `mode="S"`: gibt Inhalt als String zurück (Frontmatter wird entfernt)
+
+**Prompt-Format:**
+
+```markdown
+---
+name: beispiel_prompt
+variables: [text]
+---
+
+## system
+
+Du bist ein hilfreicher Assistent.
+
+## human
+
+Bitte verarbeite folgenden Text: {text}
+```
+
+## 5. Typische Verwendung
+
+```python
+# 1. Setup
+from genai_lib.utilities import setup_api_keys, check_environment
+setup_api_keys(["OPENAI_API_KEY", "LANGSMITH_API_KEY"])
+check_environment()
+
+# 2. LLM initialisieren (LangChain 1.0+)
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+
+# 3. Agent mit LangGraph erstellen
+from langgraph.graph import StateGraph, START, END, MessagesState
+from langchain_core.tools import tool
+
+@tool
+def my_tool(query: str) -> str:
+    """Verarbeitet eine Anfrage."""
+    return f"Ergebnis: {query}"
+
+# 4. Ergebnis anzeigen und Trace analysieren
+from genai_lib.utilities import mprint, show_trace
+mprint(result)
+show_trace("M12-MultiAgent", show_steps=True)
+```
+
+## 6. Entwicklung
+
 ```bash
 # Installation im Entwicklungsmodus
 pip install -e .
 
-# Paket erstellen
-python setup.py sdist bdist_wheel
+# Utilities testen
+python -m genai_lib.utilities
 ```
 
-### Modulausführung
-Module können einzeln getestet werden:
-```bash
-python -m genai_lib.utilities     # Utilities testen
-```
-
-## 7. 📁 Dateiorganisation
+## 7. Dateiorganisation
 
 ```
 04_modul/
-├── genai_lib/               # Hauptpaket für Generative KI
-│   ├── __init__.py          # Package-Exports und API
-│   ├── utilities.py         # Hilfsfunktionen (API-Keys, Paketinstallation, Prompt-Loader)
-│   └── multimodal_rag.py    # Multimodales RAG-System mit CLIP & Vision-LLM
-├── README.md                # Diese Datei
-└── setup.py                 # Setup-Konfiguration für pip-Installation
+├── genai_lib/
+│   ├── __init__.py          # Package-Exports
+│   ├── utilities.py         # Kernfunktionen (mprint, mermaid, setup_api_keys, show_trace, ...)
+│   └── multimodal_rag.py    # Multimodales RAG-System
+├── README.md
+├── requirements.txt
+└── setup.py
 ```
 
-### Ignorierte Dateien und Verzeichnisse
+## 8. Lizenz
 
-Die folgenden Dateien und Verzeichnisse werden durch `.gitignore` und `.claudeignore` von der Versionskontrolle und Claude Code ausgeschlossen:
-
-**Python-Build-Artefakte:**
-- `__pycache__/`, `*.pyc` - Python-Bytecode-Dateien
-- `*.egg-info/` - Python-Paket-Metadaten
-- `.pytest_cache/` - Test-Cache
-- `.ipynb_checkpoints/` - Jupyter Notebook Checkpoints
-
-**Entwicklungsumgebung:**
-- `.venv/`, `venv/` - Virtuelle Python-Umgebungen
-- `.obsidian/` - Obsidian-Notizen-Konfiguration
-
-**Projektspezifisch:**
-- `_misc/` - Verschiedene Hilfsdateien und temporäre Dateien
-- `.tmp.drivedownload`, `.tmp.driveupload` - Temporäre Google Drive Dateien
-- `*.pptx`, `*.png`, `*.jpeg` - Binäre Präsentations- und Bilddateien
-
-**Konfiguration und Dokumentation:**
-- `.gitignore`, `.claudeignore` - Ignore-Konfigurationen selbst
-- `CLAUDE.md` - Claude Code Projektanweisungen (nur für Claude Code sichtbar)
-
-## 8. 📄 Lizenz
-
-Dieses Projekt steht unter der **MIT-Lizenz**. Die Kursmaterialien können frei verwendet, modifiziert und weiterverbreitet werden.
-
-**MIT License - Copyright (c) 2025 Ralf**
-
-Weitere Details finden Sie in der `LICENSE`-Datei.
-
+MIT License - Copyright (c) 2025 Ralf

@@ -42,7 +42,7 @@ Die Bibliothek besteht aus zwei Hauptmodulen:
 
 | Modul | Beschreibung | Hauptfunktionen |
 |-------|-------------|----------------|
-| **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile |
+| **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, LangSmith Trace-Analyse |
 | **multimodal_rag.py** | Multimodales RAG-System (v3.1) | Text- und Bildsuche, Bild-zu-Bild-Suche, Cross-Modal-Retrieval, System-Status |
 
 ---
@@ -379,6 +379,54 @@ for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-
 - Temperature-Unterstützung prüfen
 - Debugging und Dokumentation
 
+#### 10. `show_trace(project_name, limit=5, show_steps=False)` 🆕
+
+Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle.
+Mit `show_steps=True` werden alle Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs
+aufgelistet — ideal zur Erkennung von Trace-Patterns direkt im Notebook.
+
+```python
+from genai_lib.utilities import show_trace
+
+# Letzte 3 Runs anzeigen
+show_trace("M32-DeepAgents-Harness", limit=3)
+
+# Mit Step-Analyse: zeigt alle Tool-Calls des letzten Runs
+show_trace("M32-DeepAgents-Harness", show_steps=True)
+```
+
+**Ausgabe (Haupttabelle):**
+
+| Run | Status | Dauer | Child-Runs |
+|-----|--------|-------|------------|
+| `m32-planning-demo` | ✅ success | 14.2s | 8 |
+| `m32-custom-tools` | ✅ success | 6.1s | 5 |
+
+**Ausgabe mit `show_steps=True`:**
+
+| # | Typ | Name | Status | Dauer |
+|---|-----|------|--------|-------|
+| 1 | `tool` | `grep` | ✅ | 0.1s |
+| 2 | `tool` | `grep` | ✅ | 0.1s |
+| 3 | `llm` | `ChatOpenAI` | ✅ | 2.3s |
+
+**Erkennbare Trace-Patterns:**
+
+| Pattern | Erkennungszeichen |
+|---------|------------------|
+| Unexpected Tool Calls | `grep`-Calls bei reiner Wissensfrage |
+| Retry-Loop | Gleicher Tool-Name mehrfach mit `error` |
+| Over-Planning | Viele `write_todos`-Steps, wenig eigentliche Arbeit |
+| Missing Tool Use | Keine Tool-Runs trotz verfügbarer Tools |
+
+**Parameter:**
+- `project_name` (str): Name des LangSmith-Projekts
+- `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
+- `show_steps` (bool): Child-Runs des letzten Runs anzeigen (Standard: False)
+
+**Hinweis:** Benötigt `langsmith` (Soft-Dependency — wird nur bei Aufruf importiert).
+Nach einem Agent-Run kurz warten: `time.sleep(2)` vor dem Aufruf.
+
 ---
 
 ## multimodal_rag.py - Multimodales RAG
@@ -674,8 +722,8 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.1       
-**Stand:** Januar 2026       
+**Version:** 3.2
+**Stand:** März 2026
 **Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.          
 
 

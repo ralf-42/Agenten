@@ -168,8 +168,12 @@ from langsmith import Client
 from langsmith.evaluation import evaluate
 
 # Utilities
-from genai_lib.utilities import setup_api_keys
+from genai_lib.utilities import setup_api_keys, show_trace
 import os
+
+# Trace-Analyse (Pattern-Erkennung direkt im Notebook)
+show_trace("Mein-Projekt", limit=5)              # Letzte Runs als Tabelle
+show_trace("Mein-Projekt", show_steps=True)      # + Tool-Calls des letzten Runs
 ```
 
 ---
@@ -187,6 +191,6 @@ import os
 
 ---
 
-**Version:** 1.0
-**Tokens:** ~1.500 (vs. 15.000 in Full)
-**Letzte Aktualisierung:** November 2025
+**Version:** 1.1
+**Tokens:** ~1.600 (vs. 15.000 in Full)
+**Letzte Aktualisierung:** März 2026

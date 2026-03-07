@@ -966,7 +966,7 @@ graph LR
 ---
 
 **Version:** 2.0
-**Stand:** November 2025
+**Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 **Changelog v2.0:**
@@ -987,8 +987,3 @@ graph LR
 - [LangChain Documentation](https://python.langchain.com/)
 - [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](https://sider.ai/blog/ai-tools/what-is-openai-chatgpt-agent-builder-a-complete-2025-guide)
 
----
-
-**Version:** 1.0  
-**Stand:** November 2025  
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.

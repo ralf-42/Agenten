@@ -2,19 +2,19 @@
 
 ## 📚 Modulstruktur
 
-Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M00-M17, 9 erweiterte Module M22-M30).
+Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M01-M22, 10 erweiterte Module M23-M32).
 
 **Hinweis Reihenfolge:** M17 (LangSmith Evaluations Basics) gehört inhaltlich zu Block 4, M15–M16 zu Block 5. Siehe Kursplan v4.5 für Details.
+**Hinweis M00:** Kurs-Intro-Materialien sind separat verfügbar und nicht als Notebook in diesem Verzeichnis enthalten.
 
 ---
 
-## 🎯 Kern-Module (M00-M17)
+## 🎯 Kern-Module (M01-M22)
 
-### **BLOCK 1: Grundlagen** (M00-M03)
+### **BLOCK 1: Grundlagen** (M01-M03)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
-| M00 | Kurs-Intro | Kursübersicht, Setup, API-Keys | ✅ Vollständig |
 | M01 | Was sind KI-Agenten? | Definition, ReAct-Prinzip, Agent-Typen | ✅ Vollständig |
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools | ✅ Vollständig |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns | ✅ Vollständig |
@@ -62,48 +62,51 @@ Dieses Verzeichnis enthält **31 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 
 ---
 
-### **BLOCK 5: HITL & Multi-Agent-Projekt** (M15-M16)
+### **BLOCK 5: HITL & Multi-Agent-Projekt** (M15–M16, M18–M22)
 
 | Modul | Titel | Inhalt | Status |
 |-------|-------|--------|--------|
 | M15 | Checkpointing & Sessions | MemorySaver, Sessions fortsetzen | ✅ Vollständig |
+| M16 | Memory-Systeme | Konversationsspeicher, Semantic Memory, Per-User Memory | ✅ Vollständig |
 | M18 | Human-in-the-Loop | interrupt(), Approval-Pattern | ✅ Vollständig |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative | ✅ Vollständig |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph | ✅ Vollständig |
 | M21 | Multi-Agent Projekt | Projekt-Templates, MVP-Definition | ✅ Vollständig |
-| M16 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
+| M22 | OpenAI Agent Builder | Kurz-Ausblick (10 Min), kein Pflicht-Hands-On | ✅ Vollständig |
 
 **Block 5** – HITL, Multi-Agent-Projekt & Ausblick
 
 ---
 
-## 📊 Erweiterte Module (M22-M30) - Optional
+## 📊 Erweiterte Module (M23-M32) - Optional
 
 > Alle Notebooks fertiggestellt ✅
 
 | Modul | Titel | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M22 | Agentic RAG | RAG als Tool, Multi-Hop, Adaptive Retrieval | 🟡 Empfohlen ✅ |
-| M23 | Agent Evaluation & Testing | Metriken, LangSmith Eval, RAGAS, Regressions-Tests | 🟡 Empfohlen ✅ |
-| M24 | Agent Security & Best Practices | Prompt Injection, Tool-Whitelisting, PII-Redaktion | 🔵 Optional ✅ |
-| M25 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, CRAG | 🔵 Optional ✅ |
-| M26 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming, HITL | 🔵 Optional ✅ |
-| M27 | MCP Integration | Model Context Protocol, Multi-Server | 🔵 Optional ✅ |
-| M28 | Production Deployment | Docker, FastAPI, Monitoring, LangSmith | 🔵 Optional ✅ |
-| M29 | Hierarchical Agent Teams | 3-Ebenen-Hierarchie, Tool-Delegation, Parallelisierung | 🔵 Optional ✅ |
-| M30 | Capstone: End-to-End Research-Report-System | Security Gate, Research/Writing Teams, Quality Judge, StateGraph | 🔵 Optional ✅ |
+| M23 | Agentic RAG | RAG als Tool, Multi-Hop, Adaptive Retrieval | 🟡 Empfohlen ✅ |
+| M24 | Agent Evaluation & Testing | Metriken, LangSmith Eval, RAGAS, Regressions-Tests | 🟡 Empfohlen ✅ |
+| M25 | Agent Security & Best Practices | Prompt Injection, Tool-Whitelisting, PII-Redaktion | 🔵 Optional ✅ |
+| M26 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, CRAG | 🔵 Optional ✅ |
+| M27 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming, HITL | 🔵 Optional ✅ |
+| M28 | MCP Integration | Model Context Protocol, Multi-Server | 🔵 Optional ✅ |
+| M29 | Production Deployment | Docker, FastAPI, Monitoring, LangSmith | 🔵 Optional ✅ |
+| M30 | Hierarchical Agent Teams | 3-Ebenen-Hierarchie, Tool-Delegation, Parallelisierung | 🔵 Optional ✅ |
+| M31 | Collaborative Multi-Agent | Peer-Review, Diskussion, direkter Agenten-Austausch | 🔵 Optional ✅ |
+| M32 | DeepAgents Harness | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional ✅ |
 
 
 **Empfohlene Reihenfolge (optional, bei Restzeit):**
-1. M22 - Agentic RAG 🟡
-2. M23 - Agent Evaluation & Testing 🟡
-3. M24 - Agent Security & Best Practices 🔵
-4. M26 - Gradio UI für Agenten 🔵
-5. M27 - MCP Integration 🔵
-6. M25 - Advanced RAG Pipeline-Patterns 🔵
-7. M28 - Production Deployment 🔵
-8. M29 - Hierarchical Agent Teams 🔵
-9. M30 - Capstone (Abschlussprojekt) 🔵
+1. M23 - Agentic RAG 🟡
+2. M24 - Agent Evaluation & Testing 🟡
+3. M25 - Agent Security & Best Practices 🔵
+4. M27 - Gradio UI für Agenten 🔵
+5. M28 - MCP Integration 🔵
+6. M26 - Advanced RAG Pipeline-Patterns 🔵
+7. M29 - Production Deployment 🔵
+8. M30 - Hierarchical Agent Teams 🔵
+9. M31 - Collaborative Multi-Agent 🔵
+10. M32 - DeepAgents Harness 🔵
 
 
 ---

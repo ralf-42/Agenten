@@ -456,6 +456,8 @@ result = compiled_graph.invoke(
 
 ## 9 Best Practices für den Kurs
 
+> **Übersicht:** Konfiguration & Organisation (9.1–9.6) · Analyse & Debugging (9.7–9.9)
+
 ### 9.1 Projekt-Organisation
 
 **Konvention: Modulname direkt in der Setup-Cell setzen**
@@ -661,6 +663,10 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 > 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
 
+---
+
+**Analyse & Debugging**
+
 ### 9.7 Trace-Patterns erkennen
 
 Traces sind mehr als ein Debug-Log — sie machen systematische Verhaltensmuster sichtbar.
@@ -703,6 +709,52 @@ show_trace("M32-DeepAgents-Harness", show_steps=True)
 
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
 Unexpected Tool Calls und Retry-Loops direkt im Notebook sichtbar zu machen.
+
+### 9.8 Problembereiche systematisch finden (Quick Workflow)
+
+Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad-hoc-Debugging:
+
+1. **Failed/Slow/Expensive Runs filtern** (Projekt + Tags + Zeitraum)
+2. **Top-Pattern clustern** (z.B. Retry-Loop, Tool-Error, Token-Akkumulation — siehe 9.7)
+3. **Einen Fix pro Pattern** umsetzen (Prompt, Tool-Description, Routing, Limits)
+4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
+
+**Im Kurs** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
+(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M29 relevant —
+wenn Agenten außerhalb von Colab betrieben werden.
+
+### 9.9 Web-UI Filter: Traces gezielt finden
+
+Die LangSmith-Oberfläche unter [eu.smith.langchain.com](https://eu.smith.langchain.com/) bietet
+leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enthält.
+
+**Nützlichste Filter-Kombinationen für den Kurs:**
+
+| Szenario | Filter | Wert |
+|----------|--------|-------|
+| Nur Fehler anzeigen | `Status` | `Error` |
+| Langsame Runs finden | `Latency` | `> 10s` |
+| Viele Tool-Calls | `Child Runs` | `> 5` |
+| Spezifischer Agent | `Name` | `contains "coordinator"` |
+| Experiment A vs. B | `Tags` | `experiment-A` / `experiment-B` |
+| Zeitraum eingrenzen | `Start Time` | `Last 1 hour` / `Last 24 hours` |
+
+**Drei Kern-Views für den Kurs:**
+
+```
+1. Debugging:    Status = Error  +  Project = M##-...
+2. Latenz:       Latency > 5s   +  Child Runs > 3
+3. Experiment:   Tag "experiment-A" vs. Tag "experiment-B" (Compare-View)
+```
+
+**Weitere Web-UI-Tipps:**
+
+- **Playground direkt aus Trace:** Trace öffnen → *"Open in Playground"* — Prompt live editieren, Modell wechseln, sofort testen
+- **Compare-Ansicht:** Zwei Runs auswählen → *"Compare"* — zeigt Input/Output/Latenz/Tokens nebeneinander; ideal für Vorher/Nachher nach einem Fix
+- **Trace-Baum navigieren:** Linke Seitenleiste zeigt verschachtelte Child-Runs; Klick auf einen Child-Run öffnet Input/Output/Latenz direkt
+- **Export:** Run-Tabelle (gefiltert) → *"Export"* → CSV (nur Tabellen-Spalten); einzelne Traces → JSON (natives Format, nicht änderbar). Für vollständige Daten: `client.list_runs()` + `pandas.DataFrame.to_csv()`
+
+> 💡 **Tipp:** LangSmith-UI im zweiten Browser-Tab öffnen — so sind Traces direkt während der Entwicklung sichtbar, ohne den Notebook-Tab zu wechseln.
 
 ---
 
@@ -787,7 +839,6 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 ---
 
-**Version:** 1.6
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
+**Version:** 1.9    
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

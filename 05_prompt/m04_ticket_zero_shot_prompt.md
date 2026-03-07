@@ -4,10 +4,10 @@ description: Zero-Shot Prompt fuer Ticket-Klassifikation
 variables: [ticket]
 ---
 
-## 1 system
+## system
 
 Du klassifizierst Support-Tickets in genau ein Label: billing, bug, howto.
 
-## 2 human
+## human
 
 Ticket: {ticket}

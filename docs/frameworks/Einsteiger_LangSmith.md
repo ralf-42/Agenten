@@ -661,6 +661,49 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 > 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
 
+### 9.7 Trace-Patterns erkennen
+
+Traces sind mehr als ein Debug-Log — sie machen systematische Verhaltensmuster sichtbar.
+Die folgenden Patterns treten immer wieder auf, quer durch alle Agenten-Typen:
+
+| Pattern | Erkennungszeichen im Trace | Ursache / Gegenmittel |
+|---------|---------------------------|----------------------|
+| **Unexpected Tool Calls** | Agent ruft Tools auf, die für die Aufgabe nicht sinnvoll sind (z.B. `grep` bei reiner Wissensfrage) | Default-Bias im Harness oder System-Prompt zu vage → explizite Anweisung im System-Prompt |
+| **Retry-Loop** | Gleicher Tool-Call mit identischen Args wiederholt, jeweils `error` | Fehlende Fehlerbehandlung im Tool oder Agent → Error-Handling im Tool ergänzen |
+| **Over-Planning** | Viele `write_todos`-Steps, danach nur ein Tool-Call | Mismatch zwischen Aufgabenkomplexität und Planning-Tiefe → Aufgabe präziser formulieren |
+| **Missing Tool Use** | Agent antwortet direkt ohne Tools, obwohl passende Tools verfügbar | Tool-Beschreibung unklar oder System-Prompt zu dominant → Tool-Docstring verbessern |
+| **Token-Akkumulation** | LLM-Input wächst mit jedem Schritt stark an | Kein Context-Management → Sliding-Window oder Summarization (M16) |
+| **Hohe Child-Run-Anzahl** | Viele Child-Runs pro Parent, obwohl Aufgabe einfach | Middleware-Overhead (z.B. DeepAgents) oder interne Loops → `recursion_limit` prüfen |
+
+**Reales Beispiel — Filesystem-first-Bias (DeepAgents M32):**
+
+```
+User: "Beantworte in je einem Satz: Was ist LangGraph? Was ist LangSmith?"
+→ AI: tool_call: grep(pattern="LangGraph")     ← Unexpected!
+→ Tool: "No matches found"
+→ AI: tool_call: grep(pattern="LangSmith")     ← Retry mit anderem Pattern
+→ Tool: "No matches found"
+→ AI: antwortet aus Modell-Wissen               ← erst jetzt
+```
+
+Ohne LangSmith-Trace wäre der Grund für die hohe Latenz nicht erkennbar gewesen.
+**Gegenmittel:** System-Prompt mit `"Beantworte direkt aus deinem Wissen — keine Filesystem-Suche"`.
+
+**Programmatische Pattern-Analyse mit `show_trace()`:**
+
+```python
+from genai_lib.utilities import show_trace
+
+# Letzte 3 Runs anzeigen
+show_trace("M32-DeepAgents-Harness", limit=3)
+
+# Mit Step-Analyse des letzten Runs (zeigt alle Tool-Calls)
+show_trace("M32-DeepAgents-Harness", show_steps=True)
+```
+
+`show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
+Unexpected Tool Calls und Retry-Loops direkt im Notebook sichtbar zu machen.
+
 ---
 
 ## 10 Vergleich: LangSmith vs. Alternatives
@@ -744,7 +787,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 ---
 
-**Version:** 1.5
+**Version:** 1.6
 **Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

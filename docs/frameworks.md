@@ -56,6 +56,14 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Prompt-Design und Testing
   - Deployment und Sharing
 
+## Agent Harness (optional)
+
+- **DeepAgents** - Harness-Ansatz für automatisiertes Multi-Agent-Planning (M32, optional)
+  - Planning und Sub-Agent Spawning
+  - Filesystem-Harness (virtuelle Dateisystem-Integration)
+  - Vergleich: Harness vs. manueller LangGraph-Aufbau
+  - Hinweis: API 0.4.x, versionsgepinnt pro Kursdurchlauf
+
 ## Modell-Auswahl
 
 - **[Modell-Auswahl Guide](frameworks/Modell_Auswahl_Guide.html)** – Welches Modell für welche Aufgabe?

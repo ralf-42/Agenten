@@ -28,7 +28,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M01-M31)
+├── 01_notebook/    # Jupyter Notebooks (M01-M32)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -48,7 +48,7 @@ Agenten/
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
-  - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`
+  - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
   - `multimodal_rag.py` - Multimodales RAG-System
 
 
@@ -96,7 +96,7 @@ Agenten/
 | M21 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
 | M22 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
 
-### Erweiterte Module (M23-M31, optional)
+### Erweiterte Module (M23-M32, optional)
 
 > Alle Notebooks fertiggestellt ✅
 
@@ -110,7 +110,7 @@ Agenten/
 | M28   | MCP Integration                  | 🔵 Optional    | ✅ |
 | M29   | Production Deployment            | 🔵 Optional    | ✅ |
 | M30   | Hierarchical Agent Teams         | 🔵 Optional    | ✅ |
-| M31   | Collaborative Multi-Agent (Capstone)        | 🔵 Optional | ✅ |
+| M31   | Collaborative Multi-Agent                   | 🔵 Optional | ✅ |
 | M32   | DeepAgents: Autonomes Harness-Pattern       | 🔵 Optional | ✅ |
 
 ## 🔑 Voraussetzungen

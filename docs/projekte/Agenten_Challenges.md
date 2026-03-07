@@ -24,7 +24,7 @@ has_toc: true
 
 # 1 | Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M22 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet.
+Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M00-M22 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M23–M32 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
 
 ## 1 Lernziele
 
@@ -37,7 +37,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 2 Voraussetzungen
 
-- Abschluss der Module M00-M22 (Tag 1-5)
+- Abschluss der Module M00-M22 (Tag 1-5); M23-M32 optional für Vertiefung
 - Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
@@ -709,6 +709,6 @@ class SupportState(TypedDict):
 **Version:** 1.1
 **Letzte Aktualisierung:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-**Basis:** Kursplan v4.5, Module M00-M31
+**Basis:** Kursplan v4.5, Module M00-M32
 **Framework-Versionen:** LangChain 1.0+, LangGraph 1.0+, LangSmith 0.4+    
 

@@ -27,4 +27,4 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
   - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
   - Abgabe: Jupyter Notebook + SQLite-DB + README.md
   - Zeitaufwand: 20-30 Stunden
-  - Module M00-M22
+  - Module M00-M22 (optional bis M32)

@@ -683,7 +683,7 @@ graph = workflow.compile(
 
 **Code-Vorlagen:**
 - [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
-- [LangChain QuickRef](../LangChain_QuickRef.md)
+- [LangChain Standards](../LangChain_Standards.md)
 
 **Projekt-Beispiele:**
 - Mermaid-Diagramme: `Agenten/Mermaid_Diagramme.ipynb`

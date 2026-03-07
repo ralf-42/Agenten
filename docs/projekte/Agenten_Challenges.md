@@ -586,7 +586,7 @@ graph = workflow.compile(
 
 **Projekt-Ressourcen:**
 - [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
-- [LangChain QuickRef](../../LangChain_QuickRef.md)
+- [LangChain Standards](../../LangChain_Standards.md)
 - [Einsteiger LangGraph](../frameworks/Einsteiger_LangGraph.md)
 
 ## 2 Code-Beispiele

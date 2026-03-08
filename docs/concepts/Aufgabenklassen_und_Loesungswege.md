@@ -10,7 +10,7 @@ has_toc: true
 # Aufgabenklassen & Lösungswege
 {: .no_toc }
 
-> **Die Aufgabe bestimmt das Tool — und die Architektur.**
+> **Die Aufgabe bestimmt das Tool — und die Architektur.**      
 > Erst Lösungsweg klären, dann Agentenarchitektur, dann Datenschutz und Betrieb.
 
 ---
@@ -130,15 +130,15 @@ flowchart TD
     C -->|Ja| C1([Workflow-Automation])
     C -->|Nein| D{Eigene Dokumente / Wissensbasis?}
     D -->|Ja| D0{Nur Suche?}
-    D0 -->|Ja| D1([RAG-System])
+    D0 -->|Ja| D1([RAG-System, <br>Python & APIs])
     D0 -->|Nein| AG
     D -->|Nein| E{Viel Daten oder komplexe Logik?}
     E -->|Ja| E1([Python & APIs])
     E -->|Nein| F{Tool für andere mit UI?}
-    F -->|Ja| F1([KI-App-Builder])
+    F -->|Ja| F1([KI-App-Builder, <br>Python & APIs])
     F -->|Nein| G{Vorgehen unklar und explorativ?}
     G -->|Nein| H1([Custom GPT/Skill])
-    G -->|Ja| AG[Agenten-System]
+    G -->|Ja| AG[Agenten-System, <br>Python & APIs]
 
     %% Ebene 2: Agentenarchitektur
     AG --> AG1{Mehrere Spezialisten nötig?}
@@ -169,12 +169,12 @@ flowchart TD
 
 1. **"E-Mail besser formulieren"** → Chat
 2. **"Rechnungen automatisch erfassen"** → Workflow-Automation
-3. **"Fragen über interne Handbücher"** → RAG-System
+3. **"Fragen über interne Handbücher"** → RAG-System, Python & APIs
 4. **"50.000 Kundenbewertungen auswerten"** → Python & APIs
-5. **"Interner HR-Assistent mit UI"** → KI-App-Builder
+5. **"Interner HR-Assistent mit UI"** → KI-App-Builder, Python & APIs
 6. **"Persönlicher Schreibassistent mit festem Stil"** → Custom GPT/Skill
 
-### Ebene 2 — Agentenarchitektur
+### Ebene 2 — Agentenarchitektur (d.R. Python & APIs)
 
 | Aufgabe | Begründung | Architektur |
 |---|---|---|
@@ -229,6 +229,6 @@ flowchart TD
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.     

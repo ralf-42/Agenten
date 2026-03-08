@@ -10,8 +10,8 @@ has_toc: true
 # Prompt-Templates — Einsteiger-Guide
 {: .no_toc }
 
-> **Eigene Prompts erstellen, strukturieren und wiederverwenden.**
-> YAML-Frontmatter, XML-Tags und `load_prompt()` Schritt für Schritt erklärt.
+> **Eigene Prompts erstellen, strukturieren und wiederverwenden.**    
+> YAML-Frontmatter, XML-Tags und `load_prompt()` Schritt für Schritt erklärt.    
 
 ---
 
@@ -25,12 +25,12 @@ has_toc: true
 
 ## 1 Was ist eine Prompt-Datei?
 
-In diesem Kurs werden Prompts nicht direkt im Notebook als String hardcodiert, sondern als
+Prompts müssen  nicht direkt im Code/Notebook als String hardcodiert werden, sondern können auch als
 separate Markdown-Dateien im Ordner `05_prompt/` gespeichert.
 
 **Vorteile:**
 - Prompts sind **wiederverwendbar** — einmal schreiben, überall nutzen
-- Prompts sind **vom Code getrennt** — Prompt-Anpassungen ohne Notebook-Änderung
+- Prompts sind **vom Code getrennt** — Prompt-Anpassungen ohne Code/Notebook-Änderung
 - Prompts sind **versionierbar** — Änderungen sind nachvollziehbar
 - `load_prompt()` lädt sie direkt als `ChatPromptTemplate` oder String
 
@@ -285,6 +285,23 @@ ergebnis = chain.invoke({"ticket": "Ich kann mich nicht einloggen."})
 
 ---
 
+### Hintergrund: Sektionen und LangChain MessageTypes
+
+Die Datei-Sektionen sind eine vereinfachte Schreibweise — unter der Haube erzeugt
+`load_prompt()` daraus typisierte LangChain-Message-Objekte:
+
+| Datei-Sektion | LangChain MessageType | Verwendung |
+|---|---|---|
+| `## system` | `SystemMessage` | Rolle, Verhalten, Anweisungen an das Modell |
+| `## human` | `HumanMessage` | Benutzereingabe oder Template mit `{variablen}` |
+| `## ai` | `AIMessage` | Modell-Antwort — nur bei Few-Shot-Prompts |
+| — | `ToolMessage` | Tool-Ergebnis zur Laufzeit — kein Template, von LangChain automatisch eingefügt |
+
+> `ToolMessage` und `ChatMessage` (freie Rollen) erscheinen **nicht** in Prompt-Dateien.
+> Sie entstehen zur Laufzeit und werden von LangChain intern verwaltet.
+
+---
+
 ## 5 load_prompt() — Übersicht
 
 ```python
@@ -297,10 +314,10 @@ system_text = load_prompt("05_prompt/mein_prompt.md", mode="S")
 prompt_template = load_prompt("05_prompt/mein_prompt.md", mode="T")
 ```
 
-| `mode` | Rückgabetyp | Wann verwenden |
-|---|---|---|
-| `"S"` | `str` | `create_agent(..., system_prompt=system_text)` |
-| `"T"` | `ChatPromptTemplate` | `chain = prompt | llm | StrOutputParser()` |
+| `mode` | Rückgabetyp          | Wann verwenden                                 |
+| ------ | -------------------- | ---------------------------------------------- |
+| `"S"`  | `str`                | `create_agent(..., system_prompt=system_text)` |
+| `"T"`  | `ChatPromptTemplate` | `chain = prompt                                |
 
 ---
 
@@ -338,11 +355,11 @@ print(p)  # Prompt-Text prüfen
 flowchart TD
     A[Neuer Prompt] --> B{Platzhalter nötig?}
     B -->|Nein| C{Beispiele zeigen?}
-    B -->|Ja| D([Typ 2: Template-Prompt\nvariables: list])
-    C -->|Ja| E([Typ 3: Few-Shot\n## ai Sektionen])
+    B -->|Ja| D([Typ 2: Template-Prompt<br>variables: list])
+    C -->|Ja| E([Typ 3: Few-Shot<br>## ai Sektionen])
     C -->|Nein| F{Mehrere Anweisungsblöcke?}
     F -->|Ja| G([Typ 1 + XML-Tags])
-    F -->|Nein| H([Typ 1: System-only\nvariables: empty])
+    F -->|Nein| H([Typ 1: System-only<br>variables: empty])
 
     classDef solution fill:#bbf,stroke:#333,stroke-width:1px
     class D,E,G,H solution
@@ -376,6 +393,6 @@ flowchart TD
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

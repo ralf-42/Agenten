@@ -71,3 +71,11 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Entscheidungsbaum und Modul-Mapping (M12, M19/18, M17, M23)
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard
+
+## Prompt-Templates
+
+- **[Prompt-Templates Einsteiger](frameworks/Einsteiger_Prompts.html)** – Eigene Prompt-Dateien in `05_prompt/` erstellen
+  - Was ist YAML? Frontmatter-Syntax und Felder erklärt
+  - Was sind XML-Tags? Warum strukturieren sie Prompts besser
+  - Die drei Typen: System-only, Template mit Variablen, Few-Shot
+  - `load_prompt()` nutzen und häufige Fehler vermeiden

@@ -797,9 +797,8 @@ A:
 
 ---
 
-**Version:** 1.0    
-**Letzte Aktualisierung:** Januar 2026    
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
-**Schwerpunkt:** LangGraph 1.0+, Multi-Agent-Systeme, State Machines    
-**Arbeitsumgebung:** Google Colab oder Jupyter Notebook    
+**Version**: 1.1     
+**Stand**: März 2026    
+**Kurs**: KI-Agenten. Verstehen. Anwenden. Gestalten.        
+
 

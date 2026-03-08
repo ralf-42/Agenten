@@ -90,8 +90,8 @@ variables: [context, question]      # Platzhalter im Prompt-Text
 | `description` | ✅ | Kurzbeschreibung (1 Satz) |
 | `variables` | ✅ | Liste der `{variable}`-Platzhalter, oder `[]` wenn keine |
 
-> ⚠️ **Häufiger Fehler:** `variables: []` vergessen, obwohl keine Platzhalter vorhanden.
-> `load_prompt()` erwartet dieses Feld immer — auch wenn die Liste leer ist.
+> [!WARNING] `variables: []` vergessen → KeyError beim Laden    
+> `load_prompt()` erwartet das `variables`-Feld immer — auch wenn keine Platzhalter vorhanden sind. Fehlt das Feld, wirft `load_prompt()` einen `KeyError`.
 
 ---
 
@@ -369,13 +369,16 @@ flowchart TD
 
 ## 8 Häufige Fehler
 
-| Fehler | Ursache | Lösung |
-|---|---|---|
-| `KeyError: 'variables'` | `variables:` im Header fehlt | Immer angeben, auch leer: `variables: []` |
-| Platzhalter wird nicht ersetzt | `{variable}` im `## system` statt `## human` | Template-Variablen in `## human` |
-| `## system` fehlt | Sektion vergessen | `## system` ist Pflicht |
-| XML-Tags erscheinen in der Ausgabe | Tags im falschen Block | XML-Tags gehören in `## system` |
-| `load_prompt()` gibt leeren String zurück | Sektion-Bezeichner falsch geschrieben | Genau `## system` (zwei `#`, Leerzeichen) |
+> [!WARNING] XML-Tags gehören in `## system`, nicht in `## human`    
+> XML-Tags in der `## human`-Sektion werden als Nutzer-Text interpretiert und erscheinen wörtlich in der Ausgabe. Strukturierungs-Tags (`<Task>`, `<Instructions>` etc.) immer in `## system` platzieren.
+
+| Fehler                                    | Ursache                                      | Lösung                                    |
+| ----------------------------------------- | -------------------------------------------- | ----------------------------------------- |
+| `KeyError: 'variables'`                   | `variables:` im Header fehlt                 | Immer angeben, auch leer: `variables: []` |
+| Platzhalter wird nicht ersetzt            | `{variable}` im `## system` statt `## human` | Template-Variablen in `## human`          |
+| `## system` fehlt                         | Sektion vergessen                            | `## system` ist Pflicht                   |
+| XML-Tags erscheinen in der Ausgabe        | Tags im falschen Block                       | XML-Tags gehören in `## system`           |
+| `load_prompt()` gibt leeren String zurück | Sektion-Bezeichner falsch geschrieben        | Genau `## system` (zwei `#`, Leerzeichen) |
 
 ---
 

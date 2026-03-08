@@ -35,8 +35,8 @@ Large Language Models sind beeindruckend in der Textverarbeitung – doch sie ha
 
 **Kernidee:** Tools erweitern die Fähigkeiten eines LLMs über reines Textwissen hinaus. Das Modell entscheidet, **wann** und **wie** ein Tool aufgerufen wird – die eigentliche Ausführung übernimmt Python-Code.
 
-{: .note }
-> **Das LLM führt keine Tools aus — es erzeugt einen Aufruf-Intent.** Die Anwendung empfängt diesen Intent, validiert ihn und führt den eigentlichen Code aus. Diese Trennung ist entscheidend für Sicherheit und Kontrolle.
+> [!NOTE] Das LLM führt keine Tools aus — es erzeugt einen Aufruf-Intent.    
+> Die Anwendung empfängt diesen Intent, validiert ihn und führt den eigentlichen Code aus. Diese Trennung ist entscheidend für Sicherheit und Kontrolle.
 
 ---
 
@@ -155,6 +155,9 @@ def safe_divide(a: float, b: float) -> str:
 
 Der Docstring ist **entscheidend** für die Tool-Nutzung. Das LLM trifft seine Entscheidung ausschließlich auf Basis von Name und Beschreibung.
 
+> [!TIP] Docstring-Qualität entscheidet über Tool-Selektion    
+> Das LLM wählt Tools **ausschließlich** anhand von Name und Beschreibung. Ein schlechter Docstring bedeutet falsche oder ausgebliebene Tool-Aufrufe — unabhängig davon, wie gut der Tool-Code ist.
+
 ### 4.1 Schlechter Docstring
 
 ```python
@@ -239,7 +242,8 @@ def add(a: int, b: int) -> int:
     return a + b
 ```
 
-**Konsequenz ohne Type Hints:** Das generierte Schema ist unvollständig, das LLM kann die Parameter nicht korrekt füllen.
+> [!WARNING] Fehlende Type Hints → unvollständiges Schema → LLM kann Parameter nicht füllen     
+> Ohne Type Hints generiert der `@tool` Decorator ein unvollständiges JSON-Schema. Das LLM kann die Parameter dann nicht korrekt befüllen, was zu fehlgeschlagenen oder falschen Tool-Aufrufen führt.
 
 ---
 

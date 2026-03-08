@@ -44,8 +44,8 @@ KI-Agenten lassen sich auf einem Spektrum zwischen vollständiger menschlicher K
 
 Die meisten produktiven Agenten-Systeme befinden sich bei Stufe 3 oder 4 — nicht weil Technologie fehlt, sondern weil vollständige Autonomie in vielen Kontexten **nicht erwünscht** ist.
 
-{: .important }
-> **HITL ist eine Designentscheidung, kein Notbehelf.** Die Frage ist nicht „Kann der Agent das alleine?", sondern „Soll er das alleine entscheiden dürfen?" Autonomie und Kontrolle sind keine Gegensätze — sie werden bewusst abgewogen.
+> [!NOTE] HITL ist eine Designentscheidung, kein Notbehelf    
+> Die Frage ist nicht „Kann der Agent das alleine?", sondern „Soll er das alleine entscheiden dürfen?" Autonomie und Kontrolle sind keine Gegensätze — sie werden bewusst abgewogen.
 
 ---
 
@@ -65,8 +65,8 @@ Je höher die Konsequenzen einer falschen Entscheidung, desto stärker ist HITL 
 | Zahlung auslösen | ❌ nein | ✅ ja |
 | Konfiguration ändern | ⚠️ bedingt | ✅ ja |
 
-{: .highlight }
-> **Faustregel:** Ist eine Aktion schwer oder unmöglich rückgängig zu machen, oder betrifft sie Dritte, braucht sie menschliche Freigabe.
+> [!TIP] Faustregel: reversible vs. nicht-reversible Aktionen    
+> Ist eine Aktion schwer oder unmöglich rückgängig zu machen, oder betrifft sie Dritte, braucht sie menschliche Freigabe.
 
 ### 3.2 Konfidenz des Agenten
 

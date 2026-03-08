@@ -76,21 +76,24 @@ flowchart LR
     F --> G[Antwort]
 ```
 
-| Schritt | Beschreibung |
-|---------|--------------|
-| **Query-Embedding** | Die Frage wird in denselben Vektorraum transformiert |
-| **Similarity Search** | Die ähnlichsten Dokumentvektoren werden gefunden |
-| **Kontext-Erstellung** | Gefundene Chunks werden zum Prompt hinzugefügt |
-| **Generation** | Das LLM generiert eine Antwort basierend auf dem Kontext |
+| Schritt                | Beschreibung                                             |
+| ---------------------- | -------------------------------------------------------- |
+| **Query-Embedding**    | Die Frage wird in denselben Vektorraum transformiert     |
+| **Similarity Search**  | Die ähnlichsten Dokumentvektoren werden gefunden         |
+| **Kontext-Erstellung** | Gefundene Chunks werden zum Prompt hinzugefügt           |
+| **Generation**         | Das LLM generiert eine Antwort basierend auf dem Kontext |
 
-{: .warning }
-> **Retrieval verbessert Relevanz — garantiert aber keine Faktentreue.** RAG reduziert Halluzination, eliminiert sie nicht. Das LLM kann relevante Dokumente fehlinterpretieren, kombinieren oder ergänzen. Kritische Anwendungen brauchen zusätzliche Validierung der generierten Antworten.
+> [!WARNING] Retrieval verbessert Relevanz — garantiert aber keine Faktentreue.      
+> RAG reduziert Halluzination, eliminiert sie nicht. Das LLM kann relevante Dokumente fehlinterpretieren, kombinieren oder ergänzen. Kritische Anwendungen brauchen zusätzliche Validierung der generierten Antworten.
 
 ---
 
 ## 3 Chunking: Dokumente sinnvoll zerlegen
 
 Chunking ist eine der kritischsten Entscheidungen in einem RAG-System. Zu große Chunks verschwenden Kontext, zu kleine Chunks verlieren Zusammenhang.
+
+> [!TIP] Chunking-Strategie beeinflusst Retrieval-Qualität stark    
+> Die Wahl von `chunk_size` und `chunk_overlap` ist dokumenttypabhängig. Falsch gewählte Parameter sind häufig die Ursache für schlechte RAG-Ergebnisse — noch bevor das LLM überhaupt zum Einsatz kommt.
 
 ### 3.1 Chunking-Strategien
 

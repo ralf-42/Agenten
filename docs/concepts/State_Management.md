@@ -124,14 +124,15 @@ class UserInput(BaseModel):
 | **LLM-Ausgaben** | ⚠️ Keine Validierung | ✅ `with_structured_output()` |
 | **API-Eingaben** | ⚠️ Unsicher | ✅ Validiert automatisch |
 
-**Faustregel:** TypedDict für Graph-State, Pydantic für Ein-/Ausgaben.
+> [!TIP] Faustregel   
+> TypedDict für Graph-State, Pydantic für Ein-/Ausgaben.
 
 ---
 
 ## 4 Reducer-Funktionen
 
-{: .warning }
-> **Ohne Reducer werden State-Werte überschrieben.** Jeder Node-Return ersetzt das gesamte Feld — bei `messages` gehen so alle vorherigen Nachrichten verloren. `Annotated[list, add_messages]` ist kein optionaler Komfort, sondern notwendig für korrektes State-Management.
+> [!DANGER] Ohne Reducer werden State-Werte überschrieben   
+> Jeder Node-Return ersetzt das gesamte Feld — bei `messages` gehen so alle vorherigen Nachrichten verloren. `Annotated[list, add_messages]` ist kein optionaler Komfort, sondern notwendig für korrektes State-Management.
 
 Reducer bestimmen, **wie** State-Felder aktualisiert werden. Ohne Reducer wird ein Feld bei jeder Änderung überschrieben. Mit Reducer können Werte intelligent kombiniert werden.
 
@@ -474,6 +475,9 @@ class GoodState(TypedDict):
 ```
 
 ### 8.3 Fehler: State mutieren statt neue Werte zurückgeben
+
+> [!WARNING] State-Mutation erzeugt inkonsistente Checkpoints     
+> Direkte Mutation des State-Objekts umgeht LangGraphs Reducer-Mechanismus und kann zu unerwartetem Verhalten beim Checkpointing führen.
 
 ```python
 # ❌ Falsch: In-Place-Mutation

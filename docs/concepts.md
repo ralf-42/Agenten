@@ -10,6 +10,14 @@ description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 
 Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
 
+## Einstieg & Entscheidung
+
+- **[Aufgaben & Lösungswege](./concepts/Aufgabenklassen_und_Loesungswege.html)** – Zweistufige Entscheidungshilfe: wann Agenten, welche Architektur?
+  - Ebene 1: Chat / Workflow / RAG / Agenten / Python — was passt wann?
+  - Ebene 2: ReAct / Tool-Calling / LangGraph Workflow / Multi-Agent — wie entscheiden?
+  - Vollständiger Entscheidungsbaum (beide Ebenen kombiniert)
+  - Checkliste vor dem Agentenbau
+
 ## Grundlagen & Architektur
 
 - **[Agent-Architekturen](./concepts/Agent_Architekturen.html)** – Architekturmuster und Design-Prinzipien für KI-Agenten (→ M01)

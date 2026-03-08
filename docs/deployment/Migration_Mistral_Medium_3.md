@@ -483,40 +483,8 @@ def get_model_for_task(task_type):
 
 ---
 
-## 📄 Anhang
 
-### A. Vollständige Notebook-Liste mit Status
-
-| # | Notebook | Status | Aufwand | Priorität |
-|---|----------|--------|---------|-----------|
-| 1 | M00_Kurs_Intro | 🔵 Keine Änderung | - | - |
-| 2 | M01_GenAI_Intro | ✅ Kompatibel | ⭐ | Niedrig |
-| 3 | M02_Modellsteuerung | ✅ Kompatibel | ⭐ | Niedrig |
-| 4 | M03_Codieren_mit_GenAI | 🔵 Framework | - | - |
-| 5 | M04_LangChain101 | ✅ Kompatibel | ⭐ | Hoch |
-| 6 | M05_LLM_Transformer | 🔵 Theorie | - | - |
-| 7 | M06_Chat_Memory | ✅ Kompatibel | ⭐⭐ | Mittel |
-| 8 | M07_OutputParser | ✅ Kompatibel | ⭐ | Hoch |
-| 9 | M08_RAG_LangChain | ✅ Kompatibel | ⭐⭐ | Hoch |
-| 10 | M09_Multimodal_Bild | ✅ Kompatibel | ⭐⭐ | **Sehr hoch** |
-| 11 | M10_Agenten_LangChain | ✅ Kompatibel | ⭐⭐ | **Sehr hoch** |
-| 12 | M11_Gradio | ✅ Kompatibel | ⭐ | Niedrig |
-| 13 | M12_Lokale_Open_Source | ⚠️ Eingeschränkt | ⭐⭐⭐ | Niedrig |
-| 14 | M13_SQL_RAG | ✅ Kompatibel | ⭐⭐ | Mittel |
-| 15 | M14_Multimodal_RAG | ✅ Kompatibel | ⭐⭐ | Hoch |
-| 16 | M15_Multimodal_Audio | ❌ Inkompatibel | ⭐⭐⭐⭐⭐ | Niedrig |
-| 17 | M16_Multimodal_Video | ✅ Kompatibel | ⭐⭐ | Mittel |
-| 18 | M17_MCP_LangChain_Agent | ✅ Kompatibel | ⭐⭐ | Hoch |
-| 19 | M18_Fine_Tuning | ⚠️ Eingeschränkt | ⭐⭐⭐⭐ | Niedrig |
-| 20 | A00_snippets_genai | 🔵 Snippets | ⭐ | Variabel |
-
-**Legende:**
-- ✅ Voll kompatibel
-- ⚠️ Eingeschränkt kompatibel
-- ❌ Inkompatibel
-- 🔵 Keine Code-Änderung nötig
-
-### B. Code-Snippets Quick Reference
+### Code-Snippets Quick Reference
 
 **Basis-Migration:**
 ```python

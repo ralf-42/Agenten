@@ -177,7 +177,7 @@ if __name__ == "__main__":
 
 **Wichtig:** `.env` muss in `.gitignore` eingetragen werden – API-Keys gehören nicht ins Repository!
 
-> [!WARNING] Security-Baseline     
+> [!DANGER] Security-Baseline
 > Secrets niemals in Code, Notebooks oder Commit-Historie speichern. Im Zweifel Key sofort rotieren.
 
 ---
@@ -348,6 +348,9 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 ---
 
 ## Typische Fehler vermeiden
+
+> [!WARNING] Hardcoding-Patterns vermeiden
+> API-Keys und Secrets direkt im Code oder in Notebooks sind der häufigste Sicherheitsfehler beim Deployment. Sie landen unweigerlich in der Git-Historie und sind danach praktisch nicht mehr rückholbar.
 
 **❌ API-Keys im Code**
 → Immer Umgebungsvariablen verwenden

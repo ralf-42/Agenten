@@ -32,7 +32,8 @@ has_toc: true
 | `o3`          | Starkes Reasoning                                           | Supervisor, Judge, komplexes Routing, Security |
 | `gpt-5.1`     | Coding & Agentic Tasks, konfigurierbarer Reasoning-Aufwand | Worker-Agenten, Code-Generierung, RAG-Synthese |
 
-> **Faustregel:** Nicht das stärkste Modell wählen — das *passende* für den Knoten.
+> [!TIP] Faustregel    
+> Nicht das stärkste Modell wählen — das *passende* für den Knoten.
 
 
 ---
@@ -44,6 +45,10 @@ Diese Regeln gelten für alle Module, in denen Modelle explizit zugewiesen werde
 ### Regel 1 — Router und Supervisor: `o3`
 
 Knoten, die **Entscheidungen treffen** (Routing, Supervisor-Logik, Conditional Edges), erhalten `o3`.
+
+> [!WARNING] Schwaches Modell als Router → Fehler im gesamten Graph    
+> Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch alle nachgelagerten Nodes fortpflanzen. Ein einzelner falscher Route-Entscheid kann den gesamten Workflow zum Scheitern bringen.
+
 Begründung: Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch den gesamten Graphen fortpflanzen.
 
 ```python
@@ -61,6 +66,9 @@ Bei kritischen Entscheidungen (Supervisor, Security, Evaluation) bleibt `o3` die
 router_llm = init_chat_model("openai:o3-mini")
 ```
 
+> [!DANGER] o3 / o3-mini: kein temperature-Parameter    
+> Beide Modelle unterstützen `temperature` nicht. Jeder Aufruf mit `temperature=...` führt zu einem API-Fehler. Parameter einfach weglassen — der API-Default wird automatisch verwendet.
+
 ### Regel 2 — Worker und Content: `gpt-5.1`
 
 Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten `gpt-5.1`.
@@ -70,8 +78,8 @@ Begründung: Optimiert für Coding und agentic Tasks mit konfigurierbarem Reason
 worker_llm = init_chat_model("openai:gpt-5.1")
 ```
 
-> ⚠️ **Parameter-Kompatibilität gpt-5.1:** `temperature` ist nur mit `reasoning_effort="none"` gültig.
-> Bei allen anderen `reasoning_effort`-Werten (`"low"`, `"medium"`, `"high"`) führt `temperature` zu einem API-Fehler.
+> [!DANGER] gpt-5.1 + temperature → API-Fehler     
+> `temperature` ist nur mit `reasoning_effort="none"` gültig. Bei allen anderen Werten (`"low"`, `"medium"`, `"high"`) wirft die API sofort einen Fehler.
 > **Empfehlung:** `temperature` bei gpt-5.1 weglassen und stattdessen `reasoning_effort` zur Qualitätssteuerung nutzen.
 >
 > ```python

@@ -722,8 +722,8 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.2
-**Stand:** März 2026
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.          
+**Version:** 3.2   
+**Stand:** März 2026   
+**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.            
 
 

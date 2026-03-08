@@ -33,8 +33,8 @@ In einem einfachen LangGraph-Workflow läuft eine Konversation vollständig im A
 | **Fehlertoleranz** | Bei Absturz läuft der Workflow vom letzten Checkpoint weiter |
 | **Time Travel** | Zu einem früheren State zurückspringen und Workflow neu starten |
 
-{: .note }
-> **Checkpointing ist kein Logging.** Es speichert den vollständigen State – nicht nur Protokolleinträge. Jeder gespeicherte Checkpoint ist ein vollständiger Snapshot, von dem aus der Workflow exakt fortgesetzt werden kann.
+> [!INFO] **Checkpointing ist kein Logging.**     
+> Es speichert den vollständigen State – nicht nur Protokolleinträge. Jeder gespeicherte Checkpoint ist ein vollständiger Snapshot, von dem aus der Workflow exakt fortgesetzt werden kann.
 
 ---
 
@@ -270,8 +270,8 @@ flowchart LR
     style E fill:#87CEEB,color:#000
 ```
 
-{: .important }
-> **interrupt() erfordert einen Checkpointer.** Ohne kompilierten Checkpointer wirft `interrupt()` eine Exception. Immer `graph.compile(checkpointer=...)` verwenden, wenn HITL genutzt wird.
+> [!WARNING] interrupt() erfordert einen Checkpointer    
+> Ohne kompilierten Checkpointer wirft `interrupt()` eine Exception. Immer `graph.compile(checkpointer=...)` verwenden, wenn HITL genutzt wird.
 
 ---
 
@@ -307,6 +307,9 @@ result = app.invoke(
 ## 8 Best Practices
 
 ### 8.1 Thread-ID-Design
+
+> [!TIP] Thread-ID-Design für Multi-User    
+> Für produktive Systeme: `thread_id = f"user_{user_id}_session_{session_id}"`. Generische IDs wie `"session1"` führen zu Datenvermischung zwischen Nutzern.
 
 ```python
 # Eindeutige, nachvollziehbare Thread-IDs

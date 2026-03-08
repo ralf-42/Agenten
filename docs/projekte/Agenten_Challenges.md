@@ -706,9 +706,9 @@ class SupportState(TypedDict):
 
 ---
 
-**Version:** 1.1
-**Letzte Aktualisierung:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-**Basis:** Kursplan v4.5, Module M00-M32
-**Framework-Versionen:** LangChain 1.0+, LangGraph 1.0+, LangSmith 0.4+    
+**Version**: 1.1     
+**Stand**: März 2026    
+**Kurs**: KI-Agenten. Verstehen. Anwenden. Gestalten.    
+
+
 

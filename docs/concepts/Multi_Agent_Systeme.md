@@ -360,6 +360,9 @@ review_system = graph.compile()
 
 ### 5.3 Herausforderungen
 
+> [!WARNING] Endlosschleifen ohne Iterationslimit    
+> Kollaborative Systeme können ohne Abbruchbedingung endlos zwischen Agenten iterieren. Immer `recursion_limit` in der Config setzen und Iterationszähler im State führen.
+
 | Herausforderung | Lösungsansatz |
 |-----------------|---------------|
 | Endlosschleifen | Maximale Iterationen setzen |
@@ -523,6 +526,9 @@ flowchart TD
 | **Direkt** | Agent ruft anderen Agent auf | Einfache Delegation |
 | **Shared State** | Gemeinsamer Zustand (LangGraph) | Standard in LangGraph |
 | **Message Queue** | Asynchrone Nachrichten | Komplexe Systeme |
+
+> [!WARNING] Deadlocks bei falschem Kommunikationsdesign    
+> Wenn Agent A auf das Ergebnis von Agent B wartet und Agent B auf das Ergebnis von Agent A — entsteht ein Deadlock. Klare Kommunikationsrichtungen (keine zirkulären Abhängigkeiten) und Timeouts sind Pflicht.
 
 ### 7.2 Strukturierte Übergaben
 

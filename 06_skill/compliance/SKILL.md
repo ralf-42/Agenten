@@ -22,18 +22,18 @@ If the request is purely informational and no operational decision is needed, gi
 
 Follow these steps in order unless the user explicitly narrows the scope:
 
-1. Clarify the case type and target entity.
-2. Collect minimum required inputs.
+1. Extract all available information from the user's message and conversation history.
+2. Identify which required inputs are still missing. Ask only for those — never ask for information already provided.
 3. Run mandatory checks.
 4. Score the risk.
 5. Decide whether the case is approved, blocked, or escalated.
 6. Produce an audit-ready decision note.
 
-Never skip steps 2 to 5 when the task requests an operational compliance decision.
+Never skip steps 3 to 5 when the task requests an operational compliance decision.
 
 ## Minimum Required Inputs
 
-Capture these fields before deciding:
+Extract these fields from the user's message or conversation history before deciding:
 
 - subject_type: person, company, vendor, customer, payment, or account
 - subject_name
@@ -42,7 +42,7 @@ Capture these fields before deciding:
 - business_purpose
 - source_of_funds or payment context if relevant
 
-If critical inputs are missing, stop and request them instead of guessing.
+Extract from natural language whenever possible. Only ask for fields that are genuinely absent or ambiguous — never repeat a question already answered.
 
 ## Mandatory Checks
 

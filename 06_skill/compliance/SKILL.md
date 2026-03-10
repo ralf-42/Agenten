@@ -41,8 +41,11 @@ Extract these fields from the user's message or conversation history before deci
 - transaction_amount if relevant
 - business_purpose
 - source_of_funds or payment context if relevant
+- sanctions_clearance_confirmed: explicit confirmation that a formal sanctions screening was performed and whether it returned a hit
 
 Extract from natural language whenever possible. Only ask for fields that are genuinely absent or ambiguous — never repeat a question already answered.
+
+**Exception — never infer:** `sanctions_clearance_confirmed` cannot be derived from context. If the user has not explicitly stated whether a sanctions check was performed and what the result was, always ask for this before proceeding.
 
 ## Mandatory Checks
 

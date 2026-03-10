@@ -153,7 +153,7 @@ flowchart TD
 
 | Module | Begründung |
 |--------|-----------|
-| M00–M11 | Grundlagen, Tool Use, RAG-Aufbau — Konzept > Qualität |
+| M01–M11 | Grundlagen, Tool Use, RAG-Aufbau — Konzept > Qualität |
 | M13–M18 | StateGraph, Checkpointing, HITL — Struktur lernen |
 | M22 | Überblick Agent Builder — Vergleich, nicht Optimierung |
 | M27 | Gradio/UI-Fokus — Interaktionsdesign > Modellqualität |

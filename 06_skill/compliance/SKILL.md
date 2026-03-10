@@ -20,16 +20,16 @@ If the request is purely informational and no operational decision is needed, gi
 
 ## Core Workflow
 
-Follow these steps in order unless the user explicitly narrows the scope:
+Follow these steps in order. Do not skip any step.
 
 1. Extract all available information from the user's message and conversation history.
-2. Identify which required inputs are still missing. Ask only for those — never ask for information already provided.
+2. Identify which required inputs are still missing. Ask only for those — never ask for information already provided. **Stop here and wait for the answer before continuing.**
 3. Run mandatory checks.
-4. Score the risk.
-5. Decide whether the case is approved, blocked, or escalated.
+4. **Call the `compliance_check` tool** to compute the risk score. Never compute risk scores manually.
+5. Decide whether the case is approved, blocked, or escalated based on the tool result.
 6. Produce an audit-ready decision note.
 
-Never skip steps 3 to 5 when the task requests an operational compliance decision.
+Never skip steps 3 to 6 when the task requests an operational compliance decision.
 
 ## Minimum Required Inputs
 
@@ -45,7 +45,7 @@ Extract these fields from the user's message or conversation history before deci
 
 Extract from natural language whenever possible. Only ask for fields that are genuinely absent or ambiguous — never repeat a question already answered.
 
-**Exception — never infer:** `sanctions_clearance_confirmed` cannot be derived from context. If the user has not explicitly stated whether a sanctions check was performed and what the result was, always ask for this before proceeding.
+**Hard rule — never infer, never skip:** `sanctions_clearance_confirmed` cannot be derived from context. You MUST ask the user explicitly whether a formal sanctions screening was performed and what the result was. Do not proceed to step 3 until this is confirmed. This rule overrides everything else.
 
 ## Mandatory Checks
 
@@ -61,15 +61,9 @@ Read [references/checklist.md](references/checklist.md) for the exact checklist.
 
 ## Risk Scoring
 
-Assign one of three outcomes:
+**Always call the `compliance_check` tool** to compute the risk score. Never estimate or manually derive the risk level — the tool result is binding.
 
-- low
-- medium
-- high
-
-Use the rule set in [references/risk_rules.md](references/risk_rules.md).
-
-If deterministic scoring is useful, run `scripts/assess_risk.py` with the case data.
+The tool returns one of three levels: low, medium, high.
 
 ## Decision Policy
 

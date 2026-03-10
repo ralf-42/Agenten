@@ -2,10 +2,10 @@
 
 ## 📚 Modulstruktur
 
-Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M01-M22, 10 erweiterte Module M23-M32).
+Dieses Verzeichnis enthält **33 Jupyter Notebooks** für den Kurs "KI-Agenten. Verstehen. Anwenden. Gestalten." (22 Kern-Module M01-M22, 10 erweiterte Module M23-M32, 1 Skill-Demo M33).
 
 **Hinweis Reihenfolge:** M17 (LangSmith Evaluations Basics) gehört inhaltlich zu Block 4, M15–M16 zu Block 5. Siehe Kursplan v4.5 für Details.
-**Hinweis M00:** Kurs-Intro-Materialien sind separat verfügbar und nicht als Notebook in diesem Verzeichnis enthalten.
+**Hinweis M33:** Skill-Demo-Notebook (Block 1), nicht als Kern-Modul bewertet.
 
 ---
 
@@ -18,6 +18,7 @@ Dieses Verzeichnis enthält **32 Jupyter Notebooks** für den Kurs "KI-Agenten. 
 | M01 | Was sind KI-Agenten? | Definition, ReAct-Prinzip, Agent-Typen | ✅ Vollständig |
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools | ✅ Vollständig |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns | ✅ Vollständig |
+| M33 | Agent Skill - Compliance *(Skill-Demo)* | SKILL.md, create_react_agent, MemorySaver | ✅ Vollständig |
 
 
 ---

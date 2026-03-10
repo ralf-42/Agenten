@@ -38,7 +38,7 @@ In dieser Übungsaufgabe bauen Sie schrittweise ein **Multi-Agent Support-System
 
 **Arbeitsumgebung:** Google Colab oder Jupyter Notebook
 
-**Voraussetzung:** LangChain 1.0+ Grundkenntnisse (Module M00-M11)
+**Voraussetzung:** LangChain 1.0+ Grundkenntnisse (Module M01-M11)
 
 ---
 

@@ -54,7 +54,7 @@ has_toc: true
 - Multiple Notebooks mit multimodalen Features (Bild, Audio, Video)
 
 **Notebook-Kategorien:**
-1. **Grundlagen:** M00, M01, M02, M03, M04, M05
+1. **Grundlagen:** M01, M02, M03, M04, M05
 2. **LangChain/Agents:** M06, M07, M08, M10, M17
 3. **Multimodal:** M09 (Bild), M14 (Multimodal RAG), M15 (Audio), M16 (Video)
 4. **Spezial:** M11 (Gradio), M12 (Lokale Modelle), M13 (SQL RAG), M18 (Fine-tuning)
@@ -139,7 +139,6 @@ has_toc: true
 
 | Notebook | Grund | Aufwand |
 |----------|-------|---------|
-| **M00_Kurs_Intro** | Nur Dokumentation | - |
 | **M03_Codieren_mit_GenAI** | Editor-unabhängig | - |
 | **M05_LLM_Transformer** | Theorie | - |
 | **A00_snippets_genai** | Code-Snippets | ⭐ Je nach Snippet |

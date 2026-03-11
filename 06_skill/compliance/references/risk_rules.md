@@ -1,8 +1,8 @@
-# Risk Rules
+# Risikoregeln
 
-Use these rules to derive a simple deterministic training score.
+Diese Regeln verwenden, um einen einfachen deterministischen Schulungs-Score zu berechnen.
 
-## Inputs
+## Eingaben
 
 - `country`
 - `transaction_amount`
@@ -11,31 +11,31 @@ Use these rules to derive a simple deterministic training score.
 - `pep_flag`
 - `documents_complete`
 
-## Rules
+## Regeln
 
-Start with score `0`.
+Mit Score `0` beginnen.
 
-Add points:
+Punkte addieren:
 
-- `+100` if `sanctions_hit = true`
-- `+40` if `pep_flag = true`
-- `+30` if `adverse_media_hit = true`
-- `+25` if country is in `{IR, KP, SY, RU}`
-- `+15` if transaction_amount >= `10000`
-- `+10` if documents_complete = false
+- `+100` wenn `sanctions_hit = true`
+- `+40` wenn `pep_flag = true`
+- `+30` wenn `adverse_media_hit = true`
+- `+25` wenn Land in `{IR, KP, SY, RU}`
+- `+15` wenn transaction_amount >= `10000`
+- `+10` wenn documents_complete = false
 
-Map score to level:
+Score auf Stufe abbilden:
 
 - `0-19` -> `low`
 - `20-49` -> `medium`
 - `50+` -> `high`
 
-Special rule:
+Sonderregel:
 
-- Any sanctions hit overrides all other logic and results in `high` plus decision `block`.
+- Jeder Sanktionstreffer überschreibt alle anderen Regeln und ergibt `high` plus Entscheidung `block`.
 
 ## Interpretation
 
-- `low`: routine case, generally approvable
-- `medium`: needs human review
-- `high`: do not proceed without formal escalation
+- `low`: Routinefall, grundsätzlich genehmigungsfähig
+- `medium`: menschliche Prüfung erforderlich
+- `high`: nicht fortfahren ohne formale Eskalation

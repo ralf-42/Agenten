@@ -1,8 +1,8 @@
-# Example Cases
+# Beispielfälle
 
-## Example 1: Low Risk Vendor
+## Beispiel 1: Lieferant mit niedrigem Risiko
 
-Input:
+Eingabe:
 
 - subject_type: vendor
 - subject_name: Nordlicht Office GmbH
@@ -13,14 +13,14 @@ Input:
 - pep_flag: false
 - documents_complete: true
 
-Expected outcome:
+Erwartetes Ergebnis:
 
-- risk level: low
-- decision: approve
+- Risikoniveau: low
+- Entscheidung: genehmigen
 
-## Example 2: Medium Risk Payment
+## Beispiel 2: Zahlung mit mittlerem Risiko
 
-Input:
+Eingabe:
 
 - subject_type: payment
 - subject_name: Baltic Export OU
@@ -31,14 +31,14 @@ Input:
 - pep_flag: false
 - documents_complete: true
 
-Expected outcome:
+Erwartetes Ergebnis:
 
-- risk level: medium
-- decision: escalate
+- Risikoniveau: medium
+- Entscheidung: eskalieren
 
-## Example 3: High Risk Counterparty
+## Beispiel 3: Gegenpartei mit hohem Risiko
 
-Input:
+Eingabe:
 
 - subject_type: customer
 - subject_name: Example Trading LLC
@@ -49,19 +49,19 @@ Input:
 - pep_flag: false
 - documents_complete: true
 
-Expected outcome:
+Erwartetes Ergebnis:
 
-- risk level: high
-- decision: block or escalate according to policy
+- Risikoniveau: high
+- Entscheidung: ablehnen oder eskalieren gemäß Richtlinie
 
-## Example Output Pattern
+## Beispiel-Ausgabemuster
 
-### Compliance Decision
+### Compliance-Entscheidung
 
-- Case: Vendor onboarding for Nordlicht Office GmbH
-- Checks performed: sanctions screening, geography review, transaction size review, documentation check
-- Risk level: low
-- Decision: approve
-- Rationale: no high-risk indicators and complete documentation
-- Missing information or escalation point: none
-- Audit note: simulated training assessment, no live sanctions source connected
+- Fall: Lieferanten-Onboarding für Nordlicht Office GmbH
+- Durchgeführte Prüfungen: Sanktionsprüfung, geografische Prüfung, Transaktionsgrößenprüfung, Dokumentenprüfung
+- Risikoniveau: low
+- Entscheidung: genehmigen
+- Begründung: keine Hochrisikoindikatoren und vollständige Dokumentation
+- Fehlende Informationen oder Eskalationspunkt: keine
+- Prüfungsnotiz: simulierte Schulungsbewertung, keine Live-Sanktionsquelle angebunden

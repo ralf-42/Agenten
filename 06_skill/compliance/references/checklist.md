@@ -1,50 +1,50 @@
-# Compliance Checklist
+# Compliance-Checkliste
 
-Use this checklist when the skill requires an operational decision.
+Diese Checkliste verwenden, wenn der Skill eine operative Entscheidung erfordert.
 
-## 1. Intake
+## 1. Aufnahme
 
-- Identify the subject and case type.
-- Capture country and transaction context.
-- Verify whether the task is informational, advisory, or operational.
+- Betroffene Partei und Falltyp identifizieren.
+- Land und Transaktionskontext erfassen.
+- Prüfen, ob die Aufgabe informationell, beratend oder operativ ist.
 
-## 2. Identity And Context
+## 2. Identität und Kontext
 
-- Confirm the party name.
-- Confirm whether the party is an individual or legal entity.
-- Record any known counterparties.
-- Record the declared business purpose.
+- Namen der Partei bestätigen.
+- Bestätigen, ob es sich um eine natürliche oder juristische Person handelt.
+- Bekannte Gegenparteien erfassen.
+- Angegebenen Geschäftszweck erfassen.
 
-## 3. Required Screening
+## 3. Erforderliche Prüfungen
 
-- Sanctions screening
-- Geography screening
-- Transaction size check
-- Adverse indicator review
-- Documentation completeness
+- Sanktionsprüfung
+- Geografische Prüfung
+- Transaktionsgrößenprüfung
+- Prüfung auf negative Indikatoren
+- Prüfung der Vollständigkeit der Dokumentation
 
-## 4. Escalation Triggers
+## 4. Eskalationsauslöser
 
-Escalate immediately if one of these is true:
+Sofort eskalieren, wenn eines davon zutrifft:
 
-- possible sanctions hit
-- high-risk country
-- unusually large transaction
-- unclear business purpose
-- inconsistent documents
-- politically exposed person or equivalent high-risk marker
+- möglicher Sanktionstreffer
+- Hochrisikoland
+- ungewöhnlich große Transaktion
+- unklarer Geschäftszweck
+- widersprüchliche Dokumente
+- politisch exponierte Person oder gleichwertiges Hochrisikomerkmal
 
-## 5. Documentation
+## 5. Dokumentation
 
-The final note should contain:
+Die abschließende Notiz sollte enthalten:
 
-- case summary
-- checks performed
-- observed indicators
-- final risk level
-- decision
-- reason for approval, block, or escalation
+- Fallzusammenfassung
+- durchgeführte Prüfungen
+- festgestellte Indikatoren
+- abschließendes Risikoniveau
+- Entscheidung
+- Begründung für Genehmigung, Ablehnung oder Eskalation
 
-## Training Note
+## Hinweis für Schulungszwecke
 
-In course material, this checklist is a didactic pattern. It does not replace legal or regulatory review.
+Im Kursmaterial ist diese Checkliste ein didaktisches Muster. Sie ersetzt keine rechtliche oder regulatorische Prüfung.

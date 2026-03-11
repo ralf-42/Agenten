@@ -1,104 +1,104 @@
 ---
 name: compliance-skill
-description: Use this skill when the user wants a compliance-oriented agent workflow, including sanctions checks, risk scoring, approval gates, documentation duties, or controlled multi-step onboarding and payment release processes.
+description: Diesen Skill verwenden, wenn der Nutzer einen compliance-orientierten Agenten-Workflow benötigt, einschließlich Sanktionsprüfungen, Risikobewertung, Freigabe-Gates, Dokumentationspflichten oder kontrollierten mehrstufigen Onboarding- und Zahlungsfreigabeprozessen.
 ---
 
 # Compliance Skill
 
-This skill defines a reusable compliance workflow for agentic processes with approval and documentation requirements.
+Dieser Skill definiert einen wiederverwendbaren Compliance-Workflow für Agentenprozesse mit Freigabe- und Dokumentationsanforderungen.
 
-## Quick Start
+## Schnellstart
 
-Use this skill when a request involves one or more of these patterns:
+Diesen Skill verwenden, wenn eine Anfrage eines oder mehrere dieser Muster enthält:
 
-- A transaction, supplier, customer, or account must be checked before execution
-- The agent must follow a fixed review sequence before taking action
-- The user asks for sanctions checks, KYC/KYB checks, risk scoring, approval gates, or audit logging
-- The task needs a documented go/no-go decision
+- Eine Transaktion, ein Lieferant, ein Kunde oder ein Konto muss vor der Ausführung geprüft werden
+- Der Agent muss eine feste Prüfsequenz einhalten, bevor er handelt
+- Der Nutzer fragt nach Sanktionsprüfungen, KYC/KYB-Prüfungen, Risikobewertung, Freigabe-Gates oder Audit-Logging
+- Die Aufgabe erfordert eine dokumentierte Go/No-Go-Entscheidung
 
-If the request is purely informational and no operational decision is needed, give a normal answer and skip the full workflow.
+Wenn die Anfrage rein informationell ist und keine operative Entscheidung erforderlich ist, eine normale Antwort geben und den vollständigen Workflow überspringen.
 
-## Core Workflow
+## Kernworkflow
 
-Follow these steps in order. Do not skip any step.
+Diese Schritte der Reihe nach ausführen. Keinen Schritt überspringen.
 
-1. Extract all available information from the user's message and conversation history.
-2. Identify which required inputs are still missing. Ask only for those — never ask for information already provided. **Stop here and wait for the answer before continuing.**
-3. Run mandatory checks.
-4. **Call the `compliance_check` tool** to compute the risk score. Never compute risk scores manually.
-5. Decide whether the case is approved, blocked, or escalated based on the tool result.
-6. Produce an audit-ready decision note.
+1. Alle verfügbaren Informationen aus der Nutzernachricht und dem Gesprächsverlauf extrahieren.
+2. Feststellen, welche erforderlichen Eingaben noch fehlen. Nur nach diesen fragen — niemals nach Informationen fragen, die bereits angegeben wurden. **Hier stoppen und auf die Antwort warten, bevor weitergemacht wird.**
+3. Pflichtprüfungen durchführen.
+4. **Das Tool `compliance_check` aufrufen**, um den Risiko-Score zu berechnen. Risiko-Scores niemals manuell berechnen.
+5. Anhand des Tool-Ergebnisses entscheiden, ob der Fall genehmigt, abgelehnt oder eskaliert wird.
+6. Eine prüfungsfähige Entscheidungsnotiz erstellen.
 
-Never skip steps 3 to 6 when the task requests an operational compliance decision.
+Die Schritte 3 bis 6 niemals überspringen, wenn die Aufgabe eine operative Compliance-Entscheidung erfordert.
 
-## Minimum Required Inputs
+## Mindestanforderungen an Eingaben
 
-Extract these fields from the user's message or conversation history before deciding:
+Diese Felder aus der Nutzernachricht oder dem Gesprächsverlauf extrahieren, bevor eine Entscheidung getroffen wird:
 
-- subject_type: person, company, vendor, customer, payment, or account
+- subject_type: Person, Unternehmen, Lieferant, Kunde, Zahlung oder Konto
 - subject_name
 - country
-- transaction_amount if relevant
+- transaction_amount (falls relevant)
 - business_purpose
-- source_of_funds or payment context if relevant
-- sanctions_clearance_confirmed: explicit confirmation that a formal sanctions screening was performed and whether it returned a hit
+- source_of_funds oder Zahlungskontext (falls relevant)
+- sanctions_clearance_confirmed: ausdrückliche Bestätigung, dass eine formale Sanktionsprüfung durchgeführt wurde und ob ein Treffer vorlag
 
-Extract from natural language whenever possible. Only ask for fields that are genuinely absent or ambiguous — never repeat a question already answered.
+Aus natürlicher Sprache extrahieren, wenn möglich. Nur nach Feldern fragen, die tatsächlich fehlen oder unklar sind — eine bereits beantwortete Frage niemals wiederholen.
 
-**Hard rule — never infer, never skip:** `sanctions_clearance_confirmed` cannot be derived from context. You MUST ask the user explicitly whether a formal sanctions screening was performed and what the result was. Do not proceed to step 3 until this is confirmed. This rule overrides everything else.
+**Strikte Regel — niemals ableiten, niemals überspringen:** `sanctions_clearance_confirmed` kann nicht aus dem Kontext abgeleitet werden. Den Nutzer MUSS explizit gefragt werden, ob eine formale Sanktionsprüfung durchgeführt wurde und was das Ergebnis war. Nicht mit Schritt 3 fortfahren, bis dies bestätigt ist. Diese Regel überschreibt alles andere.
 
-## Mandatory Checks
+## Pflichtprüfungen
 
-Always perform these checks:
+Diese Prüfungen immer durchführen:
 
-- sanctions screening
-- geography screening
-- transaction size review if money is involved
-- adverse indicator review
-- documentation completeness check
+- Sanktionsprüfung
+- Geografische Prüfung
+- Transaktionsgrößenprüfung (wenn Geld im Spiel ist)
+- Prüfung auf negative Indikatoren
+- Prüfung der Vollständigkeit der Dokumentation
 
-Read [references/checklist.md](references/checklist.md) for the exact checklist.
+Die genaue Checkliste steht in [references/checklist.md](references/checklist.md).
 
-## Risk Scoring
+## Risikobewertung
 
-**Always call the `compliance_check` tool** to compute the risk score. Never estimate or manually derive the risk level — the tool result is binding.
+**Das Tool `compliance_check` immer aufrufen**, um den Risiko-Score zu berechnen. Das Risikoniveau niemals schätzen oder manuell ableiten — das Tool-Ergebnis ist bindend.
 
-The tool returns one of three levels: low, medium, high.
+Das Tool gibt eine von drei Stufen zurück: low, medium, high.
 
-## Decision Policy
+## Entscheidungsrichtlinie
 
-Apply this policy:
+Diese Richtlinie anwenden:
 
-- `low` and all mandatory inputs present: approve
-- `medium`: escalate for human review unless the user explicitly asked for a draft recommendation only
-- `high`: block and explain why
-- any sanctions hit: block immediately
-- missing critical data: hold until completed
+- `low` und alle Pflichtangaben vorhanden: genehmigen
+- `medium`: zur menschlichen Prüfung eskalieren, es sei denn, der Nutzer hat ausdrücklich nur eine Empfehlung angefragt
+- `high`: ablehnen und begründen
+- jeder Sanktionstreffer: sofort ablehnen
+- fehlende kritische Daten: zurückhalten bis vollständig
 
-## Output Format
+## Ausgabeformat
 
-Return the final answer in this structure:
+Die abschließende Antwort in dieser Struktur zurückgeben:
 
-### Compliance Decision
+### Compliance-Entscheidung
 
-- Case
-- Checks performed
-- Risk level
-- Decision
-- Rationale
-- Missing information or escalation point
-- Audit note
+- Fall
+- Durchgeführte Prüfungen
+- Risikoniveau
+- Entscheidung
+- Begründung
+- Fehlende Informationen oder Eskalationspunkt
+- Prüfungsnotiz
 
-## References
+## Referenzen
 
-Load only what is needed:
+Nur laden, was benötigt wird:
 
-- [references/checklist.md](references/checklist.md): operational checklist
-- [references/risk_rules.md](references/risk_rules.md): deterministic scoring rules
-- [references/examples.md](references/examples.md): example cases and output patterns
+- [references/checklist.md](references/checklist.md): operative Checkliste
+- [references/risk_rules.md](references/risk_rules.md): deterministische Bewertungsregeln
+- [references/examples.md](references/examples.md): Beispielfälle und Ausgabemuster
 
-## Guardrails
+## Leitplanken
 
-- Do not claim a real sanctions screening happened unless an actual data source or tool was used.
-- If no live data source is available, state that the result is a simulated or training assessment.
-- Do not execute the payment or onboarding action as part of the review unless the user explicitly asks for action after approval.
+- Nicht behaupten, dass eine echte Sanktionsprüfung stattgefunden hat, wenn keine echte Datenquelle oder kein Tool verwendet wurde.
+- Wenn keine Live-Datenquelle verfügbar ist, darauf hinweisen, dass das Ergebnis eine simulierte oder Schulungsbewertung ist.
+- Die Zahlungs- oder Onboarding-Aktion im Rahmen der Prüfung nicht ausführen, es sei denn, der Nutzer fragt ausdrücklich nach einer Aktion nach der Genehmigung.

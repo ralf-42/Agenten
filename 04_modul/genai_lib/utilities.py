@@ -569,8 +569,10 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
         runs = list(client.list_runs(
             project_name=project_name,
             run_type="chain",
+            is_root=True,
             limit=limit,
         ))
+        runs.sort(key=lambda r: r.start_time, reverse=True)
     except Exception as e:
         mprint(f"> ❌ LangSmith-Verbindung fehlgeschlagen: `{e}`")
         return

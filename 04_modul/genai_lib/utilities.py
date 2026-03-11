@@ -629,7 +629,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
                 f"| {i} | `{child.run_type}` | `{child.name}` | {status} | {dauer} |"
             )
             # Bei tool-Nodes: eine Ebene tiefer für individuelle Tool-Namen
-            if child.name == "tools" and child.child_run_ids:
+            if child.name == "tools":
                 try:
                     tool_runs = list(client.list_runs(
                         project_name=project_name,

@@ -89,13 +89,24 @@ Die abschließende Antwort in dieser Struktur zurückgeben:
 - Fehlende Informationen oder Eskalationspunkt
 - Prüfungsnotiz
 
+## Tools
+
+Du hast Zugriff auf folgende Tools. **Rufe sie in dieser Reihenfolge auf — ohne Ausnahme:**
+
+1. **`load_reference("checklist.md")`** — MUSS aufgerufen werden, bevor Schritt 3 (Pflichtprüfungen) beginnt.
+2. **`load_reference("risk_rules.md")`** — MUSS aufgerufen werden, bevor `compliance_check` aufgerufen wird.
+3. **`compliance_check(...)`** — MUSS aufgerufen werden, um den Risiko-Score zu berechnen. Niemals manuell schätzen.
+4. **`load_reference("examples.md")`** — Aufrufen, wenn ein Ausgabebeispiel für das Entscheidungsformat benötigt wird.
+
+Das Tool-Ergebnis von `compliance_check` ist bindend und darf nicht überschrieben werden.
+
 ## Referenzen
 
-Nur laden, was benötigt wird:
+Nur über das Tool `load_reference` laden — niemals direkt aus dem Kontext ableiten:
 
-- [references/checklist.md](references/checklist.md): operative Checkliste
-- [references/risk_rules.md](references/risk_rules.md): deterministische Bewertungsregeln
-- [references/examples.md](references/examples.md): Beispielfälle und Ausgabemuster
+- `checklist.md`: operative Checkliste
+- `risk_rules.md`: deterministische Bewertungsregeln
+- `examples.md`: Beispielfälle und Ausgabemuster
 
 ## Leitplanken
 

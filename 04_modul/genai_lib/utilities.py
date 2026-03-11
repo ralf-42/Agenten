@@ -628,6 +628,24 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
             step_zeilen.append(
                 f"| {i} | `{child.run_type}` | `{child.name}` | {status} | {dauer} |"
             )
+            # Bei tool-Nodes: eine Ebene tiefer für individuelle Tool-Namen
+            if child.name == "tools" and child.child_run_ids:
+                try:
+                    tool_runs = list(client.list_runs(
+                        project_name=project_name,
+                        filter=f'eq(parent_run_id, "{str(child.id)}")',
+                    ))
+                    for tool_run in tool_runs:
+                        tool_dauer = (
+                            f"{(tool_run.end_time - tool_run.start_time).total_seconds():.1f}s"
+                            if tool_run.end_time and tool_run.start_time else "—"
+                        )
+                        tool_status = "✅" if tool_run.status == "success" else "❌"
+                        step_zeilen.append(
+                            f"| ↳ | `{tool_run.run_type}` | `{tool_run.name}` | {tool_status} | {tool_dauer} |"
+                        )
+                except Exception:
+                    pass
 
         mprint("\n".join(step_zeilen))
 

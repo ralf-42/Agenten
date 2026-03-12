@@ -1,6 +1,6 @@
 ---
-name: m07_multi_tool_system_prompt
-description: System-Prompt fuer Multi-Tool-Agent in M07
+name: m06_multi_tool_system_prompt
+description: System-Prompt fuer Multi-Tool-Agent in M06
 variables: []
 ---
 

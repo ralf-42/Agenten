@@ -115,7 +115,7 @@ get_ipinfo()
 
 **Wichtig:**
 - Env-Vars stehen **vor** dem `genai_lib`-Import – das ist Pflicht laut Best Practices
-- **Projektname-Konvention:** `"M##-Thema"` (z.B. `"M06-Structured-Output"`) – Traces sind sofort dem Modul zuzuordnen
+- **Projektname-Konvention:** `"M##-Thema"` (z.B. `"M05-Structured-Output"`) – Traces sind sofort dem Modul zuzuordnen
 - `create_globals=False` verhindert globale Variablen (Best Practice)
 - Ab jetzt werden **alle** LangChain/LangGraph-Operationen automatisch getrackt
 
@@ -464,7 +464,7 @@ result = compiled_graph.invoke(
 
 ```python
 # ✅ Modulname in der Setup-Cell – vor allen Imports!
-os.environ["LANGSMITH_PROJECT"] = "M06-Structured-Output"
+os.environ["LANGSMITH_PROJECT"] = "M05-Structured-Output"
 ```
 
 **Wichtig:** `LANGSMITH_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
@@ -478,7 +478,7 @@ import os
 
 # ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"]    = "M06-Structured-Output"  # Modulname anpassen
+os.environ["LANGSMITH_PROJECT"]    = "M05-Structured-Output"  # Modulname anpassen
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
 # Erst danach: genai_lib und weitere Imports
@@ -496,7 +496,7 @@ import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
-run_cfg = {"run_name": "M06_Kap6_StructuredTrace", "tags": ["M06", "structured-output"]}
+run_cfg = {"run_name": "M05_Kap6_StructuredTrace", "tags": ["M05", "structured-output"]}
 result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("...")
 ```
 
@@ -504,7 +504,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 
 | Kontext | Projektname |
 |---------|-------------|
-| Kurs-Notebook | `"M##-Thema"` z.B. `"M06-Structured-Output"` |
+| Kurs-Notebook | `"M##-Thema"` z.B. `"M05-Structured-Output"` |
 | Produktion | `"chatbot-production"` |
 | Experiment | `"rag-experiment-2026-03"` |
 
@@ -584,8 +584,8 @@ Automatisches Tracing erfasst alle Runs – aber ohne explizite Namen sind sie i
 ```python
 # Config-Parameter in einer eigenen Variable definieren
 run_cfg = {
-    "run_name": "M05_Kap3_LCEL_Grundchain",  # Konvention: M##_Kap##_Typ
-    "tags":     ["M05", "lcel", "chain"],     # Filterbar im LangSmith-Dashboard
+    "run_name": "M07_Kap3_LCEL_Grundchain",  # Konvention: M##_Kap##_Typ
+    "tags":     ["M07", "lcel", "chain"],     # Filterbar im LangSmith-Dashboard
 }
 
 chain = (
@@ -619,8 +619,8 @@ class Person(BaseModel):
     alter: int = Field(description="Alter in Jahren")
 
 run_cfg = {
-    "run_name": "M06_Kap3_PersonExtraktion",
-    "tags":     ["M06", "structured-output"],
+    "run_name": "M05_Kap3_PersonExtraktion",
+    "tags":     ["M05", "structured-output"],
 }
 
 structured_llm = llm.with_structured_output(Person).with_config(**run_cfg)
@@ -631,8 +631,8 @@ ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
 
 | Parameter | Konvention | Beispiel |
 |-----------|-----------|---------|
-| `run_name` | `"M##_Kap##_Typ"` (Modul, Kapitel, Kurzname) | `"M06_Kap3_PersonExtraktion"` |
-| `tags` | Liste: `["M##", "typ", ...]` | `["M06", "structured-output"]` |
+| `run_name` | `"M##_Kap##_Typ"` (Modul, Kapitel, Kurzname) | `"M05_Kap3_PersonExtraktion"` |
+| `tags` | Liste: `["M##", "typ", ...]` | `["M05", "structured-output"]` |
 
 > ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
 
@@ -720,7 +720,7 @@ Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad
 4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
 
 **Im Kurs** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
-(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M29 relevant —
+(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M31 relevant —
 wenn Agenten außerhalb von Colab betrieben werden.
 
 ### 9.9 Web-UI Filter: Traces gezielt finden

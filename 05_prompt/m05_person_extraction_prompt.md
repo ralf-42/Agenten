@@ -1,5 +1,5 @@
 ---
-name: m06_person_extraction_prompt
+name: m05_person_extraction_prompt
 description: Extraktion von Personendaten fuer Structured Output
 variables: [text]
 ---

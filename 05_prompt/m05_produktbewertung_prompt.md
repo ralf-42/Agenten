@@ -1,5 +1,5 @@
 ---
-name: m06_produktbewertung_prompt
+name: m05_produktbewertung_prompt
 description: Strukturierte Produktbewertung aus Rezensionstext
 variables: [rezension]
 ---

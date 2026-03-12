@@ -1,6 +1,6 @@
 ---
-name: m19_schreib_prompt
-description: System-Prompt fuer den Schreib-Agenten in M19
+name: m21_schreib_prompt
+description: System-Prompt fuer den Schreib-Agenten in M21
 variables: []
 ---
 

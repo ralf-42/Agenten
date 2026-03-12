@@ -1,5 +1,5 @@
 ---
-name: m07_robust_rechenassistent_system_prompt
+name: m06_robust_rechenassistent_system_prompt
 description: Robuster Rechenassistent mit Fehlerbehandlung
 variables: []
 ---

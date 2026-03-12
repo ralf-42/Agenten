@@ -119,9 +119,24 @@ MCP stellt drei Typen von Schnittstellen bereit:
 | **Tools** | Aktionen ausführen | Datei schreiben, E-Mail senden |
 | **Prompts** | Wiederverwendbare Vorlagen | Analyse-Prompt, Übersetzungs-Vorlage |
 
+### MCP und traditionelle APIs
+
+MCP und REST-APIs sind keine Konkurrenten — sie sind **Schichten im KI-Stack**:
+
+| | MCP | REST API |
+|---|---|---|
+| **Zweck** | Speziell für LLM-Agenten entworfen | Allgemein, nicht KI-spezifisch |
+| **Discovery** | Dynamisch — Agent fragt zur Laufzeit: „Was kannst du?" | Statisch — Client-Code muss bei Änderungen aktualisiert werden |
+| **Standardisierung** | Jeder MCP-Server spricht dasselbe Protokoll | Jede API hat eigene Endpoints, Parameter, Auth-Schemas |
+| **Integration** | 5 MCP-Server = dieselben Aufrufe | 5 REST-APIs = 5 individuelle Adapter |
+
+In der Praxis **wrappen viele MCP-Server intern eine REST-API**. Der MCP-GitHub-Server etwa übersetzt `repository/list` intern in den entsprechenden GitHub-REST-Aufruf. MCP ist das KI-freundliche Interface oben — die bestehende API bleibt die Implementierung darunter. Beide Schichten koexistieren.
+
 ### Effizienz durch intelligentes Laden
 
 Statt alle Tool-Definitionen vorab in das Kontextfenster des Modells zu laden (was bei hunderten Tools extrem teuer wäre), kann der Agent Tools bei Bedarf laden und Daten vorverarbeiten. In der Praxis konnte der Token-Verbrauch dadurch von 150.000 auf 2.000 Token gesenkt werden – eine Ersparnis von über 98 %.
+
+**Dynamic Discovery** geht noch weiter: Der Agent holt bei jedem Verbindungsaufbau die aktuelle Capabilities-Liste vom Server (`tools/list`, `resources/list`, `prompts/list`). Neue Server-Features werden damit automatisch verfügbar — ohne Code-Redeployment auf der Agenten-Seite. Bei traditionellen REST-APIs müsste ein Entwickler den Client-Code manuell anpassen, wenn neue Endpoints hinzukommen.
 
 ### Sicherheit
 
@@ -135,7 +150,22 @@ Da MCP Zugriff auf Dateisysteme und die Ausführung von Code ermöglicht, ist Si
 
 Während MCP die Verbindung zwischen Agent und Tool regelt, löst **A2A (Agent2Agent Protocol)** die Kommunikation zwischen autonomen Agenten. Google Cloud startete das Projekt im April 2025, heute wird es unter der Linux Foundation als offener Standard weiterentwickelt.
 
-Das Ziel: Agenten verschiedener Hersteller und Frameworks sollen eine „gemeinsame Sprache sprechen“, unabhängig davon, ob sie in LangGraph, AutoGen oder CrewAI implementiert sind.
+Das Ziel: Agenten verschiedener Hersteller und Frameworks sollen eine „gemeinsame Sprache sprechen”, unabhängig davon, ob sie in LangGraph, AutoGen oder CrewAI implementiert sind.
+
+**Modalitätsagnostische Kommunikation:** A2A-Nachrichten sind nicht auf Text beschränkt. Agenten können Bilder, Dateien und strukturierte Daten austauschen — unabhängig davon, welche Modalität jeder Agent primär verarbeitet. Ein Text-Agent und ein Bild-Agent können direkt zusammenarbeiten: einer generiert ein Design-Mockup, der nächste reviewt es, ein dritter holt die Kundenfreigabe ein. Alles im selben Flow.
+
+### Drei Phasen einer A2A-Interaktion
+
+Eine typische A2A-Kommunikation durchläuft drei explizite Phasen:
+
+| Phase | Was passiert | Schlüsselelement |
+|-------|-------------|-----------------|
+| **1. Discovery** | Client-Agent findet den Remote-Agent und liest seine Fähigkeiten | Agent Card (`/.well-known/agent.json`) |
+| **2. Authentication** | Client-Agent authentifiziert sich beim Remote-Agent | Security Scheme aus der Agent Card |
+| **3. Communication** | Client-Agent delegiert den Task, Remote-Agent führt ihn aus | JSON-RPC 2.0 über HTTPS |
+
+**Authentication vs. Authorization:**
+Die Phase 2 umfasst zwei getrennte Schritte: Der Client-Agent **authentifiziert** sich (Wer bist du?) anhand des in der Agent Card definierten Security Schemes. Anschließend ist der Remote-Agent für die **Autorisierung** zuständig (Was darfst du?) und gewährt die entsprechenden Zugriffsrechte.
 
 ### Agent Cards: Wie Agenten sich vorstellen
 
@@ -174,6 +204,26 @@ stateDiagram-v2
     Completed --> [*]
     Failed --> [*]
 ```
+
+### Artifacts
+
+Das Ergebnis einer abgeschlossenen Aufgabe ist kein einfacher String — A2A definiert dafür den Begriff **Artifact**: ein typisiertes, greifbares Ausgabeobjekt, das der Remote-Agent am Ende eines Tasks zurückliefert.
+
+| Artifact-Typ | Beispiel |
+|---|---|
+| Dokument | Analyse-Report als Markdown oder PDF |
+| Strukturierte Daten | JSON mit Suchergebnissen oder Datenbankabfragen |
+| Bild | Generiertes Diagramm oder Screenshot |
+
+Artifacts ermöglichen es, Agent-Outputs direkt weiterzuverarbeiten — z. B. als Input für den nächsten Agenten in einer Pipeline.
+
+### Privacy und offene Standards
+
+Ein oft übersehener Vorteil von A2A ist der eingebaute **Schutz der Privatsphäre**: Das Protokoll behandelt Agenten als **opake Einheiten**. Zwei Agenten können zusammenarbeiten, ohne dass einer dem anderen seine internen Abläufe offenlegen muss — kein Zugriff auf internes Memory, proprietäre Logik oder Tool-Implementierungen.
+
+Das ist für Unternehmenseinsatz relevant: Ein externer Hotel-Agent kann mit einem eigenen Reise-Agenten kooperieren, ohne IP oder Kundendaten preiszugeben.
+
+A2A baut konsequent auf etablierten Industriestandards auf (HTTP, JSON-RPC 2.0, SSE), was die Enterprise-Adoption erleichtert. Jeder bestehende Web-Server, API-Gateway oder Load Balancer kann einen A2A-Agenten hosten — wie einen normalen Web-Service. Routing, Security-Layers, Load Balancing und Logging funktionieren ohne Anpassungen, weil A2A auf denselben Mechanismen aufsetzt, die das Web bereits kennt.
 
 ---
 
@@ -292,7 +342,30 @@ flowchart TD
 | **AG-UI** | Agent mit Frontend | SSE / WebSocket | Echtzeit-Streaming für UIs |
 | **SLIM** | Infrastruktur | gRPC + MLS | Höchste Sicherheit und Performance |
 
-In der Praxis werden diese Protokolle **kombiniert**: MCP verbindet interne Datenbanken mit einem Orchestrator-Agenten, der über A2A/ACP mit spezialisierten Agenten kommuniziert.
+### A2A und MCP im Zusammenspiel
+
+A2A und MCP sind keine Konkurrenten — sie sind komplementäre Schichten:
+
+- **MCP:** Agent ↔ Tool / Datenquelle
+- **A2A:** Agent ↔ Agent
+
+```mermaid
+flowchart LR
+    IA["📦 Inventory Agent"]
+    OA["🛒 Order Agent"]
+    SA1["🏭 Supplier Agent 1"]
+    SA2["🏭 Supplier Agent 2"]
+    DB[("Produktdatenbank\nLagerbestand")]
+
+    IA -->|MCP| DB
+    IA -->|A2A| OA
+    OA -->|A2A| SA1
+    OA -->|A2A| SA2
+```
+
+**Beispiel Retail:** Der Inventory-Agent nutzt MCP, um Produktdaten und Lagerbestände aus der Datenbank zu lesen und zu schreiben. Erkennt er einen kritischen Mindestbestand, benachrichtigt er per A2A einen Order-Agent — der seinerseits per A2A mit externen Supplier-Agenten kommuniziert, unabhängig von deren Framework oder Hersteller.
+
+> A2A und MCP waren nie Konkurrenten. Sie ergänzen sich — MCP gibt Agenten Kontext, A2A gibt Agenten Kollegen.
 
 ---
 

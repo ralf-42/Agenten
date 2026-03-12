@@ -32,6 +32,7 @@ Large Language Models besitzen beeindruckende Fähigkeiten, stoßen jedoch an kl
 | **Kein Domänenwissen** | Firmeninterne Dokumente, Fachrichtlinien oder aktuelle Daten fehlen |
 | **Halluzination** | Bei Wissenslücken werden plausible, aber falsche Antworten generiert |
 | **Kontextlimit** | Nicht alle relevanten Dokumente passen in einen einzelnen Prompt |
+| **Cross-Document-Reasoning** | RAG findet, was existiert — nicht, was fehlt. Lücken zwischen Dokumenten (z. B. "Welche Anforderungen wurden im Release weggelassen?") sind nicht abrufbar, weil kein Chunk sie enthält |
 
 **Retrieval Augmented Generation (RAG)** löst diese Probleme durch einen eleganten Ansatz: Statt das LLM mit mehr Daten zu trainieren, werden relevante Informationen zur Laufzeit abgerufen und dem Prompt hinzugefügt.
 
@@ -40,6 +41,8 @@ Frage → Suche relevante Dokumente → Füge Kontext zum Prompt → LLM generie
 ```
 
 **Kernidee:** Das LLM erhält genau die Informationen, die es für die aktuelle Frage benötigt – nicht mehr und nicht weniger.
+
+> **RAG ist nicht die einzige Augmentierungsstrategie.** Eine Alternative ist **CAG (Cache Augmented Generation)**: statt relevante Chunks abzurufen, wird die gesamte Wissensbasis vorab in das Kontextfenster geladen und als KV-Cache gespeichert. CAG hat niedrigere Latenz, ist aber durch die Kontextfenstergröße begrenzt und eignet sich nur für kleine, statische Wissensbasen. Für Vergleich, Entscheidungshilfe und Hybrid-Ansätze (RAG + CAG kombiniert) → *RAG vs. CAG* (geplant).
 
 ---
 
@@ -472,6 +475,8 @@ Für Implementierungsdetails zu Evaluatoren, LangSmith-Integration, RAGAS-Framew
 Häufige Probleme und deren Lösungen.
 
 ### 10.1 Problem: Keine relevanten Dokumente gefunden
+
+Wenn der Retriever die richtigen Chunks nicht zurückliefert, beantwortet das LLM die Frage trotzdem — aber ohne die benötigte Information. Dieses Muster wird **Silent Failure** genannt: Die Antwort existierte in der Wissensbasis, das LLM hat sie nie gesehen.
 
 | Ursache | Diagnose | Lösung |
 |---------|----------|--------|

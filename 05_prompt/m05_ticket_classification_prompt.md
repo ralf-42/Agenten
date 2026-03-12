@@ -1,5 +1,5 @@
 ---
-name: m06_ticket_classification_prompt
+name: m05_ticket_classification_prompt
 description: Structured Ticket-Klassifikation
 variables: [ticket]
 ---

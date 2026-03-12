@@ -1,6 +1,6 @@
 ---
-name: m19_recherche_prompt
-description: System-Prompt fuer den Recherche-Agenten in M19
+name: m21_recherche_prompt
+description: System-Prompt fuer den Recherche-Agenten in M21
 variables: []
 ---
 

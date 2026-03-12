@@ -50,7 +50,7 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - TypedDict-basierter State, Reducer-Funktionen
   - Nodes geben nur Änderungen zurück, nicht den gesamten State
 
-- **[Checkpointing & Persistenz](./concepts/Checkpointing_Persistenz.html)** – Zustandsspeicherung und Session-Persistenz in LangGraph (→ M15–M18)
+- **[Checkpointing & Persistenz](./concepts/Checkpointing_Persistenz.html)** – Zustandsspeicherung und Session-Persistenz in LangGraph (→ M15–M17)
   - MemorySaver, SqliteSaver, PostgresSaver – Wahl des richtigen Checkpointers
   - Thread-IDs für Multi-User-Konversationen
   - Interrupt & Resume für Human-in-the-Loop
@@ -61,12 +61,12 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - Langzeit: Semantisches Memory (Vektordatenbank), Entity Memory
   - Per-User-Memory für Multi-Session-Anwendungen
 
-- **[Human-in-the-Loop](./concepts/Human_in_the_Loop.html)** – Wann und warum KI-Agenten Menschen einbinden sollten (→ M18)
+- **[Human-in-the-Loop](./concepts/Human_in_the_Loop.html)** – Wann und warum KI-Agenten Menschen einbinden sollten (→ M17)
   - Autonomie-Spektrum: von assistiert bis vollständig autonom
   - Approval-Pattern vs. Eskalations-Pattern
   - Entscheidungskritikalität und Vertrauensgrenzen
 
-- **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten (→ M19–M20)
+- **[Multi-Agent-Systeme](./concepts/Multi_Agent_Systeme.html)** – Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten (→ M21–M22)
   - Supervisor-Pattern, Hierarchical, Collaborative Patterns
   - Paralleles Pattern: Fan-out / Fan-in mit Send und Map-Reduce
   - Spezialisierung, Fehlertoleranz und Skalierbarkeit
@@ -74,12 +74,12 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
 
 ## Qualität & Praxis
 
-- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M17, M24)
+- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M18, M19)
   - Eval-Datasets, Metriken und Regression-Tests
   - LangSmith Evaluation Pipeline
   - Baseline, Drift-Erkennung und Production-Monitoring
 
-- **[Agent Security](./concepts/Agent_Security.html)** – Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M25)
+- **[Agent Security](./concepts/Agent_Security.html)** – Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M20)
   - Prompt Injection, Tool Missbrauch, Daten-Exfiltration
   - Principle of Least Privilege, Tool Whitelisting, PII-Redaktion
   - Vertrauensgrenzen und sichere Entwicklungspraxis

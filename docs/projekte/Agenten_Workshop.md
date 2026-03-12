@@ -66,12 +66,12 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 | Kapitel 1: StateGraph Basics | M12, M13 | Warum LangGraph? / StateGraph Basics |
 | Kapitel 2: Conditional Routing | M14 | Conditional Routing & Tool-Loop |
 | Kapitel 3: Checkpointing & Memory | M15 | Checkpointing & Sessions |
-| Kapitel 4: Multi-Agent System | M19, M20 | Multi-Agent Patterns / Supervisor Pattern |
-| Kapitel 5: Human-in-the-Loop | M18 | Human-in-the-Loop |
-| Kapitel 6: Subgraphs & Tool Nodes | M20, M30 | Supervisor Pattern / Hierarchical Agent Teams |
-| Kapitel 7: Production Deployment | M27, M29 | Gradio UI / Production Deployment |
+| Kapitel 4: Multi-Agent System | M21, M22 | Multi-Agent Patterns / Supervisor Pattern |
+| Kapitel 5: Human-in-the-Loop | M17 | Human-in-the-Loop |
+| Kapitel 6: Subgraphs & Tool Nodes | M22, M24 | Supervisor Pattern / Hierarchical Agent Teams |
+| Kapitel 7: Production Deployment | M28, M31 | Gradio UI / Production Deployment |
 
-> **Hinweis Reihenfolge:** Im Kurs kommt M18 (HITL) vor M19/M20 (Multi-Agent). Im Workshop wird HITL bewusst nach dem Multi-Agent-System eingeführt, um es in den bereits aufgebauten Supervisor-Graph zu integrieren.
+> **Hinweis Reihenfolge:** Im Kurs kommt M17 (HITL) vor M21/M22 (Multi-Agent). Im Workshop wird HITL bewusst nach dem Multi-Agent-System eingeführt, um es in den bereits aufgebauten Supervisor-Graph zu integrieren.
 
 ---
 
@@ -339,7 +339,7 @@ def show_session_history(thread_id: str):
 
 ## 7 Kapitel 4: Multi-Agent System (Supervisor)
 
-> 📚 **Kursmodul:** M19 – Multi-Agent Patterns | M20 – Supervisor Pattern
+> 📚 **Kursmodul:** M21 – Multi-Agent Patterns | M22 – Supervisor Pattern
 
 **Lernziel:** Supervisor-Pattern mit Worker-Agents
 
@@ -423,7 +423,7 @@ workflow.add_conditional_edges(
 
 ## 8 Kapitel 5: Human-in-the-Loop
 
-> 📚 **Kursmodul:** M18 – Human-in-the-Loop
+> 📚 **Kursmodul:** M17 – Human-in-the-Loop
 
 **Lernziel:** Interrupt & Resume für kritische Entscheidungen
 
@@ -487,7 +487,7 @@ if approval == "yes":
 
 ## 9 Kapitel 6: Subgraphs & Tool Nodes
 
-> 📚 **Kursmodul:** M20 – Supervisor Pattern | M30 – Hierarchical Agent Teams (optional)
+> 📚 **Kursmodul:** M22 – Supervisor Pattern | M24 – Hierarchical Agent Teams (optional)
 
 **Lernziel:** Modulare Workflows mit Subgraphs
 
@@ -546,7 +546,7 @@ workflow.add_conditional_edges(
 
 ## 10 Kapitel 7: Production Deployment
 
-> 📚 **Kursmodul:** M27 – Gradio UI für Agenten | M29 – Production Deployment (optional)
+> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M31 – Production Deployment (optional)
 
 **Lernziel:** Streaming, Monitoring, Gradio-UI
 

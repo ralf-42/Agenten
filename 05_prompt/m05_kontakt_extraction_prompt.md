@@ -1,5 +1,5 @@
 ---
-name: m06_kontakt_extraction_prompt
+name: m05_kontakt_extraction_prompt
 description: Extraktion von Kontaktdaten aus Freitext
 variables: [text]
 ---

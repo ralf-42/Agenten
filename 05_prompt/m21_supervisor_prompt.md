@@ -1,6 +1,6 @@
 ---
-name: m19_supervisor_prompt
-description: System-Prompt fuer den Supervisor-Agenten in M19
+name: m21_supervisor_prompt
+description: System-Prompt fuer den Supervisor-Agenten in M21
 variables: []
 ---
 

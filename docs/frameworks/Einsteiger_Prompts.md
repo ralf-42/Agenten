@@ -387,10 +387,10 @@ flowchart TD
 | Typ | Datei | Modul |
 |---|---|---|
 | System-only, einfach | `m03_agent_system_prompt.md` | M03 ReAct |
-| System-only, einfach | `m07_multi_tool_system_prompt.md` | M07 Multi-Tool |
+| System-only, einfach | `m06_multi_tool_system_prompt.md` | M06 Multi-Tool |
 | Template mit Variablen | `m10_rag_prompt.md` | M10 RAG |
 | Few-Shot | `m04_ticket_few_shot_prompt.md` | M04 Few-Shot |
-| Komplex mit XML-Tags | `m19_recherche_prompt.md` | M19 Multi-Agent |
+| Komplex mit XML-Tags | `m21_recherche_prompt.md` | M21 Multi-Agent |
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
 

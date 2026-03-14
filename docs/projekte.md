@@ -13,12 +13,12 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
 ## Übersicht
 
 ### Workshop-Format
-- **[Agenten Workshop](./projekte/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
-  - Bauen Sie ein Multi-Agent Support-System von Grund auf
-  - 7 Kapitel: Von StateGraph zu komplexen Supervisor-Hierarchien
-  - LangGraph 1.0+: State Machines, Checkpointing, Human-in-the-Loop
-  - Zeitaufwand: 6-8 Stunden
-  - Module M12-M22
+- **[Kursnavigator Workshop](./projekte/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
+  - Bauen Sie einen kleinen LangGraph-Lernassistenten für den Kurs
+  - 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
+  - LangGraph 1.0+: State, Conditional Routing, Checkpointing
+  - Zeitaufwand: 4-6 Stunden
+  - Einstieg ab M14, ausbaubar bis M31
 
 ### End-to-End Projekt
 - **[Agenten Challenge](./projekte/Agenten_Challenges.html)** - Eigenständige Implementierung

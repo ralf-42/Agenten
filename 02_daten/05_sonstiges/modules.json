@@ -1,0 +1,266 @@
+[
+  {
+    "module": "M01",
+    "title": "Was sind KI-Agenten?",
+    "topics": ["agenten", "grundlagen", "llm", "architektur", "einführung"],
+    "level": "beginner",
+    "prerequisites": [],
+    "summary": "Einführung in KI-Agenten: Was sie sind, wie sie sich von einfachen LLM-Aufrufen unterscheiden und welche Architekturmuster es gibt (ReAct, Tool-Calling, Workflow-basiert)."
+  },
+  {
+    "module": "M02",
+    "title": "Tool Use & Function Calling",
+    "topics": ["tools", "function calling", "tool use", "werkzeuge", "api"],
+    "level": "beginner",
+    "prerequisites": ["M01"],
+    "summary": "Wie KI-Agenten Werkzeuge nutzen: Function Calling, Schema-Definition, Parameterübergabe und Tool-Auswahl durch das LLM."
+  },
+  {
+    "module": "M03",
+    "title": "Erste Agenten mit LangChain",
+    "topics": ["langchain", "create_agent", "agent", "erste schritte"],
+    "level": "beginner",
+    "prerequisites": ["M01", "M02"],
+    "summary": "Erste eigene Agenten mit LangChain 1.0+: create_agent(), init_chat_model(), Tool-Decorator und einfache Agenten-Loops."
+  },
+  {
+    "module": "M04",
+    "title": "Prompt Engineering für Agenten",
+    "topics": ["prompt", "prompt engineering", "system prompt", "few-shot", "chain-of-thought"],
+    "level": "beginner",
+    "prerequisites": ["M01"],
+    "summary": "Strategien für effektive Prompts in Agenten-Systemen: System-Prompts, Tool-Beschreibungen, Reasoning-Prompts und strukturierte Ausgaben."
+  },
+  {
+    "module": "M05",
+    "title": "Structured Output",
+    "topics": ["structured output", "pydantic", "json", "with_structured_output", "schema"],
+    "level": "beginner",
+    "prerequisites": ["M03"],
+    "summary": "Strukturierte Ausgaben mit Pydantic und with_structured_output(): zuverlässige JSON-Antworten statt freitext."
+  },
+  {
+    "module": "M06",
+    "title": "Multi-Tool Agents",
+    "topics": ["multi-tool", "tools", "tool-loop", "mehrere werkzeuge"],
+    "level": "beginner",
+    "prerequisites": ["M02", "M03"],
+    "summary": "Agenten mit mehreren Werkzeugen: Tool-Auswahl, Kombinationen und Umgang mit Tool-Fehlern."
+  },
+  {
+    "module": "M07",
+    "title": "LCEL Chains",
+    "topics": ["lcel", "chain", "pipe", "runnable", "sequenz"],
+    "level": "beginner",
+    "prerequisites": ["M03"],
+    "summary": "LangChain Expression Language (LCEL): Chains mit dem | -Operator aufbauen, Runnable-Konzept und Parallelisierung."
+  },
+  {
+    "module": "M08",
+    "title": "RAG Konzepte & Embeddings",
+    "topics": ["rag", "retrieval", "embeddings", "vektordatenbank", "konzepte"],
+    "level": "intermediate",
+    "prerequisites": ["M03"],
+    "summary": "Grundlagen von Retrieval Augmented Generation: Warum RAG, Embeddings, Chunking und Vektordatenbanken."
+  },
+  {
+    "module": "M09",
+    "title": "ChromaDB Indexing",
+    "topics": ["chromadb", "indexing", "vektordatenbank", "embeddings", "speichern"],
+    "level": "intermediate",
+    "prerequisites": ["M08"],
+    "summary": "Dokumente mit ChromaDB indexieren: Vektoren speichern, Metadaten verwalten und Ähnlichkeitssuche durchführen."
+  },
+  {
+    "module": "M10",
+    "title": "RAG Chain mit LangChain",
+    "topics": ["rag", "chain", "retrieval", "langchain", "dokumente"],
+    "level": "intermediate",
+    "prerequisites": ["M08", "M09"],
+    "summary": "RAG-Pipeline als LangChain-Chain: Retriever, Prompt und LLM zu einer durchgängigen Antwort-Pipeline verbinden."
+  },
+  {
+    "module": "M11",
+    "title": "RAG Agent",
+    "topics": ["rag", "agent", "retrieval", "tool", "wissenssuche"],
+    "level": "intermediate",
+    "prerequisites": ["M10", "M06"],
+    "summary": "RAG als Agent-Werkzeug: Retrieval in einen Agenten einbetten, sodass er selbstständig entscheidet wann er sucht."
+  },
+  {
+    "module": "M12",
+    "title": "Warum LangGraph?",
+    "topics": ["langgraph", "graph", "workflow", "state machine", "warum"],
+    "level": "intermediate",
+    "prerequisites": ["M03"],
+    "summary": "Motivation für LangGraph: Grenzen einfacher Agenten-Loops, Vorteile von Graph-basierten Workflows und Überblick über StateGraph."
+  },
+  {
+    "module": "M13",
+    "title": "StateGraph Basics",
+    "topics": ["langgraph", "stategraph", "state", "typeddict", "nodes", "edges"],
+    "level": "intermediate",
+    "prerequisites": ["M12"],
+    "summary": "Grundbausteine von LangGraph: TypedDict-State, Nodes, Edges, START und END — erster eigener StateGraph."
+  },
+  {
+    "module": "M14",
+    "title": "Conditional Routing & Tool-Loop",
+    "topics": ["routing", "conditional edges", "tool-loop", "verzweigung", "langgraph"],
+    "level": "intermediate",
+    "prerequisites": ["M13"],
+    "summary": "Verzweigte Workflows mit Conditional Edges: Router-Funktionen, Tool-Loops und deterministisches Routing in LangGraph."
+  },
+  {
+    "module": "M15",
+    "title": "Checkpointing & Sessions",
+    "topics": ["checkpointing", "sessions", "persistenz", "memorysaver", "sqlitesaver", "thread_id"],
+    "level": "intermediate",
+    "prerequisites": ["M13"],
+    "summary": "Zustandsspeicherung in LangGraph: MemorySaver, SqliteSaver, Thread-IDs für Multi-User-Sessions und Time Travel."
+  },
+  {
+    "module": "M16",
+    "title": "Memory-Systeme",
+    "topics": ["memory", "langzeitgedächtnis", "kurzzeit", "entity memory", "konversation"],
+    "level": "intermediate",
+    "prerequisites": ["M15"],
+    "summary": "Kurz- und Langzeitgedächtnis für Agenten: Conversation Buffer, Sliding Window, semantisches Memory und Entity Memory."
+  },
+  {
+    "module": "M17",
+    "title": "Human-in-the-Loop",
+    "topics": ["human in the loop", "approval", "interrupt", "eskalation", "kontrolle"],
+    "level": "intermediate",
+    "prerequisites": ["M15"],
+    "summary": "Menschen in Agenten-Workflows einbinden: Approval-Pattern, Interrupt & Resume, Autonomie-Spektrum und Vertrauensgrenzen."
+  },
+  {
+    "module": "M18",
+    "title": "LangSmith Evaluations Basics",
+    "topics": ["langsmith", "evaluation", "tracing", "monitoring", "observability"],
+    "level": "intermediate",
+    "prerequisites": ["M03"],
+    "summary": "Agenten mit LangSmith beobachten und evaluieren: Tracing, Datasets, Metriken und einfache Eval-Pipelines."
+  },
+  {
+    "module": "M19",
+    "title": "Agent Evaluation & Testing",
+    "topics": ["evaluation", "testing", "regression", "qualität", "metriken"],
+    "level": "intermediate",
+    "prerequisites": ["M18"],
+    "summary": "Systematisches Testen von Agenten: Eval-Datasets, Regression-Tests, Baseline-Vergleich und Production-Monitoring."
+  },
+  {
+    "module": "M20",
+    "title": "Agent Security Best Practices",
+    "topics": ["security", "sicherheit", "prompt injection", "pii", "least privilege"],
+    "level": "intermediate",
+    "prerequisites": ["M06"],
+    "summary": "Sicherheitsrisiken und Schutzmaßnahmen: Prompt Injection, Tool-Missbrauch, PII-Redaktion und Principle of Least Privilege."
+  },
+  {
+    "module": "M21",
+    "title": "Multi-Agent Patterns",
+    "topics": ["multi-agent", "patterns", "koordination", "spezialisierung", "langgraph"],
+    "level": "advanced",
+    "prerequisites": ["M14", "M15"],
+    "summary": "Zusammenarbeit mehrerer Agenten: Supervisor-Pattern, Hierarchical und Collaborative Patterns, Fan-out / Fan-in."
+  },
+  {
+    "module": "M22",
+    "title": "Supervisor Pattern",
+    "topics": ["supervisor", "multi-agent", "orchestrierung", "koordination", "routing"],
+    "level": "advanced",
+    "prerequisites": ["M21"],
+    "summary": "Der Supervisor als Koordinator: Ein zentraler Agent verteilt Aufgaben, sammelt Ergebnisse und trifft Routing-Entscheidungen."
+  },
+  {
+    "module": "M23",
+    "title": "Multi-Agent Projekt",
+    "topics": ["multi-agent", "projekt", "end-to-end", "praxis"],
+    "level": "advanced",
+    "prerequisites": ["M22"],
+    "summary": "Durchgehendes Multi-Agent-Projekt: Planung, Implementierung und Test eines vollständigen Multi-Agent-Systems."
+  },
+  {
+    "module": "M24",
+    "title": "Hierarchical Agent Teams",
+    "topics": ["hierarchisch", "teams", "multi-agent", "verschachtelt", "sub-agenten"],
+    "level": "advanced",
+    "prerequisites": ["M22"],
+    "summary": "Hierarchische Agenten-Teams: Verschachtelte Supervisor-Strukturen, Sub-Agenten und Delegation über mehrere Ebenen."
+  },
+  {
+    "module": "M25",
+    "title": "Collaborative Multi-Agent",
+    "topics": ["kollaboration", "multi-agent", "peer-to-peer", "zusammenarbeit"],
+    "level": "advanced",
+    "prerequisites": ["M21"],
+    "summary": "Kollaborative Agenten-Muster: Agenten ohne zentralen Supervisor, Peer-to-Peer-Kommunikation und gemeinsame Zielerreichung."
+  },
+  {
+    "module": "M26",
+    "title": "Agentic RAG",
+    "topics": ["agentic rag", "rag", "agent", "retrieval", "multi-step"],
+    "level": "advanced",
+    "prerequisites": ["M11", "M14"],
+    "summary": "RAG mit agentischem Verhalten: Mehrschrittige Retrieval-Strategien, Self-Querying und adaptive Suche."
+  },
+  {
+    "module": "M27",
+    "title": "Advanced RAG Pipeline Patterns",
+    "topics": ["advanced rag", "pipeline", "reranking", "hybrid search", "pattern"],
+    "level": "advanced",
+    "prerequisites": ["M26"],
+    "summary": "Erweiterte RAG-Muster: Reranking, Hybrid Search, Query-Transformation und Production-ready RAG-Pipelines."
+  },
+  {
+    "module": "M28",
+    "title": "Gradio UI für Agenten",
+    "topics": ["gradio", "ui", "interface", "web", "chat"],
+    "level": "intermediate",
+    "prerequisites": ["M14"],
+    "summary": "Web-Oberflächen für Agenten mit Gradio: Chat-Interface, Session-Handling und einfaches Deployment."
+  },
+  {
+    "module": "M29",
+    "title": "OpenAI Agent Builder",
+    "topics": ["openai", "agent builder", "assistants api", "hosted agents"],
+    "level": "advanced",
+    "prerequisites": ["M06"],
+    "summary": "Agenten mit der OpenAI Assistants API aufbauen: Hosted Tools, Code Interpreter, File Search und Thread-Management."
+  },
+  {
+    "module": "M30",
+    "title": "MCP Integration",
+    "topics": ["mcp", "model context protocol", "tool integration", "anthropic", "protokoll"],
+    "level": "advanced",
+    "prerequisites": ["M06"],
+    "summary": "Model Context Protocol (MCP): universelle Tool-Integration für Agenten, MCP-Server aufsetzen und LangChain-MCP-Adapter nutzen."
+  },
+  {
+    "module": "M31",
+    "title": "Production Deployment",
+    "topics": ["deployment", "produktion", "hugging face", "docker", "api"],
+    "level": "advanced",
+    "prerequisites": ["M28"],
+    "summary": "Agenten in Produktion bringen: Hugging Face Spaces, Docker, API-Server und grundlegende Production-Best-Practices."
+  },
+  {
+    "module": "M32",
+    "title": "DeepAgents Harness",
+    "topics": ["deep agents", "harness", "test harness", "automatisiertes testen"],
+    "level": "advanced",
+    "prerequisites": ["M19"],
+    "summary": "Automatisiertes Testen komplexer Agenten: Test-Harness aufbauen, Szenarien definieren und Regressionstests skalieren."
+  },
+  {
+    "module": "M33",
+    "title": "Agent Skill Compliance",
+    "topics": ["skills", "skill.md", "compliance", "guardrails", "rezepte"],
+    "level": "advanced",
+    "prerequisites": ["M14"],
+    "summary": "Wiederverwendbare Agenten-Skills: SKILL.md-Format, Guardrails, Progressive Disclosure und auditierbare Arbeitsrezepte."
+  }
+]

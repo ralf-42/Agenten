@@ -641,7 +641,7 @@ A: Ja! Verwenden Sie dann:
 **Q: Unterschied zur RAG_Workshop.md?**
 A:
   - **RAG Workshop**: Fokus auf LangChain, RAG, Retrieval, Embeddings
-  - **Agenten Workshop**: Fokus auf LangGraph, State Machines, Multi-Agent
+  - **Kursnavigator Workshop**: Fokus auf LangGraph, Routing, State und kleine Kursanwendung
   - **Agenten Challenge**: Production-Ready System mit allen 7 LangGraph Must-Haves
 
 ---

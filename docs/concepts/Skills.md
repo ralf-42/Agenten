@@ -2,7 +2,7 @@
 layout: default
 title: Skills
 parent: Konzepte
-nav_order: 4
+nav_order: 13
 description: "Wiederverwendbare Arbeitsrezepte für verlässlich gesteuerte KI-Agenten"
 has_toc: true
 ---

@@ -1,17 +1,17 @@
 ---
 layout: default
-title: Agenten Workshop
+title: Kursnavigator Workshop
 parent: Projekte
 nav_order: 2
-description: "Multi-Agent-System bauen: Von einfachen State Machines zu komplexen Supervisor-Hierarchien mit LangGraph"
+description: "Schrittweise Übung: Einen LangGraph-Kursnavigator mit Routing, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
 ---
 
-# Agenten Workshop
+# Kursnavigator Workshop
 {: .no_toc }
 
-> **Multi-Agent Support-System bauen**      
-> Schrittweise Entwicklung vom einfachen State-basierten Agenten zum intelligenten Multi-Agent-System mit LangGraph
+> **Einen kleinen LangGraph-Lernassistenten bauen**      
+> Schrittweise Entwicklung vom einfachen Routing-Graphen zum nutzbaren Kursnavigator mit optionaler Web-Oberfläche
 
 ---
 
@@ -25,36 +25,35 @@ has_toc: true
 
 ## 1 Projektübersicht
 
-In dieser Übungsaufgabe bauen Sie schrittweise ein **Multi-Agent Support-System**, das komplexe Kundenanfragen intelligent routet und bearbeitet.
+In dieser Übungsaufgabe bauen Sie schrittweise einen **Kursnavigator**, der Lernende durch den Agenten-Kurs führt. Der Navigator beantwortet Fragen zu Modulen, empfiehlt Lernpfade, erklärt zentrale Konzepte und erzeugt auf Wunsch kleine Quizfragen.
 
 **Lernziele:**
 - LangGraph State Machines von Grund auf verstehen
-- Multi-Agent-Architekturen implementieren (Supervisor, Worker)
-- Checkpointing und Session-Management nutzen
-- Human-in-the-Loop Workflows bauen
-- Production-Ready Agenten mit Monitoring deployen
+- Conditional Routing für verschiedene Anfragetypen einsetzen
+- Kurswissen als kleine lokale Wissensbasis strukturieren
+- Sessions und Verlauf mit Checkpointing speichern
+- eine einfache Gradio-Oberfläche für den Agenten bereitstellen
 
-**Zeitaufwand:** ca. 6-8 Stunden (je nach Vorkenntnissen)
+**Zeitaufwand:** ca. 4-6 Stunden (je nach Vorkenntnissen)
 
-**Arbeitsumgebung:** Google Colab oder Jupyter Notebook
+**Arbeitsumgebung:** Google Colab, Jupyter Notebook oder lokales Python
 
-**Voraussetzung:** LangChain 1.0+ Grundkenntnisse (Module M01-M11)
+**Voraussetzung:** Grundkenntnisse aus M01-M14; M15 und M28 hilfreich für Erweiterungen
 
 ---
 
 ## 2 Notebook-Struktur
 
-Sie erstellen **ein Notebook** mit **7 aufbauenden Kapiteln**:
+Sie erstellen **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
-```
-📓 Multi_Agent_Support_System.ipynb
+```text
+📓 Kursnavigator_Workshop.ipynb
    ├── 🎯 Kapitel 1: StateGraph Basics
-   ├── 🔀 Kapitel 2: Conditional Routing
-   ├── 💾 Kapitel 3: Checkpointing & Memory
-   ├── 🤖 Kapitel 4: Multi-Agent System (Supervisor)
-   ├── 👤 Kapitel 5: Human-in-the-Loop
-   ├── 📦 Kapitel 6: Subgraphs & Tool Nodes
-   └── 🚀 Kapitel 7: Production Deployment
+   ├── 🔀 Kapitel 2: Intent Routing
+   ├── 📚 Kapitel 3: Wissensbasis & Retrieval-Light
+   ├── 💾 Kapitel 4: Checkpointing & Sessions
+   ├── 🧠 Kapitel 5: Lernpfade, Konzepte und Quiz
+   └── 🚀 Kapitel 6: Gradio UI & Bonus Deployment
 ```
 
 ### 2.1 Modul-Zuordnung
@@ -64,24 +63,21 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 | Workshop Kapitel | Kursmodul | Thema |
 |-----------------|-----------|-------|
 | Kapitel 1: StateGraph Basics | M12, M13 | Warum LangGraph? / StateGraph Basics |
-| Kapitel 2: Conditional Routing | M14 | Conditional Routing & Tool-Loop |
-| Kapitel 3: Checkpointing & Memory | M15 | Checkpointing & Sessions |
-| Kapitel 4: Multi-Agent System | M21, M22 | Multi-Agent Patterns / Supervisor Pattern |
-| Kapitel 5: Human-in-the-Loop | M17 | Human-in-the-Loop |
-| Kapitel 6: Subgraphs & Tool Nodes | M22, M24 | Supervisor Pattern / Hierarchical Agent Teams |
-| Kapitel 7: Production Deployment | M28, M31 | Gradio UI / Production Deployment |
+| Kapitel 2: Intent Routing | M14 | Conditional Routing & Tool-Loop |
+| Kapitel 3: Wissensbasis | M08–M11 (RAG) oder ab M14 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
+| Kapitel 4: Checkpointing & Sessions | M15 | Persistente Sitzungen |
+| Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M19 | Prompting, Struktur, Tests |
+| Kapitel 6: Gradio UI & Bonus Deployment | M28, M31 | UI und optional Hugging Face Spaces |
 
-> **Hinweis Reihenfolge:** Im Kurs kommt M17 (HITL) vor M21/M22 (Multi-Agent). Im Workshop wird HITL bewusst nach dem Multi-Agent-System eingeführt, um es in den bereits aufgebauten Supervisor-Graph zu integrieren.
+> **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M14, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
 
 ---
 
-## 3 Vorbereitung: Google Colab Setup
+## 3 Vorbereitung: Google Colab oder lokales Setup
 
-### 3.1 API-Key in Colab Secrets speichern
+### 3.1 API-Key speichern
 
-1. Klicken Sie in Colab auf das Schlüssel-Symbol 🔑 (linke Sidebar)
-2. Fügen Sie `OPENAI_API_KEY` hinzu
-3. Aktivieren Sie "Notebook access"
+Wenn Sie mit einem externen Modell arbeiten, speichern Sie Ihren `OPENAI_API_KEY` in Colab Secrets oder lokal in einer `.env`.
 
 ### 3.2 Basis-Pakete installieren
 
@@ -90,23 +86,24 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 # 📦 INSTALLATION
 # ═══════════════════════════════════════════════════
 
-!pip install -q langchain>=1.1.0 langchain-openai>=1.0.0 langchain-community
-!pip install -q langgraph>=1.0.0 langgraph-checkpoint-sqlite
-!pip install -q tiktoken gradio
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+!uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite gradio
 ```
 
-### 3.3 API-Key laden
+### 3.3 API-Key laden und Umgebung prüfen
 
 ```python
 # ═══════════════════════════════════════════════════
 # 🔑 API-KEY SETUP
 # ═══════════════════════════════════════════════════
 
-import os
-from google.colab import userdata
+from genai_lib.utilities import setup_api_keys, check_environment
 
-os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
+setup_api_keys(['OPENAI_API_KEY'])
+check_environment()
 ```
+
+> **Lokal:** API-Key vorab in `.env` oder per `os.environ["OPENAI_API_KEY"] = "sk-..."` setzen — `setup_api_keys()` liest beides automatisch.
 
 ---
 
@@ -114,10 +111,17 @@ os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
 > 📚 **Kursmodul:** M12 – Warum LangGraph? | M13 – StateGraph Basics
 
-**Lernziel:** StateGraph verstehen, TypedDict State, Nodes & Edges
+**Lernziel:** Einen kleinen Graphen mit TypedDict-State und einfachen Nodes aufbauen
 
 ### 4.1 Szenario
-Ein Support-Bot soll Kundenanfragen entgegennehmen, kategorisieren und eine Antwort generieren.
+
+Ein Nutzer stellt eine Anfrage wie:
+
+- "Welche Module brauche ich für RAG?"
+- "Erkläre mir Checkpointing."
+- "Gib mir eine Quizfrage zu Tool Calling."
+
+Der Graph soll die Anfrage zunächst entgegennehmen und den Typ der Anfrage erkennen.
 
 ### 4.2 Aufgabe 1.1: State definieren
 
@@ -126,145 +130,132 @@ Ein Support-Bot soll Kundenanfragen entgegennehmen, kategorisieren und eine Antw
 # 🎯 KAPITEL 1: STATEGRAPH BASICS
 # ═══════════════════════════════════════════════════
 
-from typing import TypedDict, Annotated, Literal
+from typing import TypedDict, Literal
 from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
+
+class NavigatorState(TypedDict):
+    user_query: str
+    intent: Literal["module", "learning_path", "concept", "quiz", "fallback"] | None
+    retrieved_context: str
+    answer: str
+```
+
+### 4.3 Aufgabe 1.2: Erste Nodes erstellen
+
+```python
 from langchain.chat_models import init_chat_model
 
-# State Definition (TypedDict für Type-Safety)
-class SupportState(TypedDict):
-    """State für Support-Anfragen."""
-    messages: Annotated[list, add_messages]  # Chat-Verlauf
-    category: Literal["technical", "billing", "general"] | None
-    priority: int  # 1-5
-    ...
-```
-
-### 4.3 Aufgabe 1.2: Node-Funktionen erstellen
-
-```python
-# LLM initialisieren
 llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
-# Node 1: Kategorisierung
-def categorize_request(state: SupportState) -> SupportState:
-    """Kategorisiert die Kundenanfrage."""
-    messages = state["messages"]
-    last_message = messages[-1].content
+def classify_intent(state: NavigatorState) -> NavigatorState:
+    """Erkennt, welche Art von Anfrage vorliegt."""
+    query = state["user_query"]
     ...
 
-# Node 2: Antwort generieren
-def generate_response(state: SupportState) -> SupportState:
-    """Generiert eine passende Antwort."""
-    category = state["category"]
+def fallback_answer(state: NavigatorState) -> NavigatorState:
+    """Gibt eine sichere Fallback-Antwort zurück."""
     ...
 ```
 
-### 4.4 Aufgabe 1.3: Graph bauen
+### 4.4 Aufgabe 1.3: Minimalen Graphen bauen
 
 ```python
-# StateGraph erstellen
-workflow = StateGraph(SupportState)
+workflow = StateGraph(NavigatorState)
 
-# Nodes hinzufügen
-workflow.add_node("categorize", categorize_request)
-workflow.add_node("respond", generate_response)
+workflow.add_node("classify_intent", classify_intent)
+workflow.add_node("fallback", fallback_answer)
 
-# Edges definieren
-workflow.add_edge(START, "categorize")
-workflow.add_edge("categorize", "respond")
-workflow.add_edge("respond", END)
+workflow.add_edge(START, "classify_intent")
+workflow.add_edge("classify_intent", "fallback")
+workflow.add_edge("fallback", END)
 
-# Graph kompilieren
 graph = workflow.compile()
 ```
 
-### 4.5 Aufgabe 1.4: Graph testen
+### 4.5 Aufgabe 1.4: Minimaltest
 
 ```python
-# Test-Input
 initial_state = {
-    "messages": [{"role": "user", "content": "Meine Rechnung ist falsch!"}],
-    "category": None,
-    "priority": 0
+    "user_query": "Welche Module brauche ich für RAG?",
+    "intent": None,
+    "retrieved_context": "",
+    "answer": "",
 }
 
-# Graph ausführen
 result = graph.invoke(initial_state)
-print(f"Kategorie: {result['category']}")
-print(f"Priorität: {result['priority']}")
-...
+print(result["intent"])
+print(result["answer"])
 ```
 
 **Erfolgskriterium:**
-- ✅ StateGraph läuft ohne Fehler durch
-- ✅ Kategorisierung funktioniert
-- ✅ State wird korrekt aktualisiert
-- ✅ Messages werden akkumuliert
+- ✅ StateGraph läuft fehlerfrei
+- ✅ State wird korrekt befüllt
+- ✅ es gibt eine sichere Fallback-Antwort
 
 ---
 
-## 5 Kapitel 2: Conditional Routing
+## 5 Kapitel 2: Intent Routing
 
 > 📚 **Kursmodul:** M14 – Conditional Routing & Tool-Loop
 
-**Lernziel:** Verzweigte Workflows mit bedingten Edges
+**Lernziel:** Verschiedene Anfragetypen über Conditional Edges zu spezialisierten Nodes leiten
 
-### 5.1 Aufgabe 2.1: Router-Funktion erstellen
+### 5.1 Aufgabe 2.1: Router-Funktion definieren
 
 ```python
 # ═══════════════════════════════════════════════════
-# 🔀 KAPITEL 2: CONDITIONAL ROUTING
+# 🔀 KAPITEL 2: INTENT ROUTING
 # ═══════════════════════════════════════════════════
 
-from langgraph.graph import StateGraph, START, END
+from typing import Literal
 
-# Router-Funktion (entscheidet nächsten Schritt)
-def route_by_category(state: SupportState) -> Literal["technical", "billing", "general"]:
-    """Routet basierend auf Kategorie."""
-    category = state["category"]
+def route_by_intent(state: NavigatorState) -> Literal["module", "learning_path", "concept", "quiz", "fallback"]:
+    """Routet zur passenden Verarbeitung basierend auf intent."""
+    return state["intent"] or "fallback"
+```
+
+### 5.2 Aufgabe 2.2: Antwort-Nodes anlegen
+
+```python
+def answer_module_question(state: NavigatorState) -> NavigatorState:
+    """Beantwortet Fragen zu Modulen und Reihenfolge."""
+    ...
+
+def recommend_learning_path(state: NavigatorState) -> NavigatorState:
+    """Empfiehlt einen Lernpfad passend zum Ziel."""
+    ...
+
+def explain_concept(state: NavigatorState) -> NavigatorState:
+    """Erklärt einen Begriff aus dem Kurs."""
+    ...
+
+def generate_quiz(state: NavigatorState) -> NavigatorState:
+    """Erzeugt kleine Quizfragen."""
     ...
 ```
 
-### 5.2 Aufgabe 2.2: Spezialisierte Handler
+### 5.3 Aufgabe 2.3: Graph mit Conditional Edge bauen
 
 ```python
-# Technical Support Handler
-def handle_technical(state: SupportState) -> SupportState:
-    """Behandelt technische Anfragen."""
-    ...
+workflow = StateGraph(NavigatorState)
 
-# Billing Support Handler
-def handle_billing(state: SupportState) -> SupportState:
-    """Behandelt Abrechnungsfragen."""
-    ...
+workflow.add_node("classify_intent", classify_intent)
+workflow.add_node("module", answer_module_question)
+workflow.add_node("learning_path", recommend_learning_path)
+workflow.add_node("concept", explain_concept)
+workflow.add_node("quiz", generate_quiz)
+workflow.add_node("fallback", fallback_answer)
 
-# General Support Handler
-def handle_general(state: SupportState) -> SupportState:
-    """Behandelt allgemeine Fragen."""
-    ...
-```
-
-### 5.3 Aufgabe 2.3: Graph mit Conditional Edge
-
-```python
-# Graph mit Verzweigung bauen
-workflow = StateGraph(SupportState)
-
-workflow.add_node("categorize", categorize_request)
-workflow.add_node("technical", handle_technical)
-workflow.add_node("billing", handle_billing)
-workflow.add_node("general", handle_general)
-
-# Conditional Edge (verzweigt basierend auf Router)
-workflow.add_edge(START, "categorize")
+workflow.add_edge(START, "classify_intent")
 workflow.add_conditional_edges(
-    "categorize",
-    route_by_category,  # Router-Funktion
+    "classify_intent",
+    route_by_intent,
     {
-        "technical": "technical",
-        "billing": "billing",
-        "general": "general"
+        "module": "module",
+        "learning_path": "learning_path",
+        "concept": "concept",
+        "quiz": "quiz",
+        "fallback": "fallback",
     }
 )
 ...
@@ -272,533 +263,449 @@ workflow.add_conditional_edges(
 
 **Erfolgskriterium:**
 - ✅ Router-Funktion entscheidet korrekt
-- ✅ Verschiedene Kategorien → verschiedene Nodes
-- ✅ State enthält richtige Antwort pro Kategorie
+- ✅ verschiedene Nutzerfragen landen in verschiedenen Nodes
+- ✅ der Graph endet deterministisch
 
 ---
 
-## 6 Kapitel 3: Checkpointing & Memory
+## 6 Kapitel 3: Wissensbasis & Retrieval-Light
 
-> 📚 **Kursmodul:** M15 – Checkpointing & Sessions
+> 📚 **Kursmodul:** M08-M11 oder als vereinfachte Kursdaten-Aufgabe ab M14
 
-**Lernziel:** Persistente Sessions mit SQLite-Checkpointer
+**Lernziel:** Kurswissen lokal strukturieren und gezielt in den Graphen einbinden
 
-### 6.1 Aufgabe 3.1: Checkpointer einrichten
+### 6.1 Aufgabe 3.1: Wissensbasis laden
+
+Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M33) liegt unter `02_daten/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
 
 ```python
 # ═══════════════════════════════════════════════════
-# 💾 KAPITEL 3: CHECKPOINTING & MEMORY
+# 📚 KAPITEL 3: WISSENSBASIS & RETRIEVAL-LIGHT
+# ═══════════════════════════════════════════════════
+
+import json
+
+with open("../../02_daten/05_sonstiges/modules.json", encoding="utf-8") as f:
+    modules = json.load(f)
+
+# Überblick
+print(f"{len(modules)} Module geladen")
+print(modules[0])
+```
+
+Jeder Eintrag enthält: `module`, `title`, `topics`, `level`, `prerequisites`, `summary`.
+
+> **Erweiterung:** Ergänzen oder korrigieren Sie Einträge nach Bedarf — die Datei ist ein Startpunkt, keine fertige Lösung.
+
+### 6.2 Aufgabe 3.2: Kontextsuche implementieren
+
+```python
+def retrieve_context(state: NavigatorState) -> NavigatorState:
+    """Sucht passende Kursinformationen zur Anfrage."""
+    query = state["user_query"].lower()
+    ...
+```
+
+### 6.3 Aufgabe 3.3: Retrieval in den Graphen einbauen
+
+```python
+workflow.add_node("retrieve_context", retrieve_context)
+
+workflow.add_edge(START, "classify_intent")
+workflow.add_edge("classify_intent", "retrieve_context")
+workflow.add_conditional_edges(
+    "retrieve_context",
+    route_by_intent,
+    ...
+)
+```
+
+**Erfolgskriterium:**
+- ✅ Kontext wird nicht frei erfunden, sondern aus Kursdaten gezogen
+- ✅ Modulfragen und Konzeptfragen nutzen die Wissensbasis
+- ✅ Antworten werden konkreter und nachvollziehbarer
+
+---
+
+## 7 Kapitel 4: Checkpointing & Sessions
+
+> 📚 **Kursmodul:** M15 – Checkpointing & Sessions
+
+**Lernziel:** Verlauf und Sitzungen für wiederholte Lernfragen speichern
+
+### 7.1 Aufgabe 4.1: Checkpointer einrichten
+
+```python
+# ═══════════════════════════════════════════════════
+# 💾 KAPITEL 4: CHECKPOINTING & SESSIONS
 # ═══════════════════════════════════════════════════
 
 from langgraph.checkpoint.sqlite import SqliteSaver
 
-# SQLite-Checkpointer (speichert State persistent)
-checkpointer = SqliteSaver.from_conn_string("support_sessions.db")
-
-# Graph mit Checkpointer kompilieren
+checkpointer = SqliteSaver.from_conn_string("kursnavigator_sessions.db")
 graph = workflow.compile(checkpointer=checkpointer)
-...
 ```
 
-### 6.2 Aufgabe 3.2: Session-basierte Interaktion
+### 7.2 Aufgabe 4.2: Session-basierte Interaktion
 
 ```python
-# Thread-Config für Session-Tracking
 config = {"configurable": {"thread_id": "user_123"}}
 
-# Erste Nachricht
-result1 = graph.invoke({
-    "messages": [{"role": "user", "content": "Meine Rechnung ist zu hoch"}]
-}, config=config)
+result1 = graph.invoke(
+    {
+        "user_query": "Ich bin Anfänger. Wo starte ich?",
+        "intent": None,
+        "retrieved_context": "",
+        "answer": "",
+    },
+    config=config,
+)
 
-# Zweite Nachricht (gleiche Session!)
-result2 = graph.invoke({
-    "messages": [{"role": "user", "content": "Können Sie das genauer erklären?"}]
-}, config=config)
-...
+result2 = graph.invoke(
+    {
+        "user_query": "Und wann sollte ich RAG lernen?",
+        "intent": None,
+        "retrieved_context": "",
+        "answer": "",
+    },
+    config=config,
+)
 ```
 
-### 6.3 Aufgabe 3.3: Session-History anzeigen
+### 7.3 Aufgabe 4.3: Verlauf inspizieren
 
 ```python
-# History einer Session abrufen
 def show_session_history(thread_id: str):
-    """Zeigt komplette Session-History."""
     config = {"configurable": {"thread_id": thread_id}}
     history = graph.get_state_history(config)
     ...
 ```
 
 **Erfolgskriterium:**
-- ✅ Sessions werden in SQLite gespeichert
-- ✅ Kontext bleibt über mehrere Anfragen erhalten
-- ✅ History kann abgerufen werden
-- ✅ Sessions können zurückgesetzt werden
+- ✅ Sitzungen bleiben erhalten
+- ✅ mehrere Anfragen können derselben Session zugeordnet werden
+- ✅ Verlauf kann eingesehen oder zurückgesetzt werden
 
 ---
 
-## 7 Kapitel 4: Multi-Agent System (Supervisor)
+## 8 Kapitel 5: Lernpfade, Konzepte und Quiz
 
-> 📚 **Kursmodul:** M21 – Multi-Agent Patterns | M22 – Supervisor Pattern
+> 📚 **Kursmodul:** M04, M05, M19
 
-**Lernziel:** Supervisor-Pattern mit Worker-Agents
+**Lernziel:** Antwortqualität strukturieren und mit einfachen Tests absichern
 
-### 7.1 Aufgabe 4.1: Worker-Agents definieren
+### 8.1 Aufgabe 5.1: Lernpfad-Logik präzisieren
 
-```python
-# ═══════════════════════════════════════════════════
-# 🤖 KAPITEL 4: MULTI-AGENT SYSTEM
-# ═══════════════════════════════════════════════════
+Definieren Sie mindestens zwei Zielgruppen:
 
-from langchain.agents import create_agent
-from langchain_core.tools import tool
+- Anfänger
+- Fortgeschrittene
 
-# Tools für Technical Agent
-@tool
-def check_server_status(server_id: str) -> str:
-    """Prüft Server-Status."""
-    ...
+Und mindestens drei Lernziele:
 
-@tool
-def restart_service(service_name: str) -> str:
-    """Startet Service neu."""
-    ...
+- Grundlagen
+- RAG
+- Multi-Agent
 
-# Technical Worker Agent
-technical_agent = create_agent(
-    model="openai:gpt-4o-mini",
-    tools=[check_server_status, restart_service],
-    system_prompt="Du bist ein Technical Support Specialist.",
-    ...
-)
-```
-
-### 7.2 Aufgabe 4.2: Supervisor-Node implementieren
+### 8.2 Aufgabe 5.2: Quiz-Output strukturieren
 
 ```python
-# Supervisor State (erweitert SupportState)
-class MultiAgentState(SupportState):
-    next_agent: Literal["technical_agent", "billing_agent", "FINISH"] | None
-    ...
-
-# Supervisor-Node (entscheidet welcher Agent)
-def supervisor_node(state: MultiAgentState) -> MultiAgentState:
-    """Supervisor entscheidet, welcher Worker-Agent arbeitet."""
-    messages = state["messages"]
+def generate_quiz(state: NavigatorState) -> NavigatorState:
+    """Erzeugt 2-3 Quizfragen in einem festen Format."""
+    # Beispiel-Ausgabe:
+    # 1. Frage
+    # 2. Frage
+    # 3. Frage
     ...
 ```
 
-### 7.3 Aufgabe 4.3: Multi-Agent Graph bauen
+### 8.3 Aufgabe 5.3: Testfragen definieren
 
-```python
-# Multi-Agent Workflow
-workflow = StateGraph(MultiAgentState)
+Testen Sie Ihren Navigator mindestens mit diesen fünf Fragen:
 
-# Supervisor & Workers
-workflow.add_node("supervisor", supervisor_node)
-workflow.add_node("technical_agent", technical_worker_node)
-workflow.add_node("billing_agent", billing_worker_node)
-
-# Routing: Supervisor → Workers → Supervisor (Loop)
-workflow.add_edge(START, "supervisor")
-workflow.add_conditional_edges(
-    "supervisor",
-    lambda state: state["next_agent"],
-    {
-        "technical_agent": "technical_agent",
-        "billing_agent": "billing_agent",
-        "FINISH": END
-    }
-)
-...
-```
+- "Welche Module sollte ich für RAG bearbeiten?"
+- "Was macht M14?"
+- "Erkläre mir Checkpointing in zwei Sätzen."
+- "Ich bin Anfänger und will Agenten verstehen. Wo starte ich?"
+- "Gib mir drei Quizfragen zu Tool Use."
 
 **Erfolgskriterium:**
-- ✅ Supervisor delegiert an Worker-Agents
-- ✅ Workers nutzen spezialisierte Tools
-- ✅ Ergebnisse werden an Supervisor zurückgemeldet
-- ✅ Loop funktioniert (Worker → Supervisor → Worker)
+- ✅ Antworten bleiben beim Kurskontext
+- ✅ Lernpfade sind nachvollziehbar
+- ✅ Quizfragen passen thematisch
+- ✅ Testfragen laufen reproduzierbar durch
 
 ---
 
-## 8 Kapitel 5: Human-in-the-Loop
+## 9 Kapitel 6: Gradio UI & Bonus Deployment
 
-> 📚 **Kursmodul:** M17 – Human-in-the-Loop
+> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M31 – Production Deployment
 
-**Lernziel:** Interrupt & Resume für kritische Entscheidungen
+**Lernziel:** Den Kursnavigator mit einer kleinen Oberfläche nutzbar machen
 
-### 8.1 Aufgabe 5.1: Interrupt-Point definieren
+### 9.1 Aufgabe 6.1: Chat-Handler schreiben
 
 ```python
 # ═══════════════════════════════════════════════════
-# 👤 KAPITEL 5: HUMAN-IN-THE-LOOP
+# 🚀 KAPITEL 6: GRADIO UI & BONUS DEPLOYMENT
 # ═══════════════════════════════════════════════════
 
-# Graph mit Interrupt kompilieren
-graph = workflow.compile(
-    checkpointer=checkpointer,
-    interrupt_before=["human_approval"]  # Stoppt vor diesem Node
-)
-```
-
-### 8.2 Aufgabe 5.2: Approval-Node erstellen
-
-```python
-# Human Approval Node
-def human_approval_node(state: MultiAgentState) -> MultiAgentState:
-    """Wartet auf menschliche Genehmigung."""
-    # Dieser Node wird NIE ausgeführt (Interrupt davor)
-    # Dient nur als Marker
-    return state
-...
-```
-
-### 8.3 Aufgabe 5.3: Interrupt & Resume Workflow
-
-```python
-# Schritt 1: Start bis Interrupt
-config = {"configurable": {"thread_id": "session_456"}}
-result = graph.invoke(initial_state, config=config)
-
-# Graph stoppt bei "human_approval" → Zeige State
-print(f"Wartet auf Approval: {result['pending_action']}")
-
-# Schritt 2: Manuelle Genehmigung (in UI oder Console)
-approval = input("Approve? (yes/no): ")
-
-# Schritt 3: State updaten & Resume
-if approval == "yes":
-    graph.update_state(
-        config,
-        {"approved": True}
+def chat_with_navigator(message, history, thread_id):
+    """Verarbeitet eine Nutzeranfrage mit dem Kursnavigator."""
+    config = {"configurable": {"thread_id": thread_id}}
+    result = graph.invoke(
+        {
+            "user_query": message,
+            "intent": None,
+            "retrieved_context": "",
+            "answer": "",
+        },
+        config=config,
     )
-    # Resume
-    result = graph.invoke(None, config=config)
     ...
 ```
 
-**Erfolgskriterium:**
-- ✅ Graph stoppt bei Interrupt-Point
-- ✅ State kann manuell inspiziert werden
-- ✅ State kann aktualisiert werden
-- ✅ Graph kann resumed werden
-
----
-
-## 9 Kapitel 6: Subgraphs & Tool Nodes
-
-> 📚 **Kursmodul:** M22 – Supervisor Pattern | M24 – Hierarchical Agent Teams (optional)
-
-**Lernziel:** Modulare Workflows mit Subgraphs
-
-### 9.1 Aufgabe 6.1: Subgraph für Eskalation
-
-```python
-# ═══════════════════════════════════════════════════
-# 📦 KAPITEL 6: SUBGRAPHS & TOOL NODES
-# ═══════════════════════════════════════════════════
-
-# Eskalations-Subgraph (eigener Workflow)
-class EscalationState(TypedDict):
-    messages: Annotated[list, add_messages]
-    escalation_reason: str
-    manager_assigned: str | None
-    ...
-
-# Subgraph bauen
-escalation_workflow = StateGraph(EscalationState)
-escalation_workflow.add_node("notify_manager", notify_manager_node)
-escalation_workflow.add_node("create_ticket", create_ticket_node)
-...
-
-# Subgraph kompilieren
-escalation_graph = escalation_workflow.compile()
-```
-
-### 9.2 Aufgabe 6.2: Subgraph in Hauptgraph integrieren
-
-```python
-# Hauptgraph mit Subgraph
-workflow = StateGraph(MultiAgentState)
-
-# Subgraph als Node hinzufügen
-workflow.add_node("escalation", escalation_graph)
-
-# Routing zu Subgraph
-workflow.add_conditional_edges(
-    "supervisor",
-    route_decision,
-    {
-        "escalate": "escalation",
-        "continue": "technical_agent"
-    }
-)
-...
-```
-
-**Erfolgskriterium:**
-- ✅ Subgraph läuft eigenständig
-- ✅ Subgraph wird korrekt aufgerufen
-- ✅ State wird zwischen Graphs übertragen
-- ✅ Modularer, wiederverwendbarer Code
-
----
-
-## 10 Kapitel 7: Production Deployment
-
-> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M31 – Production Deployment (optional)
-
-**Lernziel:** Streaming, Monitoring, Gradio-UI
-
-### 10.1 Aufgabe 7.1: Streaming implementieren
-
-```python
-# ═══════════════════════════════════════════════════
-# 🚀 KAPITEL 7: PRODUCTION DEPLOYMENT
-# ═══════════════════════════════════════════════════
-
-# Stream-Mode: Zeigt jeden Node-Übergang
-for event in graph.stream(initial_state, config=config, stream_mode="values"):
-    print(f"Event: {event}")
-    ...
-
-# Debug-Streaming (zeigt alle Zwischenschritte)
-for event in graph.stream(initial_state, config=config, stream_mode="debug"):
-    print(f"Debug: {event}")
-    ...
-```
-
-### 10.2 Aufgabe 7.2: Gradio-UI mit LangGraph
+### 9.2 Aufgabe 6.2: Gradio-Oberfläche aufbauen
 
 ```python
 import gradio as gr
 
-# Chat-Handler mit LangGraph
-def chat_with_agent(message, history, thread_id):
-    """Verarbeitet Chat mit Multi-Agent-System."""
-    config = {"configurable": {"thread_id": thread_id}}
-
-    # Invoke Graph
-    result = graph.invoke({
-        "messages": [{"role": "user", "content": message}]
-    }, config=config)
-    ...
-
-# Gradio Interface
 with gr.Blocks() as demo:
-    gr.Markdown("# 🤖 Multi-Agent Support System")
+    gr.Markdown("# Kursnavigator")
 
     with gr.Row():
         thread_id = gr.Textbox(label="Session ID", value="user_001")
 
-    chatbot = gr.Chatbot(height=500)
-    msg = gr.Textbox(placeholder="Ihre Frage...")
+    chatbot = gr.Chatbot(height=450)
+    msg = gr.Textbox(placeholder="Frage zum Kurs stellen ...")
 
-    # Event Handler
-    msg.submit(chat_with_agent, [msg, chatbot, thread_id], [msg, chatbot])
-    ...
+    msg.submit(chat_with_navigator, [msg, chatbot, thread_id], [msg, chatbot])
 ```
 
-### 10.3 Aufgabe 7.3: Monitoring & Metrics
+### 9.3 Aufgabe 6.3: Bonus Deployment
 
-```python
-# Custom Callback für Metrics
-class MetricsCallback:
-    def __init__(self):
-        self.node_executions = {}
-        self.total_tokens = 0
-        ...
+Optional können Sie die App als **Hugging Face Space** deployen. Dafür benötigen Sie mindestens:
 
-    def on_node_start(self, node_name: str):
-        """Trackt Node-Starts."""
-        ...
-
-    def on_node_end(self, node_name: str, duration: float):
-        """Trackt Node-Dauer."""
-        ...
-
-# Callback in Graph integrieren
-graph = workflow.compile(
-    checkpointer=checkpointer,
-    callbacks=[MetricsCallback()]
-)
-```
+- `app.py`
+- `requirements.txt`
+- kleine Wissensbasis (`json` oder `md`)
+- gesetzte Secrets für API-Keys
 
 **Erfolgskriterium:**
-- ✅ Streaming zeigt Zwischenschritte
-- ✅ Gradio-UI funktioniert mit Sessions
-- ✅ Metrics werden erfasst
-- ✅ Production-ready mit Error-Handling
+- ✅ lokale UI funktioniert
+- ✅ Sessions funktionieren auch über die UI
+- ✅ optional: die App läuft als kleiner Hugging Face Space
+
+### 9.4 Hugging Face Spaces Deployment (Bonus)
+
+Das Deployment auf **Hugging Face Spaces** ist ein freiwilliger Zusatzschritt. Es zeigt, wie aus der lokalen Übung eine kleine öffentlich oder privat nutzbare Web-App wird.
+
+**Empfohlene Minimalstruktur:**
+
+```text
+kursnavigator-space/
+  app.py
+  requirements.txt
+  modules.json
+  README.md
+```
+
+**Typische Inhalte:**
+
+- `app.py`: Gradio-App mit LangGraph-Workflow
+- `requirements.txt`: benötigte Pakete wie `langgraph`, `langchain`, `langchain-openai`, `gradio`
+- `modules.json`: kleine Wissensbasis für Module und Konzepte
+- `README.md`: kurze Beschreibung und Nutzungshinweise
+
+**Code-Anpassungen für Hugging Face Spaces:**
+
+Hugging Face Spaces stellt Secrets automatisch als Umgebungsvariablen bereit — `setup_api_keys()` funktioniert dort **nicht** (kein Colab-Secret-Manager). Ersetzen Sie den Setup-Block in `app.py` durch:
+
+```python
+# ✅ Hugging Face Spaces — API-Key aus Space Secrets laden
+import os
+
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("OPENAI_API_KEY nicht gesetzt. Bitte unter Space → Settings → Secrets hinterlegen.")
+
+os.environ["OPENAI_API_KEY"] = openai_api_key
+```
+
+> **Space Secrets einrichten** — zwei Wege:
+>
+> **Option A: Im Browser** — Space → Settings → Variables and secrets → New secret → Name: `OPENAI_API_KEY`, Value: `sk-...`
+>
+> **Option B: Per Code** (z.B. aus einem lokalen Notebook):
+
+
+```python
+from huggingface_hub import HfApi
+api = HfApi()
+api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value="sk-...")
+```
+
+
+**Empfohlener Ablauf:**
+
+1. Erstellen Sie einen neuen **Gradio Space** auf Hugging Face.
+2. Laden Sie `app.py`, `requirements.txt` und Ihre Wissensbasis hoch.
+3. Hinterlegen Sie benötigte API-Keys unter den **Space Secrets**.
+4. Starten Sie den Space und prüfen Sie die Logs auf Import- oder Paketfehler.
+5. Testen Sie die Anwendung mit denselben Beispielanfragen wie lokal.
+
+**Sinnvolle Secrets:**
+
+- `OPENAI_API_KEY`
+
+**Prüffragen nach dem Deployment:**
+
+- Lädt der Space ohne Build-Fehler?
+- Funktioniert die Gradio-Oberfläche im Browser?
+- Gibt der Kursnavigator sinnvolle Antworten wie in der lokalen Version?
+- Werden Fehler im UI verständlich angezeigt?
+
+> **Hinweis:** Das Hugging-Face-Deployment ist ausdrücklich **kein Pflichtbestandteil** des Workshops. Die Kernleistung bleibt der lokale Kursnavigator mit LangGraph.
 
 ---
 
-## 11 Bonusaufgaben (Optional)
+## 10 Bonusaufgaben (Optional)
 
-### 11.1 Bonus 1: LangSmith Integration
-- Tracke alle Agent-Aufrufe in LangSmith
-- Evaluiere Antwortqualität
-- Erstelle Custom-Evaluatoren
-- Verwende den EU-API-Endpoint `https://eu.api.smith.langchain.com` (Account + API-Key im EU-Workspace: `https://eu.smith.langchain.com/`)
+### 10.1 Bonus 1: Personalisierte Empfehlungen
+- berücksichtigen Sie Anfänger vs. Fortgeschrittene
+- unterscheiden Sie zwischen Interessen wie RAG, Multi-Agent oder Deployment
 
-### 11.2 Bonus 2: Erweiterte Multi-Agent-Patterns
-- Hierarchical Agent (3 Ebenen)
-- Collaborative Agents (arbeiten zusammen)
-- Competitive Agents (wählen beste Lösung)
+### 10.2 Bonus 2: LangSmith Integration
+- tracken Sie die Graph-Läufe
+- vergleichen Sie mehrere Beispielanfragen
+- dokumentieren Sie Fehlklassifikationen
 
-### 11.3 Bonus 3: Advanced Checkpointing
-- PostgreSQL-Checkpointer für Production
-- Checkpoint-Branching (Alternative Pfade)
-- Time-Travel Debugging
+### 10.3 Bonus 3: Erweiterte Wissensbasis
+- lesen Sie Inhalte aus `01_notebook/README.md`
+- ergänzen Sie ausgewählte Dateien aus `docs/concepts/`
+- bauen Sie eine bessere Kontextsuche
 
-### 11.4 Bonus 4: Mermaid-Visualisierung
-- Automatische Graph-Visualisierung mit Mermaid
-- State-Transition-Diagramme
-- Agent-Interaktions-Diagramme
+### 10.4 Bonus 4: Mermaid-Visualisierung
+- visualisieren Sie den Graphen
+- dokumentieren Sie Routing und Antwortpfade
 
 ---
 
-## 12 Bewertungskriterien
+## 11 Bewertungskriterien
 
 | Phase | Punkte | Kriterien |
 |-------|--------|-----------|
-| 1: StateGraph Basics | 10 | TypedDict, Nodes, Edges, State-Management |
-| 2: Conditional Routing | 15 | Router-Funktion, Verzweigungen |
-| 3: Checkpointing & Memory | 15 | SQLite-Checkpointer, Session-Management |
-| 4: Multi-Agent System | 25 | Supervisor-Pattern, Worker-Agents, Tools |
-| 5: Human-in-the-Loop | 10 | Interrupt, Resume, State-Update |
-| 6: Subgraphs & Tool Nodes | 15 | Modulare Workflows, Subgraph-Integration |
-| 7: Production Deployment | 10 | Streaming, UI, Monitoring |
+| 1: StateGraph Basics | 15 | TypedDict, State, Nodes, Grundgraph |
+| 2: Intent Routing | 20 | Router-Funktion, Conditional Edges |
+| 3: Wissensbasis | 20 | Kursdaten, Kontextsuche, nachvollziehbare Antworten |
+| 4: Checkpointing & Sessions | 15 | SQLite-Checkpointer, Verlauf |
+| 5: Lernpfade, Konzepte und Quiz | 20 | Antwortqualität, Quiz, Testfragen |
+| 6: Gradio UI & Bonus Deployment | 10 | Nutzbare Oberfläche, optional HF Space |
 | **Gesamt** | **100** | |
 
 **Bestanden:** ≥ 60 Punkte
 
 ---
 
-## 13 Hilfreiche Ressourcen
+## 12 Hilfreiche Ressourcen
 
 **LangGraph Dokumentation:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
-- [Multi-Agent Systems](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/)
-- [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/)
+- [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
-**Code-Vorlagen:**
-- [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
-- [LangChain Standards](../LangChain_Standards.md)
+**Projektinterne Quellen:**
+- `Agenten/01_notebook/README.md`
+- `Agenten/docs/concepts/`
+- `Agenten/docs/frameworks/`
 
-**Projekt-Beispiele:**
-- Mermaid-Diagramme: `Agenten/Mermaid_Diagramme.ipynb`
-- Multi-Agent Patterns: `docs/frameworks/Einsteiger_LangGraph.md`
+**Weiterführende Dokumente:**
+- [Aufgaben & Lösungswege](../concepts/Aufgabenklassen_und_Loesungswege.html)
+- [State Management](../concepts/State_Management.html)
+- [Checkpointing & Persistenz](../concepts/Checkpointing_Persistenz.html)
 
 ---
 
-## 14 Architektur-Übersicht
+## 13 Architektur-Übersicht
 
 ```mermaid
-graph TB
-    START([User Request]) --> SUP[Supervisor Agent]
+flowchart TD
+    START([User Query]) --> INTENT[classify_intent]
+    INTENT --> RETRIEVE[retrieve_context]
+    RETRIEVE --> ROUTE{intent}
 
-    SUP --> ROUTE{Category?}
+    ROUTE -->|module| MOD[answer_module_question]
+    ROUTE -->|learning_path| PATH[recommend_learning_path]
+    ROUTE -->|concept| CON[explain_concept]
+    ROUTE -->|quiz| QUIZ[generate_quiz]
+    ROUTE -->|fallback| FALL[fallback]
 
-    ROUTE -->|Technical| TECH[Technical Worker]
-    ROUTE -->|Billing| BILL[Billing Worker]
-    ROUTE -->|Complex| ESC[Escalation Subgraph]
+    MOD --> FINISH([Antwort])
+    PATH --> FINISH
+    CON --> FINISH
+    QUIZ --> FINISH
+    FALL --> FINISH
 
-    TECH -->|Tools| TOOLS1[Server Check<br/>Service Restart]
-    BILL -->|Tools| TOOLS2[Invoice Query<br/>Payment Check]
-
-    TOOLS1 --> TECH
-    TOOLS2 --> BILL
-
-    TECH --> APPROVAL{Needs<br/>Approval?}
-    BILL --> APPROVAL
-
-    APPROVAL -->|Yes| HUMAN[👤 Human Review]
-    APPROVAL -->|No| SUP
-
-    HUMAN --> SUP
-    ESC --> MANAGER[Manager Assigned]
-    MANAGER --> FINISH([Response])
-
-    SUP -->|Complete| FINISH
-
-    style SUP fill:#FFD700
-    style TECH fill:#87CEEB
-    style BILL fill:#90EE90
-    style HUMAN fill:#FFA500
-    style ESC fill:#ff6b6b
+    style INTENT fill:#FFD700
+    style RETRIEVE fill:#87CEEB
+    style PATH fill:#90EE90
+    style QUIZ fill:#FFB6C1
 ```
 
 ---
 
-## 15 Abgabe
+## 14 Abgabe
 
 **Format:**
-- **Jupyter Notebook** (`Multi_Agent_Support_System.ipynb`)
-  - Mit allen 7 Kapiteln ausführbar
-  - Mermaid-Diagramme für Workflows
-  - Code-Zellen mit Kommentaren
-- **SQLite-Datenbank** (`support_sessions.db`) mit Beispiel-Sessions
-- **README.md** mit:
-  - Kurzbeschreibung des Multi-Agent-Systems
-  - Architektur-Diagramm
+- **Jupyter Notebook** (`Kursnavigator_Workshop.ipynb`)
+  - mit allen 6 Kapiteln ausführbar
+  - mit mindestens einer Graph-Visualisierung
+  - mit Testfragen und Beispielausgaben
+- optional: **SQLite-Datenbank** (`kursnavigator_sessions.db`)
+- optional: **Gradio-App** (`app.py`)
+- kurzes **README.md** mit:
+  - Ziel des Navigators
+  - kurzer Architekturübersicht
   - Setup-Anleitung
-  - Screenshot des Gradio-UI
-- Optional: **Demo-Video** (max. 5 Min.)
+  - Beispielanfragen
 
 **Deadline:** [Wird vom Dozenten festgelegt]
 
-### 15.1 Checkliste vor Abgabe
+### 14.1 Checkliste vor Abgabe
 - [ ] Notebook läuft von oben bis unten fehlerfrei durch
-- [ ] Alle API-Keys sind über Colab Secrets eingebunden
-- [ ] Alle 7 Kapitel sind implementiert
-- [ ] StateGraph verwendet TypedDict (PFLICHT!)
-- [ ] Checkpointing funktioniert (Sessions persistent)
-- [ ] Multi-Agent-System funktioniert (Supervisor + Workers)
-- [ ] Human-in-the-Loop zeigt Interrupt/Resume
-- [ ] Gradio-UI läuft und erstellt share-Link
-- [ ] README.md erklärt Architektur
+- [ ] TypedDict-State ist definiert
+- [ ] Intent-Routing funktioniert
+- [ ] Wissensbasis ist eingebunden
+- [ ] mindestens fünf Testfragen wurden ausgeführt
+- [ ] Antworten bleiben beim Kursmaterial
+- [ ] Checkpointing funktioniert (Kapitel 4, 15 Punkte)
+- [ ] optional: Gradio-UI läuft (Kapitel 6)
 
 ---
 
-## 16 FAQ
+## 15 FAQ
 
-**Q: Warum LangGraph statt einfachem create_agent()?**
-A: `create_agent()` ist für einfache, lineare Agent-Tasks perfekt. LangGraph benötigen Sie für:
-  - Multi-Agent-Systeme (Supervisor, Hierarchie)
-  - Komplexe Workflows mit Verzweigungen
-  - Persistente Sessions über Tage/Wochen
-  - Human-in-the-Loop mit Interrupt/Resume
+**Q: Warum LangGraph statt einfachem `create_agent()`?**  
+A: Weil der Kursnavigator vor allem Routing, State und kontrollierte Antwortpfade zeigen soll. Genau dafür ist LangGraph didaktisch besser geeignet als ein freier Agenten-Loop.
 
-**Q: Muss ich alle Kapitel implementieren?**
-A: Kapitel 1-4 sind Pflicht (70 Punkte). Kapitel 5-7 sind optional (30 Bonuspunkte).
+**Q: Muss ich alle Kapitel implementieren?**  
+A: Kapitel 1-3 sind Pflicht für eine brauchbare Basisversion. Kapitel 4-6 erweitern das Projekt sinnvoll und bringen die volle Punktzahl.
 
-**Q: Kann ich PostgreSQL statt SQLite nutzen?**
-A: Ja! Für Production ist PostgreSQL empfohlen. In Colab ist SQLite jedoch einfacher.
+**Q: Brauche ich echtes RAG?**  
+A: Nein. Für diese Übung reicht eine kleine lokale Wissensbasis mit einfacher Kontextsuche. Das Ziel ist Agentensteuerung, nicht ein vollständiges RAG-System.
 
-**Q: Wie viele Worker-Agents soll ich erstellen?**
-A: Minimum 2 (Technical + Billing). Für Bonuspunkte: 3-4 spezialisierte Agents.
+**Q: Kann ich die Übung auch lokal statt in Colab machen?**  
+A: Ja. Verwenden Sie lokal Jupyter oder ein Python-Skript plus `.env` für API-Keys.
 
-**Q: Mein Graph führt Endlos-Loops aus**
-A: Häufige Ursachen:
-  - Supervisor routet nie zu "FINISH"
-  - Conditional Edge hat keinen END-Pfad
-  - → Fügen Sie `recursion_limit=10` bei compile() hinzu
+**Q: Ist Hugging Face Spaces Pflicht?**  
+A: Nein. Das Deployment ist ein Bonus. Der Kern der Aufgabe ist der LangGraph-Kursnavigator selbst.
 
-**Q: Kann ich die Übung auch lokal machen?**
-A: Ja! Verwenden Sie dann Jupyter Notebook/Lab lokal und:
-  - `from dotenv import load_dotenv` statt Colab Secrets
-  - Lokales SQLite funktioniert identisch
-  - `share=False` für Gradio
-
-**Q: Was ist der Unterschied zu RAG_Workshop.md?**
+**Q: Was ist der Unterschied zur Agenten-Challenge?**  
 A:
-  - **RAG Workshop**: Fokus auf LangChain, RAG, Retrieval
-  - **Agenten Workshop**: Fokus auf LangGraph, Multi-Agent, State Machines
+  - **Kursnavigator Workshop**: Fokus auf LangGraph, Routing, State und kleine Kursanwendung
+  - **Agenten Challenge**: größeres End-to-End-Projekt mit höherer technischer Breite
 
 ---
 
-**Version**: 1.1     
+**Version**: 1.0     
 **Stand**: März 2026    
-**Kurs**: KI-Agenten. Verstehen. Anwenden. Gestalten.        
-
-
+**Kurs**: KI-Agenten. Verstehen. Anwenden. Gestalten.    

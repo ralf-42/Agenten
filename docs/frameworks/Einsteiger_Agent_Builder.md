@@ -227,7 +227,7 @@ flowchart TB
 **LLM Node: "Analyze & Categorize"**
 ```yaml
 Node Type: LLM
-Model: gpt-4
+Model: gpt-4o-mini
 Temperature: 0.0
 
 System Prompt: |

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Von Colab zur lokalen Umgebung
+title: Von Colab zu Local
 parent: Ressourcen
 nav_order: 5
 description: Anleitung zur Ausführung der Kurs-Notebooks in einer lokalen Jupyter-Umgebung
@@ -10,7 +10,7 @@ has_toc: true
 # Von Colab zur lokalen Umgebung
 {: .no_toc }
 
-> **Welche Anpassungen sind nötig, um die Kurs-Notebooks lokal auszuführen?**
+> **Welche Anpassungen sind nötig, um die Kurs-Notebooks lokal auszuführen?**   
 
 ---
 
@@ -122,6 +122,6 @@ check_environment()
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.0    
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

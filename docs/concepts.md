@@ -36,6 +36,11 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - Tool-Beschreibungen und Reasoning-Prompts
   - Output-Formatierung für strukturierte Antworten
 
+- **[Skills](./concepts/Skills.html)** – Wiederverwendbare Arbeitsrezepte für verlässlich gesteuerte Agenten (→ M33, optional)
+  - Unterschied zwischen Prompt und Skill
+  - `SKILL.md`, `references/` und `scripts/` als Strukturmuster
+  - Guardrails, Progressive Disclosure und Auditierbarkeit
+
 ## Wissensmanagement
 
 - **[RAG-Konzepte](./concepts/RAG_Konzepte.html)** – Retrieval Augmented Generation: Architektur, Strategien und Best Practices (→ M08–M11)

@@ -39,6 +39,11 @@ Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Age
   - LangGraph: Recursion-Limit, State-Fehler, Tool-Loops
   - API-Fehler: Token-Limits, Rate-Limiting, Modell-Parameter
 
+- **[Von Colab zur lokalen Umgebung](./ressourcen/Colab_zu_Lokal.html)** – Anleitung zur Ausführung der Notebooks in Jupyter Lab / VS Code
+  - Einmalige Einrichtung: venv, genai_lib, API-Keys
+  - Anpassungen in der Setup-Zelle (3 Zeilen)
+  - Besonderheiten für M08, M09, M28, M30
+
 ## Weiterführende Links
 
 - **[Links](./ressourcen/links.html)** – Kuratierte Sammlung externer Ressourcen zu KI, LLMs und Frameworks

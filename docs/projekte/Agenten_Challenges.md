@@ -45,7 +45,6 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 3 Zeitrahmen & Umfang
 
-- **Zeitaufwand:** 20-30 Stunden (verteilt über 2-3 Wochen)
 - **Komplexität:** Production-Ready Multi-Agent-System mit State Management
 - **Eigenständigkeit:** Freie Gestaltung innerhalb der gewählten Projektoption
 

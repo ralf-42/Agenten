@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Kursnavigator Workshop
+title: Kursnavigator
 parent: Projekte
 nav_order: 2
 description: "Schrittweise Übung: Einen LangGraph-Kursnavigator mit Routing, Sessions und optionaler Gradio-UI bauen"
@@ -33,8 +33,6 @@ In dieser Übungsaufgabe bauen Sie schrittweise einen **Kursnavigator**, der Ler
 - Kurswissen als kleine lokale Wissensbasis strukturieren
 - Sessions und Verlauf mit Checkpointing speichern
 - eine einfache Gradio-Oberfläche für den Agenten bereitstellen
-
-**Zeitaufwand:** ca. 4-6 Stunden (je nach Vorkenntnissen)
 
 **Arbeitsumgebung:** Google Colab, Jupyter Notebook oder lokales Python
 

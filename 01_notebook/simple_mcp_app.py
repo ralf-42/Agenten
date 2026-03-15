@@ -1,22 +1,30 @@
 from fastmcp import FastMCP
-from fastapi import FastAPI
-import gradio as gr
-import uvicorn
+import math
 
-# ── FastMCP Server ────────────────────────────────────────────────────────────
 mcp = FastMCP("Crypto Tools")
 
-# ── Tools ─────────────────────────────────────────────────────────────────────
+
 @mcp.tool()
 def caesar(text: str, shift: int, decrypt: bool = False) -> str:
-    """Encrypts or decrypts text using the Caesar cipher.
+    """Caesar cipher: encrypt or decrypt text by shifting each letter.
+
+    Use this tool whenever the user wants to:
+    - encrypt text with Caesar, ROT or a letter shift
+    - decrypt a Caesar-encrypted ciphertext
+    - apply any fixed alphabet shift to text
 
     Args:
-        text: The text to process.
-        shift: Number of positions to shift each letter (1–25).
-        decrypt: If True, decrypts instead of encrypts.
+        text:    Plaintext to encrypt, or ciphertext to decrypt.
+        shift:   Positions to shift each letter (1–25).
+                 shift=3 maps A→D, B→E, Z→C.
+        decrypt: True → reverse shift (decrypt). Default: False (encrypt).
+
     Returns:
-        The processed text.
+        Shifted text. Non-letter characters pass through unchanged.
+
+    Examples:
+        caesar("HELLO WORLD", shift=3)               → "KHOOR ZRUOG"
+        caesar("KHOOR ZRUOG", shift=3, decrypt=True) → "HELLO WORLD"
     """
     if decrypt:
         shift = -shift
@@ -31,15 +39,87 @@ def caesar(text: str, shift: int, decrypt: bool = False) -> str:
 
 
 @mcp.tool()
-def vigenere(text: str, key: str, decrypt: bool = False) -> str:
-    """Encrypts or decrypts text using the Vigenère cipher.
+def scytale(text: str, columns: int, decrypt: bool = False) -> str:
+    """Scytale cipher: encrypt or decrypt text via columnar transposition.
+
+    Use this tool whenever the user wants to:
+    - encrypt text with Scytale, rails, columns or a transposition cipher
+    - decrypt a Scytale-encrypted ciphertext
+
+    The text is written row-by-row into a grid of `columns` columns,
+    then read out column-by-column (encrypt), or vice versa (decrypt).
 
     Args:
-        text: The text to process.
-        key: The keyword (letters only, case-insensitive).
-        decrypt: If True, decrypts instead of encrypts.
+        text:    Plaintext to encrypt, or ciphertext to decrypt.
+        columns: Number of columns in the grid (= rod circumference, ≥ 1).
+                 columns=3 splits "HELLOWORLD" into rows of 3 letters each.
+        decrypt: True → reverse transposition (decrypt). Default: False (encrypt).
+
     Returns:
-        The processed text.
+        Transposed (encrypted) or restored (decrypted) text.
+
+    Examples:
+        scytale("HELLOWORLD", columns=3)               → "HLODELORLW"  (approx.)
+        scytale("HLODELORLW", columns=3, decrypt=True) → "HELLOWORLD"
+    """
+    if columns <= 0:
+        raise ValueError("columns must be > 0")
+    if not decrypt:
+        rows = math.ceil(len(text) / columns)
+        grid = [[""] * columns for _ in range(rows)]
+        idx = 0
+        for r in range(rows):
+            for c in range(columns):
+                if idx < len(text):
+                    grid[r][c] = text[idx]
+                    idx += 1
+        result = []
+        for c in range(columns):
+            for r in range(rows):
+                if grid[r][c]:
+                    result.append(grid[r][c])
+        return "".join(result)
+    else:
+        rows = math.ceil(len(text) / columns)
+        grid = [[""] * columns for _ in range(rows)]
+        idx = 0
+        for c in range(columns):
+            for r in range(rows):
+                if idx < len(text):
+                    grid[r][c] = text[idx]
+                    idx += 1
+        result = []
+        for r in range(rows):
+            for c in range(columns):
+                if grid[r][c]:
+                    result.append(grid[r][c])
+        return "".join(result)
+
+
+@mcp.tool()
+def vigenere(text: str, key: str, decrypt: bool = False) -> str:
+    """Vigenere cipher: encrypt or decrypt text using a repeating keyword.
+
+    Use this tool whenever the user wants to:
+    - encrypt text with Vigenère, a keyword or a polyalphabetic cipher
+    - decrypt a Vigenère-encrypted ciphertext
+    - apply a keyword-based shift sequence to text
+
+    Each letter is shifted by the corresponding letter of `key` (cycling).
+    Key letter A = shift 0, B = shift 1, ..., Z = shift 25.
+
+    Args:
+        text:    Plaintext to encrypt, or ciphertext to decrypt.
+        key:     Keyword for shifting — only letters used, case-insensitive.
+                 key="MCP" applies shifts 12 (M), 2 (C), 15 (P) in rotation.
+        decrypt: True → reverse key shifts (decrypt). Default: False (encrypt).
+
+    Returns:
+        Keyword-shifted text. Non-letter characters pass through unchanged.
+
+    Examples:
+        vigenere("HELLO WORLD", key="MCP")               → "TOBNZ YZCND"
+        vigenere("TOBNZ YZCND", key="MCP", decrypt=True) → "HELLO WORLD"
     """
     key = "".join(c for c in key.upper() if c.isalpha()) or "A"
     result = []
@@ -57,39 +137,9 @@ def vigenere(text: str, key: str, decrypt: bool = False) -> str:
     return "".join(result)
 
 
-# ── Gradio UI ─────────────────────────────────────────────────────────────────
-with gr.Blocks(title="Crypto Tools MCP Server") as demo:
-    gr.Markdown("""
-    # 🔐 Crypto Tools MCP Server
-    Caesar- und Vigenère-Verschlüsselung als MCP-Tools.
-
-    **MCP-Endpoint:** `https://ralf42-simple-mcp.hf.space/mcp`
-    """)
-
-    with gr.Tab("Caesar"):
-        with gr.Row():
-            with gr.Column():
-                c_text    = gr.Textbox(label="Text")
-                c_shift   = gr.Slider(1, 25, value=3, step=1, label="Shift")
-                c_decrypt = gr.Checkbox(label="Entschlüsseln")
-                c_btn     = gr.Button("Ausführen")
-            c_out = gr.Textbox(label="Ergebnis")
-        c_btn.click(caesar, [c_text, c_shift, c_decrypt], c_out)
-
-    with gr.Tab("Vigenère"):
-        with gr.Row():
-            with gr.Column():
-                v_text    = gr.Textbox(label="Text")
-                v_key     = gr.Textbox(label="Schlüsselwort", value="GEHEIM")
-                v_decrypt = gr.Checkbox(label="Entschlüsseln")
-                v_btn     = gr.Button("Ausführen")
-            v_out = gr.Textbox(label="Ergebnis")
-        v_btn.click(vigenere, [v_text, v_key, v_decrypt], v_out)
-
-# ── FastAPI App — MCP + Gradio auf Port 7860 ─────────────────────────────────
-app = FastAPI()
-app.mount("/mcp", mcp.http_app())
-app = gr.mount_gradio_app(app, demo, path="/")
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+mcp.run(
+    transport="streamable-http",
+    host="0.0.0.0",
+    port=7860,
+    path="/mcp"
+)

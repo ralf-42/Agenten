@@ -178,6 +178,8 @@ def setup_api_keys(key_names, create_globals=True):
         try:
             value = userdata.get(key)
             if value:
+                value = value.strip()   # \r\n aus Colab userdata entfernen
+
                 # Umgebungsvariable setzen
                 environ[key] = value
 

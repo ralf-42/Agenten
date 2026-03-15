@@ -43,7 +43,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
 - Verständnis von State Machines und Checkpointing
 
-## 3 Zeitrahmen & Umfang
+## 3 Umfang
 
 - **Komplexität:** Production-Ready Multi-Agent-System mit State Management
 - **Eigenständigkeit:** Freie Gestaltung innerhalb der gewählten Projektoption

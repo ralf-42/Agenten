@@ -55,6 +55,6 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 
 ---
 
-**Version:** 1.2
-**Stand:** März 2026    
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Version:** 1.2    
+**Stand:** März 2026       
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.       

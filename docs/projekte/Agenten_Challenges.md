@@ -24,7 +24,7 @@ has_toc: true
 
 # 1 | Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M23 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M24–M33 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
+Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M22–M33 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
 
 ## 1 Lernziele
 
@@ -37,7 +37,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## 2 Voraussetzungen
 
-- Abschluss der Module M01-M23 (Tag 1-5); M23-M32 optional für Vertiefung
+- Abschluss der Module M01-M21 (Tag 1-5); M22-M33 optional für Vertiefung
 - Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung

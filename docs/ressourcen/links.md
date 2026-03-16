@@ -55,6 +55,73 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 
 ---
 
-**Version:** 1.2    
-**Stand:** März 2026       
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.       
+## 3 Framework-Dokumentation
+
+Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Referenz für Teilnehmer.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [LangChain Docs](https://python.langchain.com/) | Offizielle Dokumentation: Chains, Agents, Tools, RAG (→ M02–M07) |
+| [LangGraph Docs](https://langchain-ai.github.io/langgraph/) | Offizielle Dokumentation: StateGraph, Nodes, Edges, HITL, Multi-Agent (→ M08–M10, M16–M21) |
+| [LangSmith Docs](https://docs.smith.langchain.com/) | Offizielle Dokumentation: Tracing, Evaluation, Datasets (→ M15, M24) |
+| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ M01–M03) |
+| [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ M12) |
+| [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ M05, täglich) |
+
+---
+
+## 4 Grundlagen-Paper
+
+Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) | Grundlagenpaper zum TAO/ReAct-Prinzip – theoretisches Fundament aller Agenten im Kurs (→ M01) |
+| [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) | Grundlage für Tool Use & Function Calling (→ M02) |
+| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Originalpaper zur Transformer-Architektur – Basis aller verwendeten LLMs (→ M01) |
+| [Learning to Summarize with Human Feedback (RLHF)](https://arxiv.org/abs/2009.01325) | Grundlage für RLHF – Hintergrund zu Alignment und Agenten-Verhalten (→ M23) |
+| [Self-RAG: Learning to Retrieve, Generate, and Critique](https://arxiv.org/abs/2310.11511) | Grundlage für Agentic RAG – Agent steuert Retrieval aktiv (→ M22/M27) |
+
+---
+
+## 5 Alternative Agent-Frameworks
+
+Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach dem Kurs.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M21) |
+| [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
+| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten – direkter Kursinhalt (→ M29) |
+| [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus (→ M08) |
+| [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
+
+---
+
+## 6 RAG & Evaluation
+
+Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluation.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ M15/M24) |
+| [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ M11) |
+| [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ M11–M14) |
+
+---
+
+## 7 Sicherheit & Governance
+
+Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Standardreferenz für LLM-Sicherheitsrisiken: Prompt Injection, Insecure Output, Data Leakage (→ M23) |
+| [NIST AI Risk Management Framework](https://airc.nist.gov/RMF_Overview) | US-Standard für KI-Risikomanagement und Governance (→ M23) |
+| [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien (→ M23/M31) |
+
+---
+
+**Version:** 1.3
+**Stand:** März 2026
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

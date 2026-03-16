@@ -36,7 +36,7 @@ In dieser Übungsaufgabe bauen Sie schrittweise einen **Kursnavigator**, der Ler
 
 **Arbeitsumgebung:** Google Colab, Jupyter Notebook oder lokales Python
 
-**Voraussetzung:** Grundkenntnisse aus M01-M14; M15 und M28 hilfreich für Erweiterungen
+**Voraussetzung:** Grundkenntnisse aus M01-M10; M16 und M28 hilfreich für Erweiterungen
 
 ---
 
@@ -60,14 +60,14 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 
 | Workshop Kapitel | Kursmodul | Thema |
 |-----------------|-----------|-------|
-| Kapitel 1: StateGraph Basics | M12, M13 | Warum LangGraph? / StateGraph Basics |
-| Kapitel 2: Intent Routing | M14 | Conditional Routing & Tool-Loop |
-| Kapitel 3: Wissensbasis | M08–M11 (RAG) oder ab M14 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
-| Kapitel 4: Checkpointing & Sessions | M15 | Persistente Sitzungen |
-| Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M19 | Prompting, Struktur, Tests |
+| Kapitel 1: StateGraph Basics | M08, M09 | Warum LangGraph? / StateGraph Basics |
+| Kapitel 2: Intent Routing | M10 | Conditional Routing & Tool-Loop |
+| Kapitel 3: Wissensbasis | M11–M14 (RAG) oder ab M10 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
+| Kapitel 4: Checkpointing & Sessions | M16 | Persistente Sitzungen |
+| Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M24 | Prompting, Struktur, Tests |
 | Kapitel 6: Gradio UI & Bonus Deployment | M28, M31 | UI und optional Hugging Face Spaces |
 
-> **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M14, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
+> **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M10, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
 
 ---
 
@@ -107,7 +107,7 @@ check_environment()
 
 ## 4 Kapitel 1: StateGraph Basics
 
-> 📚 **Kursmodul:** M12 – Warum LangGraph? | M13 – StateGraph Basics
+> 📚 **Kursmodul:** M08 – Warum LangGraph? | M09 – StateGraph Basics
 
 **Lernziel:** Einen kleinen Graphen mit TypedDict-State und einfachen Nodes aufbauen
 
@@ -194,7 +194,7 @@ print(result["answer"])
 
 ## 5 Kapitel 2: Intent Routing
 
-> 📚 **Kursmodul:** M14 – Conditional Routing & Tool-Loop
+> 📚 **Kursmodul:** M10 – Conditional Routing & Tool-Loop
 
 **Lernziel:** Verschiedene Anfragetypen über Conditional Edges zu spezialisierten Nodes leiten
 
@@ -268,7 +268,7 @@ workflow.add_conditional_edges(
 
 ## 6 Kapitel 3: Wissensbasis & Retrieval-Light
 
-> 📚 **Kursmodul:** M08-M11 oder als vereinfachte Kursdaten-Aufgabe ab M14
+> 📚 **Kursmodul:** M11-M14 oder als vereinfachte Kursdaten-Aufgabe ab M10
 
 **Lernziel:** Kurswissen lokal strukturieren und gezielt in den Graphen einbinden
 
@@ -327,7 +327,7 @@ workflow.add_conditional_edges(
 
 ## 7 Kapitel 4: Checkpointing & Sessions
 
-> 📚 **Kursmodul:** M15 – Checkpointing & Sessions
+> 📚 **Kursmodul:** M16 – Checkpointing & Sessions
 
 **Lernziel:** Verlauf und Sitzungen für wiederholte Lernfragen speichern
 
@@ -591,8 +591,8 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 ## 11 Bewertungskriterien
 
-| Phase | Punkte | Kriterien |
-|-------|--------|-----------|
+| Aufgabe | Punkte | Kriterien |
+|---------|--------|-----------|
 | 1: StateGraph Basics | 15 | TypedDict, State, Nodes, Grundgraph |
 | 2: Intent Routing | 20 | Router-Funktion, Conditional Edges |
 | 3: Wissensbasis | 20 | Kursdaten, Kontextsuche, nachvollziehbare Antworten |

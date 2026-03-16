@@ -50,64 +50,61 @@ Agenten/
   - `multimodal_rag.py` - Multimodales RAG-System
 
 
-## 📚 Kursmodule (Kursplan v4.5)
+## 📚 Kursmodule (Kursplan v5.0)
 
-### Block 1: Vom LLM zum denkenden Agenten (M01-M03)
+### Block 1: Agenten-Basics (M01–M07, Tag 1–2)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M01 | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen |
 | M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools bauen |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
-
-### Block 2: Chains & Workflow-Struktur (M04-M07)
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
 | M04 | Prompt Engineering | ChatPromptTemplate, System/Human Messages |
-| M05 | LCEL Chains | Pipe-Operator, Runnable Interface, Streaming |
-| M06 | Structured Output | Pydantic, with_structured_output() |
-| M07 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
+| M05 | Structured Output | Pydantic, with_structured_output() |
+| M06 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
+| M07 | LCEL Chains (Brücke → LangGraph) | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
 
-### Block 3: Gedächtnis & RAG (M08-M11)
+### Block 2: Agenten-Kontrolle / LangGraph (M08–M10, Tag 3)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M08 | RAG-Konzepte & Embeddings | RAG-Architektur, Vektoren, Token-Limits |
-| M09 | ChromaDB & Indexing | Chunking, Embedding, Vektordatenbank |
-| M10 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
-| M11 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
+| M08 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
+| M09 | StateGraph Basics | State, Nodes, Edges, compile() |
+| M10 | Conditional Routing & Tool-Loop (+ Security) | Routing-Funktionen, Security-Basics integriert |
 
-### Block 4: Kontrolle mit LangGraph (M12-M14, M17)
+### Block 3: Agenten mit Wissen / RAG (M11–M15, Tag 4)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M12 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
-| M13 | StateGraph Basics | State, Nodes, Edges, compile() |
-| M14 | Conditional Routing & Tool-Loop | Routing-Funktionen, Security-Basics |
-| M17 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
+| M11 | RAG-Konzepte & Embeddings | RAG-Architektur, Vektoren, Token-Limits |
+| M12 | ChromaDB & Indexing | Chunking, Embedding, Vektordatenbank |
+| M13 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
+| M14 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
+| M15 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
 
-### Block 5: HITL & Multi-Agent-Projekt (M15-M22)
+### Block 4: HITL & Multi-Agent (M16–M21, Tag 5)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M15 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
-| M16 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
+| M16 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
+| M17 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
 | M18 | Human-in-the-Loop | interrupt(), Approval-Pattern |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | M21 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
-| M22 | OpenAI Agent Builder | No-Code Builder, OpenAI Agents SDK, LangGraph-Vergleich |
 
-### Erweiterte Module (M23-M32, optional)
+### Erweiterte Module (M22–M33, optional)
 
 | Modul | Thema                                 | Priorität    | Status |
 | ----- | ------------------------------------- | ------------ | ------ |
-| M23   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
+| M22   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
+| M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
 | M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
-| M25   | Agent Security & Best Practices       | 🔵 Optional  | ✅      |
-| M26   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
-| M27   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
-| M28   | MCP Integration                       | 🔵 Optional  | ✅      |
-| M29   | Production Deployment                 | 🔵 Optional  | ✅      |
-| M30   | Hierarchical Agent Teams              | 🔵 Optional  | ✅      |
-| M31   | Collaborative Multi-Agent             | 🔵 Optional  | ✅      |
+| M25   | Hierarchical Agent Teams              | 🔵 Optional  | ✅      |
+| M26   | Collaborative Multi-Agent             | 🔵 Optional  | ✅      |
+| M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
+| M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
+| M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |
+| M30   | MCP Integration                       | 🔵 Optional  | ✅      |
+| M31   | Production Deployment                 | 🔵 Optional  | ✅      |
 | M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
+| M33   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 
@@ -158,5 +155,5 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 ---
 
-**Letzte Aktualisierung:** März 2026     
-**Version:** 3.5    
+**Letzte Aktualisierung:** März 2026
+**Version:** 5.0

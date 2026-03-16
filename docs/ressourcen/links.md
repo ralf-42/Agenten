@@ -45,9 +45,16 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 | [Labor Market Impacts](https://www.anthropic.com/research/labor-market-impacts) | Forschungsarbeit zu den Auswirkungen von KI auf den Arbeitsmarkt |
 | [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
 | [Economic Index Primitives](https://www.anthropic.com/research/economic-index-primitives) | Grundlegende Konzepte für wirtschaftliche Indizes im KI-Kontext |
+| [Alignment Faking in Large Language Models](https://www.anthropic.com/research/alignment-faking) | Wie LLMs scheinbar kooperieren, aber eigene Ziele verfolgen – zentral für Agenten-Sicherheit (→ M23) |
+| [Tracing the Thoughts of a Large Language Model](https://www.anthropic.com/research/tracing-thoughts-language-model) | Interpretierbarkeit von LLM-Entscheidungen – Hintergrund zu LangSmith-Tracing (→ M15/M24) |
+| [Disempowerment Patterns in Real-World AI Usage](https://www.anthropic.com/research/disempowerment-patterns) | Reale Missbrauchsmuster bei KI-Nutzung – Grundlage für Security Best Practices (→ M23) |
+| [Constitutional Classifiers: Defending Against Universal Jailbreaks](https://www.anthropic.com/research/constitutional-classifiers) | Technische Abwehr von Jailbreaks durch regelbasierte Klassifikatoren (→ M23) |
+| [Project Vend: Phase Two](https://www.anthropic.com/research/project-vend-2) | Anthropics autonomes Einkaufs-Experiment – Praxisbeispiel für Multi-Agent-Systeme (→ M19–M21) |
+| [Claude's New Constitution](https://www.anthropic.com/news/claude-new-constitution) | Wie Agenten-Verhalten durch Constitutional AI gesteuert wird (→ M01/M23) |
+| [How AI Assistance Impacts the Formation of Coding Skills](https://www.anthropic.com/research/AI-assistance-coding-skills) | Studie zu KI-Unterstützung beim Coding-Lernen – relevant für Kurs-Kontext |
 
 ---
 
-**Version:** 1.1     
+**Version:** 1.2
 **Stand:** März 2026    
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

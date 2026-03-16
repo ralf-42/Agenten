@@ -55,28 +55,6 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 
 ---
 
-## 🖼️ Multimodal - Bild
-
-Bildverarbeitung und Computer Vision
-
-| Thema | Beschreibung | Link |
-|-------|--------------|------|
-| **Merkmals-Filter** | CNN-Filter und Kantendetektion | [Merkmals-Filter](https://editor.p5js.org/ralf.bendig.rb/full/zLXqi5u6f) |
-| **Filter-Anwendung** | Convolutional Filter in Aktion | [Merkmals-Filter-Anwendung](https://editor.p5js.org/ralf.bendig.rb/full/Xi2uabjR9) |
-| **CNN Explainer** | Convolutional Neural Networks interaktiv erklärt (Georgia Tech) | [CNN Explainer](https://poloclub.github.io/cnn-explainer/) |
-
----
-
-## 🎵 Multimodal - Audio
-
-Audioverarbeitung und Visualisierung
-
-| Thema | Beschreibung | Link |
-|-------|--------------|------|
-| **Audio-Visualisierung** | Wellenformen und Spektrogramme | [Audio_Viz](https://editor.p5js.org/ralf.bendig.rb/full/_oMmtCprP) |
-
----
-
 ## 🤖 Modellauswahl
 
 Entscheidungshilfen für die richtige Modellwahl

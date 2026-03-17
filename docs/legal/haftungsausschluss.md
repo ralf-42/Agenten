@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Haftungsausschluss
+parent: Rechtliches
 nav_exclude: true
 description: "Haftungsausschluss (Disclaimer)"
 ---

@@ -422,7 +422,7 @@ def get_model_for_task(task_type):
 **Technische Features:**
 - [Function Calling Docs](https://docs.mistral.ai/capabilities/function_calling)
 - [Structured Output Docs](https://docs.mistral.ai/capabilities/structured_output)
-- [Agents Function Calling Guide](https://docs.mistral.ai/agents/function_calling/)
+- [Agents Function Calling Guide](https://docs.mistral.ai/agents/tools/function_calling)
 - [Fine-tuning Guide](https://docs.mistral.ai/capabilities/finetuning)
 
 **LangChain Integration:**

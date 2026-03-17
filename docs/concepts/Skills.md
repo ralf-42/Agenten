@@ -304,6 +304,6 @@ Das zugehörige Demo-Notebook ist `M33_Agent_Skill_Compliance.ipynb`.
 
 ---
 
-**Version:** 1.1 (Skills 2.0 Frontmatter ergänzt)
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.     
+**Version:** 1.1     
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.        

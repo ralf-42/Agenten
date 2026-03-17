@@ -91,7 +91,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 - **Takeaway:** Debugging ohne Traces ist unmöglich
 
 {: .info }
-> **Empfehlung:** Studieren Sie die [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md) für Production-Best-Practices.
+> **Empfehlung:** Studieren Sie den [LangGraph Einsteiger Guide](../frameworks/Einsteiger_LangGraph.html) für Production-Best-Practices.
 
 ### 4.3 Konkrete Tipps für Ihre Challenge
 
@@ -579,12 +579,12 @@ graph = workflow.compile(
 
 **LangGraph:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
-- [Multi-Agent Systems](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/)
-- [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/)
+- [Multi-Agent Systems](https://langchain-ai.github.io/langgraph/how-tos/multi-agent-network-functional/)
+- [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/review-tool-calls/)
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph 1.0 Must-Haves](../../_docs/LangGraph_Best_Practices.md)
+- [LangGraph Einsteiger Guide](../frameworks/Einsteiger_LangGraph.html)
 - [LangChain Standards](../../LangChain_Standards.md)
 - [Einsteiger LangGraph](../frameworks/Einsteiger_LangGraph.md)
 

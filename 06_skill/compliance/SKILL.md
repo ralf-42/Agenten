@@ -1,6 +1,6 @@
 ---
 name: compliance-skill
-description: Diesen Skill verwenden, wenn der Nutzer einen compliance-orientierten Agenten-Workflow benötigt, einschließlich Sanktionsprüfungen, Risikobewertung, Freigabe-Gates, Dokumentationspflichten oder kontrollierten mehrstufigen Onboarding- und Zahlungsfreigabeprozessen.
+description: Führt compliance-orientierte Agenten-Workflows durch — Sanktionsprüfung, Risikobewertung (low/medium/high), Freigabe-Gate und auditierbare Entscheidungsnotiz. Aktivieren wenn Nutzer sagt: "prüfe diesen Lieferanten", "Sanktionsprüfung", "Onboarding prüfen", "Zahlung freigeben", "KYC/KYB-Prüfung", "Risikobewertung", "Compliance-Check", "ist dieser Kunde unbedenklich", "Zahlungsfreigabe", "Go/No-Go-Entscheidung", "due diligence" oder "AML-Prüfung".
 ---
 
 # Compliance Skill

@@ -134,6 +134,24 @@ allowed-tools: Read, Grep, Glob    # erlaubte Tools
 | `allowed-tools` | Tool-Beschränkung während der Skill aktiv ist |
 | `model` | Modell-Override für diesen Skill |
 
+### Die `description` als Trigger-Bedingung
+
+Das `description`-Feld ist **kein beschreibender Text für Menschen** — es ist die Bedingung, anhand derer der Agent entscheidet, ob er den Skill überhaupt aktiviert. Der häufigste Fehler: Man überarbeitet die Anweisungen im SKILL.md-Body, während das eigentliche Problem in diesen zwei Zeilen liegt.
+
+**Formel für eine wirksame `description`:**
+
+```
+[Was der Skill tut] + [Wann er ausgelöst wird — mit konkreten Trigger-Formulierungen]
+```
+
+| | Beispiel |
+|---|---|
+| ❌ Zu vage | `Hilft mit Dokumenten.` |
+| ❌ Was, aber nicht wann | `Erstellt mehrseitige, professionell formatierte Dokumentation.` |
+| ✅ Was + konkrete Trigger | `Erstellt README.md-Dateien für Softwareprojekte. Use when user asks to "write a README", "create a readme", "document this project", "generate project documentation".` |
+
+> **Praktische Regel:** Wenn ein Skill nicht automatisch auslöst, zuerst die `description` überarbeiten — nicht die Anweisungen darunter.
+
 **Dynamische Kontextinjektion:** Shell-Befehle mit `!` werden vor dem Laden ausgeführt und ersetzen den Platzhalter:
 
 ```markdown
@@ -164,14 +182,53 @@ allowed-tools: Read, Grep, Glob    # erlaubte Tools
 
 ## 5 Wie ein Agent einen Skill nutzt
 
-Ein Skill kann auf verschiedene Arten in ein Agentensystem eingebunden werden:
+### Dreistufiges Ladesystem (Progressive Disclosure)
 
-1. `SKILL.md` wird als steuernder System-Kontext geladen.
+Skills werden nicht auf einmal geladen — der Agent zieht Inhalte nur bei Bedarf in den Kontext. Das hält den Token-Verbrauch gering, auch bei vielen installierten Skills.
+
+| Stufe | Was wird geladen | Wann | Token-Kosten |
+|---|---|---|---|
+| **Stufe 1 – Metadaten** | Nur `name` + `description` aus dem YAML-Frontmatter | Immer beim Session-Start | ~100 Token pro Skill |
+| **Stufe 2 – Body** | Vollständiger `SKILL.md`-Inhalt | Wenn der Agent den Skill für relevant hält | < 5.000 Token |
+| **Stufe 3 – Referenzen & Skripte** | Verlinkte Dateien aus `references/`, ausführbare Skripte aus `scripts/` | Nur wenn der Body darauf verweist und sie gebraucht werden | Praktisch unbegrenzt |
+
+**Konsequenz für die Struktur:** Der Body sollte schlank bleiben. Detailwissen (Checklisten, Regelwerke, API-Muster) gehört in `references/` — es wird nur bei tatsächlichem Bedarf geladen.
+
+**Beispiel-Ablauf:**
+
+```
+1. Session startet
+   → Agent lädt: name + description aller installierten Skills (~100 Token je)
+
+2. Nutzer fragt: "Kannst du ein README für dieses Projekt schreiben?"
+   → Agent lädt: readme-writer/SKILL.md vollständig (Stufe 2)
+
+3. SKILL.md verweist auf references/style.md
+   → Agent lädt: references/style.md (Stufe 3)
+
+4. SKILL.md enthält ein Validierungsskript
+   → Agent führt aus: scripts/validate.sh (ohne es in den Kontext zu lesen)
+```
+
+### Einbindung in den Agenten-Workflow
+
+1. `SKILL.md` wird als steuernder Kontext geladen.
 2. Referenzdateien werden nur bei Bedarf nachgeladen.
 3. Deterministische Teilaufgaben werden als Tool oder Skript ausgeführt.
 4. Der Agent kombiniert Skill-Regeln, Tool-Ergebnisse und Nutzereingaben zu einer kontrollierten Entscheidung.
 
 Wichtig dabei: Das LLM ersetzt nicht die Fachlogik vollständig. Gerade fragile oder risikokritische Teilaufgaben sollten, wenn möglich, **deterministisch** umgesetzt werden.
+
+### Debugging: Wenn ein Skill nicht auslöst
+
+| Schritt | Prüfung |
+|---|---|
+| **1. `description` überarbeiten** | Enthält sie konkrete Trigger-Formulierungen, die zur Nutzeranfrage passen? Ist die Formel `[Was] + [Wann + Trigger-Phrasen]` erfüllt? |
+| **2. Dateipfad prüfen** | Liegt `SKILL.md` exakt unter `.claude/skills/<name>/SKILL.md`? |
+| **3. YAML-Syntax prüfen** | Beginnt das Frontmatter auf Zeile 1 mit `---`? Keine unescapten `<>` im Frontmatter? |
+| **4. Session neu starten** | Skills werden beim Session-Start geladen — Änderungen während einer laufenden Session werden erst nach Neustart aktiv. |
+| **5. Debug-Modus** | `claude --debug` zeigt, welche Skills geladen werden. |
+| **6. Explizit aufrufen** | `/skill-name` — wenn es explizit funktioniert, aber nicht automatisch, liegt das Problem an der `description`. |
 
 ---
 

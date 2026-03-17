@@ -423,7 +423,7 @@ def get_model_for_task(task_type):
 - [Function Calling Docs](https://docs.mistral.ai/capabilities/function_calling)
 - [Structured Output Docs](https://docs.mistral.ai/capabilities/structured_output)
 - [Agents Function Calling Guide](https://docs.mistral.ai/agents/tools/function_calling)
-- [Fine-tuning Guide](https://docs.mistral.ai/capabilities/finetuning)
+- [Fine-tuning Guide](https://docs.mistral.ai/deprecated/finetuning/)
 
 **LangChain Integration:**
 - [LangChain ChatMistralAI](https://python.langchain.com/docs/integrations/chat/mistralai/)

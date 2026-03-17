@@ -580,7 +580,7 @@ graph = workflow.compile(
 **LangGraph:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
 - [Multi-Agent Systems](https://langchain-ai.github.io/langgraph/how-tos/multi-agent-network-functional/)
-- [Human-in-the-Loop](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/review-tool-calls/)
+- [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**

@@ -42,6 +42,8 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 |-----------|--------------|
 | [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol) | Anthropics offener Standard zur Verbindung von KI-Modellen mit externen Datenquellen und Tools |
 | [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) | Vollständiger Leitfaden zur Entwicklung von Skills für Claude-Agenten |
+| [Agent Skills Specification (agentskills.io)](https://agentskills.io/specification) | Offener SKILL.md-Standard für plattformübergreifende Agenten-Skills |
+| [Anthropic Skills Repository (GitHub)](https://github.com/anthropics/skills) | Offizielle Skill-Sammlung von Anthropic als Referenz und Ausgangspunkt |
 | [Labor Market Impacts](https://www.anthropic.com/research/labor-market-impacts) | Forschungsarbeit zu den Auswirkungen von KI auf den Arbeitsmarkt |
 | [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
 | [Economic Index Primitives](https://www.anthropic.com/research/economic-index-primitives) | Grundlegende Konzepte für wirtschaftliche Indizes im KI-Kontext |
@@ -93,6 +95,7 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 | [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M21) |
 | [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
 | [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten – direkter Kursinhalt (→ M29) |
+| [OpenAI Skills Repository (GitHub)](https://github.com/openai/skills) | Offizielle Skill-Sammlung von OpenAI, kompatibel mit dem SKILL.md-Standard |
 | [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus (→ M08) |
 | [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
 
@@ -122,6 +125,6 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 ---
 
-**Version:** 1.3
+**Version:** 1.4
 **Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

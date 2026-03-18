@@ -150,17 +150,65 @@ print(response.content)
 
 ## 4 Traces verstehen: Die Grundstruktur
 
-Ein **Trace** ist die vollständige Aufzeichnung einer Ausführung. Jeder Trace besteht aus einem oder mehreren **Runs**.
+LangSmith organisiert alle Daten in einer klaren Hierarchie:
+
+```mermaid
+flowchart TB
+    PROJECT["Project\nContainer für alle Traces\nz.B. 'M03-Erste-Agenten'"]
+    THREAD["Thread\nGesprächs-Sequenz\nsession_id / conversation_id"]
+    TRACE["Trace\nEine vollständige Anfrage\nz.B. Agent-Ausführung"]
+    RUN["Run\nEinzelne Operation\nllm · chain · tool · ..."]
+    TAGS["Tags\nFilterbare Labels"]
+    META["Metadata\nKey-Value-Paare"]
+    FEEDBACK["Feedback\nScore 0.0 – 1.0"]
+
+    PROJECT --> THREAD
+    THREAD --> TRACE
+    TRACE --> RUN
+    RUN -.-> TAGS
+    RUN -.-> META
+    RUN -.-> FEEDBACK
+
+    style PROJECT fill:#e1f5ff
+    style THREAD fill:#fff3cd
+    style TRACE fill:#dae8fc
+    style RUN fill:#d5e8d4
+    style TAGS fill:#f5f5f5
+    style META fill:#f5f5f5
+    style FEEDBACK fill:#f5f5f5
+```
+
+| Konzept | Bedeutung |
+|---------|-----------|
+| **Project** | Container für alle zusammengehörigen Traces (z.B. ein Kursmodul) |
+| **Thread** | Sequenz mehrerer Traces für ein Gespräch — verknüpft via `session_id` |
+| **Trace** | Vollständige Aufzeichnung einer einzelnen Anfrage |
+| **Run** | Einzelner Schritt innerhalb eines Trace (`llm`, `chain`, `tool` …) |
+| **Tags** | Labels zur Filterung und Kategorisierung von Runs |
+| **Metadata** | Zusätzliche Key-Value-Daten pro Run (z.B. User-ID, Version) |
+| **Feedback** | Bewertung eines Runs — manuell oder automatisch (Score 0.0–1.0) |
+
+---
 
 ### 4.1 Run-Typen
 
-| Run-Typ | Beschreibung | Beispiel |
-|---------|-------------|----------|
-| **LLM** | Direkter Modell-Call | `llm.invoke()` |
-| **Chain** | LCEL-Pipeline | `prompt \| llm \| parser` |
-| **Tool** | Tool-Ausführung | `@tool` Decorator |
-| **Agent** | Agent-Entscheidungsloop | `create_agent()` |
-| **Retriever** | Dokumenten-Abruf | `vectorstore.as_retriever()` |
+LangSmith kennt 7 Run-Typen (Werte immer **lowercase**):
+
+| Run-Typ         | Bedeutung                                 | Typisches Beispiel                         |
+| --------------- | ----------------------------------------- | ------------------------------------------ |
+| **`llm`**       | Direkte LLM-Aufrufe (Chat, Completion)    | `llm.invoke()`                             |
+| **`chain`**     | Verkettungen, Workflows, Agenten-Schritte | `prompt \| llm \| parser`, LangGraph-Nodes |
+| **`tool`**      | Tool-/Funktionsaufrufe                    | `@tool` Decorator                          |
+| **`retriever`** | Dokumentenabruf aus Vektordatenbanken     | `vectorstore.as_retriever()`               |
+| **`embedding`** | Embedding-Berechnungen                    | `embeddings.embed_query()`                 |
+| **`prompt`**    | Prompt-Template-Verarbeitung              | `ChatPromptTemplate.format_messages()`     |
+| **`parser`**    | Output-Parser                             | `StrOutputParser()`                        |
+
+**Wichtige Hinweise:**
+
+- **`chain` ist der häufigste Typ** — er deckt alles ab, was kein direkter LLM-Call, kein Tool etc. ist. Agenten-Schritte in LangGraph erscheinen typischerweise als `chain`.
+- **Default-Fallback:** Unbekannte oder falsch geschriebene `run_type`-Werte (z.B. `"LLM"` statt `"llm"`) fallen automatisch auf `"chain"` zurück.
+- **Kosten-Tracking (ab 2026):** LangSmith bietet eine einheitliche Kostenübersicht über den gesamten Agenten-Workflow — nicht nur für `llm`-Runs. Custom Cost Metadata kann für beliebige Run-Typen übergeben werden.
 
 ### 4.2 Beispiel: Chain mit mehreren Runs
 
@@ -205,6 +253,27 @@ Chain Run (Gesamt)
 │  └─ Latenz: 1.2s
 └─ Parser Run (String-Extraktion)
 ```
+
+### 4.3 Threads: Gespräche über mehrere Traces hinweg
+
+Ein **Thread** verknüpft mehrere Traces zu einer Gesprächs-Sequenz — z.B. alle Nachrichten einer Chat-Session. Die Verknüpfung erfolgt über `session_id` oder `conversation_id` in den Metadaten.
+
+```python
+# Thread-ID in den Metadaten setzen
+config = {
+    "configurable": {"thread_id": "session-42"},
+    "metadata": {"session_id": "session-42"},  # → LangSmith gruppiert Traces als Thread
+}
+
+response = agent.invoke(
+    {"messages": [{"role": "user", "content": "Hallo!"}]},
+    config=config,
+)
+```
+
+**Im LangSmith-Dashboard:** Threads-Ansicht zeigt den vollständigen Gesprächsverlauf über alle Traces hinweg — ideal für Debugging von Multi-Turn-Gesprächen.
+
+> 💡 **Kurskontext:** Threads werden in **M16 (Checkpointing)** und **M17 (Memory-Systeme)** praktisch eingesetzt.
 
 ---
 
@@ -315,12 +384,11 @@ examples = [
 dataset_name = "Rechen-Agent-Tests"
 dataset = client.create_dataset(dataset_name=dataset_name)
 
-for example in examples:
-    client.create_example(
-        dataset_id=dataset.id,
-        inputs=example["inputs"],
-        outputs=example["outputs"],
-    )
+client.create_examples(
+    inputs=[e["inputs"] for e in examples],
+    outputs=[e["outputs"] for e in examples],
+    dataset_id=dataset.id,
+)
 ```
 
 ### 6.2 Agent gegen Dataset evaluieren
@@ -364,42 +432,76 @@ In der LangSmith-UI kann jeder Run bewertet werden:
 
 ### 7.2 Programmatisches Feedback
 
+Run-IDs über `@traceable` mit `run_tree`-Injection ermitteln – der moderne Weg (kein `response["__run"].id` mehr, da veraltet und unzuverlässig):
+
 ```python
-from langsmith import Client
+from langsmith import traceable, Client
 
 client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 
-# Nach Agent-Ausführung
-run_id = response["__run"].id  # Run-ID aus Response
+@traceable(run_type="chain", name="AgentRun")
+def agent_ausfuehren(frage: str, run_tree=None) -> str:
+    """Agent-Ausführung – run_tree wird automatisch injiziert."""
+    response = agent.invoke({
+        "messages": [{"role": "user", "content": frage}]
+    })
+    return response["messages"][-1].content
 
-# Positives Feedback
-client.create_feedback(
-    run_id=run_id,
-    key="user_satisfaction",
-    score=1.0,  # 0.0 = schlecht, 1.0 = gut
-    comment="Antwort war präzise und korrekt.",
-)
+# Agent ausführen
+antwort = agent_ausfuehren("Was ist 5 * 8?")
+
+# Run-ID über letzten Run im Projekt ermitteln
+runs = list(client.list_runs(
+    project_name=os.environ["LANGSMITH_PROJECT"], limit=1
+))
+if runs:
+    client.create_feedback(
+        run_id=runs[0].id,
+        key="user_satisfaction",
+        score=1.0,   # 0.0 = schlecht, 1.0 = gut
+        comment="Antwort war präzise und korrekt.",
+    )
 ```
+
+{: .warning }
+> ⚠️ `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0 — nicht verwenden. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
 
 ### 7.3 Automatische Evaluierung mit LLM-as-Judge
 
+`LangChainStringEvaluator` ist deprecated. Modernes Pattern: **function-based Evaluators** — einfache Python-Funktionen mit Signatur `(run, example) -> dict`:
+
 ```python
-from langsmith.evaluation import evaluate, LangChainStringEvaluator
+from langsmith.evaluation import evaluate
+from langsmith import traceable
 
-# Evaluator: Bewertet Antwort-Qualität mit LLM
-qa_evaluator = LangChainStringEvaluator(
-    "qa",
-    config={
-        "llm": llm,
-        "criteria": "correctness",
-    },
-)
+# Einfacher Evaluator: exakter Vergleich
+def korrektheit_evaluator(run, example) -> dict:
+    predicted = run.outputs.get("answer", "").strip().lower()
+    expected  = example.outputs.get("answer", "").strip().lower()
+    return {"key": "correctness", "score": 1.0 if predicted == expected else 0.0}
 
-# Evaluierung mit automatischem Scoring
+# LLM-as-Judge Evaluator
+@traceable
+def llm_judge(run, example) -> dict:
+    predicted = run.outputs.get("answer", "")
+    expected  = example.outputs.get("answer", "")
+    prompt = (
+        f"Bewerte die Antwort auf einer Skala von 0 bis 1.\n"
+        f"Erwartete Antwort: {expected}\n"
+        f"Tatsächliche Antwort: {predicted}\n"
+        f"Antworte nur mit einer Zahl zwischen 0 und 1."
+    )
+    try:
+        score = float(llm.invoke(prompt).content.strip())
+    except ValueError:
+        score = 0.0
+    return {"key": "quality", "score": score}
+
+# Evaluierung ausführen
 results = evaluate(
     predict,
     data=dataset_name,
-    evaluators=[qa_evaluator],
+    evaluators=[korrektheit_evaluator, llm_judge],
     experiment_prefix="Agent-v1-auto-eval",
 )
 ```
@@ -792,10 +894,23 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ### 11.2 "Kostet LangSmith extra?"
 
-**Free Tier:** 5.000 Traces/Monat kostenlos (ausreichend für Kurs)
-**Paid Tiers:** Ab $39/Monat für Production-Nutzung
+**Free Tier:** Kostenloser Einstieg verfügbar (ausreichend für Kurszwecke)
+**Paid Tiers:** Verschiedene Pläne für Production-Nutzung
 
-### 11.3 "Wie deaktiviere ich Tracing?"
+> 💡 Aktuelle Preise: [smith.langchain.com/pricing](https://smith.langchain.com/pricing) — Pläne ändern sich regelmäßig.
+
+### 11.3 "Wie lange werden Traces gespeichert?"
+
+Traces werden maximal **400 Tage** aufbewahrt. Danach werden sie automatisch gelöscht.
+
+**Längerfristige Speicherung:** Wichtige Runs als **Dataset** exportieren — Datasets unterliegen keiner automatischen Löschfrist.
+
+```python
+# Run dauerhaft in ein Dataset überführen
+client.create_example_from_run(run_id=run_id, dataset_name="wichtige-runs")
+```
+
+### 11.4 "Wie deaktiviere ich Tracing?"
 
 ```python
 # Temporär deaktivieren
@@ -809,7 +924,7 @@ def nicht_getrackt():
     pass
 ```
 
-### 11.4 "Kann ich LangSmith ohne LangChain nutzen?"
+### 11.5 "Kann ich LangSmith ohne LangChain nutzen?"
 
 **Ja**, mit dem `@traceable` Decorator:
 ```python
@@ -821,7 +936,7 @@ def custom_function(input_data):
     return result
 ```
 
-### 11.5 "Was passiert, wenn ich den API-Key vergesse?"
+### 11.6 "Was passiert, wenn ich den API-Key vergesse?"
 
 ```python
 # Setup prüft automatisch, ob Keys vorhanden sind
@@ -839,6 +954,6 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 ---
 
-**Version:** 1.9    
-**Stand:** März 2026    
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Version:** 2.1
+**Stand:** März 2026
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -2,8 +2,8 @@
 layout: default
 title: Prompt-Templates Einsteiger
 parent: Frameworks
-nav_order: 8
-description: "Wie erstelle ich eigene Prompt-Dateien in 05_prompt/? YAML, XML-Tags und die drei Prompt-Typen erklärt."
+nav_order: 9
+description: Wie erstelle ich eigene Prompt-Dateien in 05_prompt/? YAML, XML-Tags und die drei Prompt-Typen erklärt.
 has_toc: true
 ---
 

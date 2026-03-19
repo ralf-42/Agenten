@@ -2,8 +2,8 @@
 layout: default
 title: Modell-Auswahl Guide
 parent: Frameworks
-nav_order: 7
-description: "Welches Modell für welche Aufgabe? Designregeln für gpt-4o-mini, o3, gpt-5.1 im Agentenkontext"
+nav_order: 8
+description: Welches Modell für welche Aufgabe? Designregeln für gpt-4o-mini, o3, gpt-5.1 im Agentenkontext
 has_toc: true
 ---
 

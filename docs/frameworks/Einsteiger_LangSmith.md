@@ -2,8 +2,8 @@
 layout: default
 title: LangSmith Einsteiger
 parent: Frameworks
-nav_order: 3
-description: "Monitoring & Debugging mit LangSmith"
+nav_order: 4
+description: Monitoring & Debugging mit LangSmith
 has_toc: true
 ---
 

@@ -46,6 +46,22 @@ Damit eignet sich DeepAgents besonders für Aufgaben wie:
 - Delegation an spezialisierte Unteragenten
 - längere Aufgaben mit Zwischenständen und Plananpassung
 
+Ein kompakter Architektur-Blick:
+
+```mermaid
+flowchart LR
+    U[Anfrage] --> O[DeepAgent Orchestrator]
+    O --> P[Planning]
+    O --> T[Tools]
+    O --> S[Sub-Agenten]
+    O --> F[Dateien]
+    P --> O
+    T --> O
+    S --> O
+    F --> O
+    O --> A[Ergebnis]
+```
+
 ---
 
 ## 2 Wann DeepAgents, wann LangGraph?
@@ -63,6 +79,17 @@ DeepAgents ist kein Ersatz für LangGraph, sondern eine bequeme Schicht darüber
 **Faustregel:**  
 Wenn Kontrolle und Nachvollziehbarkeit im Vordergrund stehen, ist LangGraph meist die bessere Wahl.  
 Wenn ein autonomer Agent mit Planning, Dateien und Delegation schnell aufgebaut werden soll, ist DeepAgents oft der direktere Weg.
+
+Als schnelle Orientierung:
+
+```mermaid
+flowchart TD
+    A[Neue Agenten-Aufgabe] --> B{Jeder Schritt<br>explizit steuerbar?}
+    B -->|Ja| C[LangGraph]
+    B -->|Nein| D{Planning, Dateien oder<br>Sub-Agenten wichtig?}
+    D -->|Ja| E[DeepAgents]
+    D -->|Nein| F[LangGraph oder einfacher Agent]
+```
 
 ---
 
@@ -256,6 +283,19 @@ Das ist der zentrale Unterschied zu einfachen Loop-Agenten:
 
 - **flacher Agent**: Anfrage → Tool-Call → Antwort
 - **DeepAgent**: Anfrage → Plan → Teilaufgaben → Zwischenstände → Überarbeitung → Ergebnis
+
+```mermaid
+flowchart TD
+    U[Anfrage] --> P[Plan erstellen oder aktualisieren]
+    P --> D{Teilaufgabe delegieren?}
+    D -->|Ja| S[Sub-Agent ausfuehren]
+    D -->|Nein| T[Tool direkt nutzen]
+    S --> F[Ergebnisse in Dateien oder Kontext ablegen]
+    T --> F
+    F --> R{Weitere Schritte offen?}
+    R -->|Ja| P
+    R -->|Nein| A[Endergebnis]
+```
 
 ---
 

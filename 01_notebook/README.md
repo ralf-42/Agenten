@@ -33,12 +33,12 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** sowie **3 Projekt-
 
 ## Tag 2 – Prompt Engineering, Structured Output, LCEL (M04–M07)
 
-| Modul | Datei | Inhalt | Prio |
-|-------|-------|--------|------|
-| M04 | `M04_Prompt_Engineering_fuer_Agenten.ipynb` | ChatPromptTemplate, System/Human Messages, Few-Shot | 🟢 Pflicht |
-| M05 | `M05_Structured_Output.ipynb` | Pydantic BaseModel, `with_structured_output()` | 🟢 Pflicht |
-| M06 | `M06_Multi_Tool_Agents.ipynb` | Agent mit 3–4 Tools, Tool-Auswahl, Debugging | 🟢 Pflicht |
-| M07 | `M07_LCEL_Chains.ipynb` | Pipe-Operator `\|`, Runnable Interface, Brücke zu LangGraph | 🟢 Pflicht |
+| Modul | Datei                                       | Inhalt                                                     | Prio       |
+| ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
+| M04   | `M04_Prompt_Engineering_fuer_Agenten.ipynb` | ChatPromptTemplate, System/Human Messages, Few-Shot        | 🟢 Pflicht |
+| M05   | `M05_Structured_Output.ipynb`               | Pydantic BaseModel, `with_structured_output()`             | 🟢 Pflicht |
+| M06   | `M06_Multi_Tool_Agents.ipynb`               | Agent mit 3–4 Tools, Tool-Auswahl, Debugging               | 🟢 Pflicht |
+| M07   | `M07_LCEL_Chains.ipynb`                     | Pipe-Operator \| , Runnable Interface, Brücke zu LangGraph | 🟢 Pflicht |
 
 ---
 
@@ -69,8 +69,8 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** sowie **3 Projekt-
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
 | M16 | `M16_Checkpointing_Sessions.ipynb` | MemorySaver, Sessions persistieren & fortsetzen | 🟢 Pflicht |
-| M17 | `M17_Memory_Systeme.ipynb` | InMemoryStore, Conversation Buffer, Per-User Memory | 🟢 Pflicht |
-| M18 | `M18_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Pflicht |
+| M17 | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Pflicht |
+| M18 | `M18_Memory_Systeme.ipynb` | InMemoryStore, Conversation Buffer, Per-User Memory | 🟢 Pflicht |
 | M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Hierarchical, Collaborative – Überblick | 🟢 Pflicht |
 | M20 | `M20_Supervisor_Pattern.ipynb` | Supervisor Deep Dive, Worker mit Tools, Iterations-Schutz | 🟢 Pflicht |
 | M21 | `M21_Multi_Agent_Projekt.ipynb` | Kurs-Abschlussprojekt mit Template-Auswahl (→ T_A/B/C) | 🟢 Pflicht |

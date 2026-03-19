@@ -1,6 +1,6 @@
 ---
 name: m14_rag_agent_system_prompt
-description: System-Prompt fuer den RAG-Agenten in M11
+description: System-Prompt fuer den RAG-Agenten in M14
 variables: []
 ---
 

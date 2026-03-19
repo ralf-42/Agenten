@@ -1,5 +1,5 @@
 ---
-name: m14_sentiment_analyse_prompt
+name: m10_sentiment_analyse_prompt
 description: Klassifiziert Sentiment eines Textes als positiv, negativ oder neutral
 variables: [text]
 ---

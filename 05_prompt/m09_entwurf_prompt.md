@@ -1,5 +1,5 @@
 ---
-name: m13_entwurf_prompt
+name: m09_entwurf_prompt
 description: Prompt fuer den Entwurfs-Node im StateGraph
 variables: [anfrage]
 ---

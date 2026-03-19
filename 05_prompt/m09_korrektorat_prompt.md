@@ -1,5 +1,5 @@
 ---
-name: m13_korrektorat_prompt
+name: m09_korrektorat_prompt
 description: Prompt fuer den Korrektorat-Node im StateGraph
 variables: [entwurf]
 ---

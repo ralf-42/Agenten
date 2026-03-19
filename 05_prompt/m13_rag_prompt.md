@@ -1,5 +1,5 @@
 ---
-name: m10_rag_prompt
+name: m13_rag_prompt
 description: RAG-Prompt fuer den Kursassistenten
 variables: [context, question]
 ---

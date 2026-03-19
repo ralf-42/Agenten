@@ -8,9 +8,9 @@ description: "Einsteiger-Guides für LangChain, LangGraph, LangSmith, ChromaDB u
 
 # Frameworks
 
-Willkommen zu den Einsteiger-Guides für die wichtigsten Frameworks und Tools der Generativen KI!
+Einsteiger-Guides zu wichtigen Frameworks und Werkzeugen der generativen KI.
 
-Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und Werkzeuge ein:
+Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und Werkzeuge:
 
 ## LLM-Orchestrierung & Workflows
 
@@ -25,6 +25,12 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Conditional Routing und Entscheidungslogik
   - Checkpointing und Session-Management
   - Human-in-the-Loop und Supervisor-Pattern
+
+- **[DeepAgents Einsteiger](frameworks/Einsteiger_DeepAgents.html)** - Harness-Ansatz für Planning, Dateien und Sub-Agenten
+  - `create_deep_agent()` als schneller Einstieg
+  - Planning, Filesystem und Delegation
+  - Vergleich: Harness vs. manueller LangGraph-Aufbau
+  - Grenzen, Transparenz und Debugging
 
 ## Monitoring & Debugging
 
@@ -56,19 +62,11 @@ Diese Guides führen Sie Schritt für Schritt in die wichtigsten Frameworks und 
   - Prompt-Design und Testing
   - Deployment und Sharing
 
-## Agent Harness (optional)
-
-- **DeepAgents** - Harness-Ansatz für automatisiertes Multi-Agent-Planning (M32, optional)
-  - Planning und Sub-Agent Spawning
-  - Filesystem-Harness (virtuelle Dateisystem-Integration)
-  - Vergleich: Harness vs. manueller LangGraph-Aufbau
-  - Hinweis: API 0.4.x, versionsgepinnt pro Kursdurchlauf
-
 ## Modell-Auswahl
 
 - **[Modell-Auswahl Guide](frameworks/Modell_Auswahl_Guide.html)** – Welches Modell für welche Aufgabe?
   - Designregeln: Router/Supervisor → `o3`, Worker → `gpt-5.1`, Demos → `gpt-4o-mini`
-  - Entscheidungsbaum und Modul-Mapping (M12, M21/17, M18, M26)
+  - Entscheidungsbaum und Einordnung typischer Einsatzszenarien
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard
 

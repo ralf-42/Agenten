@@ -2,7 +2,7 @@
 layout: default
 title: GenAI_Lib Einsteiger
 parent: Frameworks
-nav_order: 5
+nav_order: 6
 description: Projektspezifische Python-Bibliothek für Kursanwendungen
 ---
 

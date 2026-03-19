@@ -83,11 +83,17 @@ Agenten/
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M16 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
-| M17 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
-| M18 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M17 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M18 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | M21 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
+
+### Empfohlene Lernpfade
+
+**RAG-Vertiefung:** M11 → M12 → M13 → M14 → M22 → M27
+**Security:** M10 → M23 (direkt empfohlen nach Block 2)
+**Evaluation:** M15 → M24 (natürliche Fortsetzung)
 
 ### Erweiterte Module (M22–M33, optional)
 

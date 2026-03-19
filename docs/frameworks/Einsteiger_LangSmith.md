@@ -273,7 +273,7 @@ response = agent.invoke(
 
 **Im LangSmith-Dashboard:** Threads-Ansicht zeigt den vollständigen Gesprächsverlauf über alle Traces hinweg — ideal für Debugging von Multi-Turn-Gesprächen.
 
-> 💡 **Kurskontext:** Threads werden in **M16 (Checkpointing)** und **M17 (Memory-Systeme)** praktisch eingesetzt.
+> 💡 **Kurskontext:** Threads werden in **M16 (Checkpointing)** und **M18 (Memory-Systeme)** praktisch eingesetzt.
 
 ---
 

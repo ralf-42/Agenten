@@ -278,7 +278,7 @@ graph LR
 - M02 (Tool Use)
 - M03 (Erste Agenten)
 - M13-M14 (StateGraph, Routing)
-- M15-M17 (Checkpointing, HITL)
+- M16-M17 (Checkpointing, HITL)
 
 **Erweiterte Module (optional):**
 - M20 (Agent Security & Best Practices)

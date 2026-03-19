@@ -50,7 +50,7 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - TypedDict-basierter State, Reducer-Funktionen
   - Nodes geben nur Änderungen zurück, nicht den gesamten State
 
-- **[Checkpointing & Persistenz](./concepts/Checkpointing_Persistenz.html)** – Zustandsspeicherung und Session-Persistenz in LangGraph (→ M15–M17)
+- **[Checkpointing & Persistenz](./concepts/Checkpointing_Persistenz.html)** – Zustandsspeicherung und Session-Persistenz in LangGraph (→ M16–M17)
   - MemorySaver, SqliteSaver, PostgresSaver – Wahl des richtigen Checkpointers
   - Thread-IDs für Multi-User-Konversationen
   - Interrupt & Resume für Human-in-the-Loop
@@ -74,7 +74,7 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
 
 ## Qualität & Praxis
 
-- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M18, M19)
+- **[Evaluation & Testing](./concepts/Evaluation_Testing.html)** – Bewertung und Qualitätssicherung von KI-Agenten (→ M15, M24)
   - Eval-Datasets, Metriken und Regression-Tests
   - LangSmith Evaluation Pipeline
   - Baseline, Drift-Erkennung und Production-Monitoring

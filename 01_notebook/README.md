@@ -4,24 +4,15 @@
 
 Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
 
-> **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Tage_v4.7.md`
+> **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
 ---
 
-## Tagesübersicht
 
-| Tag | Notebooks | Kernthema |
-|-----|-----------|-----------|
-| **Tag 1** | M01–M03 | Konzepte & erste Agenten |
-| **Tag 2** | M04–M07 | Prompt Engineering, Structured Output, LCEL |
-| **Tag 3** | M08–M10 | LangGraph – Agenten-Kontrolle |
-| **Tag 4** | M11–M15 | RAG – Agenten mit Wissen |
-| **Tag 5** | M16–M21 | HITL, Memory & Multi-Agent |
-| **Erweiterung** | M22–M33 | Spezialisierung *(nur optional)* |
 
 ---
 
-## Tag 1 – Konzepte & erste Agenten (M01–M03)
+## Phase  1 – Konzepte & erste Agenten (M01–M03)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
@@ -31,7 +22,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ---
 
-## Tag 2 – Prompt Engineering, Structured Output, LCEL (M04–M07)
+## Phase  2 – Prompt Engineering, Structured Output, LCEL (M04–M07)
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
@@ -42,7 +33,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ---
 
-## Tag 3 – LangGraph: Agenten-Kontrolle (M08–M10)
+## Phase  3 – LangGraph: Agenten-Kontrolle (M08–M10)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
@@ -52,7 +43,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ---
 
-## Tag 4 – Agenten mit Wissen / RAG (M11–M15)
+## Phase  4 – Agenten mit Wissen / RAG (M11–M15)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
@@ -64,7 +55,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ---
 
-## Tag 5 – HITL, Memory & Multi-Agent (M16–M21)
+## Phase  5 – HITL, Memory & Multi-Agent (M16–M21)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
@@ -79,7 +70,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ## Erweiterte Module – Spezialisierung & Produktion (M22–M33)
 
-> Diese Module sind **nicht Teil des 5-Tages-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
+> Diese Module sind **nicht Teil des 5-Phase es-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
 
 | Modul | Datei | Inhalt | Priorität |
 |-------|-------|--------|-----------|
@@ -96,6 +87,6 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 | M33 | `M33_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
 
 
-**Version:** 2.0
-**Stand:** März 2026
-**Kursplan-Referenz:** v5.0
+**Version:** 2.0    
+**Stand:** März 2026    
+**Kursplan-Referenz:** v5.0    

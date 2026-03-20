@@ -69,6 +69,7 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 | [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ M01–M03) |
 | [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ M12) |
 | [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ M05, täglich) |
+| [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ M30) |
 
 ---
 

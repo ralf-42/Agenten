@@ -52,7 +52,7 @@ Agenten/
 
 ## 📚 Kursmodule (Kursplan v5.0)
 
-### Block 1: Agenten-Basics (M01–M07, Tag 1–2)
+### Block 1: Agenten-Basics (M01–M07)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M01 | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen |
@@ -63,14 +63,14 @@ Agenten/
 | M06 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
 | M07 | LCEL Chains (Brücke → LangGraph) | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
 
-### Block 2: Agenten-Kontrolle / LangGraph (M08–M10, Tag 3)
+### Block 2: Agenten-Kontrolle / LangGraph (M08–M10)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M08 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
 | M09 | StateGraph Basics | State, Nodes, Edges, compile() |
 | M10 | Conditional Routing & Tool-Loop (+ Security) | Routing-Funktionen, Security-Basics integriert |
 
-### Block 3: Agenten mit Wissen / RAG (M11–M15, Tag 4)
+### Block 3: Agenten mit Wissen / RAG (M11–M15)
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M11 | RAG-Konzepte & Embeddings | RAG-Architektur, Vektoren, Token-Limits |
@@ -79,7 +79,8 @@ Agenten/
 | M14 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
 | M15 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
 
-### Block 4: HITL & Multi-Agent (M16–M21, Tag 5)
+### Block 4: HITL & Multi-Agent (M16–M21)
+
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M16 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
@@ -156,9 +157,9 @@ Der **Quellcode** steht unter der [MIT License](./LICENSE).
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
   
 
-© 2025–2026 Ralf-42
+© 2025–2026 Ralf-42     
 
 ---
 
-**Letzte Aktualisierung:** März 2026
-**Version:** 5.0
+**Letzte Aktualisierung:** März 2026     
+**Version:** 5.0     

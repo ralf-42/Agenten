@@ -271,9 +271,14 @@ def mermaid(code: str, width=None, height=None):
 
     html = f"""<div id="{div_id}" style="{style}"><pre class="mermaid">{code}</pre></div>
 <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({{ startOnLoad: false }});
-    await mermaid.run({{ nodes: [document.querySelector('#{div_id} .mermaid')] }});
+    // Mermaid einmalig laden und in window._mermaidLib cachen.
+    // Bei schnellem "Run All" vermeidet das Race Conditions durch parallele CDN-Requests.
+    if (!window._mermaidLib) {{
+        const m = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+        m.default.initialize({{ startOnLoad: false }});
+        window._mermaidLib = m.default;
+    }}
+    await window._mermaidLib.run({{ nodes: [document.querySelector('#{div_id} .mermaid')] }});
 </script>"""
 
     try:

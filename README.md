@@ -87,7 +87,7 @@ Agenten/
 | M18 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
-| M21 | Multi-Agent Projekt | Projekt-Templates (Research/Content/Support) |
+| M21 | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Sub-Supervisor, Tool-Delegation |
 
 ### Empfohlene Lernpfade
 
@@ -102,8 +102,7 @@ Agenten/
 | M22   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
 | M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
 | M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
-| M25   | Hierarchical Agent Teams              | 🔵 Optional  | ✅      |
-| M26   | Collaborative Multi-Agent             | 🔵 Optional  | ✅      |
+| M26   | Collaborative Multi-Agent (Integration) | 🔵 Optional  | ✅      |
 | M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
 | M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |

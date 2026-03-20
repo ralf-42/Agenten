@@ -86,7 +86,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 | M22 | `M22_Agentic_RAG.ipynb` | Agenten steuern Retrieval aktiv, Query-Rephrasing | 🟡 Empfohlen |
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, PII-Redaktion | 🟡 Empfohlen |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Metriken, systematisches Benchmarking, RAGAS | 🟡 Empfohlen |
-| M26 | `M26_Collaborative_Multi_Agent.ipynb` | Integration: Research-Report-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
+| M26 | `M26_Integration_Pipeline.ipynb` | Integration: Research-Report-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M29 | `M29_OpenAI_Agent_Builder.ipynb` | No-Code-Alternative, Vergleich mit LangGraph | 🔵 Optional |

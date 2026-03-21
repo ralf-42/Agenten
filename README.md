@@ -108,9 +108,9 @@ Agenten/
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
 | M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |
 | M30   | MCP Integration                       | 🔵 Optional  | ✅      |
-| M31   | Production Deployment                 | 🔵 Optional  | ✅      |
+| M33   | Production Deployment                 | 🔵 Optional  | ✅      |
 | M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
-| M33   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
+| M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 

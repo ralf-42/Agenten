@@ -65,7 +65,7 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 | Kapitel 3: Wissensbasis | M11–M14 (RAG) oder ab M10 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
 | Kapitel 4: Checkpointing & Sessions | M16 | Persistente Sitzungen |
 | Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M24 | Prompting, Struktur, Tests |
-| Kapitel 6: Gradio UI & Bonus Deployment | M28, M31 | UI und optional Hugging Face Spaces |
+| Kapitel 6: Gradio UI & Bonus Deployment | M28, M33 | UI und optional Hugging Face Spaces |
 
 > **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M10, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
 
@@ -437,7 +437,7 @@ Testen Sie Ihren Navigator mindestens mit diesen fünf Fragen:
 
 ## 9 Kapitel 6: Gradio UI & Bonus Deployment
 
-> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M31 – Production Deployment
+> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M33 – Production Deployment
 
 **Lernziel:** Den Kursnavigator mit einer kleinen Oberfläche nutzbar machen
 

@@ -122,7 +122,7 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 |-----------|--------------|
 | [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Standardreferenz für LLM-Sicherheitsrisiken: Prompt Injection, Insecure Output, Data Leakage (→ M23) |
 | [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | US-Standard für KI-Risikomanagement und Governance (→ M23) |
-| [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien (→ M23/M31) |
+| [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien (→ M23/M33) |
 
 ---
 

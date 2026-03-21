@@ -13,14 +13,14 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
 ## Übersicht
 
 ### Architektur & Ökosystem
-- **[Vom Modell zum Produkt](./deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.html)** - Das LangChain-Ökosystem verstehen
+- **[Vom Modell zum Produkt](https://ralf-42.github.io/Agenten/deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.html)** - Das LangChain-Ökosystem verstehen
   - Von Prototypen zu produktionsreifen Systemen
   - LangChain, LangGraph und LangSmith im Überblick
   - Entscheidungshilfe: Wann welches Tool?
   - Alternativen zum LangChain-Ökosystem
 
 ### Deployment-Prozess
-- **[Aus Entwicklung ins Deployment](./deployment/aus-entwicklung-ins-deployment.html)** - Vom Notebook zur produktionsreifen App
+- **[Aus Entwicklung ins Deployment](https://ralf-42.github.io/Agenten/deployment/aus-entwicklung-ins-deployment.html)** - Vom Notebook zur produktionsreifen App
   - Notebook aufräumen und Code extrahieren
   - Projektstruktur und Best Practices
   - Konfiguration externalisieren
@@ -28,7 +28,7 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
   - Deployment-Optionen im Vergleich
 
 ### Migration & Provider-Wechsel
-- **[Migration zu Mistral Medium 3](./deployment/Migration_Mistral_Medium_3.html)** - Technische Analyse
+- **[Migration zu Mistral Medium 3](https://ralf-42.github.io/Agenten/deployment/Migration_Mistral_Medium_3.html)** - Technische Analyse
   - Feature-Kompatibilitätsvergleich
   - Kosten-Analyse (2.7-3.3x teurer)
   - Notebook-spezifische Kompatibilität

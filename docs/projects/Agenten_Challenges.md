@@ -138,7 +138,7 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 **Erweiterte Module (optional):**
 - M20 (Agent Security & Best Practices)
 - M28 (Gradio UI für Agenten)
-- M31 (Production Deployment)
+- M33 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -282,7 +282,7 @@ graph LR
 
 **Erweiterte Module (optional):**
 - M20 (Agent Security & Best Practices)
-- M31 (Production Deployment)
+- M33 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -584,9 +584,9 @@ graph = workflow.compile(
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph Einsteiger Guide](../frameworks/Einsteiger_LangGraph.html)
-- [LangChain Standards](../../LangChain_Standards.md)
-- [Einsteiger LangGraph](../frameworks/Einsteiger_LangGraph.md)
+- [LangGraph Einsteiger Guide](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangGraph.html)
+- [LangChain Standards](https://ralf-42.github.io/Agenten/resources/standards.html)
+- [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangGraph.html)
 
 ## 2 Code-Beispiele
 

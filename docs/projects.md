@@ -13,14 +13,14 @@ Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
 ## Übersicht
 
 ### Workshop-Format
-- **[Kursnavigator](./projects/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
+- **[Kursnavigator](https://ralf-42.github.io/Agenten/projects/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
 - Bauen Sie einen kleinen LangGraph-Lernassistenten für den Kurs
 - 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
 - LangGraph 1.0+: State, Conditional Routing, Checkpointing
-- Einstieg ab M14, ausbaubar bis M31
+- Einstieg ab M14, ausbaubar bis M33
 
 ### End-to-End Projekt
-- **[Agenten Challenge](./projects/Agenten_Challenges.html)** - Eigenständige Implementierung
+- **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/Agenten_Challenges.html)** - Eigenständige Implementierung
 - Entwickeln Sie ein Production-Ready Multi-Agent-System
 - 4 Projektoptionen: Support-System, Research-Team, Code-Review, Workflow-Automation
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions

@@ -281,26 +281,29 @@ Skills werden dann relevant, wenn aus einem allgemeinen Agenten ein **verlässli
 
 ## 9 Praxisbezug im Projekt
 
-Im Projekt liegt ein konkretes Beispiel unter `06_skill/compliance/`. Dort zeigt der Compliance-Skill:
+Im Projekt liegen drei fertige Skill-Beispiele unter `06_skill/`:
 
-- wie `SKILL.md` den Agenten steuert
-- wie Referenzen gezielt nachgeladen werden
-- wie ein Skript eine Risikoprüfung deterministisch berechnet
-- wie daraus ein kontrollierter Agenten-Workflow mit dokumentierbarer Entscheidung entsteht
+| Skill | Schwerpunkt | Demo-Notebook |
+|---|---|---|
+| `compliance/` | Risikoprüfung, deterministisches Scoring, Eskalationsregeln | `M31_Agent_Skill_Compliance.ipynb` |
+| `research/` | Web-Recherche, Relevanz-Scoring, Report-Synthese | — |
+| `meeting-briefing/` | Meeting-Vorbereitung, Agenda-Strukturierung, Action-Item-Extraktion | — |
 
-Das zugehörige Demo-Notebook ist `M33_Agent_Skill_Compliance.ipynb`.
+Alle drei folgen demselben Muster: Gate-Agent (o3) analysiert und strukturiert, Writer-LLM (gpt-5.1) erzeugt die Ausgabe. Die Unterschiede liegen in den `references/`-Regelwerken und den deterministischen Skripten in `scripts/`.
+
+Eine Vorlage für eigene Skills liegt unter `06_skill/README.md`.
 
 ---
 
 ## 10 Weiterführende Verweise
 
-| Dokument | Inhalt |
-|---|---|
-| [Prompt Engineering](./Prompt_Engineering.html) | Wie System-Prompts und Anweisungen aufgebaut werden |
-| [Tool Use & Function Calling](./Tool_Use_Function_Calling.html) | Wie Agenten deterministische Hilfsfunktionen aufrufen |
-| [State Management](./State_Management.html) | Wie mehrstufige Agenten kontrolliert ausgeführt werden |
-| [Human-in-the-Loop](./Human_in_the_Loop.html) | Wie kritische Entscheidungen menschlich abgesichert werden |
-| [Aufgaben & Lösungswege](./Aufgabenklassen_und_Loesungswege.html) | Wann ein Skill, Workflow oder Agent sinnvoll ist |
+| Dokument                                                          | Inhalt                                                     |
+| ----------------------------------------------------------------- | ---------------------------------------------------------- |
+| [Prompt Engineering](https://ralf-42.github.io/Agenten/concepts/Prompt_Engineering.html)                   | Wie System-Prompts und Anweisungen aufgebaut werden        |
+| [Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html)   | Wie Agenten deterministische Hilfsfunktionen aufrufen      |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html)                       | Wie mehrstufige Agenten kontrolliert ausgeführt werden     |
+| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html)                     | Wie kritische Entscheidungen menschlich abgesichert werden |
+| [Aufgaben & Lösungswege](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html) | Wann ein Skill, Workflow oder Agent sinnvoll ist           |
 
 ---
 

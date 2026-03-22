@@ -96,7 +96,7 @@ Agenten/
 **Security:** M10 → M23 (direkt empfohlen nach Block 2)
 **Evaluation:** M15 → M24 (natürliche Fortsetzung)
 
-### Erweiterte Module (M22–M33, optional)
+### Erweiterte Module (M22–M34, optional)
 
 | Modul | Thema                                 | Priorität    | Status |
 | ----- | ------------------------------------- | ------------ | ------ |
@@ -108,7 +108,8 @@ Agenten/
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
 | M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |
 | M30   | MCP Integration                       | 🔵 Optional  | ✅      |
-| M33   | Production Deployment                 | 🔵 Optional  | ✅      |
+| M33   | Meeting-Briefing Skill mit DeepAgents | 🔵 Optional  | ✅      |
+| M34   | Production Deployment                 | 🔵 Optional  | ✅      |
 | M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
 | M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
 

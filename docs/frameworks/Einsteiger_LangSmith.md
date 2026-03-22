@@ -822,7 +822,7 @@ Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad
 4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
 
 **Im Kurs** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
-(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M33 relevant —
+(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M34 relevant —
 wenn Agenten außerhalb von Colab betrieben werden.
 
 ### 9.9 Web-UI Filter: Traces gezielt finden

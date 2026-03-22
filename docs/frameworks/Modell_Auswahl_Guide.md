@@ -157,7 +157,7 @@ flowchart TD
 | M13–M17 | StateGraph, Checkpointing, HITL — Struktur lernen |
 | M29 | Überblick Agent Builder — Vergleich, nicht Optimierung |
 | M28 | Gradio/UI-Fokus — Interaktionsdesign > Modellqualität |
-| M33 | Production Deployment — Kostenmodell verstehen |
+| M34 | Production Deployment — Kostenmodell verstehen |
 
 ### Mixed-Model: Lerninhalt im Modul verankert
 

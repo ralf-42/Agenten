@@ -2,7 +2,7 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
+Dieses Verzeichnis enthält **34 Kurs-Notebooks (M01–M34)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
@@ -68,7 +68,7 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 
 ---
 
-## Erweiterte Module – Spezialisierung & Produktion (M22–M33)
+## Erweiterte Module – Spezialisierung & Produktion (M22–M34)
 
 > Diese Module sind **nicht Teil des 5-Phase es-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
 
@@ -83,7 +83,8 @@ Dieses Verzeichnis enthält **33 Kurs-Notebooks (M01–M33)** für den Kurs „K
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M29 | `M29_OpenAI_Agent_Builder.ipynb` | No-Code-Alternative, Vergleich mit LangGraph | 🔵 Optional |
 | M30 | `M30_MCP_Integration.ipynb` | Model Context Protocol, Multi-Server-Setup | 🔵 Optional |
-| M33 | `M33_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
+| M33 | `M33_Meeting_Briefing_Skill_DeepAgents.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
+| M34 | `M34_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
 | M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
 | M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
 

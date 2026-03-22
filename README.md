@@ -3,6 +3,7 @@
 ![LangChain 1.0+](https://img.shields.io/badge/LangChain-1.0%2B-brightgreen)
 ![LangGraph 1.0.9](https://img.shields.io/badge/LangGraph-1.0.9-brightgreen)
 ![LangSmith 0.4.41](https://img.shields.io/badge/LangSmith-0.4.41-brightgreen)
+![DeepAgents 0.4.12](https://img.shields.io/badge/DeepAgents-0.4.12-brightgreen)
 ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--03--05-blue)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
@@ -28,7 +29,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M01-M32)
+├── 01_notebook/    # Jupyter Notebooks (M01-M35)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -96,7 +97,7 @@ Agenten/
 **Security:** M10 → M23 (direkt empfohlen nach Block 2)
 **Evaluation:** M15 → M24 (natürliche Fortsetzung)
 
-### Erweiterte Module (M22–M34, optional)
+### Erweiterte Module (M22–M35, optional)
 
 | Modul | Thema                                 | Priorität    | Status |
 | ----- | ------------------------------------- | ------------ | ------ |
@@ -108,10 +109,11 @@ Agenten/
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
 | M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |
 | M30   | MCP Integration                       | 🔵 Optional  | ✅      |
+| M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
+| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
 | M33   | Meeting-Briefing Skill mit DeepAgents | 🔵 Optional  | ✅      |
 | M34   | Production Deployment                 | 🔵 Optional  | ✅      |
-| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
-| M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
+| M35   | Capstone                              | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 

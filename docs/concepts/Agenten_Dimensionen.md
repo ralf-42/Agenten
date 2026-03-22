@@ -10,7 +10,7 @@ has_toc: false
 # Agenten-Dimensionen
 {: .no_toc }
 
-> **Drei Ebenen, die einen KI-Agenten vollständig beschreiben**
+> **Drei Ebenen, die einen KI-Agenten vollständig beschreiben**       
 
 ---
 
@@ -22,9 +22,9 @@ graph TD
     classDef property fill:#ececff,stroke:#9370db,stroke-width:2px,color:#333
     classDef function fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#333
     classDef infra fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#333
-    classDef groupStyle fill:#f9f9f9,stroke:#d3d3d3,stroke-dasharray: 5 5
+    classDef groupStyle fill:#f9f9f9,stroke:#ccc
 
-    subgraph E1["<b>🧠 1. Eigenschaften — Das Wesen</b>"]
+    subgraph E1["🧠 1. Eigenschaften — Das Wesen"]
         direction LR
         A(["<b>Autonomie</b><br/>Trifft eigenständig Entscheidungen"])
         R(["<b>Reaktionsfähigkeit</b><br/>Reagiert auf Änderungen"])
@@ -32,21 +32,21 @@ graph TD
         I(["<b>Interaktionsfähigkeit</b><br/>Kommuniziert mit Menschen und Systemen"])
     end
 
-    subgraph E2["<b>🛠️ 2. Funktionen — Das Können</b>"]
+    subgraph E2["🛠️ 2. Funktionen — Das Können"]
         direction LR
         PL["<b>Planning</b><br/>Zerlegt Ziele in Schritte"]
         ME["<b>Memory</b><br/>Hält Zustand und Verlauf"]
         TU["<b>Tool Use</b><br/>Nutzt externe Werkzeuge und APIs"]
         MO["<b>Monitoring</b><br/>Beobachtet Ergebnisse und Feedback"]
-        DE{{"<b>Delegation</b><br/>Orchestriert Sub-Agenten"}}
+        DE["<b>Delegation</b><br/>Orchestriert Sub-Agenten"]
     end
 
-    subgraph E3["<b>🏗️ 3. Infrastruktur — Das Fundament</b>"]
+    subgraph E3["🏗️ 3. Infrastruktur — Das Fundament"]
         direction LR
-        CM[/"<b>Context Management</b><br/>Filtert und verdichtet Kontext"/]
-        GR[/"<b>Guardrails</b><br/>Prüft und begrenzt Aktionen"/]
-        EA[/"<b>Environment Access</b><br/>Dateien, APIs, externe Systeme"/]
-        OB[/"<b>Observability</b><br/>Logs, Traces, Debugging"/]
+        CM["<b>Context Management</b><br/>Filtert und verdichtet Kontext"]
+        GR["<b>Guardrails</b><br/>Prüft und begrenzt Aktionen"]
+        EA["<b>Environment Access</b><br/>Dateien, APIs, externe Systeme"]
+        OB["<b>Observability</b><br/>Logs, Traces, Debugging"]
     end
 
     E1 ==> E2

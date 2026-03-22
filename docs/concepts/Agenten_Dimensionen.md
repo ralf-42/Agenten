@@ -16,7 +16,7 @@ has_toc: false
 
 Ein KI-Agent lässt sich entlang von drei Ebenen strukturieren: seinen grundlegenden **Eigenschaften**, den daraus abgeleiteten **Funktionen** und der **Infrastruktur**, die den stabilen Betrieb ermöglicht. Diese Ebenen bauen aufeinander auf — ohne ein solides Fundament können Funktionen nicht zuverlässig ausgeführt werden, und ohne Funktionen bleiben Eigenschaften abstrakt.
 
-<div class="mermaid">
+```mermaid
 %%{init: {'theme': 'base'}}%%
 graph TD
     classDef property fill:#ececff,stroke:#9370db,stroke-width:2px,color:#333
@@ -71,7 +71,8 @@ graph TD
     class PL,ME,TU,MO,DE function
     class CM,GR,EA,OB infra
     class E1,E2,E3 groupStyle
-</div>
+```
+
 
 ---
 

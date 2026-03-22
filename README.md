@@ -33,7 +33,8 @@ Agenten/
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
-└── 05_prompt/      # Prompt-Templates (Markdown-Format)
+├── 05_prompt/      # Prompt-Templates (Markdown-Format)
+└── 06_skill/       # Agent Skills (SKILL.md, WRITER.md, Scripts)
 ```
 
 ## 🛠️ Technologie-Stack

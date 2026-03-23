@@ -140,17 +140,17 @@ Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder R
 
 Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. OpenAI `gpt-5.1`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Anthropic `claude-sonnet-4-20250514`.
 
-### 5.5 Coding-Worker
+### Coding-Worker
 
 Für Code-Generierung, Refactoring, Entwicklungsagenten und technische Workflow-Knoten. Mistral bietet hier spezialisierte Modelle: `devstral-latest` und `codestral-latest`. Auf OpenAI-Seite übernimmt `gpt-5.1`, bei Anthropic `claude-sonnet-4-20250514`.
 
-### 5.6 Embeddings
+### Embeddings
 
 Stabile semantische Repräsentationen für Retrieval, Chunk-Suche und Vektorindizes. OpenAI bietet `text-embedding-3-small`, Mistral eigene Embedding-Modelle, Anthropic keinen direkten Standardpfad im Kurskontext. Wichtig: Bei Providerwechseln sind Chat-Modell und Embedding-Modell **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht nicht automatisch den anderen nach sich.
 
 ---
 
-## 6 Minimalregel für providerneutrale Dokumentation
+## Minimalregel für providerneutrale Dokumentation
 
 Wenn Modultexte, Architekturtexte oder Deployment-Dokumente providerneutral formuliert werden sollen, ist dieses Muster robust:
 
@@ -180,7 +180,7 @@ Das erlaubt eine allgemeine Beschreibung, ohne die konkreten OpenAI-Implementier
 
 ---
 
-## 7 Verhältnis zum Modell-Auswahl Guide
+## Verhältnis zum Modell-Auswahl Guide
 
 Dieses Dokument ersetzt den Modell-Auswahl Guide **nicht**.
 

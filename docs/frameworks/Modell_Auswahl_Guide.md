@@ -35,7 +35,8 @@ has_toc: true
 | `gpt-4o-mini` | Schnell, günstig                                            | Grundlagen, einfache Tool-Calls, Demos         |
 | `o3-mini`     | Reasoning, kompakt                                          | Leichte Entscheidungslogik, Routing            |
 | `o3`          | Starkes Reasoning                                           | Supervisor, Judge, komplexes Routing, Security |
-| `gpt-5.1`     | Coding & Agentic Tasks, konfigurierbarer Reasoning-Aufwand | Worker-Agenten, Code-Generierung, RAG-Synthese |
+| `gpt-5.4-mini` | Coding & Agentic Tasks, schnell und kostengünstig          | Worker-Agenten, Code-Generierung, RAG-Synthese |
+| `gpt-5.4`      | Maximale Ausgabequalität, komplexe Synthese                | Worker (hochwertig), finale Reports, kritische RAG |
 
 > [!TIP] Faustregel    
 > Nicht das stärkste Modell wählen — das *passende* für den Knoten.
@@ -61,7 +62,7 @@ Die nachfolgenden Regeln beschreiben also zwei Ebenen gleichzeitig:
 1. **die Rolle im Agentensystem**
 2. **den aktuellen OpenAI-Default im Kurs**
 
-Wer dieselbe Rollenlogik auf Mistral oder Anthropic übertragen möchte, nutzt ergänzend das zentrale Mapping-Dokument.
+Wer dieselbe Rollenlogik auf Mistral, Gemini oder Anthropic übertragen möchte, nutzt ergänzend das zentrale Mapping-Dokument.
 
 ---
 
@@ -102,25 +103,27 @@ router_llm = init_chat_model("openai:o3-mini")
 > [!DANGER] o3 / o3-mini: kein temperature-Parameter    
 > Beide Modelle unterstützen `temperature` nicht. Jeder Aufruf mit `temperature=...` führt zu einem API-Fehler. Parameter einfach weglassen — der API-Default wird automatisch verwendet.
 
-### Regel 2 — Worker und Content: `gpt-5.1`
+### Regel 2 — Worker und Content: `gpt-5.4-mini`
 
-Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten im Kurs `gpt-5.1`.
-Begründung: Optimiert für Coding und agentic Tasks mit konfigurierbarem Reasoning-Aufwand.
+Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten im Kurs `gpt-5.4-mini`.
+Begründung: Stärkstes Mini-Modell für Coding und Subagenten, ~40 % günstiger als `gpt-5.1`, aktuellerer Knowledge Cutoff (Aug 2025).
 
-**Rollenbeschreibung:**  
+Für **maximale Ausgabequalität** (komplexe RAG, finale Reports) steht `gpt-5.4` als Upgrade zur Verfügung.
+
+**Rollenbeschreibung:**
 Hier geht es um die Rolle **Worker / Synthese** beziehungsweise bei Entwicklungsaufgaben um einen **Coding-Worker**.
 
 ```python
-worker_llm = init_chat_model("openai:gpt-5.1")
+worker_llm        = init_chat_model("openai:gpt-5.4-mini")   # Standard-Worker
+worker_premium_llm = init_chat_model("openai:gpt-5.4")        # Worker hochwertig
 ```
 
-> [!DANGER] gpt-5.1 + temperature → API-Fehler     
-> `temperature` ist nur mit `reasoning_effort="none"` gültig. Bei allen anderen Werten (`"low"`, `"medium"`, `"high"`) wirft die API sofort einen Fehler.
-> **Empfehlung:** `temperature` bei gpt-5.1 weglassen und stattdessen `reasoning_effort` zur Qualitätssteuerung nutzen.
+> [!DANGER] gpt-5.4-mini / gpt-5.4 + temperature → API-Fehler
+> Die gesamte GPT-5.x-Serie unterstützt `temperature` nicht. Parameter einfach weglassen.
 >
 > ```python
 > # Korrekt: ohne temperature
-> worker_llm = init_chat_model("openai:gpt-5.1")
+> worker_llm = init_chat_model("openai:gpt-5.4-mini")
 > ```
 
 ### Regel 3 — Judge und Evaluator: `o3`
@@ -174,7 +177,7 @@ flowchart TD
     R -->|kritisch| O3A["🔵 o3"]
     R -->|einfach / Demo| O3M["🔵 o3-mini"]
     J -->|Ja| O3B["🔵 o3"]
-    W -->|Ja| GP["🟢 gpt-5.1"]
+    W -->|Ja| GP["🟢 gpt-5.4-mini"]
     G -->|Ja| MINI["⚪ gpt-4o-mini"]
     U -->|Ja| BASE["⚪ gpt-4o-mini\nals Baseline starten\ndann gezielt upgraden"]
 
@@ -203,14 +206,14 @@ flowchart TD
 
 ### Mixed-Model: Lerninhalt im Modul verankert
 
-| Modul | Supervisor / Router | Worker / Generator | Lernziel |
-|-------|--------------------|--------------------|-----------|
-| **M12** | Einführung Konzept | — | *Warum Routing-Knoten ein stärkeres Modell brauchen* |
-| **M21 / M22** | `o3` | `gpt-4o-mini` | Supervisor-Pattern: Modell-Rollentrennung live erleben |
-| **M18** | `o3` (Judge) | `gpt-4o-mini` (Candidate) | LLM-as-Judge: Warum der Judge stark sein muss |
-| **M26** | `o3` (Planner) | `gpt-5.1` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese |
-| **M19** | `o3` (Judge, optional Demo) | `gpt-4o-mini` (Candidate) | Evaluation: Baseline vs. starker Evaluator |
-| **M20** | `o3` (Policy/Risk) | `gpt-4o-mini` (Worker) | Security: robuste Gate-Entscheidungen |
+| Modul         | Supervisor / Router         | Worker / Generator         | Lernziel                                               |
+| ------------- | --------------------------- | -------------------------- | ------------------------------------------------------ |
+| **M12**       | Einführung Konzept          | —                          | *Warum Routing-Knoten ein stärkeres Modell brauchen*   |
+| **M21 / M22** | `o3`                        | `gpt-4o-mini`              | Supervisor-Pattern: Modell-Rollentrennung live erleben |
+| **M18**       | `o3` (Judge)                | `gpt-4o-mini` (Candidate)  | LLM-as-Judge: Warum der Judge stark sein muss          |
+| **M26**       | `o3` (Planner)              | `gpt-5.4-mini` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese   |
+| **M19**       | `o3` (Judge, optional Demo) | `gpt-4o-mini` (Candidate)  | Evaluation: Baseline vs. starker Evaluator             |
+| **M20**       | `o3` (Policy/Risk)          | `gpt-4o-mini` (Worker)     | Security: robuste Gate-Entscheidungen                  |
 
 ---
 
@@ -248,22 +251,58 @@ agent_llm   = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 planner_llm   = init_chat_model("openai:o3")
 
 # Generator: synthetisiert die finale Antwort aus Chunks
-# Hinweis: gpt-5.1 ohne temperature (Kompatibilität, siehe Regel 2)
-generator_llm = init_chat_model("openai:gpt-5.1")
+# Hinweis: gpt-5.4-mini ohne temperature (GPT-5.x-Serie, siehe Regel 2)
+generator_llm = init_chat_model("openai:gpt-5.4-mini")
 ```
 
-### Vollständiges Rollen-Setup (model_config.py — Production)
+### Vollständiges Rollen-Setup (`genai_lib/model_config.py`)
+
+Modell-IDs sind in `model_config.py` als Konstanten definiert. Die Instanziierung
+erfolgt im Notebook, damit der API Key bereits gesetzt ist.
+
+**Installation (einmalig):**
+
+```bash
+pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+```
+
+**Import & Instanziierung im Notebook (in "Umgebung einrichten"):**
 
 ```python
 from langchain.chat_models import init_chat_model
 from langchain_openai import OpenAIEmbeddings
+from genai_lib.model_config import BASELINE, ROUTER, JUDGE, PLANNER, WORKER, WORKER_PREMIUM, CODING, EMBEDDINGS
 
-baseline_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)  # Baseline / Demo
-router_llm   = init_chat_model("openai:o3-mini")                        # Router / leichter Reasoner
-judge_llm    = init_chat_model("openai:o3")                             # Judge / starker Reasoner
-worker_llm   = init_chat_model("openai:gpt-5.1")                        # Worker / Synthese
-coding_llm   = init_chat_model("openai:gpt-5.1")                        # Coding-Worker
-embed_model  = OpenAIEmbeddings(model="text-embedding-3-small")         # Embeddings
+baseline_llm       = init_chat_model(BASELINE, temperature=0.0)  # Baseline / Demo
+router_llm         = init_chat_model(ROUTER)                      # Router / leichter Reasoner
+judge_llm          = init_chat_model(JUDGE)                       # Judge / starker Reasoner
+planner_llm        = init_chat_model(PLANNER)                     # Planner / Aufgabenzerlegung
+worker_llm         = init_chat_model(WORKER)                      # Worker / Synthese
+worker_premium_llm = init_chat_model(WORKER_PREMIUM)              # Worker / Synthese (hochwertig)
+coding_llm         = init_chat_model(CODING)                      # Coding-Worker
+embed_model        = OpenAIEmbeddings(model=EMBEDDINGS)           # Embeddings
+```
+
+**Beispiel-Aufrufe:**
+
+```python
+from langchain_core.messages import HumanMessage
+from langgraph.prebuilt import create_react_agent
+
+# Einfacher Modell-Aufruf (kein temperature bei o3 / gpt-5.4-mini!)
+route = judge_llm.invoke([HumanMessage(content="Bewerte diese Antwort: ...")])
+
+# Worker als ReAct-Agent
+worker_agent = create_react_agent(model=worker_llm, tools=[my_tool])
+result = worker_agent.invoke({"messages": [("human", "Erstelle einen Report über ...")]})
+output = result["messages"][-1].content
+
+# Supervisor steuert Worker
+supervisor_agent = create_react_agent(
+    model=router_llm,
+    tools=[worker_tool],
+    prompt="Du bist Supervisor. Delegiere Aufgaben an den Worker-Agenten.",
+)
 ```
 
 ---
@@ -277,7 +316,8 @@ embed_model  = OpenAIEmbeddings(model="text-embedding-3-small")         # Embedd
 |-------|----------------------|------------|
 | Alles `gpt-4o-mini` | ⭐ (Baseline) | Standard für alle Lernschritte |
 | Supervisor `o3` + Worker `gpt-4o-mini` | ⭐⭐⭐ | Nur für Mixed-Model-Demo-Zellen |
-| Supervisor `o3` + Worker `gpt-5.1` | ⭐⭐⭐⭐⭐ | Nur als abschließender Qualitätsvergleich |
+| Supervisor `o3` + Worker `gpt-5.4-mini` | ⭐⭐⭐⭐ | Mixed-Model mit starkem Worker |
+| Supervisor `o3` + Worker `gpt-5.4` | ⭐⭐⭐⭐⭐ | Nur als abschließender Qualitätsvergleich |
 
 **Empfohlenes Vorgehen im Kurs:**
 
@@ -308,21 +348,22 @@ vergleich = {
 
 Wenn nachfolgende Architektur- oder Migrationstexte providerneutral formuliert werden sollen, kann dieser Guide mit folgender Übersetzungsregel gelesen werden:
 
-- `gpt-4o-mini` = **Baseline / Demo**
-- `o3-mini` = **Router / leichter Reasoner**
-- `o3` = **Judge / starker Reasoner**
-- `gpt-5.1` = **Worker / Synthese**
-- `gpt-5.1` = **Coding-Worker**
-- `text-embedding-3-small` = **Embeddings**
+- `BASELINE` → **Baseline / Demo** (`gpt-4o-mini`)
+- `ROUTER` → **Router / leichter Reasoner** (`o3-mini`)
+- `JUDGE` → **Judge / starker Reasoner** (`o3`)
+- `WORKER` → **Worker / Synthese** (`gpt-5.4-mini`)
+- `WORKER_PREMIUM` → **Worker / Synthese (hochwertig)** (`gpt-5.4`)
+- `CODING` → **Coding-Worker** (`gpt-5.4-mini`)
+- `EMBEDDINGS` → **Embeddings** (`text-embedding-3-small`)
 
 Dadurch bleibt der Kurs konkret und die Beschreibung dennoch übertragbar.
 
-Für die konkrete Zuordnung auf Mistral und Anthropic siehe:
+Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
 [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
 
 ---
+    
 
-
-**Version:** 1.3    
-**Stand:** März 2026    
-**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API    
+**Version:** 1.4     
+**Stand:** März 2026       
+**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API       

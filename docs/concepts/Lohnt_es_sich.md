@@ -10,7 +10,7 @@ has_toc: true
 # Lohnt es sich überhaupt?
 {: .no_toc }
 
-> **Vor dem Bau kommt die Frage.**
+> **Vor dem Bau kommt die Frage.**     
 > Ein Agenten-System zu bauen ist keine Antwort — es ist ein Mittel. Dieses Dokument hilft zu klären, ob KI das richtige Mittel ist.
 
 ---

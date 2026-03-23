@@ -46,8 +46,6 @@ Systematische Evaluation löst diese Probleme durch:
 
 ## 2 Evaluierungsebenen
 
-Die Bewertung von Agenten erfolgt auf mehreren Ebenen, die jeweils unterschiedliche Aspekte prüfen.
-
 ### 2.1 Komponenten-Evaluation
 
 Einzelne Bausteine werden isoliert getestet:

@@ -26,7 +26,7 @@ has_toc: true
 
 ---
 
-## 1 Kernaussage
+## Kernaussage
 
 Eine Migration von OpenAI zu Mistral ist im Projekt `Agenten` **nicht trivial**, aber sie ist deutlich einfacher, weil große Teile der LLM-Nutzung bereits über **LangChain-Abstraktionen** laufen.
 
@@ -45,9 +45,9 @@ Die Migration ist deshalb in erster Linie:
 
 ---
 
-## 2 Was LangChain bei der Migration vereinfacht
+## Was LangChain bei der Migration vereinfacht
 
-### 2.1 Vereinheitlichte Modellinitialisierung
+### Vereinheitlichte Modellinitialisierung
 
 Wo Modelle über `init_chat_model(...)` bezogen werden, wird die Migration deutlich leichter:
 
@@ -62,7 +62,7 @@ Wo Modelle über `init_chat_model(...)` bezogen werden, wird die Migration deutl
 - LangGraph-Nodes
 - Supervisor- oder Judge-Knoten
 
-### 2.2 Einheitliche Patterns für Chains, Tools und Graphen
+### Einheitliche Patterns für Chains, Tools und Graphen
 
 Die Architektur des Projekts basiert weitgehend auf stabilen Patterns:
 
@@ -74,7 +74,7 @@ Die Architektur des Projekts basiert weitgehend auf stabilen Patterns:
 
 Das ist migrationsfreundlich, weil die LLM-Ebene ausgetauscht werden kann, ohne dass die Grundstruktur neu entworfen werden muss.
 
-### 2.3 LangGraph hält die Ablaufsteuerung stabil
+### LangGraph hält die Ablaufsteuerung stabil
 
 Bei Multi-Step-Agenten liegt die eigentliche Komplexität oft nicht im Modell, sondern im Ablauf:
 
@@ -86,7 +86,7 @@ Bei Multi-Step-Agenten liegt die eigentliche Komplexität oft nicht im Modell, s
 
 Da diese Teile im Projekt über **LangGraph** modelliert sind, bleiben sie bei einem Providerwechsel grundsätzlich erhalten. Geändert wird primär, **welches Modell** die Rolle eines Routers, Judges oder Workers übernimmt.
 
-### 2.4 Strukturierte Ausgaben bleiben auf derselben Schiene
+### Strukturierte Ausgaben bleiben auf derselben Schiene
 
 Wenn ein Modul `with_structured_output()` oder Pydantic-Schemata nutzt, muss bei einer Migration nicht die gesamte Extraktionslogik neu gebaut werden. Stattdessen wird geprüft:
 
@@ -98,11 +98,11 @@ Auch hier reduziert LangChain den Migrationsaufwand, weil dieselbe Integrationsf
 
 ---
 
-## 3 Was trotz LangChain nicht automatisch gelöst ist
+## Was trotz LangChain nicht automatisch gelöst ist
 
 LangChain vereinfacht die Migration stark, aber es löst nicht alle Unterschiede zwischen Providern.
 
-### 3.1 Modellrollen müssen neu gemappt werden
+### Modellrollen müssen neu gemappt werden
 
 Das Projekt nutzt faktisch ein Rollenmodell:
 
@@ -114,7 +114,7 @@ Das Projekt nutzt faktisch ein Rollenmodell:
 
 Die Migration besteht deshalb nicht nur darin, `"openai:..."` durch `"mistral:..."` zu ersetzen, sondern die Rollen sinnvoll auf Mistral-Modelle zu verteilen.
 
-### 3.2 Embeddings sind ein eigenes Migrationsthema
+### Embeddings sind ein eigenes Migrationsthema
 
 RAG-Strecken sind nicht automatisch mit einem Chat-Modell-Wechsel mitmigriert.
 
@@ -125,11 +125,11 @@ Zu entscheiden ist:
 
 Das ist architektonisch getrennt von der Chat-Modell-Migration.
 
-### 3.3 OpenAI-spezifische Inhalte bleiben OpenAI-spezifisch
+### OpenAI-spezifische Inhalte bleiben OpenAI-spezifisch
 
 Wo ein Modul fachlich auf OpenAI zielt, hilft die LangChain-Abstraktion nicht weiter. Solche Inhalte sollten nicht künstlich in eine Mistral-Migration hineingezogen werden.
 
-### 3.4 Qualitätsunterschiede bleiben real
+### Qualitätsunterschiede bleiben real
 
 Auch wenn dieselbe LangChain-Schnittstelle verwendet wird, können sich ändern:
 
@@ -144,9 +144,9 @@ LangChain reduziert also den **Umbauaufwand**, nicht automatisch die **fachliche
 
 ---
 
-## 4 Welche Migrationsarbeiten konkret anfallen
+## Welche Migrationsarbeiten konkret anfallen
 
-### 4.1 Provider-Schicht abstrahieren
+### Provider-Schicht abstrahieren
 
 Die wichtigste technische Maßnahme ist eine zentrale Modellinitialisierung.
 
@@ -176,7 +176,7 @@ def get_llm(role: str = "baseline", provider: str = "openai", **kwargs):
 **Effekt:**  
 Die eigentliche LangChain-/LangGraph-Logik bleibt weitgehend gleich, während die Providerwahl zentralisiert wird.
 
-### 4.2 Embeddings separat kapseln
+### Embeddings separat kapseln
 
 ```python
 from langchain_openai import OpenAIEmbeddings
@@ -190,7 +190,7 @@ def get_embeddings(provider: str = "openai"):
 **Effekt:**  
 Chat-Provider und Embedding-Provider werden sauber getrennt.
 
-### 4.3 Modultexte und Doku markieren
+### Modultexte und Doku markieren
 
 Sinnvolle Markierungen:
 
@@ -205,7 +205,7 @@ Die Migration wird transparent dokumentiert, ohne dass einzelne Notebooks überi
 
 ---
 
-## 5 Wie die Notebooks als Beispiele dienen
+## Wie die Notebooks als Beispiele dienen
 
 Die Notebooks dienen nur dazu, die Typen von Migrationsarbeit anschaulich zu machen:
 
@@ -221,7 +221,7 @@ Die Botschaft ist also:
 
 ---
 
-## 6 Prüf- und Testpunkte
+## Prüf- und Testpunkte
 
 Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
@@ -244,7 +244,7 @@ Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
 ---
 
-## 7 Empfohlene Reihenfolge
+## Empfohlene Reihenfolge
 
 ### Phase 1: Provider-Schicht zentralisieren
 
@@ -276,7 +276,7 @@ Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
 ---
 
-## 8 Fazit
+## Fazit
 
 Die eigentliche Botschaft dieser Migration ist:
 

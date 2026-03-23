@@ -439,6 +439,17 @@ Mögliche Erweiterungen:
 - mehrere Worker mit Prioritäten
 - automatische oder manuelle Rollenwechsel
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangChain.html) | Voraussetzung: Modell-Init, Tools und Agenten mit LangChain |
+| [Einsteiger ChromaDB](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_ChromaDB.html) | Vektordatenbank als RAG-Tool in LangGraph-Workflows |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Konzeptionelle Tiefe hinter TypedDict und Reducer-Funktionen |
+| [Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html) | Technische Details zu MemorySaver und Thread-IDs |
+| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Konzept hinter Interrupt & Resume aus Abschnitt 9 |
+
+
 ---
 
 **Version:** 2.0  

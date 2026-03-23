@@ -418,6 +418,15 @@ Agenten-Kommunikationsprotokolle sind das unsichtbare Rückgrat moderner KI-Syst
 
 Der Trend ist klar: Weg von monolithischen KI-Anwendungen, hin zu modularen Ökosystemen aus spezialisierten, vernetzten Agenten. Die hier vorgestellten Protokolle bilden die Grundlage für dieses „Internet der Agenten“.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html) | Koordinationsmuster — wie Agenten zusammenarbeiten, nicht wie sie kommunizieren |
+| [Agent Security](https://ralf-42.github.io/Agenten/concepts/Agent_Security.html) | Sicherheitsrisiken durch offene Protokolle und externe Tool-Verbindungen |
+| [Skills](https://ralf-42.github.io/Agenten/concepts/Skills.html) | Wiederverwendbare Arbeitsrezepte als Alternative zu offenen Protokollschnittstellen |
+
+
 ---
 
 **Version:** 1.0    

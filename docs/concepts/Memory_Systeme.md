@@ -419,6 +419,15 @@ def sollte_gespeichert_werden(nachricht: str) -> bool:
 - [Checkpointing & Persistenz](./Checkpointing_Persistenz.html) – Technische Basis für Persistenz
 - [RAG-Konzepte](./RAG_Konzepte.html) – Vektordatenbanken für Wissensabruf
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html) | Technische Speicherung des Konversations-States (Kurzzeitgedächtnis im Graph) |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Memory-Einträge im Graph-State verankert sind |
+| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Gedächtnis im Kontext menschlicher Kontrolle und Unterbrechungen |
+
+
 ---
 
 **Version:** 1.0

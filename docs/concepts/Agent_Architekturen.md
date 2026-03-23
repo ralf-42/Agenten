@@ -243,6 +243,16 @@ Die Architekturmuster schließen sich nicht gegenseitig aus. In der Praxis kombi
 
 Im weiteren Kursverlauf werden diese Architekturen praktisch mit LangChain und LangGraph umgesetzt.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Welches Werkzeug?](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html) | Entscheidung: wann Agent, wann Workflow, wann RAG? |
+| [Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html) | Wie Werkzeuge technisch definiert und eingebunden werden |
+| [Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html) | Koordinationsmuster wenn mehrere Architekturen zusammenarbeiten |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Graph-Zustand über Architekturebenen hinweg verwaltet wird |
+
+
 ---
 
 **Version:** 1.1    

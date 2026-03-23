@@ -678,6 +678,16 @@ print(antwort)
 
 Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assistenten oder interne Suchsysteme im Kurs und kann schrittweise um Evaluierung, Feedback‑Schleifen oder LangGraph‑Workflows erweitert werden.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [frameworks/Einsteiger_LangGraph](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangGraph.html) | LangGraph aufbauend auf LangChain — Workflows, State, Routing |
+| [Einsteiger ChromaDB](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_ChromaDB.html) | Vektordatenbank für die RAG-Beispiele in diesem Guide |
+| [Einsteiger Prompts](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_Prompts.html) | Prompt-Dateien und  als Ergänzung zu  |
+| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/RAG_Konzepte.html) | Konzeptionelle Grundlagen hinter den RAG-Patterns in Abschnitt 12 |
+
+
 ---
 
 **Version:** 1.0    

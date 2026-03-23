@@ -767,6 +767,15 @@ results = evaluate(my_agent, data="My-Tests", evaluators=[my_evaluator])
 client.create_feedback(run_id=run_id, key="user_rating", score=0.8)
 ```
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html) | Machbarkeitsbewertung vor dem Bau — Evaluation bewertet nach dem Bau |
+| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/RAG_Konzepte.html) | RAG-Architektur — dieses Dokument beschreibt deren Evaluierung |
+| [Agent Security](https://ralf-42.github.io/Agenten/concepts/Agent_Security.html) | Sicherheitstests als eigene Evaluierungsebene |
+
+
 ---
 
 **Version:** 1.0     

@@ -410,6 +410,15 @@ Checkpointing ist das technische Fundament für persistente, unterbrechbare Agen
 - [Human-in-the-Loop](./Human_in_the_Loop.html) – Interrupt & Resume in der Praxis
 - [Memory-Systeme](./Memory_Systeme.html) – Langfristige Gedächtnisstrukturen
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Definition und Struktur des States, der gespeichert wird |
+| [Memory-Systeme](https://ralf-42.github.io/Agenten/concepts/Memory_Systeme.html) | Langzeitgedächtnis jenseits des Checkpoint-Scopes (semantisch, per User) |
+| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Interrupt & Resume als Anwendungsfall von Checkpointing |
+
+
 ---
 
 **Version:** 1.0

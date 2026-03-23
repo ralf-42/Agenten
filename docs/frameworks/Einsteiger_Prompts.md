@@ -394,6 +394,15 @@ flowchart TD
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangChain.html) |  als Alternative zu Prompt-Dateien |
+| [Einsteiger genai_lib](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_GenAI_Lib.html) |  als Ladefunktion für Prompt-Dateien |
+| [Einsteiger Agent Builder](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_Agent_Builder.html) | Prompt-Dateien in Agent-Builder-Workflows |
+
+
 ---
 
 **Version:** 1.0    

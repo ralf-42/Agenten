@@ -42,7 +42,7 @@ Die Bibliothek besteht aus zwei Hauptmodulen:
 | Modul | Beschreibung | Hauptfunktionen |
 |-------|-------------|----------------|
 | **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, LangSmith Trace-Analyse |
-| **multimodal_rag.py** | Multimodales RAG-System (v3.1) | Text- und Bildsuche, Bild-zu-Bild-Suche, Cross-Modal-Retrieval, System-Status |
+| **model_config.py** | Rollenbasierte Modell-Konstanten | `BASELINE`, `ROUTER`, `JUDGE`, `PLANNER`, `WORKER`, `WORKER_PREMIUM`, `CODING`, `EMBEDDINGS` |
 
 ---
 
@@ -428,213 +428,44 @@ Nach einem Agent-Run kurz warten: `time.sleep(2)` vor dem Aufruf.
 
 ---
 
-## multimodal_rag.py - Multimodales RAG
+## model_config.py - Rollenbasierte Modell-Konstanten
 
 ### Überblick
 
-Das `multimodal_rag`-Modul implementiert ein vollständiges RAG-System mit Unterstützung für Text- und Bilddokumente. Es kombiniert OpenAI-Embeddings für Text und CLIP-Embeddings für Bilder.
+`model_config.py` definiert Modell-IDs als Konstanten nach dem Rollenmodell des Kurses.
+Die Instanziierung erfolgt im Notebook mit `init_chat_model()`, damit der API Key bereits gesetzt ist.
 
-### Architektur
+### Konstanten
 
-```
-multimodal_rag
-├── Text-Pipeline: OpenAI Embeddings + ChromaDB
-├── Bild-Pipeline: CLIP Embeddings + ChromaDB
-├── Vision-LLM: GPT-4o-mini für Bildbeschreibungen (via init_chat_model)
-└── Hybride Suche: Text ↔ Bild ↔ Bild
-```
+| Konstante | Modell | Rolle |
+|-----------|--------|-------|
+| `BASELINE` | `openai:gpt-4o-mini` | Baseline / Demo |
+| `ROUTER` | `openai:o3-mini` | Router / leichter Reasoner |
+| `JUDGE` | `openai:o3` | Judge / starker Reasoner |
+| `PLANNER` | `openai:o3` | Planner / Aufgabenzerlegung |
+| `WORKER` | `openai:gpt-5.4-mini` | Worker / Synthese |
+| `WORKER_PREMIUM` | `openai:gpt-5.4` | Worker / Synthese (hochwertig) |
+| `CODING` | `openai:gpt-5.4-mini` | Coding-Worker |
+| `EMBEDDINGS` | `text-embedding-3-small` | Embeddings |
 
-**🆕 LangChain 1.0+ Integration (v3.1):**
-- Nutzt `init_chat_model("openai:gpt-4o-mini")` für LLM-Initialisierung
-- Vision-Analysen mit `HumanMessage` und Standard Content Blocks
-- Provider-agnostische Multimodal-Verarbeitung
-
-### Hauptfunktionen
-
-#### 1. `init_rag_system(config=None)`
-
-Initialisiert das vollständige RAG-System.
+### Verwendung im Notebook
 
 ```python
-from genai_lib.multimodal_rag import init_rag_system, RAGConfig
+from langchain.chat_models import init_chat_model
+from langchain_openai import OpenAIEmbeddings
+from genai_lib.model_config import BASELINE, ROUTER, JUDGE, PLANNER, WORKER, WORKER_PREMIUM, CODING, EMBEDDINGS
 
-# Mit Standard-Konfiguration
-rag = init_rag_system()
-
-# Mit eigener Konfiguration
-config = RAGConfig(
-    chunk_size=300,
-    chunk_overlap=50,
-    clip_model='clip-ViT-B-32',
-    llm_model='gpt-4o-mini',
-    db_path='./my_rag_db'
-)
-rag = init_rag_system(config)
+baseline_llm       = init_chat_model(BASELINE, temperature=0.0)
+router_llm         = init_chat_model(ROUTER)
+judge_llm          = init_chat_model(JUDGE)
+planner_llm        = init_chat_model(PLANNER)
+worker_llm         = init_chat_model(WORKER)
+worker_premium_llm = init_chat_model(WORKER_PREMIUM)
+coding_llm         = init_chat_model(CODING)
+embed_model        = OpenAIEmbeddings(model=EMBEDDINGS)
 ```
 
-**Was wird initialisiert:**
-- OpenAI Text-Embeddings
-- CLIP-Modell für Bild-Embeddings
-- GPT-4o-mini für Text und Vision (via `init_chat_model()` - LangChain 1.0+)
-- ChromaDB mit zwei Collections (texts, images)
-- MarkItDown für Dokumentenkonvertierung
-
-**Interne LangChain 1.0+ Patterns:**
-```python
-# System nutzt intern moderne LangChain APIs
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-# Vision-Analyse mit Standard Content Blocks
-message = HumanMessage(content=[
-    {"type": "text", "text": "Beschreibe dieses Bild"},
-    {"type": "image", "url": "data:image/png;base64,...", "mime_type": "image/png"}
-])
-```
-
-#### 2. `process_directory(rag, directory_path, auto_describe_images=True)`
-
-Verarbeitet ein Verzeichnis mit Text- und Bilddateien.
-
-```python
-from genai_lib.multimodal_rag import process_directory
-
-# Verzeichnis mit automatischen Bildbeschreibungen
-process_directory(rag, './files', auto_describe_images=True)
-
-# Ohne Bildbeschreibungen (nur CLIP-Embeddings)
-process_directory(rag, './files', auto_describe_images=False)
-```
-
-**Unterstützte Dateitypen:**
-- **Text:** `.txt`, `.md`, `.pdf`, `.docx`, `.pptx`, `.xlsx`
-- **Bilder:** `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`
-
-**Features:**
-- Automatische Dokumentenkonvertierung mit MarkItDown
-- Text-Chunking mit RecursiveCharacterTextSplitter
-- Automatische Bildbeschreibung mit GPT-4o-mini
-- CLIP-Embeddings für Bilder
-- Fortschrittsanzeige
-
-#### 3. `multimodal_search(rag, query, k=5, text_only=False, images_only=False)`
-
-Durchsucht Text und Bilder gleichzeitig.
-
-```python
-from genai_lib.multimodal_rag import multimodal_search
-
-# Hybride Suche (Text + Bilder)
-results = multimodal_search(rag, "Roboter mit KI", k=5)
-
-# Nur Text
-text_results = multimodal_search(rag, "Maschinelles Lernen", text_only=True)
-
-# Nur Bilder
-image_results = multimodal_search(rag, "rote Autos", images_only=True)
-```
-
-**Rückgabe:**
-- `text_docs`: Liste von LangChain Documents mit Text-Chunks
-- `image_results`: Liste von Dictionaries mit Bildpfaden und Metadaten
-
-#### 4. `search_similar_images(rag, image_path, k=5)`
-
-Findet ähnliche Bilder zu einem Query-Bild (Bild → Bild Suche).
-
-```python
-from genai_lib.multimodal_rag import search_similar_images
-
-# Ähnliche Bilder finden
-similar = search_similar_images(rag, "./query_image.jpg", k=5)
-
-for img in similar:
-    print(f"Ähnlichkeit: {img['similarity']:.2f}")
-    print(f"Pfad: {img['image_path']}")
-```
-
-**Use Cases:**
-- Duplikate finden
-- Ähnliche Produkte vorschlagen
-- Bildkategorisierung
-
-#### 5. `search_text_by_image(rag, image_path, k=3)`
-
-Findet Textdokumente, die zum Bildinhalt passen (Bild → Text Suche).
-
-```python
-from genai_lib.multimodal_rag import search_text_by_image
-
-# Passende Texte zu einem Bild finden
-texts = search_text_by_image(rag, "./product_image.jpg", k=3)
-
-for doc in texts:
-    print(doc.page_content)
-```
-
-**Use Cases:**
-- Produktbeschreibungen zu Bildern finden
-- Dokumentation zu Screenshots suchen
-- Bild-Text-Verknüpfung in Datenbanken
-
-#### 6. `get_system_status(rag)`
-
-Gibt Statistiken über das RAG-System zurück.
-
-```python
-from genai_lib.multimodal_rag import get_system_status
-
-status = get_system_status(rag)
-print(f"Text-Chunks: {status['text_chunks']}")
-print(f"Bilder: {status['images']}")
-print(f"Bildbeschreibungen: {status['image_descriptions']}")
-```
-
-**Rückgabe:**
-- `text_chunks`: Anzahl der Text-Dokument-Chunks
-- `images`: Anzahl der Bilder in der Datenbank
-- `image_descriptions`: Anzahl der Bildbeschreibungen
-- `total_documents`: Gesamtanzahl aller Einträge
-
-#### 7. `cleanup_database(db_path)`
-
-Löscht die Datenbank komplett für einen Neustart.
-
-```python
-from genai_lib.multimodal_rag import cleanup_database
-
-cleanup_database('./multimodal_rag_db')
-```
-
-### Vollständiges Beispiel
-
-```python
-from genai_lib.multimodal_rag import (
-    init_rag_system,
-    process_directory,
-    multimodal_search,
-    search_similar_images,
-    get_system_status
-)
-
-# 1. System initialisieren
-rag = init_rag_system()
-
-# 2. Dokumente verarbeiten
-process_directory(rag, './knowledge_base', auto_describe_images=True)
-
-# 3. Status prüfen
-status = get_system_status(rag)
-print(f"Verarbeitet: {status['text_chunks']} Texte, {status['images']} Bilder")
-
-# 4. Multimodale Suche (Text + Bilder + Cross-Modal)
-results = multimodal_search(rag, "Neuronale Netze", k_text=3, k_images=3)
-print(results)
-
-# 5. Bild-zu-Bild Suche
-similar = search_similar_images(rag, "./query_image.jpg", k=5)
-for img in similar:
-    print(f"{img['filename']}: {img['similarity']}")
-```
+> ⚠️ `o3`, `o3-mini`, `gpt-5.4-mini` und `gpt-5.4` unterstützen keinen `temperature`-Parameter.
 
 ---
 
@@ -649,36 +480,10 @@ from genai_lib.utilities import check_environment, setup_api_keys, install_packa
 check_environment()
 
 # 2. Pakete installieren
-install_packages([
-    'langchain',
-    'langchain-openai',
-    ('markitdown[all]', 'markitdown')
-])
+install_packages(['langchain', 'langchain-openai'])
 
 # 3. API-Keys setzen
 setup_api_keys(["OPENAI_API_KEY"])
-```
-
-### 2. Multimodales RAG-System
-
-```python
-from genai_lib.multimodal_rag import (
-    init_rag_system,
-    RAGConfig,
-    process_directory,
-    multimodal_search
-)
-
-# Custom Konfiguration für große Dokumente
-config = RAGConfig(
-    chunk_size=500,
-    chunk_overlap=100,
-    text_threshold=1.0,
-    db_path='./projekt_rag'
-)
-
-rag = init_rag_system(config)
-process_directory(rag, './docs', auto_describe_images=True)
 ```
 
 ---

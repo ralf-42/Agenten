@@ -51,7 +51,7 @@ Die 7 MUST-HAVE Features für LangChain 1.0+ sind vollständig dokumentiert in:
 - **snake_case** für:
   - Variablen: `model_output`, `training_data`
   - Funktionen: `load_model()`, `preprocess_text()`
-  - Module: `utilities.py`, `multimodal_rag.py`
+  - Module: `utilities.py`, `model_config.py`
 
 - **PascalCase** für:
   - Klassen: `TypedDict`, `BaseModel` (Pydantic)

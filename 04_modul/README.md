@@ -25,7 +25,7 @@ from genai_lib.utilities import mprint, mermaid, setup_api_keys, check_environme
 Die Bibliothek besteht aus modularen Hilfsdateien im `genai_lib/` Verzeichnis:
 
 - **`utilities.py`** - Kernfunktionen: Markdown-Ausgabe, Mermaid-Diagramme, API-Key-Verwaltung, LangSmith Trace-Analyse, Model-Profile, Thinking-Parser, Prompt-Loader
-- **`multimodal_rag.py`** - Multimodales RAG-System mit Bildsuche und Vision-LLM
+- **`model_config.py`** - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `PLANNER`, `WORKER`, `WORKER_PREMIUM`, `CODING`, `EMBEDDINGS`)
 
 ## 3. Abhängigkeiten
 
@@ -178,7 +178,7 @@ python -m genai_lib.utilities
 ├── genai_lib/
 │   ├── __init__.py          # Package-Exports
 │   ├── utilities.py         # Kernfunktionen (mprint, mermaid, setup_api_keys, show_trace, ...)
-│   └── multimodal_rag.py    # Multimodales RAG-System
+│   └── model_config.py      # Rollenbasierte Modell-Konstanten (BASELINE, ROUTER, JUDGE, ...)
 ├── README.md
 ├── requirements.txt
 └── setup.py

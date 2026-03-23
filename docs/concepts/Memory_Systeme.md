@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Überblick
+## Überblick
 
 Ein LLM hat kein inhärentes Gedächtnis. Ohne explizite Mechanismen vergisst es nach jeder Konversation alles – Nutzerpräferenzen, frühere Entscheidungen, gesammeltes Wissen. **Memory-Systeme** sind die Infrastruktur, die Agenten dauerhaftes Erinnern ermöglicht.
 
@@ -35,7 +35,7 @@ Ein LLM hat kein inhärentes Gedächtnis. Ohne explizite Mechanismen vergisst es
 
 ---
 
-## 2 Taxonomie der Memory-Typen
+## Taxonomie der Memory-Typen
 
 Aus der kognitiven Psychologie lassen sich verschiedene Gedächtnistypen ableiten – diese Analogie hilft, Agenten-Memory zu strukturieren:
 
@@ -64,9 +64,9 @@ flowchart TB
 
 ---
 
-## 3 Kurzzeit-Memory
+## Kurzzeit-Memory
 
-### 3.1 Conversation Buffer
+### Conversation Buffer
 
 Der einfachste Ansatz: alle Nachrichten im LangGraph-State speichern. Kein zusätzliches Setup nötig.
 
@@ -85,7 +85,7 @@ def chat_node(state: ChatState) -> ChatState:
 
 **Grenze:** Das Kontextfenster des LLMs ist begrenzt. Bei langen Konversationen werden die Tokens teuer und irgendwann zu lang für das Modell.
 
-### 3.2 Sliding Window
+### Sliding Window
 
 Nur die letzten N Nachrichten behalten – ältere werden verworfen.
 
@@ -108,7 +108,7 @@ def chat_node(state: ChatState) -> ChatState:
 
 **Grenze:** Ältere Informationen gehen vollständig verloren – bei wichtigen frühen Inhalten problematisch.
 
-### 3.3 Summarization Memory
+### Summarization Memory
 
 Statt ältere Nachrichten zu verwerfen, werden sie komprimiert. Der Kontext bleibt erhalten, der Token-Verbrauch wird begrenzt.
 
@@ -162,11 +162,11 @@ flowchart LR
 
 ---
 
-## 4 Langzeit-Memory
+## Langzeit-Memory
 
 Langzeit-Memory überlebt das Sitzungsende und steht in zukünftigen Gesprächen zur Verfügung.
 
-### 4.1 Semantisches Memory (Vektordatenbank)
+### Semantisches Memory (Vektordatenbank)
 
 Fakten und Wissen werden als Embeddings gespeichert und bei Bedarf semantisch abgerufen.
 
@@ -219,7 +219,7 @@ def memory_abrufen(frage: str) -> str:
     return "\n".join(f"- {doc.page_content}" for doc in docs)
 ```
 
-### 4.2 Entity Memory (Key-Value)
+### Entity Memory (Key-Value)
 
 Strukturierte Informationen über Entitäten (Personen, Projekte, Orte) in einem Dictionary.
 
@@ -265,7 +265,7 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
 
 ---
 
-## 5 Per-User Memory
+## Per-User Memory
 
 In Multi-User-Systemen muss Memory nutzerspezifisch gespeichert werden. LangGraph's Checkpointing bildet den natürlichen Rahmen dafür.
 
@@ -290,7 +290,7 @@ result_a = app.invoke(inputs, config=get_user_config("alice", "2025-01"))
 result_b = app.invoke(inputs, config=get_user_config("bob",   "2025-01"))
 ```
 
-### 5.1 Nutzer-übergreifendes Memory (sitzungsübergreifend)
+### Nutzer-übergreifendes Memory (sitzungsübergreifend)
 
 Wenn ein Nutzer über mehrere Sitzungen hinweg erinnert werden soll:
 
@@ -316,7 +316,7 @@ def get_user_facts(user_id: str) -> list[str]:
 
 ---
 
-## 6 Memory-Strategien kombinieren
+## Memory-Strategien kombinieren
 
 In der Praxis kombiniert man verschiedene Memory-Typen je nach Anforderung:
 
@@ -361,9 +361,9 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
 
 ---
 
-## 7 Best Practices
+## Best Practices
 
-### 7.1 Strategie nach Anwendungsfall
+### Strategie nach Anwendungsfall
 
 | Anwendungsfall | Empfohlene Strategie |
 |---------------|---------------------|
@@ -373,7 +373,7 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
 | Research-Agent | Semantisches Memory für Wissensaufbau |
 | Multi-Session-Nutzer | Checkpointing + Langzeit-Store |
 
-### 7.2 Memory-Hygiene
+### Memory-Hygiene
 
 ```python
 # Relevanzfilter beim Speichern

@@ -268,6 +268,7 @@ for event in graph.stream(initial_state, {"configurable": {"thread_id": "demo"}}
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant User
     participant Graph
     participant Node1

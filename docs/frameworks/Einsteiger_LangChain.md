@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum LangChain?
+## Kurzüberblick: Warum LangChain?
 
 Große Sprachmodelle (LLMs) wie GPT-4 sind beeindruckend – doch für den Einsatz in der Praxis stoßen sie schnell an Grenzen:
 
@@ -77,7 +77,7 @@ graph TB
 
 ---
 
-## 2 Prompts mit `ChatPromptTemplate`
+## Prompts mit `ChatPromptTemplate`
 
 Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 das `ChatPromptTemplate` im Mittelpunkt. Es beschreibt, welche Nachrichtenrollen im Dialog verwendet werden und welche Platzhalter dynamisch zur Laufzeit gefüllt werden.
 
@@ -120,7 +120,7 @@ msgs = rag_prompt.format_messages(
 
 ---
 
-## 3 Einheitliche Modell-Initialisierung: `init_chat_model()`
+## Einheitliche Modell-Initialisierung: `init_chat_model()`
 
 Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sprachmodells bildet die Basis jeder Agentenarchitektur. `init_chat_model()` stellt sicher, dass verschiedene Modellanbieter konsistent angesprochen werden können, ohne die restliche Codebasis anpassen zu müssen.
 
@@ -144,7 +144,7 @@ print(response.content)
 
 ---
 
-## 4 Strukturierte Ausgaben: `with_structured_output()`
+## Strukturierte Ausgaben: `with_structured_output()`
 
 Viele Anwendungen benötigen klar definierte Datenstrukturen – etwa bei der Extraktion von Feldern, Bewertungen oder Metadaten. Mit `with_structured_output()` lassen sich Modellantworten direkt an Pydantic-Modelle koppeln und zuverlässig validieren.
 
@@ -174,11 +174,11 @@ Hinweis: Dieses Feature setzt voraus, dass der verwendete Modell‑Provider nati
 
 ---
 
-## 5 Werkzeuge definieren: `@tool`
+## Werkzeuge definieren: `@tool`
 
 Tools erweitern die Fähigkeiten eines Agenten erheblich, da sie Funktionen abdecken, die ein Modell selbst nicht ausführen kann – etwa Berechnungen, Datenabrufe, lokale Analysen oder Abfragen externer Systeme. Der `@tool`‑Decorator ermöglicht eine klare, typensichere und gut dokumentierte Definition solcher Werkzeuge.
 
-### 5.1 Beispiel: Ein einfaches Rechentool
+### Beispiel: Ein einfaches Rechentool
 
 ```python
 from langchain_core.tools import tool
@@ -192,7 +192,7 @@ def multiply(a: int, b: int) -> int:
 print(multiply.invoke({"a": 6, "b": 7}))
 ```
 
-### 5.2 Beispiel: Tool mit Fehlerbehandlung und Docstring
+### Beispiel: Tool mit Fehlerbehandlung und Docstring
 
 ```python
 @tool
@@ -208,7 +208,7 @@ print(safe_divide.invoke({"a": 10, "b": 0}))
 
 
 
-### 5.3 Tool Extras für Provider-spezifische Features (NEU v1.2.0)
+### Tool Extras für Provider-spezifische Features (NEU v1.2.0)
 
 Tools unterstützen jetzt `extras` für provider-native Konfigurationen – eine der wichtigsten Neuerungen in LangChain v1.2.0:
 
@@ -261,7 +261,7 @@ def take_screenshot() -> str:
 
 ---
 
-## 6 Agenten erstellen: `create_agent()`
+## Agenten erstellen: `create_agent()`
 
 Mit `create_agent()` werden Modell, Tools, Systemprompt und optional Middleware zu einer Einheit verbunden. Agenten basieren auf einer klaren Struktur, die intern auf der LangGraph-State-Machine aufsetzt.
 
@@ -298,7 +298,7 @@ result
 
 Hier liefert `create_agent()` bereits ein kompiliertes LangGraph‑Objekt (CompiledStateGraph). Dadurch kann derselbe Agent später in komplexere Workflows eingebettet werden.
 
-### 6.2 Strict Schema für Agent-Responses (NEU v1.2.0)
+### Strict Schema für Agent-Responses (NEU v1.2.0)
 
 Agents unterstützen jetzt `response_format` für strikte Validierung von Agent-Outputs:
 
@@ -351,6 +351,7 @@ print(response.confidence)  # float (0-1)
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant User
     participant Agent
     participant LLM
@@ -371,7 +372,7 @@ sequenceDiagram
 
 ---
 
-## 7 Moderne Kettensyntax: LCEL `|`
+## Moderne Kettensyntax: LCEL `|`
 
 LangChain Expression Language (LCEL) ersetzt frühere Chain‑Implementierungen. Über den Pipe‑Operator `|` werden Verarbeitungsschritte logisch miteinander verbunden.
 
@@ -395,7 +396,7 @@ flowchart LR
     style PARSER fill:#dae8fc
 ```
 
-### 7.1 Beispiel: Einfache LCEL-Chain für Textumformung
+### Beispiel: Einfache LCEL-Chain für Textumformung
 
 ```python
 from langchain_core.output_parsers import StrOutputParser
@@ -411,7 +412,7 @@ output = rewrite_chain.invoke({"input_text": text})
 print(output)
 ```
 
-### 7.2 Beispiel: LCEL-Chain mit zusätzlicher Eingabe (Pass-Through)
+### Beispiel: LCEL-Chain mit zusätzlicher Eingabe (Pass-Through)
 
 ```python
 from langchain_core.runnables import RunnablePassthrough
@@ -439,7 +440,7 @@ print(answer)
 
 ---
 
-## 8 Middleware zur Agentensteuerung
+## Middleware zur Agentensteuerung
 
 Middleware ergänzt Agenten um wichtige Kontrollmechanismen, etwa Sicherheitsprüfungen oder automatische Kontextverdichtung.
 
@@ -500,7 +501,7 @@ agent_compact = create_agent(model=llm_compact, tools=tools)
 
 ---
 
-## 9 Einheitliche Content-Blöcke für multimodale Eingaben
+## Einheitliche Content-Blöcke für multimodale Eingaben
 
 Da moderne Modelle verschiedene Datentypen verarbeiten, benötigen Agenten ein einheitliches Format für Eingaben. LangChain 1.0 definiert Content‑Blöcke, die Text, Bilder, Audio oder andere Inhalte abbilden.
 
@@ -530,7 +531,7 @@ Dieses Muster kann später in multimodalen RAG‑Notebooks wiederverwendet werde
 
 ---
 
-## 10 Chunking‑Best Practices
+## Chunking‑Best Practices
 
 Damit RAG‑Systeme sinnvoll arbeiten, müssen Dokumente in geeignete Textstücke („Chunks“) zerlegt werden. In LangChain hat sich der `RecursiveCharacterTextSplitter` etabliert.
 
@@ -555,7 +556,7 @@ Im Kurs lässt sich hier gut mit unterschiedlichen Chunk‑Größen und Overlaps
 
 ---
 
-## 11 Embeddings: Grundlagen für semantische Suche
+## Embeddings: Grundlagen für semantische Suche
 
 Embeddings repräsentieren Texte als Vektoren und bilden die Basis für semantische Suche und RAG. Häufig kommen OpenAI‑Embeddings in Kombination mit Chroma zum Einsatz.
 
@@ -592,7 +593,7 @@ for i, doc in enumerate(results, start=1):
 
 ---
 
-## 12 Standard‑Pattern für RAG mit LangChain
+## Standard‑Pattern für RAG mit LangChain
 
 Retrieval‑Augmented Generation (RAG) ist eines der wichtigsten Einsatzszenarien für LangChain. Typischerweise werden Vektorspeicher, Retriever und eine LCEL‑Pipeline kombiniert.
 

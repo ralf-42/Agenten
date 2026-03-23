@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Was ist ein Skill?
+## Was ist ein Skill?
 
 Ein Skill ist ein **wiederverwendbarer Ablaufbaustein** für einen Agenten. Er beschreibt nicht nur eine Aufgabe, sondern auch:
 
@@ -35,7 +35,7 @@ Ein Skill ist damit mehr als ein einzelner Prompt. Er operationalisiert Fachwiss
 
 ---
 
-## 2 Prompt vs. Skill
+## Prompt vs. Skill
 
 | | Prompt | Skill |
 |---|---|---|
@@ -50,7 +50,7 @@ Ein Skill ist damit mehr als ein einzelner Prompt. Er operationalisiert Fachwiss
 
 ---
 
-## 3 Warum sind Skills für Agenten wichtig?
+## Warum sind Skills für Agenten wichtig?
 
 Agenten arbeiten oft in offenen, mehrstufigen Situationen. Genau dort steigt das Risiko, dass wichtige Schritte ausgelassen, Regeln falsch angewendet oder Ergebnisse uneinheitlich formuliert werden.
 
@@ -66,7 +66,7 @@ Skills sind deshalb besonders nützlich in Bereichen wie **Compliance, Security,
 
 ---
 
-## 4 Typische Struktur eines Skills
+## Typische Struktur eines Skills
 
 Eine praxistaugliche Skill-Struktur trennt Kernlogik, Referenzwissen und deterministische Hilfslogik.
 
@@ -94,7 +94,7 @@ Beispielhafte Struktur:
 
 ---
 
-## 4.1 SKILL.md in Claude Code (Skills 2.0)
+## SKILL.md in Claude Code (Skills 2.0)
 
 In **Claude Code** werden Skills als eigene Verzeichnisse unter `.claude/skills/<name>/` abgelegt. Die `SKILL.md` ist der Einstiegspunkt; weitere Dateien werden nur bei Bedarf geladen.
 
@@ -180,7 +180,7 @@ Das `description`-Feld ist **kein beschreibender Text für Menschen** — es ist
 
 ---
 
-## 5 Wie ein Agent einen Skill nutzt
+## Wie ein Agent einen Skill nutzt
 
 ### Dreistufiges Ladesystem (Progressive Disclosure)
 
@@ -232,7 +232,7 @@ Wichtig dabei: Das LLM ersetzt nicht die Fachlogik vollständig. Gerade fragile 
 
 ---
 
-## 6 Wann Skills sinnvoll sind und wann nicht
+## Wann Skills sinnvoll sind und wann nicht
 
 ### Skills sind sinnvoll, wenn
 
@@ -251,20 +251,20 @@ Wichtig dabei: Das LLM ersetzt nicht die Fachlogik vollständig. Gerade fragile 
 
 ---
 
-## 7 Abgrenzung zu verwandten Konzepten
+## Abgrenzung zu verwandten Dokumenten
 
-| Konzept | Fokus | Unterschied zu Skills |
-|---|---|---|
-| Prompt Engineering | Gute Anweisungen formulieren | Skills beschreiben einen wiederverwendbaren Ablauf, nicht nur eine Anweisung |
-| Tool Use | Externe Funktionen aufrufen | Skills legen fest, wann und unter welchen Regeln Tools verwendet werden |
-| LangGraph Workflow | Kontrollierter Ablauf als Graph | Skills beschreiben Fachlogik; ein Workflow ist die technische Orchestrierung |
-| Multi-Agent | Arbeitsteilung zwischen Spezialisten | Skills können innerhalb einzelner Agenten oder Rollen eingesetzt werden |
+| Dokument | Frage |
+|---|---|
+| [Prompt Engineering](./Prompt_Engineering.html) | Wie werden System-Prompts und Anweisungen aufgebaut? |
+| [Tool Use & Function Calling](./Tool_Use_Function_Calling.html) | Wie rufen Agenten externe Werkzeuge auf? |
+| [State Management](./State_Management.html) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
+| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html) | Wie arbeiten mehrere spezialisierte Agenten zusammen? |
 
 Skills sind damit kein Ersatz für Tools, Workflows oder Graphen. Sie sind eine **fachliche Steuerungsschicht** darüber.
 
 ---
 
-## 8 Einordnung im Kurs
+## Einordnung im Kurs
 
 Im Kurs wird das Thema als **erweiterndes Muster** behandelt, nicht als Kernvoraussetzung für den Einstieg.
 
@@ -279,7 +279,7 @@ Skills werden dann relevant, wenn aus einem allgemeinen Agenten ein **verlässli
 
 ---
 
-## 9 Praxisbezug im Projekt
+## Praxisbezug im Projekt
 
 Im Projekt liegen drei fertige Skill-Beispiele unter `06_skill/`:
 
@@ -295,7 +295,7 @@ Eine Vorlage für eigene Skills liegt unter `06_skill/README.md`.
 
 ---
 
-## 10 Weiterführende Verweise
+## Weiterführende Verweise
 
 | Dokument                                                          | Inhalt                                                     |
 | ----------------------------------------------------------------- | ---------------------------------------------------------- |

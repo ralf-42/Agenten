@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Überblick
+## Überblick
 
 In einem einfachen LangGraph-Workflow läuft eine Konversation vollständig im Arbeitsspeicher – sobald der Prozess endet, ist der gesamte State verloren. **Checkpointing** löst dieses Problem: Der State wird nach jedem Node-Schritt persistiert und kann jederzeit wiederhergestellt werden.
 
@@ -38,7 +38,7 @@ In einem einfachen LangGraph-Workflow läuft eine Konversation vollständig im A
 
 ---
 
-## 2 Wie Checkpointing funktioniert
+## Wie Checkpointing funktioniert
 
 LangGraph speichert nach **jedem Node-Ausführungsschritt** einen Snapshot des States. Diese Snapshots sind nach Thread-ID und Checkpoint-ID adressierbar.
 
@@ -54,7 +54,7 @@ flowchart LR
     CP3[(Checkpoint 3)] -.->|gespeichert| N3
 ```
 
-### 2.1 Kernkonzepte
+### Kernkonzepte
 
 | Konzept | Beschreibung |
 |---------|-------------|
@@ -63,7 +63,7 @@ flowchart LR
 | **Checkpoint-ID** | Eindeutige ID jedes Snapshots |
 | **Namespace** | Organisationseinheit für mehrere Threads |
 
-### 2.2 Thread-IDs
+### Thread-IDs
 
 Jede Konversation erhält eine eindeutige `thread_id`. LangGraph speichert und lädt Checkpoints automatisch anhand dieser ID.
 
@@ -85,11 +85,11 @@ result2 = app.invoke(
 
 ---
 
-## 3 Checkpointer-Typen
+## Checkpointer-Typen
 
 LangGraph bietet verschiedene Checkpointer für unterschiedliche Anforderungen.
 
-### 3.1 MemorySaver – Entwicklung & Tests
+### MemorySaver – Entwicklung & Tests
 
 ```python
 from langgraph.checkpoint.memory import MemorySaver
@@ -105,7 +105,7 @@ app = graph.compile(checkpointer=checkpointer)
 | **Einsatz** | Entwicklung, Tests, einfache Demos |
 | **Setup** | Keine externe Abhängigkeit |
 
-### 3.2 SqliteSaver – Leichtgewichtige Persistenz
+### SqliteSaver – Leichtgewichtige Persistenz
 
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
@@ -123,7 +123,7 @@ with SqliteSaver.from_conn_string("checkpoints.db") as checkpointer:
 | **Einsatz** | Prototypen, lokale Anwendungen |
 | **Setup** | `pip install langgraph-checkpoint-sqlite` |
 
-### 3.3 AsyncSqliteSaver – Async-Anwendungen
+### AsyncSqliteSaver – Async-Anwendungen
 
 ```python
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
@@ -133,7 +133,7 @@ async with AsyncSqliteSaver.from_conn_string("checkpoints.db") as checkpointer:
     result = await app.ainvoke(inputs, config=config)
 ```
 
-### 3.4 PostgresSaver – Produktionsumgebungen
+### PostgresSaver – Produktionsumgebungen
 
 ```python
 from langgraph.checkpoint.postgres import PostgresSaver
@@ -152,7 +152,7 @@ with psycopg.connect("postgresql://user:pass@host/db") as conn:
 | **Einsatz** | Produktionssysteme |
 | **Setup** | `pip install langgraph-checkpoint-postgres` |
 
-### 3.5 Entscheidungshilfe
+### Entscheidungshilfe
 
 ```mermaid
 flowchart TD
@@ -167,7 +167,7 @@ flowchart TD
 
 ---
 
-## 4 Vollständiges Beispiel: Multi-Turn-Konversation
+## Vollständiges Beispiel: Multi-Turn-Konversation
 
 ```python
 from typing import TypedDict, Annotated
@@ -212,7 +212,7 @@ print(result["messages"][-1].content)
 
 ---
 
-## 5 Checkpoint-State abrufen
+## Checkpoint-State abrufen
 
 ```python
 # Aktuellen State eines Threads abrufen
@@ -230,7 +230,7 @@ for checkpoint in app.get_state_history(config):
 
 ---
 
-## 6 Interrupt & Resume (Human-in-the-Loop)
+## Interrupt & Resume (Human-in-the-Loop)
 
 Checkpointing ist die technische Basis für Human-in-the-Loop. Der Agent pausiert an einem definierten Punkt – der State bleibt gespeichert, bis ein Mensch antwortet.
 
@@ -275,7 +275,7 @@ flowchart LR
 
 ---
 
-## 7 Time Travel: Zu früherem State zurückkehren
+## Time Travel: Zu früherem State zurückkehren
 
 LangGraph ermöglicht es, zu einem früheren Checkpoint zurückzuspringen und den Workflow von dort neu zu starten.
 
@@ -304,9 +304,9 @@ result = app.invoke(
 
 ---
 
-## 8 Best Practices
+## Best Practices
 
-### 8.1 Thread-ID-Design
+### Thread-ID-Design
 
 > [!TIP] Thread-ID-Design für Multi-User    
 > Für produktive Systeme: `thread_id = f"user_{user_id}_session_{session_id}"`. Generische IDs wie `"session1"` führen zu Datenvermischung zwischen Nutzern.
@@ -323,7 +323,7 @@ thread_id = str(uuid.uuid4())
 # thread_id = "session1"  # Kollisionsgefahr
 ```
 
-### 8.2 State-Größe kontrollieren
+### State-Größe kontrollieren
 
 Checkpoints speichern den gesamten State. Großer State bedeutet mehr Speicher und langsamere I/O.
 
@@ -341,7 +341,7 @@ def trim_node(state: ConversationState) -> ConversationState:
     return {"messages": trimmed}
 ```
 
-### 8.3 Checkpointer-Ressourcen korrekt schließen
+### Checkpointer-Ressourcen korrekt schließen
 
 ```python
 # Mit Context Manager (empfohlen)
@@ -353,9 +353,9 @@ with SqliteSaver.from_conn_string("db.sqlite") as checkpointer:
 
 ---
 
-## 9 Häufige Fehler
+## Häufige Fehler
 
-### 9.1 interrupt() ohne Checkpointer
+### interrupt() ohne Checkpointer
 
 ```python
 # Fehler
@@ -366,7 +366,7 @@ app.invoke(inputs, config=config)  # Wirft: "No checkpointer set"
 app = graph.compile(checkpointer=MemorySaver())
 ```
 
-### 9.2 Gleiche thread_id für verschiedene Nutzer
+### Gleiche thread_id für verschiedene Nutzer
 
 ```python
 # Falsch: alle Nutzer teilen einen Thread
@@ -376,7 +376,7 @@ config = {"configurable": {"thread_id": "global"}}
 config = {"configurable": {"thread_id": f"user_{user_id}"}}
 ```
 
-### 9.3 State direkt mutieren
+### State direkt mutieren
 
 ```python
 # Falsch: mutiert den gespeicherten State

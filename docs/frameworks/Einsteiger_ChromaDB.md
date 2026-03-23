@@ -450,6 +450,7 @@ Die Suche in der Vektordatenbank findet die semantisch ähnlichsten Dokumente.
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant User
     participant App
     participant Embeddings as Embedding Model

@@ -28,7 +28,7 @@ has_toc: true
 
 ---
 
-## 1 OpenAI-Default im Kurs
+## OpenAI-Default im Kurs
 
 | Modell        | Stärke                                                      | Typischer Einsatz                              |
 | ------------- | ----------------------------------------------------------- | ---------------------------------------------- |
@@ -43,7 +43,7 @@ has_toc: true
 
 ---
 
-## 2 Rollenlogik hinter der Modellwahl
+## Rollenlogik hinter der Modellwahl
 
 Auch wenn im Kurs konkrete OpenAI-Modelle verwendet werden, steckt dahinter ein allgemeines Rollenmodell:
 
@@ -65,7 +65,7 @@ Wer dieselbe Rollenlogik auf Mistral oder Anthropic übertragen möchte, nutzt e
 
 ---
 
-## 3 Designregeln
+## Designregeln
 
 Diese Regeln gelten für alle Module, in denen Modelle explizit zugewiesen werden:
 
@@ -159,7 +159,7 @@ Premium-Modelle für strukturierte Datenextraktion aus klar definierten Texten b
 
 ---
 
-## 4 Entscheidungsbaum
+## Entscheidungsbaum
 
 ```mermaid
 flowchart TD
@@ -189,7 +189,7 @@ flowchart TD
 
 ---
 
-## 5 Modul-Mapping
+## Modul-Mapping
 
 ### Standard: `gpt-4o-mini` (Fokus Konzept, nicht Modellqualität)
 
@@ -214,7 +214,7 @@ flowchart TD
 
 ---
 
-## 6 Code-Muster für Mixed-Model-Setup
+## Code-Muster für Mixed-Model-Setup
 
 ### Supervisor + Worker (M21 / M22)
 
@@ -268,7 +268,7 @@ embed_model  = OpenAIEmbeddings(model="text-embedding-3-small")         # Embedd
 
 ---
 
-## 7 Kosten-Orientierung
+## Kosten-Orientierung
 
 > Wichtig für Kursteilnehmer: Das Kurs-Budget liegt bei ca. 5 EUR.
 > Mixed-Model-Runs mit `o3` kosten deutlich mehr als `gpt-4o-mini`.
@@ -287,7 +287,7 @@ embed_model  = OpenAIEmbeddings(model="text-embedding-3-small")         # Embedd
 
 ---
 
-## 8 Vergleichsstandard (Minimalformat)
+## Vergleichsstandard (Minimalformat)
 
 Jeder Mixed-Model-Abschnitt in den Modulen dokumentiert den Vergleich in dieser Tabelle:
 
@@ -304,7 +304,7 @@ vergleich = {
 
 ---
 
-## 9 Providerneutrale Lesart dieses Guides
+## Providerneutrale Lesart dieses Guides
 
 Wenn nachfolgende Architektur- oder Migrationstexte providerneutral formuliert werden sollen, kann dieser Guide mit folgender Übersetzungsregel gelesen werden:
 

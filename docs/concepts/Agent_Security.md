@@ -135,7 +135,7 @@ processing_agent = create_agent(
 )
 ```
 
-### 3.4 PII-Redaktion
+### PII-Redaktion
 
 > [!WARNING] PII-Redaktion ist Pflicht    
 > Personenbezogene Daten in LLM-Prompts verstoßen gegen DSGVO und erzeugen Haftungsrisiken. PII muss vor jedem LLM-Aufruf maskiert oder entfernt werden.
@@ -154,7 +154,7 @@ Praktische Maßnahmen:
 - Minimalprinzip: Nur Daten übergeben, die für die Aufgabe notwendig sind
 - LangSmith-Traces auf PII prüfen und ggf. maskieren
 
-### 3.5 Output-Validierung
+### Output-Validierung
 
 Nicht nur Inputs, auch Outputs müssen geprüft werden:
 - Enthält die Antwort versehentlich interne Systeminformationen?
@@ -163,7 +163,7 @@ Nicht nur Inputs, auch Outputs müssen geprüft werden:
 
 ---
 
-## 4 Vertrauensgrenzen verstehen
+## Vertrauensgrenzen verstehen
 
 In einem Agenten-System gibt es unterschiedliche Vertrauensstufen:
 
@@ -200,7 +200,7 @@ flowchart TB
 
 ---
 
-## 5 Sichere Entwicklungspraxis
+## Sichere Entwicklungspraxis
 
 > [!IMPORTANT] Security by Design
 > Sicherheit einplanen, nicht nachträglich hinzufügen. Wer zuerst die Architektur baut und dann Security drüberlegt, baut sie falsch.
@@ -220,7 +220,7 @@ Im Fehlerfall sollte der Agent sicher fehlschlagen — mit einem definierten Fal
 
 ---
 
-## 6 Abgrenzung: Modell-Sicherheit vs. System-Sicherheit
+## Abgrenzung: Modell-Sicherheit vs. System-Sicherheit
 
 | | **Modell-Sicherheit** | **System-Sicherheit** |
 |--|----------------------|----------------------|

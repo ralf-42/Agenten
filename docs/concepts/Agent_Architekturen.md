@@ -21,7 +21,7 @@ has_toc: true
 
 ---
 
-## 1 Überblick
+## Überblick
 
 Ein KI-Agent ist mehr als ein einfacher Chatbot. Während ein Chatbot auf Eingaben reagiert und Antworten generiert, kann ein Agent **selbstständig Entscheidungen treffen**, **Werkzeuge nutzen** und **mehrstufige Aufgaben lösen**. Die Wahl der richtigen Architektur bestimmt maßgeblich, wie leistungsfähig, zuverlässig und wartbar ein Agent-System wird.
 
@@ -43,7 +43,7 @@ Vier grundlegende Implementierungsmuster haben sich in der Praxis etabliert:
 
 ---
 
-## 2 Agenten-Typen nach Intelligenz
+## Agenten-Typen nach Intelligenz
 
 Agenten lassen sich nach **Intelligenz und Entscheidungslogik** klassifizieren. Diese Klassifikation beschreibt, wie ein Agent zu Entscheidungen kommt — unabhängig davon, wie er technisch implementiert ist:
 
@@ -72,7 +72,7 @@ Ein Agent mit LLM-as-Judge-Komponente (z. B. Qualitäts-Gate) nähert sich dem U
 
 ---
 
-## 3 ReAct-Architektur
+## ReAct-Architektur
 
 ReAct (Reasoning + Acting) beschreibt einen iterativen Zyklus: Der Agent **denkt nach** (Reasoning), **führt eine Aktion aus** (Acting) und **beobachtet das Ergebnis**. Dieser Zyklus wiederholt sich, bis die Aufgabe gelöst ist.
 
@@ -95,7 +95,7 @@ flowchart LR
 
 ---
 
-## 4 Tool-Calling-Architektur
+## Tool-Calling-Architektur
 
 Bei dieser Architektur entscheidet das LLM, **welches Werkzeug** mit **welchen Parametern** aufgerufen werden soll. Das Ergebnis fließt zurück in den Kontext, und der Agent formuliert die finale Antwort.
 
@@ -119,7 +119,7 @@ flowchart TD
 
 ---
 
-## 5 Workflow-basierte Architektur
+## Workflow-basierte Architektur
 
 Hier werden Arbeitsschritte als **Graph mit Knoten und Kanten** modelliert. Jeder Knoten repräsentiert eine Verarbeitung, Kanten definieren den Ablauf – einschließlich bedingter Verzweigungen.
 
@@ -145,7 +145,7 @@ flowchart TD
 
 ---
 
-## 6 Multi-Agent-Architektur
+## Multi-Agent-Architektur
 
 Mehrere spezialisierte Agenten arbeiten zusammen. Ein **Supervisor** koordiniert die Aufgabenverteilung, oder Agenten kommunizieren **kollaborativ** miteinander.
 
@@ -178,28 +178,28 @@ flowchart TD
 
 ---
 
-## 7 Design-Prinzipien
+## Design-Prinzipien
 
 Unabhängig von der gewählten Architektur gelten bewährte Prinzipien:
 
-### 7.1 Single Responsibility
+### Single Responsibility
 Jede Komponente hat **eine klar definierte Aufgabe**. Ein Tool berechnet, ein anderes sucht – nicht beides gleichzeitig. Das erleichtert Wartung und Fehlersuche.
 
-### 7.2 Fail-Safe Design
+### Fail-Safe Design
 Agenten müssen mit Fehlern umgehen können:
 - Was passiert, wenn ein Tool nicht erreichbar ist?
 - Was, wenn das LLM eine ungültige Tool-Auswahl trifft?
 - Maximale Iterationen verhindern Endlosschleifen.
 
-### 7.3 Human-in-the-Loop
+### Human-in-the-Loop
 Bei kritischen Aktionen (Löschen, Senden, Bezahlen) sollte eine **menschliche Bestätigung** eingeholt werden. Das schafft Vertrauen und verhindert kostspielige Fehler.
 
-### 7.4 Observability
+### Observability
 Jede Entscheidung des Agenten sollte **nachvollziehbar** sein. Logging und Tracing ermöglichen Debugging und kontinuierliche Verbesserung.
 
 ---
 
-## 8 Entscheidungshilfe
+## Entscheidungshilfe
 
 Die Wahl der Architektur hängt vom Anwendungsfall ab:
 
@@ -224,7 +224,7 @@ flowchart TD
 
 ---
 
-## 9 Zusammenfassung
+## Zusammenfassung
 
 **Intelligenz-Typen (Section 2):**
 - **Simple Reflex** reagiert — schnell, aber ohne Gedächtnis

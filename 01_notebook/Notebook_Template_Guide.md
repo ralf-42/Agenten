@@ -25,7 +25,7 @@ KI-Agenten. Verstehen. Anwenden. Gestalten.
 ```
 
 ```python
-#@title 🔧 Umgebung einrichten{ display-mode: "form" }
+#@title 🛠️ Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 from genai_lib.utilities import (
@@ -96,7 +96,7 @@ get_ipinfo()
 #### 2.2.1 Zelle 2: 🛠️ Umgebung einrichten (Code, PFLICHT)
 
 ```python
-#@title 🔧 Umgebung einrichten{ display-mode: "form" }
+#@title 🛠️ Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 from genai_lib.utilities import (
@@ -129,7 +129,7 @@ get_ipinfo()
 #### 2.2.2 Zelle 3: 📦 Installationen (Code, OPTIONAL)
 
 ```python
-#@title 🛠️ Installationen { display-mode: "form" }
+#@title 📦 Installationen { display-mode: "form" }
 install_packages([
     'langchain_huggingface',
     ('markitdown[all]', 'markitdown'),
@@ -199,8 +199,8 @@ install_packages([
 
 | Emoji | Verwendung           | Beispiel                              |
 | ----- | -------------------- | ------------------------------------- |
-| 🛠️   | Setup/Konfiguration  | `#@title 🔧 Umgebung einrichten`      |
-| 📦    | Installationen       | `#@title 🛠️ Installationen`          |
+| 🛠️   | Setup/Konfiguration  | `#@title 🛠️ Umgebung einrichten`      |
+| 📦    | Installationen       | `#@title 📦 Installationen`          |
 | 📂    | Dateien/Daten        | `#@title 📂 Dokumente, Bilder`        |
 | 🤖    | KI-Ausgabe           | `mprint("## 🤖 KI:")`                 |
 | 🧑    | User-Input           | `mprint("## 🧑 Mensch:")`             |
@@ -1036,7 +1036,7 @@ print("✅ Alle Checks bestanden")
 ### 8.1 Struktur
 - [ ] Titel im HTML-Format mit grauer Schrift (`<font size="5" color='grey'>`)
 - [ ] `---` Separator nach Titel
-- [ ] `🔧 Umgebung einrichten` Zelle (collapsed)
+- [ ] `🛠️ Umgebung einrichten` Zelle (collapsed)
 - [ ] Hauptkapitel mit `# [Nummer] | [Titel]` und `---`
 - [ ] Aufgaben-Section `# A | Aufgabe` am Ende
 

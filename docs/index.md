@@ -40,6 +40,6 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 
 ---
 
-**Version:** 1.1
-**Stand:** März 2026
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Version:** 1.1    
+**Stand:** März 2026    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

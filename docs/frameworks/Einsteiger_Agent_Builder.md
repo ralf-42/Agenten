@@ -351,6 +351,7 @@ graph TB
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant AB as Agent Builder
     participant REG as Connector Registry
     participant MCP as MCP Server
@@ -530,6 +531,7 @@ Agent Builder erlaubt Export von Workflows als TypeScript oder Python-Code für 
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant AB as Agent Builder
     participant EXP as Export Function
     participant CODE as Code Editor
@@ -657,6 +659,7 @@ Permissions:
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant U as User
     participant W as Workflow
     participant A as Audit Log

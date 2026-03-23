@@ -48,6 +48,7 @@ Function Calling ist der Mechanismus, durch den ein LLM strukturiert mitteilt, w
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant User
     participant LLM
     participant Tool

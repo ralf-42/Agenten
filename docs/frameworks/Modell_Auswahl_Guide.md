@@ -3,7 +3,7 @@ layout: default
 title: Modell-Auswahl Guide
 parent: Frameworks
 nav_order: 8
-description: Welches Modell für welche Aufgabe? Designregeln für gpt-4o-mini, o3, gpt-5.1 im Agentenkontext
+description: Welches Modell für welche Aufgabe? OpenAI-Default im Kurs plus rollenbasierte Einordnung im Agentenkontext
 has_toc: true
 ---
 
@@ -12,6 +12,11 @@ has_toc: true
 
 > **Welches Modell für welche Aufgabe?**      
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
+
+{: .note }
+> Dieser Guide beschreibt den **aktuellen Kurs-Default mit OpenAI-Modellen**.  
+> Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe:  
+> [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
 
 ---
 
@@ -23,7 +28,7 @@ has_toc: true
 
 ---
 
-## 1 Modelle im Kurs
+## 1 OpenAI-Default im Kurs
 
 | Modell        | Stärke                                                      | Typischer Einsatz                              |
 | ------------- | ----------------------------------------------------------- | ---------------------------------------------- |
@@ -38,18 +43,43 @@ has_toc: true
 
 ---
 
-## 2 Designregeln
+## 2 Rollenlogik hinter der Modellwahl
+
+Auch wenn im Kurs konkrete OpenAI-Modelle verwendet werden, steckt dahinter ein allgemeines Rollenmodell:
+
+| Rolle | Bedeutung im Kurs |
+|------|--------------------|
+| **Baseline / Demo** | günstige, schnelle Läufe für Grundlagen und erste Tests |
+| **Router / leichter Reasoner** | einfache Routing- und Auswahlentscheidungen |
+| **Judge / starker Reasoner** | Supervisor, Security, Bewertung, Compliance |
+| **Worker / Synthese** | hochwertige Text-, Code- oder RAG-Ausgabe |
+| **Coding-Worker** | Code-Generierung, Refactoring, technische Agenten-Knoten |
+| **Embeddings** | Vektorrepräsentationen für Retrieval und RAG — kein Chat-Modell |
+
+Die nachfolgenden Regeln beschreiben also zwei Ebenen gleichzeitig:
+
+1. **die Rolle im Agentensystem**
+2. **den aktuellen OpenAI-Default im Kurs**
+
+Wer dieselbe Rollenlogik auf Mistral oder Anthropic übertragen möchte, nutzt ergänzend das zentrale Mapping-Dokument.
+
+---
+
+## 3 Designregeln
 
 Diese Regeln gelten für alle Module, in denen Modelle explizit zugewiesen werden:
 
 ### Regel 1 — Router und Supervisor: `o3`
 
-Knoten, die **Entscheidungen treffen** (Routing, Supervisor-Logik, Conditional Edges), erhalten `o3`.
+Knoten, die **Entscheidungen treffen** (Routing, Supervisor-Logik, Conditional Edges), erhalten im Kurs `o3`.
 
 > [!WARNING] Schwaches Modell als Router → Fehler im gesamten Graph    
 > Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch alle nachgelagerten Nodes fortpflanzen. Ein einzelner falscher Route-Entscheid kann den gesamten Workflow zum Scheitern bringen.
 
 Begründung: Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch den gesamten Graphen fortpflanzen.
+
+**Rollenbeschreibung:**  
+Hier wird ein **starkes Reasoning-Modell** benötigt, nicht einfach nur ein allgemeines Chat-Modell.
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -62,6 +92,9 @@ supervisor_llm = init_chat_model("openai:o3")
 Für **einfache** Entscheidungslogik (2-3 Routen, geringe Fehlertoleranz, Demo/Prototyp) kann `o3-mini` als kostengünstige Baseline genutzt werden.
 Bei kritischen Entscheidungen (Supervisor, Security, Evaluation) bleibt `o3` die Standardwahl.
 
+**Rollenbeschreibung:**  
+Das ist die Rolle **Router / leichter Reasoner**.
+
 ```python
 router_llm = init_chat_model("openai:o3-mini")
 ```
@@ -71,8 +104,11 @@ router_llm = init_chat_model("openai:o3-mini")
 
 ### Regel 2 — Worker und Content: `gpt-5.1`
 
-Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten `gpt-5.1`.
+Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten im Kurs `gpt-5.1`.
 Begründung: Optimiert für Coding und agentic Tasks mit konfigurierbarem Reasoning-Aufwand.
+
+**Rollenbeschreibung:**  
+Hier geht es um die Rolle **Worker / Synthese** beziehungsweise bei Entwicklungsaufgaben um einen **Coding-Worker**.
 
 ```python
 worker_llm = init_chat_model("openai:gpt-5.1")
@@ -89,8 +125,11 @@ worker_llm = init_chat_model("openai:gpt-5.1")
 
 ### Regel 3 — Judge und Evaluator: `o3`
 
-LLM-as-Judge Evaluatoren erhalten `o3`.
+LLM-as-Judge Evaluatoren erhalten im Kurs `o3`.
 Begründung: Qualitative Bewertung erfordert Urteilsvermögen, nicht nur Textgenerierung.
+
+**Rollenbeschreibung:**  
+Das ist die Rolle **Judge / starker Reasoner**.
 
 ```python
 judge_llm = init_chat_model("openai:o3")
@@ -98,8 +137,11 @@ judge_llm = init_chat_model("openai:o3")
 
 ### Regel 4 — Grundlagen und Demos: `gpt-4o-mini`
 
-Alle Module, in denen das Konzept im Vordergrund steht (nicht die Ausgabequalität), verwenden `gpt-4o-mini`.
+Alle Module, in denen das Konzept im Vordergrund steht (nicht die Ausgabequalität), verwenden im Kurs `gpt-4o-mini`.
 Begründung: Didaktik, Kosteneffizienz, schnelle Iteration.
+
+**Rollenbeschreibung:**  
+Das ist die Rolle **Baseline / Demo**.
 
 ```python
 llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
@@ -117,7 +159,7 @@ Premium-Modelle für strukturierte Datenextraktion aus klar definierten Texten b
 
 ---
 
-## 3 Entscheidungsbaum
+## 4 Entscheidungsbaum
 
 ```mermaid
 flowchart TD
@@ -147,7 +189,7 @@ flowchart TD
 
 ---
 
-## 4 Modul-Mapping
+## 5 Modul-Mapping
 
 ### Standard: `gpt-4o-mini` (Fokus Konzept, nicht Modellqualität)
 
@@ -172,7 +214,7 @@ flowchart TD
 
 ---
 
-## 5 Code-Muster für Mixed-Model-Setup
+## 6 Code-Muster für Mixed-Model-Setup
 
 ### Supervisor + Worker (M21 / M22)
 
@@ -210,9 +252,23 @@ planner_llm   = init_chat_model("openai:o3")
 generator_llm = init_chat_model("openai:gpt-5.1")
 ```
 
+### Vollständiges Rollen-Setup (model_config.py — Production)
+
+```python
+from langchain.chat_models import init_chat_model
+from langchain_openai import OpenAIEmbeddings
+
+baseline_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)  # Baseline / Demo
+router_llm   = init_chat_model("openai:o3-mini")                        # Router / leichter Reasoner
+judge_llm    = init_chat_model("openai:o3")                             # Judge / starker Reasoner
+worker_llm   = init_chat_model("openai:gpt-5.1")                        # Worker / Synthese
+coding_llm   = init_chat_model("openai:gpt-5.1")                        # Coding-Worker
+embed_model  = OpenAIEmbeddings(model="text-embedding-3-small")         # Embeddings
+```
+
 ---
 
-## 6 Kosten-Orientierung
+## 7 Kosten-Orientierung
 
 > Wichtig für Kursteilnehmer: Das Kurs-Budget liegt bei ca. 5 EUR.
 > Mixed-Model-Runs mit `o3` kosten deutlich mehr als `gpt-4o-mini`.
@@ -231,7 +287,7 @@ generator_llm = init_chat_model("openai:gpt-5.1")
 
 ---
 
-## 7 Vergleichsstandard (Minimalformat)
+## 8 Vergleichsstandard (Minimalformat)
 
 Jeder Mixed-Model-Abschnitt in den Modulen dokumentiert den Vergleich in dieser Tabelle:
 
@@ -248,20 +304,25 @@ vergleich = {
 
 ---
 
-## 8 Wo ist dieser Guide im Kurs verankert?
+## 9 Providerneutrale Lesart dieses Guides
 
-| Modul | Art der Verankerung |
-|-------|---------------------|
-| M12 | Markdown-Zelle: Konzept Modell-Rollentrennung + Link zu diesem Guide |
-| M21 | Code-Zelle: Supervisor `o3` vs. `gpt-4o-mini` Baseline-Vergleich |
-| M22 | Vergleichstabelle: Supervisor-Pattern mit Kennzahlen |
-| M18 | Code-Zelle: Judge `o3` — Warum der Evaluator stark sein muss |
-| M26 | Code-Zelle: Planner `o3` + Generator `gpt-5.1` |
-| M19 | Modul-Mapping: `o3` als optionaler Judge in Evaluation-Pipeline |
-| M20 | Modul-Mapping: `o3` als Policy/Risk-Klassifizierer, `gpt-4o-mini` als Worker |
+Wenn nachfolgende Architektur- oder Migrationstexte providerneutral formuliert werden sollen, kann dieser Guide mit folgender Übersetzungsregel gelesen werden:
+
+- `gpt-4o-mini` = **Baseline / Demo**
+- `o3-mini` = **Router / leichter Reasoner**
+- `o3` = **Judge / starker Reasoner**
+- `gpt-5.1` = **Worker / Synthese**
+- `gpt-5.1` = **Coding-Worker**
+- `text-embedding-3-small` = **Embeddings**
+
+Dadurch bleibt der Kurs konkret und die Beschreibung dennoch übertragbar.
+
+Für die konkrete Zuordnung auf Mistral und Anthropic siehe:
+[Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
 
 ---
 
-**Version:** 1.2    
+
+**Version:** 1.3    
 **Stand:** März 2026    
 **Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API    

@@ -23,7 +23,7 @@ has_toc: true
 
 ---
 
-## 1 Zweck dieses Dokuments
+## Zweck dieses Dokuments
 
 Im Kurs werden konkrete OpenAI-Modelle verwendet, weil die Module, Notebooks und Beispiele darauf abgestimmt sind. Für Architekturentscheidungen ist aber oft nicht der Markenname entscheidend, sondern die **Rolle**, die ein Modell im System übernimmt.
 
@@ -38,7 +38,7 @@ Dieses Dokument trennt deshalb zwei Ebenen:
 
 ---
 
-## 2 Rollen statt Produktnamen
+## Rollen statt Produktnamen
 
 Für den Kurs sind vor allem diese Modellrollen relevant:
 
@@ -57,7 +57,7 @@ Der wichtigste Grundsatz lautet:
 
 ---
 
-## 3 Zentrales Mapping - 3 Beispiele
+## Zentrales Mapping - 3 Beispiele
 
 | Rolle                          | OpenAI                   | Mistral                                                | Anthropic                  | Kommentar                                                           |
 | ------------------------------ | ------------------------ | ------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------- |
@@ -74,7 +74,7 @@ Der wichtigste Grundsatz lautet:
 
 ---
 
-## 4 Wie die Provider im Kurskontext zu lesen sind
+## Wie die Provider im Kurskontext zu lesen sind
 
 ### OpenAI
 
@@ -122,21 +122,21 @@ Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
 ---
 
-## 5 Provider-spezifische Empfehlungen je Rolle
+## Provider-spezifische Empfehlungen je Rolle
 
-### 5.1 Baseline / Demo
+### Baseline / Demo
 
 Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung ist bei allen Providern dieselbe. Geeignet für Grundlagenmodule, erste Tests und kostensensitive Standardläufe mit einfacher Klassifikation, Formatierung oder Tool-Demos. OpenAI `gpt-4o-mini`, Mistral `mistral-small-latest`, Anthropic `claude-3-5-haiku-latest`.
 
-### 5.2 Router / leichter Reasoner
+### Router / leichter Reasoner
 
 Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder Routing-Experimente in Demo-Szenarien. Gefragt sind robuste Entscheidungen zwischen wenigen Optionen ohne übertriebene Kostenlast. OpenAI `o3-mini`, Mistral `magistral-medium-latest` oder `mistral-medium-latest`, Anthropic `claude-sonnet-4-20250514`.
 
-### 5.3 Judge / starker Reasoner
+### Judge / starker Reasoner
 
 Überall dort, wo Fehlentscheidungen teuer sind: LLM-as-Judge, Security- oder Compliance-Gates, Supervisor-Routing, Fact-Check oder Konfliktbewertung. Die stärksten verfügbaren Reasoning-Modelle — OpenAI `o3`, Mistral `magistral-medium-latest` oder `mistral-large-latest`, Anthropic `claude-opus-4-20250514`.
 
-### 5.4 Worker / Synthese
+### Worker / Synthese
 
 Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. OpenAI `gpt-5.1`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Anthropic `claude-sonnet-4-20250514`.
 

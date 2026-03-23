@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 KI-Agenten: Externe Ressourcen
+## KI-Agenten: Externe Ressourcen
 
 Externe Ressourcen und Artikel zum Thema KI-Agenten.
 
@@ -34,7 +34,7 @@ Externe Ressourcen und Artikel zum Thema KI-Agenten.
 
 ---
 
-## 2 Anthropic
+## Anthropic
 
 Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und gesellschaftlichen Auswirkungen.
 
@@ -57,7 +57,7 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 
 ---
 
-## 3 Framework-Dokumentation
+## Framework-Dokumentation
 
 Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Referenz für Teilnehmer.
 
@@ -73,7 +73,7 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 
 ---
 
-## 4 Grundlagen-Paper
+## Grundlagen-Paper
 
 Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.
 
@@ -87,7 +87,7 @@ Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.
 
 ---
 
-## 5 Alternative Agent-Frameworks
+## Alternative Agent-Frameworks
 
 Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach dem Kurs.
 
@@ -102,7 +102,7 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 
 ---
 
-## 6 RAG & Evaluation
+## RAG & Evaluation
 
 Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluation.
 
@@ -114,7 +114,7 @@ Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluati
 
 ---
 
-## 7 Sicherheit & Governance
+## Sicherheit & Governance
 
 Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 

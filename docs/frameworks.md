@@ -70,6 +70,11 @@ Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und W
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard
 
+- **[Provider-Modell-Mapping](frameworks/Provider_Modell_Mapping.html)** – Wie sich dieselben Modellrollen auf OpenAI, Mistral und Anthropic abbilden lassen
+  - Rollenbasiertes Mapping statt reiner Modellnamen
+  - Zuordnung für Baseline, Router, Judge, Worker, Coding, Audio und Embeddings
+  - Hilfestellung für providerneutrale Architektur- und Migrationstexte
+
 ## Prompt-Templates
 
 - **[Prompt-Templates Einsteiger](frameworks/Einsteiger_Prompts.html)** – Eigene Prompt-Dateien in `05_prompt/` erstellen

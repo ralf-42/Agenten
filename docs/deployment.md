@@ -28,7 +28,7 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
   - Deployment-Optionen im Vergleich
 
 ### Migration & Provider-Wechsel
-- **[Migration zu Mistral Medium 3](https://ralf-42.github.io/Agenten/deployment/Migration_Mistral_Medium_3.html)** - Technische Analyse
+- **[Migration zu Mistral Medium 3](https://ralf-42.github.io/Agenten/deployment/Migration_OpenAI_Mistral.html)** - Technische Analyse
   - Feature-Kompatibilitätsvergleich
   - Kosten-Analyse (2.7-3.3x teurer)
   - Notebook-spezifische Kompatibilität

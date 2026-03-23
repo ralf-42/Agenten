@@ -175,7 +175,7 @@ Das `description`-Feld ist **kein beschreibender Text für Menschen** — es ist
 | `disable-model-invocation: true` | nur Nutzer | nur bei manuellem Aufruf |
 | `user-invocable: false` | nur Claude | immer (Hintergrundwissen) |
 
-{: .note }
+> [!NOTE] context: fork nur für Aufgaben-Skills
 > `context: fork` ist nur für Aufgaben-Skills sinnvoll (der Subagent braucht eine konkrete Aufgabe). Reine Richtlinien-Skills (z.B. Coding-Konventionen) sollten ohne `fork` laufen.
 
 ---

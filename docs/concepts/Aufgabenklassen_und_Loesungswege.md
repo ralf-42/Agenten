@@ -220,12 +220,12 @@ flowchart TD
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
-|---|---|
-| [Agent-Architekturen](./Agent_Architekturen.html) | Technische Details zu ReAct, Tool-Calling, Workflow, Multi-Agent |
-| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html) | Supervisor-Pattern, Hierarchical, Kollaborativ im Detail |
-| [Human-in-the-Loop](./Human_in_the_Loop.html) | Wann und wie Menschen eingebunden werden |
-| [Modell-Auswahl Guide](../frameworks/Modell_Auswahl_Guide.html) | Welches Modell für welche Rolle im Graph |
+| Dokument                                                        | Inhalt                                                           |
+| --------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [Agent-Architekturen](./Agent_Architekturen.html)               | Technische Details zu ReAct, Tool-Calling, Workflow, Multi-Agent |
+| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html)               | Supervisor-Pattern, Hierarchical, Kollaborativ im Detail         |
+| [Human-in-the-Loop](./Human_in_the_Loop.html)                   | Wann und wie Menschen eingebunden werden                         |
+| [Modell-Auswahl Guide](../frameworks/Modell_Auswahl_Guide.html) | Welches Modell für welche Rolle im Graph                         |
 
 ---
 

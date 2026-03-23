@@ -27,8 +27,7 @@ has_toc: true
 
 Viele Einsteiger in die Generative KI beginnen mit einem großen Sprachmodell (LLM) und entwickeln darauf aufbauend einen einfachen Chatbot. Zwischen einem funktionierenden Prototyp und einer produktionsreifen Anwendung liegt jedoch ein weiter Weg. Ein Modell, das nur Texte generiert, löst noch keine konkreten Geschäftsanforderungen wie Zuverlässigkeit, Nachvollziehbarkeit oder Integrationsfähigkeit.
 
-{: .important }
-> **Die zentrale Frage lautet:**
+> [!IMPORTANT] Die zentrale Frage
 > Wie lässt sich aus einem KI-Experiment ein steuerbares, überprüfbares und kontinuierlich verbesserbares System entwickeln?
 
 ---
@@ -49,8 +48,7 @@ Das LangChain-Ökosystem bietet dafür ein häufig genutztes Set von Werkzeugen,
 
 LangChain verbindet ein Sprachmodell mit externen Ressourcen und Tools. Agenten in LangChain folgen dem Prinzip:
 
-{: .note }
-> **Agent = LLM + Tools + Schleife**
+> [!NOTE] Agent = LLM + Tools + Schleife
 
 Damit kann eine KI nicht nur Text generieren, sondern auch Informationen abrufen, APIs ansprechen oder Berechnungen ausführen. „Chains" ermöglichen zudem, wiederkehrende Abläufe in strukturierte Workflows zu überführen – ein notwendiger Schritt, um von experimentellem Prompting zu reproduzierbaren Prozessen zu gelangen.
 
@@ -84,8 +82,8 @@ Während einfache Agenten teilweise unvorhersehbar handeln, zielt LangGraph auf 
 - Anpassung an komplexe Szenarien
 - State-Management für komplexe Workflows
 
-{: .warning }
-> **Wichtig:** LangGraph eignet sich besonders für komplexe Multi-Agent-Systeme und Workflows mit bedingter Logik. Für einfache Chains reicht oft LangChain allein.
+> [!WARNING] LangGraph-Einsatz
+> LangGraph eignet sich besonders für komplexe Multi-Agent-Systeme und Workflows mit bedingter Logik. Für einfache Chains reicht oft LangChain allein.
 
 ---
 
@@ -130,7 +128,7 @@ Diese Analogie verdeutlicht die Rollen der einzelnen Komponenten im Gesamtsystem
 | **LangGraph** | Ermöglicht Steuerung und Kontrolle | Das Cockpit |
 | **LangSmith** | Dokumentiert den Betrieb und liefert Daten für Verbesserungen | Die Telemetrie |
 
-{: .note }
+> [!NOTE] Das System ist mehr als das Modell
 > Wie ein Auto mehr ist als nur ein Motor, ist ein produktionsreifes KI-System mehr als nur ein LLM. Alle Komponenten müssen zusammenspielen, um ein zuverlässiges und wartbares System zu schaffen.
 
 ---
@@ -213,8 +211,8 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 | **CrewAI** | Spezialisierte Agents | Rollenbasierte Multi-Agent-Systeme |
 | **Semantic Kernel** | Microsoft-Integration | .NET und Azure-optimiert |
 
-{: .important }
-> **Tipp:** Die Wahl des Frameworks hängt von Ihren spezifischen Anforderungen ab. LangChain bietet ein gutes Gleichgewicht zwischen Flexibilität und Struktur, während spezialisierte Frameworks für bestimmte Use Cases optimiert sind.
+> [!TIP] Framework-Wahl
+> Die Wahl des Frameworks hängt von den spezifischen Anforderungen ab. LangChain bietet ein gutes Gleichgewicht zwischen Flexibilität und Struktur, während spezialisierte Frameworks für bestimmte Use Cases optimiert sind.
 
 ---
 

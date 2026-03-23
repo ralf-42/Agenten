@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum Evaluation?
+## Kurzüberblick: Warum Evaluation?
 
 KI-Agenten unterscheiden sich fundamental von klassischer Software: Ihre Ausgaben sind nicht deterministisch, ihre Entscheidungswege oft überraschend, und kleine Prompt-Änderungen können große Auswirkungen haben. Ohne systematische Evaluation entstehen kritische Probleme:
 
@@ -44,9 +44,9 @@ Systematische Evaluation löst diese Probleme durch:
 
 ---
 
-## 2 Evaluierungsebenen
+## Evaluierungsebenen
 
-### 2.1 Komponenten-Evaluation
+### Komponenten-Evaluation
 
 Einzelne Bausteine werden isoliert getestet:
 
@@ -58,7 +58,7 @@ Einzelne Bausteine werden isoliert getestet:
 | **Retriever** | Relevante Dokumente gefunden? | Precision@k, Recall |
 | **Strukturierte Ausgabe** | Schema eingehalten? | Validierungsrate |
 
-### 2.2 Workflow-Evaluation
+### Workflow-Evaluation
 
 Der gesamte Ablauf wird End-to-End bewertet:
 
@@ -67,7 +67,7 @@ Der gesamte Ablauf wird End-to-End bewertet:
 - Welche Fehler treten auf?
 - Wie lange dauert die Ausführung?
 
-### 2.3 Nutzer-Evaluation
+### Nutzer-Evaluation
 
 Die tatsächliche Nutzererfahrung steht im Fokus:
 
@@ -80,9 +80,9 @@ Die tatsächliche Nutzererfahrung steht im Fokus:
 > [!WARNING] Ohne Baseline keine belastbare Aussage
 > Eine einzelne Messung sagt nichts — erst der Vergleich (vorher/nachher, Version A/B) zeigt, ob eine Änderung wirklich hilft oder nur an einem Ort verbessert und anderswo verschlechtert. Regression-Tests sind kein Optional-Feature.
 
-## 3 Metriken für Agenten
+## Metriken für Agenten
 
-### 3.1 Quantitative Metriken
+### Quantitative Metriken
 
 **Accuracy-basiert:**
 
@@ -110,7 +110,7 @@ accuracy = 1.0 if expected_tool == actual_tool else 0.0
 | **Token-Verbrauch** | Kosten pro Request | Minimieren |
 | **Schritte bis Lösung** | Anzahl Tool-Calls | Minimieren |
 
-### 3.2 Qualitative Metriken
+### Qualitative Metriken
 
 Nicht alles lässt sich in Zahlen fassen. Qualitative Bewertungen erfassen:
 
@@ -122,11 +122,11 @@ Nicht alles lässt sich in Zahlen fassen. Qualitative Bewertungen erfassen:
 
 ---
 
-## 4 Datasets erstellen
+## Datasets erstellen
 
 Gute Evaluation beginnt mit guten Testdaten. Ein Dataset besteht aus Input-Output-Paaren, die das erwartete Verhalten definieren.
 
-### 4.1 Grundstruktur
+### Grundstruktur
 
 ```python
 examples = [
@@ -141,7 +141,7 @@ examples = [
 ]
 ```
 
-### 4.2 Dataset-Erstellung mit LangSmith
+### Dataset-Erstellung mit LangSmith
 
 ```python
 from langsmith import Client
@@ -163,7 +163,7 @@ for example in examples:
     )
 ```
 
-### 4.3 Best Practices für Datasets
+### Best Practices für Datasets
 
 | Aspekt | Empfehlung | Begründung |
 |--------|------------|------------|
@@ -173,7 +173,7 @@ for example in examples:
 | **Dokumentation** | Beschreibung pro Beispiel | Nachvollziehbarkeit |
 | **Aktualisierung** | Bei neuen Fehlern erweitern | Kontinuierliche Verbesserung |
 
-### 4.4 Kategorien von Testfällen
+### Kategorien von Testfällen
 
 Ein ausgewogenes Dataset enthält verschiedene Kategorien:
 
@@ -193,9 +193,9 @@ Dataset-Struktur:
 
 ---
 
-## 5 Evaluierungsmethoden
+## Evaluierungsmethoden
 
-### 5.1 Exakte Übereinstimmung
+### Exakte Übereinstimmung
 
 Die einfachste Form: Stimmt die Ausgabe exakt mit dem Erwartungswert überein?
 
@@ -207,7 +207,7 @@ def exact_match(predicted: str, expected: str) -> float:
 **Vorteile:** Einfach, deterministisch, schnell  
 **Nachteile:** Zu streng für natürlichsprachliche Ausgaben
 
-### 5.2 Teilübereinstimmung
+### Teilübereinstimmung
 
 Prüft, ob erwartete Elemente in der Antwort enthalten sind:
 
@@ -218,7 +218,7 @@ def contains_answer(predicted: str, expected_keywords: list) -> float:
     return matches / len(expected_keywords)
 ```
 
-### 5.3 Semantische Ähnlichkeit
+### Semantische Ähnlichkeit
 
 Nutzt Embeddings, um die Bedeutungsähnlichkeit zu messen:
 
@@ -235,7 +235,7 @@ def semantic_similarity(text1: str, text2: str) -> float:
     return np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
 ```
 
-### 5.4 LLM-as-Judge
+### LLM-as-Judge
 
 Ein LLM bewertet die Qualität einer Antwort — der mächtigste, aber auch teuerste Ansatz.
 
@@ -282,11 +282,11 @@ def llm_judge(question: str, expected: str, actual: str) -> float:
 
 ---
 
-## 6 Automatisierte Evaluation mit LangSmith
+## Automatisierte Evaluation mit LangSmith
 
 LangSmith bietet integrierte Tools für systematische Evaluation.
 
-### 6.1 Evaluator definieren
+### Evaluator definieren
 
 ```python
 from langsmith.evaluation import evaluate
@@ -312,7 +312,7 @@ def accuracy_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> 
     }
 ```
 
-### 6.2 Evaluation ausführen
+### Evaluation ausführen
 
 ```python
 results = evaluate(
@@ -325,7 +325,7 @@ results = evaluate(
 print(f"Durchschnittliche Accuracy: {results['contains_answer']:.1%}")
 ```
 
-### 6.3 Mehrere Evaluatoren kombinieren
+### Mehrere Evaluatoren kombinieren
 
 ```python
 def latency_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
@@ -355,11 +355,11 @@ results = evaluate(
 
 ---
 
-## 7 Regression Testing
+## Regression Testing
 
 Regression Testing stellt sicher, dass Änderungen keine bestehende Funktionalität brechen.
 
-### 7.1 Workflow
+### Workflow
 
 ```
 1. Baseline etablieren
@@ -378,7 +378,7 @@ Regression Testing stellt sicher, dass Änderungen keine bestehende Funktionalit
    └── Deployment oder Rollback
 ```
 
-### 7.2 Praktische Umsetzung
+### Praktische Umsetzung
 
 ```python
 # Baseline etablieren (einmalig)
@@ -404,7 +404,7 @@ else:
     print("❌ Regression erkannt — Änderungen überprüfen")
 ```
 
-### 7.3 CI/CD-Integration
+### CI/CD-Integration
 
 ```python
 # In pytest-Test integrieren
@@ -424,11 +424,11 @@ def test_agent_regression():
 
 ---
 
-## 8 Feedback-Schleifen
+## Feedback-Schleifen
 
 Evaluation ist kein einmaliger Vorgang, sondern ein kontinuierlicher Prozess.
 
-### 8.1 Production-Feedback sammeln
+### Production-Feedback sammeln
 
 ```python
 from langsmith import Client
@@ -446,7 +446,7 @@ def collect_user_feedback(run_id: str, rating: int, comment: str = ""):
     )
 ```
 
-### 8.2 Feedback → Dataset → Verbesserung
+### Feedback → Dataset → Verbesserung
 
 ```
 Production-Feedback
@@ -476,7 +476,7 @@ Production-Feedback
 └──────────────────┘
 ```
 
-### 8.3 Automatische Anomalie-Erkennung
+### Automatische Anomalie-Erkennung
 
 ```python
 def monitor_agent_quality():
@@ -500,11 +500,11 @@ def monitor_agent_quality():
 
 ---
 
-## 9 A/B-Testing
+## A/B-Testing
 
 Systematischer Vergleich verschiedener Agent-Varianten unter realen Bedingungen.
 
-### 9.1 Versuchsaufbau
+### Versuchsaufbau
 
 ```python
 import random
@@ -533,7 +533,7 @@ def invoke_with_variant(user_id: str, question: str):
     return response
 ```
 
-### 9.2 Auswertung
+### Auswertung
 
 Nach ausreichend Datenpunkten (typischerweise > 100 pro Variante):
 
@@ -566,11 +566,11 @@ def analyze_ab_test():
 
 ---
 
-## 10 Evaluation von RAG-Systemen
+## Evaluation von RAG-Systemen
 
 RAG-Systeme erfordern spezialisierte Evaluation auf mehreren Ebenen.
 
-### 10.1 Retrieval-Evaluation
+### Retrieval-Evaluation
 
 Findet der Retriever die richtigen Dokumente?
 
@@ -590,7 +590,7 @@ def evaluate_retrieval(query: str, relevant_doc_ids: list, k: int = 5):
     return {"precision": precision, "recall": recall}
 ```
 
-### 10.2 Generation-Evaluation
+### Generation-Evaluation
 
 Nutzt das LLM den Kontext korrekt?
 
@@ -622,7 +622,7 @@ def faithfulness_evaluator(inputs: dict, outputs: dict, reference_outputs: dict)
     return {"key": "faithfulness", "score": score}
 ```
 
-### 10.3 End-to-End RAG-Evaluation
+### End-to-End RAG-Evaluation
 
 ```python
 rag_evaluators = [
@@ -643,9 +643,9 @@ results = evaluate(
 
 ---
 
-## 11 Best Practices
+## Best Practices
 
-### 11.1 Evaluations-Strategie
+### Evaluations-Strategie
 
 | Phase | Fokus | Methode |
 |-------|-------|---------|
@@ -653,7 +653,7 @@ results = evaluate(
 | **Pre-Release** | Umfassende Prüfung | Volle Datasets, alle Evaluatoren |
 | **Production** | Kontinuierlich | Sampling, Feedback-Loops |
 
-### 11.2 Häufige Fehler vermeiden
+### Häufige Fehler vermeiden
 
 **Fehler 1: Zu kleine Datasets**
 
@@ -683,7 +683,7 @@ results = evaluate(
 ✅ Mehrere Dimensionen → Vollständiges Bild
 ```
 
-### 11.3 Dokumentation
+### Dokumentation
 
 Jede Evaluation sollte dokumentiert werden:
 
@@ -709,9 +709,9 @@ Empfehlung: Deployment freigeben.
 
 ---
 
-## 12 Zusammenfassung
+## Zusammenfassung
 
-### 12.1 Kernkonzepte
+### Kernkonzepte
 
 | Konzept | Beschreibung |
 |---------|--------------|
@@ -722,7 +722,7 @@ Empfehlung: Deployment freigeben.
 | **Baseline** | Referenzwert für Vergleiche |
 | **Regression** | Qualitätsverschlechterung nach Änderungen |
 
-### 12.2 Evaluierungs-Workflow
+### Evaluierungs-Workflow
 
 ```
 1. Dataset erstellen
@@ -744,7 +744,7 @@ Empfehlung: Deployment freigeben.
    └── Production-Feedback → Dataset erweitern
 ```
 
-### 12.3 Quick Reference
+### Quick Reference
 
 ```python
 # Dataset erstellen

@@ -391,7 +391,7 @@ def good_node(state):
 
 ---
 
-## 10 Zusammenfassung
+## Zusammenfassung
 
 Checkpointing ist das technische Fundament für persistente, unterbrechbare Agenten-Workflows.
 

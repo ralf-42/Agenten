@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Überblick
+## Überblick
 
 Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Agent-Systeme (MAS) lösen dieses Problem durch **Arbeitsteilung**: Mehrere spezialisierte Agenten übernehmen jeweils Teilaufgaben und koordinieren sich untereinander.
 
@@ -44,7 +44,7 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 ---
 
-## 2 Koordinationsmuster
+## Koordinationsmuster
 
 Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
@@ -79,7 +79,7 @@ flowchart TD
 
 ---
 
-## 3 Supervisor-Pattern
+## Supervisor-Pattern
 
 Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Supervisor** analysiert Aufgaben und delegiert sie an spezialisierte **Worker-Agenten**.
 
@@ -95,7 +95,7 @@ flowchart TD
     S --> E[Finale Antwort]
 ```
 
-### 3.1 Funktionsweise
+### Funktionsweise
 
 1. **Supervisor** erhält die Aufgabe und analysiert sie
 2. **Routing-Entscheidung**: Welcher Worker ist zuständig?
@@ -104,7 +104,7 @@ flowchart TD
 5. **Iteration**: Bei Bedarf weitere Worker einbeziehen
 6. **Synthese**: Supervisor erstellt finale Antwort
 
-### 3.2 Implementierung mit LangGraph
+### Implementierung mit LangGraph
 
 ```python
 from typing import TypedDict, Annotated, Literal
@@ -179,7 +179,7 @@ graph.add_edge("writer_agent", END)
 team = graph.compile()
 ```
 
-### 3.3 Vorteile und Grenzen
+### Vorteile und Grenzen
 
 | Vorteile | Grenzen |
 |----------|---------|
@@ -189,7 +189,7 @@ team = graph.compile()
 
 ---
 
-## 4 Hierarchisches Pattern
+## Hierarchisches Pattern
 
 Bei sehr komplexen Aufgaben reicht eine Ebene nicht aus. Das hierarchische Pattern führt **Team Leads** ein, die selbst wieder Teams koordinieren.
 
@@ -219,7 +219,7 @@ flowchart TD
     M --> E[Finale Lösung]
 ```
 
-### 4.1 Funktionsweise
+### Funktionsweise
 
 1. **Manager** zerlegt Aufgabe in Teilbereiche
 2. **Team Leads** übernehmen Teilbereiche
@@ -227,7 +227,7 @@ flowchart TD
 4. **Ergebnisse** fließen die Hierarchie hinauf
 5. **Manager** integriert alle Teilergebnisse
 
-### 4.2 Wann hierarchisch?
+### Wann hierarchisch?
 
 | Kriterium | Supervisor reicht | Hierarchie nötig |
 |-----------|-------------------|------------------|
@@ -236,7 +236,7 @@ flowchart TD
 | Domänen | Eine Domäne | Mehrere Fachbereiche |
 | Abhängigkeiten | Unabhängig | Stark verknüpft |
 
-### 4.3 Implementierungshinweis
+### Implementierungshinweis
 
 Hierarchische Systeme werden als **verschachtelte Subgraphs** in LangGraph umgesetzt:
 
@@ -258,7 +258,7 @@ manager_graph.add_node("content_team", create_content_team())
 
 ---
 
-## 5 Kollaboratives Pattern
+## Kollaboratives Pattern
 
 Im kollaborativen Pattern kommunizieren Agenten **direkt miteinander**, ohne zentrale Koordination. Dies ermöglicht emergentes Verhalten und komplexe Interaktionen.
 
@@ -273,7 +273,7 @@ flowchart LR
     D -.->|Beobachtet| C
 ```
 
-### 5.1 Typische Szenarien
+### Typische Szenarien
 
 **Debatte/Diskussion:**
 - Mehrere "Experten" diskutieren ein Thema
@@ -291,7 +291,7 @@ flowchart LR
 - Agent B prüft Arbeit von Agent C
 - Gegenseitige Qualitätskontrolle
 
-### 5.2 Implementierung: Autor-Kritiker-Zyklus
+### Implementierung: Autor-Kritiker-Zyklus
 
 ```python
 from typing import TypedDict, Annotated
@@ -358,7 +358,7 @@ graph.add_conditional_edges("critic", should_continue, {"author": "author", END:
 review_system = graph.compile()
 ```
 
-### 5.3 Herausforderungen
+### Herausforderungen
 
 > [!WARNING] Endlosschleifen ohne Iterationslimit    
 > Kollaborative Systeme können ohne Abbruchbedingung endlos zwischen Agenten iterieren. Immer `recursion_limit` in der Config setzen und Iterationszähler im State führen.
@@ -372,7 +372,7 @@ review_system = graph.compile()
 
 ---
 
-## 6 Paralleles Pattern (Fan-out / Fan-in)
+## Paralleles Pattern (Fan-out / Fan-in)
 
 Während Supervisor und kollaborative Muster Aufgaben sequenziell verarbeiten, ermöglicht das **Parallele Pattern** die gleichzeitige Ausführung unabhängiger Teilaufgaben. Dies reduziert die Gesamtlaufzeit erheblich – besonders bei I/O-lastigen Operationen wie Websuchen oder API-Abfragen.
 
@@ -388,7 +388,7 @@ flowchart TD
     J --> E[Finale Antwort]
 ```
 
-### 6.1 Wann Parallelismus sinnvoll ist
+### Wann Parallelismus sinnvoll ist
 
 | Geeignet | Nicht geeignet |
 |----------|----------------|
@@ -397,7 +397,7 @@ flowchart TD
 | Viele Dokumente gleichzeitig analysieren | Strikte Reihenfolge erforderlich |
 | Mehrere Modell-Prompts parallel vergleichen | Kleine Aufgaben mit wenig Laufzeitvorteil |
 
-### 6.2 Implementierung mit Send
+### Implementierung mit Send
 
 LangGraph realisiert Parallelismus über das `Send`-Primitive. Nodes geben eine Liste von `Send`-Objekten zurück, die LangGraph parallel ausführt.
 
@@ -454,7 +454,7 @@ result = app.invoke({
 })
 ```
 
-### 6.3 Map-Reduce-Pattern
+### Map-Reduce-Pattern
 
 Ein häufiges Anwendungsmuster ist Map-Reduce: Viele Dokumente gleichzeitig analysieren, dann Ergebnisse zusammenführen.
 
@@ -484,7 +484,7 @@ def reduce_phase(state: MapReduceState) -> MapReduceState:
     return {"zusammenfassung": response.content}
 ```
 
-### 6.4 Vorteile und Grenzen
+### Vorteile und Grenzen
 
 | Vorteile | Grenzen |
 |---------|---------|
@@ -494,11 +494,11 @@ def reduce_phase(state: MapReduceState) -> MapReduceState:
 
 ---
 
-## 7 Kommunikation zwischen Agenten
+## Kommunikation zwischen Agenten
 
 Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Agent-Systems.
 
-### 7.1 Kommunikationsformen
+### Kommunikationsformen
 
 ```mermaid
 flowchart TD
@@ -530,7 +530,7 @@ flowchart TD
 > [!WARNING] Deadlocks bei falschem Kommunikationsdesign    
 > Wenn Agent A auf das Ergebnis von Agent B wartet und Agent B auf das Ergebnis von Agent A — entsteht ein Deadlock. Klare Kommunikationsrichtungen (keine zirkulären Abhängigkeiten) und Timeouts sind Pflicht.
 
-### 7.2 Strukturierte Übergaben
+### Strukturierte Übergaben
 
 Für zuverlässige Kommunikation sollten Übergaben strukturiert erfolgen:
 
@@ -554,7 +554,7 @@ class TaskResult(BaseModel):
 
 ---
 
-## 8 State-Management
+## State-Management
 
 Der gemeinsame State ist das Rückgrat eines Multi-Agent-Systems in LangGraph. Das typische Multi-Agent-State-Schema erweitert den Basis-Chat-State um koordinationsspezifische Felder:
 
@@ -577,11 +577,11 @@ Für Grundlagen zu State-Design, Reducer-Funktionen und häufigen Fehlern siehe 
 
 ---
 
-## 9 Fehlerbehandlung
+## Fehlerbehandlung
 
 In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehlerbehandlung ist essenziell.
 
-### 9.1 Fehlerquellen
+### Fehlerquellen
 
 ```mermaid
 flowchart TD
@@ -601,7 +601,7 @@ flowchart TD
     E3 --> E3c[Falsche Routing-Entscheidung]
 ```
 
-### 9.2 Strategien
+### Strategien
 
 **Retry mit Backoff:**
 ```python
@@ -631,7 +631,7 @@ def should_continue(state: TeamState) -> str:
 
 ---
 
-## 10 Entscheidungshilfe
+## Entscheidungshilfe
 
 Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
@@ -659,7 +659,7 @@ flowchart TD
 
 ---
 
-## 11 Zusammenfassung
+## Zusammenfassung
 
 Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisierte, kooperierende Agenten.
 

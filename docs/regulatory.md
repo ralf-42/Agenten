@@ -8,7 +8,7 @@ description: "Rechtliche Rahmenbedingungen, Ethik und Souveränität"
 
 # Regulatorisches
 
-Rechtliche, ethische und strategische Aspekte beim Einsatz von KI-Agenten.
+Wer KI-Agenten produktiv einsetzt, begegnet früher oder später drei Fragekomplexen: Was regelt der EU AI Act? Welche ethischen Anforderungen gelten? Und wie viel Abhängigkeit von externen Cloud-Providern ist vertretbar?
 
 ## Übersicht
 

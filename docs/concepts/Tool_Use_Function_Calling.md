@@ -486,8 +486,16 @@ Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung erm
 
 Im nächsten Schritt werden diese Tools in vollständige Agenten integriert, die selbstständig entscheiden, welche Werkzeuge sie für eine Aufgabe benötigen.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Agent-Architekturen](./Agent_Architekturen.html) | Wie werden Tools in Multi-Agent-Systeme und Graphen eingebettet? |
+| [Agent Security](./Agent_Security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch verhindert? |
+| [RAG Konzepte](./RAG_Konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
+
 ---
 
-**Version:** 1.0  
-**Stand:** November 2025  
+**Version:** 1.0
+**Stand:** November 2025
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -206,7 +206,7 @@ flowchart TB
 > Sicherheit einplanen, nicht nachträglich hinzufügen. Wer zuerst die Architektur baut und dann Security drüberlegt, baut sie falsch.
 
 **Red Teaming**
-Agenten aktiv angreifen: Versuchen Sie, Ihren eigenen Agenten durch Prompt Injection zu kompromittieren. Was passiert bei manipulierten Tool-Antworten? Was bei sehr langen Inputs?
+Agenten aktiv angreifen: Den eigenen Agenten durch Prompt Injection kompromittieren. Was passiert bei manipulierten Tool-Antworten? Was bei sehr langen Inputs?
 
 **Monitoring und Alerting**
 Anomalien erkennen:
@@ -232,8 +232,16 @@ Im Fehlerfall sollte der Agent sicher fehlschlagen — mit einem definierten Fal
 Modell-Sicherheitsmechanismen des Anbieters sind kein Ersatz für System-Sicherheit. Beide Ebenen sind notwendig.
 
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Human-in-the-Loop](./Human_in_the_Loop.html) | Wann und wie wird der Mensch als Kontrollinstanz in den Ablauf eingebunden? |
+| [Evaluation & Testing](./Evaluation_Testing.html) | Wie werden Agenten systematisch auf Qualitätsmängel und Fehler getestet? |
+| [Lohnt es sich überhaupt?](./Lohnt_es_sich.html) | Welche Risiken und Anforderungen sollten vor dem Start eines KI-Projekts geprüft werden? |
+
 ---
 
-**Version:** 1.0    
-**Stand:** März 2026    
+**Version:** 1.0
+**Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

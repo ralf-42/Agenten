@@ -8,20 +8,20 @@ description: "Praktische Übungen und End-to-End Projekte"
 
 # Projekte
 
-Praxisorientierte Lernformate zum Aufbau von Agent-Systemen.
+Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Workshop-Format führt durch einen konkreten LangGraph-Aufbau; die Challenge verlangt einen vollständigen eigenen Entwurf.
 
 ## Übersicht
 
 ### Workshop-Format
 - **[Kursnavigator](https://ralf-42.github.io/Agenten/projects/Agenten_Workshop.html)** - Begleitete Schritt-für-Schritt-Übung
-- Bauen Sie einen kleinen LangGraph-Lernassistenten für den Kurs
+- Ein kleiner LangGraph-Lernassistent für den Kurs
 - 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
 - LangGraph 1.0+: State, Conditional Routing, Checkpointing
 - Einstieg ab M14, ausbaubar bis M34
 
 ### End-to-End Projekt
 - **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/Agenten_Challenges.html)** - Eigenständige Implementierung
-- Entwickeln Sie ein Production-Ready Multi-Agent-System
+- Ein Production-Ready Multi-Agent-System entwickeln
 - 4 Projektoptionen: Support-System, Research-Team, Code-Review, Workflow-Automation
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
 - Abgabe: Jupyter Notebook + SQLite-DB + README.md

@@ -49,7 +49,7 @@ Agenten/
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
-  - `multimodal_rag.py` - Multimodales RAG-System
+  - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `WORKER`, ...)
 
 
 ## 📚 Kursmodule (Kursplan v5.0)

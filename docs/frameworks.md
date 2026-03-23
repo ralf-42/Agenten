@@ -52,7 +52,7 @@ Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und W
 
 - **[GenAI_Lib Einsteiger](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_GenAI_Lib.html)** – *Welche Utilities stellt das Projekt bereit?* Projektspezifische Python-Bibliothek für Kursanwendungen
   - **utilities.py** - Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates
-  - **multimodal_rag.py** - Multimodales RAG-System mit Text- und Bildsuche (Bild ↔ Bild, Bild ↔ Text)
+  - **model_config.py** - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `WORKER`, ...)
 
 ## No-Code / Low-Code
 

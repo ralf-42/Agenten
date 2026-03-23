@@ -60,7 +60,7 @@ Agenten mit mächtigen Tools können dazu gebracht werden, diese missbräuchlich
 
 Ein kompromittierter Agent könnte versuchen, interne Daten (API-Keys, persönliche Informationen, Geschäftsdaten) nach außen zu übermitteln — z.B. durch manipulierte Tool-Aufrufe oder präparierte Ausgaben.
 
-### 2.4 Jailbreaking
+### Jailbreaking
 
 Durch kreative Umformulierungen, Rollenspiel-Szenarien oder mehrstufige Anweisungen versuchen Angreifer, die Sicherheitsmechanismen des Modells zu umgehen und verbotene Ausgaben zu erzeugen.
 

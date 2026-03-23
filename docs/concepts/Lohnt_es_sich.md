@@ -217,13 +217,13 @@ Die EU KI-Verordnung (AI Act) klassifiziert KI-Systeme nach Risikostufe. Hochris
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Frage |
-|---|---|
-| [Welches Werkzeug?](./Aufgabenklassen_und_Loesungswege.html) | Chat, Workflow, RAG oder Agent — was ist der richtige Lösungsweg? |
-| [Evaluation & Testing](./Evaluation_Testing.html) | Wie wird die Qualität eines fertigen Systems gemessen? |
-| [Agent Security](./Agent_Security.html) | Wie wird ein Agenten-System gegen Angriffe abgesichert? |
-| [EU AI Act](../regulatory/EU_AI_Act.html) | Welche regulatorischen Anforderungen gelten? |
-| [Digitale Souveränität](../regulatory/Digitale_Souveraenitet.html) | Welche Abhängigkeiten entstehen durch Cloud-Modelle? |
+| Dokument                                                           | Frage                                                             |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| [Welches Werkzeug?](./Aufgabenklassen_und_Loesungswege.html)       | Chat, Workflow, RAG oder Agent — was ist der richtige Lösungsweg? |
+| [Evaluation & Testing](./Evaluation_Testing.html)                  | Wie wird die Qualität eines fertigen Systems gemessen?            |
+| [Agent Security](./Agent_Security.html)                            | Wie wird ein Agenten-System gegen Angriffe abgesichert?           |
+| [EU AI Act](../regulatory/EU_AI_Act.html)                          | Welche regulatorischen Anforderungen gelten?                      |
+| [Digitale Souveränität](../regulatory/Digitale_Souveraenitat.html) | Welche Abhängigkeiten entstehen durch Cloud-Modelle?              |
 
 ---
 

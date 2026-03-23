@@ -202,8 +202,8 @@ flowchart TB
 
 ## 5 Sichere Entwicklungspraxis
 
-{: .important }
-> **Security by Design:** Sicherheit einplanen, nicht nachträglich hinzufügen. Wer zuerst die Architektur baut und dann Security drüberlegt, baut sie falsch.
+> [!IMPORTANT] Security by Design
+> Sicherheit einplanen, nicht nachträglich hinzufügen. Wer zuerst die Architektur baut und dann Security drüberlegt, baut sie falsch.
 
 **Red Teaming**
 Agenten aktiv angreifen: Versuchen Sie, Ihren eigenen Agenten durch Prompt Injection zu kompromittieren. Was passiert bei manipulierten Tool-Antworten? Was bei sehr langen Inputs?

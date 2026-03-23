@@ -74,8 +74,8 @@ flowchart TB
 2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
 3. Optional: Organisation und Projekte anlegen
 
-{: .warning }
-> **Wichtig (EU/US-Endpunkte):** Für diesen Kurs immer den **EU-Endpoint** verwenden: `https://eu.api.smith.langchain.com`.  
+> [!WARNING] EU-Endpoint verwenden
+> Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
 > Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
 
 ### 2.2 API-Keys in Google Colab Secrets hinterlegen
@@ -89,8 +89,8 @@ flowchart TB
 
 **Schritt 2: Umgebung einrichten (Standard-Setup)**
 
-{: .warning }
-> ⚠️ **Reihenfolge-Regel:** LangSmith-Env-Vars müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert. Deshalb: Env-Vars ganz oben in der Setup-Cell, vor allen Imports.
+> [!WARNING] Reihenfolge-Regel: Env-Vars vor Imports
+> LangSmith-Env-Vars müssen gesetzt sein, bevor `langchain`, `langsmith` oder `genai_lib` importiert werden. Der Tracer liest die Env-Vars beim ersten Import — späteres Setzen wird ignoriert. Env-Vars ganz oben in der Setup-Cell, vor allen Imports setzen.
 
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
@@ -463,8 +463,8 @@ if runs:
     )
 ```
 
-{: .warning }
-> ⚠️ `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0 — nicht verwenden. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
+> [!WARNING] Veraltetes Muster — nicht verwenden
+> `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
 
 ### 7.3 Automatische Evaluierung mit LLM-as-Judge
 

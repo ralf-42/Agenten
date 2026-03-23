@@ -173,6 +173,7 @@ Die Phase 2 umfasst zwei getrennte Schritte: Der Client-Agent **authentifiziert*
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant C as Client-Agent
     participant S as Server-Agent
 
@@ -265,6 +266,7 @@ AG-UI nutzt eine **ereignisbasierte Architektur**: Der Agent streamt seinen Fort
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant N as Nutzer Frontend
     participant A as Agent Backend
 

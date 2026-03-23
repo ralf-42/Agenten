@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 LangChain Expression Language & Chains
+## LangChain Expression Language & Chains
 
 
 | **Problem**                    | **Ursache**                                                                                                                                                                                                                        | **Symptom**                                                                                          | **Lösung/Intervention**                                                                                                                                                                                                               |
@@ -35,7 +35,7 @@ has_toc: true
 | **Chain-Debugging**            | Es ist unklar, an welcher Stelle in der Chain der Fehler auftritt oder welche Zwischenergebnisse falsch sind.                                                                                                                      | Die Fehlermeldung ist unpräzise und verweist auf die Kompilierung.                                   | **Trace-Analyse:** Führen Sie die Chain über `invoke()` aus und inspizieren Sie den **LangSmith Trace** . LangSmith zeigt den Input und Output **jedes einzelnen `Runnable`** in der Kette.                                           |
 
 
-## 2 Structured Output & Pydantic
+## Structured Output & Pydantic
 
 
 | **Problem**                         | **Ursache**                                                                                                                                                | **Symptom**                                                                                       | **Lösung/Intervention**                                                                                                                                                                                                                                |
@@ -46,7 +46,7 @@ has_toc: true
 
 
 
-## 3 ChromaDB
+## ChromaDB
 
 | Problem                    | Ursache                     | Lösung                                              |
 | -------------------------- | --------------------------- | --------------------------------------------------- |

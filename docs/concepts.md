@@ -12,14 +12,14 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
 
 ## Einstieg & Entscheidung
 
-- **[Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html)** – Machbarkeit, Nutzen und Risiken vor dem Projektstart bewerten
+- **[Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html)** – *Lohnt sich KI für diese Aufgabe?* Machbarkeit, Nutzen und Risiken vor dem Projektstart bewerten
   - Problemklärung: Ist das Problem klar und messbar?
   - Datengrundlage: Sind die richtigen Daten vorhanden und nutzbar?
   - Nutzeneinschätzung: Lohnt sich KI gegenüber dem Status quo?
   - Risikoeinschätzung: Technisch, organisatorisch, regulatorisch
   - Go / No-Go Checkliste
 
-- **[Welches Werkzeug?](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html)** – Zweistufige Entscheidungshilfe: wann Agenten, welche Architektur?
+- **[Welches Werkzeug?](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html)** – *Welches Werkzeug passt zur Aufgabe?* Zweistufige Entscheidungshilfe: wann Agenten, welche Architektur?
   - Ebene 1: Chat / Workflow / RAG / Agenten / Python — was passt wann?
   - Ebene 2: ReAct / Tool-Calling / LangGraph Workflow / Multi-Agent — wie entscheiden?
   - Vollständiger Entscheidungsbaum (beide Ebenen kombiniert)

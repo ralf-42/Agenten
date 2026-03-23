@@ -2,14 +2,14 @@
 layout: default
 title: Markdown Template Guide
 nav_exclude: true
-description: "Anleitung zur Erstellung von Markdown-Dateien für GitHub Pages mit just-the-docs Theme"
+description: "Vorlage und Regeln für Markdown-Dateien in docs/ nach dem verbindlichen Doku-Standard"
 has_toc: true
 ---
 
 # Markdown Template Guide
 {: .no_toc }
 
-> **Anleitung zur Erstellung von Markdown-Dateien für GitHub Pages mit just-the-docs Theme**
+> **Vorlage und Regeln für Markdown-Dateien in `docs/` nach dem verbindlichen Doku-Standard**
 
 ---
 
@@ -21,24 +21,40 @@ has_toc: true
 
 ---
 
-## 1 Standard-Template für neue Dokumentations-Seiten
+## Ziel und Geltungsbereich
 
-Verwende diese Struktur für **alle** neuen Markdown-Dateien im `/docs` Verzeichnis:
+Diese Datei übersetzt den verbindlichen Standard aus [`_docs/Dokument_Standard.md`](../../_docs/Dokument_Standard.md) in eine praktische Arbeitsvorlage für `Agenten/docs/`. Maßgeblich bleibt immer der Standard selbst. Diese Guide-Datei konkretisiert ihn für Jekyll, just-the-docs und die vorhandene Projektstruktur.
 
-```markdown
+---
+
+## Grundprinzip
+
+Für alle Dokumente in `docs/` gilt: **Substanz vor Struktur**. Formatierung hilft beim Lesen, ersetzt aber keinen präzisen Text. Ein sauber formulierter Absatz ist fast immer besser als eine Kette aus Bullet Points.
+
+Aufzählungen werden nur eingesetzt, wenn echte Parallelstruktur vorliegt. Abschnitte mit zusammenhängender Argumentation bleiben Fließtext. Aussagen wie "praxisorientiert", "ganzheitlich" oder "state of the art" werden vermieden, wenn sie nicht durch ein Beispiel oder einen überprüfbaren Beleg gedeckt sind.
+
+Personalpronomen werden vermieden. Statt "Sie prüfen" oder "du findest" werden unpersönliche Formulierungen verwendet, etwa "Vor dem Start wird geprüft" oder "Die Checkliste findet sich weiter unten".
+
+---
+
+## Standard-Template für Inhaltsseiten
+
+Diese Vorlage gilt für inhaltliche Dokumente in `concepts/`, `frameworks/`, `deployment/`, `resources/` und `regulatory/`.
+
+````markdown
 ---
 layout: default
-title: [Seitentitel]
-parent: [Übergeordnete Kategorie]
-nav_order: [Nummer für Sortierung]
-description: "[Kurzbeschreibung der Seite]"
+title: Titel des Dokuments
+parent: Übergeordnete Seite
+nav_order: 1
+description: Prägnanter Beschreibungstext für Navigation und SEO
 has_toc: true
 ---
 
-# [Seitentitel]
+# Titel des Dokuments
 {: .no_toc }
 
-> **[Kurzbeschreibung - identisch mit description]**
+> **Prägnanter Beschreibungstext für Navigation und SEO**
 
 ---
 
@@ -50,45 +66,61 @@ has_toc: true
 
 ---
 
-## [Erstes Kapitel]
+## Erstes Kapitel
 
-[Inhalt...]
+Hier steht zusammenhängender Text. Bullet Points nur dann, wenn mehrere wirklich gleichwertige Punkte nebeneinanderstehen.
 
 ---
 
-## [Zweites Kapitel]
+## Zweites Kapitel
 
-[Inhalt...]
+Hier folgt der eigentliche Inhalt.
 
+---
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Verwandtes Dokument](./Verwandtes_Dokument.html) | Worum geht es dort? |
+
+---
+
+**Version:**    1.0
+**Stand:**    März 2026
+**Kurs:**    KI-Agenten. Verstehen. Anwenden. Gestalten.
+````
+
+Die Vorlage ist ein Ausgangspunkt, kein Zwang zur Textaufblähung. Wenn ein Sachverhalt mit zwei starken Absätzen erklärt ist, bleibt es bei zwei starken Absätzen.
+
+---
+
+## Pflichtregeln
+
+### Frontmatter
+
+Jede Inhaltsseite in `docs/` beginnt mit Frontmatter. Pflichtfelder:
+
+```yaml
+---
+layout: default
+title: Titel des Dokuments
+parent: Übergeordnete Seite
+nav_order: 1
+description: Prägnanter Beschreibungstext für Navigation und SEO
+has_toc: true
 ---
 ```
 
----
+`nav_order` muss zur Reihenfolge im jeweiligen Index-Dokument passen. `description` bleibt knapp; sie ist kein Teaser-Absatz.
 
-## 2 Wichtige Regeln
+### Titel
 
-### 2.1 Front Matter (YAML Header)
+Einstiegs- und Orientierungsdokumente verwenden nach Möglichkeit ein W-Frage-Format, etwa `Lohnt es sich überhaupt?` oder `Welches Werkzeug?`. Technische Referenzdokumente behalten präzise technische Titel wie `Checkpointing & Persistenz` oder `Agent Security`.
 
-- **Immer** am Anfang der Datei
-- **Pflichtfelder:**
-  - `layout: default` - Standardlayout verwenden
-  - `title:` - Seitentitel (erscheint in Navigation)
-  - `parent:` - Übergeordnete Kategorie (z.B. "Frameworks", "Concepts", "Guides")
-  - `nav_order:` - Sortierreihenfolge in Navigation (1, 2, 3, ...)
-  - `description:` - Kurzbeschreibung für SEO und Übersicht
-  - `has_toc: true` - Aktiviert Inhaltsverzeichnis
+### Inhaltsverzeichnis
 
-### 2.2 Hauptüberschrift (H1)
-
-```markdown
-# [Seitentitel]
-{: .no_toc }
-```
-
-- **Wichtig:** `{: .no_toc }` verhindert, dass die Hauptüberschrift im TOC erscheint
-- Direkt danach: Blockquote mit Beschreibung
-
-### 2.3 Inhaltsverzeichnis
+Ein automatisches Inhaltsverzeichnis ist Pflicht, sobald ein Dokument mehr als drei Hauptabschnitte besitzt.
 
 ```markdown
 # Inhaltsverzeichnis
@@ -98,328 +130,208 @@ has_toc: true
 {:toc}
 ```
 
-- **Immer** nach der Hauptüberschrift einfügen
-- `{: .no_toc .text-delta }` - Überschrift selbst nicht im TOC, kleinere Schrift
-- `{:toc}` - Kramdown-Syntax für automatisches TOC
+Kurze Seiten mit bis zu drei Hauptabschnitten benötigen kein TOC.
 
-### 2.4 Überschriften-Hierarchie
+### Abgrenzungstabelle für Konzeptdokumente
 
-- **KEINE manuellen Nummern** in Überschriften verwenden
-- Obsidian's automatische Nummerierung ist deaktiviert
-- Just-the-docs generiert automatisch Nummern
-
-**❌ Falsch:**
+Jedes Dokument in `docs/concepts/` endet vor dem Versionsblock mit einer Abgrenzungstabelle.
 
 ```markdown
-## 1 Kurzüberblick
-## 2 Setup
-### 2.1 Installation
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Titel](./Datei.html) | Worum geht es dort? |
 ```
 
-**✅ Richtig:**
+### Versionierungsblock
+
+Jede Seite endet mit genau diesem Block. Im Markdown-Quelltext stehen nach `**Version:**`, `**Stand:**` und `**Kurs:**` jeweils vier Leerzeichen vor dem Wert.
 
 ```markdown
-## Kurzüberblick
-## Setup
+**Version:**    1.0
+**Stand:**    März 2026
+**Kurs:**    KI-Agenten. Verstehen. Anwenden. Gestalten.
+```
+
+---
+
+## Schreibregeln
+
+### Aufzählungen sparsam einsetzen
+
+Aufzählungen passen nur bei echter Parallelstruktur. Was sich als Begründung, Abwägung oder Ablauf erzählen lässt, bleibt Fließtext.
+
+**Nicht geeignet sind zum Beispiel:**
+- Gedankengänge mit Ursache und Wirkung
+- Sätze, die sich sinnvoll mit "und", "weil" oder "deshalb" verbinden lassen
+- Abschnitte, die nur aus Mini-Sätzen unter mehreren Überschriften bestehen
+
+### Mehrwert statt Selbstbeschreibung
+
+Eigenschaften werden nicht behauptet, sondern gezeigt. Statt "praxisorientiertes Training" ist ein Satz wie "Im Modul entsteht ein lauffähiges RAG-System" belastbar.
+
+### Grenzen benennen
+
+Gute Doku beschreibt nicht nur, was funktioniert, sondern auch, wo ein Ansatz scheitert, wann er aufwendig wird und welche Fehlannahmen häufig auftreten.
+
+### Satzvarianz
+
+Gleich lange Sätze hintereinander wirken maschinell. Unterschiedliche Satzlängen, klare Kontraste und gelegentliche Leitfragen machen Texte lesbarer, solange sie echte Orientierung geben.
+
+---
+
+## Strukturregeln
+
+### Keine manuell nummerierten Überschriften
+
+Nummern werden nicht in Überschriften geschrieben.
+
+**Falsch:**
+
+```markdown
+## 1 Überblick
+### 1.1 Installation
+```
+
+**Richtig:**
+
+```markdown
+## Überblick
 ### Installation
 ```
 
-### 2.5 Überschriften-Ebenen
+### Überschriften dienen der Gliederung
 
-- `#` (H1) - Nur für Haupttitel (mit `{: .no_toc }`)
-- `##` (H2) - Hauptkapitel
-- `###` (H3) - Unterkapitel
-- `####` (H4) - Weitere Untergliederung
+Überschriften strukturieren den Text, sie ersetzen ihn nicht. Ein Abschnitt mit nur einem Halbsatz unter einer eigenen H2 ist kein tragfähiger Abschnitt.
 
-### 2.6 Trennlinien
+### Trennlinien gezielt einsetzen
 
-- Verwende `---` zwischen Hauptkapiteln für visuelle Trennung
-- Nicht in Unterkapiteln verwenden
+`---` trennt Hauptabschnitte sichtbar voneinander. Zwischen einzelnen Unterpunkten innerhalb desselben Gedankengangs wird keine zusätzliche Trennlinie eingefügt.
 
 ---
 
-## 3 Beispiele für verschiedene Seitentypen
+## Link-Konventionen
 
-### 3.1 Framework-Dokumentation
+In Index-Dokumenten wie `concepts.md` oder `frameworks.md` werden absolute URLs verwendet:
 
 ```markdown
----
-layout: default
-title: LangChain Einsteiger
-parent: Frameworks
-nav_order: 1
-description: "Grundlagen und Best Practices für LangChain 1.0+"
-has_toc: true
----
-
-# LangChain Einsteiger
-{: .no_toc }
-
-> **Grundlagen und Best Practices für LangChain 1.0+**
-
----
-
-# Inhaltsverzeichnis
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
-## Kurzüberblick: Warum LangChain?
-
-Große Sprachmodelle (LLMs) wie GPT-4 sind beeindruckend...
-
----
-
-## Prompts mit `ChatPromptTemplate`
-
-Für wiederverwendbare Prompts...
-
-### Beispiel: Einfacher Prompt
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
+[Digitale Souveränität](https://ralf-42.github.io/Agenten/regulatory/Digitale_Souveraenitat.html)
 ```
 
----
-```
-
-### Konzept-Dokumentation
+Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
----
-layout: default
-title: Agent-Architekturen
-parent: Concepts
-nav_order: 1
-description: "Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten"
-has_toc: true
----
-
-# Agent-Architekturen
-{: .no_toc }
-
-> **Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten**
-
----
-
-# Inhaltsverzeichnis
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
-## Überblick
-
-Ein KI-Agent ist mehr als ein einfacher Chatbot...
-
----
-
-## ReAct-Architektur
-
-ReAct beschreibt einen iterativen Zyklus...
-
-### Charakteristik
-
-- Transparenter Denkprozess
-- Gut geeignet für explorative Aufgaben
-
----
+[Agent-Architekturen](./Agent_Architekturen.html)
+[Modell-Auswahl Guide](../frameworks/Modell_Auswahl_Guide.html)
 ```
 
-### 3.2 Übergeordnete Kategorie-Seite
+Regeln:
+
+- Immer `.html`, nie `.md`
+- Dateiname exakt wie auf der Festplatte
+- Keine trailing slashes bei Datei-URLs
+- Seiten mit eigenem `permalink:` verwenden für interne Verweise besser absolute URLs
+
+---
+
+## Callouts und Mermaid
+
+### Callouts
+
+Im Projekt wird GitHub-Alert-Syntax verwendet. Der Titel nach dem Alert-Typ ist Pflicht.
 
 ```markdown
----
-layout: default
-title: Frameworks
-nav_order: 3
-has_children: true
-description: "Einsteiger-Guides für LangChain, ChromaDB und LangSmith"
-permalink: /frameworks/
----
+> [!NOTE] Kontext
+> Ergänzende Information, die den Haupttext nicht unterbrechen soll.
 
-# Frameworks
-
-Willkommen zu den Framework-Guides!
-
-Dieser Bereich enthält Einsteiger-Anleitungen für:
-
-- **LangChain** - Grundlagen und Best Practices
-- **LangSmith** - Monitoring & Debugging
-- **ChromaDB** - Vektordatenbanken für RAG-Systeme
-
-Wählen Sie ein Framework aus der Navigation links aus.
+> [!WARNING] Einschränkung
+> Bekannte Fehlerquelle oder wichtige Grenze.
 ```
 
----
+Pro Abschnitt höchstens ein Callout. Wenn jeder zweite Absatz hervorgehoben wird, verliert die Hervorhebung ihren Zweck.
 
-## 4 Spezielle Kramdown-Syntax
+### Mermaid
 
-### 4.1 Klassen für Überschriften
-
-```markdown
-## Überschrift
-{: .no_toc }           # Nicht im TOC anzeigen
-{: .text-delta }       # Kleinere Schrift
-{: .no_toc .text-delta } # Kombination
-```
-
-### 4.2 Code-Blöcke
-
-````markdown
-```python
-from langchain import ChatOpenAI
-```
-````
-
-### 4.3 Tabellen
-
-```markdown
-| Spalte 1 | Spalte 2 | Spalte 3 |
-|----------|----------|----------|
-| Wert 1   | Wert 2   | Wert 3   |
-```
-
-### 4.4 Mermaid-Diagramme
+Mermaid wird nur eingesetzt, wenn ein Zusammenhang visuell klarer wird als im Fließtext oder in einer Tabelle. Geeignet sind Entscheidungslogik, Zustandswechsel, Sequenzen und Architekturübersichten. `sequenceDiagram` beginnt immer mit `autonumber`.
 
 ````markdown
 ```mermaid
 flowchart TD
-    A[Start] --> B[Prozess]
-    B --> C[Ende]
+    A[Sachverhalt] --> B{Visuell klarer?}
+    B -->|Ja| C[Diagramm einsetzen]
+    B -->|Nein| D[Fließtext behalten]
 ```
 ````
 
 ---
 
-## 5 Häufige Fehler vermeiden
+## Kategorie-Seiten
 
-### 5.1 Fehler 1: Manuelle Nummerierung
+Kategorie-Seiten wie `concepts.md` oder `frameworks.md` dienen der Orientierung. Sie verwenden `has_children: true` und bei Bedarf `permalink:`. Die Einträge arbeiten mit absoluten URLs und ergänzen technische Titel durch eine kursive W-Frage.
 
-**❌ Falsch:**
-
-```markdown
-## 1 Kurzüberblick
-## 2 Setup
-```
-
-**✅ Richtig:**
-
-```markdown
-## Kurzüberblick
-## Setup
-```
-
-### 5.2 Fehler 2: Hauptüberschrift im TOC
-
-**❌ Falsch:**
-
-```markdown
-# Mein Dokument
-
-> **Beschreibung**
-```
-
-**✅ Richtig:**
-
-```markdown
-# Mein Dokument
-{: .no_toc }
-
-> **Beschreibung**
-```
-
-### 5.3 Fehler 3: Fehlendes Front Matter
-
-**❌ Falsch:**
-
-```markdown
-# Mein Dokument
-
-Inhalt...
-```
-
-**✅ Richtig:**
-
-```markdown
+````markdown
 ---
 layout: default
-title: Mein Dokument
-parent: Kategorie
-nav_order: 1
-description: "Beschreibung"
-has_toc: true
+title: Konzepte
+nav_order: 2
+has_children: true
+description: Theoretische Grundlagen und technische Konzepte für KI-Agenten
 ---
 
-# Mein Dokument
-{: .no_toc }
-```
+# Konzepte
 
-### 5.4 Fehler 4: Inkonsistente Struktur
+Kurze Einordnung des Bereichs in einem Absatz.
 
-**❌ Falsch:**
+## Grundlagen
 
-```markdown
-# Titel
+- **[Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html)** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Agent Security](https://ralf-42.github.io/Agenten/concepts/Agent_Security.html)** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+````
 
-## Kapitel 1
-Text...
-## Kapitel 2
-```
-
-**✅ Richtig:**
-
-```markdown
-# Titel
-{: .no_toc }
-
-> **Beschreibung**
+Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.
 
 ---
 
-# Inhaltsverzeichnis
-{: .no_toc .text-delta }
+## Häufige Fehler
 
-1. TOC
-{:toc}
+### Widerspruch zwischen Standard und Vorlage
 
----
+Wenn diese Guide-Datei und `_docs/Dokument_Standard.md` voneinander abweichen, gilt der Standard. Die Guide-Datei wird dann angepasst.
 
-## Kapitel 1
+### Zu viele Bullet Points
 
-Text...
+Wenn mehr als die Hälfte eines Abschnitts aus Aufzählungen besteht, ist fast immer ein Absatz oder eine Tabelle die bessere Form.
 
----
+### Falsche Linkziele
 
-## Kapitel 2
-```
+Interne Links auf `.md` sind im Projekt falsch. Verwendet werden `.html`-Ziele.
 
----
+### Fehlender Abschluss
 
-## 6 Checkliste für neue Dateien
+Viele Seiten wirken fertig, brechen aber ohne Abgrenzungstabelle oder Versionsblock ab. Beides gehört zum formalen Abschluss.
 
-- [ ] Front Matter vollständig (layout, title, parent, nav_order, description, has_toc)
-- [ ] Hauptüberschrift mit `{: .no_toc }`
-- [ ] Blockquote mit Beschreibung
-- [ ] Trennlinie (`---`)
-- [ ] Inhaltsverzeichnis-Sektion mit korrekten Klassen
-- [ ] Trennlinie vor erstem Kapitel
-- [ ] KEINE manuellen Nummern in Überschriften
-- [ ] Trennlinien zwischen Hauptkapiteln (##)
-- [ ] Konsistente Überschriften-Hierarchie (H2 → H3 → H4)
+### Direkte Ansprache
+
+Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neutrale Formulierungen überführt.
 
 ---
 
-## 7 Zusammenfassung
+## Checkliste vor dem Speichern
 
-Diese Anleitung stellt sicher, dass alle Markdown-Dateien im GitHub Pages Projekt eine konsistente Struktur haben und korrekt mit dem just-the-docs Theme funktionieren. Besonders wichtig sind:
+- Frontmatter vollständig und korrekt
+- `nav_order` stimmt mit dem Index-Dokument überein
+- Titel passt zum Dokumenttyp
+- TOC nur dann, wenn mehr als drei Hauptabschnitte vorhanden sind
+- Keine manuell nummerierten Überschriften
+- Aufzählungen nur dort, wo echte Parallelstruktur vorliegt
+- Interne Links zeigen auf `.html`
+- Konzeptdokument enthält Abgrenzungstabelle
+- Callouts haben einen Titel
+- Versionsblock steht am Ende im vorgeschriebenen Format
 
-1. **Korrektes Front Matter** - Alle Metadaten vollständig
-2. **Hauptüberschrift mit `{: .no_toc }`** - Verhindert Duplikate im TOC
-3. **Keine manuellen Nummern** - Just-the-docs nummeriert automatisch
-4. **Konsistente Struktur** - Template für alle Seiten verwenden
+---
+
+**Version:**    1.0
+**Stand:**    März 2026
+**Kurs:**    KI-Agenten. Verstehen. Anwenden. Gestalten.

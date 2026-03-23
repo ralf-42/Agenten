@@ -25,7 +25,7 @@ has_toc: true
 
 ## 1 Projektübersicht
 
-In dieser Übungsaufgabe bauen Sie schrittweise einen **Kursnavigator**, der Lernende durch den Agenten-Kurs führt. Der Navigator beantwortet Fragen zu Modulen, empfiehlt Lernpfade, erklärt zentrale Konzepte und erzeugt auf Wunsch kleine Quizfragen.
+In dieser Übungsaufgabe entsteht schrittweise ein **Kursnavigator**, der Lernende durch den Agenten-Kurs führt. Der Navigator beantwortet Fragen zu Modulen, empfiehlt Lernpfade, erklärt zentrale Konzepte und erzeugt auf Wunsch kleine Quizfragen.
 
 **Lernziele:**
 - LangGraph State Machines von Grund auf verstehen
@@ -42,7 +42,7 @@ In dieser Übungsaufgabe bauen Sie schrittweise einen **Kursnavigator**, der Ler
 
 ## 2 Notebook-Struktur
 
-Sie erstellen **ein Notebook** mit **6 aufbauenden Kapiteln**:
+Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ```text
 📓 Kursnavigator_Workshop.ipynb
@@ -56,7 +56,7 @@ Sie erstellen **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ### 2.1 Modul-Zuordnung
 
-Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das jeweilige Kapitel **nach** dem zugehörigen Modul:
+Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel wird **nach** dem zugehörigen Modul bearbeitet:
 
 | Workshop Kapitel | Kursmodul | Thema |
 |-----------------|-----------|-------|
@@ -75,7 +75,7 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Bearbeiten Sie das je
 
 ### 3.1 API-Key speichern
 
-Wenn Sie mit einem externen Modell arbeiten, speichern Sie Ihren `OPENAI_API_KEY` in Colab Secrets oder lokal in einer `.env`.
+Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets oder lokal in einer `.env` speichern.
 
 ### 3.2 Basis-Pakete installieren
 
@@ -394,7 +394,7 @@ def show_session_history(thread_id: str):
 
 ### 8.1 Aufgabe 5.1: Lernpfad-Logik präzisieren
 
-Definieren Sie mindestens zwei Zielgruppen:
+Mindestens zwei Zielgruppen definieren:
 
 - Anfänger
 - Fortgeschrittene
@@ -419,7 +419,7 @@ def generate_quiz(state: NavigatorState) -> NavigatorState:
 
 ### 8.3 Aufgabe 5.3: Testfragen definieren
 
-Testen Sie Ihren Navigator mindestens mit diesen fünf Fragen:
+Mindestens diese fünf Fragen testen:
 
 - "Welche Module sollte ich für RAG bearbeiten?"
 - "Was macht M14?"
@@ -546,11 +546,11 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 **Empfohlener Ablauf:**
 
-1. Erstellen Sie einen neuen **Gradio Space** auf Hugging Face.
-2. Laden Sie `app.py`, `requirements.txt` und Ihre Wissensbasis hoch.
-3. Hinterlegen Sie benötigte API-Keys unter den **Space Secrets**.
-4. Starten Sie den Space und prüfen Sie die Logs auf Import- oder Paketfehler.
-5. Testen Sie die Anwendung mit denselben Beispielanfragen wie lokal.
+1. Einen neuen **Gradio Space** auf Hugging Face erstellen.
+2. `app.py`, `requirements.txt` und die Wissensbasis hochladen.
+3. API-Keys unter den **Space Secrets** hinterlegen.
+4. Den Space starten und Logs auf Import- oder Paketfehler prüfen.
+5. Die Anwendung mit denselben Beispielanfragen wie lokal testen.
 
 **Sinnvolle Secrets:**
 

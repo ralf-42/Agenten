@@ -33,13 +33,13 @@ Die praktische Umsetzung von Agenten erfordert die Fähigkeit, Modelle gezielt z
 
 Mit zunehmender Verfügbarkeit von APIs, Open-Source-Modellen und Orchestrierungs-Frameworks entsteht ein neues Feld der Gestaltung: Single-Agent-Lösungen, Supervisor-Patterns und komplette Multi-Agent-Systeme. Gleichzeitig wachsen Anforderungen an Evaluation, Monitoring, Security und Governance, damit aus Prototypen verlässliche Produkte werden.
 
-**Von der Theorie zur Praxis:** Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos - sie braucht saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Einblicke aus der Praxis zeigen: Der Weg vom Experiment zum stabilen Agentensystem ist geprägt von Engineering-Disziplin, iterativem Feedback und klarem Nutzerfokus.
+Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos: saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Der Weg vom Experiment zum stabilen Agentensystem ist kürzer, wenn Struktur von Anfang an mitgedacht wird — Checkpointing, Evaluation und Monitoring sind keine Nacharbeiten, sondern Bestandteile des Entwurfs.
 
-Agentische KI markiert damit einen technologischen Wendepunkt. Sie verändert nicht nur die Art, wie Aufgaben bearbeitet werden, sondern auch das Zusammenspiel von Mensch und Maschine in Analyse, Entscheidung und Umsetzung.
+Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder fehlendem Monitoring als an der Technologie selbst. Das ist die eigentliche Herausforderung — und der Kern dieses Kurses.
 
 
 ---
 
 **Version:** 1.1
 **Stand:** März 2026
-**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

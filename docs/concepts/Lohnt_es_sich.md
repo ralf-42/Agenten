@@ -147,7 +147,7 @@ KI lohnt sich **nicht**, wenn:
 
 Die EU KI-Verordnung (AI Act) klassifiziert KI-Systeme nach Risikostufe. Hochrisiko-Systeme (z. B. im HR-, Kredit- oder Gesundheitsbereich) unterliegen strengen Anforderungen.
 
-> Weiterführend: [EU AI Act](../regulatory/EU_AI_Act.html), [Ethik & GenAI](../regulatory/Ethik_und_GenAI.html), [Digitale Souveränität](../regulatory/Digitale_Souveraenitet.html)
+> Weiterführend: [EU AI Act](../regulatory/EU_AI_Act.html), [Ethik & GenAI](../regulatory/Ethik_und_GenAI.html), [Digitale Souveränität](../regulatory/Digitale_Souveraenitat.html)
 
 ---
 

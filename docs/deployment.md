@@ -28,8 +28,8 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
   - Deployment-Optionen im Vergleich
 
 ### Migration & Provider-Wechsel
-- **[Migration zu Mistral Medium 3](https://ralf-42.github.io/Agenten/deployment/Migration_OpenAI_Mistral.html)** - Technische Analyse
-  - Feature-Kompatibilitätsvergleich
-  - Kosten-Analyse (2.7-3.3x teurer)
-  - Notebook-spezifische Kompatibilität
-  - Schritt-für-Schritt Migrations-Strategie
+- **[Migration: OpenAI → Mistral](https://ralf-42.github.io/Agenten/deployment/Migration_OpenAI_Mistral.html)** - Technische Analyse der Provider-Migration
+  - Kernaussage: LangChain vereinfacht die Migration strukturell
+  - Modell-Rollenmapping für Baseline, Router, Judge, Worker
+  - Embeddings und OpenAI-spezifische Module separat bewerten
+  - Empfohlene Reihenfolge für eine kontrollierte Migration

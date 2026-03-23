@@ -13,9 +13,8 @@ has_toc: true
 > **Migrationsleitfaden für das Projekt `Agenten`**      
 > Zentrale Aussage: Die Migration wird vor allem dadurch vereinfacht, dass das Projekt stark auf **LangChain** und das umgebende Ökosystem setzt.
 
-{: .note }
-> Die in `01_notebook/` genannten Module dienen hier nur als **anfassbare Beispiele**.  
-> Relevant ist nicht das einzelne Notebook, sondern **welche Art von Änderung** durch die bestehende LangChain-Struktur vereinfacht wird.
+> [!NOTE] Hinweis zu den Notebooks
+> Die in `01_notebook/` genannten Module dienen hier nur als **anfassbare Beispiele**. Relevant ist nicht das einzelne Notebook, sondern **welche Art von Änderung** durch die bestehende LangChain-Struktur vereinfacht wird.
 
 ---
 
@@ -300,4 +299,4 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 **Version:** 4.0    
 **Stand:** März 2026    
-**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

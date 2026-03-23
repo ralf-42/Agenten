@@ -2,7 +2,7 @@
 layout: default
 title: Human-in-the-Loop
 parent: Konzepte
-nav_order: 8
+nav_order: 9
 description: "Wann und warum KI-Agenten Menschen einbinden sollten"
 has_toc: true
 ---

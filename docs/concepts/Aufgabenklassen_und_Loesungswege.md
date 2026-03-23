@@ -2,7 +2,7 @@
 layout: default
 title: Welches Werkzeug?
 parent: Konzepte
-nav_order: 0
+nav_order: 1
 description: Zweistufige Entscheidungshilfe für Agenten-Projekte - von der Aufgabe zum richtigen Lösungsweg und zur passenden Agentenarchitektur.
 has_toc: true
 ---

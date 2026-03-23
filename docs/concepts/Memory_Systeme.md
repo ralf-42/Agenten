@@ -2,7 +2,7 @@
 layout: default
 title: Memory-Systeme
 parent: Konzepte
-nav_order: 7
+nav_order: 8
 description: "Kurz- und Langzeitgedächtnis für persistente KI-Agenten"
 has_toc: true
 ---

@@ -2,7 +2,7 @@
 layout: default
 title: Lohnt es sich überhaupt?
 parent: Konzepte
-nav_order: 1
+nav_order: 0
 description: Strukturierte Einschätzung vor dem Start eines KI-Projekts — Machbarkeit, Nutzen, Risiken und Erwartungsmanagement.
 has_toc: true
 ---

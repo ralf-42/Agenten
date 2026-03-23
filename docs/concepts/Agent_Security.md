@@ -2,7 +2,7 @@
 layout: default
 title: Agent Security
 parent: Konzepte
-nav_order: 11
+nav_order: 12
 description: "Sicherheitsrisiken und Schutzprinzipien für KI-Agenten"
 has_toc: true
 ---

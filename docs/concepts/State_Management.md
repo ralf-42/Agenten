@@ -2,7 +2,7 @@
 layout: default
 title: State Management
 parent: Konzepte
-nav_order: 5
+nav_order: 6
 description: "Zustandsverwaltung in komplexen Workflows mit LangGraph"
 has_toc: true
 ---

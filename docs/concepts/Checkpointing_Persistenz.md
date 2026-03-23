@@ -2,7 +2,7 @@
 layout: default
 title: Checkpointing & Persistenz
 parent: Konzepte
-nav_order: 6
+nav_order: 7
 description: "Zustandsspeicherung und Session-Persistenz in LangGraph"
 has_toc: true
 ---

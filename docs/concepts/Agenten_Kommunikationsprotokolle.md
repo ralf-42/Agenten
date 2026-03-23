@@ -2,7 +2,7 @@
 layout: default
 title: Agenten-Kommunikation
 parent: Konzepte
-nav_order: 12
+nav_order: 13
 description: Wie KI-Agenten miteinander und mit Tools kommunizieren – MCP, A2A, ACP und AG-UI im Überblick
 has_toc: true
 ---

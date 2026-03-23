@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum LangSmith?
+## Kurzüberblick: Warum LangSmith?
 
 LangChain und LangGraph ermöglichen den Bau komplexer KI-Agenten. Doch bei der Entwicklung stellen sich schnell Fragen:
 - **Warum** hat der Agent eine bestimmte Entscheidung getroffen?
@@ -39,7 +39,7 @@ LangSmith beantwortet diese Fragen durch:
 
 Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvollzogen werden** – ohne zusätzlichen Code im Workflow selbst.
 
-### 1.1 LangSmith im Entwicklungs-Workflow
+### LangSmith im Entwicklungs-Workflow
 
 ```mermaid
 flowchart TB
@@ -66,9 +66,9 @@ flowchart TB
 
 ---
 
-## 2 Setup: API-Key und Umgebung
+## Setup: API-Key und Umgebung
 
-### 2.1 LangSmith-Account erstellen
+### LangSmith-Account erstellen
 
 1. Kostenlosen Account anlegen: [eu.smith.langchain.com](https://eu.smith.langchain.com/)
 2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
@@ -78,7 +78,7 @@ flowchart TB
 > Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
 > Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
 
-### 2.2 API-Keys in Google Colab Secrets hinterlegen
+### API-Keys in Google Colab Secrets hinterlegen
 
 **Schritt 1: Secrets in Colab einrichten**
 1. In Google Colab: Schlüssel-Symbol 🔑 in der linken Seitenleiste
@@ -121,7 +121,7 @@ get_ipinfo()
 
 ---
 
-## 3 Das kleinstmögliche funktionierende Beispiel
+## Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tracing.
 
@@ -148,7 +148,7 @@ print(response.content)
 
 ---
 
-## 4 Traces verstehen: Die Grundstruktur
+## Traces verstehen: Die Grundstruktur
 
 LangSmith organisiert alle Daten in einer klaren Hierarchie:
 
@@ -190,7 +190,7 @@ flowchart TB
 
 ---
 
-### 4.1 Run-Typen
+### Run-Typen
 
 LangSmith kennt 7 Run-Typen (Werte immer **lowercase**):
 
@@ -210,7 +210,7 @@ LangSmith kennt 7 Run-Typen (Werte immer **lowercase**):
 - **Default-Fallback:** Unbekannte oder falsch geschriebene `run_type`-Werte (z.B. `"LLM"` statt `"llm"`) fallen automatisch auf `"chain"` zurück.
 - **Kosten-Tracking (ab 2026):** LangSmith bietet eine einheitliche Kostenübersicht über den gesamten Agenten-Workflow — nicht nur für `llm`-Runs. Custom Cost Metadata kann für beliebige Run-Typen übergeben werden.
 
-### 4.2 Beispiel: Chain mit mehreren Runs
+### Beispiel: Chain mit mehreren Runs
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -254,7 +254,7 @@ Chain Run (Gesamt)
 └─ Parser Run (String-Extraktion)
 ```
 
-### 4.3 Threads: Gespräche über mehrere Traces hinweg
+### Threads: Gespräche über mehrere Traces hinweg
 
 Ein **Thread** verknüpft mehrere Traces zu einer Gesprächs-Sequenz — z.B. alle Nachrichten einer Chat-Session. Die Verknüpfung erfolgt über `session_id` oder `conversation_id` in den Metadaten.
 
@@ -277,7 +277,7 @@ response = agent.invoke(
 
 ---
 
-## 5 Praktisches Beispiel: Agent mit Tools tracken
+## Praktisches Beispiel: Agent mit Tools tracken
 
 Tools und Agents profitieren besonders von LangSmith, da ihre Entscheidungswege oft komplex sind.
 
@@ -357,11 +357,11 @@ sequenceDiagram
 
 ---
 
-## 6 Datasets: Systematisches Testen
+## Datasets: Systematisches Testen
 
 Datasets ermöglichen wiederholbare Tests mit definierten Inputs und erwarteten Outputs.
 
-### 6.1 Dataset erstellen (UI oder Code)
+### Dataset erstellen (UI oder Code)
 
 **Variante A: Über UI**
 1. LangSmith → Datasets → Create Dataset
@@ -391,7 +391,7 @@ client.create_examples(
 )
 ```
 
-### 6.2 Agent gegen Dataset evaluieren
+### Agent gegen Dataset evaluieren
 
 ```python
 from langsmith.evaluation import evaluate
@@ -419,18 +419,18 @@ results = evaluate(
 
 ---
 
-## 7 Feedback: Qualität messen
+## Feedback: Qualität messen
 
 Feedback ermöglicht es, die Qualität von Antworten zu bewerten – manuell oder automatisch.
 
-### 7.1 Manuelles Feedback (UI)
+### Manuelles Feedback (UI)
 
 In der LangSmith-UI kann jeder Run bewertet werden:
 - Daumen hoch/runter
 - Sterne (1-5)
 - Freitext-Kommentar
 
-### 7.2 Programmatisches Feedback
+### Programmatisches Feedback
 
 Run-IDs über `@traceable` mit `run_tree`-Injection ermitteln – der moderne Weg (kein `response["__run"].id` mehr, da veraltet und unzuverlässig):
 
@@ -466,7 +466,7 @@ if runs:
 > [!WARNING] Veraltetes Muster — nicht verwenden
 > `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
 
-### 7.3 Automatische Evaluierung mit LLM-as-Judge
+### Automatische Evaluierung mit LLM-as-Judge
 
 `LangChainStringEvaluator` ist deprecated. Modernes Pattern: **function-based Evaluators** — einfache Python-Funktionen mit Signatur `(run, example) -> dict`:
 
@@ -513,7 +513,7 @@ results = evaluate(
 
 ---
 
-## 8 Integration in LangGraph-Workflows
+## Integration in LangGraph-Workflows
 
 LangSmith trackt auch komplexe LangGraph-State-Machines automatisch.
 
@@ -556,11 +556,11 @@ result = compiled_graph.invoke(
 
 ---
 
-## 9 Best Practices für den Kurs
+## Best Practices für den Kurs
 
 > **Übersicht:** Konfiguration & Organisation (9.1–9.6) · Analyse & Debugging (9.7–9.9)
 
-### 9.1 Projekt-Organisation
+### Projekt-Organisation
 
 **Konvention: Modulname direkt in der Setup-Cell setzen**
 
@@ -612,7 +612,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 
 > 💡 **Edge Case:** Falls ein Projekt-Wechsel nach Notebook-Start nötig ist (z.B. kein Kernel-Neustart möglich), kann `ls.tracing_context(project_name=...)` als Workaround verwendet werden.
 
-### 9.2 Tags für bessere Organisation
+### Tags für bessere Organisation
 
 ```python
 from langsmith import traceable
@@ -626,7 +626,7 @@ def my_rag_chain(question: str):
     pass
 ```
 
-### 9.3 Fehler debuggen
+### Fehler debuggen
 
 ```mermaid
 flowchart LR
@@ -661,7 +661,7 @@ flowchart LR
 
 **Vorteil:** Direkter Vorher/Nachher-Vergleich im LangSmith-UI.
 
-### 9.4 Performance-Monitoring
+### Performance-Monitoring
 
 ```python
 # Metadaten hinzufügen für Filterung
@@ -677,7 +677,7 @@ def process_query(query: str):
 - Token-Verbrauch pro Student analysieren
 - Fehlerraten nach Umgebung filtern
 
-### 9.5 Einzelne Chains und Runs benennen mit `.with_config()`
+### Einzelne Chains und Runs benennen mit `.with_config()`
 
 Automatisches Tracing erfasst alle Runs – aber ohne explizite Namen sind sie im Dashboard schwer zu unterscheiden. `.with_config()` gibt einzelnen Chains, LLM-Aufrufen und Structured-Output-Chains einen eindeutigen Namen und Tags.
 
@@ -738,7 +738,7 @@ ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
 
 > ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
 
-### 9.6 Tool-Tests ohne Tracing: `.func()`
+### Tool-Tests ohne Tracing: `.func()`
 
 Beim Testen einzelner `@tool`-Funktionen entsteht mit `.invoke()` immer ein Trace. Für isolierte Unit-Tests die Python-Funktion direkt über `.func()` aufrufen – komplett am Runnable-Framework vorbei.
 
@@ -769,7 +769,7 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 **Analyse & Debugging**
 
-### 9.7 Trace-Patterns erkennen
+### Trace-Patterns erkennen
 
 Traces sind mehr als ein Debug-Log — sie machen systematische Verhaltensmuster sichtbar.
 Die folgenden Patterns treten immer wieder auf, quer durch alle Agenten-Typen:
@@ -812,7 +812,7 @@ show_trace("M32-DeepAgents-Harness", show_steps=True)
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
 Unexpected Tool Calls und Retry-Loops direkt im Notebook sichtbar zu machen.
 
-### 9.8 Problembereiche systematisch finden (Quick Workflow)
+### Problembereiche systematisch finden (Quick Workflow)
 
 Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad-hoc-Debugging:
 
@@ -825,7 +825,7 @@ Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad
 (p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M34 relevant —
 wenn Agenten außerhalb von Colab betrieben werden.
 
-### 9.9 Web-UI Filter: Traces gezielt finden
+### Web-UI Filter: Traces gezielt finden
 
 Die LangSmith-Oberfläche unter [eu.smith.langchain.com](https://eu.smith.langchain.com/) bietet
 leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enthält.
@@ -860,7 +860,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ---
 
-## 10 Vergleich: LangSmith vs. Alternatives
+## Vergleich: LangSmith vs. Alternatives
 
 | Aspekt | LangSmith | Print/Logs | LangGraph Debug |
 |--------|-----------|-----------|-----------------|
@@ -878,9 +878,9 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ---
 
-## 11 Häufige Fragen (FAQ)
+## Häufige Fragen (FAQ)
 
-### 11.1 "Werden alle Daten an LangSmith gesendet?"
+### "Werden alle Daten an LangSmith gesendet?"
 
 **Ja**, standardmäßig:
 - Alle Inputs und Outputs
@@ -892,14 +892,14 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 - Selective Tracing mit `@traceable(enabled=False)`
 - Self-Hosted LangSmith für vollständige Kontrolle
 
-### 11.2 "Kostet LangSmith extra?"
+### "Kostet LangSmith extra?"
 
 **Free Tier:** Kostenloser Einstieg verfügbar (ausreichend für Kurszwecke)
 **Paid Tiers:** Verschiedene Pläne für Production-Nutzung
 
 > 💡 Aktuelle Preise: [smith.langchain.com/pricing](https://smith.langchain.com/pricing) — Pläne ändern sich regelmäßig.
 
-### 11.3 "Wie lange werden Traces gespeichert?"
+### "Wie lange werden Traces gespeichert?"
 
 Traces werden maximal **400 Tage** aufbewahrt. Danach werden sie automatisch gelöscht.
 
@@ -910,7 +910,7 @@ Traces werden maximal **400 Tage** aufbewahrt. Danach werden sie automatisch gel
 client.create_example_from_run(run_id=run_id, dataset_name="wichtige-runs")
 ```
 
-### 11.4 "Wie deaktiviere ich Tracing?"
+### "Wie deaktiviere ich Tracing?"
 
 ```python
 # Temporär deaktivieren
@@ -924,7 +924,7 @@ def nicht_getrackt():
     pass
 ```
 
-### 11.5 "Kann ich LangSmith ohne LangChain nutzen?"
+### "Kann ich LangSmith ohne LangChain nutzen?"
 
 **Ja**, mit dem `@traceable` Decorator:
 ```python
@@ -936,7 +936,7 @@ def custom_function(input_data):
     return result
 ```
 
-### 11.6 "Was passiert, wenn ich den API-Key vergesse?"
+### "Was passiert, wenn ich den API-Key vergesse?"
 
 ```python
 # Setup prüft automatisch, ob Keys vorhanden sind

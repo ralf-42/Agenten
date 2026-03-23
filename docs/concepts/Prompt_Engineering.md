@@ -446,8 +446,17 @@ Effektives Prompt Engineering basiert auf drei Säulen:
 
 Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents angewendet.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html) | Technische Tool-Definition — dieses Dokument beschreibt, wie Tools beschrieben werden |
+| [Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html) | Welche Architektur welche Prompt-Strategien voraussetzt |
+| [Skills](https://ralf-42.github.io/Agenten/concepts/Skills.html) | Wiederverwendbare Prompt-Strukturen als produktionsreife Muster |
+
+
 ---
 
 **Version:** 1.0    
 **Stand:** November 2025     
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.      
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.      

@@ -686,6 +686,16 @@ Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisi
 
 Die praktische Umsetzung erfolgt mit LangGraph. Dort werden diese Patterns Schritt für Schritt implementiert – vom einfachen Supervisor bis zum kollaborativen Review-System.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html) | Grundlegende Architekturmuster für einzelne Agenten |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Zustandsverwaltung im Multi-Agent-Graph |
+| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Wann und wie Menschen in Agenten-Teams eingebunden werden |
+| [Agenten-Kommunikationsprotokolle](https://ralf-42.github.io/Agenten/concepts/Agenten_Kommunikationsprotokolle.html) | Standards für Agent-zu-Agent-Kommunikation über Systemgrenzen |
+
+
 ---
 
 **Version:** 1.0  

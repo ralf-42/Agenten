@@ -364,6 +364,5 @@ Die digitale Souveränität Europas wird sich nicht daran entscheiden, ob ein eu
 ---
 
 **Version:** 1.0       
-**Letzte Aktualisierung:** Dezember 2025       
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.       
-**Quelle:** *Powered by Google Gemini*       
+**Stand:** Dezember 2025       
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.       

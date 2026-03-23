@@ -274,4 +274,4 @@ Beide Dokumente zusammen ergeben:
 
 **Version:** 1.0       
 **Stand:** März 2026    
-**Kurs:** Agenten. Verstehen. Anwenden. Gestalten.    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

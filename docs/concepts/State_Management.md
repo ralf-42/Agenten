@@ -548,6 +548,15 @@ app = graph.compile()
 result = app.invoke({"messages": [], "data": ""})
 ```
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html) | Speicherung und Wiederherstellung des States über Sessions |
+| [Memory-Systeme](https://ralf-42.github.io/Agenten/concepts/Memory_Systeme.html) | Langzeitgedächtnis als Ergänzung zum kurzlebigen Graph-State |
+| [Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html) | State-Übergabe zwischen mehreren Agenten im Graph |
+
+
 ---
 
 **Version:** 1.0  

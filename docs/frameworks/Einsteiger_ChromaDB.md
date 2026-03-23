@@ -946,6 +946,15 @@ results = retriever.invoke("Meine Frage")
 > + [ChromaDB Dokumentation](https://docs.trychroma.com/) 
 > + [LangChain VectorStores](https://python.langchain.com/docs/modules/data_connection/vectorstores/)
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangChain.html) | RAG-Chain und LCEL-Integration mit ChromaDB (Abschnitt 12) |
+| [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangGraph.html) | ChromaDB als Retrieval-Tool in LangGraph-Workflows |
+| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/RAG_Konzepte.html) | Konzeptionelle Grundlagen: Chunking, Embeddings, Retrieval-Strategien |
+
+
 ---
 
 **Version:** 1.0    

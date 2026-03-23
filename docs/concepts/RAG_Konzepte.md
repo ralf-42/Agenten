@@ -565,8 +565,17 @@ RAG kombiniert die Stärken von Retrieval-Systemen mit generativen LLMs:
 
 RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten – ohne teures Fine-Tuning und mit voller Kontrolle über die Wissensbasis.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html) | Wann RAG die richtige Wahl ist — und wann nicht |
+| [Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Testing.html) | Wie Retrieval-Qualität, Faithfulness und Groundedness gemessen werden |
+| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Retrieval-Ergebnisse im Graph-State weitergegeben werden |
+
+
 ---
 
 **Version:** 1.0    
 **Stand:** November 2025    
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.  
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  

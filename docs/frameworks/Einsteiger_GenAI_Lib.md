@@ -719,10 +719,19 @@ MIT License - Copyright (c) 2025 Ralf
 Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte verwendet werden.
 
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangChain.html) | LangChain-Basis, auf der genai_lib aufbaut |
+| [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_LangGraph.html) | LangGraph-Workflows, die genai_lib-Utilities nutzen |
+| [Einsteiger Prompts](https://ralf-42.github.io/Agenten/frameworks/Einsteiger_Prompts.html) |  aus genai_lib im Kontext von Prompt-Dateien |
+
+
 ---
 
 **Version:** 3.2   
 **Stand:** März 2026   
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.            
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.            
 
 

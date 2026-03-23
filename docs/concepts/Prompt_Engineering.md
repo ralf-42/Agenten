@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Überblick
+## Überblick
 
 Ein Prompt ist die Schnittstelle zwischen Mensch und Sprachmodell. Die Qualität der Antwort hängt maßgeblich davon ab, **wie** eine Aufgabe formuliert wird – nicht nur **was** gefragt wird.
 
@@ -39,11 +39,11 @@ Für KI-Agenten ist Prompt Engineering besonders relevant:
 
 ---
 
-## 2 Grundlegende Prompt-Strukturen
+## Grundlegende Prompt-Strukturen
 
 Effektive Prompts folgen einer klaren Struktur. Drei Grundmuster haben sich etabliert.
 
-### 2.1 Zero-Shot Prompting
+### Zero-Shot Prompting
 
 Das Modell erhält eine Aufgabe ohne Beispiele und löst sie basierend auf seinem Vorwissen.
 
@@ -62,7 +62,7 @@ prompt = ChatPromptTemplate.from_messages([
 - Allgemeinwissen-Fragen
 - Standardformatierungen
 
-### 2.2 Few-Shot Prompting
+### Few-Shot Prompting
 
 Das Modell erhält Beispiele, die das gewünschte Verhalten demonstrieren.
 
@@ -82,7 +82,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 - Domänenspezifische Klassifikationen
 - Konsistente Ausgabestrukturen
 
-### 2.3 Chain-of-Thought (CoT)
+### Chain-of-Thought (CoT)
 
 Das Modell wird angewiesen, seinen Denkprozess schrittweise darzulegen.
 
@@ -110,11 +110,11 @@ Lösung:"""
 
 ---
 
-## 3 System-Prompts für Agenten
+## System-Prompts für Agenten
 
 Der System-Prompt definiert die Identität und das Verhalten eines Agenten. Er ist der wichtigste Hebel für konsistentes Agentenverhalten.
 
-### 3.1 Struktur eines effektiven System-Prompts
+### Struktur eines effektiven System-Prompts
 
 Ein guter System-Prompt beantwortet vier Fragen:
 
@@ -125,7 +125,7 @@ Ein guter System-Prompt beantwortet vier Fragen:
 | **Wie?** | Verhaltensregeln und Tonalität |
 | **Was nicht?** | Explizite Einschränkungen |
 
-### 3.2 Beispiel: Vollständiger Agent-System-Prompt
+### Beispiel: Vollständiger Agent-System-Prompt
 
 ```python
 system_prompt = """Du bist ein technischer Support-Agent für ein Software-Unternehmen.
@@ -153,7 +153,7 @@ EINSCHRÄNKUNGEN:
 """
 ```
 
-### 3.3 Typische Fehler bei System-Prompts
+### Typische Fehler bei System-Prompts
 
 > [!WARNING] System-Prompt Anti-Patterns     
 > Diese Fehler führen zu inkonsistentem, unvorhersagbarem Agentenverhalten — oft erst in der Produktion erkennbar.
@@ -167,11 +167,11 @@ EINSCHRÄNKUNGEN:
 
 ---
 
-## 4 Tool-Beschreibungen optimieren
+## Tool-Beschreibungen optimieren
 
 Die Beschreibung eines Tools bestimmt, ob und wann ein Agent es korrekt einsetzt. Eine präzise Beschreibung ist entscheidender als der Code dahinter.
 
-### 4.1 Anatomie einer guten Tool-Beschreibung
+### Anatomie einer guten Tool-Beschreibung
 
 ```python
 from langchain_core.tools import tool
@@ -200,7 +200,7 @@ def search_knowledge(query: str, max_results: int = 5) -> str:
     # Implementation...
 ```
 
-### 4.2 Checkliste für Tool-Beschreibungen
+### Checkliste für Tool-Beschreibungen
 
 - [ ] **Zweck klar benannt** – Was macht das Tool?
 - [ ] **Anwendungsfälle** – Wann soll es verwendet werden?
@@ -210,11 +210,11 @@ def search_knowledge(query: str, max_results: int = 5) -> str:
 
 ---
 
-## 5 Ausgabeformatierung
+## Ausgabeformatierung
 
 Strukturierte Ausgaben machen Agentenantworten verarbeitbar und konsistent.
 
-### 5.1 Explizite Formatvorgaben
+### Explizite Formatvorgaben
 
 ```python
 format_prompt = ChatPromptTemplate.from_template(
@@ -234,7 +234,7 @@ KONFIDENZ: [hoch/mittel/niedrig]
 )
 ```
 
-### 5.2 Strukturierte Ausgaben mit Pydantic
+### Strukturierte Ausgaben mit Pydantic
 
 Für maschinelle Weiterverarbeitung bietet LangChain typsichere Ausgaben:
 
@@ -258,9 +258,9 @@ print(result.konfidenz)
 
 ---
 
-## 6 Fortgeschrittene Strategien
+## Fortgeschrittene Strategien
 
-### 6.1 Role-Prompting
+### Role-Prompting
 
 Die Zuweisung einer spezifischen Rolle verbessert domänenspezifische Antworten.
 
@@ -277,7 +277,7 @@ prompt = ChatPromptTemplate.from_messages([
 ])
 ```
 
-### 6.2 Self-Consistency
+### Self-Consistency
 
 Mehrere Antworten generieren und die häufigste oder konsistenteste wählen.
 
@@ -293,7 +293,7 @@ def self_consistent_answer(question: str, n: int = 3) -> str:
     return aggregate_responses(responses)
 ```
 
-### 6.3 Retrieval-Augmented Prompting
+### Retrieval-Augmented Prompting
 
 Kontext aus externen Quellen in den Prompt integrieren:
 
@@ -313,9 +313,9 @@ ANTWORT:"""
 
 ---
 
-## 7 Best Practices
+## Best Practices
 
-### 7.1 Die CLEAR-Methode
+### Die CLEAR-Methode
 
 | Buchstabe | Prinzip | Umsetzung |
 |-----------|---------|-----------|
@@ -325,7 +325,7 @@ ANTWORT:"""
 | **A** | Adaptive | An Aufgabe und Modell anpassen |
 | **R** | Reproducible | Konsistente Ergebnisse ermöglichen |
 
-### 7.2 Iteratives Prompt-Design
+### Iteratives Prompt-Design
 
 ```mermaid
 flowchart LR
@@ -345,7 +345,7 @@ flowchart LR
 4. **Testen mit Varianten** – Verschiedene Eingaben prüfen
 5. **Dokumentieren** – Warum funktioniert diese Version?
 
-### 7.3 Prompt-Versionierung
+### Prompt-Versionierung
 
 ```python
 PROMPTS = {
@@ -364,9 +364,9 @@ current_version = "classify_email_v2"
 
 ---
 
-## 8 Häufige Fehler und Lösungen
+## Häufige Fehler und Lösungen
 
-### 8.1 Fehler: Ambige Anweisungen
+### Fehler: Ambige Anweisungen
 
 **Problem:**
 ```python
@@ -386,7 +386,7 @@ Text: {text}
 Zusammenfassung:"""
 ```
 
-### 8.2 Fehler: Fehlende Beispiele bei komplexen Formaten
+### Fehler: Fehlende Beispiele bei komplexen Formaten
 
 **Problem:**
 ```python
@@ -407,7 +407,7 @@ Text: {text}
 Entitäten:"""
 ```
 
-### 8.3 Fehler: Widersprüchliche Anweisungen
+### Fehler: Widersprüchliche Anweisungen
 
 **Problem:**
 ```python
@@ -427,7 +427,7 @@ Thema: {thema}"""
 
 ---
 
-## 9 Zusammenfassung
+## Zusammenfassung
 
 Effektives Prompt Engineering basiert auf drei Säulen:
 

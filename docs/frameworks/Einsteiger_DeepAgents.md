@@ -22,12 +22,12 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Was ist DeepAgents?
+## Kurzüberblick: Was ist DeepAgents?
 
 DeepAgents ist eine zusätzliche Abstraktionsschicht im LangChain-Ökosystem.
 Während LangGraph Workflows explizit über **State**, **Nodes** und **Edges** modelliert, liefert DeepAgents ein bereits vorbereitetes **Harness** für typische agentische Langläufer-Aufgaben.
 
-### 1.1 Herkunft
+### Herkunft
 
 LangChain hat DeepAgents explizit als Open-Source-Umsetzung der Claude-Code-Architektur veröffentlicht — aus dem README:
 
@@ -35,7 +35,7 @@ LangChain hat DeepAgents explizit als Open-Source-Umsetzung der Claude-Code-Arch
 
 Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehen, zu verallgemeinern und provider-agnostisch zugänglich zu machen. MIT-Lizenz. Kostenlos.
 
-### 1.2 Kernbausteine
+### Kernbausteine
 
 - **Planning** über eingebaute Todo-Mechanismen
 - **Filesystem-Zugriff** über Lese-/Schreibwerkzeuge mit austauschbaren Backends
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 2 Wann DeepAgents, wann LangGraph?
+## Wann DeepAgents, wann LangGraph?
 
 DeepAgents ist kein Ersatz für LangGraph, sondern eine bequeme Schicht darüber.
 
@@ -103,11 +103,11 @@ flowchart TD
 
 ---
 
-## 3 Das kleinstmögliche funktionierende Beispiel
+## Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Zugang ist ein Minimalbeispiel mit einem Tool und einem DeepAgent.
 
-### 3.1 Installation
+### Installation
 
 ```bash
 pip install deepagents
@@ -115,7 +115,7 @@ pip install deepagents
 
 Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt.
 
-### 3.2 Ein einfaches Tool
+### Ein einfaches Tool
 
 ```python
 from langchain_core.tools import tool
@@ -131,7 +131,7 @@ def begriff_erklaeren(begriff: str) -> str:
     return glossar.get(begriff.lower(), f"Kein Eintrag für: {begriff}")
 ```
 
-### 3.3 Agent erzeugen
+### Agent erzeugen
 
 ```python
 from deepagents import create_deep_agent
@@ -147,7 +147,7 @@ agent = create_deep_agent(
 )
 ```
 
-### 3.4 Agent ausführen
+### Agent ausführen
 
 ```python
 result = agent.invoke({
@@ -165,11 +165,11 @@ print(result["messages"][-1].content)
 
 ---
 
-## 4 Die Grundidee: Planning, Dateien, Delegation
+## Die Grundidee: Planning, Dateien, Delegation
 
 DeepAgents wird leichter verständlich, wenn die drei Kernideen getrennt betrachtet werden.
 
-### 4.1 Planning — und die No-Op-Einsicht
+### Planning — und die No-Op-Einsicht
 
 Das Harness kann Aufgaben in Teilschritte zerlegen und diese intern als Arbeitsplan verwalten.
 
@@ -189,7 +189,7 @@ Typischer Nutzen:
 
 Merksatz: **Nicht nur reagieren, sondern Arbeitsschritte sichtbar organisieren.**
 
-### 4.2 Dateien statt nur Chat-History — und austauschbare Backends
+### Dateien statt nur Chat-History — und austauschbare Backends
 
 DeepAgents arbeitet nicht nur mit Nachrichten, sondern kann Informationen in Dateien ablegen und später wieder lesen.
 
@@ -214,7 +214,7 @@ Das Backend lässt sich austauschen, ohne die Agent-Logik zu ändern.
 
 Merksatz: **Wissen wird ausgelagert, statt nur im Nachrichtenverlauf mitgeschleppt zu werden.**
 
-### 4.3 Sub-Agenten
+### Sub-Agenten
 
 Teilaufgaben können an spezialisierte Sub-Agenten delegiert werden.
 Jeder Sub-Agent arbeitet mit eigener History und klarer Rolle.
@@ -229,7 +229,7 @@ Merksatz: **Der Hauptagent koordiniert, Spezialisten bearbeiten Teilprobleme.**
 
 ---
 
-## 5 Eigene Tools ergänzen
+## Eigene Tools ergänzen
 
 DeepAgents lebt von kleinen, klaren Werkzeugen.
 
@@ -266,7 +266,7 @@ Bewährte Regeln:
 
 ---
 
-## 6 Einfacher Sub-Agent
+## Einfacher Sub-Agent
 
 Sub-Agenten werden als Konfigurationsobjekte beschrieben und dem Hauptagenten übergeben.
 
@@ -301,18 +301,18 @@ Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede 
 
 ---
 
-## 7 CLI und erweiterte Features
+## CLI und erweiterte Features
 
 Neben dem Python-SDK gibt es eine eigenständige **DeepAgents CLI** — die interaktive Terminal-Variante für den direkten Einsatz.
 
-### 7.1 Installation der CLI
+### Installation der CLI
 
 ```bash
 # Linux / Mac
 curl -LsSf https://raw.githubusercontent.com/langchain-ai/deepagents/main/libs/cli/scripts/install.sh | bash
 ```
 
-### 7.2 Was die CLI hinzufügt
+### Was die CLI hinzufügt
 
 | Feature | SDK | CLI |
 |---------|-----|-----|
@@ -325,12 +325,12 @@ curl -LsSf https://raw.githubusercontent.com/langchain-ai/deepagents/main/libs/c
 | Human-in-the-Loop Approval | — | ✅ |
 | Custom Skills | — | ✅ |
 
-### 7.3 MCP-Support
+### MCP-Support
 
 DeepAgents unterstützt das **Model Context Protocol (MCP)** via `langchain-mcp-adapters`.
 Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können direkt verwendet werden.
 
-### 7.4 Langzeitgedächtnis
+### Langzeitgedächtnis
 
 Über den LangGraph Memory Store kann der Agent Informationen **thread-übergreifend** speichern. Vorherige Gespräche und deren Kontext bleiben erhalten.
 

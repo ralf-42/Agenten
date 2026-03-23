@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Warum brauchen LLMs Werkzeuge?
+## Warum brauchen LLMs Werkzeuge?
 
 Large Language Models sind beeindruckend in der Textverarbeitung – doch sie haben fundamentale Grenzen:
 
@@ -40,11 +40,11 @@ Large Language Models sind beeindruckend in der Textverarbeitung – doch sie ha
 
 ---
 
-## 2 Das Konzept: Function Calling
+## Das Konzept: Function Calling
 
 Function Calling ist der Mechanismus, durch den ein LLM strukturiert mitteilt, welches Tool mit welchen Parametern aufgerufen werden soll.
 
-### 2.1 Ablauf im Detail
+### Ablauf im Detail
 
 ```mermaid
 sequenceDiagram
@@ -62,7 +62,7 @@ sequenceDiagram
 
 **Wichtige Erkenntnis:** Das LLM führt das Tool nicht selbst aus – es generiert lediglich einen strukturierten Aufruf (JSON), den die Anwendung interpretiert und ausführt.
 
-### 2.2 Was das LLM "sieht"
+### Was das LLM "sieht"
 
 Dem Modell werden verfügbare Tools als Schema übergeben:
 
@@ -85,11 +85,11 @@ Das Modell entscheidet anhand von **Name** und **Beschreibung**, ob und wie es d
 
 ---
 
-## 3 Tools definieren mit dem `@tool` Decorator
+## Tools definieren mit dem `@tool` Decorator
 
 In LangChain 1.0+ ist der `@tool` Decorator der Standard für Tool-Definitionen. Er generiert automatisch das Schema aus Docstring und Type Hints.
 
-### 3.1 Grundstruktur
+### Grundstruktur
 
 ```python
 from langchain_core.tools import tool
@@ -108,7 +108,7 @@ def tool_name(parameter: type) -> return_type:
     return ergebnis
 ```
 
-### 3.2 Beispiel: Einfaches Rechen-Tool
+### Beispiel: Einfaches Rechen-Tool
 
 ```python
 from langchain_core.tools import tool
@@ -127,7 +127,7 @@ def multiply(a: int, b: int) -> int:
     return a * b
 ```
 
-### 3.3 Beispiel: Tool mit Fehlerbehandlung
+### Beispiel: Tool mit Fehlerbehandlung
 
 ```python
 @tool
@@ -152,14 +152,14 @@ def safe_divide(a: float, b: float) -> str:
 
 ---
 
-## 4 Die Bedeutung guter Docstrings
+## Die Bedeutung guter Docstrings
 
 Der Docstring ist **entscheidend** für die Tool-Nutzung. Das LLM trifft seine Entscheidung ausschließlich auf Basis von Name und Beschreibung.
 
-> [!TIP] Docstring-Qualität entscheidet über Tool-Selektion    
+> [!TIP] Docstring-Qualität entscheidet über Tool-Selektion
 > Das LLM wählt Tools **ausschließlich** anhand von Name und Beschreibung. Ein schlechter Docstring bedeutet falsche oder ausgebliebene Tool-Aufrufe — unabhängig davon, wie gut der Tool-Code ist.
 
-### 4.1 Schlechter Docstring
+### Schlechter Docstring
 
 ```python
 @tool
@@ -170,7 +170,7 @@ def search(q: str) -> str:
 
 **Problem:** Das LLM weiß nicht, *was* gesucht wird, *wo* gesucht wird, oder *wann* dieses Tool sinnvoll ist.
 
-### 4.2 Guter Docstring
+### Guter Docstring
 
 ```python
 @tool
@@ -205,11 +205,11 @@ def search_company_documents(query: str) -> str:
 
 ---
 
-## 5 Type Hints: Pflicht, nicht Kür
+## Type Hints: Pflicht, nicht Kür
 
 Type Hints sind **zwingend erforderlich** für die automatische Schema-Generierung.
 
-### 5.1 Unterstützte Typen
+### Unterstützte Typen
 
 ```python
 from typing import List, Optional, Dict
@@ -227,7 +227,7 @@ def process_data(
     pass
 ```
 
-### 5.2 Häufiger Fehler: Fehlende Type Hints
+### Häufiger Fehler: Fehlende Type Hints
 
 ```python
 # ❌ FALSCH: Keine Type Hints
@@ -248,7 +248,7 @@ def add(a: int, b: int) -> int:
 
 ---
 
-## 6 Tools direkt testen
+## Tools direkt testen
 
 Vor der Integration in einen Agenten sollten Tools isoliert getestet werden.
 
@@ -274,11 +274,11 @@ Ergebnis: 56
 
 ---
 
-## 7 Tools an ein LLM binden
+## Tools an ein LLM binden
 
 Ein LLM mit gebundenen Tools kann selbstständig entscheiden, welches Tool wann aufgerufen wird.
 
-### 7.1 Variante A: `bind_tools()`
+### Variante A: `bind_tools()`
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -302,7 +302,7 @@ print(response.tool_calls)
 
 **Wichtig:** `bind_tools()` führt das Tool nicht aus – es gibt nur die Absicht des LLMs zurück.
 
-### 7.2 Variante B: Agent mit automatischer Ausführung
+### Variante B: Agent mit automatischer Ausführung
 
 ```python
 from langchain.agents import create_agent
@@ -323,9 +323,9 @@ print(response["messages"][-1].content)
 
 ---
 
-## 8 Praktische Tool-Beispiele
+## Praktische Tool-Beispiele
 
-### 8.1 Beispiel: Aktuelles Datum
+### Beispiel: Aktuelles Datum
 
 ```python
 from datetime import datetime
@@ -347,7 +347,7 @@ def get_current_date() -> str:
     return f"{weekday}, {now.strftime('%d.%m.%Y')}"
 ```
 
-### 8.2 Beispiel: Websuche (Stub)
+### Beispiel: Websuche (Stub)
 
 ```python
 @tool
@@ -370,7 +370,7 @@ def web_search(query: str, num_results: int = 3) -> str:
     return f"Suchergebnisse für '{query}': [Platzhalter für echte Ergebnisse]"
 ```
 
-### 8.3 Beispiel: Dateioperationen
+### Beispiel: Dateioperationen
 
 ```python
 from pathlib import Path
@@ -402,11 +402,11 @@ def read_file(filepath: str) -> str:
 
 ---
 
-## 9 Fehlerbehandlung in Tools
+## Fehlerbehandlung in Tools
 
 Robuste Tools müssen mit Fehlern umgehen können. Ein Tool-Absturz kann den gesamten Agenten blockieren.
 
-### 9.1 Muster: Try-Except mit informativer Rückgabe
+### Muster: Try-Except mit informativer Rückgabe
 
 ```python
 @tool
@@ -436,7 +436,7 @@ def query_database(sql: str) -> str:
         return f"Unerwarteter Fehler: {str(e)}"
 ```
 
-### 9.2 Warum informative Fehlermeldungen?
+### Warum informative Fehlermeldungen?
 
 Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung ermöglicht dem Agenten:
 
@@ -449,9 +449,9 @@ Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung erm
 
 ---
 
-## 10 Best Practices
+## Best Practices
 
-### 10.1 Do's ✅
+### Do's ✅
 
 | Praxis | Begründung |
 |--------|------------|
@@ -462,7 +462,7 @@ Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung erm
 | **Isolierte Tests vor Integration** | Frühzeitige Fehlererkennung |
 | **Emojis für visuelle Identifikation** | Besseres Debugging |
 
-### 10.2 Don'ts ❌
+### Don'ts ❌
 
 | Anti-Pattern | Problem |
 |--------------|---------|
@@ -475,7 +475,7 @@ Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung erm
 
 ---
 
-## 11 Zusammenfassung
+## Zusammenfassung
 
 **Tool Use** ermöglicht KI-Agenten, über reines Textwissen hinauszugehen:
 

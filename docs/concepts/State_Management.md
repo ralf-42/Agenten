@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum State Management?
+## Kurzüberblick: Warum State Management?
 
 Ein einfacher Chatbot benötigt keinen komplexen Zustand – die letzte Nachricht reicht. Doch sobald Workflows mehrere Schritte umfassen, Tools aufrufen oder Entscheidungen treffen, wird die **zentrale Verwaltung von Zustandsdaten** unverzichtbar.
 
@@ -44,9 +44,9 @@ Typische Herausforderungen ohne strukturiertes State Management:
 
 ---
 
-## 2 Grundkonzepte
+## Grundkonzepte
 
-### 2.1 Was ist "State"?
+### Was ist "State"?
 
 Der State ist ein **zentrales Datenobjekt**, das alle relevanten Informationen eines Workflows enthält. Er wird von Node zu Node weitergereicht und dabei transformiert.
 
@@ -54,7 +54,7 @@ Der State ist ein **zentrales Datenobjekt**, das alle relevanten Informationen e
 [Node A] → State → [Node B] → State' → [Node C] → State'' → ...
 ```
 
-### 2.2 Eigenschaften eines guten States
+### Eigenschaften eines guten States
 
 | Eigenschaft | Beschreibung |
 |-------------|--------------|
@@ -63,7 +63,7 @@ Der State ist ein **zentrales Datenobjekt**, das alle relevanten Informationen e
 | **Immutable-freundlich** | Änderungen erzeugen neue Versionen, kein Überschreiben |
 | **Serialisierbar** | Für Checkpointing und Debugging speicherbar |
 
-### 2.3 Beispiel: Einfacher Chat-State
+### Beispiel: Einfacher Chat-State
 
 ```python
 from typing import TypedDict, Annotated
@@ -77,11 +77,11 @@ class ChatState(TypedDict):
 
 ---
 
-## 3 TypedDict vs. Pydantic
+## TypedDict vs. Pydantic
 
 Für State-Definitionen stehen zwei Hauptansätze zur Verfügung. Die Wahl hängt vom Einsatzzweck ab.
 
-### 3.1 TypedDict – Empfohlen für internen State
+### TypedDict – Empfohlen für internen State
 
 ```python
 from typing import TypedDict, Annotated
@@ -99,7 +99,7 @@ class WorkflowState(TypedDict):
 - Perfekt für State Machines
 - Von LangGraph empfohlen
 
-### 3.2 Pydantic BaseModel – Für Schnittstellen
+### Pydantic BaseModel – Für Schnittstellen
 
 ```python
 from pydantic import BaseModel, Field
@@ -114,7 +114,7 @@ class UserInput(BaseModel):
 - Automatische Typkonvertierung
 - Ideal für API-Eingaben und strukturierte LLM-Ausgaben
 
-### 3.3 Entscheidungshilfe
+### Entscheidungshilfe
 
 | Kriterium | TypedDict | Pydantic |
 |-----------|-----------|----------|
@@ -129,14 +129,14 @@ class UserInput(BaseModel):
 
 ---
 
-## 4 Reducer-Funktionen
+## Reducer-Funktionen
 
 > [!DANGER] Ohne Reducer werden State-Werte überschrieben   
 > Jeder Node-Return ersetzt das gesamte Feld — bei `messages` gehen so alle vorherigen Nachrichten verloren. `Annotated[list, add_messages]` ist kein optionaler Komfort, sondern notwendig für korrektes State-Management.
 
 Reducer bestimmen, **wie** State-Felder aktualisiert werden. Ohne Reducer wird ein Feld bei jeder Änderung überschrieben. Mit Reducer können Werte intelligent kombiniert werden.
 
-### 4.1 Das Problem ohne Reducer
+### Das Problem ohne Reducer
 
 ```python
 # Ohne Reducer: Überschreiben
@@ -146,7 +146,7 @@ state = {"messages": ["Hallo"]}
 # Ergebnis: messages = ["Wie geht's?"]  ← "Hallo" ist weg!
 ```
 
-### 4.2 Die Lösung mit add_messages
+### Die Lösung mit add_messages
 
 ```python
 from typing import Annotated
@@ -162,14 +162,14 @@ state = {"messages": ["Hallo"]}
 # Ergebnis: messages = ["Hallo", "Wie geht's?"]  ← Beide erhalten!
 ```
 
-### 4.3 Eingebaute Reducer
+### Eingebaute Reducer
 
 | Reducer | Verhalten | Anwendung |
 |---------|-----------|-----------|
 | `add_messages` | Fügt Nachrichten hinzu, dedupliziert nach ID | Chat-Verläufe |
 | `operator.add` | Addiert Werte (Listen, Zahlen) | Zähler, Log-Listen |
 
-### 4.4 Beispiel: Eigener Reducer
+### Beispiel: Eigener Reducer
 
 ```python
 from typing import Annotated
@@ -181,7 +181,7 @@ class AnalysisState(TypedDict):
     total_tokens: Annotated[int, operator.add]  # Token-Zähler addieren
 ```
 
-### 4.5 Visualisierung: Reducer in Aktion
+### Visualisierung: Reducer in Aktion
 
 ```
 Initial State:
@@ -208,11 +208,11 @@ State nach Node 2:
 
 ---
 
-## 5 State in LangGraph
+## State in LangGraph
 
 LangGraph nutzt State als zentrales Element für Workflows. Jeder Node empfängt den aktuellen State und gibt Änderungen zurück.
 
-### 5.1 Grundstruktur
+### Grundstruktur
 
 ```python
 from langgraph.graph import StateGraph, START, END
@@ -246,7 +246,7 @@ graph.add_edge("process", END)
 app = graph.compile()
 ```
 
-### 5.2 Wichtige Prinzipien
+### Wichtige Prinzipien
 
 **Nodes geben nur Änderungen zurück:**
 
@@ -278,9 +278,9 @@ def typed_node(state: AgentState) -> AgentState:
 
 ---
 
-## 6 Praktische Beispiele
+## Praktische Beispiele
 
-### 6.1 Beispiel: Mehrstufiger Analyse-Workflow
+### Beispiel: Mehrstufiger Analyse-Workflow
 
 ```python
 from typing import TypedDict, Annotated
@@ -345,7 +345,7 @@ initial_state = {
 result = app.invoke(initial_state)
 ```
 
-### 6.2 Beispiel: Bedingtes Routing basierend auf State
+### Beispiel: Bedingtes Routing basierend auf State
 
 ```python
 class RouterState(TypedDict):
@@ -391,9 +391,9 @@ graph.add_conditional_edges(
 
 ---
 
-## 7 Best Practices
+## Best Practices
 
-### 7.1 State-Design
+### State-Design
 
 | Empfehlung | Begründung |
 |------------|------------|
@@ -402,7 +402,7 @@ graph.add_conditional_edges(
 | **Optionale Felder vermeiden** | Lieber Defaults setzen |
 | **Keine sensiblen Daten** | PII gehört nicht in den State |
 
-### 7.2 Reducer-Nutzung
+### Reducer-Nutzung
 
 ```python
 # ✅ Empfohlen: Reducer für akkumulierende Felder
@@ -415,7 +415,7 @@ class RiskyState(TypedDict):
     messages: list  # Kann unbeabsichtigt überschrieben werden
 ```
 
-### 7.3 Node-Design
+### Node-Design
 
 ```python
 # ✅ Node gibt nur Änderungen zurück
@@ -432,7 +432,7 @@ def safe_node(state: MyState) -> MyState:
         return {"result": None, "error": str(e)}
 ```
 
-### 7.4 Debugging
+### Debugging
 
 ```python
 # State-Änderungen loggen
@@ -447,9 +447,9 @@ def debug_node(state: MyState) -> MyState:
 
 ---
 
-## 8 Häufige Fehler
+## Häufige Fehler
 
-### 8.1 Fehler: Gesamten State zurückgeben
+### Fehler: Gesamten State zurückgeben
 
 ```python
 # ❌ Falsch
@@ -462,7 +462,7 @@ def good_node(state: MyState) -> MyState:
     return {"new_field": "value"}  # Nur die Änderung
 ```
 
-### 8.2 Fehler: Reducer vergessen
+### Fehler: Reducer vergessen
 
 ```python
 # ❌ Problem: Nachrichten werden überschrieben
@@ -474,7 +474,7 @@ class GoodState(TypedDict):
     messages: Annotated[list, add_messages]
 ```
 
-### 8.3 Fehler: State mutieren statt neue Werte zurückgeben
+### Fehler: State mutieren statt neue Werte zurückgeben
 
 > [!WARNING] State-Mutation erzeugt inkonsistente Checkpoints     
 > Direkte Mutation des State-Objekts umgeht LangGraphs Reducer-Mechanismus und kann zu unerwartetem Verhalten beim Checkpointing führen.
@@ -491,7 +491,7 @@ def pure_node(state: MyState) -> MyState:
     return {"items": new_items}
 ```
 
-### 8.4 Fehler: Untypisierter State
+### Fehler: Untypisierter State
 
 ```python
 # ❌ Falsch: dict ohne Typen
@@ -507,7 +507,7 @@ graph = StateGraph(TypedState)  # Volle IDE-Unterstützung
 
 ---
 
-## 9 Zusammenfassung
+## Zusammenfassung
 
 State Management bildet das Rückgrat komplexer KI-Workflows. Die wichtigsten Punkte:
 
@@ -520,7 +520,7 @@ State Management bildet das Rückgrat komplexer KI-Workflows. Die wichtigsten Pu
 | **add_messages** | Standard-Reducer für Chat-Verläufe |
 | **Nodes** | Geben nur Änderungen zurück, nicht den gesamten State |
 
-### 9.1 Quick Reference
+### Quick Reference
 
 ```python
 from typing import TypedDict, Annotated

@@ -336,7 +336,7 @@ Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können
 
 ---
 
-## 8 Provider-Agnostik: Das zentrale Versprechen
+## Provider-Agnostik: Das zentrale Versprechen
 
 Der wichtigste Unterschied zu Claude Code oder Codex: **DeepAgents ist modellunabhängig.**
 
@@ -361,7 +361,7 @@ Das ist besonders relevant, wenn:
 - Organisationsrichtlinien Multi-Provider-Unterstützung erfordern
 - Kosten zwischen Anbietern optimiert werden sollen
 
-### 8.1 Vergleich: DeepAgents vs. Claude Agent SDK vs. Codex SDK
+### Vergleich: DeepAgents vs. Claude Agent SDK vs. Codex SDK
 
 | Kriterium | DeepAgents | Claude Agent SDK | Codex SDK |
 |---|---|---|---|
@@ -381,7 +381,7 @@ Modellfreiheit, pluggable Backends, Unabhängigkeit von einem einzelnen Anbieter
 
 ---
 
-## 9 Was intern passiert
+## Was intern passiert
 
 Auch wenn das Harness viel Arbeit abnimmt, läuft darunter weiterhin ein agentischer Workflow ab:
 
@@ -411,11 +411,11 @@ flowchart TD
 
 ---
 
-## 10 Grenzen und Debugging
+## Grenzen und Debugging
 
 DeepAgents spart Code, versteckt aber auch mehr Logik.
 
-### 10.1 Typische Grenzen
+### Typische Grenzen
 
 - Weniger direkte Kontrolle als bei manuell gebautem LangGraph
 - Interne Abläufe sind nicht so transparent wie ein selbst definierter Graph
@@ -423,7 +423,7 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
 - Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
-### 10.2 Das "Trust the LLM"-Modell und Security
+### Das "Trust the LLM"-Modell und Security
 
 DeepAgents verfolgt eine bewusst offene Philosophie — aus dem README:
 
@@ -437,7 +437,7 @@ Das bedeutet:
 
 Das ist eine Designentscheidung, keine Schwäche — aber wer DeepAgents produktiv einsetzt, trägt die Verantwortung für saubere Tool-Grenzen.
 
-### 10.3 Praktische Hinweise
+### Praktische Hinweise
 
 - Versionen pinnen
 - Kleine Tools statt Monolithen bauen
@@ -452,7 +452,7 @@ Deshalb gilt:
 
 ---
 
-## 11 Einordnung im Kurskontext
+## Einordnung im Kurskontext
 
 DeepAgents ist am nützlichsten, wenn bereits ein Fundament vorhanden ist:
 
@@ -474,7 +474,7 @@ Kurzform:
 
 ---
 
-## 12 Zusammenfassung
+## Zusammenfassung
 
 DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 

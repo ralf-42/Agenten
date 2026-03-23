@@ -23,7 +23,7 @@ has_toc: true
 
 ---
 
-## 1 Projektübersicht
+## Projektübersicht
 
 In dieser Übungsaufgabe entsteht schrittweise ein **Kursnavigator**, der Lernende durch den Agenten-Kurs führt. Der Navigator beantwortet Fragen zu Modulen, empfiehlt Lernpfade, erklärt zentrale Konzepte und erzeugt auf Wunsch kleine Quizfragen.
 
@@ -40,7 +40,7 @@ In dieser Übungsaufgabe entsteht schrittweise ein **Kursnavigator**, der Lernen
 
 ---
 
-## 2 Notebook-Struktur
+## Notebook-Struktur
 
 Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
@@ -54,7 +54,7 @@ Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
    └── 🚀 Kapitel 6: Gradio UI & Bonus Deployment
 ```
 
-### 2.1 Modul-Zuordnung
+### Modul-Zuordnung
 
 Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel wird **nach** dem zugehörigen Modul bearbeitet:
 
@@ -71,13 +71,13 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel
 
 ---
 
-## 3 Vorbereitung: Google Colab oder lokales Setup
+## Vorbereitung: Google Colab oder lokales Setup
 
-### 3.1 API-Key speichern
+### API-Key speichern
 
 Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets oder lokal in einer `.env` speichern.
 
-### 3.2 Basis-Pakete installieren
+### Basis-Pakete installieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -88,7 +88,7 @@ Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets od
 !uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite gradio
 ```
 
-### 3.3 API-Key laden und Umgebung prüfen
+### API-Key laden und Umgebung prüfen
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -105,13 +105,13 @@ check_environment()
 
 ---
 
-## 4 Kapitel 1: StateGraph Basics
+## Kapitel 1: StateGraph Basics
 
 > 📚 **Kursmodul:** M08 – Warum LangGraph? | M09 – StateGraph Basics
 
 **Lernziel:** Einen kleinen Graphen mit TypedDict-State und einfachen Nodes aufbauen
 
-### 4.1 Szenario
+### Szenario
 
 Ein Nutzer stellt eine Anfrage wie:
 
@@ -121,7 +121,7 @@ Ein Nutzer stellt eine Anfrage wie:
 
 Der Graph soll die Anfrage zunächst entgegennehmen und den Typ der Anfrage erkennen.
 
-### 4.2 Aufgabe 1.1: State definieren
+### Aufgabe 1.1: State definieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -138,7 +138,7 @@ class NavigatorState(TypedDict):
     answer: str
 ```
 
-### 4.3 Aufgabe 1.2: Erste Nodes erstellen
+### Aufgabe 1.2: Erste Nodes erstellen
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -155,7 +155,7 @@ def fallback_answer(state: NavigatorState) -> NavigatorState:
     ...
 ```
 
-### 4.4 Aufgabe 1.3: Minimalen Graphen bauen
+### Aufgabe 1.3: Minimalen Graphen bauen
 
 ```python
 workflow = StateGraph(NavigatorState)
@@ -170,7 +170,7 @@ workflow.add_edge("fallback", END)
 graph = workflow.compile()
 ```
 
-### 4.5 Aufgabe 1.4: Minimaltest
+### Aufgabe 1.4: Minimaltest
 
 ```python
 initial_state = {
@@ -192,13 +192,13 @@ print(result["answer"])
 
 ---
 
-## 5 Kapitel 2: Intent Routing
+## Kapitel 2: Intent Routing
 
 > 📚 **Kursmodul:** M10 – Conditional Routing & Tool-Loop
 
 **Lernziel:** Verschiedene Anfragetypen über Conditional Edges zu spezialisierten Nodes leiten
 
-### 5.1 Aufgabe 2.1: Router-Funktion definieren
+### Aufgabe 2.1: Router-Funktion definieren
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -212,7 +212,7 @@ def route_by_intent(state: NavigatorState) -> Literal["module", "learning_path",
     return state["intent"] or "fallback"
 ```
 
-### 5.2 Aufgabe 2.2: Antwort-Nodes anlegen
+### Aufgabe 2.2: Antwort-Nodes anlegen
 
 ```python
 def answer_module_question(state: NavigatorState) -> NavigatorState:
@@ -232,7 +232,7 @@ def generate_quiz(state: NavigatorState) -> NavigatorState:
     ...
 ```
 
-### 5.3 Aufgabe 2.3: Graph mit Conditional Edge bauen
+### Aufgabe 2.3: Graph mit Conditional Edge bauen
 
 ```python
 workflow = StateGraph(NavigatorState)
@@ -266,13 +266,13 @@ workflow.add_conditional_edges(
 
 ---
 
-## 6 Kapitel 3: Wissensbasis & Retrieval-Light
+## Kapitel 3: Wissensbasis & Retrieval-Light
 
 > 📚 **Kursmodul:** M11-M14 oder als vereinfachte Kursdaten-Aufgabe ab M10
 
 **Lernziel:** Kurswissen lokal strukturieren und gezielt in den Graphen einbinden
 
-### 6.1 Aufgabe 3.1: Wissensbasis laden
+### Aufgabe 3.1: Wissensbasis laden
 
 Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M34) liegt unter `02_daten/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
 
@@ -295,7 +295,7 @@ Jeder Eintrag enthält: `module`, `title`, `topics`, `level`, `prerequisites`, `
 
 > **Erweiterung:** Ergänzen oder korrigieren Sie Einträge nach Bedarf — die Datei ist ein Startpunkt, keine fertige Lösung.
 
-### 6.2 Aufgabe 3.2: Kontextsuche implementieren
+### Aufgabe 3.2: Kontextsuche implementieren
 
 ```python
 def retrieve_context(state: NavigatorState) -> NavigatorState:
@@ -304,7 +304,7 @@ def retrieve_context(state: NavigatorState) -> NavigatorState:
     ...
 ```
 
-### 6.3 Aufgabe 3.3: Retrieval in den Graphen einbauen
+### Aufgabe 3.3: Retrieval in den Graphen einbauen
 
 ```python
 workflow.add_node("retrieve_context", retrieve_context)
@@ -325,13 +325,13 @@ workflow.add_conditional_edges(
 
 ---
 
-## 7 Kapitel 4: Checkpointing & Sessions
+## Kapitel 4: Checkpointing & Sessions
 
 > 📚 **Kursmodul:** M16 – Checkpointing & Sessions
 
 **Lernziel:** Verlauf und Sitzungen für wiederholte Lernfragen speichern
 
-### 7.1 Aufgabe 4.1: Checkpointer einrichten
+### Aufgabe 4.1: Checkpointer einrichten
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -344,7 +344,7 @@ checkpointer = SqliteSaver.from_conn_string("kursnavigator_sessions.db")
 graph = workflow.compile(checkpointer=checkpointer)
 ```
 
-### 7.2 Aufgabe 4.2: Session-basierte Interaktion
+### Aufgabe 4.2: Session-basierte Interaktion
 
 ```python
 config = {"configurable": {"thread_id": "user_123"}}
@@ -370,7 +370,7 @@ result2 = graph.invoke(
 )
 ```
 
-### 7.3 Aufgabe 4.3: Verlauf inspizieren
+### Aufgabe 4.3: Verlauf inspizieren
 
 ```python
 def show_session_history(thread_id: str):
@@ -386,13 +386,13 @@ def show_session_history(thread_id: str):
 
 ---
 
-## 8 Kapitel 5: Lernpfade, Konzepte und Quiz
+## Kapitel 5: Lernpfade, Konzepte und Quiz
 
 > 📚 **Kursmodul:** M04, M05, M19
 
 **Lernziel:** Antwortqualität strukturieren und mit einfachen Tests absichern
 
-### 8.1 Aufgabe 5.1: Lernpfad-Logik präzisieren
+### Aufgabe 5.1: Lernpfad-Logik präzisieren
 
 Mindestens zwei Zielgruppen definieren:
 
@@ -405,7 +405,7 @@ Und mindestens drei Lernziele:
 - RAG
 - Multi-Agent
 
-### 8.2 Aufgabe 5.2: Quiz-Output strukturieren
+### Aufgabe 5.2: Quiz-Output strukturieren
 
 ```python
 def generate_quiz(state: NavigatorState) -> NavigatorState:
@@ -417,7 +417,7 @@ def generate_quiz(state: NavigatorState) -> NavigatorState:
     ...
 ```
 
-### 8.3 Aufgabe 5.3: Testfragen definieren
+### Aufgabe 5.3: Testfragen definieren
 
 Mindestens diese fünf Fragen testen:
 
@@ -435,13 +435,13 @@ Mindestens diese fünf Fragen testen:
 
 ---
 
-## 9 Kapitel 6: Gradio UI & Bonus Deployment
+## Kapitel 6: Gradio UI & Bonus Deployment
 
 > 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M33 – Production Deployment
 
 **Lernziel:** Den Kursnavigator mit einer kleinen Oberfläche nutzbar machen
 
-### 9.1 Aufgabe 6.1: Chat-Handler schreiben
+### Aufgabe 6.1: Chat-Handler schreiben
 
 ```python
 # ═══════════════════════════════════════════════════
@@ -463,7 +463,7 @@ def chat_with_navigator(message, history, thread_id):
     ...
 ```
 
-### 9.2 Aufgabe 6.2: Gradio-Oberfläche aufbauen
+### Aufgabe 6.2: Gradio-Oberfläche aufbauen
 
 ```python
 import gradio as gr
@@ -480,7 +480,7 @@ with gr.Blocks() as demo:
     msg.submit(chat_with_navigator, [msg, chatbot, thread_id], [msg, chatbot])
 ```
 
-### 9.3 Aufgabe 6.3: Bonus Deployment
+### Aufgabe 6.3: Bonus Deployment
 
 Optional können Sie die App als **Hugging Face Space** deployen. Dafür benötigen Sie mindestens:
 
@@ -494,7 +494,7 @@ Optional können Sie die App als **Hugging Face Space** deployen. Dafür benöti
 - ✅ Sessions funktionieren auch über die UI
 - ✅ optional: die App läuft als kleiner Hugging Face Space
 
-### 9.4 Hugging Face Spaces Deployment (Bonus)
+### Hugging Face Spaces Deployment (Bonus)
 
 Das Deployment auf **Hugging Face Spaces** ist ein freiwilliger Zusatzschritt. Es zeigt, wie aus der lokalen Übung eine kleine öffentlich oder privat nutzbare Web-App wird.
 
@@ -567,29 +567,29 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 ---
 
-## 10 Bonusaufgaben (Optional)
+## Bonusaufgaben (Optional)
 
-### 10.1 Bonus 1: Personalisierte Empfehlungen
+### Bonus 1: Personalisierte Empfehlungen
 - berücksichtigen Sie Anfänger vs. Fortgeschrittene
 - unterscheiden Sie zwischen Interessen wie RAG, Multi-Agent oder Deployment
 
-### 10.2 Bonus 2: LangSmith Integration
+### Bonus 2: LangSmith Integration
 - tracken Sie die Graph-Läufe
 - vergleichen Sie mehrere Beispielanfragen
 - dokumentieren Sie Fehlklassifikationen
 
-### 10.3 Bonus 3: Erweiterte Wissensbasis
+### Bonus 3: Erweiterte Wissensbasis
 - lesen Sie Inhalte aus `01_notebook/README.md`
 - ergänzen Sie ausgewählte Dateien aus `docs/concepts/`
 - bauen Sie eine bessere Kontextsuche
 
-### 10.4 Bonus 4: Mermaid-Visualisierung
+### Bonus 4: Mermaid-Visualisierung
 - visualisieren Sie den Graphen
 - dokumentieren Sie Routing und Antwortpfade
 
 ---
 
-## 11 Bewertungskriterien
+## Bewertungskriterien
 
 | Aufgabe | Punkte | Kriterien |
 |---------|--------|-----------|
@@ -605,7 +605,7 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 ---
 
-## 12 Hilfreiche Ressourcen
+## Hilfreiche Ressourcen
 
 **LangGraph Dokumentation:**
 - [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
@@ -623,7 +623,7 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 ---
 
-## 13 Architektur-Übersicht
+## Architektur-Übersicht
 
 ```mermaid
 flowchart TD
@@ -651,7 +651,7 @@ flowchart TD
 
 ---
 
-## 14 Abgabe
+## Abgabe
 
 **Format:**
 - **Jupyter Notebook** (`Kursnavigator_Workshop.ipynb`)
@@ -668,7 +668,7 @@ flowchart TD
 
 **Deadline:** [Wird vom Dozenten festgelegt]
 
-### 14.1 Checkliste vor Abgabe
+### Checkliste vor Abgabe
 - [ ] Notebook läuft von oben bis unten fehlerfrei durch
 - [ ] TypedDict-State ist definiert
 - [ ] Intent-Routing funktioniert
@@ -680,7 +680,7 @@ flowchart TD
 
 ---
 
-## 15 FAQ
+## FAQ
 
 **Q: Warum LangGraph statt einfachem `create_agent()`?**  
 A: Weil der Kursnavigator vor allem Routing, State und kontrollierte Antwortpfade zeigen soll. Genau dafür ist LangGraph didaktisch besser geeignet als ein freier Agenten-Loop.

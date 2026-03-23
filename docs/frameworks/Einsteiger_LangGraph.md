@@ -22,7 +22,7 @@ has_toc: true
 
 ---
 
-## 1 Kurzüberblick: Warum LangGraph?
+## Kurzüberblick: Warum LangGraph?
 
 LangChain bietet Modelle, Tools und einfache Agenten. LangGraph baut darauf auf und ermöglicht:
 - **Abläufe in mehreren Schritten**
@@ -55,11 +55,11 @@ Damit ist sofort klar: LangGraph strukturiert Workflows, anstatt alles in ein ei
 
 ---
 
-## 2 Das kleinstmögliche funktionierende Beispiel
+## Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis ist ein Mini-Workflow.
 
-### 2.1 State definieren
+### State definieren
 
 ```python
 from typing import TypedDict, Annotated
@@ -70,7 +70,7 @@ class ChatState(TypedDict):
     step: int
 ```
 
-### 2.2 Ein einzelner Node
+### Ein einzelner Node
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -81,7 +81,7 @@ def agent_node(state: ChatState) -> ChatState:
     return {"messages": [response], "step": state["step"] + 1}
 ```
 
-### 2.3 Graph bauen
+### Graph bauen
 
 ```python
 from langgraph.graph import StateGraph, START, END
@@ -94,7 +94,7 @@ g.add_edge("agent", END)
 graph = g.compile()
 ```
 
-### 2.4 Graphen visualisieren
+### Graphen visualisieren
 
 ```python
 from IPython.display import Image
@@ -114,7 +114,7 @@ flowchart LR
     style AGENT fill:#87CEEB
 ```
 
-### 2.5 Ausführen
+### Ausführen
 
 ```python
 from langchain_core.messages import HumanMessage
@@ -128,7 +128,7 @@ result
 
 ---
 
-## 3 Die Grundidee: Workflows als State Machine
+## Die Grundidee: Workflows als State Machine
 
 Nachdem Einsteiger ein funktionsfähiges Beispiel gesehen haben, kann das Konzept erklärt werden:
 
@@ -156,7 +156,7 @@ Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
 
 ---
 
-## 4 State sauber definieren (vertieft)
+## State sauber definieren (vertieft)
 
 ```python
 class ChatState(TypedDict):
@@ -172,7 +172,7 @@ Prinzipien:
 
 ---
 
-## 5 Nodes: Bausteine des Workflows
+## Nodes: Bausteine des Workflows
 
 Nodes sollen klein, fokussiert und deterministisch sein.
 
@@ -195,18 +195,18 @@ def summarize_node(state: ChatState) -> ChatState:
 
 ---
 
-## 6 Edges & Conditional Routing
+## Edges & Conditional Routing
 
 Nun erst wird Routing eingeführt – **nachdem Einsteiger Nodes und State kennen**.
 
-### 6.1 Lineare Edges
+### Lineare Edges
 
 ```python
 g.add_edge(START, "agent")
 g.add_edge("agent", END)
 ```
 
-### 6.2 Bedingtes Routing
+### Bedingtes Routing
 
 ```python
 def tool_node(state: ChatState):
@@ -247,7 +247,7 @@ flowchart TB
     style AGENT fill:#87CEEB
 ```
 
-### 6.3 Typische Muster
+### Typische Muster
 - Schlüsselwort-Trigger
 - Unsicherheitsanalyse
 - Routing nach Tool-Feedback
@@ -255,7 +255,7 @@ flowchart TB
 
 ---
 
-## 7 Streaming: Schritte sichtbar machen
+## Streaming: Schritte sichtbar machen
 
 Streaming ist ein wichtiges Werkzeug für das Verständnis.
 
@@ -291,7 +291,7 @@ Empfehlung für Einsteiger: **updates**.
 
 ---
 
-## 8 Checkpointing & Sessions
+## Checkpointing & Sessions
 
 Checkpointing ermöglicht:
 - längerfristige Workflows
@@ -337,11 +337,11 @@ Hinweise:
 
 ---
 
-## 9 Human-in-the-Loop (Approval & Formulare)
+## Human-in-the-Loop (Approval & Formulare)
 
 Human-in-the-Loop ist ein wichtiges Konzept – aber erst an dieser Stelle sinnvoll.
 
-### 9.1 Interrupt
+### Interrupt
 
 ```python
 from langgraph.types import interrupt
@@ -351,7 +351,7 @@ def approval_node(state: ChatState) -> ChatState:
     return {"approved": decision == "yes"}
 ```
 
-### 9.2 Weiterführen
+### Weiterführen
 
 ```python
 from langgraph.types import Command
@@ -386,11 +386,11 @@ Einsatzmöglichkeiten:
 
 ---
 
-## 10 Multi-Agent-Workflows (Fortgeschritten)
+## Multi-Agent-Workflows (Fortgeschritten)
 
 Dieses Thema wurde bewusst ans Ende verschoben.
 
-### 10.1 Agenten definieren
+### Agenten definieren
 
 ```python
 from langchain.agents import create_agent
@@ -399,7 +399,7 @@ research_agent = create_agent(model=llm, tools=[...], system_prompt="Research")
 writer_agent   = create_agent(model=llm, tools=[...], system_prompt="Writer")
 ```
 
-### 10.2 Supervisor
+### Supervisor
 
 ```python
 from langgraph.types import Command

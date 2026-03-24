@@ -65,7 +65,7 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel
 | Kapitel 3: Wissensbasis | M11–M14 (RAG) oder ab M10 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
 | Kapitel 4: Checkpointing & Sessions | M16 | Persistente Sitzungen |
 | Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M24 | Prompting, Struktur, Tests |
-| Kapitel 6: Gradio UI & Bonus Deployment | M28, M34 | UI und optional Hugging Face Spaces |
+| Kapitel 6: Gradio UI & Bonus Deployment | M28, M35 | UI und optional Hugging Face Spaces |
 
 > **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M10, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
 
@@ -274,7 +274,7 @@ workflow.add_conditional_edges(
 
 ### Aufgabe 3.1: Wissensbasis laden
 
-Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M34) liegt unter `02_daten/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
+Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M36) liegt unter `02_daten/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
 
 ```python
 # ═══════════════════════════════════════════════════

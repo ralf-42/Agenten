@@ -1,6 +1,13 @@
 ---
 name: meeting-briefing-skill
-description: Erstellt strukturierte Meeting-Briefings auf Basis von Kontext-Dokumenten, Agenda und Teilnehmerliste. Erfasst Action Items und offene Fragen. Aktivieren wenn Nutzer sagt: "bereite das Meeting vor", "erstelle ein Briefing", "was muss ich für das Gespräch wissen", "Meeting-Vorbereitung", "Agenda erstellen", "Besprechung vorbereiten", "fasse den Kontext zusammen", "welche Fragen sollte ich stellen", "Action Items erfassen" oder "Nachbereitung".
+description: >-
+  Erstellt strukturierte Meeting-Briefings auf Basis von Kontext-Dokumenten,
+  Agenda und Teilnehmerliste. Erfasst Action Items und offene Fragen.
+  Aktivieren wenn Nutzer sagt: "bereite das Meeting vor",
+  "erstelle ein Briefing", "was muss ich für das Gespräch wissen",
+  "Meeting-Vorbereitung", "Agenda erstellen", "Besprechung vorbereiten",
+  "fasse den Kontext zusammen", "welche Fragen sollte ich stellen",
+  "Action Items erfassen" oder "Nachbereitung".
 ---
 
 # Meeting-Briefing Skill

@@ -43,7 +43,7 @@ Agenten/
 - **LangChain** (1.0+) - Orchestrierung, Chains, Agents, RAG
 - **LangGraph** (1.0.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
 - **LangSmith** (0.x+) - Tracing, Debugging, Evaluations
-- **OpenAI API** (>=1.0.0) - gpt-4o-mini, o3, o3-mini, gpt-5.1, Embeddings
+- **OpenAI API** (>=1.0.0) - gpt-4o-mini, o3, o3-mini, gpt-5.4-mini, gpt-5.4, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
@@ -100,21 +100,22 @@ Agenten/
 
 ### Erweiterte Module (M22–M35, optional)
 
-| Modul | Thema                                 | Priorität    | Status |
-| ----- | ------------------------------------- | ------------ | ------ |
-| M22   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
-| M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
-| M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
-| M26   | Collaborative Multi-Agent (Integration) | 🔵 Optional  | ✅      |
-| M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
-| M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
-| M29   | OpenAI Agent Builder                  | 🔵 Optional  | ✅      |
-| M30   | MCP Integration                       | 🔵 Optional  | ✅      |
-| M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
-| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
-| M33   | Meeting-Briefing Skill mit DeepAgents | 🔵 Optional  | ✅      |
-| M34   | Production Deployment                 | 🔵 Optional  | ✅      |
-| M35   | Capstone                              | 🔵 Optional  | ✅      |
+| Modul | Thema                                   | Priorität    | Status |
+| ----- | --------------------------------------- | ------------ | ------ |
+| M22   | Agentic RAG                             | 🟡 Empfohlen | ✅      |
+| M23   | Agent Security & Best Practices         | 🟡 Empfohlen | ✅      |
+| M24   | Agent Evaluation & Testing              | 🟡 Empfohlen | ✅      |
+| M26   | Integration Pipeline                    | 🔵 Optional  | ✅      |
+| M27   | Advanced RAG – Pipeline-Patterns        | 🔵 Optional  | ✅      |
+| M28   | Gradio UI für Agenten                   | 🔵 Optional  | ✅      |
+| M29   | OpenAI Agent Builder                    | 🔵 Optional  | ✅      |
+| M30a  | MCP Local                               | 🔵 Optional  | ✅      |
+| M30b  | MCP HuggingFace                         | 🔵 Optional  | ✅      |
+| M31   | Agent Skill – Compliance                | 🔵 Optional  | ✅      |
+| M32   | DeepAgents: Autonomes Harness-Pattern   | 🔵 Optional  | ✅      |
+| M33   | DeepAgents Skill: Meeting-Briefing      | 🔵 Optional  | ✅      |
+| M34   | Production Deployment                   | 🔵 Optional  | ✅      |
+| M35   | Capstone                                | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 

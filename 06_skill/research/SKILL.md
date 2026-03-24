@@ -1,6 +1,12 @@
 ---
 name: research-skill
-description: Führt strukturierte Recherche-Workflows durch — Quellen identifizieren, Relevanz bewerten, Wissen synthetisieren und einen zitierfähigen Research-Report erstellen. Aktivieren wenn Nutzer sagt: "recherchiere zu", "fasse zusammen", "was weiß man über", "erstelle einen Bericht", "analysiere das Thema", "suche Quellen zu", "research report", "Literaturüberblick", "Marktrecherche" oder "Hintergrundinformation zu".
+description: >-
+  Führt strukturierte Recherche-Workflows durch — Quellen identifizieren,
+  Relevanz bewerten, Wissen synthetisieren und einen zitierfähigen
+  Research-Report erstellen. Aktivieren wenn Nutzer sagt: "recherchiere zu",
+  "fasse zusammen", "was weiß man über", "erstelle einen Bericht",
+  "analysiere das Thema", "suche Quellen zu", "research report",
+  "Literaturüberblick", "Marktrecherche" oder "Hintergrundinformation zu".
 ---
 
 # Research Skill

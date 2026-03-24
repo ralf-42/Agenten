@@ -83,7 +83,7 @@ Dieses Verzeichnis enthält **34 Kurs-Notebooks (M01–M34)** für den Kurs „K
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M29 | `M29_OpenAI_Agent_Builder.ipynb` | No-Code-Alternative, Vergleich mit LangGraph | 🔵 Optional |
 | M30 | `M30_MCP_Integration.ipynb` | Model Context Protocol, Multi-Server-Setup | 🔵 Optional |
-| M33 | `M33_Meeting_Briefing_Skill_DeepAgents.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
+| M33 | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
 | M34 | `M34_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
 | M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
 | M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |

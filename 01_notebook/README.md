@@ -2,7 +2,7 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält **34 Kurs-Notebooks (M01–M34)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
+Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
@@ -68,7 +68,7 @@ Dieses Verzeichnis enthält **34 Kurs-Notebooks (M01–M34)** für den Kurs „K
 
 ---
 
-## Erweiterte Module – Spezialisierung & Produktion (M22–M34)
+## Erweiterte Module – Spezialisierung & Produktion (M22–M36)
 
 > Diese Module sind **nicht Teil des 5-Phase es-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
 
@@ -84,7 +84,9 @@ Dieses Verzeichnis enthält **34 Kurs-Notebooks (M01–M34)** für den Kurs „K
 | M29 | `M29_OpenAI_Agent_Builder.ipynb` | No-Code-Alternative, Vergleich mit LangGraph | 🔵 Optional |
 | M30 | `M30_MCP_Integration.ipynb` | Model Context Protocol, Multi-Server-Setup | 🔵 Optional |
 | M33 | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
-| M34 | `M34_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
+| M34 | `M34_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
+| M35 | `M35_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
+| M36 | `M36_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
 | M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
 | M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
 

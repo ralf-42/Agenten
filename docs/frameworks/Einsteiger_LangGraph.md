@@ -176,22 +176,57 @@ Prinzipien:
 
 Nodes sollen klein, fokussiert und deterministisch sein.
 
-Beispiele für Node-Typen:
-- LLM-Schritt
-- Tool-Besorgung
-- Validierung
-- Zusammenfassung
-- Human-in-the-Loop
+**Ein Node ist immer eine Python-Funktion** — was sich unterscheidet, ist der Inhalt:
 
-Ein LLM-Node wurde oben bereits eingeführt; hier ein kleiner weiterer Beispieltyp:
+| Node-Typ | Inhalt der Funktion | Typischer Einsatz |
+|---|---|---|
+| **LLM-Node** | direkter LLM-Aufruf | Antworten, Zusammenfassungen |
+| **Tool-Node** | Tool-Ausführung | Suche, Berechnungen, APIs |
+| **Agent-Node** | vollständiger Agent (`create_react_agent`) | komplexe Teilaufgaben mit eigenem Tool-Loop |
+
+### Typ 1: LLM-Node
 
 ```python
 def summarize_node(state: ChatState) -> ChatState:
-    text = "
-".join([m.content for m in state["messages"]])
+    text = "\n".join([m.content for m in state["messages"]])
     summary = llm.invoke([{"role": "user", "content": f"Fasse zusammen: {text}"}])
     return {"messages": [summary]}
 ```
+
+### Typ 2: Tool-Node
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def suche(query: str) -> str:
+    """Führt eine Websuche durch."""
+    return f"Ergebnis für: {query}"
+
+def tool_node(state: ChatState) -> ChatState:
+    result = suche.invoke({"query": state["messages"][-1].content})
+    return {"messages": [{"role": "tool", "content": result}]}
+```
+
+### Typ 3: Agent-Node
+
+Ein Node kann intern einen vollständigen Agenten ausführen — inklusive eigenem Tool-Loop:
+
+```python
+from langgraph.prebuilt import create_react_agent
+
+research_agent = create_react_agent(
+    model=llm,
+    tools=[suche],
+    prompt="Du bist ein Research-Spezialist. Recherchiere gründlich.",
+)
+
+def research_node(state: ChatState) -> ChatState:
+    result = research_agent.invoke({"messages": state["messages"]})
+    return {"messages": result["messages"]}
+```
+
+> **Hinweis:** Der Agent-Node ist das Muster hinter Supervisor-Architekturen (M20, M21). Der Supervisor ruft `research_node`, `writer_node` etc. auf — jeder Node kapselt intern einen vollständigen Agenten.
 
 ---
 

@@ -24,7 +24,7 @@ has_toc: true
 
 # Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M22–M34 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
+Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M22–M36 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
 
 ## Lernziele
 
@@ -138,7 +138,7 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 **Erweiterte Module (optional):**
 - M20 (Agent Security & Best Practices)
 - M28 (Gradio UI für Agenten)
-- M34 (Production Deployment)
+- M35 (Production Deployment)
 
 **Architektur:**
 ```mermaid
@@ -282,7 +282,7 @@ graph LR
 
 **Erweiterte Module (optional):**
 - M20 (Agent Security & Best Practices)
-- M34 (Production Deployment)
+- M35 (Production Deployment)
 
 **Architektur:**
 ```mermaid

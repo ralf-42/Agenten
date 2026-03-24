@@ -25,6 +25,11 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
   - Vollständiger Entscheidungsbaum (beide Ebenen kombiniert)
   - Checkliste vor dem Agentenbau
 
+- **[Architekturentscheidungen – Katalog](https://ralf-42.github.io/Agenten/concepts/Architekturentscheidungen_Catalog.html)** – *Welche Architekturentscheidungen muss ich treffen?* Vollständige, systematische Liste aller Entwurfsfragen von E0 (Agent nötig?) bis E5 (Deployment)
+  - Schnellpfade: Einfacher Agent · Workflow-Agent · Multi-Agent · DeepAgents
+  - Entscheidungsbaum: die fünf zentralen Verzweigungspunkte
+  - Architektur-Canvas: alle Entscheidungen in einem Konzeptbild zusammenführen
+
 ## Grundlagen & Architektur
 
 - **[Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html)** – *Wie ist ein Agent aufgebaut?* Architekturmuster und Design-Prinzipien für KI-Agenten (→ M01)

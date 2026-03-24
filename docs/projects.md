@@ -17,7 +17,7 @@ Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-A
 - Ein kleiner LangGraph-Lernassistent für den Kurs
 - 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
 - LangGraph 1.0+: State, Conditional Routing, Checkpointing
-- Einstieg ab M14, ausbaubar bis M34
+- Einstieg ab M14, ausbaubar bis M35
 
 ### End-to-End Projekt
 - **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/Agenten_Challenges.html)** – *Wie entwickle ich ein eigenständiges Multi-Agent-System?* Eigenständige Implementierung

@@ -29,7 +29,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M01-M35)
+├── 01_notebook/    # Jupyter Notebooks (M01-M36)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursmaterialien (PDF)
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -98,7 +98,7 @@ Agenten/
 **Security:** M10 → M23 (direkt empfohlen nach Block 2)
 **Evaluation:** M15 → M24 (natürliche Fortsetzung)
 
-### Erweiterte Module (M22–M35, optional)
+### Erweiterte Module (M22–M36, optional)
 
 | Modul | Thema                                   | Priorität    | Status |
 | ----- | --------------------------------------- | ------------ | ------ |
@@ -114,8 +114,9 @@ Agenten/
 | M31   | Agent Skill – Compliance                | 🔵 Optional  | ✅      |
 | M32   | DeepAgents: Autonomes Harness-Pattern   | 🔵 Optional  | ✅      |
 | M33   | DeepAgents Skill: Meeting-Briefing      | 🔵 Optional  | ✅      |
-| M34   | Production Deployment                   | 🔵 Optional  | ✅      |
-| M35   | Capstone                                | 🔵 Optional  | ✅      |
+| M34   | DeepAgent Multi-Skill                   | 🔵 Optional  | ✅      |
+| M35   | Production Deployment                   | 🔵 Optional  | ✅      |
+| M36   | Capstone                                | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 

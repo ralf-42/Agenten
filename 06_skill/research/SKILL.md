@@ -1,5 +1,5 @@
 ---
-name: research-skill
+name: research
 description: >-
   Führt strukturierte Recherche-Workflows durch — Quellen identifizieren,
   Relevanz bewerten, Wissen synthetisieren und einen zitierfähigen

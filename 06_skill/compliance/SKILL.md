@@ -1,5 +1,5 @@
 ---
-name: compliance-skill
+name: compliance
 description: >-
   Führt compliance-orientierte Agenten-Workflows durch — Sanktionsprüfung,
   Risikobewertung (low/medium/high), Freigabe-Gate und auditierbare

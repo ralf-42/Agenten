@@ -1,5 +1,5 @@
 ---
-name: meeting-briefing-skill
+name: meeting-briefing
 description: >-
   Erstellt strukturierte Meeting-Briefings auf Basis von Kontext-Dokumenten,
   Agenda und Teilnehmerliste. Erfasst Action Items und offene Fragen.

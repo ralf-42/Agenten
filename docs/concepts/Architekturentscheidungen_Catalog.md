@@ -10,7 +10,7 @@ has_toc: true
 # Architekturentscheidungen – Katalog
 {: .no_toc }
 
-> **Vollständige, systematische Liste aller Entwurfsfragen beim Aufbau von KI-Agenten-Systemen mit LangChain / LangGraph / DeepAgents**
+> **Vollständige, systematische Liste aller Entwurfsfragen beim Aufbau von KI-Agenten-Systemen mit LangChain / LangGraph / DeepAgents**  
 
 ---
 

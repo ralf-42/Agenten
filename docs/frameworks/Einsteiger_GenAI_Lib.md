@@ -41,7 +41,7 @@ Die Bibliothek besteht aus zwei Hauptmodulen:
 
 | Modul | Beschreibung | Hauptfunktionen |
 |-------|-------------|----------------|
-| **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, LangSmith Trace-Analyse |
+| **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, LangSmith Trace-Analyse, GitHub-Datei-Download |
 | **model_config.py** | Rollenbasierte Modell-Konstanten | `BASELINE`, `ROUTER`, `JUDGE`, `PLANNER`, `WORKER`, `WORKER_PREMIUM`, `CODING`, `EMBEDDINGS` |
 
 ---
@@ -378,6 +378,49 @@ for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-
 - Temperature-Unterstützung prüfen
 - Debugging und Dokumentation
 
+#### 11. `copy_from_github(source, target, mask="*", ...)` 🆕
+
+Kopiert Dateien aus einem GitHub-Repository (oder Unterverzeichnis) in ein lokales Verzeichnis — ohne vollständigen Clone.
+
+```python
+from genai_lib.utilities import copy_from_github
+
+# Alle Notebooks aus dem Root eines Repos
+copy_from_github("ralf-42/GenAI", "./lokal", mask="*.ipynb")
+
+# Nur ein Unterverzeichnis, alle Python-Dateien
+copy_from_github("ralf-42/GenAI/04_modul", "./module", mask="*.py")
+
+# Vorschau: anzeigen, was kopiert würde (keine Dateien schreiben)
+copy_from_github("ralf-42/GenAI", "./ziel", dry_run=True)
+
+# Private Repos: Token übergeben oder GITHUB_TOKEN setzen
+copy_from_github("myorg/private-repo", "./ziel", token="ghp_...")
+```
+
+**Parameter:**
+
+| Parameter | Typ | Beschreibung |
+|-----------|-----|--------------|
+| `source` | str | `owner/repo` oder `owner/repo/unterordner` (auch GitHub-URL) |
+| `target` | str | Lokales Zielverzeichnis (wird erstellt) |
+| `mask` | str | Dateimaske, z.B. `"*.ipynb"`, `"data_*.csv"` (Default: `"*"`) |
+| `token` | str | GitHub-Token (alternativ: Env-Var `GITHUB_TOKEN`) |
+| `recursive` | bool | Unterordner einschließen (Default: `True`) |
+| `branch` | str | Branch-Name (Default: wird automatisch ermittelt) |
+| `dry_run` | bool | Nur anzeigen, nichts kopieren |
+
+**Rückgabe:**
+- `list[str]`: Liste der kopierten (oder bei `dry_run=True`: gefundenen) Dateipfade
+
+**Features:**
+- Nutzt GitHub Contents API — kein `git clone` nötig
+- Unterstützt Unterverzeichnisse großer Repos direkt
+- Erhält die Verzeichnisstruktur im Zielverzeichnis
+- Automatische Branch-Erkennung (`main`, `master`, etc.)
+
+---
+
 #### 10. `show_trace(project_name, limit=5, show_steps=False)` 🆕
 
 Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle.
@@ -535,7 +578,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.2   
+**Version:** 3.3
 **Stand:** März 2026   
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.            
 

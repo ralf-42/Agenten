@@ -12,6 +12,9 @@ import subprocess
 import importlib
 import re
 from typing import Tuple, Any
+from pathlib import Path
+import fnmatch
+import os
 from langchain_core.prompts import ChatPromptTemplate
 #
 # -- Sammlung von Standard-Funktionen für den Kurs
@@ -812,6 +815,175 @@ def load_prompt(path, mode="T"):
 
 # Abwärtskompatibilität
 load_chat_prompt_template = load_prompt
+
+
+# ============================================================================
+# GITHUB REPOSITORY UTILITIES
+# ============================================================================
+
+def copy_from_github(
+    source: str,
+    target: str,
+    mask: str = "*",
+    token: str = None,
+    recursive: bool = True,
+    branch: str = None,
+    dry_run: bool = False,
+) -> list:
+    """
+    Kopiert Dateien aus einem GitHub-Repository (oder Unterverzeichnis) in ein lokales Verzeichnis.
+
+    Parameter:
+    ----------
+    source : str
+        GitHub-Pfad im Format "owner/repo" oder "owner/repo/pfad/unterordner".
+        Alternativ: vollständige GitHub-URL (https://github.com/owner/repo/...).
+    target : str
+        Lokales Zielverzeichnis. Wird bei Bedarf erstellt.
+    mask : str
+        Dateimaske (Glob-Muster), z. B. "*.ipynb", "*.py", "data_*.csv".
+        Default: "*" (alle Dateien).
+    token : str | None
+        Persönlicher GitHub-Token (optional). Erhöht das Rate-Limit und ermöglicht
+        Zugriff auf private Repositories.
+        Alternativ: Umgebungsvariable GITHUB_TOKEN setzen.
+    recursive : bool
+        True  → Unterordner rekursiv einschließen (Default).
+        False → nur die oberste Ebene des source-Pfades.
+    branch : str | None
+        Branch-Name (z. B. "main", "master"). Wird automatisch ermittelt, wenn None.
+    dry_run : bool
+        True → zeigt nur an, was kopiert würde, ohne Dateien zu schreiben.
+
+    Returns:
+    --------
+    list[str]
+        Liste der kopierten (oder bei dry_run: gefundenen) Dateipfade.
+
+    Beispiel:
+    ---------
+    >>> from genai_lib.utilities import copy_from_github
+    >>>
+    >>> # Alle Notebooks aus dem Root eines Repos
+    >>> copy_from_github("ralf-42/GenAI", "./lokal", mask="*.ipynb")
+    >>>
+    >>> # Nur ein Unterverzeichnis, alle Dateien
+    >>> copy_from_github("ralf-42/GenAI/04_modul", "./module")
+    >>>
+    >>> # Vorschau ohne Dateien zu kopieren
+    >>> copy_from_github("ralf-42/GenAI", "./ziel", dry_run=True)
+    """
+    # Token aus Umgebungsvariable, falls nicht übergeben
+    if token is None:
+        token = os.environ.get("GITHUB_TOKEN")
+
+    headers = {"Accept": "application/vnd.github+json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    owner, repo, repo_path = _gh_parse_source(source)
+
+    if branch is None:
+        branch = _gh_get_default_branch(owner, repo, headers)
+
+    target_path = Path(target)
+    copied = []
+
+    _gh_process_directory(
+        owner=owner,
+        repo=repo,
+        repo_path=repo_path,
+        branch=branch,
+        headers=headers,
+        target_root=target_path,
+        repo_root=repo_path,
+        mask=mask,
+        recursive=recursive,
+        dry_run=dry_run,
+        copied=copied,
+    )
+
+    print(f"\n{'[DRY RUN] ' if dry_run else ''}Ergebnis: {len(copied)} Datei(en) "
+          f"{'gefunden' if dry_run else 'kopiert'} → {target}")
+    return copied
+
+
+def _gh_parse_source(source: str):
+    """Zerlegt einen GitHub-Source-Pfad in (owner, repo, pfad)."""
+    if source.startswith("https://github.com/"):
+        source = source.replace("https://github.com/", "")
+    if source.startswith("github.com/"):
+        source = source.replace("github.com/", "")
+    source = source.rstrip("/")
+    parts = source.split("/")
+    if len(parts) < 2:
+        raise ValueError(
+            f"Ungültiger source-Pfad: '{source}'. Erwartet: 'owner/repo' oder 'owner/repo/pfad'"
+        )
+    return parts[0], parts[1], "/".join(parts[2:])
+
+
+def _gh_get_default_branch(owner: str, repo: str, headers: dict) -> str:
+    """Ermittelt den Standard-Branch des Repositories über die GitHub API."""
+    r = requests.get(
+        f"https://api.github.com/repos/{owner}/{repo}",
+        headers=headers,
+        timeout=15,
+    )
+    r.raise_for_status()
+    return r.json().get("default_branch", "main")
+
+
+def _gh_process_directory(
+    owner, repo, repo_path, branch, headers,
+    target_root, repo_root, mask, recursive, dry_run, copied,
+):
+    """Liest ein Verzeichnis über die GitHub Contents API und verarbeitet Einträge."""
+    r = requests.get(
+        f"https://api.github.com/repos/{owner}/{repo}/contents/{repo_path}",
+        headers=headers,
+        params={"ref": branch},
+        timeout=15,
+    )
+    if r.status_code == 404:
+        raise FileNotFoundError(
+            f"Pfad '{repo_path}' im Repository '{owner}/{repo}' (Branch: {branch}) nicht gefunden."
+        )
+    r.raise_for_status()
+    entries = r.json()
+    if not isinstance(entries, list):
+        raise ValueError(f"Erwartet ein Verzeichnis, aber '{repo_path}' ist eine Datei.")
+
+    for entry in entries:
+        if entry["type"] == "file":
+            if fnmatch.fnmatch(entry["name"], mask):
+                _gh_download_file(entry, repo_root, target_root, dry_run, copied)
+        elif entry["type"] == "dir" and recursive:
+            _gh_process_directory(
+                owner=owner, repo=repo, repo_path=entry["path"],
+                branch=branch, headers=headers,
+                target_root=target_root, repo_root=repo_root,
+                mask=mask, recursive=recursive,
+                dry_run=dry_run, copied=copied,
+            )
+
+
+def _gh_download_file(entry, repo_root, target_root, dry_run, copied):
+    """Lädt eine einzelne Datei aus GitHub herunter und speichert sie lokal."""
+    full_path = entry["path"]
+    rel_path = full_path[len(repo_root):].lstrip("/") if repo_root else full_path
+    local_path = Path(target_root) / rel_path
+
+    label = "[DRY RUN] Gefunden" if dry_run else "Kopiere"
+    print(f"  {label}: {full_path} → {local_path}")
+
+    if not dry_run:
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+        r = requests.get(entry["download_url"], timeout=30)
+        r.raise_for_status()
+        local_path.write_bytes(r.content)
+
+    copied.append(str(local_path))
 
 
 # ============================================================================

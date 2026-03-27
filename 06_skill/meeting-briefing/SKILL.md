@@ -34,31 +34,22 @@ Typische Trigger-Phrasen sind in der `description` aufgeführt.
 Nutzeranfrage (Thema, Teilnehmer, Kontext)
     │
     ▼
-[Gate-Agent: o3]
+[Meeting-Briefing-Skill]
     ├─ Kontext-Dokumente laden & auswerten
     ├─ Agenda strukturieren (agenda_rules.md)
     ├─ Offene Fragen & Risiken identifizieren
     ├─ Tool: extract_actions (Action Items aus Kontext extrahieren)
-    └─ Strukturiertes JSON-Ergebnis ausgeben
-    │
-    ▼
-[Writer-LLM: gpt-5.1]
     └─ Meeting-Briefing im definierten Ausgabeformat erstellen
 ```
 
-## Gate-Agent: Aufgaben (o3)
+## Aufgaben
 
 - Thema und Gesprächstyp klassifizieren (Vorbereitung oder Nachbereitung)
 - Alle übergebenen Kontext-Dokumente sichten
 - Agenda-Punkte nach Priorität ordnen
 - Offene Fragen und potenzielle Konflikte identifizieren
 - `extract_actions` für bestehende Action Items aufrufen
-- Strukturiertes JSON für den Writer ausgeben
-
-## Writer-LLM: Aufgaben (gpt-5.1)
-
-- Erhält Gate-Output (JSON mit Agenda, Kontext, Action Items, offenen Fragen)
-- Erstellt Briefing exakt im Ausgabeformat (siehe unten)
+- Briefing exakt im Ausgabeformat erstellen
 - Sachlicher, klarer Stil — keine Füllwörter
 - Keine eigenen Bewertungen ohne Quellenbeleg aus dem Kontext
 
@@ -106,7 +97,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 | 1 | ...     | ...           | ...    |
 
 ---
-*Erstellt durch Meeting-Briefing-Skill | Gate: o3 | Writer: gpt-5.1*
+*Erstellt durch Meeting-Briefing-Skill*
 ```
 
 ## Ausgabeformat — Nachbereitung
@@ -135,7 +126,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - [Punkt, der nicht abgeschlossen wurde]
 
 ---
-*Erstellt durch Meeting-Briefing-Skill | Gate: o3 | Writer: gpt-5.1*
+*Erstellt durch Meeting-Briefing-Skill*
 ```
 
 ## Eskalation

@@ -144,6 +144,10 @@ agent = create_deep_agent(
         "Ein kompakter Kurs-Assistent für agentische Systeme. "
         "Werkzeuge gezielt nutzen und auf Deutsch antworten."
     ),
+    # Weitere praxisrelevante Parameter:
+    # interrupt_on={"tool_names": ["write_file"]},  # HITL vor bestimmten Tools
+    # memory=["AGENTS.md"],                          # Kontext-Dateien beim Start laden
+    # skills=["path/to/SKILL.md"],                   # SKILL.md-Dateien laden (→ M33/M34)
 )
 ```
 
@@ -279,8 +283,22 @@ research_subagent = {
         "Knappe, saubere Fachzusammenfassungen auf Deutsch liefern."
     ),
     "tools": [begriff_erklaeren, kurs_thema_info],
+    # "model": "openai:gpt-4o",  # Optional: eigenes Modell seit 0.4.11
 }
 ```
+
+**Vollständige SubAgent-Dict Felder:**
+
+| Feld | Pflicht | Beschreibung |
+|------|---------|-------------|
+| `name` | ✅ | Interner Name des Sub-Agenten |
+| `description` | ✅ | Erklärt dem Hauptagenten wann er zu rufen ist |
+| `system_prompt` | ✅ | Rolle und Verhalten des Sub-Agenten |
+| `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
+| `model` | — | Eigenes Modell pro Sub-Agent (**neu seit 0.4.11**) |
+| `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
+| `interrupt_on` | — | Freigabe vor bestimmten Tools dieses Sub-Agenten |
+| `skills` | — | SKILL.md-Dateien für den Sub-Agenten |
 
 Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
@@ -500,6 +518,6 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.1    
-**Stand:** März 2026    
+**Version:** 1.2
+**Stand:** März 2026
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

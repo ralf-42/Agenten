@@ -1,6 +1,6 @@
 # Agenda-Regeln
 
-Diese Regeln definieren, wie der Gate-Agent eine Meeting-Agenda strukturiert.
+Diese Regeln definieren, wie der Skill eine Meeting-Agenda strukturiert.
 
 ## Prioritätsstufen
 

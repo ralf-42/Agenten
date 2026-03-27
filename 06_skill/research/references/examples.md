@@ -6,7 +6,7 @@ Eingabe:
 - query: "Was sind die Neuerungen in LangGraph 1.0?"
 - mode: search_web
 
-Gate-Output (vereinfacht):
+Strukturierter Skill-Output (vereinfacht):
 ```json
 {
   "topic": "LangGraph 1.0 Neuerungen",
@@ -32,7 +32,7 @@ Eingabe:
 - query: "Vergleich proprietärer Agent-Frameworks 2027"
 - mode: search_web
 
-Gate-Output:
+Strukturierter Skill-Output:
 ```json
 {
   "topic": "Agent-Framework-Vergleich 2027",
@@ -51,7 +51,7 @@ Erwartetes Ergebnis: Kurzformat mit Hinweis, keine vollständigen Kernaussagen
 Eingabe:
 - query: "Kostenvergleich GPT-5.1 vs. o3"
 
-Gate-Output (Auszug):
+Strukturierter Skill-Output (Auszug):
 ```json
 {
   "findings": [

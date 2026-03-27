@@ -31,29 +31,20 @@ Dieser Skill wird aktiv, wenn der Nutzer eine Recherche-Aufgabe formuliert. Typi
 Nutzeranfrage
     │
     ▼
-[Gate-Agent: o3]
+[Research-Skill]
     ├─ Thema analysieren & Suchstrategie definieren
     ├─ Tool: search_web (Websuche) oder search_docs (Vektordatenbank)
     ├─ Tool: score_relevance (Quellen bewerten)
-    └─ Strukturiertes Recherche-Ergebnis ausgeben
-    │
-    ▼
-[Writer-LLM: gpt-5.1]
     └─ Research-Report im definierten Ausgabeformat generieren
 ```
 
-## Gate-Agent: Aufgaben (o3)
+## Aufgaben
 
 - Thema in 2–3 Suchqueries zerlegen
 - Quellen abrufen (Web oder Vektordatenbank)
 - Jede Quelle mit `score_relevance` bewerten
 - Quellen mit Score < 0.4 ausschließen
-- Strukturiertes JSON-Ergebnis an Writer übergeben
-
-## Writer-LLM: Aufgaben (gpt-5.1)
-
-- Erhält Gate-Output (JSON mit bewerteten Quellen + Fakten)
-- Erstellt Report exakt im Ausgabeformat (siehe unten)
+- Strukturierten Research-Output erzeugen
 - Keine eigenen Interpretationen — nur belegte Aussagen
 
 ## Ausgabeformat
@@ -81,14 +72,14 @@ Nutzeranfrage
 [Kurze Handlungsempfehlung oder nächster Schritt]
 
 ---
-*Erstellt durch Research-Skill | Gate: o3 | Writer: gpt-5.1*
+*Erstellt durch Research-Skill*
 ```
 
 ## Eskalation
 
-- Weniger als 2 relevante Quellen gefunden → Gate gibt `"status": "insufficient_sources"` zurück
-- Widersprüchliche Quellen → Gate markiert explizit als `"conflict": true`
-- Thema außerhalb des definierten Suchraums → Gate gibt `"status": "out_of_scope"` zurück
+- Weniger als 2 relevante Quellen gefunden → `"status": "insufficient_sources"`
+- Widersprüchliche Quellen → `"conflict": true`
+- Thema außerhalb des definierten Suchraums → `"status": "out_of_scope"`
 
 ## Verwandte Module
 

@@ -8,7 +8,7 @@ Eingabe:
 - Kontext: Sprint-Bericht vom 18.03., offene Tickets aus Jira
 - Typ: Vorbereitung
 
-Gate-Output (vereinfacht):
+Strukturierter Skill-Output (vereinfacht):
 ```json
 {
   "type": "vorbereitung",
@@ -43,7 +43,7 @@ Eingabe:
 - Kontext: Gesprächsnotizen 19.03.2026
 - Typ: Nachbereitung
 
-Gate-Output (vereinfacht):
+Strukturierter Skill-Output (vereinfacht):
 ```json
 {
   "type": "nachbereitung",
@@ -78,7 +78,7 @@ Eingabe:
 - Kontext: kein Dokument übergeben
 - Typ: Vorbereitung
 
-Gate-Output:
+Strukturierter Skill-Output:
 ```json
 {
   "status": "no_context",
@@ -97,7 +97,7 @@ Eingabe:
 - Thema: „Budget-Review Q2"
 - Kontext: Zwei Dokumente mit abweichenden Budgetzahlen (Dok A: 120k€, Dok B: 95k€)
 
-Gate-Output (Auszug):
+Strukturierter Skill-Output (Auszug):
 ```json
 {
   "conflict": true,

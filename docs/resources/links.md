@@ -42,7 +42,6 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 |-----------|--------------|
 | [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol) | Anthropics offener Standard zur Verbindung von KI-Modellen mit externen Datenquellen und Tools |
 | [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) | Vollständiger Leitfaden zur Entwicklung von Skills für Claude-Agenten |
-| [Agent Skills Specification (agentskills.io)](https://agentskills.io/specification) | Offener SKILL.md-Standard für plattformübergreifende Agenten-Skills |
 | [Anthropic Skills Repository (GitHub)](https://github.com/anthropics/skills) | Offizielle Skill-Sammlung von Anthropic als Referenz und Ausgangspunkt |
 | [Labor Market Impacts](https://www.anthropic.com/research/labor-market-impacts) | Forschungsarbeit zu den Auswirkungen von KI auf den Arbeitsmarkt |
 | [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
@@ -54,6 +53,29 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 | [Project Vend: Phase Two](https://www.anthropic.com/research/project-vend-2) | Anthropics autonomes Einkaufs-Experiment – Praxisbeispiel für Multi-Agent-Systeme (→ M19–M21) |
 | [Claude's New Constitution](https://www.anthropic.com/news/claude-new-constitution) | Wie Agenten-Verhalten durch Constitutional AI gesteuert wird (→ M01/M23) |
 | [How AI Assistance Impacts the Formation of Coding Skills](https://www.anthropic.com/research/AI-assistance-coding-skills) | Studie zu KI-Unterstützung beim Coding-Lernen – relevant für Kurs-Kontext |
+
+---
+
+## MCP
+
+Offizielle Ressourcen zum Model Context Protocol und den zugehörigen Entwickler-Tools.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [MCP Introduction](https://modelcontextprotocol.io/docs/getting-started/intro) | Offizieller Einstieg in das Model Context Protocol mit Grundlagen, Architektur und Anwendungsfällen |
+| [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) | Offizielle Dokumentation zum Inspector für das Testen und Debuggen von MCP-Servern |
+
+---
+
+## Skills
+
+Ressourcen rund um den offenen Standard für Agenten-Skills und dessen praktische Nutzung.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Agent Skills](https://agentskills.io/home) | Überblick über den offenen Skill-Standard, Beispiele und Einstieg in plattformübergreifende Agenten-Skills |
+| [Agent Skills Specification](https://agentskills.io/specification) | Offener SKILL.md-Standard für plattformübergreifende Agenten-Skills |
+| [Claude Agent Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) | Best Practices von Claude für Konzeption, Struktur und Pflege von Agenten-Skills |
 
 ---
 

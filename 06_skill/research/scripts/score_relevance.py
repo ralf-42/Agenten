@@ -2,7 +2,7 @@
 score_relevance.py — Deterministischer Relevanz-Scorer für den Research-Skill.
 
 Bewertet eine Quelle anhand von Keyword-Übereinstimmung und Metadaten.
-Wird vom Gate-Agenten (o3) als Tool aufgerufen.
+Wird vom Research-Skill als Tool aufgerufen.
 
 Verwendung:
     python score_relevance.py '{"query": "LangGraph Streaming", "source_text": "...", "source_url": "..."}'

@@ -1,6 +1,6 @@
 # Action-Item-Regeln
 
-Diese Regeln definieren, wie der Gate-Agent Action Items aus Kontext-Dokumenten extrahiert.
+Diese Regeln definieren, wie der Skill Action Items aus Kontext-Dokumenten extrahiert.
 
 ## Definition: Was ist ein Action Item?
 
@@ -56,8 +56,8 @@ Fehlt eines dieser drei Elemente → Action Item trotzdem aufnehmen, fehlende Fe
 
 Wenn zwei Quellen dasselbe Action Item unterschiedlich beschreiben:
 - Beide Varianten ausgeben
-- `conflict: true` im Gate-Output setzen
-- Writer benennt Konflikt explizit im Briefing
+- `conflict: true` im strukturierten Skill-Output setzen
+- Konflikt im Briefing explizit benennen
 
 ## Sonderfall: Keine Action Items vorhanden
 

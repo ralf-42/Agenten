@@ -1,6 +1,6 @@
 # Suchregeln
 
-Diese Regeln definieren die Suchstrategie des Research-Gate-Agenten.
+Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 ## Suchmodus-Auswahl
 

@@ -564,7 +564,6 @@ Trage hier deine Entscheidungen ein. Am Ende ergibt sich das Konzeptbild deiner 
 | Dokument | Inhalt |
 |----------|--------|
 | [Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html) | Was die Architekturmuster (ReAct, Tool-Calling, StateGraph, Multi-Agent) sind |
-| [DeepAgents Architekturleitlinie](https://ralf-42.github.io/Agenten/frameworks/DeepAgents_Architekturleitlinie.html) | Entscheidungen spezifisch für Skills, Subagents und Harness-Nutzung |
 | [Modell-Auswahl Guide](https://ralf-42.github.io/Agenten/frameworks/Modell_Auswahl_Guide.html) | Welches Modell für welche Rolle |
 | [Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html) | Koordinationsmuster in Multi-Agent-Architekturen |
 | [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | TypedDict, Reducer, Checkpoint-Backends im Detail |

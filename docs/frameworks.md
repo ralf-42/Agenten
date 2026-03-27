@@ -32,11 +32,6 @@ Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und W
   - Vergleich: Harness vs. manueller LangGraph-Aufbau
   - Grenzen, Transparenz und Debugging
 
-- **[DeepAgents Architekturleitlinie](https://ralf-42.github.io/Agenten/frameworks/DeepAgents_Architekturleitlinie.html)** – *Wann Skills, wann Subagents, wann explizite Orchestrierung?* Entscheidungsreferenz für komplexe DeepAgents-Architekturen
-  - Skills vs. Subagents vs. Worker-Nodes — wann was?
-  - Architektur-Landkarte: 6 Leitfragen und ihre Antworten
-  - Entscheidungsmatrix mit 12 Entwurfsfragen
-  - Faustregel: globaler Kontext · Skills · Subagents
 
 ## Monitoring & Debugging
 

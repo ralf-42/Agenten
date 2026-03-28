@@ -1,3 +1,12 @@
+---
+layout: default
+title: LangChain Best Practices
+parent: Frameworks
+nav_order: 10
+description: "7 MUST-HAVE Features für LangChain 1.0+: init_chat_model, with_structured_output, @tool, create_agent, LCEL"
+has_toc: true
+---
+
 # LangChain 1.0+ MUST-HAVE Features
 
 > **Pflichtlektüre für alle neuen Notebooks und Code im GenAI-Projekt**

@@ -1,3 +1,12 @@
+---
+layout: default
+title: LangGraph Best Practices
+parent: Frameworks
+nav_order: 11
+description: "7 MUST-HAVE Features für LangGraph 1.0+: StateGraph, Conditional Routing, Checkpointing, HITL, Subgraphs"
+has_toc: true
+---
+
 # LangGraph 1.0+ MUST-HAVE Features
 
 > **Advanced Multi-Agent & State Machine Patterns für komplexe Workflows**

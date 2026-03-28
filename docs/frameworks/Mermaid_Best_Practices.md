@@ -1,3 +1,12 @@
+---
+layout: default
+title: Mermaid Best Practices
+parent: Frameworks
+nav_order: 13
+description: "Fehlerfreie Mermaid-Diagramme: reservierte Keywords, Sonderzeichen, sequenceDiagram, Checkliste"
+has_toc: true
+---
+
 # Mermaid Best Practices & Troubleshooting
 
 > **Zweck:** Wissensdatenbank für fehlerfreie Mermaid-Diagramme in Markdown-Dokumenten

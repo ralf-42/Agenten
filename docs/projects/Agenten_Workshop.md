@@ -274,7 +274,7 @@ workflow.add_conditional_edges(
 
 ### Aufgabe 3.1: Wissensbasis laden
 
-Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M36) liegt unter `02_daten/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
+Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M36) liegt unter `02_daten/05_sonstiges/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
 
 ```python
 # ═══════════════════════════════════════════════════

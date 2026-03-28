@@ -18,7 +18,7 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 |-------|-------|--------|------|
 | M01 | `M01_Was_sind_KI_Agenten.ipynb` | Definition, 4 Eigenschaften, ReAct/TAO-Prinzip, Agent-Typen | 🟢 Pflicht |
 | M02 | `M02_Tool_Use_Function_Calling.ipynb` | `@tool`-Decorator, Type Hints, Docstrings, eigene Tools | 🟢 Pflicht |
-| M03 | `M03_Erste_Agenten_LangChain.ipynb` | `create_react_agent()`, Deprecated-Patterns einmalig klären | 🟢 Pflicht |
+| M03 | `M03_Erste_Agenten_LangChain.ipynb` | `create_agent()`, Deprecated-Patterns einmalig klären | 🟢 Pflicht |
 
 ---
 
@@ -37,7 +37,7 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M08 | `M08_Warum_LangGraph.ipynb` | Limitierungen von `create_react_agent()`, State Machine Konzept | 🟢 Pflicht |
+| M08 | `M08_Warum_LangGraph.ipynb` | Limitierungen von `create_agent()`, State Machine Konzept | 🟢 Pflicht |
 | M09 | `M09_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges, Graph kompilieren | 🟢 Pflicht |
 | M10 | `M10_Conditional_Routing_Tool_Loop.ipynb` | Conditional Edges, Routing-Funktion, Tool-Loop, Security-Basics | 🟢 Pflicht |
 
@@ -82,13 +82,14 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M29 | `M29_OpenAI_Agent_Builder.ipynb` | No-Code-Alternative, Vergleich mit LangGraph | 🔵 Optional |
-| M30 | `M30_MCP_Integration.ipynb` | Model Context Protocol, Multi-Server-Setup | 🔵 Optional |
+| M30a | `M30_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🔵 Optional |
+| M30b | `M30_MCP_HuggingFace.ipynb` | MCP mit HuggingFace-Integration | 🔵 Optional |
+| M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
+| M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
 | M33 | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
 | M34 | `M34_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
 | M35 | `M35_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
 | M36 | `M36_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
-| M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
-| M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
 
 
 **Version:** 2.0    

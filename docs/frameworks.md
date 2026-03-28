@@ -83,3 +83,27 @@ Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und W
   - Was sind XML-Tags? Warum strukturieren sie Prompts besser
   - Die drei Typen: System-only, Template mit Variablen, Few-Shot
   - `load_prompt()` nutzen und häufige Fehler vermeiden
+
+## Best Practices & Anti-Patterns
+
+Für jedes zentrale Framework gibt es eine dedizierte Referenz mit empfohlenen Patterns und Anti-Patterns zum Vermeiden.
+
+- **[LangChain Best Practices](https://ralf-42.github.io/Agenten/frameworks/LangChain_Best_Practices.html)** – *Was sind die 7 MUST-HAVE Features?* Pflichtpatterns für alle LangChain 1.0+ Notebooks
+  - `init_chat_model()`, `with_structured_output()`, `@tool`, `create_agent()`
+  - LCEL `|` Chains, Middleware, Standard Content Blocks
+  - Anti-Patterns und Migrationshinweise (v1.2.x Neuerungen)
+
+- **[LangGraph Best Practices](https://ralf-42.github.io/Agenten/frameworks/LangGraph_Best_Practices.html)** – *Wann LangGraph statt `create_agent()`?* Pflichtpatterns für Multi-Agent-Systeme und State Machines
+  - StateGraph, Nodes & Edges, Conditional Routing
+  - Checkpointing, Human-in-the-Loop, Subgraphs
+  - Entscheidungshilfe: LangChain vs. LangGraph
+
+- **[LangSmith Best Practices](https://ralf-42.github.io/Agenten/frameworks/LangSmith_Best_Practices.html)** – *Wie observiere ich Agenten richtig?* Tracing, Evaluation und Monitoring in der Praxis
+  - `LANGSMITH_*` Umgebungsvariablen (nicht `LANGCHAIN_*`)
+  - `.with_config()`, `.func()`, Projektname-Konventionen
+  - Troubleshooting: EU-Endpoint, falsches Projekt, fehlende Traces
+
+- **[Mermaid Best Practices](https://ralf-42.github.io/Agenten/frameworks/Mermaid_Best_Practices.html)** – *Wie vermeide ich typische Diagramm-Fehler?* Fehlerfreie Mermaid-Diagramme in Notebooks und Dokumentation
+  - Reservierte Keywords, Sonderzeichen, sequenceDiagram-Pflichtregeln
+  - Diagramm-Typen und ihre Best Practices
+  - Checkliste für neue Diagramme

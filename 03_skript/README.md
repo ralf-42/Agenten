@@ -154,5 +154,5 @@ Siehe **`Obsidian_Migration_Plan.md`** für detaillierte Anleitung.
 
 ---
 
-**Letzte Aktualisierung:** November 2025
+**Letzte Aktualisierung:** März 2026
 **Maintainer:** Ralf

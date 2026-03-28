@@ -129,14 +129,14 @@ Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unte
 **Erwartete Module:**
 - M03 (Erste Agenten)
 - M06 (Multi-Tool Agents)
-- M13 (StateGraph Basics)
-- M14 (Conditional Routing)
-- M15 (Checkpointing)
+- M09 (StateGraph Basics)
+- M10 (Conditional Routing)
+- M16 (Checkpointing)
 - M17 (Human-in-the-Loop)
-- M22 (Supervisor-Pattern)
+- M20 (Supervisor-Pattern)
 
 **Erweiterte Module (optional):**
-- M20 (Agent Security & Best Practices)
+- M23 (Agent Security & Best Practices)
 - M28 (Gradio UI für Agenten)
 - M35 (Production Deployment)
 

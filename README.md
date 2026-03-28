@@ -31,10 +31,10 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 Agenten/
 ├── 01_notebook/    # Jupyter Notebooks (M01-M36)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
-├── 03_skript/      # Kursmaterialien (PDF)
+├── 03_skript/      # Kursfolien & Intro-Präsentation
 ├── 04_modul/       # Python-Module (genai_lib)
 ├── 05_prompt/      # Prompt-Templates (Markdown-Format)
-└── 06_skill/       # Agent Skills (SKILL.md, WRITER.md, Scripts)
+└── 06_skill/       # Agent Skills (compliance, meeting-briefing, research)
 ```
 
 ## 🛠️ Technologie-Stack

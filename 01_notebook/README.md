@@ -70,14 +70,14 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 ## Erweiterte Module – Spezialisierung & Produktion (M22–M36)
 
-> Diese Module sind **nicht Teil des 5-Phase es-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
+> Diese Module sind **nicht Teil des 5-Phasen-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
 
 | Modul | Datei | Inhalt | Priorität |
 |-------|-------|--------|-----------|
 | M22 | `M22_Agentic_RAG.ipynb` | Agenten steuern Retrieval aktiv, Query-Rephrasing | 🟡 Empfohlen |
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, PII-Redaktion | 🟡 Empfohlen |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Metriken, systematisches Benchmarking, RAGAS | 🟡 Empfohlen |
-| M25 | — | **offen** – noch nicht erstellt | ⬜ |
+| M25 | — | Reserveplatz | ⬜ |
 | M26 | `M26_Integration_Pipeline.ipynb` | Integration: Research-Report-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
@@ -88,7 +88,7 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 | M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
 | M33 | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
 | M34 | `M34_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
-| M35 | `M35_Production_Deployment.ipynb` | Docker, FastAPI, LangServe, Monitoring | 🔵 Optional |
+| M35 | `M35_Production_Deployment.ipynb` | Docker, FastAPI, Monitoring | 🔵 Optional |
 | M36 | `M36_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
 
 

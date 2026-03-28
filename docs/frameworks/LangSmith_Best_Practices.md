@@ -1,3 +1,12 @@
+---
+layout: default
+title: LangSmith Best Practices
+parent: Frameworks
+nav_order: 12
+description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, with_config, Troubleshooting"
+has_toc: true
+---
+
 # LangSmith Best Practices
 
 **Projekt:** Generative KI mit LangChain 1.1+

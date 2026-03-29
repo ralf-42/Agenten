@@ -576,6 +576,6 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 
 ---
 
-**Version:** 1.0    
-**Stand:** November 2025    
+**Version:** 1.0<br>
+**Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  

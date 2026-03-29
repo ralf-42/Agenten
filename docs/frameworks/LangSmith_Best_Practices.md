@@ -10,7 +10,7 @@ has_toc: true
 # LangSmith Best Practices
 
 **Projekt:** Generative KI mit LangChain 1.1+
-**Version:** 1.9
+**Version:** 1.9<br>
 **Datum:** 2026-03-04
 
 ---
@@ -753,6 +753,6 @@ callback = LangSmithCallback(
 
 ---
 
-**Version:** 1.9
-**Stand:** März 2026
+**Version:** 1.9<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten

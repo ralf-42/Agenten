@@ -315,6 +315,6 @@ def test_agent_with_tools():
 
 ---
 
-**Version:** 2.0 (konsolidiert)
-**Stand:** Januar 2026
+**Version:** 2.0 (konsolidiert)<br>
+**Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

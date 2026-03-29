@@ -958,8 +958,8 @@ results = retriever.invoke("Meine Frage")
 
 ---
 
-**Version:** 1.0    
-**Stand:** November 2025    
+**Version:** 1.0<br>
+**Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.  
 
 

@@ -106,6 +106,6 @@ Der langfristige Erfolg des EU AI Acts wird davon abhängen, ob es gelingt, die 
 
 ---
 
-**Version:** 1.0    
-**Stand:** November 2025    
+**Version:** 1.0<br>
+**Stand:** November 2025<br>
 **Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.      

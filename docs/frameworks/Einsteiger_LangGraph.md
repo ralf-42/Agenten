@@ -488,7 +488,7 @@ Mögliche Erweiterungen:
 
 ---
 
-**Version:** 2.0  
-**Stand:** Januar 2026  
+**Version:** 2.0<br>
+**Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
 

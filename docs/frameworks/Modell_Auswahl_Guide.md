@@ -375,6 +375,6 @@ Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
 
 ---
 
-**Version:** 1.4
-**Stand:** März 2026
+**Version:** 1.4<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten

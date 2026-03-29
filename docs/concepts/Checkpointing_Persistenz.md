@@ -421,6 +421,6 @@ Checkpointing ist das technische Fundament für persistente, unterbrechbare Agen
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

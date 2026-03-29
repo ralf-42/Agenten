@@ -297,6 +297,6 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 ---
 
-**Version:** 4.0    
-**Stand:** März 2026    
+**Version:** 4.0<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

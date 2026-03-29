@@ -46,5 +46,5 @@ Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden 
 
 ---
 
-**Version:** 1.0         
+**Version:** 1.0<br>
 **Letzte Aktualisierung:** Dezember 2025      

@@ -1062,7 +1062,7 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 
 ---
 
-**Version:** 1.4
+**Version:** 1.4<br>
 **Letzte Aktualisierung:** März 2026 (LangGraph v1.0.10 / langgraph-prebuilt v1.0.8)
 **Autor:** GenAI Projekt Team
 
@@ -1096,6 +1096,6 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten

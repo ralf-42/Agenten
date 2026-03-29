@@ -518,6 +518,6 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.2
-**Stand:** März 2026
+**Version:** 1.2<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

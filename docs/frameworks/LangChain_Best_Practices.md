@@ -1131,4 +1131,11 @@ Beim Refactoring von altem Code:
 
 ---
 
-> 💡 **Tipp:** Bookmark diese Datei und konsultiere sie bei jedem neuen Notebook oder Code-Modul!
+> [!TIP] Tipp
+> Bookmark diese Datei und konsultiere sie bei jedem neuen Notebook oder Code-Modul.
+
+---
+
+**Version:** 1.0
+**Stand:** März 2026
+**Kurs:** Agenten

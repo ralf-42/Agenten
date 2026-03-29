@@ -10,7 +10,7 @@ has_toc: true
 
 Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Der schnellste Einstieg entsteht meist nicht durch vollständiges Lesen, sondern durch einen passenden Pfad: erst das Ziel klären, dann gezielt vertiefen.
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -129,10 +129,6 @@ Die Dokumentation muss nicht vollständig von oben nach unten gelesen werden. Si
 
 Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu früher Sprung in Deployment, Multi-Agent-Patterns oder Governance erzeugt oft mehr Komplexität als Erkenntnis.
 
-## Nächster Ausbauschritt
-
-Wenn diese Seite als zentraler Einstieg genutzt wird, lohnt sich anschließend eine kleine Ergänzung in den Bereichsseiten wie [concepts](./concepts.html), [frameworks](./frameworks.html), [deployment](./deployment.html), [regulatory](./regulatory.html), [resources](./resources.html) und [projects](./projects.html): ganz oben jeweils ein kurzer Abschnitt `Wann dieser Bereich?`. Damit entsteht nicht nur ein zentraler Startpunkt, sondern auch lokale Orientierung innerhalb der Teilbereiche.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
@@ -140,7 +136,9 @@ Wenn diese Seite als zentraler Einstieg genutzt wird, lohnt sich anschließend e
 | [concepts](./concepts.html) | Welche Konzeptdokumente stehen zur Verfügung? |
 | [frameworks](./frameworks.html) | Welche Frameworks und Best Practices werden behandelt? |
 | [deployment](./deployment.html) | Welche Dokumente begleiten den Weg in den Betrieb? |
+| [regulatory](./regulatory.html) | Welche rechtlichen und organisatorischen Rahmenbedingungen gelten? |
 | [resources](./resources.html) | Welche Hilfen und Nachschlagepunkte unterstützen die Umsetzung? |
+| [projects](./projects.html) | Welche projektnahen Aufgaben und Kursformate stehen bereit? |
 
 **Version:** 1.0   
 **Stand:** März 2026   

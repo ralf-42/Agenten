@@ -186,5 +186,6 @@ llm = Ollama(model="llama3")
 ---
 
 **Version:** 1.0
-**Letzte Aktualisierung:** Dezember 2025
+**Stand:** Dezember 2025
+**Kurs:** Agenten
 

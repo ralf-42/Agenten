@@ -1091,7 +1091,7 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 
 ---
 
-> [!TIP] Tipp
+> [!TIP] Tipp<br>
 > Mit einfachen `create_agent()` Workflows starten und zu LangGraph migrieren, wenn die Komplexität steigt.
 
 ---

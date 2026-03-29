@@ -1131,7 +1131,7 @@ Beim Refactoring von altem Code:
 
 ---
 
-> [!TIP] Tipp
+> [!TIP] Tipp<br>
 > Bookmark diese Datei und konsultiere sie bei jedem neuen Notebook oder Code-Modul.
 
 ---

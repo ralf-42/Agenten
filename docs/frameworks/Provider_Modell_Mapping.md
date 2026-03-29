@@ -32,7 +32,7 @@ Dieses Dokument trennt deshalb zwei Ebenen:
 1. **Kurs-Default:** die tatsächlich in den Modulen verwendeten OpenAI-Modelle
 2. **Provider-Mapping:** geeignete Entsprechungen bei Mistral, Gemini und Anthropic
 
-> [!IMPORTANT] Nur zur Einordnung und Planung
+> [!IMPORTANT] Nur zur Einordnung und Planung<br>
 > Dieses Mapping dient der Einordnung und Architekturplanung.
 > Es ändert nicht automatisch die in den Modulen verwendeten Modelle.
 
@@ -70,7 +70,7 @@ Der wichtigste Grundsatz lautet:
 | **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
 | **Embeddings**                     | `text-embedding-3-small` | Mistral Embeddings                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
 
-> [!NOTE] Funktionsorientiert, nicht benchmark-orientiert
+> [!NOTE] Funktionsorientiert, nicht benchmark-orientiert<br>
 > Das Mapping ist bewusst funktionsorientiert, nicht benchmark-orientiert.
 > Ziel ist eine tragfähige Architekturentscheidung, kein absoluter Leistungsvergleich.
 

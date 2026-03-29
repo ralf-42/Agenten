@@ -74,7 +74,7 @@ flowchart TB
 2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
 3. Optional: Organisation und Projekte anlegen
 
-> [!WARNING] EU-Endpoint verwenden
+> [!WARNING] EU-Endpoint verwenden<br>
 > Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
 > Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
 
@@ -89,7 +89,7 @@ flowchart TB
 
 **Schritt 2: Umgebung einrichten (Standard-Setup)**
 
-> [!WARNING] Reihenfolge-Regel: Env-Vars vor Imports
+> [!WARNING] Reihenfolge-Regel: Env-Vars vor Imports<br>
 > LangSmith-Env-Vars müssen gesetzt sein, bevor `langchain`, `langsmith` oder `genai_lib` importiert werden. Der Tracer liest die Env-Vars beim ersten Import — späteres Setzen wird ignoriert. Env-Vars ganz oben in der Setup-Cell, vor allen Imports setzen.
 
 ```python
@@ -463,7 +463,7 @@ if runs:
     )
 ```
 
-> [!WARNING] Veraltetes Muster — nicht verwenden
+> [!WARNING] Veraltetes Muster — nicht verwenden<br>
 > `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
 
 ### Automatische Evaluierung mit LLM-as-Judge

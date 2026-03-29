@@ -86,7 +86,7 @@ flowchart LR
 | **Kontext-Erstellung** | Gefundene Chunks werden zum Prompt hinzugefügt           |
 | **Generation**         | Das LLM generiert eine Antwort basierend auf dem Kontext |
 
-> [!WARNING] Retrieval verbessert Relevanz — garantiert aber keine Faktentreue.      
+> [!WARNING] Retrieval verbessert Relevanz — garantiert aber keine Faktentreue.<br>
 > RAG reduziert Halluzination, eliminiert sie nicht. Das LLM kann relevante Dokumente fehlinterpretieren, kombinieren oder ergänzen. Kritische Anwendungen brauchen zusätzliche Validierung der generierten Antworten.
 
 ---
@@ -95,7 +95,7 @@ flowchart LR
 
 Chunking ist eine der kritischsten Entscheidungen in einem RAG-System. Zu große Chunks verschwenden Kontext, zu kleine Chunks verlieren Zusammenhang.
 
-> [!TIP] Chunking-Strategie beeinflusst Retrieval-Qualität stark    
+> [!TIP] Chunking-Strategie beeinflusst Retrieval-Qualität stark<br>
 > Die Wahl von `chunk_size` und `chunk_overlap` ist dokumenttypabhängig. Falsch gewählte Parameter sind häufig die Ursache für schlechte RAG-Ergebnisse — noch bevor das LLM überhaupt zum Einsatz kommt.
 
 ### Chunking-Strategien

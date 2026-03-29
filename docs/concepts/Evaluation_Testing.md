@@ -77,7 +77,7 @@ Die tatsächliche Nutzererfahrung steht im Fokus:
 
 ---
 
-> [!WARNING] Ohne Baseline keine belastbare Aussage
+> [!WARNING] Ohne Baseline keine belastbare Aussage<br>
 > Eine einzelne Messung sagt nichts — erst der Vergleich (vorher/nachher, Version A/B) zeigt, ob eine Änderung wirklich hilft oder nur an einem Ort verbessert und anderswo verschlechtert. Regression-Tests sind kein Optional-Feature.
 
 ## Metriken für Agenten

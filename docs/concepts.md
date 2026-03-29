@@ -10,6 +10,12 @@ description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 
 Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
 
+## Wann dieser Bereich?
+
+`concepts/` ist der richtige Einstieg, wenn Begriffe, Muster oder Architekturentscheidungen noch unscharf sind. Der Bereich hilft vor allem dann, wenn zuerst geklärt werden soll, was ein Agent überhaupt ist, wann RAG sinnvoll wird, wie State funktioniert oder an welcher Stelle Human-in-the-Loop und Security relevant werden.
+
+Für einen schnellen Gesamtpfad zuerst [Start hier](./Start_Hier.html) öffnen.
+
 ## Einstieg & Entscheidung
 
 - **[Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html)** – *Lohnt sich KI für diese Aufgabe?* Machbarkeit, Nutzen und Risiken vor dem Projektstart bewerten

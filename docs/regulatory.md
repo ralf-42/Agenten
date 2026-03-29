@@ -10,6 +10,12 @@ description: "Rechtliche Rahmenbedingungen, Ethik und Souveränität"
 
 Wer KI-Agenten produktiv einsetzt, begegnet früher oder später drei Fragekomplexen: Was regelt der EU AI Act? Welche ethischen Anforderungen gelten? Und wie viel Abhängigkeit von externen Cloud-Providern ist vertretbar?
 
+## Wann dieser Bereich?
+
+`regulatory/` ist nicht der übliche Ersteinstieg in die Technik, wird aber relevant, sobald Agentensysteme in Organisationen, Bildung, Verwaltung oder produktiven Prozessen eingesetzt werden. Der Bereich hilft bei der Einordnung von Souveränität, Compliance, Verantwortung und rechtlichen Grenzen.
+
+Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Start hier](./Start_Hier.html) öffnen.
+
 ## Übersicht
 
 ### Digitale Souveränität

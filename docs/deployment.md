@@ -10,6 +10,12 @@ description: "Von der Entwicklung zur produktionsreifen Anwendung"
 
 Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für Deployment, Architektur und Provider-Migration.
 
+## Wann dieser Bereich?
+
+`deployment/` wird meist erst dann relevant, wenn ein Notebook oder Prototyp bereits funktioniert und in eine robustere Form überführt werden soll. Themen wie Projektstruktur, Konfiguration, APIs, Docker, Provider-Wechsel und Produktreife stehen deshalb erst nach dem konzeptionellen und technischen Einstieg im Vordergrund.
+
+Für einen passenden Gesamtpfad zuerst [Start hier](./Start_Hier.html) öffnen.
+
 ## Übersicht
 
 ### Architektur & Ökosystem

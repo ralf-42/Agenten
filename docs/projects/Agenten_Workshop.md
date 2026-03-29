@@ -704,6 +704,6 @@ A:
 
 ---
 
-**Version**: 1.0     
-**Stand**: März 2026    
-**Kurs**: KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Version:** 1.0     
+**Stand:** März 2026    
+**Kurs:** Agenten

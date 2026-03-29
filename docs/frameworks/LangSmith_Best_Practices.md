@@ -140,7 +140,8 @@ tags=["M05", "lcel", "parallel"]
 tags=["production", "rag", "v2"]
 ```
 
-> ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* –
+> [WARNING] Regel
+> ** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* –
 > nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig
 > demonstrieren (z. B. in einem eigenen „LangSmith"-Kapitel), in den
 > vorherigen LCEL-Beispielen weglassen.
@@ -169,7 +170,8 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 - ✅ Wenn Tracing-Unterdrückung via Context Manager nicht zuverlässig funktioniert
 - ❌ Nicht verwenden, wenn das Runnable-Verhalten (Schema-Validierung, Callbacks) getestet werden soll
 
-> 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
+> [TIP] Didaktischer Mehrwert
+> ** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
 
 ---
 
@@ -365,7 +367,8 @@ os.environ["LANGSMITH_PROJECT"] = "my-project"   # Optional: Projekt-Name
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
-> ⚠️ **Reihenfolge-Regel:** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der LangChain-Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert.
+> [WARNING] Reihenfolge-Regel
+> ** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der LangChain-Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert.
 >
 > **In Notebooks:** Env-Vars in die Setup-Cell (ganz oben), vor alle anderen Imports.
 
@@ -377,7 +380,8 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 | `LANGSMITH_TRACING` | Einmalig beim **ersten LangChain-Import** | ❌ Nein – muss vor Imports stehen |
 | `LANGSMITH_PROJECT` | Beim **ersten Trace** – dann gecacht via `lru_cache` | ⚠️ Nur wenn **vor dem ersten Trace** gesetzt |
 
-> ⚠️ **LangSmith-SDK Verhalten:** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
+> [NOTE] LangSmith-SDK Verhalten
+> ** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
 >
 > **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Projekt-Wechsel nach Notebook-Start sind nicht vorgesehen.
 
@@ -677,9 +681,9 @@ callback = LangSmithCallback(
 - [Release Notes](https://docs.smith.langchain.com/release-notes)
 
 ### Interne Dokumentation
-- [Vom Modell zum Produkt: LangChain-Ökosystem](./docs/deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.md)
-- [LangChain 1.0 Must-Haves](./LangChain_Best_Practices.md)
-- [LangGraph 1.0 Must-Haves](./LangGraph_Best_Practices.md)
+- [Vom Modell zum Produkt: LangChain-Ökosystem](../deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.html)
+- [LangChain 1.0 Must-Haves](./LangChain_Best_Practices.html)
+- [LangGraph 1.0 Must-Haves](./LangGraph_Best_Practices.html)
 
 ### Related Commands
 - `/check-langsmith-changelog` - Prüft neue LangSmith-Features
@@ -738,6 +742,17 @@ callback = LangSmithCallback(
 
 ---
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [LangChain 1.0 Must-Haves](./LangChain_Best_Practices.html) | Wie werden Chains, Agents und Tools korrekt implementiert? |
+| [LangGraph 1.0 Must-Haves](./LangGraph_Best_Practices.html) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
+| [Modell-Auswahl Guide](./Modell_Auswahl_Guide.html) | Welches Modell eignet sich für welche Agentenrolle? |
+| [Vom Modell zum Produkt](../deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.html) | Wie wird ein LangChain-Prototyp produktionsreif? |
+
+---
+
 **Version:** 1.9
-**Maintainer:** Ralf
-**Lizenz:** MIT License
+**Stand:** März 2026
+**Kurs:** Agenten

@@ -364,6 +364,17 @@ Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
 ---
     
 
-**Version:** 1.4     
-**Stand:** März 2026       
-**Gilt für:** LangChain 1.0+, LangGraph 1.0+, OpenAI API       
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [LangChain 1.0 Must-Haves](./LangChain_Best_Practices.html) | Wie werden die gewählten Modelle in Chains und Agents eingesetzt? |
+| [LangGraph 1.0 Must-Haves](./LangGraph_Best_Practices.html) | Wie werden Multi-Agent-Workflows mit den empfohlenen Modellen aufgebaut? |
+| [LangSmith Best Practices](./LangSmith_Best_Practices.html) | Wie werden Modellkosten und -qualität über LangSmith beobachtet? |
+| [Provider & API-Keys](../resources/API_Keys_und_Provider.html) | Wie werden die jeweiligen Provider-Zugänge eingerichtet? |
+
+---
+
+**Version:** 1.4
+**Stand:** März 2026
+**Kurs:** Agenten

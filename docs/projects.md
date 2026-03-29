@@ -10,6 +10,12 @@ description: "Praktische Übungen und End-to-End Projekte"
 
 Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Workshop-Format führt durch einen konkreten LangGraph-Aufbau; die Challenge verlangt einen vollständigen eigenen Entwurf.
 
+## Wann dieser Bereich?
+
+`projects/` ist dann sinnvoll, wenn nicht mehr nur gelesen oder ausprobiert, sondern ein zusammenhängendes System gebaut werden soll. Der Bereich eignet sich vor allem zum Anwenden, Vertiefen und Prüfen, ob die Konzepte und Frameworks bereits sicher genug sitzen.
+
+Für den Weg bis zu diesem Punkt zuerst [Start hier](./Start_Hier.html) öffnen.
+
 ## Übersicht
 
 ### Workshop-Format

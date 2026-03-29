@@ -27,6 +27,13 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
   - Testing, API-Endpunkte, Docker
   - Deployment-Optionen im Vergleich
 
+### Stack & Infrastruktur
+- **[Minimum Viable Agent Stack](https://ralf-42.github.io/Agenten/deployment/Minimum_Viable_Agent_Stack.html)** – *Welche Schichten braucht ein Produktionsagent?* Die sechs Infrastrukturschichten zwischen LLM und Produktionssystem
+  - Übersichtstabelle: Einstiegspunkt und Upgrade-Kriterium pro Schicht
+  - Bewertungsrahmen: Zustand, Lock-in-Risiko, Demo-Produktions-Lücke
+  - Detailanalyse aller sechs Schichten mit ehrlicher Einschätzung
+  - Stack-Empfehlung nach Agententyp (Stateless bis Multi-Agent)
+
 ### Migration & Provider-Wechsel
 - **[Migration: OpenAI → Mistral](https://ralf-42.github.io/Agenten/deployment/Migration_OpenAI_Mistral.html)** – *Wie wechsle ich den LLM-Provider?* Technische Analyse der Provider-Migration
   - Kernaussage: LangChain vereinfacht die Migration strukturell

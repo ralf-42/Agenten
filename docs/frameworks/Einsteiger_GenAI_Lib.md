@@ -578,8 +578,8 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.3
-**Stand:** März 2026   
+**Version:** 3.3<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.            
 
 

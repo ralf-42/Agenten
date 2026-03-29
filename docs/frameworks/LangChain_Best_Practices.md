@@ -1077,7 +1077,7 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.6
+**Version:** 1.6<br>
 **Letzte Aktualisierung:** März 2026 (LangChain v1.2.10 / langchain-openai v1.1.10)
 **Autor:** GenAI Projekt Team
 
@@ -1136,6 +1136,6 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten

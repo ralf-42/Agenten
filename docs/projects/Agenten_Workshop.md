@@ -704,6 +704,6 @@ A:
 
 ---
 
-**Version:** 1.0     
-**Stand:** März 2026    
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten

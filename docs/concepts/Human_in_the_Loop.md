@@ -190,6 +190,6 @@ Wartet ein Agent zu lange auf menschliche Eingabe, kann das Prozesse blockieren.
 
 ---
 
-**Version:** 1.0
-**Stand:** März 2026
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

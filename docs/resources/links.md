@@ -148,6 +148,6 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 ---
 
-**Version:** 1.4    
-**Stand:** März 2026    
+**Version:** 1.4<br>
+**Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    

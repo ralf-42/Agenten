@@ -705,8 +705,8 @@ class SupportState(TypedDict):
 
 ---
 
-**Version:** 1.1     
-**Stand:** März 2026    
+**Version:** 1.1<br>
+**Stand:** März 2026<br>
 **Kurs:** Agenten
 
 

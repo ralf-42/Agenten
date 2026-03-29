@@ -265,7 +265,7 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 
 ---
 
-**Version:** 1.0      
-**Stand:** Dezember 2025      
+**Version:** 1.0<br>
+**Stand:** Dezember 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.         
 

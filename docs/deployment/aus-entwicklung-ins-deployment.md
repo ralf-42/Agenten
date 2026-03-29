@@ -378,6 +378,6 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 
 ---
 
-**Version:** 1.0      
-**Stand:** Februar 2026      
+**Version:** 1.0<br>
+**Stand:** Februar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.      

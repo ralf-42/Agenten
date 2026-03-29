@@ -362,7 +362,39 @@ Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
 [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
 
 ---
-    
+
+## LLM-Routing als Agenten-Auswahl
+
+Im Supervisor-Pattern trägt jeder Worker ein festes Modell. Damit gilt:
+
+> **Wer den Worker auswählt, wählt das Modell.**
+
+Das ist **Variante A** des LLM-Routings — kein neues Konzept, sondern die konsequente Anwendung der Designregeln oben auf die Supervisor-Logik.
+
+| Kriterium | Routing-Entscheid | Worker |
+|---|---|---|
+| Einfache Aufgabe, Latenz wichtig | → `fast_agent` | `BASELINE` (`gpt-4o-mini`) |
+| Komplexe Analyse, Qualität wichtig | → `capable_agent` | `WORKER` (`gpt-5.4-mini`) |
+| Kritische Entscheidung, Fehlertoleranz gering | → `judge_agent` | `JUDGE` (`o3`) |
+
+```python
+# Supervisor klassifiziert → Agenten-Auswahl = LLM-Auswahl
+fast_agent    = create_agent(model=init_chat_model(BASELINE, temperature=0.0), ...)
+capable_agent = create_agent(model=init_chat_model(WORKER), ...)
+
+# routing_edge gibt Agenten-Namen zurück → bestimmt automatisch das Modell
+builder.add_conditional_edges("supervisor", routing_edge,
+    {"einfach": "fast_agent", "komplex": "capable_agent"})
+```
+
+**Variante B** — Modell als Laufzeit-Parameter — ist möglich, aber komplexer und erst in M35 (Production Deployment) relevant.
+
+**Praxishinweis:** Den Supervisor-Knoten selbst immer mit `JUDGE` (`o3`) betreiben — eine falsche Routing-Entscheidung pflanzt sich durch den gesamten Graph fort.
+
+> [!TIP] Vollständiges Beispiel<br>
+> Implementierung mit `LLMRouterState`, `routing_edge` und Tests: M20 Kapitel 7.
+
+---
 
 ## Abgrenzung zu verwandten Dokumenten
 

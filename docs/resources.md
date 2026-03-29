@@ -14,7 +14,7 @@ Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Age
 
 `resources/` ist der pragmatische Begleitbereich der Dokumentation. Er hilft bei Setup, Troubleshooting, Standards, lokalen Umgebungen und externen Quellen. Der Bereich eignet sich deshalb selten als inhaltlicher Einstieg, aber sehr oft als Arbeitsunterstützung während der Umsetzung.
 
-Für einen inhaltlichen Startpunkt zuerst [Start hier](./Start_Hier.html) öffnen.
+Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 > [!NOTE] Bei API- oder Trace-Problemen
 > Zuerst [Troubleshooting](https://ralf-42.github.io/Agenten/resources/troubleshooting.html) prüfen. LangSmith-Verbindungsprobleme fast immer durch falschen Endpoint — EU-Workspace benötigt `https://eu.api.smith.langchain.com`.

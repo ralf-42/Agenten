@@ -14,7 +14,7 @@ Einsteiger-Guides zu wichtigen Frameworks und Werkzeugen der generativen KI.
 
 `frameworks/` passt, wenn das fachliche Ziel bereits klar ist und nun die konkrete Umsetzung folgt. Der Bereich beantwortet vor allem die Frage, mit welchem Werkzeug begonnen werden sollte, wie typische Arbeitsmuster in LangChain, LangGraph oder LangSmith aussehen und welche Best Practices im Projekt gelten.
 
-Für eine empfohlene Lesereihenfolge über mehrere Bereiche hinweg zuerst [Start hier](./Start_Hier.html) öffnen.
+Für eine empfohlene Lesereihenfolge über mehrere Bereiche hinweg zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und Werkzeuge:
 

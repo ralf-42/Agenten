@@ -14,7 +14,7 @@ Wer KI-Agenten produktiv einsetzt, begegnet früher oder später drei Fragekompl
 
 `regulatory/` ist nicht der übliche Ersteinstieg in die Technik, wird aber relevant, sobald Agentensysteme in Organisationen, Bildung, Verwaltung oder produktiven Prozessen eingesetzt werden. Der Bereich hilft bei der Einordnung von Souveränität, Compliance, Verantwortung und rechtlichen Grenzen.
 
-Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Start hier](./Start_Hier.html) öffnen.
+Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 ## Übersicht
 

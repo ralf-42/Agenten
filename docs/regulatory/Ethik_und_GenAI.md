@@ -224,4 +224,4 @@ has_toc: true
 
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
-**Kurs:** Generative KI. Verstehen. Anwenden. Gestalten.      
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

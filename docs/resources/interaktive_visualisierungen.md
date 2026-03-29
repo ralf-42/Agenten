@@ -104,4 +104,4 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 **Version:** 1.0<br>
 **Stand:** Januar 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.        
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

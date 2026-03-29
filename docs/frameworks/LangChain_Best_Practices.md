@@ -1138,4 +1138,4 @@ Beim Refactoring von altem Code:
 
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
-**Kurs:** Agenten
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

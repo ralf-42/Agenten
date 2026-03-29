@@ -459,4 +459,4 @@ Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents an
 
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.      
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

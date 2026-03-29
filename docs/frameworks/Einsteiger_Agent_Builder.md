@@ -970,7 +970,4 @@ graph LR
 
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.   
-
-
-
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

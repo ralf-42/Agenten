@@ -257,4 +257,4 @@ Im weiteren Kursverlauf werden diese Architekturen praktisch mit LangChain und L
 
 **Version:** 1.1<br>
 **Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.     
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

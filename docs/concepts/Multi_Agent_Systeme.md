@@ -700,4 +700,4 @@ Die praktische Umsetzung erfolgt mit LangGraph. Dort werden diese Patterns Schri
 
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.   
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

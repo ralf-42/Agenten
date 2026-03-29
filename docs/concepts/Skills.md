@@ -458,4 +458,4 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Die vorh
 
 **Version:** 1.3<br>
 **Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.          
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

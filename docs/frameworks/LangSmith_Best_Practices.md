@@ -755,4 +755,4 @@ callback = LangSmithCallback(
 
 **Version:** 1.9<br>
 **Stand:** März 2026<br>
-**Kurs:** Agenten
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

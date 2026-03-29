@@ -124,4 +124,4 @@ check_environment()
 
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.    
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

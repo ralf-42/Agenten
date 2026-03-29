@@ -270,7 +270,7 @@ flowchart LR
     style E fill:#87CEEB,color:#000
 ```
 
-> [!WARNING] interrupt() erfordert einen Checkpointer    
+> [!WARNING] interrupt() erfordert einen Checkpointer<br>
 > Ohne kompilierten Checkpointer wirft `interrupt()` eine Exception. Immer `graph.compile(checkpointer=...)` verwenden, wenn HITL genutzt wird.
 
 ---
@@ -308,7 +308,7 @@ result = app.invoke(
 
 ### Thread-ID-Design
 
-> [!TIP] Thread-ID-Design für Multi-User    
+> [!TIP] Thread-ID-Design für Multi-User<br>
 > Für produktive Systeme: `thread_id = f"user_{user_id}_session_{session_id}"`. Generische IDs wie `"session1"` führen zu Datenvermischung zwischen Nutzern.
 
 ```python

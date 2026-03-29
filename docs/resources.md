@@ -16,7 +16,7 @@ Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Age
 
 Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
-> [!NOTE] Bei API- oder Trace-Problemen
+> [!NOTE] Bei API- oder Trace-Problemen<br>
 > Zuerst [Troubleshooting](https://ralf-42.github.io/Agenten/resources/troubleshooting.html) prüfen. LangSmith-Verbindungsprobleme fast immer durch falschen Endpoint — EU-Workspace benötigt `https://eu.api.smith.langchain.com`.
 
 ## Einstieg & Orientierung

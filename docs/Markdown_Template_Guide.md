@@ -242,10 +242,10 @@ Regeln:
 Im Projekt wird GitHub-Alert-Syntax verwendet. Der Titel nach dem Alert-Typ ist Pflicht.
 
 ```markdown
-> [!NOTE] Kontext
+> [!NOTE] Kontext<br>
 > Ergänzende Information, die den Haupttext nicht unterbrechen soll.
 
-> [!WARNING] Einschränkung
+> [!WARNING] Einschränkung<br>
 > Bekannte Fehlerquelle oder wichtige Grenze.
 ```
 

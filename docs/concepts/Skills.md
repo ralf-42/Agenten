@@ -204,7 +204,7 @@ Das `description`-Feld ist **kein beschreibender Text für Menschen** — es ist
 | ❌ Was, aber nicht wann | `Erstellt mehrseitige, professionell formatierte Dokumentation.` |
 | ✅ Was + konkrete Trigger | `Erstellt README.md-Dateien für Softwareprojekte. Use when user asks to "write a README", "create a readme", "document this project", "generate project documentation".` |
 
-> [!TIP] Praktische Regel
+> [!TIP] Praktische Regel<br>
 > Wenn ein Skill nicht automatisch auslöst, zuerst die `description` überarbeiten — nicht die Anweisungen darunter.
 
 **Negative Boundaries:** Eine wirksame `description` definiert auch, was der Skill *nicht* behandelt — z.B. `Do NOT use for: cover letters, job searching`. Ohne diese Abgrenzung aktiviert der Agent den Skill bei thematisch ähnlichen, aber unpassenden Anfragen (Overtriggering).
@@ -251,7 +251,7 @@ Der Markdown-Body ist das Herzstück des Skills. Folgende Prinzipien erhöhen di
 
 Empfohlene Abschnitte: `## Schnellreferenz` → `## Workflow` (Checkliste) → `## Gotchas` → `## Kritische Regeln`.
 
-> [!NOTE] context: fork nur für Aufgaben-Skills
+> [!NOTE] context: fork nur für Aufgaben-Skills<br>
 > `context: fork` ist nur für Aufgaben-Skills sinnvoll (der Subagent braucht eine konkrete Aufgabe). Reine Richtlinien-Skills (z.B. Coding-Konventionen) sollten ohne `fork` laufen.
 
 ### Subagenten gezielt einsetzen
@@ -373,7 +373,7 @@ Für echte Kurs- oder Projektarbeit reicht meist eine kleine Sammlung repräsent
 - Modellabhängig — Skill-Effektivität variiert je nach LLM; kleinere Modelle folgen Anweisungen weniger zuverlässig
 - Kontextbudget — viele installierte Skills erhöhen den Token-Verbrauch (Stufe 1: ~100 Token pro Skill)
 
-> [!WARNING] Sicherheit bei Community-Skills
+> [!WARNING] Sicherheit bei Community-Skills<br>
 > Skills injizieren Instruktionen direkt in das Kontextfenster des Agenten. Ein bösartig gestalteter Skill kann das Verhalten des Agenten gezielt manipulieren (Prompt Injection). SKILL.md vor der Installation lesen, `allowed-tools` auf benötigte Tools beschränken, projektspezifische Installation (`.claude/skills/`) gegenüber globaler bevorzugen.
 
 ### Wann aus einem Prompt ein Skill werden sollte

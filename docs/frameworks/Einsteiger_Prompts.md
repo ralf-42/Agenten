@@ -90,7 +90,7 @@ variables: [context, question]      # Platzhalter im Prompt-Text
 | `description` | ✅ | Kurzbeschreibung (1 Satz) |
 | `variables` | ✅ | Liste der `{variable}`-Platzhalter, oder `[]` wenn keine |
 
-> [!WARNING] `variables: []` vergessen → KeyError beim Laden    
+> [!WARNING] `variables: []` vergessen → KeyError beim Laden<br>
 > `load_prompt()` erwartet das `variables`-Feld immer — auch wenn keine Platzhalter vorhanden sind. Fehlt das Feld, wirft `load_prompt()` einen `KeyError`.
 
 ---
@@ -369,7 +369,7 @@ flowchart TD
 
 ## Häufige Fehler
 
-> [!WARNING] XML-Tags gehören in `## system`, nicht in `## human`    
+> [!WARNING] XML-Tags gehören in `## system`, nicht in `## human`<br>
 > XML-Tags in der `## human`-Sektion werden als Nutzer-Text interpretiert und erscheinen wörtlich in der Ausgabe. Strukturierungs-Tags (`<Task>`, `<Instructions>` etc.) immer in `## system` platzieren.
 
 | Fehler                                    | Ursache                                      | Lösung                                    |

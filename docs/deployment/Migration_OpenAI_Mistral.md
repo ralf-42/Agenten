@@ -13,7 +13,7 @@ has_toc: true
 > **Migrationsleitfaden für das Projekt `Agenten`**      
 > Zentrale Aussage: Die Migration wird vor allem dadurch vereinfacht, dass das Projekt stark auf **LangChain** und das umgebende Ökosystem setzt.
 
-> [!NOTE] Hinweis zu den Notebooks
+> [!NOTE] Hinweis zu den Notebooks<br>
 > Die in `01_notebook/` genannten Module dienen hier nur als **anfassbare Beispiele**. Relevant ist nicht das einzelne Notebook, sondern **welche Art von Änderung** durch die bestehende LangChain-Struktur vereinfacht wird.
 
 ---

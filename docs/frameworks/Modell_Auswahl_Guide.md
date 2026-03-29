@@ -13,7 +13,7 @@ has_toc: true
 > **Welches Modell für welche Aufgabe?**      
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
-> [!NOTE] OpenAI-Default im Kurs
+> [!NOTE] OpenAI-Default im Kurs<br>
 > Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen.
 > Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe:
 > [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
@@ -38,7 +38,7 @@ has_toc: true
 | `gpt-5.4-mini` | Coding & Agentic Tasks, schnell und kostengünstig          | Worker-Agenten, Code-Generierung, RAG-Synthese |
 | `gpt-5.4`      | Maximale Ausgabequalität, komplexe Synthese                | Worker (hochwertig), finale Reports, kritische RAG |
 
-> [!TIP] Faustregel    
+> [!TIP] Faustregel<br>
 > Nicht das stärkste Modell wählen — das *passende* für den Knoten.
 
 
@@ -74,7 +74,7 @@ Diese Regeln gelten für alle Module, in denen Modelle explizit zugewiesen werde
 
 Knoten, die **Entscheidungen treffen** (Routing, Supervisor-Logik, Conditional Edges), erhalten im Kurs `o3`.
 
-> [!WARNING] Schwaches Modell als Router → Fehler im gesamten Graph    
+> [!WARNING] Schwaches Modell als Router → Fehler im gesamten Graph<br>
 > Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch alle nachgelagerten Nodes fortpflanzen. Ein einzelner falscher Route-Entscheid kann den gesamten Workflow zum Scheitern bringen.
 
 Begründung: Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch den gesamten Graphen fortpflanzen.
@@ -100,7 +100,7 @@ Das ist die Rolle **Router / leichter Reasoner**.
 router_llm = init_chat_model("openai:o3-mini")
 ```
 
-> [!DANGER] o3 / o3-mini: kein temperature-Parameter    
+> [!DANGER] o3 / o3-mini: kein temperature-Parameter<br>
 > Beide Modelle unterstützen `temperature` nicht. Jeder Aufruf mit `temperature=...` führt zu einem API-Fehler. Parameter einfach weglassen — der API-Default wird automatisch verwendet.
 
 ### Regel 2 — Worker und Content: `gpt-5.4-mini`
@@ -118,7 +118,7 @@ worker_llm        = init_chat_model("openai:gpt-5.4-mini")   # Standard-Worker
 worker_premium_llm = init_chat_model("openai:gpt-5.4")        # Worker hochwertig
 ```
 
-> [!DANGER] gpt-5.4-mini / gpt-5.4 + temperature → API-Fehler
+> [!DANGER] gpt-5.4-mini / gpt-5.4 + temperature → API-Fehler<br>
 > Die gesamte GPT-5.x-Serie unterstützt `temperature` nicht. Parameter einfach weglassen.
 >
 > ```python

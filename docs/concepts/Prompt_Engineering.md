@@ -155,7 +155,7 @@ EINSCHRÄNKUNGEN:
 
 ### Typische Fehler bei System-Prompts
 
-> [!WARNING] System-Prompt Anti-Patterns     
+> [!WARNING] System-Prompt Anti-Patterns<br>
 > Diese Fehler führen zu inkonsistentem, unvorhersagbarem Agentenverhalten — oft erst in der Produktion erkennbar.
 
 | Fehler | Problem | Lösung |

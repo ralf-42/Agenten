@@ -74,7 +74,7 @@ Wie das Modell ausgeführt wird, das den Agenten antreibt: API-Aufruf, verwaltet
 
 Diese Schicht wird zur Ware gemacht. Modellunterschiede sind jedes Quartal weniger wichtig — die eigentliche Entscheidung ist die Abwägung von Kosten und Latenz, nicht welches Modell "am klügsten" ist. API-Aufrufe sind zustandslos und damit die am einfachsten zu verwaltende Schicht. Das Lock-in-Risiko ist bei geschlossenen APIs hoch (ein Anbieterwechsel bedeutet, Prompts neu abzustimmen und die Eval-Suite erneut zu testen) und bei Open-Weight niedrig. Die Lücke zwischen Demo und Produktion ist die kleinste im Stack: der Demo-API-Aufruf ist identisch mit dem Produktions-Aufruf.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > Selbsthosten lohnt sich, wenn der Umfang der Agentenanrufe API-Preise unmöglich macht oder wenn Latenzen unter 100 ms benötigt werden, die API-Roundtrips nicht liefern können.
 
 ---
@@ -92,7 +92,7 @@ Wie der Agent externe Tools und APIs aufruft — über MCP-Server, Browser-Autom
 
 Die Debatte über das Protokoll ist vorbei: MCP hat gewonnen. Die einzige offene Frage ist, wie MCP-Server abgesichert werden, bevor sie ausgenutzt werden. Zustandsverwaltung entfällt auf dieser Schicht vollständig — der Agent ruft ein Tool an, bekommt eine Antwort, fertig. Das Lock-in-Risiko ist gering, weil MCP ein offener Standard ist. Die Demo-Produktions-Lücke ist mittel: ein Demo-MCP-Server funktioniert problemlos, bis jemand eine bösartige Werkzeugbeschreibung schickt.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > MCP hat standardisiert, wie Agenten Werkzeuge nutzen. Für Agent-zu-Agent-Kommunikation (ACP, A2A) hat noch keiner die kritische Masse erreicht. Wer heute Multi-Agenten-Koordination braucht, baut sie auf der Framework-Ebene selbst.
 
 ---
@@ -109,7 +109,7 @@ Wie der Agent speichert und abruft, was er weiß — In-Context-Zustand, Vektors
 
 Die meisten Teams verkomplizieren das Gedächtnis zu früh. Der Einstieg gelingt mit dem Gesprächsverlauf in Postgres und einem strukturierten Systemprompt — Vektorsuche kommt hinzu, wenn die Historie die Kontextgrenzen überschreitet, agentisches Speichermanagement erst dann, wenn sitzungsübergreifendes Lernen gefordert ist. Diese Schicht hat die höchste Zustandskomplexität im gesamten Stack. Das Lock-in-Risiko ist mittel: pgvector ist portabel (es ist im Kern nur Postgres), spezialisierte Tools wie Mem0 oder Zep sind schwerer zu verlassen. Die Demo-Produktions-Lücke ist groß — Demo-Speicher funktioniert, weil die Kontextfenster groß genug sind; in der Produktion bricht das Gedächtnis, wenn Gespräche lang werden.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > Dedizierte Speicherinfrastruktur (Letta, Zep, Mem0) verdient sich dort, wo Agenten Speicher zwischen Instanzen teilen oder den Zustand zwischen Modellanbieter-Wechseln aufrechterhalten müssen.
 
 ---
@@ -126,12 +126,12 @@ Wie Modellaufrufe, Werkzeugnutzung und Steuerfluss miteinander verbunden werden 
 | **Memory-first** | Letta | Agenten, die über Sitzungen hinweg lernen |
 | **Build-it-yourself** | Provider API + MCP + thin wrapper | Einfache Agenten, maximale Kontrolle |
 
-> [!WARNING] LangChain ≠ LangGraph
+> [!WARNING] LangChain ≠ LangGraph<br>
 > LangChain ist die Integrationsschicht (Modellkonnektoren, Werkzeugaufrufe, Prompt-Vorlagen). LangGraph ist die Orchestrierungs-Engine (Zustand, Steuerfluss, Graphen). Die meisten Produktionsteams verwenden beides zusammen — die Agentenlogik liegt dabei in LangGraph.
 
 Die meisten Teams wählen zu viel Framework. Wenn der Agent ein Modell und einige Tools aufruft, wird kein LangGraph benötigt — ein Provider-SDK und ein paar Tool-Calls führen schneller in die Produktion als jeder Graph. Das Framework-Lock-in-Risiko ist das höchste im Stack: Orchestrierungscode portiert nicht, ein für CrewAI umgeschriebener LangGraph-Agent ist eine neue Codebasis. Die Demo-Produktions-Lücke ist groß, weil in der Demo nichts schiefgeht — Produktion bedeutet Werkzeugausfälle, Wiederholungen und Auszeiten.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > Das gewählte Framework bestimmt die Migrationskosten. MCP ist die eine Schicht, die über alle Framework-Lager hinweg übertragen wird.
 
 ---
@@ -142,7 +142,7 @@ Wie gemessen wird, ob der Agent seine Arbeit erfüllt — Läufe nachverfolgen, 
 
 Die meisten Teams überspringen die Bewertung, bis in der Produktion etwas kaputtgeht. Bis dahin wird blind debuggt. Die LangChain State of Agent Engineering-Umfrage ergab, dass 89 % der Teams mit Produktionsagenten Observability implementiert haben, aber nur 52 % Evaluierungen vorweisen — diese 37-Punkte-Lücke ist der Punkt, an dem Produktionsqualität stirbt. Das Zustandsproblem auf dieser Schicht: ein Agent führt 12 Schritte durch, wählt in Schritt 3 das falsche Werkzeug, und die Schritte 4–12 waren von da an zum Scheitern verurteilt. Wer nur das Endergebnis prüft, findet die Ursache nie. Das Lock-in-Risiko ist moderat, weil die meisten Tools OpenTelemetrie-Traces exportieren. Die Demo-Produktions-Lücke ist die größte aller Schichten.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > Aktuelle Evaluierungswerkzeuge sind am stärksten für Einzelrunden- und Werkzeugaufruf-Bewertungen. Multi-Agenten-Bewertung und Long-Horizon-Task-Assessment sind ungelöste Probleme — wer diese Anforderungen hat, braucht eine maßgeschneiderte Evaluierungsinfrastruktur.
 
 ---
@@ -153,7 +153,7 @@ Wie der Agent davon abgehalten wird, Dinge zu tun, die er nicht sollte — Einga
 
 Dies ist die am wenigsten ausgereifte Schicht im Stack. Es gibt kein dominantes Rahmenwerk, keine etablierten Muster. Im Jahr 2024 bedeuteten Leitplanken Ein-/Ausgabefilter bei einem Modell. Im Jahr 2026 ruft der Agent Werkzeuge auf, gibt Geld aus und ergreift Maßnahmen — Leitplanken bedeuten jetzt, Werkzeugaufrufe zu autorisieren, Ratenbegrenzungen durchzusetzen und zu validieren, was der Agent tatsächlich getan hat. OWASP veröffentlichte die MCP Top 10 (Beta) als erste echte Sicherheitscheckliste für tool-verbundene Agenten. Das Zustandsproblem: Leitplanken müssen wissen, was der Agent gerade tut, um zu entscheiden, was er als Nächstes nicht tun sollte — das erfordert Echtzeit-Statusverfolgung. Das Lock-in-Risiko ist gering (individuelle Richtlinien, selbst geschrieben). Die Demo-Produktions-Lücke ist unendlich: die Demo hat keine Schutzmechanismen, weil niemand versucht, sie zu zerstören.
 
-> [!TIP] Fazit
+> [!TIP] Fazit<br>
 > Bei Multi-Agenten-Workflows, bei denen Agenten sich gegenseitig delegieren, ist die Leitplanken-Propagation über Agentengrenzen hinweg ein ungelöstes Problem. Es braucht benutzerdefinierte Autorisierungslogik.
 
 ---

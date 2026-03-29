@@ -21,7 +21,7 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 
 ## Test 2: Callout mit Custom Title
 
-> [!TIP] Best Practice
+> [!TIP] Best Practice<br>
 > Verwenden Sie immer Embeddings für semantische Suche.
 
 **Erwartetes Ergebnis:**

@@ -14,7 +14,7 @@ Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI
 
 `concepts/` ist der richtige Einstieg, wenn Begriffe, Muster oder Architekturentscheidungen noch unscharf sind. Der Bereich hilft vor allem dann, wenn zuerst geklärt werden soll, was ein Agent überhaupt ist, wann RAG sinnvoll wird, wie State funktioniert oder an welcher Stelle Human-in-the-Loop und Security relevant werden.
 
-Für einen schnellen Gesamtpfad zuerst [Start hier](./Start_Hier.html) öffnen.
+Für einen schnellen Gesamtpfad zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 ## Einstieg & Entscheidung
 

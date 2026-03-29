@@ -12,7 +12,7 @@ permalink: /
 > Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith
 
 > [!TIP] Einstieg in die Dokumentation
-> Für einen schnellen Überblick über sinnvolle Lesepfade, Einstiegsreihenfolgen und typische Startpunkte zuerst [Start hier](./Start_Hier.html) öffnen.
+> Für einen schnellen Überblick über sinnvolle Lesepfade, Einstiegsreihenfolgen und typische Startpunkte zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 
 ---

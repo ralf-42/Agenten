@@ -14,7 +14,7 @@ Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für
 
 `deployment/` wird meist erst dann relevant, wenn ein Notebook oder Prototyp bereits funktioniert und in eine robustere Form überführt werden soll. Themen wie Projektstruktur, Konfiguration, APIs, Docker, Provider-Wechsel und Produktreife stehen deshalb erst nach dem konzeptionellen und technischen Einstieg im Vordergrund.
 
-Für einen passenden Gesamtpfad zuerst [Start hier](./Start_Hier.html) öffnen.
+Für einen passenden Gesamtpfad zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 ## Übersicht
 

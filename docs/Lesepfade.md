@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Start hier
+title: Lesepfade
 nav_order: 2
 description: Orientierung, Lesepfade und empfohlene Einstiege durch die Agenten-Dokumentation
 has_toc: true
 ---
 
-# Start hier
+# Lesepfade
 
 Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Der schnellste Einstieg entsteht meist nicht durch vollständiges Lesen, sondern durch einen passenden Pfad: erst das Ziel klären, dann gezielt vertiefen.
 

@@ -234,4 +234,4 @@ Der Stack wird sich konsolidieren. Provider-SDKs integrieren bereits Speicher, T
 
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
-**Kurs:** Agenten   
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

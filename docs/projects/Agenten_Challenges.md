@@ -707,7 +707,4 @@ class SupportState(TypedDict):
 
 **Version:** 1.1<br>
 **Stand:** März 2026<br>
-**Kurs:** Agenten
-
-
-
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

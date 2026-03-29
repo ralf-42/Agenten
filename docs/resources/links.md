@@ -136,6 +136,16 @@ Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluati
 
 ---
 
+## Fine-Tuning
+
+Ressourcen zur Anpassung von Sprachmodellen auf eigene Daten.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Unsloth Docs](https://unsloth.ai/docs/de) | Fine-Tuning von LLMs mit minimalem Speicherbedarf – unterstützt LLaMA, Mistral, Gemma u. a. |
+
+---
+
 ## Sicherheit & Governance
 
 Referenzwerke für verantwortungsvolle Agenten-Entwicklung.

@@ -41,14 +41,14 @@ Faustregel: Komplexität wird hinzugefügt, wenn etwas Bestimmtes kaputtgeht —
 
 ### Übersichtstabelle
 
-| Schicht | Hier beginnen | Wann aktualisieren |
-|---|---|---|
-| **Model Serving** | Anthropic oder OpenAI API | Selbst-hosten, wenn Kosten oder Latenz es erfordern |
-| **Protokolle & Werkzeuge** | MCP | Nicht aktualisieren — es ist der Standard |
-| **Speicher & Wissen** | Postgres (pgvector) + In-Context-Speicher | Dedizierte Vektor-DB ab 10M+ Embeddings |
-| **Frameworks** | Provider SDK (einfach) oder LangGraph (komplex) | Wenn das SDK zu eng wird |
-| **Eval & Observability** | Langfuse oder Braintrust | Wenn benutzerdefinierte Evals im großen Maßstab gebraucht werden |
-| **Guardrails & Sicherheit** | NeMo Guardrails + eigene Richtlinienschicht | Wenn die Agentenzahl die manuelle Überprüfung übersteigt |
+| Schicht                     | Hier beginnen                                   | Wann aktualisieren                                               |
+| --------------------------- | ----------------------------------------------- | ---------------------------------------------------------------- |
+| **Model Serving**           | Anthropic oder OpenAI API                       | Selbst-hosten, wenn Kosten oder Latenz es erfordern              |
+| **Protokolle & Werkzeuge**  | MCP                                             | Nicht aktualisieren — es ist der Standard                        |
+| **Speicher & Wissen**       | Postgres (pgvector) + In-Context-Speicher       | Dedizierte Vektor-DB ab 10M+ Embeddings                          |
+| **Frameworks**              | Provider SDK (einfach) oder LangGraph (komplex) | Wenn das SDK zu eng wird                                         |
+| **Eval & Observability**    | Langfuse oder Braintrust                        | Wenn benutzerdefinierte Evals im großen Maßstab gebraucht werden |
+| **Guardrails & Sicherheit** | NeMo Guardrails + eigene Richtlinienschicht     | Wenn die Agentenzahl die manuelle Überprüfung übersteigt         |
 
 ### Bewertungsrahmen
 
@@ -161,6 +161,36 @@ Dies ist die am wenigsten ausgereifte Schicht im Stack. Es gibt kein dominantes 
 ## Stack nach Agententyp
 
 Der Agententyp bestimmt, in welche Schichten investiert wird und welche Werkzeuge jeweils gewählt werden:
+
+```mermaid
+flowchart TD
+    START{{Was wird gebaut?}}
+
+    START --> S1[Stateless<br>Tool Caller]
+    START --> S2[Mehrstufiger<br>Workflow]
+    START --> S3[Agent der<br>lernt]
+    START --> S4[Multi-Agenten-<br>System]
+
+    S1 --> T1[Provider SDK<br>+ MCP + Postgres]
+    S2 --> T2[LangGraph<br>+ MCP + Eval]
+    S3 --> T3[Memory-First<br>+ Vektordatenbank + Eval]
+    S4 --> T4[LangGraph / CrewAI<br>+ Full Stack]
+
+    T1 --> R1([Einfachster Weg<br>In Tagen deploybar])
+    T2 --> R2([Produktionsstandard<br>Wochen bis Produktion])
+    T3 --> R3([Schwierigste Speicherfrage<br>Orchestrierung ist einfach])
+    T4 --> R4([Höchste Komplexität<br>Eval zuerst bauen])
+
+    classDef question fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    classDef agenttype fill:#f0fdf4,stroke:#22c55e,stroke-width:1px
+    classDef stack fill:#fefce8,stroke:#eab308,stroke-width:1px
+    classDef result fill:#f3f4f6,stroke:#9ca3af,stroke-width:1px
+
+    class START question
+    class S1,S2,S3,S4 agenttype
+    class T1,T2,T3,T4 stack
+    class R1,R2,R3,R4 result
+```
 
 | Agententyp | Beispiele | Stack |
 |---|---|---|

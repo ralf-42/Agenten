@@ -46,6 +46,7 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 | [Labor Market Impacts](https://www.anthropic.com/research/labor-market-impacts) | Forschungsarbeit zu den Auswirkungen von KI auf den Arbeitsmarkt |
 | [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
 | [Economic Index Primitives](https://www.anthropic.com/research/economic-index-primitives) | Grundlegende Konzepte für wirtschaftliche Indizes im KI-Kontext |
+| [Anthropic Economic Index: US Usage](https://www.anthropic.com/economic-index#us-usage) | Nutzungsmuster von KI in den USA als Teil des Anthropic Economic Index |
 | [Alignment Faking in Large Language Models](https://www.anthropic.com/research/alignment-faking) | Wie LLMs scheinbar kooperieren, aber eigene Ziele verfolgen – zentral für Agenten-Sicherheit (→ M23) |
 | [Tracing the Thoughts of a Large Language Model](https://www.anthropic.com/research/tracing-thoughts-language-model) | Interpretierbarkeit von LLM-Entscheidungen – Hintergrund zu LangSmith-Tracing (→ M15/M24) |
 | [Disempowerment Patterns in Real-World AI Usage](https://www.anthropic.com/research/disempowerment-patterns) | Reale Missbrauchsmuster bei KI-Nutzung – Grundlage für Security Best Practices (→ M23) |

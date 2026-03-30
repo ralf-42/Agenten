@@ -35,6 +35,8 @@ Aufzählungen werden nur eingesetzt, wenn echte Parallelstruktur vorliegt. Absch
 
 Personalpronomen werden vermieden. Statt "Sie prüfen" oder "du findest" werden unpersönliche Formulierungen verwendet, etwa "Vor dem Start wird geprüft" oder "Die Checkliste findet sich weiter unten".
 
+**Ausnahme Legal-Seiten:** In `rechtliches.md`, `impressum.md`, `datenschutz.md` und `haftungsausschluss.md` bleibt die "Sie"-Form erhalten. Gesetzliche Texte folgen der Rechtssprache; navigationsbezogene Sätze in `rechtliches.md` (z. B. "finden Sie im Footer") sind Teil dieser Konvention.
+
 ---
 
 ## Standard-Template für Inhaltsseiten

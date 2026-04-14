@@ -67,6 +67,82 @@ flowchart LR
 | **Embedding** | Textchunks in Vektoren umwandeln | OpenAIEmbeddings, HuggingFaceEmbeddings |
 | **Speichern** | Vektoren in Datenbank ablegen | ChromaDB, FAISS, Pinecone |
 
+### Metadaten anreichern
+
+Jeder Chunk wird zusammen mit seinen Metadaten gespeichert. Reichhaltige Metadaten ermöglichen präzises Filtern beim Retrieval — und sind in regulierten Umgebungen (DSGVO) oft Pflicht.
+
+#### Metadaten-Schema
+
+| Kategorie | Feld | Beschreibung | Beispiel |
+|-----------|------|--------------|---------|
+| **Datei** | `dateiname` | Ursprünglicher Dateiname | `"richtlinie_2024.pdf"` |
+| **Datei** | `dateigroesse_kb` | Dateigröße in KB | `142` |
+| **Datei** | `dateiformat` | Typ der Quelldatei | `"pdf"`, `"docx"`, `"html"` |
+| **Dokument** | `titel` | Dokumenttitel | `"Datenschutzrichtlinie v2.1"` |
+| **Dokument** | `autor` | Verantwortliche Person/Abteilung | `"Rechtsabteilung"` |
+| **Dokument** | `version` | Versionsnummer | `"2.1"` |
+| **Dokument** | `typ` | Dokumenttyp | `"richtlinie"`, `"handbuch"`, `"faq"` |
+| **Dokument** | `sprache` | Inhaltssprache (ISO 639-1) | `"de"`, `"en"` |
+| **Zeitstempel** | `erstellt_am` | Erstellungsdatum (ISO 8601) | `"2024-01-15"` |
+| **Zeitstempel** | `gueltig_ab` | Datum der Inkraftsetzung | `"2024-02-01"` |
+| **Zeitstempel** | `aktualisiert_am` | Letztes Änderungsdatum | `"2024-11-30"` |
+| **Datenschutz** | `enthaelt_pbd` | Enthält personenbezogene Daten | `true` / `false` |
+| **Datenschutz** | `dsgvo_kategorie` | DSGVO-Artikel-9-Kategorie | `"keine"`, `"gesundheit"`, `"biometrisch"` |
+| **Datenschutz** | `vertraulichkeit` | Zugriffsklasse | `"intern"`, `"vertraulich"`, `"öffentlich"` |
+| **Kategorisierung** | `tags` | Thematische Schlagwörter | `["datenschutz", "compliance"]` |
+| **Kategorisierung** | `abteilung` | Zuständige Organisationseinheit | `"HR"`, `"IT"`, `"Legal"` |
+
+> [!NOTE] Nicht alle Felder sind in jedem Projekt sinnvoll<br>
+> Starte mit den Pflichtfeldern `dateiname`, `typ`, `aktualisiert_am` und `vertraulichkeit`. Ergänze datenschutzrelevante Felder (`enthaelt_pbd`, `dsgvo_kategorie`) sobald das System personenbezogene Daten verarbeitet.
+
+#### Metadaten in LangChain setzen
+
+```python
+from langchain_core.documents import Document
+
+doc = Document(
+    page_content="Der Urlaubsantrag muss spätestens vier Wochen im Voraus...",
+    metadata={
+        # Datei
+        "dateiname":        "urlaubsrichtlinie_2024.pdf",
+        "dateiformat":      "pdf",
+        # Dokument
+        "titel":            "Urlaubsrichtlinie",
+        "autor":            "HR",
+        "version":          "3.0",
+        "typ":              "richtlinie",
+        "sprache":          "de",
+        # Zeitstempel
+        "aktualisiert_am":  "2024-03-01",
+        "gueltig_ab":       "2024-04-01",
+        # Datenschutz
+        "enthaelt_pbd":     False,
+        "vertraulichkeit":  "intern",
+        # Kategorisierung
+        "tags":             ["urlaub", "hr", "richtlinie"],
+        "abteilung":        "HR",
+    }
+)
+```
+
+> [!TIP] Datumswerte als ISO-String speichern<br>
+> ChromaDB und FAISS filtern Metadaten als Strings. Datumsfelder im Format `"YYYY-MM-DD"` speichern — dann ist lexikografische Sortierung identisch mit chronologischer.
+
+#### DSGVO-relevante Felder
+
+Bei Systemen, die personenbezogene Daten verarbeiten oder Mitarbeiterdokumente indexieren, sind diese Felder besonders wichtig:
+
+| Feld | Wert | Bedeutung |
+|------|------|-----------|
+| `enthaelt_pbd` | `true` | Chunk enthält Namen, E-Mails, IDs o.Ä. |
+| `dsgvo_kategorie` | `"keine"` | Kein besonderer Schutz nach Art. 9 DSGVO |
+| `dsgvo_kategorie` | `"gesundheit"` | Gesundheitsdaten → erhöhter Schutz |
+| `dsgvo_kategorie` | `"biometrisch"` | Biometrische Daten → erhöhter Schutz |
+| `vertraulichkeit` | `"vertraulich"` | Nur für autorisierte Nutzergruppen abrufbar |
+
+> [!WARNING] Metadaten ersetzen keine Zugriffskontrolle<br>
+> Datenschutz-Metadaten sind Hinweise für den Retriever — kein Sicherheitsmechanismus. Wer auf das Retrieval-System zugreifen kann, kann auch die Metadaten lesen. Für echte Zugriffskontrolle müssen Nutzerrollen bereits vor dem Retrieval geprüft werden.
+
 ### Abfragephase
 
 ```mermaid
@@ -259,11 +335,30 @@ retriever = vectorstore.as_retriever(
 
 ### Metadaten-Filter
 
+Metadaten aus der Indexierungsphase (→ [Metadaten-Schema](#metadaten-anreichern)) können beim Retrieval als Filter eingesetzt werden — etwa um nur aktuelle Dokumente einer bestimmten Abteilung zu suchen.
+
 ```python
+# Nur interne HR-Richtlinien, die nach 2024-01-01 aktualisiert wurden
 retriever = vectorstore.as_retriever(
     search_kwargs={
         "k": 5,
-        "filter": {"source": "handbuch.pdf", "kapitel": "Sicherheit"}
+        "filter": {
+            "abteilung":       "HR",
+            "vertraulichkeit": "intern",
+            "typ":             "richtlinie",
+        }
+    }
+)
+```
+
+Für datenschutzkritische Systeme lässt sich `enthaelt_pbd` als Gate nutzen:
+
+```python
+# Nur Chunks ohne personenbezogene Daten zurückgeben
+retriever = vectorstore.as_retriever(
+    search_kwargs={
+        "k": 5,
+        "filter": {"enthaelt_pbd": False}
     }
 )
 ```
@@ -466,7 +561,7 @@ Die Qualität eines RAG-Systems wird auf zwei Ebenen gemessen:
 
 **Faithfulness** ist die wichtigste RAG-Metrik: Sie prüft, ob das Modell halluziniert oder sich strikt auf die abgerufenen Dokumente stützt.
 
-Für Implementierungsdetails zu Evaluatoren, LangSmith-Integration, RAGAS-Framework, LLM-as-Judge und Regression-Tests siehe → [Evaluation & Testing](./Evaluation_Testing.html).
+Für Implementierungsdetails zu Evaluatoren, LangSmith-Integration, RAGAS-Framework, LLM-as-Judge und Regression-Tests siehe → [Evaluation & Testing](./Evaluation_Observability.html).
 
 ---
 
@@ -511,7 +606,7 @@ Wenn der Retriever die richtigen Chunks nicht zurückliefert, beantwortet das LL
 
 - **Konsistentes Embedding-Modell:** Dasselbe Modell für Indexierung und Queries verwenden
 - **Sinnvolles Chunking:** Dokumenttyp-spezifische Parameter wählen
-- **Metadaten anreichern:** Quelle, Datum, Kategorie für späteres Filtern
+- **Metadaten anreichern:** Quelle, Datum, Kategorie, Vertraulichkeit für späteres Filtern — vollständiges Schema: [Metadaten anreichern](#metadaten-anreichern)
 - **Inkrementelle Updates:** Nur geänderte Dokumente neu indexieren
 
 ### Retrieval
@@ -570,7 +665,7 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 | Dokument | Inhalt |
 |---|---|
 | [Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html) | Wann RAG die richtige Wahl ist — und wann nicht |
-| [Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Testing.html) | Wie Retrieval-Qualität, Faithfulness und Groundedness gemessen werden |
+| [Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Observability.html) | Wie Retrieval-Qualität, Faithfulness und Groundedness gemessen werden |
 | [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Retrieval-Ergebnisse im Graph-State weitergegeben werden |
 
 

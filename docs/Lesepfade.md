@@ -60,7 +60,7 @@ Empfohlener Einstieg:
 
 1. [RAG-Konzepte](./concepts/RAG_Konzepte.html)
 2. [Memory-Systeme](./concepts/Memory_Systeme.html)
-3. [Evaluation & Testing](./concepts/Evaluation_Testing.html)
+3. [Evaluation & Testing](./concepts/Evaluation_Observability.html)
 4. [Einsteiger ChromaDB](./frameworks/Einsteiger_ChromaDB.html)
 
 ### Robustheit und Kontrolle

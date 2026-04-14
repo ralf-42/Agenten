@@ -154,6 +154,47 @@ Praktische Maßnahmen:
 - Minimalprinzip: Nur Daten übergeben, die für die Aufgabe notwendig sind
 - LangSmith-Traces auf PII prüfen und ggf. maskieren
 
+#### Pre-Handler Regex Redaction
+
+"Never log raw card numbers" im System-Prompt zu schreiben ist *Orientierung*, kein Schutz — LLMs sind probabilistisch, Audit-Logs sind permanent. PII muss **vor** der Tool-Handler-Ausführung durch Code bereinigt werden, bevor sie persistiert wird.
+
+**Anti-Pattern:** PII-Regel im Prompt formulieren
+
+```python
+# ❌ Im System-Prompt: "Logge keine Kreditkartennummern"
+# "Usually compliant" ist still noncompliant — ein Audit-Log-Eintrag mit PII genügt
+```
+
+**Korrekt:** Regex-Redaktion als Pre-Handler, bevor der eigentliche Tool-Code läuft
+
+```python
+import re
+
+# Kreditkartennummern: XXXX-XXXX-XXXX-XXXX oder mit Leerzeichen
+CARD_PATTERN = re.compile(r"\b(\d{4}[-\s]\d{4}[-\s]\d{4}[-\s])(\d{4})\b")
+
+def redact_pii(text: str) -> str:
+    """Maskiert Kreditkartennummern vor der Persistierung."""
+    return CARD_PATTERN.sub(r"****-****-****-\2", text)
+
+# Im Tool-Handler: redact VOR dem Audit-Log-Schreiben
+def handle_tool_call(input_dict: dict) -> dict:
+    input_dict["details"] = redact_pii(input_dict.get("details", ""))
+    audit_log.write(input_dict)   # Log enthält niemals rohe PII
+    return process(input_dict)
+```
+
+**Test:** Nicht die Tool-Antwort prüfen — den Audit-Log-Store direkt prüfen:
+
+```python
+for entry in audit_log.get_entries():
+    assert "4111-1111-1111-1111" not in entry.details   # ❌ rohe Nummer
+    assert "****-****-****-1111"     in entry.details   # ✅ redaktiert
+```
+
+> [!WARNING] Redact before persistence — nicht danach<br>
+> Der Audit-Log muss zum Zeitpunkt der Erfassung sauber sein. Nachträgliches Bereinigen von Logs ist komplex, fehleranfällig und bei Audits nicht akzeptabel. Die Redaktion gehört in die Schicht *vor* dem Handler, nicht in die Ausgabe-Verarbeitung.
+
 ### Output-Validierung
 
 Nicht nur Inputs, auch Outputs müssen geprüft werden:
@@ -237,11 +278,11 @@ Modell-Sicherheitsmechanismen des Anbieters sind kein Ersatz für System-Sicherh
 | Dokument | Frage |
 |---|---|
 | [Human-in-the-Loop](./Human_in_the_Loop.html) | Wann und wie wird der Mensch als Kontrollinstanz in den Ablauf eingebunden? |
-| [Evaluation & Testing](./Evaluation_Testing.html) | Wie werden Agenten systematisch auf Qualitätsmängel und Fehler getestet? |
+| [Evaluation & Testing](./Evaluation_Observability.html) | Wie werden Agenten systematisch auf Qualitätsmängel und Fehler getestet? |
 | [Lohnt es sich überhaupt?](./Lohnt_es_sich.html) | Welche Risiken und Anforderungen sollten vor dem Start eines KI-Projekts geprüft werden? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

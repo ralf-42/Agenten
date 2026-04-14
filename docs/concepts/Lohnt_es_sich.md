@@ -77,7 +77,7 @@ KI-Systeme sind nur so gut wie die Daten, auf denen sie arbeiten.
 | Sensible oder personenbezogene Daten | Cloud-Modelle ggf. ausgeschlossen → lokale Alternativen prüfen |
 | Zu wenig Daten für Evaluation | Qualität des Systems nicht nachweisbar |
 
-> Weiterführend: [Evaluation & Testing](./Evaluation_Testing.html) — Abschnitt Dataset-Anforderungen
+> Weiterführend: [Evaluation & Testing](./Evaluation_Observability.html) — Abschnitt Dataset-Anforderungen
 
 ---
 
@@ -220,7 +220,7 @@ Die EU KI-Verordnung (AI Act) klassifiziert KI-Systeme nach Risikostufe. Hochris
 | Dokument                                                           | Frage                                                             |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
 | [Welches Werkzeug?](./Aufgabenklassen_und_Loesungswege.html)       | Chat, Workflow, RAG oder Agent — was ist der richtige Lösungsweg? |
-| [Evaluation & Testing](./Evaluation_Testing.html)                  | Wie wird die Qualität eines fertigen Systems gemessen?            |
+| [Evaluation & Testing](./Evaluation_Observability.html)                  | Wie wird die Qualität eines fertigen Systems gemessen?            |
 | [Agent Security](./Agent_Security.html)                            | Wie wird ein Agenten-System gegen Angriffe abgesichert?           |
 | [EU AI Act](../regulatory/EU_AI_Act.html)                          | Welche regulatorischen Anforderungen gelten?                      |
 | [Digitale Souveränität](../regulatory/Digitale_Souveraenitat.html) | Welche Abhängigkeiten entstehen durch Cloud-Modelle?              |

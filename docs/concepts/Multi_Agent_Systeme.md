@@ -46,36 +46,15 @@ Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Age
 
 ## Koordinationsmuster
 
-Drei grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
+Fünf grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
 
-```mermaid
-flowchart TD
-    subgraph Supervisor
-        S1[Supervisor] --> W1[Worker A]
-        S1 --> W2[Worker B]
-        S1 --> W3[Worker C]
-    end
-    
-    subgraph Hierarchisch
-        M[Manager] --> T1[Team Lead 1]
-        M --> T2[Team Lead 2]
-        T1 --> WA[Worker]
-        T1 --> WB[Worker]
-        T2 --> WC[Worker]
-    end
-    
-    subgraph Kollaborativ
-        A1[Agent 1] <--> A2[Agent 2]
-        A2 <--> A3[Agent 3]
-        A3 <--> A1
-    end
-```
-
-| Muster           | Struktur        | Koordination | Komplexität |
-| ---------------- | --------------- | ------------ | ----------- |
-| **Supervisor**   | Flach (1 Ebene) | Zentral      | ⭐⭐          |
-| **Hierarchisch** | Mehrere Ebenen  | Kaskadierend | ⭐⭐⭐         |
-| **Kollaborativ** | Peer-to-Peer    | Dezentral    | ⭐⭐⭐⭐        |
+| Muster                       | Kernidee                                      | Koordination  | Komplexität |
+| ---------------------------- | --------------------------------------------- | ------------- | ----------- |
+| **Supervisor**               | Router delegiert *vor* der Bearbeitung        | Zentral       | ⭐⭐          |
+| **Handoff**                  | Agent übergibt *während* der Bearbeitung      | Lateral       | ⭐⭐          |
+| **Skill / Capability Loading** | Hauptagent lädt Fähigkeiten bei Bedarf      | Intern        | ⭐⭐⭐         |
+| **Hierarchisch**             | Mehrere Ebenen von Supervisors und Workern    | Kaskadierend  | ⭐⭐⭐         |
+| **Kollaborativ**             | Agenten kommunizieren direkt miteinander      | Dezentral     | ⭐⭐⭐⭐        |
 
 ---
 
@@ -186,6 +165,238 @@ team = graph.compile()
 | Einfach zu verstehen und implementieren | Supervisor als Bottleneck |
 | Klare Verantwortlichkeiten | Keine direkte Worker-Kommunikation |
 | Gut für parallele Aufgaben | Begrenzte Skalierbarkeit |
+
+> [!WARNING] Häufiger Fehler: Der Router löst auch<br>
+> Der Supervisor entscheidet *wer* zuständig ist — nicht *wie* das Problem gelöst wird. Sobald der Supervisor selbst anfängt, Aufgaben zu bearbeiten statt zu delegieren, verliert er seine Routing-Funktion und wird zum Engpass.
+
+---
+
+## Handoff-Pattern
+
+Der kritische Unterschied zum Supervisor: **Der Router entscheidet vor der Bearbeitung, der Handoff-Agent während der Bearbeitung.**
+
+```mermaid
+flowchart LR
+    A[Anfrage] --> B[Agent A]
+    B -->|"erkennt Domänenwechsel"| C{Handoff?}
+    C -->|Ja| D[Agent B]
+    C -->|Nein| E[Antwort]
+    D --> E
+```
+
+### Funktionsweise
+
+Ein Agent startet die Aufgabe und erkennt *während der Ausführung*, dass ein anderer Agent besser geeignet ist — weil sich die Domäne, das Risiko oder die Komplexität verändert hat. Er übergibt dann die Kontrolle **zusammen mit dem vollständigen Kontext**.
+
+### Wann Handoff verwenden?
+
+| Situation | Beispiel |
+|-----------|---------|
+| Aufgaben entwickeln sich mid-execution | Allgemeine Anfrage → wird zu Rechtsfrage |
+| Agent erkennt Risiko oder Compliance-Relevanz | Chat-Agent → Compliance-Agent |
+| Domainwechsel während der Verarbeitung | Research-Agent → Domänenexperte |
+| Graceful Escalation in autonomen Systemen | Worker → Human-in-the-Loop |
+
+### Implementierung mit LangGraph
+
+```python
+from typing import TypedDict, Annotated, Optional
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langgraph.types import Command
+from langchain.chat_models import init_chat_model
+
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+
+class HandoffState(TypedDict):
+    messages: Annotated[list, add_messages]
+    handoff_context: Optional[list]   # Kontext für den Zielagenten
+    active_agent: str
+
+def chat_agent(state: HandoffState) -> Command:
+    """Allgemeiner Chat-Agent — übergibt bei Compliance-Themen."""
+    response = llm.invoke([
+        {"role": "system", "content": (
+            "Du bist ein hilfreicher Assistent. "
+            "Erkennst du eine Compliance- oder Datenschutzfrage, "
+            "antworte ausschließlich mit: HANDOFF:compliance"
+        )},
+        *state["messages"]
+    ])
+
+    if "HANDOFF:compliance" in response.content:
+        # Kontext explizit übergeben — kein Kontextverlust
+        return Command(
+            goto="compliance_agent",
+            update={
+                "handoff_context": state["messages"],
+                "active_agent": "compliance"
+            }
+        )
+
+    return Command(goto=END, update={"messages": [response]})
+
+def compliance_agent(state: HandoffState) -> HandoffState:
+    """Spezialisierter Compliance-Agent — erhält den vollständigen Kontext."""
+    response = llm.invoke([
+        {"role": "system", "content": "Du bist ein Compliance-Experte für DSGVO und EU-Regulierung."},
+        *state["handoff_context"]   # Vollständiger Kontext aus dem Handoff
+    ])
+    return {"messages": [response], "active_agent": "compliance"}
+
+# Graph aufbauen
+graph = StateGraph(HandoffState)
+graph.add_node("chat_agent", chat_agent)
+graph.add_node("compliance_agent", compliance_agent)
+graph.add_edge(START, "chat_agent")
+graph.add_edge("compliance_agent", END)
+
+app = graph.compile()
+```
+
+### Vorteile und Grenzen
+
+| Vorteile | Grenzen |
+|----------|---------|
+| Graceful Escalation ohne Neustart | Kontextverlust wenn State schlecht designed |
+| Agent entscheidet selbst über Zuständigkeit | Schwerer zu debuggen als statisches Routing |
+| Kein zentraler Router nötig | Zirkuläre Handoffs möglich |
+
+> [!WARNING] Häufiger Fehler: Kontextverlust beim Handoff<br>
+> Der übernehmende Agent sieht ohne explizite Übergabe nur seinen eigenen Einstiegspunkt — nicht was Agent A bereits verarbeitet hat. Immer den relevanten Kontext (Messages, Teilresultate) im State mitführen und beim Handoff explizit befüllen.
+
+---
+
+## Skill / Capability Loading
+
+Ein Hauptagent bleibt dauerhaft aktiv, lädt aber **spezialisierte Fähigkeiten nur dann**, wenn sie für die aktuelle Aufgabe gebraucht werden.
+
+```mermaid
+flowchart TD
+    A[Anfrage] --> B[Hauptagent]
+    B -->|"klassifiziert Bedarf"| C{Skill?}
+    C -->|Legal| D[Legal-Skill laden]
+    C -->|Finance| E[Finance-Skill laden]
+    C -->|Keiner| F[Direkt antworten]
+    D --> G[Aufgabe lösen]
+    E --> G
+    F --> G
+    G --> B
+```
+
+### Warum dieser Ansatz?
+
+Das Gegenteil — alle Fähigkeiten immer im System-Prompt zu halten — führt zu **Prompt Bloat**: Der Agent bekommt Anweisungen für Szenarien, die selten auftreten, und verliert Fokus. Skill Loading hält den Prompt schlank und lädt Expertise nur wenn nötig.
+
+| Problem ohne Skill Loading | Lösung mit Skill Loading |
+|----------------------------|--------------------------|
+| Riesiger System-Prompt | Minimaler Basis-Prompt |
+| Tool-Liste wächst unkontrolliert | Nur aktive Tools im Kontext |
+| Agent verwirrt durch irrelevante Capabilities | Klarer Aufgabenfokus |
+| Schlechtere Performance | Bessere Retrieval-Qualität |
+
+### Wann Skill Loading verwenden?
+
+- Die Aufgabe ist weitgehend linear (kein Multi-Agent nötig)
+- Domänenwissen ist groß, wird aber nur sporadisch gebraucht
+- Prompt Bloat ist ein messbares Problem
+- Mehrere Fachbereiche mit separaten Tool-Sets (Legal, Finance, HR)
+
+### Implementierung mit LangGraph
+
+```python
+from typing import TypedDict, Annotated
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langchain_core.tools import tool
+from langchain.agents import create_agent
+from langchain.chat_models import init_chat_model
+
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+
+# Skills als separate Tool-Sets definieren
+@tool
+def vertrag_pruefen(vertragstext: str) -> str:
+    """Prüft einen Vertrag auf rechtliche Risiken nach deutschem Recht."""
+    # Implementierung ...
+    return "Analyse..."
+
+@tool
+def dsgvo_check(prozessbeschreibung: str) -> str:
+    """Prüft einen Prozess auf DSGVO-Konformität."""
+    # Implementierung ...
+    return "DSGVO-Bewertung..."
+
+@tool
+def budget_analysieren(kostenstelle: str) -> str:
+    """Analysiert Budgetdaten einer Kostenstelle."""
+    # Implementierung ...
+    return "Budgetanalyse..."
+
+# Skill-Registry: Fähigkeiten nach Domäne organisiert
+SKILL_REGISTRY = {
+    "legal":   [vertrag_pruefen, dsgvo_check],
+    "finance": [budget_analysieren],
+    "general": [],  # Kein spezieller Skill nötig
+}
+
+class SkillState(TypedDict):
+    messages: Annotated[list, add_messages]
+    active_skill: str
+    active_tools: list
+
+def klassifiziere_anfrage(state: SkillState) -> SkillState:
+    """Bestimmt, welcher Skill gebraucht wird."""
+    letzte_nachricht = state["messages"][-1].content.lower()
+
+    if any(w in letzte_nachricht for w in ["vertrag", "recht", "dsgvo", "datenschutz"]):
+        skill = "legal"
+    elif any(w in letzte_nachricht for w in ["budget", "kosten", "finanzen"]):
+        skill = "finance"
+    else:
+        skill = "general"
+
+    return {
+        "active_skill": skill,
+        "active_tools": SKILL_REGISTRY[skill]
+    }
+
+def hauptagent(state: SkillState) -> SkillState:
+    """Hauptagent — verwendet nur die aktuell geladenen Tools."""
+    agent = create_agent(
+        model=llm,
+        tools=state["active_tools"],    # Nur temporär geladene Skills
+        system_prompt=(
+            f"Du bist ein hilfreicher Assistent. "
+            f"Aktiver Modus: {state['active_skill']}. "
+            f"Nutze ausschließlich die verfügbaren Tools."
+        ),
+    )
+    result = agent.invoke({"messages": state["messages"]})
+    return {"messages": result["messages"]}
+
+# Graph aufbauen
+graph = StateGraph(SkillState)
+graph.add_node("klassifiziere", klassifiziere_anfrage)
+graph.add_node("hauptagent", hauptagent)
+
+graph.add_edge(START, "klassifiziere")
+graph.add_edge("klassifiziere", "hauptagent")
+graph.add_edge("hauptagent", END)
+
+app = graph.compile()
+```
+
+### Vorteile und Grenzen
+
+| Vorteile | Grenzen |
+|----------|---------|
+| Schlanker Kontext, bessere Performance | Klassifikationsfehler lädt falschen Skill |
+| Skaliert gut bei vielen Domänen | Overhead durch Klassifikationsschritt |
+| Klare Trennung von Fähigkeiten | Skills müssen sauber abgegrenzt sein |
+
+> [!WARNING] Häufiger Fehler: Skills als dauerhafter Kontext<br>
+> Skills müssen **temporär und aufgabenspezifisch** sein. Ein Skill, der nach der Aufgabe nicht wieder entladen wird, degeneriert zum Prompt Bloat — genau das Problem, das Skill Loading lösen soll.
 
 ---
 
@@ -637,25 +848,27 @@ Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
 
 ```mermaid
 flowchart TD
-    A[Anforderung analysieren] --> B{Wie viele Spezialisten?}
-    B -->|1-2| C[Einzelner Agent mit Tools]
-    B -->|3-5| D{Müssen Agenten kommunizieren?}
-    B -->|>5| E[Hierarchisches Pattern]
-    
-    D -->|Nein| F[Supervisor-Pattern]
-    D -->|Ja, sequenziell| G[Supervisor mit Routing]
-    D -->|Ja, iterativ| H[Kollaboratives Pattern]
-    D -->|Ja, unabhaengig| I[Paralleles Pattern]
+    A[Anforderung analysieren] --> B{Routing vor oder während der Bearbeitung?}
+    B -->|Vor der Bearbeitung| C[Supervisor-Pattern]
+    B -->|Während der Bearbeitung| D[Handoff-Pattern]
+    B -->|Kein Routing nötig| E{Domänenwissen groß aber sporadisch?}
+    E -->|Ja| F[Skill / Capability Loading]
+    E -->|Nein| G{Wie viele Spezialisten?}
+    G -->|3-5| H{Kommunikation?}
+    G -->|>5| I[Hierarchisches Pattern]
+    H -->|Iterativ / Feedback| J[Kollaboratives Pattern]
+    H -->|Unabhängig parallel| K[Paralleles Pattern]
 ```
 
 | Situation | Empfohlenes Pattern |
 |-----------|---------------------|
-| Einfache Aufgabenteilung (Recherche + Schreiben) | Supervisor |
+| Einfache Aufgabenteilung, Routing vorab bekannt | Supervisor |
+| Agent erkennt mid-execution: falscher Zuständiger | Handoff |
+| Großes Domänenwissen, nur sporadisch gebraucht | Skill / Capability Loading |
 | Qualitätssicherung mit Feedback-Schleifen | Kollaborativ |
-| Großes Team mit Fachbereichen | Hierarchisch |
-| Debatte/Diskussion simulieren | Kollaborativ |
-| Content-Pipeline mit Stages | Supervisor |
-| Komplexe Software-Entwicklung | Hierarchisch |
+| Großes Team mit mehreren Fachbereichen | Hierarchisch |
+| Unabhängige Teilaufgaben, Latenz kritisch | Paralleles Pattern |
+| Content-Pipeline mit festen Stages | Supervisor |
 
 ---
 
@@ -667,9 +880,11 @@ Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisi
 
 | Konzept | Beschreibung |
 |---------|-------------|
-| **Supervisor** | Zentraler Koordinator verteilt Aufgaben |
+| **Supervisor** | Zentraler Router delegiert *vor* der Bearbeitung |
+| **Handoff** | Agent übergibt Kontrolle *während* der Bearbeitung |
+| **Skill / Capability Loading** | Hauptagent lädt Fähigkeiten temporär bei Bedarf |
 | **Hierarchisch** | Mehrere Ebenen für sehr komplexe Systeme |
-| **Kollaborativ** | Direkte Agent-zu-Agent-Kommunikation |
+| **Kollaborativ** | Direkte Agent-zu-Agent-Kommunikation mit Feedback |
 | **Paralleles Pattern** | Fan-out / Fan-in für unabhängige Aufgaben |
 | **Shared State** | Gemeinsamer Zustand in LangGraph |
 | **Strukturierte Übergaben** | Pydantic-Modelle für klare Schnittstellen |

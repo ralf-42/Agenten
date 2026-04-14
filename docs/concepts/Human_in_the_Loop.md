@@ -186,7 +186,7 @@ Wartet ein Agent zu lange auf menschliche Eingabe, kann das Prozesse blockieren.
 |---|---|
 | [Checkpointing & Persistenz](./Checkpointing_Persistenz.html) | Wie wird der Agent-Zustand für HITL-Unterbrechungen technisch gespeichert? |
 | [Agent Security](./Agent_Security.html) | Wie werden Agenten gegen Missbrauch und ungewollte Aktionen abgesichert? |
-| [Evaluation & Testing](./Evaluation_Testing.html) | Wie wird die Qualität eines Agenten systematisch gemessen und verbessert? |
+| [Evaluation & Testing](./Evaluation_Observability.html) | Wie wird die Qualität eines Agenten systematisch gemessen und verbessert? |
 
 ---
 

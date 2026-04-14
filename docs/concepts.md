@@ -88,7 +88,7 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 ## Qualität & Praxis
 
-- **[Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Testing.html)** – *Wie gut ist das System wirklich?* Bewertung und Qualitätssicherung von KI-Agenten (→ M15, M24)
+- **[Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Observability.html)** – *Wie gut ist das System wirklich?* Bewertung und Qualitätssicherung von KI-Agenten (→ M15, M24)
   - Eval-Datasets, Metriken und Regression-Tests
   - LangSmith Evaluation Pipeline
   - Baseline, Drift-Erkennung und Production-Monitoring

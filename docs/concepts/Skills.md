@@ -211,6 +211,32 @@ Das `description`-Feld ist **kein beschreibender Text für Menschen** — es ist
 
 **Undertriggering:** LLM-basiertes Routing neigt dazu, einfache Anfragen nicht weiterzuleiten, wenn das Modell glaubt, sie direkt beantworten zu können. Komplexe, mehrstufige oder fachspezifische Aufgaben triggern zuverlässiger als einfache Einzelfragen.
 
+### Description-Discernment Loop
+
+Eine `description` ist selten beim ersten Versuch fertig. In der Praxis bewährt sich ein iterativer Zyklus:
+
+```mermaid
+flowchart LR
+    D["📝 Describe\n(description schreiben)"]
+    O["⚙️ Claude output\n(Skill testen)"]
+    DI["🔍 Discern\n(Ergebnis bewerten)"]
+    U["✏️ Update\n(description verfeinern)"]
+
+    D --> O --> DI --> U --> D
+```
+
+| Schritt | Tätigkeit |
+|---|---|
+| **Describe** | `description` im YAML-Frontmatter formulieren: *Was tut der Skill? Wann soll er auslösen?* |
+| **Claude output** | Skill mit einem realen Testprompt aufrufen — manuell oder über `/skill-name` |
+| **Discern** | Bewerten: Hat der Skill ausgelöst? War das korrekt? Hätte er *nicht* auslösen sollen? |
+| **Update** | `description` präzisieren: fehlende Trigger ergänzen, falsche Trigger mit `Do NOT use for:` ausschließen |
+
+> [!NOTE] Typischer Fehler<br>
+> Wenn ein Skill nicht funktioniert, wird meist der Body (`SKILL.md`-Inhalt) überarbeitet — obwohl das Problem in der `description` liegt. Der Loop macht diesen Unterschied sichtbar: **Trigger-Problem** → `description` anpassen; **Ablaufproblem** → Body anpassen.
+
+Dieser Zyklus läuft so lange, bis der Skill zuverlässig auslöst (und nicht auslöst, wenn er es nicht soll). Drei bis fünf Iterationen sind bei neuen Skills normal.
+
 **Dynamische Kontextinjektion:** Shell-Befehle mit `!` werden vor dem Laden ausgeführt und ersetzen den Platzhalter:
 
 ```markdown
@@ -259,6 +285,65 @@ Empfohlene Abschnitte: `## Schnellreferenz` → `## Workflow` (Checkliste) → `
 `context: fork` verlagert die Ausführung in ein eigenes Kontextfenster. Das eignet sich für Aufgaben-Skills, die Recherche, Analyse oder komplexe Einzelaufträge isoliert abarbeiten sollen. Das Feld `agent:` bestimmt, welcher Subagententyp diese Arbeit übernimmt. In Claude Code kann das ein allgemeiner Subagent sein oder ein spezialisierter Agent wie `Explore` oder `Plan`.
 
 Für Richtlinien-Skills ist diese Isolation meist unnötig. Dort soll die Fachlogik den Hauptagenten während der gesamten Bearbeitung begleiten, statt als abgeschlossener Teilauftrag zu laufen.
+
+---
+
+## Rules vs. Skills — wann was gilt
+
+Claude Code unterscheidet zwei Arten von Steuerungsdateien, die oft verwechselt werden:
+
+| | **Rules** | **Skills** |
+|---|---|---|
+| **Ablageort** | `.claude/rules/*.md` | `.claude/skills/<name>/SKILL.md` |
+| **Laden** | Automatisch — jede Session, ohne Aufruf | Auf Anforderung — wenn Trigger zutrifft |
+| **Zweck** | Dauerhaft wirksame Projektregeln | Wiederverwendbare Arbeitsabläufe |
+| **Typischer Inhalt** | Codestil, Namenskonventionen, verbotene Patterns | Prüfschritt-Workflows, Eskalationslogik, Fachabläufe |
+| **Sichtbar für Nutzer?** | Nein — Hintergrundwissen | Ja — aufrufbar per `/skill-name` |
+| **Umfang** | Kurz und fokussiert | Vollständige Ablaufdokumentation |
+
+**Rules** sind nicht optional — sie wirken in jeder Session ohne expliziten Aufruf. Ein Rule-File `no-deprecated-api.md` verhindert beispielsweise, dass Claude veraltete API-Patterns schreibt, unabhängig davon, was der Nutzer in der Session sonst anfragt.
+
+**Skills** sind kontextgebunden — sie treten nur in Kraft, wenn ihre `description` zur Anfrage passt oder der Nutzer sie explizit aufruft.
+
+> [!TIP] Faustregel<br>
+> Was in **jeder** Session gelten soll → Rule (`.claude/rules/`).<br>
+> Was nur für **bestimmte Aufgaben** relevant ist → Skill (`.claude/skills/`).
+
+**Beispiel: dasselbe Thema — zwei Ebenen**
+
+```
+.claude/
+  rules/
+    python-style.md       # Rule: "Immer snake_case, keine Abkürzungen" — gilt immer
+  skills/
+    code-review/
+      SKILL.md            # Skill: vollständiger Review-Workflow mit Checklisten — nur bei Bedarf
+```
+
+Die Rule sorgt dafür, dass Claude niemals Variablen wie `tmpVar` schreibt. Der Skill aktiviert sich, wenn explizit ein Code-Review angefragt wird, und führt dann den vollständigen Prüfablauf durch.
+
+---
+
+## CLAUDE.md Hierarchie
+
+CLAUDE.md-Dateien werden in einer vierstufigen Hierarchie geladen, vom allgemeinsten zum spezifischsten. Spezifischere Stufen erweitern oder überschreiben allgemeinere.
+
+| Stufe | Pfad | Wer verwaltet es? | Typischer Inhalt |
+|---|---|---|---|
+| **Org** | `/etc/claude-code/CLAUDE.md` (Linux/Mac)<br>`C:\Program Files\ClaudeCode\CLAUDE.md` (Windows) | IT / DevOps | Compliance-Regeln, verbotene Tools, Sicherheitsrichtlinien |
+| **Projekt** | `<projekt>/CLAUDE.md` oder `<projekt>/.claude/CLAUDE.md` | Team — versionskontrolliert | Projektkonventionen, Architekturvorgaben, Standards |
+| **Nutzer** | `~/.claude/CLAUDE.md` | Einzelperson | Persönliche Präferenzen, eigener Arbeitsstil |
+| **Lokal** | `<projekt>/.claude/CLAUDE.local.md` | Einzelperson — nicht im Repo | Lokale Overrides, Experimente, sensible Pfade |
+
+> [!TIP] Was gehört wohin?<br>
+> **Org:** Was für alle gilt und zentral durchgesetzt werden soll — unabhängig von Projekten.<br>
+> **Projekt:** Was das Team braucht und versioniert werden soll — dieser Wert steckt in `.gitignore`-geprüften Pfaden oder direkt im Projektstamm.<br>
+> **Nutzer:** Was individuell ist und projektübergreifend gilt — persönliche Shortcuts, bevorzugte Erklärtiefe.<br>
+> **Lokal:** Was nicht ins Repository gehört — absolute Pfade, API-Key-Hinweise, Experimental-Flags.
+
+Diese Hierarchie gilt auch für Rules und Skills: Ein Rule-File unter `<projekt>/.claude/rules/` wirkt nur im zugehörigen Projekt. Eine Rule unter `~/.claude/rules/` wirkt in allen Projekten des Nutzers.
+
+**Konflikte auflösen:** Wenn Org und Projekt dasselbe Thema behandeln, gilt grundsätzlich die spezifischere Stufe — mit einer Ausnahme: Org-Level-Dateien können explizit als `mandatory` markiert werden und dürfen dann nicht überschrieben werden. Solche Dateien sind in der Regel auf Sicherheits- und Compliance-Anforderungen beschränkt.
 
 ---
 
@@ -456,6 +541,6 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Die vorh
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** März 2026<br>
+**Version:** 1.4<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -205,6 +205,196 @@ def search_company_documents(query: str) -> str:
 
 ---
 
+## Negative-Bound Tool Descriptions
+
+Wenn ein Agent mehrere ähnliche Tools verwaltet, entsteht *Tool-Overlap*: Das LLM kann nicht zuverlässig unterscheiden, welches Tool für eine Anfrage zuständig ist. Negative Bounding löst dieses Problem durch explizite Ausschlüsse im Docstring — das LLM erfährt nicht nur, **was** ein Tool tut, sondern auch, **was es nicht tut**.
+
+### Das Problem: Überlappende Tools
+
+```python
+@tool
+def search_products(query: str) -> str:
+    """Sucht nach Produkten."""
+    ...
+
+@tool
+def search_customers(query: str) -> str:
+    """Sucht nach Kunden."""
+    ...
+```
+
+**Problem:** Beide Tools "suchen" — das LLM trifft bei ambigen Anfragen wie "Suche nach Schmidt" eine unsichere Entscheidung.
+
+### Die Lösung: Explizite Negativabgrenzung
+
+```python
+@tool
+def search_products(query: str) -> str:
+    """🛒 PRODUKTSUCHE – Durchsucht den Produktkatalog nach Name, SKU oder Kategorie.
+
+    Verwende dieses Tool für Anfragen zu Artikeln, Preisen und Verfügbarkeit.
+
+    NICHT geeignet für: Kundendaten, Bestellungen, Rechnungen.
+    Verändert KEINE Daten. Schreibt NICHT in die Datenbank.
+
+    Args:
+        query: Suchbegriff (Name, SKU, Kategorie)
+
+    Returns:
+        Liste passender Produkte mit Preis und Bestand
+    """
+    ...
+
+@tool
+def search_customers(query: str) -> str:
+    """👤 KUNDENSUCHE – Durchsucht die Kundendatenbank nach Name, E-Mail oder Kundennummer.
+
+    Verwende dieses Tool für Anfragen zu Kontaktdaten und Konten.
+
+    NICHT geeignet für: Produktinfos, Lagerbestand, Preise.
+    Verändert KEINE Kundendaten. Sendet KEINE E-Mails.
+
+    Args:
+        query: Suchbegriff (Name, E-Mail, Kundennummer)
+
+    Returns:
+        Kundendatensatz mit Kontaktinformationen
+    """
+    ...
+```
+
+### Negative-Bound-Muster im Überblick
+
+| Situation | Negativabgrenzung im Docstring |
+|-----------|-------------------------------|
+| Read-only Tool neben Write-Tool | `Verändert KEINE Daten.` |
+| Tool mit ähnlichem Scope wie anderes | `NICHT geeignet für: [Alternativen]` |
+| Tool ohne Seiteneffekte | `Sendet KEINE Benachrichtigungen.` |
+| Scoped Access Tool | `Greift NUR auf [Bereich] zu, nicht auf [anderer Bereich].` |
+
+> [!TIP] Negative Bounding als Architektur-Prinzip<br>
+> Bei 4–5 Tools pro Agent reicht ein klarer Scope oft aus. Ab 6+ Tools steigt die Gefahr von Tool-Overlap deutlich — dann ist Negative Bounding kein Nice-to-have, sondern Pflicht.
+
+---
+
+## Pydantic als Contract-Schicht
+
+In produktionsfähigen Agenten übernehmen Pydantic-Modelle drei Rollen gleichzeitig: **Laufzeitvalidierung**, **Tool-Schema-Generierung** und **typisierte Übergabestrukturen** zwischen Agenten. Das macht Pydantic zur "Single Source of Truth" — Schema und Validierungslogik leben an einem Ort und können nicht auseinanderdriften.
+
+**Anti-Pattern:** Schema und Validierung getrennt pflegen
+
+```python
+# ❌ Tool-Beschreibung im Docstring, Validierung irgendwo anders — driftet auseinander
+@tool
+def process_refund(customer_id: str, amount: float) -> dict:
+    """Verarbeitet eine Erstattung."""
+    if amount < 0:   # Validierung dupliziert, nicht im Schema sichtbar
+        raise ValueError("Negativer Betrag")
+    ...
+```
+
+**Korrekt:** Pydantic-Modell als Contract für Schema + Validierung
+
+```python
+from pydantic import BaseModel, Field
+from langchain_core.tools import tool
+
+class RefundRequest(BaseModel):
+    customer_id: str   = Field(description="Eindeutige Kunden-ID")
+    amount:      float = Field(ge=0, description="Erstattungsbetrag in EUR (≥ 0)")
+    reason:      str   = Field(description="Begründung der Erstattung")
+
+@tool(args_schema=RefundRequest)
+def process_refund(customer_id: str, amount: float, reason: str) -> dict:
+    """💰 ERSTATTUNG – Verarbeitet eine geprüfte Rückerstattungsanfrage.
+
+    NICHT geeignet für: Kontosperrungen, Kundendaten-Änderungen.
+    Prüft KEINE Berechtigung — zuvor check_policy aufrufen.
+
+    Returns:
+        Erstattungsstatus mit Transaktions-ID
+    """
+    # amount >= 0 wurde bereits von Pydantic validiert — kein Duplikat nötig
+    return {"status": "processed", "amount": amount}
+```
+
+**Drei Gewinne durch Pydantic als Contract:**
+
+| Rolle | Mechanismus | Vorteil |
+|-------|------------|---------|
+| Laufzeitvalidierung | `ge=0` wirft `ValidationError` vor Tool-Ausführung | Ungültige Daten erreichen den Code nicht |
+| Schema-Generierung | JSON-Schema direkt aus dem Modell | Keine Divergenz zwischen Beschreibung und Realität |
+| Handoff-Struktur | Dasselbe Modell als typisierte Übergabe | Agenten sprechen denselben Datenvertrag |
+
+> [!TIP] Pydantic-Schemas und `title`-Feld<br>
+> Beim Generieren von Tool-Schemas aus Pydantic das Top-Level-`title`-Feld entfernen (`schema.pop("title", None)`), um Token zu sparen und Schema-Validierungsüberraschungen mit der Claude API zu vermeiden.
+
+---
+
+## Two-Step Veto und Forced tool_choice
+
+### Two-Step Veto für hochrisikoreiche Operationen
+
+Bei Operationen mit realen Konsequenzen (Rückerstattungen, Löschungen, Zahlungen) trennt das Two-Step Veto Pattern Prüfung und Ausführung in zwei separate Tools. Der Agent kann `propose` aufrufen, `commit` aber nur nach positivem Policy-Check.
+
+```python
+@tool
+def propose_refund(customer_id: str, amount: float) -> dict:
+    """💡 ERSTATTUNGSVORSCHLAG – Prüft Berechtigung, führt NICHT aus.
+
+    Immer zuerst aufrufen, bevor commit_refund verwendet wird.
+    Verändert KEINE Daten. Schreibt NICHTS in die Datenbank.
+
+    Returns:
+        {"approved": bool, "limit": float, "reason": str}
+    """
+    return PolicyEngine().check_policy(customer_id, amount)
+
+@tool
+def commit_refund(customer_id: str, amount: float) -> dict:
+    """✅ ERSTATTUNG DURCHFÜHREN – Führt eine bereits geprüfte Erstattung aus.
+
+    Nur aufrufen wenn propose_refund approved=True zurückgegeben hat.
+    NICHT für ungeprüfte Erstattungen verwenden.
+
+    Returns:
+        Transaktionsstatus mit Transaktions-ID
+    """
+    return financial_system.process(customer_id, amount)
+```
+
+**Ablauf:**
+
+```mermaid
+flowchart LR
+    A[Agent] --> B[propose_refund]
+    B --> C{approved?}
+    C -->|Ja| D[commit_refund]
+    C -->|Nein| E[escalate_to_human]
+    D --> F[Transaktion]
+    E --> G[Mensch entscheidet]
+```
+
+### Forced tool_choice
+
+Wenn ein Policy-Check eine Eskalation erfordert, kann das System Claude zwingen, ein bestimmtes Tool aufzurufen — unabhängig davon, was Claude selbst entscheiden würde:
+
+```python
+# Policy blockiert — Claude zum Eskalations-Tool zwingen
+if tool_result.get("action_required") == "escalate_to_human":
+    client.messages.create(
+        model="claude-opus-4-6",
+        messages=messages,
+        tools=tools,
+        tool_choice={"type": "tool", "name": "escalate_to_human"}
+    )
+```
+
+> [!NOTE] Wann Forced tool_choice einsetzen<br>
+> Nur wenn deterministisch feststeht, welches Tool als nächstes aufgerufen werden muss — z.B. nach einem negativen Policy-Check. Nicht als genereller Mechanismus zur Steuerung des Agenten verwenden.
+
+---
+
 ## Type Hints: Pflicht, nicht Kür
 
 Type Hints sind **zwingend erforderlich** für die automatische Schema-Generierung.
@@ -497,6 +687,6 @@ Im nächsten Schritt werden diese Tools in vollständige Agenten integriert, die
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** November 2025<br>
+**Version:** 1.2<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

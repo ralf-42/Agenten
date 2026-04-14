@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Evaluation & Testing
+title: Evaluation & Observability
 parent: Konzepte
 nav_order: 11
-description: "Bewertung und Qualitätssicherung von KI-Agenten"
+description: "Bewertung, Qualitätssicherung und Observability von KI-Agenten"
 has_toc: true
 ---
 
-# Evaluation & Testing
+# Evaluation & Observability
 {: .no_toc }
 
 > **Bewertung und Qualitätssicherung von KI-Agenten**
@@ -19,6 +19,44 @@ has_toc: true
 
 1. TOC
 {:toc}
+
+---
+
+## Das Silent Failure Problem
+
+Klassische Software scheitert laut: Exceptions, Stack Traces, rote Dashboards. Ein KI-Agent mit 99,2 % Verfügbarkeit, Latenz unter 2 Sekunden und Fehlerquote nahe null kann gleichzeitig seit zwölf Tagen falsch klassifizieren — ohne eine einzige Fehlermeldung.
+
+> **"Traditionelle Software bricht laut zusammen. KI-Agenten scheitern leise, mit Zuversicht und im großen Maßstab."**
+
+Der Statuscode sagt dir, ob das System läuft. Das Signal liegt im Gespräch selbst — nicht im Container, in dem es läuft. Ein HTTP-200 beweist nichts über die Qualität der Antwort.
+
+Das ist der Paradigmenwechsel: **Systeme nicht überwachen. Verhalten überwachen.**
+
+---
+
+## Die 4 Observability-Schichten
+
+Vier Datenpunkte pro Session decken auf, was Standard-Monitoring nicht sieht:
+
+```mermaid
+flowchart TB
+    L1["1️⃣ Vollständige Prompt-Antwort-Paare\nUser-Prompt + System-Prompt + Kontext + Modellantwort\nDas Qualitätssignal"]
+    L2["2️⃣ Agent Trajectory (jeder Schritt)\nReasoning → Tool Call → Retrieval → Reasoning → ...\nWo genau ist es schiefgelaufen?"]
+    L3["3️⃣ Token- & Kostenaufschlüsselung\nPro Session, pro Span — nicht nur Gesamtkosten\nWelcher Schritt verbraucht 80 % der Token?"]
+    L4["4️⃣ Tool Call Behavior\nWelche Tools? Welche Argumente? Wie oft? Stille Fehler?\nUnterschied zwischen 'schlechte Antwort' und 'falsches Tool'"]
+
+    L1 --> L2 --> L3 --> L4
+```
+
+| Schicht | Was sie zeigt | Was ohne sie verborgen bleibt |
+|---------|--------------|-------------------------------|
+| Prompt-Antwort-Paare | Vollständiger Konversationskontext | Agent klingt richtig, ist aber falsch |
+| Trajectory | Jeden Denkschritt und Tool-Aufruf | Wo in der Kette der Fehler entstand |
+| Token/Kosten | Kostenverteilung pro Span | Reasoning-Loop erzeugt $4-Session statt $0,08 |
+| Tool Behavior | Argumente, Wiederholungen, stille Fehler | Agent halluziniert statt zu eskalieren |
+
+> [!NOTE] Erst mit allen 4 Schichten ist Observability vollständig<br>
+> Latenz und Uptime sind Infrastruktur-Signale. Die 4 Schichten sind Verhaltens-Signale — sie sagen dir, ob der Agent tatsächlich das Richtige tut.
 
 ---
 
@@ -109,6 +147,23 @@ accuracy = 1.0 if expected_tool == actual_tool else 0.0
 | **Latenz (p95)** | 95. Perzentil | < 5 Sekunden |
 | **Token-Verbrauch** | Kosten pro Request | Minimieren |
 | **Schritte bis Lösung** | Anzahl Tool-Calls | Minimieren |
+| **Tool Selection Accuracy** | Richtiges Tool pro Situation? | Maximieren |
+| **Trajectory Efficiency** | Schritte pro Aufgabe — konsistent? | Senken |
+| **Retrieval Hit Rate** | Anteil genutzter abgerufener Dokumente | Maximieren |
+
+**Kritische Agenten-Metrik: Cost per Successful Completion**
+
+Kosten pro Session sagen das Falsche. Ein Agent für 0,05 € pro Session mit 40 % Fehlerrate kostet **0,083 € pro gelöstem Problem**. Ein Agent für 0,10 € mit 95 % Erfolgsrate kostet **0,105 € pro gelöstem Problem**. In aggregierten Dashboards sehen beide ähnlich aus — bis man die Zahlen nebeneinanderstellt.
+
+```python
+def cost_per_successful_completion(sessions: list[dict]) -> float:
+    """Kosten pro tatsächlich gelöster Session — nicht pro Session insgesamt."""
+    total_cost = sum(s["cost"] for s in sessions)
+    successful = sum(1 for s in sessions if s["task_completed"])
+    return total_cost / successful if successful > 0 else float("inf")
+```
+
+> **"Track cost per successful completion, not cost per session. They tell completely different stories."**
 
 ### Qualitative Metriken
 
@@ -446,35 +501,31 @@ def collect_user_feedback(run_id: str, rating: int, comment: str = ""):
     )
 ```
 
-### Feedback → Dataset → Verbesserung
+### Der Development Loop
 
+Die meisten Teams springen direkt von Produktionsfehler zu Deployment-Fix — ohne Evidenz. Der folgende Loop macht Qualität kumulativ: Jede Iteration baut auf der vorherigen auf.
+
+```mermaid
+flowchart LR
+    A["1️⃣ Production Trace\nFehler oder Edge Case\nwird sichtbar"] --> B
+    B["2️⃣ Annotation Queue\nMensch reviewed und\nlabelt den Trace"] --> C
+    C["3️⃣ Dataset\nBeispiel wird\nEvaluations-Set"] --> D
+    D["4️⃣ Playground\nFix reproduzieren\nund testen"] --> E
+    E["5️⃣ Experiment\nA/B: alt vs. neu\nauf denselben Traces"] --> F
+    F["6️⃣ Online Evals\nFix in Production\nvalidieren (15% Sampling)"] --> G
+    G["7️⃣ Next Trace\nZyklus\nwiederholt sich"] --> A
 ```
-Production-Feedback
-       │
-       ▼
-┌──────────────────┐
-│ Schlechte Fälle  │
-│ identifizieren   │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Zu Dataset       │
-│ hinzufügen       │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Agent            │
-│ verbessern       │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│ Re-Evaluation    │
-│ durchführen      │
-└──────────────────┘
-```
+
+| Schritt | Was passiert | Häufiger Fehler |
+|---------|-------------|-----------------|
+| Production Trace | Failure wird erfasst | Gar nicht erfasst |
+| Annotation Queue | Mensch reviewed gezielt | Ocean of Logs statt fokussierter Queue |
+| Dataset | Beispiel wird Testfall | Fix deployen ohne Testfall |
+| Playground | Fix reproduzieren | Direkt in Prod deployen |
+| Experiment | Vorher/Nachher auf gleichen Daten | Auf anderen Daten vergleichen |
+| Online Evals | Validieren in Production | Kein Production-Monitoring |
+
+> **"Ship fixes backed by evidence, not hope. That is the only way agent quality compounds over time."**
 
 ### Automatische Anomalie-Erkennung
 
@@ -776,6 +827,6 @@ client.create_feedback(run_id=run_id, key="user_rating", score=0.8)
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** November 2025<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

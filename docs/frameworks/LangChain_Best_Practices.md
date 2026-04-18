@@ -8,6 +8,8 @@ has_toc: true
 ---
 
 # LangChain Best Practices
+{: .no_toc }
+
 > **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide belastbare LangChain-Muster nachschlagen möchten.**
 
 Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz für saubere, moderne Patterns, wenn die Grundlagen bereits klar sind. Für den ersten Zugang empfiehlt sich zuerst [LangChain Einsteiger](./Einsteiger_LangChain.html).
@@ -15,6 +17,14 @@ Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz fü
 Im Projektkontext werden einige dieser Patterns als Standard behandelt. Für Teilnehmende im Kurs ist wichtiger, die Unterschiede zwischen älteren und robusteren Mustern zu verstehen, nicht alle Punkte sofort auswendig zu beherrschen.
 
 Typischer Fehler: Diese Seite wie eine lineare Einführung zu lesen. Als Lernpfad ist sie zu dicht. Als Nachschlagewerk bei konkreten Umsetzungsfragen ist sie deutlich nützlicher.
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 

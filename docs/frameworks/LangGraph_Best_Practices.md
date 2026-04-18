@@ -8,11 +8,21 @@ has_toc: true
 ---
 
 # LangGraph Best Practices
+{: .no_toc }
+
 > **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide robuste LangGraph-Muster für echte Workflows nachschlagen möchten.**
 
 Diese Seite ist keine erste Einführung in LangGraph. Sie richtet sich an Teilnehmende, die bereits verstanden haben, warum ein Graph nötig ist und nun stabilere Muster für State, Routing, Checkpointing oder Multi-Agent-Flüsse suchen. Für den ersten Zugang empfiehlt sich zuerst [LangGraph Einsteiger](./Einsteiger_LangGraph.html).
 
 Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerseiten. Im Kurs bedeutet das nicht, dass jede Funktion sofort verwendet werden muss. Wichtiger ist zu verstehen, wann ein Pattern wirklich nötig ist und wann es für den aktuellen Schritt noch überdimensioniert wäre.
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 

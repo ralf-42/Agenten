@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?
+title: Kommunikationsprotokolle
 parent: Konzepte
 nav_order: 13
 description: MCP, A2A, ACP und AG-UI als Kommunikationsprotokolle für KI-Agenten
 has_toc: true
 ---
 
-# Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?
+# Kommunikationsprotokolle
 {: .no_toc }
 
 > **Agenten brauchen Protokolle, sobald sie nicht mehr allein arbeiten.**

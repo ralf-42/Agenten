@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie nutzen Agenten Werkzeuge?
+title: Tool Use & Function Calling
 parent: Konzepte
 nav_order: 3
-description: Tool Use und Function Calling für KI-Agenten: warum Werkzeuge nötig sind und wie sie sicher eingebunden werden
+description: "Tool Use und Function Calling für KI-Agenten: warum Werkzeuge nötig sind und wie sie sicher eingebunden werden"
 has_toc: true
 ---
 
-# Wie nutzen Agenten Werkzeuge?
+# Tool Use & Function Calling
 {: .no_toc }
 
 > **Ein Agent wird erst dann handlungsfähig, wenn er mehr kann als Text erzeugen.**

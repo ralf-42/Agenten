@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wann sollten Menschen in den Ablauf eingreifen?
+title: Human-in-the-Loop
 parent: Konzepte
 nav_order: 9
 description: Human-in-the-Loop als Designprinzip für Kontrolle, Freigabe und Eskalation in KI-Agenten
 has_toc: true
 ---
 
-# Wann sollten Menschen in den Ablauf eingreifen?
+# Human-in-the-Loop
 {: .no_toc }
 
 > **Nicht jede Entscheidung eines Agenten sollte ohne menschliche Kontrolle erfolgen.**

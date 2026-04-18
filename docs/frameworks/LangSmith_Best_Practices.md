@@ -3,7 +3,7 @@ layout: default
 title: LangSmith Best Practices
 parent: Frameworks
 nav_order: 12
-description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, with_config, Troubleshooting"
+description: "Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith"
 has_toc: true
 ---
 
@@ -17,6 +17,8 @@ has_toc: true
 
 ## Übersicht
 
+Diese Seite ist eine technische Referenz und keine erste Einführung in LangSmith. Für den ersten Zugang empfiehlt sich zuerst [LangSmith Einsteiger](./Einsteiger_LangSmith.html). Die Stärke dieser Seite liegt in verlässlichen Setup-Regeln, Beobachtungsmustern und typischen Fehlerbildern.
+
 **LangSmith** ist die **Observability-Plattform** für LangChain/LangGraph-Anwendungen und bildet die **dritte Säule** des LangChain-Ökosystems:
 
 - **LangChain** - Struktur (Chains, Tools, Prompts)
@@ -25,9 +27,13 @@ has_toc: true
 
 > **📘 Referenz:** Siehe `docs/deployment/Vom_Modell_zum_Produkt_LangChain_Oekosystem.md` für das Zusammenspiel aller drei Komponenten.
 
+Typischer Fehler: LangSmith nur als Debugging-Ansicht zu verstehen. Im Kurs wird LangSmith besonders dann wertvoll, wenn Traces, Datasets, Baselines und Vergleiche zusammengedacht werden.
+
 ---
 
 ## 🎯 Warum LangSmith?
+
+Für Einsteiger reicht zunächst diese Grundidee: LangSmith zeigt nicht nur die Endantwort, sondern den Weg dorthin. Viele spätere Detailabschnitte, etwa zu Import-Reihenfolge, Endpoint-Varianten oder Caching, sind erst wichtig, wenn konkrete Probleme auftreten.
 
 ### Das Problem ohne LangSmith
 ```python

@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Agent Evaluation & Observability Best Practices
+title: Agent Eval & Observ Best Practices
 parent: Frameworks
 nav_order: 13
-description: "Wie Agenten mit Baselines, Traces, Regressionen und einfachem Harness belastbar werden"
+description: Wie Agenten mit Baselines, Traces, Regressionen und einfachem Harness belastbar werden
 has_toc: true
 ---
 

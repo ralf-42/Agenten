@@ -3,34 +3,39 @@ layout: default
 title: LangChain Best Practices
 parent: Frameworks
 nav_order: 10
-description: "7 MUST-HAVE Features für LangChain 1.0+: init_chat_model, with_structured_output, @tool, create_agent, LCEL"
+description: "Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg"
 has_toc: true
 ---
 
-# LangChain 1.0+ MUST-HAVE Features
+# LangChain Best Practices
+> **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide belastbare LangChain-Muster nachschlagen möchten.**
 
-> **Pflichtlektüre für alle neuen Notebooks und Code im GenAI-Projekt**
+Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz für saubere, moderne Patterns, wenn die Grundlagen bereits klar sind. Für den ersten Zugang empfiehlt sich zuerst [LangChain Einsteiger](./Einsteiger_LangChain.html).
 
-Dieses Dokument fasst die 7 verpflichtenden Features für LangChain 1.0+ zusammen, die in allen neuen Implementierungen verwendet werden **MÜSSEN**.
+Im Projektkontext werden einige dieser Patterns als Standard behandelt. Für Teilnehmende im Kurs ist wichtiger, die Unterschiede zwischen älteren und robusteren Mustern zu verstehen, nicht alle Punkte sofort auswendig zu beherrschen.
+
+Typischer Fehler: Diese Seite wie eine lineare Einführung zu lesen. Als Lernpfad ist sie zu dicht. Als Nachschlagewerk bei konkreten Umsetzungsfragen ist sie deutlich nützlicher.
 
 ---
 
-## 📋 Übersicht der 7 MUST-HAVE Features
+## Überblick der wichtigsten LangChain-Standards
 
 | # | Feature | Priorität | Ersetzt | Hauptvorteil |
 |---|---------|-----------|---------|--------------|
-| 1 | `init_chat_model()` | ⭐ PFLICHT | `ChatOpenAI()` direkt | Provider-Unabhängigkeit |
-| 2 | `with_structured_output()` | ⭐ PFLICHT | `PydanticOutputParser` | Garantierte Schema-Konformität |
-| 3 | `@tool` Decorator | ⭐ PFLICHT | `Tool()` wrapper | Automatische Schema-Generierung |
-| 4 | `create_agent()` | ⭐ PFLICHT | `initialize_agent()` + `AgentExecutor` | LangGraph-basierte State Machine |
-| 5 | LCEL `\|` Chains | ⭐ PFLICHT | Legacy Chain-Syntax | Moderne Pipe-Operator-Syntax |
-| 6 | Middleware für Agents | ⭐ PFLICHT | Hook-Pattern | Production-Ready Features |
-| 7 | Standard Content Blocks | ⭐ PFLICHT | Provider-spezifische Formate | Multimodal-Support |
-| 8 | `.with_retry()` / `.with_fallbacks()` | 💡 EMPFOHLEN | Manuelle try/except-Blöcke | Robuste Production-Chains |
+| 1 | `init_chat_model()` | Kernstandard | `ChatOpenAI()` direkt | Provider-Unabhängigkeit |
+| 2 | `with_structured_output()` | Kernstandard | `PydanticOutputParser` | Garantierte Schema-Konformität |
+| 3 | `@tool` Decorator | Kernstandard | `Tool()` wrapper | Automatische Schema-Generierung |
+| 4 | `create_agent()` | Kernstandard | `initialize_agent()` + `AgentExecutor` | Moderne Agenten-Erstellung |
+| 5 | LCEL `\|` Chains | Kernstandard | Legacy Chain-Syntax | Moderne Pipe-Operator-Syntax |
+| 6 | Middleware für Agents | Vertiefung | Hook-Pattern | Robusteres Laufzeitverhalten |
+| 7 | Standard Content Blocks | Vertiefung | Provider-spezifische Formate | Multimodal-Support |
+| 8 | `.with_retry()` / `.with_fallbacks()` | Empfehlung | Manuelle try/except-Blöcke | Robustere Chains |
 
 ---
 
 ## 🆕 What's New in LangChain v1.2.0 (December 15, 2025)
+
+Hinweis für Einsteiger: Diese Versionssektion ist nur dann wichtig, wenn bestehender Code modernisiert oder Unterschiede zwischen älteren und neueren Beispielen verstanden werden sollen. Für die ersten Kursmodule kann sie zunächst übersprungen werden.
 
 LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 

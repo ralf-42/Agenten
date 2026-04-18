@@ -3,19 +3,22 @@ layout: default
 title: LangGraph Best Practices
 parent: Frameworks
 nav_order: 11
-description: "7 MUST-HAVE Features für LangGraph 1.0+: StateGraph, Conditional Routing, Checkpointing, HITL, Subgraphs"
+description: "Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg"
 has_toc: true
 ---
 
-# LangGraph 1.0+ MUST-HAVE Features
+# LangGraph Best Practices
+> **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide robuste LangGraph-Muster für echte Workflows nachschlagen möchten.**
 
-> **Advanced Multi-Agent & State Machine Patterns für komplexe Workflows**
+Diese Seite ist keine erste Einführung in LangGraph. Sie richtet sich an Teilnehmende, die bereits verstanden haben, warum ein Graph nötig ist und nun stabilere Muster für State, Routing, Checkpointing oder Multi-Agent-Flüsse suchen. Für den ersten Zugang empfiehlt sich zuerst [LangGraph Einsteiger](./Einsteiger_LangGraph.html).
 
-Dieses Dokument beschreibt die 7 verpflichtenden Features für **LangGraph 1.0+**, die für komplexe Multi-Agent-Systeme und State Machines verwendet werden müssen.
+Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerseiten. Im Kurs bedeutet das nicht, dass jede Funktion sofort verwendet werden muss. Wichtiger ist zu verstehen, wann ein Pattern wirklich nötig ist und wann es für den aktuellen Schritt noch überdimensioniert wäre.
 
 ---
 
 ## 🎯 Wann LangGraph statt einfachem `create_agent()`?
+
+Für Einsteiger ist diese Tabelle wichtiger als viele Detailabschnitte weiter unten. Erst wenn der Anwendungsfall wirklich mehrstufig, verzweigt oder langlebig wird, lohnt sich die Vertiefung in die restlichen Patterns.
 
 | Use Case | LangChain `create_agent()` | LangGraph |
 |----------|---------------------------|-----------|
@@ -33,17 +36,17 @@ Dieses Dokument beschreibt die 7 verpflichtenden Features für **LangGraph 1.0+*
 
 ---
 
-## 📋 Übersicht der 7 MUST-HAVE Features
+## Überblick der wichtigsten LangGraph-Standards
 
 | # | Feature | Priorität | Hauptvorteil | Use Case |
 |---|---------|-----------|--------------|----------|
-| 1 | StateGraph mit TypedDict | ⭐ PFLICHT | Type-safe State Management | Alle Workflows |
-| 2 | Nodes & Edges | ⭐ PFLICHT | Workflow-Definition | Alle Workflows |
-| 3 | Conditional Routing | ⭐ PFLICHT | Dynamische Entscheidungen | Verzweigte Logik |
-| 4 | Checkpointing & Memory | ⭐ PFLICHT | Persistenz & Recovery | Langlebige Sessions |
-| 5 | Human-in-the-Loop (erweitert) | ⭐ PFLICHT | Interrupt & Resume | Kritische Entscheidungen |
-| 6 | Subgraphs & Multi-Agent | ⭐ PFLICHT | Modulare Systeme | Komplexe Workflows |
-| 7 | Stream Modes | ⭐ PFLICHT | Debugging & Monitoring | Production-Ready Apps |
+| 1 | StateGraph mit TypedDict | Kernstandard | Type-safe State Management | Alle Workflows |
+| 2 | Nodes & Edges | Kernstandard | Workflow-Definition | Alle Workflows |
+| 3 | Conditional Routing | Kernstandard | Dynamische Entscheidungen | Verzweigte Logik |
+| 4 | Checkpointing & Memory | Aufbauend | Persistenz & Recovery | Langlebige Sessions |
+| 5 | Human-in-the-Loop (erweitert) | Aufbauend | Interrupt & Resume | Kritische Entscheidungen |
+| 6 | Subgraphs & Multi-Agent | Vertiefung | Modulare Systeme | Komplexe Workflows |
+| 7 | Stream Modes | Vertiefung | Debugging & Monitoring | Beobachtbare Apps |
 
 ---
 

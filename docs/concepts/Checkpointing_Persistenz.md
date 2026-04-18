@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Checkpointing & Persistenz
+title: Wie bleiben Sitzungen und Zustände erhalten?
 parent: Konzepte
 nav_order: 7
-description: "Zustandsspeicherung und Session-Persistenz in LangGraph"
+description: Checkpointing und Persistenz in LangGraph für unterbrechbare und wiederaufnehmbare Agenten-Workflows
 has_toc: true
 ---
 
-# Checkpointing & Persistenz
+# Wie bleiben Sitzungen und Zustände erhalten?
 {: .no_toc }
 
-> **Zustandsspeicherung und Session-Persistenz in LangGraph**
+> **Checkpointing speichert nicht nur Nachrichten, sondern den Arbeitszustand eines Agenten.**
 
 ---
 
@@ -22,25 +22,23 @@ has_toc: true
 
 ---
 
-## Überblick
+## Warum Checkpointing überhaupt gebraucht wird
 
-In einem einfachen LangGraph-Workflow läuft eine Konversation vollständig im Arbeitsspeicher – sobald der Prozess endet, ist der gesamte State verloren. **Checkpointing** löst dieses Problem: Der State wird nach jedem Node-Schritt persistiert und kann jederzeit wiederhergestellt werden.
+Ein einfacher Workflow im Arbeitsspeicher funktioniert nur so lange, wie der Prozess läuft und niemand den Ablauf unterbricht. Sobald ein Agent mehrere Schritte ausführt, auf menschliche Freigabe warten soll oder nach einem Fehler wieder an derselben Stelle weitermachen muss, reicht flüchtiger Speicher nicht mehr aus. Genau hier beginnt Checkpointing.
 
-| Fähigkeit | Beschreibung |
-|-----------|-------------|
-| **Multi-Turn-Konversationen** | Nutzer können Gespräche unterbrechen und nahtlos fortsetzen |
-| **Human-in-the-Loop** | Agent pausiert und wartet auf menschliche Eingabe |
-| **Fehlertoleranz** | Bei Absturz läuft der Workflow vom letzten Checkpoint weiter |
-| **Time Travel** | Zu einem früheren State zurückspringen und Workflow neu starten |
+Checkpointing speichert den Zustand eines Graphen nach einzelnen Ausführungsschritten, sodass dieser Zustand später wieder geladen werden kann. Damit werden längere Gespräche, Human-in-the-Loop, Fehlertoleranz und das Zurückspringen zu früheren Punkten erst praktikabel.
 
-> [!INFO] **Checkpointing ist kein Logging.**     
-> Es speichert den vollständigen State – nicht nur Protokolleinträge. Jeder gespeicherte Checkpoint ist ein vollständiger Snapshot, von dem aus der Workflow exakt fortgesetzt werden kann.
+Typischer Fehler: Checkpointing mit Logging zu verwechseln. Logs beschreiben, was passiert ist. Checkpoints speichern, von wo aus ein Workflow exakt weiterlaufen kann.
 
----
+## Ein einfaches Kursbeispiel
 
-## Wie Checkpointing funktioniert
+Ein Agent beantwortet nicht nur Fragen, sondern soll bei einer kritischen Aktion auf Freigabe warten. Ohne Persistenz wäre der Zustand zwischen Anfrage und Freigabe verloren, sobald der Prozess endet oder neu startet. Mit Checkpointing bleibt der Graph an genau dieser Stelle erhalten.
 
-LangGraph speichert nach **jedem Node-Ausführungsschritt** einen Snapshot des States. Diese Snapshots sind nach Thread-ID und Checkpoint-ID adressierbar.
+Dasselbe gilt für längere Konversationen. Wenn ein Nutzer zuerst den eigenen Namen nennt und später danach fragt, muss dieser Zustand an eine Sitzung gebunden bleiben. In LangGraph geschieht das über Threads und Checkpoints.
+
+## Was ein Checkpoint in LangGraph eigentlich ist
+
+LangGraph speichert nach Ausführung eines Knotens einen Snapshot des aktuellen States. Dieser Snapshot gehört zu einer bestimmten Sitzung und kann später wieder aufgerufen werden. Praktisch entsteht dadurch eine Folge gespeicherter Zustände, über die ein Workflow nicht nur vorwärts, sondern im Bedarfsfall auch rückwärts nachvollziehbar wird.
 
 ```mermaid
 flowchart LR
@@ -54,42 +52,44 @@ flowchart LR
     CP3[(Checkpoint 3)] -.->|gespeichert| N3
 ```
 
-### Kernkonzepte
+Für den Einstieg genügen vier Begriffe. Ein Thread ist eine Sitzung, typischerweise identifiziert durch eine `thread_id`. Ein Checkpoint ist ein gespeicherter Snapshot dieses States. Jede gespeicherte Version besitzt eine eigene Checkpoint-ID. Ein Namespace dient zur zusätzlichen organisatorischen Trennung mehrerer Thread-Gruppen.
 
-| Konzept | Beschreibung |
-|---------|-------------|
-| **Thread** | Eine Konversations-Sitzung, identifiziert durch `thread_id` |
-| **Checkpoint** | Vollständiger Snapshot des States nach einem Node |
-| **Checkpoint-ID** | Eindeutige ID jedes Snapshots |
-| **Namespace** | Organisationseinheit für mehrere Threads |
+| Begriff | Bedeutung |
+|---|---|
+| Thread | eine Sitzung oder Konversation |
+| Checkpoint | gespeicherter Snapshot des States |
+| Checkpoint-ID | eindeutige Kennung eines Snapshots |
+| Namespace | organisatorische Trennung mehrerer Thread-Bereiche |
 
-### Thread-IDs
+## Warum die Thread-ID entscheidend ist
 
-Jede Konversation erhält eine eindeutige `thread_id`. LangGraph speichert und lädt Checkpoints automatisch anhand dieser ID.
+Die `thread_id` entscheidet, ob ein neuer Aufruf als Fortsetzung oder als neue Sitzung behandelt wird. Wird dieselbe ID erneut verwendet, lädt LangGraph den dazugehörigen Verlauf. Wird eine andere ID verwendet, beginnt ein neuer Thread.
 
 ```python
-# Erster Aufruf
 config = {"configurable": {"thread_id": "nutzer-123-session-1"}}
+
 result1 = app.invoke(
     {"messages": [{"role": "user", "content": "Mein Name ist Anna."}]},
     config=config
 )
 
-# Zweiter Aufruf – Kontext ist erhalten, da gleiche thread_id
 result2 = app.invoke(
     {"messages": [{"role": "user", "content": "Wie heisse ich?"}]},
     config=config
 )
-# Antwort: "Du heisst Anna." – der Agent erinnert sich
 ```
 
----
+In diesem einfachen Beispiel bleibt der Gesprächskontext erhalten, weil beide Aufrufe dieselbe Thread-ID verwenden. Genau daran hängen in der Praxis Sitzungsfortsetzung, Zuordnung zu Nutzern und spätere Wiederaufnahme.
 
-## Checkpointer-Typen
+In der Praxis relevant, wenn: Mehrere Nutzer gleichzeitig arbeiten, Sessions unterbrochen werden oder eine Konversation nicht nach einem einzigen Request endet.
 
-LangGraph bietet verschiedene Checkpointer für unterschiedliche Anforderungen.
+## Welche Checkpointer-Typen es gibt
 
-### MemorySaver – Entwicklung & Tests
+LangGraph bietet unterschiedliche Checkpointer für unterschiedliche Reifestufen eines Projekts. Für erste Demos reicht In-Memory-Speicherung. Für lokale Prototypen ist SQLite oft ausreichend. Für produktive Umgebungen mit mehreren Nutzern wird typischerweise eine persistente Datenbank wie PostgreSQL benötigt.
+
+### MemorySaver
+
+`MemorySaver` ist schnell und ohne externe Abhängigkeit nutzbar, verliert aber alle Daten beim Neustart. Deshalb eignet er sich gut für Entwicklung, Tests und kleine Demos, aber nicht für echte Sitzungsfortsetzung nach Prozessende.
 
 ```python
 from langgraph.checkpoint.memory import MemorySaver
@@ -98,42 +98,21 @@ checkpointer = MemorySaver()
 app = graph.compile(checkpointer=checkpointer)
 ```
 
-| Eigenschaft | Wert |
-|------------|------|
-| **Persistenz** | Nein – verloren beim Neustart |
-| **Performance** | Sehr schnell |
-| **Einsatz** | Entwicklung, Tests, einfache Demos |
-| **Setup** | Keine externe Abhängigkeit |
+### SqliteSaver
 
-### SqliteSaver – Leichtgewichtige Persistenz
+`SqliteSaver` speichert Checkpoints dateibasiert und ist damit ein sinnvoller Zwischenschritt für lokale Anwendungen oder Prototypen. Der Einrichtungsaufwand bleibt niedrig, die Persistenz ist aber bereits real.
 
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
 
-# Datei-basiert (persistent)
 with SqliteSaver.from_conn_string("checkpoints.db") as checkpointer:
     app = graph.compile(checkpointer=checkpointer)
     result = app.invoke(inputs, config=config)
 ```
 
-| Eigenschaft | Wert |
-|------------|------|
-| **Persistenz** | Ja – Datei bleibt erhalten |
-| **Performance** | Gut für moderate Last |
-| **Einsatz** | Prototypen, lokale Anwendungen |
-| **Setup** | `pip install langgraph-checkpoint-sqlite` |
+### AsyncSqliteSaver und PostgresSaver
 
-### AsyncSqliteSaver – Async-Anwendungen
-
-```python
-from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
-
-async with AsyncSqliteSaver.from_conn_string("checkpoints.db") as checkpointer:
-    app = graph.compile(checkpointer=checkpointer)
-    result = await app.ainvoke(inputs, config=config)
-```
-
-### PostgresSaver – Produktionsumgebungen
+Für asynchrone Anwendungen gibt es `AsyncSqliteSaver`. Für produktive Mehrnutzerumgebungen ist `PostgresSaver` meist die naheliegende Wahl, weil Persistenz, Skalierung und paralleler Zugriff dort besser aufgehoben sind.
 
 ```python
 from langgraph.checkpoint.postgres import PostgresSaver
@@ -141,18 +120,17 @@ import psycopg
 
 with psycopg.connect("postgresql://user:pass@host/db") as conn:
     checkpointer = PostgresSaver(conn)
-    checkpointer.setup()  # Erstellt notwendige Tabellen einmalig
+    checkpointer.setup()
     app = graph.compile(checkpointer=checkpointer)
 ```
 
-| Eigenschaft | Wert |
-|------------|------|
-| **Persistenz** | Ja – vollständig persistent |
-| **Performance** | Skalierbar, Multi-User-fähig |
-| **Einsatz** | Produktionssysteme |
-| **Setup** | `pip install langgraph-checkpoint-postgres` |
+| Checkpointer | Geeignet für | Grenze |
+|---|---|---|
+| MemorySaver | Entwicklung, Tests, Demos | kein Zustand nach Neustart |
+| SqliteSaver | lokale Prototypen, kleinere Anwendungen | begrenzter als echte Produktionsdatenbank |
+| PostgresSaver | Produktionssysteme, mehrere Nutzer | höherer Betriebsaufwand |
 
-### Entscheidungshilfe
+## Eine einfache Entscheidungshilfe
 
 ```mermaid
 flowchart TD
@@ -160,14 +138,14 @@ flowchart TD
     A -->|Nein| B[MemorySaver]
     A -->|Ja| C{Produktionsumgebung?}
     C -->|Nein| D[SqliteSaver]
-    C -->|Ja| E{Async?}
-    E -->|Ja| F[AsyncSqliteSaver + Postgres]
-    E -->|Nein| G[PostgresSaver]
+    C -->|Ja| E[PostgresSaver]
 ```
 
----
+Nicht geeignet, wenn: Ein In-Memory-Checkpointer für einen produktiven Agenten mit echter Sitzungsfortsetzung oder HITL-Freigaben eingesetzt wird. Dann wäre der zentrale Vorteil von Checkpointing beim Neustart sofort verloren.
 
-## Vollständiges Beispiel: Multi-Turn-Konversation
+## Ein vollständiges Beispiel für eine Multi-Turn-Konversation
+
+Das folgende Minimalbeispiel zeigt, wie ein Checkpointer an einen einfachen Chat-Graphen gebunden wird. Die eigentliche Fachlogik ist klein. Entscheidend ist, dass die Sitzung über die `thread_id` wiedergefunden werden kann.
 
 ```python
 from typing import TypedDict, Annotated
@@ -185,7 +163,6 @@ def chat_node(state: ConversationState) -> ConversationState:
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
-# Graph mit Checkpointing aufbauen
 graph = StateGraph(ConversationState)
 graph.add_node("chat", chat_node)
 graph.add_edge(START, "chat")
@@ -194,52 +171,47 @@ graph.add_edge("chat", END)
 checkpointer = MemorySaver()
 app = graph.compile(checkpointer=checkpointer)
 
-# Erste Nachricht
 config = {"configurable": {"thread_id": "user-42"}}
-result = app.invoke(
+
+app.invoke(
     {"messages": [{"role": "user", "content": "Mein Name ist Anna."}]},
     config=config
 )
 
-# Zweite Nachricht – Kontext aus Checkpoint geladen
 result = app.invoke(
     {"messages": [{"role": "user", "content": "Wie heisse ich?"}]},
     config=config
 )
-print(result["messages"][-1].content)
-# "Du heisst Anna."
 ```
 
----
+Dieses Beispiel ist didaktisch einfach, aber es zeigt den Kern: Der zweite Aufruf setzt denselben Thread fort, statt neu zu beginnen.
 
-## Checkpoint-State abrufen
+## Den aktuellen State und die Historie abrufen
+
+Checkpointing wird besonders nützlich, wenn der gespeicherte Zustand nicht nur implizit genutzt, sondern auch aktiv inspiziert wird. LangGraph erlaubt es, den aktuellen State eines Threads abzurufen und frühere Checkpoints durchzugehen.
 
 ```python
-# Aktuellen State eines Threads abrufen
 state = app.get_state(config)
-print(state.values)       # Aktueller State-Inhalt
-print(state.next)         # Nächste geplante Nodes (bei Interrupt)
-print(state.config)       # Aktuelle Konfiguration inkl. checkpoint_id
+print(state.values)
+print(state.next)
+print(state.config)
 
-# Verlauf aller Checkpoints (neueste zuerst)
 for checkpoint in app.get_state_history(config):
     cid = checkpoint.config["configurable"]["checkpoint_id"]
     n_msgs = len(checkpoint.values.get("messages", []))
     print(f"Checkpoint {cid}: {n_msgs} Nachrichten")
 ```
 
----
+Gerade für Debugging, Nachvollziehbarkeit und spätere Fehleranalyse ist diese Sicht oft wichtiger als eine bloße Erfolgs- oder Fehlermeldung.
 
-## Interrupt & Resume (Human-in-the-Loop)
+## Warum Human-in-the-Loop ohne Checkpointing nicht sauber funktioniert
 
-Checkpointing ist die technische Basis für Human-in-the-Loop. Der Agent pausiert an einem definierten Punkt – der State bleibt gespeichert, bis ein Mensch antwortet.
+Sobald ein Agent an einer kritischen Stelle pausieren und auf eine menschliche Entscheidung warten soll, braucht der Workflow eine persistente Stelle zum Anhalten. `interrupt()` ist genau dafür gedacht. Der Graph stoppt, der State bleibt erhalten und kann später mit einer Entscheidung fortgesetzt werden.
 
 ```python
 from langgraph.types import interrupt, Command
 
 def kritische_aktion(state: ConversationState) -> ConversationState:
-    """Node, der menschliche Bestätigung erfordert."""
-    # interrupt() pausiert den Workflow und gibt Daten zurück
     entscheidung = interrupt({
         "frage": "Soll ich die E-Mail wirklich senden?",
         "empfaenger": "team@firma.de"
@@ -247,13 +219,9 @@ def kritische_aktion(state: ConversationState) -> ConversationState:
 
     if entscheidung == "ja":
         return {"messages": [{"role": "assistant", "content": "E-Mail gesendet."}]}
-    else:
-        return {"messages": [{"role": "assistant", "content": "E-Mail abgebrochen."}]}
+    return {"messages": [{"role": "assistant", "content": "E-Mail abgebrochen."}]}
 
-# Workflow starten – stoppt beim interrupt()
 app.invoke(inputs, config=config)
-
-# Mensch entscheidet und setzt Workflow fort
 app.invoke(Command(resume="ja"), config=config)
 ```
 
@@ -261,77 +229,62 @@ app.invoke(Command(resume="ja"), config=config)
 flowchart LR
     A([START]) --> B[Aufgabe bearbeiten]
     B --> C{Kritische Aktion}
-    C -->|interrupt| D[(Checkpoint\ngespeichert)]
+    C -->|interrupt| D[(Checkpoint gespeichert)]
     D --> E[Mensch entscheidet]
     E -->|resume| F[Aktion ausfuehren]
     F --> G([END])
-
-    style D fill:#FFA500,color:#000
-    style E fill:#87CEEB,color:#000
 ```
 
-> [!WARNING] interrupt() erfordert einen Checkpointer<br>
-> Ohne kompilierten Checkpointer wirft `interrupt()` eine Exception. Immer `graph.compile(checkpointer=...)` verwenden, wenn HITL genutzt wird.
+> [!WARNING] interrupt() braucht einen Checkpointer<br>
+> Ohne kompilierten Checkpointer kann ein unterbrochener Workflow nicht zuverlässig wieder aufgenommen werden. `graph.compile(checkpointer=...)` ist dafür zwingend.
 
----
+## Time Travel: warum frühere Zustände nützlich sind
 
-## Time Travel: Zu früherem State zurückkehren
-
-LangGraph ermöglicht es, zu einem früheren Checkpoint zurückzuspringen und den Workflow von dort neu zu starten.
+Ein gespeicherter Verlauf ist nicht nur für Fortsetzung interessant. Er ermöglicht auch, zu einem früheren Punkt zurückzugehen und von dort einen neuen Pfad zu testen. Genau deshalb wird in LangGraph oft von Time Travel gesprochen.
 
 ```python
-# Verlauf abrufen (neueste zuerst)
 history = list(app.get_state_history(config))
-
-# Früherer Checkpoint (z.B. vor einer Fehlerentscheidung)
 earlier = history[3]
 
-# Workflow vom früheren State aus neu starten
 result = app.invoke(
     {"messages": [{"role": "user", "content": "Versuche es anders."}]},
-    config=earlier.config  # Früherer Checkpoint als Ausgangspunkt
+    config=earlier.config
 )
 ```
 
-**Einsatzszenarien:**
+Typische Anwendungsfälle sind Fehlerkorrektur, alternatives Routing, schrittweises Debugging oder der Vergleich zweier Varianten aus derselben Ausgangslage.
 
-| Szenario | Beschreibung |
-|----------|-------------|
-| **Fehlerkorrektur** | Fehlerhafte Entscheidung rückgängig machen |
-| **Alternatives Routing** | Anderen Entscheidungspfad testen |
-| **Debugging** | Agenten-Verhalten schrittweise analysieren |
-| **A/B-Vergleich** | Zwei Antworten aus gleicher Ausgangssituation vergleichen |
+## Was in der Praxis schnell schiefgeht
 
----
-
-## Best Practices
-
-### Thread-ID-Design
-
-> [!TIP] Thread-ID-Design für Multi-User<br>
-> Für produktive Systeme: `thread_id = f"user_{user_id}_session_{session_id}"`. Generische IDs wie `"session1"` führen zu Datenvermischung zwischen Nutzern.
+Eine häufige Fehlerquelle ist eine zu generische `thread_id`. Wenn mehrere Nutzer versehentlich denselben Thread teilen, vermischen sich Zustände. Ebenso problematisch ist es, einen Checkpointer zu vergessen und dann `interrupt()` zu verwenden. Auch direkte Mutation des States ist riskant, weil dadurch schwer nachvollziehbare Seiteneffekte entstehen können.
 
 ```python
-# Eindeutige, nachvollziehbare Thread-IDs
-thread_id = f"user_{user_id}_session_{session_id}"
+# Falsch: alle Nutzer teilen einen Thread
+config = {"configurable": {"thread_id": "global"}}
 
-# UUID für automatisch generierte IDs
-import uuid
-thread_id = str(uuid.uuid4())
-
-# Nicht: zu generisch
-# thread_id = "session1"  # Kollisionsgefahr
+# Richtig: pro Nutzer oder Session eigener Thread
+config = {"configurable": {"thread_id": f"user_{user_id}"}}
 ```
 
-### State-Größe kontrollieren
+```python
+# Falsch: State direkt mutieren
+def bad_node(state):
+    state["messages"].append("neue Nachricht")
+    return state
 
-Checkpoints speichern den gesamten State. Großer State bedeutet mehr Speicher und langsamere I/O.
+# Richtig: neue Werte zurückgeben
+def good_node(state):
+    return {"messages": [{"role": "assistant", "content": "neue Nachricht"}]}
+```
+
+## Best Practices für Einsteigerprojekte
+
+Thread-IDs sollten eindeutig und nachvollziehbar sein. Der State sollte nicht unnötig groß werden, weil jeder Checkpoint den gesamten Zustand speichert. Deshalb kann es sinnvoll sein, ältere Nachrichten vor dem Speichern zu kürzen oder zu verdichten. Datenbank-Checkpointer sollten sauber über Context Manager geöffnet und geschlossen werden.
 
 ```python
 from langchain_core.messages import trim_messages
 
 def trim_node(state: ConversationState) -> ConversationState:
-    """Begrenzt die Nachrichten-History vor dem Checkpointing."""
     trimmed = trim_messages(
         state["messages"],
         max_tokens=4000,
@@ -341,86 +294,30 @@ def trim_node(state: ConversationState) -> ConversationState:
     return {"messages": trimmed}
 ```
 
-### Checkpointer-Ressourcen korrekt schließen
-
 ```python
-# Mit Context Manager (empfohlen)
 with SqliteSaver.from_conn_string("db.sqlite") as checkpointer:
     app = graph.compile(checkpointer=checkpointer)
     result = app.invoke(inputs, config=config)
-# Ressource wird automatisch freigegeben
 ```
 
----
+In der Praxis relevant, wenn: Multi-Turn-Sitzungen wachsen, viele Nachrichten im State liegen oder mehrere Nutzer gleichzeitig mit demselben System arbeiten.
 
-## Häufige Fehler
+## Was für Einsteiger zuerst wichtig ist
 
-### interrupt() ohne Checkpointer
+Für den Einstieg reicht meist schon ein klares mentales Modell: Ein Checkpointer macht aus einem flüchtigen Ablauf eine wiederaufnehmbare Sitzung. Wer Multi-Turn-Gespräche, HITL-Freigaben oder Fehlertoleranz bauen will, braucht diese Grundlage früh.
 
-```python
-# Fehler
-app = graph.compile()  # Kein Checkpointer
-app.invoke(inputs, config=config)  # Wirft: "No checkpointer set"
-
-# Richtig
-app = graph.compile(checkpointer=MemorySaver())
-```
-
-### Gleiche thread_id für verschiedene Nutzer
-
-```python
-# Falsch: alle Nutzer teilen einen Thread
-config = {"configurable": {"thread_id": "global"}}
-
-# Richtig: pro Nutzer eigener Thread
-config = {"configurable": {"thread_id": f"user_{user_id}"}}
-```
-
-### State direkt mutieren
-
-```python
-# Falsch: mutiert den gespeicherten State
-def bad_node(state):
-    state["messages"].append("neue Nachricht")
-    return state
-
-# Richtig: neue Werte als Return
-def good_node(state):
-    return {"messages": [{"role": "assistant", "content": "neue Nachricht"}]}
-```
-
----
-
-## Zusammenfassung
-
-Checkpointing ist das technische Fundament für persistente, unterbrechbare Agenten-Workflows.
-
-| Konzept | Kernaussage |
-|---------|-------------|
-| **MemorySaver** | Entwicklung & Tests – kein Setup, nicht persistent |
-| **SqliteSaver** | Lokale Persistenz – einfach, dateibasiert |
-| **PostgresSaver** | Produktion – skalierbar, multi-user-fähig |
-| **Thread-ID** | Identifiziert eine Konversations-Sitzung eindeutig |
-| **interrupt()** | Pausiert Workflow für menschliche Eingabe |
-| **Time Travel** | Zu früherem State zurückspringen |
-
-**Verwandte Konzepte:**
-
-- [State Management](./State_Management.html) – Grundlagen der Zustandsverwaltung
-- [Human-in-the-Loop](./Human_in_the_Loop.html) – Interrupt & Resume in der Praxis
-- [Memory-Systeme](./Memory_Systeme.html) – Langfristige Gedächtnisstrukturen
+Teilnehmende unterschätzen oft, dass Checkpointing kein Luxus für große Produktionssysteme ist. Schon kleine Kursprojekte mit Unterbrechung, Freigabe oder Sitzungsfortsetzung profitieren sofort davon.
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Definition und Struktur des States, der gespeichert wird |
-| [Memory-Systeme](https://ralf-42.github.io/Agenten/concepts/Memory_Systeme.html) | Langzeitgedächtnis jenseits des Checkpoint-Scopes (semantisch, per User) |
-| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Interrupt & Resume als Anwendungsfall von Checkpointing |
-
+| [State Management](./State_Management.html) | Wie ist der State aufgebaut, der durch Checkpoints gespeichert wird? |
+| [Memory-Systeme](./Memory_Systeme.html) | Wie unterscheidet sich langfristiges Gedächtnis von sitzungsbezogener Persistenz? |
+| [Human-in-the-Loop](./Human_in_the_Loop.html) | Wie werden Unterbrechung, Freigabe und Wiederaufnahme praktisch gestaltet? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

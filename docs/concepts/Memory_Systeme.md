@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Memory-Systeme
+title: Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?
 parent: Konzepte
 nav_order: 8
-description: "Kurz- und Langzeitgedächtnis für persistente KI-Agenten"
+description: Kurz- und Langzeitgedächtnis für KI-Agenten mit LangGraph, Vektordatenbanken und nutzerspezifischer Persistenz
 has_toc: true
 ---
 
-# Memory-Systeme
+# Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?
 {: .no_toc }
 
-> **Kurz- und Langzeitgedächtnis für persistente KI-Agenten**
+> **Memory macht aus einem einmaligen Modellaufruf ein System, das Kontext behalten kann.**
 
 ---
 
@@ -22,115 +22,98 @@ has_toc: true
 
 ---
 
-## Überblick
+## Warum Agenten überhaupt ein Gedächtnis brauchen
 
-Ein LLM hat kein inhärentes Gedächtnis. Ohne explizite Mechanismen vergisst es nach jeder Konversation alles – Nutzerpräferenzen, frühere Entscheidungen, gesammeltes Wissen. **Memory-Systeme** sind die Infrastruktur, die Agenten dauerhaftes Erinnern ermöglicht.
+Ein Sprachmodell bringt kein dauerhaftes Gedächtnis mit. Ohne zusätzliche Mechanismen beginnt jede Konversation praktisch von vorn. Nutzerpräferenzen gehen verloren, frühere Entscheidungen verschwinden, und wichtige Fakten müssen immer wieder neu genannt werden. Für einfache Einmalanfragen ist das oft egal. Für mehrstufige Agenten, persönliche Assistenten oder längere Sitzungen wird es schnell zum Problem.
 
-| Problem ohne Memory | Lösung |
-|--------------------|--------|
-| Jede Konversation beginnt von vorne | Kurzzeit-Memory: Gesprächsverlauf speichern |
-| Nutzerpräferenzen gehen verloren | Langzeit-Memory: Fakten persistent ablegen |
-| Kontext wächst unbegrenzt | Summarization: Kontext komprimieren |
-| Kein Personalisierungspotenzial | Per-User-Memory: nutzerspezifisch speichern |
+Memory-Systeme lösen genau diese Lücke. Sie speichern nicht nur Gesprächsverlauf, sondern je nach Bedarf auch verdichtete Zusammenfassungen, strukturierte Entitäten oder dauerhaftes Wissen über Sitzungen hinweg. Damit entsteht ein entscheidender Unterschied zwischen einem Modellaufruf und einem wiederverwendbaren Agentensystem.
 
----
+Typischer Fehler: Alles, was ein Agent behalten soll, einfach im Prompt zu wiederholen. Das skaliert schlecht, wird teuer und verliert bei langen Sitzungen schnell die Übersicht.
 
-## Taxonomie der Memory-Typen
+## Ein einfaches Beispiel
 
-Aus der kognitiven Psychologie lassen sich verschiedene Gedächtnistypen ableiten – diese Analogie hilft, Agenten-Memory zu strukturieren:
+Ein Assistent soll sich merken, dass eine Nutzerin kurze Antworten bevorzugt, an einem Python-Kurs arbeitet und in einer späteren Sitzung nach genau diesem Thema weiterlernen will. Ohne Memory müsste diese Information jedes Mal neu genannt werden. Mit einem geeigneten Gedächtnissystem kann der Agent in der laufenden Sitzung den unmittelbaren Kontext halten und zusätzlich langfristig relevante Fakten speichern.
+
+Dieses Beispiel zeigt bereits die wichtigste Unterscheidung: Nicht alles, was ein Agent behalten soll, gehört in dieselbe Form von Memory. Für den letzten Gesprächsverlauf braucht es etwas anderes als für dauerhafte Nutzerfakten.
+
+## Zwei Grundformen von Memory
+
+Für Einsteiger ist die Trennung zwischen Kurzzeit- und Langzeit-Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Langzeit-Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
 
 ```mermaid
 flowchart TB
     M[Memory-Systeme] --> K[Kurzzeit-Memory]
     M --> L[Langzeit-Memory]
 
-    K --> K1["Conversation Buffer<br/>Voller Verlauf"]
-    K --> K2["Sliding Window<br/>Letzte N Nachrichten"]
-    K --> K3["Summarization<br/>Komprimierter Verlauf"]
+    K --> K1["Conversation Buffer"]
+    K --> K2["Sliding Window"]
+    K --> K3["Summarization"]
 
-    L --> L1["Semantisch<br/>Fakten und Wissen"]
-    L --> L2["Episodisch<br/>Ereignisse und Erfahrungen"]
-    L --> L3["Entity Memory<br/>Strukturierte Entitaeten"]
+    L --> L1["Semantisches Memory"]
+    L --> L2["Episodisches Memory"]
+    L --> L3["Entity Memory"]
 ```
 
-| Memory-Typ | Analogie | Technische Umsetzung |
-|-----------|---------|---------------------|
-| **Conversation Buffer** | Kurzeitgedächtnis | Vollständige Message-Liste im State |
-| **Sliding Window** | Arbeitsgedächtnis | Letzte N Nachrichten behalten |
-| **Summarization** | Komprimiertes Gedächtnis | Ältere Nachrichten zusammenfassen |
-| **Semantisches Memory** | Faktenwissen | Vektordatenbank (Embeddings) |
-| **Episodisches Memory** | Erlebnisgedächtnis | Strukturierte Ereignis-Logs |
-| **Entity Memory** | Personengedächtnis | Key-Value für Entitäten |
+Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb einer Sitzung den roten Faden verliert. Langzeit-Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
 
----
+## Conversation Buffer: der einfachste Einstieg
 
-## Kurzzeit-Memory
-
-### Conversation Buffer
-
-Der einfachste Ansatz: alle Nachrichten im LangGraph-State speichern. Kein zusätzliches Setup nötig.
+Der einfachste Ansatz besteht darin, alle Nachrichten im State zu behalten. In LangGraph ist das besonders naheliegend, weil der Verlauf direkt Teil des States sein kann. Für kurze Konversationen ist dieser Ansatz didaktisch ideal, weil er kaum zusätzliche Infrastruktur braucht.
 
 ```python
 from typing import TypedDict, Annotated
 from langgraph.graph.message import add_messages
 
 class ChatState(TypedDict):
-    messages: Annotated[list, add_messages]  # Vollständiger Verlauf
+    messages: Annotated[list, add_messages]
 
 def chat_node(state: ChatState) -> ChatState:
-    # Das LLM empfängt alle bisherigen Nachrichten als Kontext
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 ```
 
-**Grenze:** Das Kontextfenster des LLMs ist begrenzt. Bei langen Konversationen werden die Tokens teuer und irgendwann zu lang für das Modell.
+Grenze: Der Verlauf wächst mit jeder Nachricht. Dadurch steigen Tokenverbrauch, Kosten und die Gefahr, dass das Kontextfenster überschritten wird.
 
-### Sliding Window
+## Sliding Window: wenn nur das Jüngste wichtig ist
 
-Nur die letzten N Nachrichten behalten – ältere werden verworfen.
+Beim Sliding Window werden nur die letzten Nachrichten im aktiven Kontext behalten. Ältere Inhalte fallen aus dem direkten Arbeitsgedächtnis heraus. Diese Strategie ist einfach, günstig und für viele Chats ausreichend, solange frühe Informationen nicht dauerhaft relevant bleiben.
 
 ```python
 from langchain_core.messages import trim_messages
 
 def chat_node(state: ChatState) -> ChatState:
-    # Nachrichten bis maximal 4000 Token
     trimmed = trim_messages(
         state["messages"],
         max_tokens=4000,
-        strategy="last",        # Älteste verwerfen
-        token_counter=llm,      # LLM zum Zählen verwenden
-        include_system=True,    # System-Prompt immer behalten
+        strategy="last",
+        token_counter=llm,
+        include_system=True,
         allow_partial=False,
     )
     response = llm.invoke(trimmed)
     return {"messages": [response]}
 ```
 
-**Grenze:** Ältere Informationen gehen vollständig verloren – bei wichtigen frühen Inhalten problematisch.
+Nicht geeignet, wenn: Frühe Informationen später wieder wichtig werden, etwa Nutzerpräferenzen, offene Aufgaben oder definierte Projektziele.
 
-### Summarization Memory
+## Summarization: wenn Kontext erhalten bleiben soll
 
-Statt ältere Nachrichten zu verwerfen, werden sie komprimiert. Der Kontext bleibt erhalten, der Token-Verbrauch wird begrenzt.
+Statt alte Nachrichten vollständig zu verwerfen, kann ein Agent sie zusammenfassen. Dadurch bleibt die inhaltliche Linie erhalten, ohne dass jede einzelne Nachricht im Modellkontext liegen muss. Genau hier beginnt Summarization Memory.
 
 ```python
-from typing import Optional
 from langchain_core.messages import RemoveMessage, SystemMessage
 
 class SummaryState(TypedDict):
     messages: Annotated[list, add_messages]
-    summary: str  # Komprimierter Verlauf älterer Nachrichten
+    summary: str
 
 def summarize_node(state: SummaryState) -> SummaryState:
-    """Komprimiert ältere Nachrichten, wenn Verlauf zu lang wird."""
     messages = state["messages"]
-
-    # Nur komprimieren, wenn mehr als 10 Nachrichten vorhanden
     if len(messages) < 10:
         return {}
 
-    # Zusammenfassung erstellen
     existing_summary = state.get("summary", "Keine bisherige Zusammenfassung.")
-    to_summarize = messages[:-4]  # Alle außer den letzten 4 behalten
+    to_summarize = messages[:-4]
 
     prompt = (
         f"Bestehende Zusammenfassung: {existing_summary}\n\n"
@@ -139,7 +122,6 @@ def summarize_node(state: SummaryState) -> SummaryState:
     )
     new_summary = llm.invoke(prompt).content
 
-    # Alte Nachrichten entfernen, Zusammenfassung als System-Nachricht einfügen
     to_remove = [RemoveMessage(id=m.id) for m in to_summarize]
     summary_msg = SystemMessage(
         content=f"Bisheriger Gesprächsverlauf (komprimiert): {new_summary}"
@@ -153,29 +135,26 @@ def summarize_node(state: SummaryState) -> SummaryState:
 
 ```mermaid
 flowchart LR
-    A[10 Nachrichten\nim State] --> B{Limit erreicht?}
-    B -->|Nein| C[Normal fortfahren]
-    B -->|Ja| D[LLM fasst\naeltere Nachrichten zusammen]
-    D --> E[Zusammenfassung als\nSystem-Nachricht]
-    E --> F[Letzte 4 Nachrichten\nbleiben erhalten]
+    A[Langer Verlauf] --> B{Limit erreicht?}
+    B -->|Nein| C[Normal weiterarbeiten]
+    B -->|Ja| D[Aeltere Nachrichten zusammenfassen]
+    D --> E[Zusammenfassung bleibt]
+    E --> F[Letzte Nachrichten bleiben voll erhalten]
 ```
 
----
+In der Praxis relevant, wenn: Sitzungen lang werden, aber der frühere Verlauf nicht vollständig verloren gehen darf.
 
-## Langzeit-Memory
+## Langzeit-Memory: wenn Wissen Sitzungen überleben soll
 
-Langzeit-Memory überlebt das Sitzungsende und steht in zukünftigen Gesprächen zur Verfügung.
+Langzeit-Memory wird nötig, sobald relevante Informationen nach Ende einer Sitzung noch verfügbar sein sollen. Dazu gehören Nutzerpräferenzen, Ziele, wichtige Fakten oder Wissen, das später semantisch wiedergefunden werden soll.
 
-### Semantisches Memory (Vektordatenbank)
-
-Fakten und Wissen werden als Embeddings gespeichert und bei Bedarf semantisch abgerufen.
+Ein typischer technischer Weg ist semantisches Memory über eine Vektordatenbank. Gespeicherte Fakten werden eingebettet und bei Bedarf per Ähnlichkeitssuche wieder abgerufen.
 
 ```python
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.tools import tool
 
-# Memory-Store einmalig aufbauen
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 memory_store = Chroma(
     collection_name="agent_memory",
@@ -185,50 +164,29 @@ memory_store = Chroma(
 
 @tool
 def memory_speichern(information: str) -> str:
-    """MEMORY SPEICHERN – Speichert eine wichtige Information dauerhaft.
-
-    Verwende dieses Tool, wenn der Nutzer etwas Relevantes erwähnt:
-    - Präferenzen ("Ich mag keine langen Antworten")
-    - Persönliche Fakten ("Ich arbeite als Ärztin")
-    - Ziele ("Ich lerne Python für Data Science")
-
-    NICHT verwenden für: flüchtige Konversationsinhalte, kurze Bestätigungen.
-
-    Args:
-        information: Die zu speichernde Information in einem präzisen Satz
-
-    Returns:
-        Bestätigung der Speicherung
-    """
     memory_store.add_texts([information])
     return f"Gespeichert: {information}"
 
 @tool
 def memory_abrufen(frage: str) -> str:
-    """MEMORY ABRUFEN – Durchsucht das Gedächtnis nach relevanten Informationen.
-
-    Args:
-        frage: Suchanfrage in natürlicher Sprache
-
-    Returns:
-        Relevante gespeicherte Informationen, oder Hinweis wenn nichts gefunden
-    """
     docs = memory_store.similarity_search(frage, k=3)
     if not docs:
         return "Keine relevanten Informationen im Gedächtnis gefunden."
     return "\n".join(f"- {doc.page_content}" for doc in docs)
 ```
 
-### Entity Memory (Key-Value)
+Der Vorteil liegt darin, dass nicht nur exakte Schlüssel gesucht werden, sondern inhaltlich ähnliche Informationen wieder auftauchen können. Das passt gut zu Präferenzen, Erfahrungswissen oder thematischen Fakten.
 
-Strukturierte Informationen über Entitäten (Personen, Projekte, Orte) in einem Dictionary.
+## Entity Memory: wenn Informationen strukturiert bleiben sollen
+
+Manche Informationen sollen nicht nur auffindbar, sondern geordnet gespeichert werden. Genau dafür eignet sich Entity Memory. Personen, Projekte oder Orte werden als benannte Entitäten im State oder in einem Store abgelegt. Das ist besonders nützlich, wenn ein Agent mit Kundendaten, Projektnamen oder festen Objekten arbeitet.
 
 ```python
 from pydantic import BaseModel, Field
 
 class EntityMemoryState(TypedDict):
     messages: Annotated[list, add_messages]
-    entity_memory: dict  # {"Anna": "Entwicklerin bei Firma X", "Projekt Alpha": "..."}
+    entity_memory: dict
 
 class Entitaet(BaseModel):
     name: str = Field(description="Name der Entität")
@@ -240,10 +198,7 @@ class EntitaetListe(BaseModel):
 FRAGE_PRAEFIXE = ("was ", "wer ", "wie ", "wo ", "wann ", "warum ", "welche", "kennst")
 
 def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
-    """Extrahiert und speichert Entitäten aus der letzten Nachricht."""
     letzte = state["messages"][-1].content.strip()
-
-    # Fragen überspringen – sie enthalten keine neuen Fakten
     if letzte.endswith("?") or letzte.lower().startswith(FRAGE_PRAEFIXE):
         return {}
 
@@ -254,7 +209,6 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
 
     updated = dict(state.get("entity_memory", {}))
     for e in result.entitaeten:
-        # Merge statt überschreiben – neue Info an vorhandene anhängen
         if e.name in updated and e.beschreibung not in updated[e.name]:
             updated[e.name] = updated[e.name] + "; " + e.beschreibung
         else:
@@ -263,11 +217,11 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
     return {"entity_memory": updated}
 ```
 
----
+Typischer Fehler: Alle Fakten unstrukturiert in eine Vektordatenbank zu schreiben, obwohl bestimmte Informationen besser als klar benannte Entitäten gepflegt würden.
 
-## Per-User Memory
+## Per-User Memory: wenn mehrere Nutzer getrennt bleiben müssen
 
-In Multi-User-Systemen muss Memory nutzerspezifisch gespeichert werden. LangGraph's Checkpointing bildet den natürlichen Rahmen dafür.
+Sobald ein Agent von mehreren Nutzern verwendet wird, reicht ein globales Gedächtnis nicht mehr aus. Sitzungen und langfristige Fakten müssen nutzerspezifisch getrennt bleiben. In LangGraph bildet Checkpointing mit Thread-IDs dafür die natürliche Grundlage.
 
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
@@ -278,55 +232,43 @@ checkpointer = SqliteSaver(conn)
 app = graph.compile(checkpointer=checkpointer)
 
 def get_user_config(user_id: str, session_id: str) -> dict:
-    """Erstellt nutzerspezifische Konfiguration."""
     return {
         "configurable": {
             "thread_id": f"{user_id}:{session_id}"
         }
     }
-
-# Nutzer A und B haben vollständig getrennten Kontext
-result_a = app.invoke(inputs, config=get_user_config("alice", "2025-01"))
-result_b = app.invoke(inputs, config=get_user_config("bob",   "2025-01"))
 ```
 
-### Nutzer-übergreifendes Memory (sitzungsübergreifend)
-
-Wenn ein Nutzer über mehrere Sitzungen hinweg erinnert werden soll:
+Wenn ein Nutzer über mehrere Sitzungen hinweg erinnert werden soll, reicht eine Thread-ID allein nicht aus. Dann braucht es zusätzlich einen Store für nutzerspezifische Fakten, der unabhängig von einzelnen Sessions existiert.
 
 ```python
 from langgraph.store.memory import InMemoryStore
 
-# Persistenter Store für user-spezifische Fakten (unabhängig von Sessions)
 user_store = InMemoryStore()
 
 def save_user_fact(user_id: str, fact: str):
-    """Speichert einen Fakt im nutzerspezifischen Profil."""
     namespace = ("user_profiles", user_id)
     existing = user_store.get(namespace, "facts") or {"facts": []}
     existing["facts"].append(fact)
     user_store.put(namespace, "facts", existing)
 
 def get_user_facts(user_id: str) -> list[str]:
-    """Lädt alle Fakten aus dem Nutzerprofil."""
     namespace = ("user_profiles", user_id)
     data = user_store.get(namespace, "facts")
     return data["facts"] if data else []
 ```
 
----
+## Warum gute Systeme mehrere Memory-Formen kombinieren
 
-## Memory-Strategien kombinieren
-
-In der Praxis kombiniert man verschiedene Memory-Typen je nach Anforderung:
+In realen Agenten wird Memory selten nur in einer Form eingesetzt. Ein System kann die letzten Nachrichten im State halten, ältere Teile zusammenfassen, Nutzerfakten in einer Vektordatenbank speichern und zusätzlich strukturierte Entitäten pflegen.
 
 ```mermaid
 flowchart TD
     INPUT[Nutzereingabe] --> AGENT[Agent]
 
-    AGENT -->|liest| ST[Short-term Memory\nSlidingWindow im State]
-    AGENT -->|liest| LT[Langzeit-Memory\nVektordatenbank]
-    AGENT -->|liest| EM[Entity Memory\nKey-Value Dict]
+    AGENT -->|liest| ST[Kurzzeit-Memory]
+    AGENT -->|liest| LT[Langzeit-Memory]
+    AGENT -->|liest| EM[Entity Memory]
 
     AGENT --> RESPONSE[Antwort]
     RESPONSE -->|schreibt| ST
@@ -336,12 +278,11 @@ flowchart TD
 
 ```python
 class HybridMemoryState(TypedDict):
-    messages: Annotated[list, add_messages]  # Short-term: letzte Nachrichten
-    summary: str                              # Short-term: komprimierter Verlauf
-    entity_memory: dict                       # Long-term: Entitäten
+    messages: Annotated[list, add_messages]
+    summary: str
+    entity_memory: dict
 
 def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
-    # Langzeit-Memory zu aktueller Frage abrufen
     long_term = memory_store.similarity_search(
         state["messages"][-1].content, k=2
     )
@@ -359,77 +300,43 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
     return {"messages": [response]}
 ```
 
----
+Genau darin liegt die eigentliche Architekturentscheidung: Nicht `ob` Memory eingesetzt wird, sondern `welche Art` von Memory für welche Information passend ist.
 
-## Best Practices
+## Was in der Praxis schnell schiefgeht
 
-### Strategie nach Anwendungsfall
-
-| Anwendungsfall | Empfohlene Strategie |
-|---------------|---------------------|
-| Einfacher Chatbot | Conversation Buffer (Sliding Window) |
-| Persönlicher Assistent | Buffer + Semantisches Memory |
-| Support-Agent | Entity Memory für Kundendaten |
-| Research-Agent | Semantisches Memory für Wissensaufbau |
-| Multi-Session-Nutzer | Checkpointing + Langzeit-Store |
-
-### Memory-Hygiene
+Viele Systeme speichern zu viel, zu wahllos oder zu unsauber getrennt. Kurze Floskeln wie `ok` oder `danke` gehören selten in ein dauerhaftes Gedächtnis. Sensible personenbezogene Daten sollten nicht unreflektiert in Vektordatenbanken landen. Ebenso problematisch ist es, Memory ohne Löschstrategie aufzubauen.
 
 ```python
-# Relevanzfilter beim Speichern
 def sollte_gespeichert_werden(nachricht: str) -> bool:
-    """Nur relevante Informationen speichern."""
     if len(nachricht) < 30:
-        return False  # Zu kurz (OK, Danke, etc.)
-    floskel_woerter = ["ok", "danke", "hallo", "tschüss", "ja", "nein"]
+        return False
+    floskel_woerter = ["ok", "danke", "hallo", "tschuess", "ja", "nein"]
     return not all(w in nachricht.lower() for w in floskel_woerter)
 ```
 
-### 7.3 Datenschutz beachten
+| Empfehlung | Warum sie wichtig ist |
+|---|---|
+| Keine PII unkritisch einbetten | Embeddings sind kein Freifahrtschein für sensible Daten |
+| Lösch- und Ablaufregeln definieren | Gedächtnis darf nicht unkontrolliert wachsen |
+| Nutzerkontrolle anbieten | rechtliche und organisatorische Nachvollziehbarkeit |
+| Relevanz vor dem Speichern prüfen | sonst füllt sich das Memory mit Ballast |
 
-| Empfehlung | Begründung |
-|-----------|-----------|
-| Keine PII in Vektordatenbank | Embeddings können in Sonderfällen invertiert werden |
-| Nutzerkontrolle anbieten | DSGVO: Recht auf Vergessenwerden implementieren |
-| Ablaufzeiten setzen | Memory nach definierten Tagen automatisch löschen |
-| Verschlüsselung nutzen | Bei sensiblen Daten im persistenten Store |
+## Was für Einsteiger zuerst wichtig ist
 
----
+Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann Langzeit-Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
 
-## 8 Zusammenfassung
-
-| Konzept | Beschreibung |
-|---------|-------------|
-| **Conversation Buffer** | Vollständiger Verlauf im State – einfach, aber begrenzt |
-| **Sliding Window** | Letzte N Nachrichten – kontrollierte Größe |
-| **Summarization** | Ältere Nachrichten komprimieren – Kontext erhalten |
-| **Semantisches Memory** | Vektordatenbank – Faktenwissen über Sitzungen hinweg |
-| **Entity Memory** | Key-Value für Entitäten – strukturierte Personalisierung |
-| **Per-User Memory** | Thread-IDs + persistenter Store – Multi-User-Systeme |
-
-**Faustregel:**
-
-- **Kurzzeit-Memory** → immer (Conversation Buffer oder Sliding Window)
-- **Langzeit-Memory** → bei Personalisierung und Multi-Session-Bedarf
-- **Entity Memory** → bei strukturierten Entitäten (CRM-Agenten, Support)
-
-**Verwandte Konzepte:**
-
-- [State Management](./State_Management.html) – Grundlagen des LangGraph-States
-- [Checkpointing & Persistenz](./Checkpointing_Persistenz.html) – Technische Basis für Persistenz
-- [RAG-Konzepte](./RAG_Konzepte.html) – Vektordatenbanken für Wissensabruf
+Teilnehmende unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Ohne Gedächtnis werden viele scheinbar intelligente Agenten schon nach wenigen Nachrichten brüchig oder müssen dieselben Informationen immer wieder neu erfragen.
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html) | Technische Speicherung des Konversations-States (Kurzzeitgedächtnis im Graph) |
-| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Memory-Einträge im Graph-State verankert sind |
-| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Gedächtnis im Kontext menschlicher Kontrolle und Unterbrechungen |
-
+| [Wie bleiben Sitzungen und Zustände erhalten?](./Checkpointing_Persistenz.html) | Wie wird der State technisch gespeichert und wiederaufgenommen? |
+| [State Management](./State_Management.html) | Wie sind Nachrichten, Variablen und andere Zustandsdaten im Graph organisiert? |
+| [Human-in-the-Loop](./Human_in_the_Loop.html) | Wie wirkt sich gespeicherter Kontext auf Unterbrechung und Freigabe aus? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

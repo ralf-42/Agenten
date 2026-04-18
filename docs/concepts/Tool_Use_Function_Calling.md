@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Tool Use & Function Calling
+title: Wie nutzen Agenten Werkzeuge?
 parent: Konzepte
 nav_order: 3
-description: "Wie KI-Agenten durch Werkzeuge ihre Fähigkeiten erweitern"
+description: Tool Use und Function Calling für KI-Agenten: warum Werkzeuge nötig sind und wie sie sicher eingebunden werden
 has_toc: true
 ---
 
-# Tool Use & Function Calling
+# Wie nutzen Agenten Werkzeuge?
 {: .no_toc }
 
-> **Wie KI-Agenten durch Werkzeuge ihre Fähigkeiten erweitern**
+> **Ein Agent wird erst dann handlungsfähig, wenn er mehr kann als Text erzeugen.**
 
 ---
 
@@ -22,29 +22,31 @@ has_toc: true
 
 ---
 
-## Warum brauchen LLMs Werkzeuge?
+## Warum ein Modell allein oft nicht reicht
 
-Large Language Models sind beeindruckend in der Textverarbeitung – doch sie haben fundamentale Grenzen:
+Sprachmodelle sind stark im Formulieren, Zusammenfassen und Interpretieren von Text. Sie haben aber klare Grenzen. Sie kennen nicht automatisch aktuelle Informationen, können nicht zuverlässig rechnen, greifen nicht selbst auf Dateien zu und führen keine Aktionen in externen Systemen aus. Genau an dieser Stelle beginnt Tool Use.
 
-| Limitation | Beispiel | Lösung durch Tools |
-|------------|----------|-------------------|
-| **Kein aktuelles Wissen** | "Wie ist das Wetter heute?" | Wetter-API aufrufen |
-| **Keine Berechnungen** | "Was ist 17 × 243?" | Taschenrechner-Tool |
-| **Kein Dateizugriff** | "Lies die Datei report.pdf" | Datei-Loader-Tool |
-| **Keine externen Systeme** | "Buche einen Termin" | Kalender-API |
+Werkzeuge erweitern die Fähigkeiten eines Modells über reines Sprachwissen hinaus. Das Modell entscheidet, ob ein Werkzeug gebraucht wird und welche Parameter dafür sinnvoll sind. Der eigentliche Aufruf wird danach von der Anwendung oder dem Agentensystem ausgeführt.
 
-**Kernidee:** Tools erweitern die Fähigkeiten eines LLMs über reines Textwissen hinaus. Das Modell entscheidet, **wann** und **wie** ein Tool aufgerufen wird – die eigentliche Ausführung übernimmt Python-Code.
+| Grenze des Modells | Typisches Beispiel | Werkzeug löst das Problem |
+|---|---|---|
+| kein aktuelles Wissen | Wetter, Aktienkurse, heutige Termine | API oder Websuche |
+| keine verlässliche Berechnung | `17 * 243` | Rechen-Tool |
+| kein Dateizugriff | PDF oder Textdatei lesen | Datei-Tool |
+| keine echte Außenwirkung | Termin buchen, E-Mail senden | Kalender- oder Mail-Tool |
 
-> [!NOTE] Das LLM führt keine Tools aus — es erzeugt einen Aufruf-Intent.<br>
-> Die Anwendung empfängt diesen Intent, validiert ihn und führt den eigentlichen Code aus. Diese Trennung ist entscheidend für Sicherheit und Kontrolle.
+> [!NOTE] Das Modell führt das Tool nicht selbst aus<br>
+> Es erzeugt nur die strukturierte Absicht, ein Tool zu verwenden. Die Anwendung validiert und führt den eigentlichen Code aus.
 
----
+## Ein einfaches Beispiel
 
-## Das Konzept: Function Calling
+Ein Assistent soll die Anfrage `Multipliziere 7 mit 8` beantworten. Ohne Tool könnte das Modell korrekt antworten, aber die Antwort wäre nicht verlässlich aus einer kontrollierten Operation abgeleitet. Mit Tool Use erkennt das Modell, dass eine Berechnung nötig ist, erzeugt einen Aufruf an `multiply(a=7, b=8)` und nutzt das Ergebnis danach in der Antwort.
 
-Function Calling ist der Mechanismus, durch den ein LLM strukturiert mitteilt, welches Tool mit welchen Parametern aufgerufen werden soll.
+Genau dieses Muster skaliert später auf realere Fälle: Datenbankabfragen, Websuche, Dateilesen oder Freigabeprozesse.
 
-### Ablauf im Detail
+## Was Function Calling eigentlich bedeutet
+
+Function Calling ist der Mechanismus, mit dem ein Modell strukturiert angibt, welches Tool mit welchen Parametern ausgeführt werden soll. Das Modell formuliert also nicht nur freien Text, sondern einen maschinenlesbaren Aufruf.
 
 ```mermaid
 sequenceDiagram
@@ -52,19 +54,15 @@ sequenceDiagram
     participant User
     participant LLM
     participant Tool
-    
+
     User->>LLM: "Multipliziere 7 mit 8"
-    LLM->>LLM: Analysiert Anfrage
+    LLM->>LLM: Anfrage analysieren
     LLM-->>Tool: multiply(a=7, b=8)
     Tool-->>LLM: 56
     LLM->>User: "Das Ergebnis ist 56."
 ```
 
-**Wichtige Erkenntnis:** Das LLM führt das Tool nicht selbst aus – es generiert lediglich einen strukturierten Aufruf (JSON), den die Anwendung interpretiert und ausführt.
-
-### Was das LLM "sieht"
-
-Dem Modell werden verfügbare Tools als Schema übergeben:
+Für das Modell ist ein Tool letztlich ein Schema mit Name, Beschreibung und Parametern. Anhand dieser Informationen entscheidet es, ob ein Tool passt.
 
 ```json
 {
@@ -81,34 +79,11 @@ Dem Modell werden verfügbare Tools als Schema übergeben:
 }
 ```
 
-Das Modell entscheidet anhand von **Name** und **Beschreibung**, ob und wie es das Tool einsetzt.
+Typischer Fehler: Zu denken, dass das Modell damit bereits sicher und korrekt gehandelt hat. In Wahrheit beginnt Sicherheit erst bei Validierung, Begrenzung und kontrollierter Ausführung.
 
----
+## Tools definieren mit `@tool`
 
-## Tools definieren mit dem `@tool` Decorator
-
-In LangChain 1.0+ ist der `@tool` Decorator der Standard für Tool-Definitionen. Er generiert automatisch das Schema aus Docstring und Type Hints.
-
-### Grundstruktur
-
-```python
-from langchain_core.tools import tool
-
-@tool
-def tool_name(parameter: type) -> return_type:
-    """Kurze Beschreibung des Tools.
-    
-    Args:
-        parameter: Beschreibung des Parameters
-    
-    Returns:
-        Beschreibung des Rückgabewerts
-    """
-    # Tool-Logik
-    return ergebnis
-```
-
-### Beispiel: Einfaches Rechen-Tool
+In LangChain werden Tools typischerweise mit dem `@tool`-Decorator definiert. Docstring und Type Hints erzeugen dabei das Schema, das das Modell später sieht.
 
 ```python
 from langchain_core.tools import tool
@@ -116,383 +91,196 @@ from langchain_core.tools import tool
 @tool
 def multiply(a: int, b: int) -> int:
     """Multipliziert zwei ganze Zahlen.
-    
+
     Args:
         a: Erste Zahl
         b: Zweite Zahl
-    
+
     Returns:
         Das Produkt von a und b
     """
     return a * b
 ```
 
-### Beispiel: Tool mit Fehlerbehandlung
+Dieses Minimalbeispiel zeigt bereits zwei Grundregeln: Type Hints sind notwendig und der Docstring ist nicht bloß Dokumentation für Menschen, sondern Steuerungsinformation für das Modell.
 
-```python
-@tool
-def safe_divide(a: float, b: float) -> str:
-    """Dividiert a durch b mit Fehlerbehandlung.
-    
-    Args:
-        a: Dividend (Zähler)
-        b: Divisor (Nenner)
-    
-    Returns:
-        Das Ergebnis als Text oder eine Fehlermeldung
-    """
-    try:
-        if b == 0:
-            return "Fehler: Division durch Null ist nicht erlaubt."
-        result = a / b
-        return f"Ergebnis: {result:.4f}"
-    except Exception as e:
-        return f"Fehler bei der Berechnung: {str(e)}"
-```
+## Warum gute Docstrings über die Tool-Auswahl entscheiden
 
----
-
-## Die Bedeutung guter Docstrings
-
-Der Docstring ist **entscheidend** für die Tool-Nutzung. Das LLM trifft seine Entscheidung ausschließlich auf Basis von Name und Beschreibung.
-
-> [!TIP] Docstring-Qualität entscheidet über Tool-Selektion<br>
-> Das LLM wählt Tools **ausschließlich** anhand von Name und Beschreibung. Ein schlechter Docstring bedeutet falsche oder ausgebliebene Tool-Aufrufe — unabhängig davon, wie gut der Tool-Code ist.
-
-### Schlechter Docstring
+Das Modell wählt ein Tool nicht aufgrund des Python-Codes, sondern auf Basis von Name, Beschreibung und Parametern. Ein schlechter Docstring führt deshalb oft zu falscher oder ausbleibender Tool-Nutzung, selbst wenn die Implementierung technisch korrekt ist.
 
 ```python
 @tool
 def search(q: str) -> str:
-    """Sucht etwas."""  # Zu vage!
+    """Sucht etwas."""
     return do_search(q)
 ```
 
-**Problem:** Das LLM weiß nicht, *was* gesucht wird, *wo* gesucht wird, oder *wann* dieses Tool sinnvoll ist.
+Dieses Beispiel ist zu vage. Es bleibt offen, wonach gesucht wird, in welchem Bereich gesucht wird und wann das Tool überhaupt verwendet werden soll.
 
-### Guter Docstring
+Ein deutlich besserer Docstring grenzt den Zweck, die typischen Anwendungsfälle und die Ausschlüsse explizit ein.
 
 ```python
 @tool
 def search_company_documents(query: str) -> str:
     """🔍 FIRMEN-DOKUMENTENSUCHE – Durchsucht interne Dokumente.
-    
+
     Verwende dieses Tool für Fragen zu:
     - Unternehmensrichtlinien und Prozessen
-    - Produktinformationen und Handbücher
-    - Interne Regelwerke und Compliance
-    
+    - Produktinformationen und Handbüchern
+    - internen Regelwerken und Compliance
+
     NICHT geeignet für: Allgemeinwissen, aktuelle Nachrichten, Berechnungen.
-    
+
     Args:
         query: Suchbegriff oder Frage in natürlicher Sprache
-    
+
     Returns:
         Relevante Textpassagen aus den Firmendokumenten
     """
     return document_retriever.search(query)
 ```
 
-**Merkmale eines guten Docstrings:**
+In der Praxis relevant, wenn: Mehrere ähnliche Tools verfügbar sind und das Modell klar unterscheiden soll, welches Werkzeug wofür gedacht ist.
 
-| Element | Zweck |
-|---------|-------|
-| **Emoji** | Visuelle Identifikation im Debug-Output |
-| **GROSSBUCHSTABEN-Name** | Schnelles Erkennen der Tool-Kategorie |
-| **Anwendungsfälle** | Dem LLM zeigen, wann das Tool passt |
-| **Negative Abgrenzung** | Verhindern falscher Tool-Aufrufe |
-| **Parameter-Beschreibung** | Korrekte Werteübergabe sicherstellen |
+## Negative Boundaries verhindern Tool-Verwechslungen
 
----
-
-## Negative-Bound Tool Descriptions
-
-Wenn ein Agent mehrere ähnliche Tools verwaltet, entsteht *Tool-Overlap*: Das LLM kann nicht zuverlässig unterscheiden, welches Tool für eine Anfrage zuständig ist. Negative Bounding löst dieses Problem durch explizite Ausschlüsse im Docstring — das LLM erfährt nicht nur, **was** ein Tool tut, sondern auch, **was es nicht tut**.
-
-### Das Problem: Überlappende Tools
+Sobald ein Agent mehrere ähnliche Werkzeuge verwaltet, entsteht leicht Tool-Overlap. Zwei Tools „suchen“ beide etwas, aber in unterschiedlichen Datenräumen. Ohne klare Ausschlüsse kann das Modell schwer entscheiden, welches Werkzeug gemeint ist.
 
 ```python
 @tool
 def search_products(query: str) -> str:
-    """Sucht nach Produkten."""
-    ...
-
-@tool
-def search_customers(query: str) -> str:
-    """Sucht nach Kunden."""
-    ...
-```
-
-**Problem:** Beide Tools "suchen" — das LLM trifft bei ambigen Anfragen wie "Suche nach Schmidt" eine unsichere Entscheidung.
-
-### Die Lösung: Explizite Negativabgrenzung
-
-```python
-@tool
-def search_products(query: str) -> str:
-    """🛒 PRODUKTSUCHE – Durchsucht den Produktkatalog nach Name, SKU oder Kategorie.
-
-    Verwende dieses Tool für Anfragen zu Artikeln, Preisen und Verfügbarkeit.
+    """🛒 PRODUKTSUCHE – Durchsucht den Produktkatalog.
 
     NICHT geeignet für: Kundendaten, Bestellungen, Rechnungen.
-    Verändert KEINE Daten. Schreibt NICHT in die Datenbank.
-
-    Args:
-        query: Suchbegriff (Name, SKU, Kategorie)
-
-    Returns:
-        Liste passender Produkte mit Preis und Bestand
+    Verändert KEINE Daten.
     """
     ...
 
 @tool
 def search_customers(query: str) -> str:
-    """👤 KUNDENSUCHE – Durchsucht die Kundendatenbank nach Name, E-Mail oder Kundennummer.
-
-    Verwende dieses Tool für Anfragen zu Kontaktdaten und Konten.
+    """👤 KUNDENSUCHE – Durchsucht die Kundendatenbank.
 
     NICHT geeignet für: Produktinfos, Lagerbestand, Preise.
-    Verändert KEINE Kundendaten. Sendet KEINE E-Mails.
-
-    Args:
-        query: Suchbegriff (Name, E-Mail, Kundennummer)
-
-    Returns:
-        Kundendatensatz mit Kontaktinformationen
+    Sendet KEINE E-Mails.
     """
     ...
 ```
 
-### Negative-Bound-Muster im Überblick
+Gerade bei Agenten mit vielen Tools ist diese Negativabgrenzung kein Zusatz, sondern ein wichtiges Architekturmittel. Sie reduziert Fehlgriffe des Modells deutlich.
 
-| Situation | Negativabgrenzung im Docstring |
-|-----------|-------------------------------|
-| Read-only Tool neben Write-Tool | `Verändert KEINE Daten.` |
-| Tool mit ähnlichem Scope wie anderes | `NICHT geeignet für: [Alternativen]` |
-| Tool ohne Seiteneffekte | `Sendet KEINE Benachrichtigungen.` |
-| Scoped Access Tool | `Greift NUR auf [Bereich] zu, nicht auf [anderer Bereich].` |
+## Type Hints sind Pflicht
 
-> [!TIP] Negative Bounding als Architektur-Prinzip<br>
-> Bei 4–5 Tools pro Agent reicht ein klarer Scope oft aus. Ab 6+ Tools steigt die Gefahr von Tool-Overlap deutlich — dann ist Negative Bounding kein Nice-to-have, sondern Pflicht.
-
----
-
-## Pydantic als Contract-Schicht
-
-In produktionsfähigen Agenten übernehmen Pydantic-Modelle drei Rollen gleichzeitig: **Laufzeitvalidierung**, **Tool-Schema-Generierung** und **typisierte Übergabestrukturen** zwischen Agenten. Das macht Pydantic zur "Single Source of Truth" — Schema und Validierungslogik leben an einem Ort und können nicht auseinanderdriften.
-
-**Anti-Pattern:** Schema und Validierung getrennt pflegen
+Ohne Type Hints entsteht kein sauberes Schema. Das Modell weiß dann nicht zuverlässig, welche Parameter es liefern soll oder welche Datentypen erwartet werden.
 
 ```python
-# ❌ Tool-Beschreibung im Docstring, Validierung irgendwo anders — driftet auseinander
-@tool
-def process_refund(customer_id: str, amount: float) -> dict:
-    """Verarbeitet eine Erstattung."""
-    if amount < 0:   # Validierung dupliziert, nicht im Schema sichtbar
-        raise ValueError("Negativer Betrag")
-    ...
-```
-
-**Korrekt:** Pydantic-Modell als Contract für Schema + Validierung
-
-```python
-from pydantic import BaseModel, Field
-from langchain_core.tools import tool
-
-class RefundRequest(BaseModel):
-    customer_id: str   = Field(description="Eindeutige Kunden-ID")
-    amount:      float = Field(ge=0, description="Erstattungsbetrag in EUR (≥ 0)")
-    reason:      str   = Field(description="Begründung der Erstattung")
-
-@tool(args_schema=RefundRequest)
-def process_refund(customer_id: str, amount: float, reason: str) -> dict:
-    """💰 ERSTATTUNG – Verarbeitet eine geprüfte Rückerstattungsanfrage.
-
-    NICHT geeignet für: Kontosperrungen, Kundendaten-Änderungen.
-    Prüft KEINE Berechtigung — zuvor check_policy aufrufen.
-
-    Returns:
-        Erstattungsstatus mit Transaktions-ID
-    """
-    # amount >= 0 wurde bereits von Pydantic validiert — kein Duplikat nötig
-    return {"status": "processed", "amount": amount}
-```
-
-**Drei Gewinne durch Pydantic als Contract:**
-
-| Rolle | Mechanismus | Vorteil |
-|-------|------------|---------|
-| Laufzeitvalidierung | `ge=0` wirft `ValidationError` vor Tool-Ausführung | Ungültige Daten erreichen den Code nicht |
-| Schema-Generierung | JSON-Schema direkt aus dem Modell | Keine Divergenz zwischen Beschreibung und Realität |
-| Handoff-Struktur | Dasselbe Modell als typisierte Übergabe | Agenten sprechen denselben Datenvertrag |
-
-> [!TIP] Pydantic-Schemas und `title`-Feld<br>
-> Beim Generieren von Tool-Schemas aus Pydantic das Top-Level-`title`-Feld entfernen (`schema.pop("title", None)`), um Token zu sparen und Schema-Validierungsüberraschungen mit der Claude API zu vermeiden.
-
----
-
-## Two-Step Veto und Forced tool_choice
-
-### Two-Step Veto für hochrisikoreiche Operationen
-
-Bei Operationen mit realen Konsequenzen (Rückerstattungen, Löschungen, Zahlungen) trennt das Two-Step Veto Pattern Prüfung und Ausführung in zwei separate Tools. Der Agent kann `propose` aufrufen, `commit` aber nur nach positivem Policy-Check.
-
-```python
-@tool
-def propose_refund(customer_id: str, amount: float) -> dict:
-    """💡 ERSTATTUNGSVORSCHLAG – Prüft Berechtigung, führt NICHT aus.
-
-    Immer zuerst aufrufen, bevor commit_refund verwendet wird.
-    Verändert KEINE Daten. Schreibt NICHTS in die Datenbank.
-
-    Returns:
-        {"approved": bool, "limit": float, "reason": str}
-    """
-    return PolicyEngine().check_policy(customer_id, amount)
-
-@tool
-def commit_refund(customer_id: str, amount: float) -> dict:
-    """✅ ERSTATTUNG DURCHFÜHREN – Führt eine bereits geprüfte Erstattung aus.
-
-    Nur aufrufen wenn propose_refund approved=True zurückgegeben hat.
-    NICHT für ungeprüfte Erstattungen verwenden.
-
-    Returns:
-        Transaktionsstatus mit Transaktions-ID
-    """
-    return financial_system.process(customer_id, amount)
-```
-
-**Ablauf:**
-
-```mermaid
-flowchart LR
-    A[Agent] --> B[propose_refund]
-    B --> C{approved?}
-    C -->|Ja| D[commit_refund]
-    C -->|Nein| E[escalate_to_human]
-    D --> F[Transaktion]
-    E --> G[Mensch entscheidet]
-```
-
-### Forced tool_choice
-
-Wenn ein Policy-Check eine Eskalation erfordert, kann das System Claude zwingen, ein bestimmtes Tool aufzurufen — unabhängig davon, was Claude selbst entscheiden würde:
-
-```python
-# Policy blockiert — Claude zum Eskalations-Tool zwingen
-if tool_result.get("action_required") == "escalate_to_human":
-    client.messages.create(
-        model="claude-opus-4-6",
-        messages=messages,
-        tools=tools,
-        tool_choice={"type": "tool", "name": "escalate_to_human"}
-    )
-```
-
-> [!NOTE] Wann Forced tool_choice einsetzen<br>
-> Nur wenn deterministisch feststeht, welches Tool als nächstes aufgerufen werden muss — z.B. nach einem negativen Policy-Check. Nicht als genereller Mechanismus zur Steuerung des Agenten verwenden.
-
----
-
-## Type Hints: Pflicht, nicht Kür
-
-Type Hints sind **zwingend erforderlich** für die automatische Schema-Generierung.
-
-### Unterstützte Typen
-
-```python
-from typing import List, Optional, Dict
-
-@tool
-def process_data(
-    text: str,                          # Einfacher String
-    count: int,                         # Ganzzahl
-    threshold: float,                   # Dezimalzahl
-    enabled: bool,                      # Boolean
-    items: List[str],                   # Liste von Strings
-    config: Optional[Dict[str, str]] = None  # Optionales Dictionary
-) -> str:
-    """Verarbeitet Daten mit verschiedenen Parametertypen."""
-    pass
-```
-
-### Häufiger Fehler: Fehlende Type Hints
-
-```python
-# ❌ FALSCH: Keine Type Hints
+# Falsch
 @tool
 def add(a, b):
     """Addiert zwei Zahlen."""
     return a + b
 
-# ✅ RICHTIG: Mit Type Hints
+# Richtig
 @tool
 def add(a: int, b: int) -> int:
     """Addiert zwei ganze Zahlen."""
     return a + b
 ```
 
-> [!WARNING] Fehlende Type Hints → unvollständiges Schema → LLM kann Parameter nicht füllen<br>
-> Ohne Type Hints generiert der `@tool` Decorator ein unvollständiges JSON-Schema. Das LLM kann die Parameter dann nicht korrekt befüllen, was zu fehlgeschlagenen oder falschen Tool-Aufrufen führt.
+> [!WARNING] Fehlende Type Hints erzeugen schwache Tool-Schemata<br>
+> Wenn das Schema unvollständig ist, kann das Modell Parameter falsch oder gar nicht befüllen.
 
----
+## Pydantic als Vertrags-Schicht
 
-## Tools direkt testen
-
-Vor der Integration in einen Agenten sollten Tools isoliert getestet werden.
+Bei produktionsnäheren Tools reicht ein Docstring oft nicht aus. Dann wird ein Pydantic-Modell zur eigentlichen Contract-Schicht. Es definiert zugleich das Schema, validiert die Eingaben und macht Übergaben zwischen Komponenten konsistent.
 
 ```python
-# Tool-Objekt inspizieren
+from pydantic import BaseModel, Field
+from langchain_core.tools import tool
+
+class RefundRequest(BaseModel):
+    customer_id: str = Field(description="Eindeutige Kunden-ID")
+    amount: float = Field(ge=0, description="Erstattungsbetrag in EUR")
+    reason: str = Field(description="Begründung der Erstattung")
+
+@tool(args_schema=RefundRequest)
+def process_refund(customer_id: str, amount: float, reason: str) -> dict:
+    """💰 ERSTATTUNG – Verarbeitet eine geprüfte Rückerstattung.
+
+    NICHT geeignet für: Kontosperrungen, Kundendaten-Änderungen.
+    Prüft KEINE Berechtigung – dafür zuerst Policy prüfen.
+    """
+    return {"status": "processed", "amount": amount}
+```
+
+Der Vorteil liegt darin, dass Schema und Validierung nicht auseinanderdriften. Genau deshalb ist Pydantic für höherwertige Tool-Schnittstellen oft sinnvoll.
+
+## Fehlerbehandlung gehört in jedes Tool
+
+Ein Tool kann fehlschlagen: Datei nicht gefunden, Datenbank nicht erreichbar, Eingabe ungültig. Gute Tools liefern deshalb nicht nur einen Absturz, sondern eine verständliche Rückmeldung, mit der der Agent weiterarbeiten kann.
+
+```python
+@tool
+def safe_divide(a: float, b: float) -> str:
+    """Dividiert a durch b mit Fehlerbehandlung."""
+    try:
+        if b == 0:
+            return "Fehler: Division durch Null ist nicht erlaubt."
+        return f"Ergebnis: {a / b:.4f}"
+    except Exception as e:
+        return f"Fehler bei der Berechnung: {str(e)}"
+```
+
+Das gilt auch für externe Systeme:
+
+```python
+@tool
+def query_database(sql: str) -> str:
+    """🗄️ DATENBANK – Führt eine SQL-SELECT-Abfrage aus."""
+    try:
+        if not sql.strip().upper().startswith("SELECT"):
+            return "Fehler: Nur SELECT-Anweisungen sind erlaubt."
+        result = database.execute(sql)
+        return f"Ergebnis: {result}"
+    except ConnectionError:
+        return "Fehler: Keine Verbindung zur Datenbank."
+    except TimeoutError:
+        return "Fehler: Abfrage hat zu lange gedauert."
+    except Exception as e:
+        return f"Unerwarteter Fehler: {str(e)}"
+```
+
+Typischer Fehler: Nur `Error` zurückzugeben. Ein Agent braucht eine informative Fehlermeldung, sonst kann er weder sinnvoll erklären noch sinnvoll weiterfragen.
+
+## Werkzeuge zunächst isoliert testen
+
+Bevor ein Tool an einen Agenten gebunden wird, sollte es einzeln geprüft werden. Dazu gehört die direkte Ausführung ebenso wie die Kontrolle von Name, Beschreibung und Schema.
+
+```python
 print(f"Name: {multiply.name}")
 print(f"Beschreibung: {multiply.description}")
 print(f"Schema: {multiply.args_schema.schema()}")
 
-# Tool direkt aufrufen
 result = multiply.invoke({"a": 7, "b": 8})
 print(f"Ergebnis: {result}")
 ```
 
-**Ausgabe:**
+Gerade in Einsteigerprojekten spart dieser Zwischenschritt viel Zeit, weil unklare Schemas oder fehlerhafte Parameter nicht erst im Agentenverbund auffallen.
 
-```
-Name: multiply
-Beschreibung: Multipliziert zwei ganze Zahlen.
-Schema: {'properties': {'a': {'type': 'integer'}, 'b': {'type': 'integer'}}, 'required': ['a', 'b']}
-Ergebnis: 56
-```
+## Tools an das Modell binden
 
----
-
-## Tools an ein LLM binden
-
-Ein LLM mit gebundenen Tools kann selbstständig entscheiden, welches Tool wann aufgerufen wird.
-
-### Variante A: `bind_tools()`
+Sobald Werkzeuge definiert sind, können sie an ein Modell gebunden werden. Das Modell entscheidet dann selbst, ob ein Tool sinnvoll ist. Mit `bind_tools()` wird zunächst nur die Tool-Absicht erzeugt.
 
 ```python
 from langchain.chat_models import init_chat_model
 
 llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm_with_tools = llm.bind_tools([multiply, safe_divide])
 
-# Tools an das Modell binden
-tools = [multiply, safe_divide]
-llm_with_tools = llm.bind_tools(tools)
-
-# Aufruf – LLM entscheidet über Tool-Nutzung
 response = llm_with_tools.invoke("Was ist 15 mal 23?")
 print(response.tool_calls)
 ```
 
-**Ausgabe:**
-
-```python
-[{'name': 'multiply', 'args': {'a': 15, 'b': 23}, 'id': 'call_abc123'}]
-```
-
-**Wichtig:** `bind_tools()` führt das Tool nicht aus – es gibt nur die Absicht des LLMs zurück.
-
-### Variante B: Agent mit automatischer Ausführung
+Erst ein Agent oder eine umgebende Laufzeit führt diesen Aufruf wirklich aus.
 
 ```python
 from langchain.agents import create_agent
@@ -506,82 +294,40 @@ agent = create_agent(
 response = agent.invoke({
     "messages": [{"role": "user", "content": "Berechne 15 mal 23"}]
 })
-
-print(response["messages"][-1].content)
-# Ausgabe: "Das Ergebnis von 15 × 23 ist 345."
 ```
-
----
 
 ## Praktische Tool-Beispiele
 
-### Beispiel: Aktuelles Datum
+Ein Datums-Tool ist nützlich, wenn aktuelle Zeitinformation gebraucht wird:
 
 ```python
 from datetime import datetime
 
 @tool
 def get_current_date() -> str:
-    """📅 DATUM – Gibt das aktuelle Datum zurück.
-    
-    Verwende dieses Tool, wenn nach dem heutigen Datum,
-    Wochentag oder aktuellen Zeitpunkt gefragt wird.
-    
-    Returns:
-        Aktuelles Datum im Format "Wochentag, TT.MM.JJJJ"
-    """
+    """📅 DATUM – Gibt das aktuelle Datum zurück."""
     now = datetime.now()
-    weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", 
+    weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag",
                 "Freitag", "Samstag", "Sonntag"]
     weekday = weekdays[now.weekday()]
     return f"{weekday}, {now.strftime('%d.%m.%Y')}"
 ```
 
-### Beispiel: Websuche (Stub)
-
-```python
-@tool
-def web_search(query: str, num_results: int = 3) -> str:
-    """🌐 WEBSUCHE – Durchsucht das Internet nach aktuellen Informationen.
-    
-    Verwende dieses Tool für:
-    - Aktuelle Nachrichten und Ereignisse
-    - Fakten, die sich ändern können (Aktienkurse, Wetter)
-    - Informationen nach dem Wissens-Cutoff des Modells
-    
-    Args:
-        query: Suchbegriff oder Frage
-        num_results: Anzahl der gewünschten Ergebnisse (Standard: 3)
-    
-    Returns:
-        Zusammenfassung der Suchergebnisse
-    """
-    # Hier würde die tatsächliche Suche implementiert
-    return f"Suchergebnisse für '{query}': [Platzhalter für echte Ergebnisse]"
-```
-
-### Beispiel: Dateioperationen
+Ein Datei-Tool zeigt gut, wie externe Operationen kontrolliert werden:
 
 ```python
 from pathlib import Path
 
 @tool
 def read_file(filepath: str) -> str:
-    """📄 DATEI LESEN – Liest den Inhalt einer Textdatei.
-    
-    Args:
-        filepath: Pfad zur Datei (relativ oder absolut)
-    
-    Returns:
-        Dateiinhalt als Text oder Fehlermeldung
-    """
+    """📄 DATEI LESEN – Liest den Inhalt einer Textdatei."""
     try:
         path = Path(filepath)
         if not path.exists():
             return f"Fehler: Datei '{filepath}' nicht gefunden."
         if not path.is_file():
             return f"Fehler: '{filepath}' ist keine Datei."
-        
+
         content = path.read_text(encoding="utf-8")
         if len(content) > 5000:
             return content[:5000] + "\n\n[... Datei gekürzt ...]"
@@ -590,103 +336,69 @@ def read_file(filepath: str) -> str:
         return f"Fehler beim Lesen: {str(e)}"
 ```
 
----
-
-## Fehlerbehandlung in Tools
-
-Robuste Tools müssen mit Fehlern umgehen können. Ein Tool-Absturz kann den gesamten Agenten blockieren.
-
-### Muster: Try-Except mit informativer Rückgabe
+Ein Websuch-Tool ist besonders für aktuelle Informationen nützlich, die nicht im Modellwissen liegen:
 
 ```python
 @tool
-def query_database(sql: str) -> str:
-    """🗄️ DATENBANK – Führt eine SQL-Abfrage aus.
-    
-    Args:
-        sql: SQL SELECT-Anweisung
-    
-    Returns:
-        Abfrageergebnis oder Fehlermeldung
-    """
-    try:
-        # Sicherheitsprüfung
-        if not sql.strip().upper().startswith("SELECT"):
-            return "Fehler: Nur SELECT-Anweisungen sind erlaubt."
-        
-        # Datenbankabfrage (Pseudocode)
-        result = database.execute(sql)
-        return f"Ergebnis: {result}"
-    
-    except ConnectionError:
-        return "Fehler: Keine Verbindung zur Datenbank. Bitte später erneut versuchen."
-    except TimeoutError:
-        return "Fehler: Abfrage hat zu lange gedauert. Bitte die Anfrage vereinfachen."
-    except Exception as e:
-        return f"Unerwarteter Fehler: {str(e)}"
+def web_search(query: str, num_results: int = 3) -> str:
+    """🌐 WEBSUCHE – Durchsucht das Internet nach aktuellen Informationen."""
+    return f"Suchergebnisse für '{query}': [Platzhalter für echte Ergebnisse]"
 ```
 
-### Warum informative Fehlermeldungen?
+## Hochriskante Aktionen brauchen zusätzliche Schranken
 
-Das LLM erhält die Rückgabe des Tools als Kontext. Eine gute Fehlermeldung ermöglicht dem Agenten:
+Bei Operationen mit realen Folgen, etwa Rückerstattung, Löschung oder Zahlung, reicht ein einzelnes Tool oft nicht aus. Ein sinnvolles Muster ist Two-Step Veto: Zuerst wird geprüft, danach erst ausgeführt.
 
-- Den Fehler zu verstehen und dem Nutzer zu erklären
-- Alternative Strategien zu versuchen
-- Sinnvolle Rückfragen zu stellen
+```python
+@tool
+def propose_refund(customer_id: str, amount: float) -> dict:
+    """💡 ERSTATTUNGSVORSCHLAG – Prüft, führt aber NICHT aus."""
+    return PolicyEngine().check_policy(customer_id, amount)
 
-**Schlecht:** `return "Error"`
-**Gut:** `return "Fehler: Die Datei 'report.pdf' existiert nicht. Verfügbare Dateien: budget.xlsx, notes.txt"`
+@tool
+def commit_refund(customer_id: str, amount: float) -> dict:
+    """✅ ERSTATTUNG DURCHFÜHREN – Führt eine bereits geprüfte Erstattung aus."""
+    return financial_system.process(customer_id, amount)
+```
 
----
+```mermaid
+flowchart LR
+    A[Agent] --> B[propose_refund]
+    B --> C{approved?}
+    C -->|Ja| D[commit_refund]
+    C -->|Nein| E[escalate_to_human]
+```
 
-## Best Practices
+Wenn nach einer Policy-Prüfung deterministisch feststeht, welches Tool als Nächstes aufgerufen werden muss, kann ein System den nächsten Tool-Schritt auch erzwingen.
 
-### Do's ✅
+```python
+if tool_result.get("action_required") == "escalate_to_human":
+    client.messages.create(
+        model="claude-opus-4-6",
+        messages=messages,
+        tools=tools,
+        tool_choice={"type": "tool", "name": "escalate_to_human"}
+    )
+```
 
-| Praxis | Begründung |
-|--------|------------|
-| **Docstrings mit Anwendungsfällen** | LLM trifft bessere Entscheidungen |
-| **Type Hints für alle Parameter** | Automatische Schema-Generierung |
-| **Fehlerbehandlung mit Try-Except** | Robuster Agent-Betrieb |
-| **Informative Rückgabewerte** | LLM kann Fehler interpretieren |
-| **Isolierte Tests vor Integration** | Frühzeitige Fehlererkennung |
-| **Emojis für visuelle Identifikation** | Besseres Debugging |
+Nicht geeignet, wenn: Tool-Auswahl generell durch Zwang gesteuert wird. Forced `tool_choice` ist für klare Sonderfälle gedacht, nicht als Dauerersatz für gutes Routing.
 
-### Don'ts ❌
+## Was für Einsteiger zuerst wichtig ist
 
-| Anti-Pattern | Problem |
-|--------------|---------|
-| **Vage Docstrings** | LLM wählt falsche Tools |
-| **Fehlende Type Hints** | Schema unvollständig |
-| **Unbehandelte Exceptions** | Agent-Absturz |
-| **Seiteneffekte ohne Warnung** | Unerwartetes Verhalten |
-| **Zu viele Tools auf einmal** | Entscheidungsüberlastung |
-| **Sensible Operationen ohne Schutz** | Sicherheitsrisiko |
+Für einen ersten Agenten reichen meist wenige, klar benannte Werkzeuge mit guten Docstrings und sauberer Fehlerbehandlung. Zu viele Tools auf einmal überfordern nicht nur das Modell, sondern auch das eigene Debugging. Ein kleines, klar abgegrenztes Toolset ist fast immer der bessere Start.
 
----
-
-## Zusammenfassung
-
-**Tool Use** ermöglicht KI-Agenten, über reines Textwissen hinauszugehen:
-
-- **Function Calling** ist der Mechanismus, durch den LLMs strukturiert Tools aufrufen
-- Der **`@tool` Decorator** generiert automatisch das benötigte Schema
-- **Docstrings** sind entscheidend – sie bestimmen, wann das LLM ein Tool wählt
-- **Type Hints** sind Pflicht für korrekte Parameter-Übergabe
-- **Fehlerbehandlung** macht Tools robust und Agent-freundlich
-
-Im nächsten Schritt werden diese Tools in vollständige Agenten integriert, die selbstständig entscheiden, welche Werkzeuge sie für eine Aufgabe benötigen.
+Teilnehmende unterschätzen oft, dass Tool Use nicht nur neue Fähigkeiten bringt, sondern auch neue Verantwortung. Sobald ein Agent lesen, suchen, schreiben oder externe Systeme verändern kann, wird Tool-Design zur Sicherheitsfrage.
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Agent-Architekturen](./Agent_Architekturen.html) | Wie werden Tools in Multi-Agent-Systeme und Graphen eingebettet? |
-| [Agent Security](./Agent_Security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch verhindert? |
+| [Welche Architektur passt zu diesem Agenten?](./Agent_Architekturen.html) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
+| [Agent Security](./Agent_Security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
 | [RAG Konzepte](./RAG_Konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

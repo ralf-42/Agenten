@@ -1,18 +1,19 @@
 ---
 layout: default
-title: Agent-Architekturen
+title: Welche Architektur passt zu diesem Agenten?
 parent: Konzepte
 nav_order: 2
-description: "Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten"
+description: Architekturmuster und Design-Prinzipien für KI-Agenten
 has_toc: true
 ---
 
-# Agent-Architekturen
+# Welche Architektur passt zu diesem Agenten?
 {: .no_toc }
 
-> **Verschiedene Architekturmuster und Design-Prinzipien für KI-Agenten**
+> **Die Architektur entscheidet, wie ein Agent denkt, handelt, Grenzen einhält und mit Fehlern umgeht.**
 
 ---
+
 # Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
@@ -21,60 +22,39 @@ has_toc: true
 
 ---
 
-## Überblick
+## Warum die Architekturfrage früh geklärt werden muss
 
-Ein KI-Agent ist mehr als ein einfacher Chatbot. Während ein Chatbot auf Eingaben reagiert und Antworten generiert, kann ein Agent **selbstständig Entscheidungen treffen**, **Werkzeuge nutzen** und **mehrstufige Aufgaben lösen**. Die Wahl der richtigen Architektur bestimmt maßgeblich, wie leistungsfähig, zuverlässig und wartbar ein Agent-System wird.
+Viele Agentenprojekte scheitern nicht am Modell, sondern an einer unpassenden Grundstruktur. Ein Agent soll vielleicht nur ein Werkzeug aufrufen, wird aber als komplexes Multi-Agent-System gebaut. Oder ein eigentlich mehrstufiger Prozess wird als freier ReAct-Loop modelliert und verliert dadurch Kontrolle, Nachvollziehbarkeit und Kostenstabilität.
 
-Agenten lassen sich aus zwei Perspektiven klassifizieren:
+Architektur meint in diesem Zusammenhang nicht zuerst Framework oder Programmiersprache. Gemeint ist die Entscheidung, wie ein Agent Aufgaben zerlegt, wie viel Entscheidungsfreiheit er erhält und an welchen Stellen deterministische Logik wichtiger ist als modellbasierte Flexibilität. Für einen Einsteigerkurs ist genau diese Unterscheidung zentral, weil sie viele spätere Probleme bereits vorwegnimmt.
 
-| Perspektive | Frage | Abschnitt |
-|---|---|---|
-| **Intelligenz-Typ** | Wie entscheidet der Agent? | Section 2 |
-| **Implementierungsmuster** | Wie ist der Agent aufgebaut? | Sections 3–6 |
+Typischer Fehler: Zu früh die technisch eindrucksvollste Architektur zu wählen. In der Praxis ist die einfachste Struktur oft die robusteste.
 
-Vier grundlegende Implementierungsmuster haben sich in der Praxis etabliert:
+## Ein einfaches Beispiel
 
-| Architektur | Kernidee | Komplexität |
-|-------------|----------|-------------|
-| **ReAct** | Denken → Handeln → Beobachten | ⭐⭐ |
-| **Tool-Calling** | LLM wählt und nutzt Werkzeuge | ⭐⭐ |
-| **Workflow-basiert** | Definierte Schritte mit Verzweigungen | ⭐⭐⭐ |
-| **Multi-Agent** | Spezialisierte Agenten arbeiten zusammen | ⭐⭐⭐⭐ |
+Ein Support-System soll drei Arten von Anfragen bearbeiten: Lieferstatus nennen, Rechnung erneut senden und komplexe Sonderfälle an einen Menschen weiterleiten. Schon dieses kleine Beispiel zeigt, dass Architektur keine akademische Zusatzfrage ist. Für den Lieferstatus reicht meist ein gezielter Tool-Aufruf. Für die Rechnung braucht es eventuell mehrere Schritte. Für Sonderfälle wird eine sichere Eskalation benötigt.
 
----
+Aus genau solchen Anforderungen ergibt sich die Architektur. Nicht jede Aufgabe braucht einen denkenden, frei planenden Agenten. Häufig genügt ein klarer Workflow oder ein Tool-Calling-Muster mit wenigen kontrollierten Entscheidungen.
 
-## Agenten-Typen nach Intelligenz
+## Zwei Blickrichtungen auf Agenten
 
-Agenten lassen sich nach **Intelligenz und Entscheidungslogik** klassifizieren. Diese Klassifikation beschreibt, wie ein Agent zu Entscheidungen kommt — unabhängig davon, wie er technisch implementiert ist:
+Agenten lassen sich aus zwei Blickrichtungen beschreiben. Die erste fragt, wie ein Agent grundsätzlich zu einer Entscheidung kommt. Die zweite fragt, wie diese Logik technisch organisiert wird. Für Einsteiger ist diese Trennung hilfreich, weil sie erklärt, warum ein System nach außen klug wirken kann, intern aber sehr unterschiedlich gebaut sein kann.
 
-| Typ | Entscheidet durch | Stärke | Schwäche | LangChain-Analogie |
-|---|---|---|---|---|
-| **Simple Reflex** | If/Then-Regeln | Schnell, vorhersagbar | Kein Gedächtnis, keine Anpassung | Regelbasierter Workflow ohne State |
-| **Model-Based Reflex** | Internes Weltmodell + State | Reagiert auf nicht-sichtbare Zustände | Plant nicht voraus | LangGraph mit StateGraph |
-| **Goal-Based** | Simulation zukünftiger Zustände | Flexibel, zielorientiert | Rechenaufwändig | ReAct-Agent |
-| **Utility-Based** | Maximierung eines Präferenz-Scores | Wählt die *beste* Option, nicht nur eine gültige | Braucht präzise Utility-Funktion | Agent mit Judge/Evaluator |
-| **Learning Agent** | Lernen aus Erfahrung und Feedback | Verbessert sich über Zeit | Datenhungrig, langsam | Reinforcement Learning (außerhalb LangGraph-Scope) |
+Die Intelligenzperspektive beschreibt das Entscheidungsprinzip. Handelt ein System streng regelbasiert, zustandsbasiert, zielorientiert oder nutzenmaximierend? Die Architekturperspektive beschreibt dagegen das praktische Baumuster, etwa ReAct, Tool-Calling, Workflow oder Multi-Agent. Beide Ebenen hängen zusammen, sind aber nicht identisch.
 
-**Die Kernfrage je Typ:**
+## Welche Entscheidungslogik hinter einem Agenten steckt
 
-- **Simple Reflex:** *Welche Regel passt zu dieser Situation?* — reagiert, kein Gedächtnis
-- **Model-Based:** *Was weiß ich über den Zustand der Welt, auch was ich nicht direkt sehe?* — erinnert sich, plant nicht
-- **Goal-Based:** *Was bringt mich meinem Ziel näher?* — zielt, jeder Weg zum Ziel ist akzeptabel
-- **Utility-Based:** *Welche Option maximiert meinen Nutzen-Score?* — bewertet, wählt den besten Weg
-- **Learning Agent:** *Was hat in der Vergangenheit funktioniert?* — verbessert sich, aber langsam und datenintensiv
+Eine einfache Regelarchitektur reagiert auf klar definierte Muster. Das entspricht einem Simple-Reflex-Agenten: Wenn Bedingung A erfüllt ist, folgt Aktion B. Solche Systeme sind schnell und gut kontrollierbar, brechen aber bei unerwarteten Situationen schnell an ihre Grenzen.
 
-**Bezug zu den Implementierungsmustern:**
-Ein ReAct-Agent (Section 3) verhält sich wie ein Goal-Based Agent — er simuliert, welche Aktion sein Ziel erreicht.
-Ein Workflow-basierter Agent (Section 5) entspricht je nach Komplexität einem Simple-Reflex- oder Model-Based-Agenten.
-Ein Agent mit LLM-as-Judge-Komponente (z. B. Qualitäts-Gate) nähert sich dem Utility-Based-Typ.
+Ein zustandsbasierter Agent berücksichtigt zusätzlich, was bereits bekannt ist, auch wenn diese Information nicht direkt in der aktuellen Eingabe steht. Diese Form ist nützlich, wenn ein Verlauf oder ein interner Status mitgeführt werden muss. Ein Beispiel wäre ein Agent, der weiß, dass eine Identitätsprüfung bereits erfolgt ist und deshalb im nächsten Schritt andere Optionen freischaltet.
 
-> **Hinweis:** Learning Agents mit Reinforcement Learning liegen außerhalb des LangChain/LangGraph-Scopes dieses Kurses.
+Zielorientierte Agenten bewerten, welche Aktion dem gewünschten Ergebnis näherkommt. ReAct-Systeme verhalten sich oft so: Sie planen nicht vollständig im Voraus, sondern nähern sich dem Ziel iterativ. Utility-basierte Agenten gehen noch einen Schritt weiter und vergleichen Optionen nach einem Präferenzwert, etwa Kosten, Risiko oder Erfolgswahrscheinlichkeit. Lernende Agenten wiederum verändern ihr Verhalten auf Basis früherer Rückmeldungen, spielen im Einsteigerkontext aber meist noch keine Hauptrolle.
 
----
+Grenze: Diese Einteilung hilft beim Denken, ersetzt aber keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
 
-## ReAct-Architektur
+## ReAct: wenn der Lösungsweg noch nicht feststeht
 
-ReAct (Reasoning + Acting) beschreibt einen iterativen Zyklus: Der Agent **denkt nach** (Reasoning), **führt eine Aktion aus** (Acting) und **beobachtet das Ergebnis**. Dieser Zyklus wiederholt sich, bis die Aufgabe gelöst ist.
+ReAct kombiniert Nachdenken, Handeln und Beobachten in einem wiederholten Zyklus. Der Agent prüft den aktuellen Stand, führt eine Aktion aus, liest das Ergebnis und entscheidet anschließend über den nächsten Schritt. Dieses Muster eignet sich vor allem dann, wenn der Lösungsweg vorab nicht vollständig bekannt ist.
 
 ```mermaid
 flowchart LR
@@ -86,42 +66,43 @@ flowchart LR
     E -->|Ja| F[Antwort]
 ```
 
-**Charakteristik:**
-- Transparenter Denkprozess (nachvollziehbar)
-- Gut geeignet für explorative Aufgaben
-- Kann bei komplexen Problemen viele Iterationen benötigen
+Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
 
-**Typischer Einsatz:** Recherche-Aufgaben, Problemlösung mit unbekanntem Lösungsweg
+In der Praxis relevant, wenn: Die Aufgabe offen ist, mehrere Zwischenschritte nötig sind und vorab nicht feststeht, welche Aktion als Nächstes sinnvoll ist.
 
----
+## Tool-Calling: wenn das Modell Werkzeuge steuern soll
 
-## Tool-Calling-Architektur
-
-Bei dieser Architektur entscheidet das LLM, **welches Werkzeug** mit **welchen Parametern** aufgerufen werden soll. Das Ergebnis fließt zurück in den Kontext, und der Agent formuliert die finale Antwort.
+Beim Tool-Calling entscheidet das Modell, welches Werkzeug mit welchen Parametern aufgerufen werden soll. Dieses Muster ist oft der sinnvollste Einstieg, weil die Freiheitsgrade begrenzt bleiben und die Architektur trotzdem bereits deutlich mehr kann als ein reiner Chatbot.
 
 ```mermaid
 flowchart TD
-    A[Benutzeranfrage] --> B[LLM analysiert]
+    A[Anfrage] --> B[LLM analysiert]
     B --> C{Tool nötig?}
     C -->|Ja| D[Tool auswählen]
     D --> E[Tool ausführen]
-    E --> F[Ergebnis verarbeiten]
+    E --> F[Ergebnis einbinden]
     F --> B
-    C -->|Nein| G[Antwort generieren]
+    C -->|Nein| G[Antwort]
 ```
 
-**Charakteristik:**
-- LLM als "Orchestrator" der Werkzeuge
-- Erweiterbar durch neue Tools ohne Architekturänderung
-- Abhängig von der Qualität der Tool-Beschreibungen
+Ein Support-Agent kann etwa das Tool `track_order` für den Lieferstatus oder `send_invoice` für Rechnungen aufrufen. Die Stärke liegt darin, dass das Modell flexibel formulieren kann, während die eigentliche Aktion in deterministischem Code oder in einer externen API stattfindet.
 
-**Typischer Einsatz:** Assistenten mit definierten Fähigkeiten (Kalender, E-Mail, Datenbank)
+```python
+tools = [
+    {"name": "track_order", "description": "Liefert den aktuellen Sendungsstatus"},
+    {"name": "send_invoice", "description": "Versendet eine Rechnung erneut per E-Mail"},
+]
 
----
+response = agent.invoke({
+    "messages": [{"role": "user", "content": "Bitte sende mir die Rechnung erneut."}]
+})
+```
 
-## Workflow-basierte Architektur
+Typischer Fehler: Ein einziges Tool für zu viele unterschiedliche Aufgaben zu bauen. Dann verliert das Modell die Klarheit, welches Werkzeug in welcher Situation gemeint ist.
 
-Hier werden Arbeitsschritte als **Graph mit Knoten und Kanten** modelliert. Jeder Knoten repräsentiert eine Verarbeitung, Kanten definieren den Ablauf – einschließlich bedingter Verzweigungen.
+## Workflow-basierte Architektur: wenn der Ablauf kontrolliert sein muss
+
+Workflow-basierte Architekturen modellieren einen klaren Ablauf aus Knoten und Verzweigungen. Das System entscheidet nicht in jeder Runde frei über den nächsten Schritt, sondern bewegt sich entlang eines vorgegebenen Prozesses. Genau dadurch werden Genehmigungen, Qualitätsprüfungen und sichere Übergaben deutlich leichter beherrschbar.
 
 ```mermaid
 flowchart TD
@@ -136,18 +117,13 @@ flowchart TD
     F --> END((Ende))
 ```
 
-**Charakteristik:**
-- Vorhersagbarer, kontrollierbarer Ablauf
-- Explizite Fehlerbehandlung möglich
-- Komplexität steigt mit Anzahl der Verzweigungen
+Ein Kursbeispiel wäre ein Beschwerdeprozess. Zuerst wird die Anfrage kategorisiert, dann folgt je nach Kategorie eine passende Bearbeitung, anschließend eine Qualitätsprüfung und schließlich entweder eine Antwort oder eine menschliche Freigabe. Diese Struktur ist weniger flexibel als ReAct, dafür aber meist robuster und erklärbarer.
 
-**Typischer Einsatz:** Mehrstufige Prozesse, Genehmigungsworkflows, RAG-Pipelines
+Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und der Lösungsweg erst während der Bearbeitung entsteht.
 
----
+## Multi-Agent: wenn Arbeitsteilung wirklich einen Mehrwert bringt
 
-## Multi-Agent-Architektur
-
-Mehrere spezialisierte Agenten arbeiten zusammen. Ein **Supervisor** koordiniert die Aufgabenverteilung, oder Agenten kommunizieren **kollaborativ** miteinander.
+In Multi-Agent-Architekturen arbeiten mehrere spezialisierte Agenten zusammen. Ein Supervisor kann Aufgaben verteilen, oder die Agenten tauschen Ergebnisse direkt untereinander aus. Dieses Muster klingt oft attraktiv, ist aber nur dann sinnvoll, wenn echte Spezialisierung einen erkennbaren Gewinn bringt.
 
 ```mermaid
 flowchart TD
@@ -161,62 +137,47 @@ flowchart TD
     S --> E[Finale Antwort]
 ```
 
-**Varianten:**
+Ein Beispiel ist eine Content-Pipeline: Ein Recherche-Agent sammelt Quellen, ein Schreib-Agent formuliert, ein Prüf-Agent bewertet Qualität und Konsistenz. Solch eine Trennung kann sinnvoll sein, wenn die Teilaufgaben fachlich oder technisch wirklich unterschiedlich sind. Ohne klare Zuständigkeiten entsteht allerdings schnell mehr Koordinationsaufwand als Nutzen.
 
-| Pattern | Beschreibung |
-|---------|-------------|
-| **Supervisor** | Ein Agent verteilt Aufgaben an Worker-Agenten |
-| **Hierarchisch** | Mehrere Ebenen von Supervisors und Workern |
-| **Kollaborativ** | Agenten kommunizieren direkt miteinander |
+Teilnehmende unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
 
-**Charakteristik:**
-- Skalierbar für komplexe Aufgaben
-- Jeder Agent kann optimiert werden
-- Koordination erfordert sorgfältiges Design
+## Welche Architektur meist zuerst gewählt werden sollte
 
-**Typischer Einsatz:** Content-Erstellung, komplexe Analysen, autonome Systeme
+Für viele Einsteigerprojekte genügt bereits eine einfache Entscheidungslogik. Wenn eine Anfrage auf klar definierte Werkzeuge abgebildet werden kann, ist Tool-Calling meist der beste Startpunkt. Wenn ein Prozess feste Schritte und Freigaben hat, ist ein Workflow meist sinnvoller. ReAct eignet sich eher für offene Aufgaben. Multi-Agent lohnt sich erst, wenn Arbeitsteilung messbar bessere Ergebnisse liefert.
 
----
-
-## Design-Prinzipien
-
-Unabhängig von der gewählten Architektur gelten bewährte Prinzipien:
-
-### Single Responsibility
-Jede Komponente hat **eine klar definierte Aufgabe**. Ein Tool berechnet, ein anderes sucht – nicht beides gleichzeitig. Das erleichtert Wartung und Fehlersuche.
-
-### Fail-Safe Design
-Agenten müssen mit Fehlern umgehen können:
-- Was passiert, wenn ein Tool nicht erreichbar ist?
-- Was, wenn das LLM eine ungültige Tool-Auswahl trifft?
-- Maximale Iterationen verhindern Endlosschleifen.
-
-### Human-in-the-Loop
-Bei kritischen Aktionen (Löschen, Senden, Bezahlen) sollte eine **menschliche Bestätigung** eingeholt werden. Das schafft Vertrauen und verhindert kostspielige Fehler.
-
-### Observability
-Jede Entscheidung des Agenten sollte **nachvollziehbar** sein. Logging und Tracing ermöglichen Debugging und kontinuierliche Verbesserung.
-
-### Deterministic Escalation
-
-Bei kritischen Entscheidungen — Weiterleitung an einen Menschen oder Eskalation an einen Spezialisten-Agenten — sollte **kein LLM-Urteil** die Eskalation auslösen. LLMs schätzen Konfidenzscores inkonsistent ein. Deterministisch auswertbare Bedingungen sind zuverlässiger.
-
-**Anti-Pattern:** LLM bewertet selbst, ob Eskalation nötig ist
-
-```python
-# ❌ LLM-basierte Eskalation — unzuverlässig
-if llm.assess_confidence(response) < 0.7:
-    escalate_to_human()
+```mermaid
+flowchart TD
+    A[Anforderung prüfen] --> B{Mehrere Spezialrollen nötig?}
+    B -->|Ja| C[Multi-Agent]
+    B -->|Nein| D{Fester Ablauf?}
+    D -->|Ja| E[Workflow]
+    D -->|Nein| F{Klare Tools vorhanden?}
+    F -->|Ja| G[Tool-Calling]
+    F -->|Nein| H[ReAct]
 ```
 
-**Korrekt:** Explizite Flags, regelbasiert ausgewertet
+| Situation | Naheliegende Wahl |
+|---|---|
+| FAQ plus Datenbankzugriff | Tool-Calling |
+| Mehrstufiger Genehmigungsprozess | Workflow |
+| Offene Rechercheaufgabe | ReAct |
+| Arbeitsteilige Content-Erstellung | Multi-Agent |
+
+## Welche Design-Prinzipien immer gelten
+
+Unabhängig vom Muster bleibt gute Agentenarchitektur an einige wenige Grundprinzipien gebunden. Komponenten sollten eine klar abgegrenzte Verantwortung haben. Kritische Aktionen sollten nicht ohne Kontrolle ausgelöst werden. Fehlerpfade müssen mitgedacht werden. Entscheidungen sollten nachvollziehbar bleiben, damit sich Probleme später nicht nur beobachten, sondern auch beheben lassen.
+
+Diese Prinzipien klingen allgemein, werden aber in Agentensystemen schnell konkret. Ein Tool, das gleichzeitig sucht, entscheidet und schreibt, ist schwer zu testen. Ein Agent, der ohne Freigabe E-Mails versendet oder Zahlungen auslöst, wird im Betrieb riskant. Ein System ohne Traces ist im Fehlerfall kaum noch zu verstehen.
+
+## Deterministische Eskalation statt Modellgefühl
+
+Bei kritischen Entscheidungen sollte die Eskalation nicht von einem gefühlten Konfidenzwert des Modells abhängen. Modelle schätzen Unsicherheit inkonsistent ein. Verlässlicher sind explizite Flags, die aus Regeln, Tools oder Vorverarbeitung stammen.
 
 ```python
-# ✅ Deterministisch — Flags werden vom Tool oder einer Vorverarbeitung gesetzt
 ESCALATION_FLAGS = {
-    "compliance_trigger":   True,   # Regulatorische Anforderung erkannt
-    "amount_exceeds_limit": True,   # Betrag überschreitet Freigabegrenze
-    "pii_detected":         False,
+    "compliance_trigger": True,
+    "amount_exceeds_limit": True,
+    "pii_detected": False,
 }
 
 def route_response(state: AgentState) -> str:
@@ -226,209 +187,89 @@ def route_response(state: AgentState) -> str:
     return "continue"
 ```
 
-Eskalations-Bedingungen werden **vor** dem LLM-Aufruf durch Tools, Regex oder Regelwerke gesetzt — das LLM wertet sie nicht selbst aus.
+Dieses Muster ist für Einsteiger besonders wichtig, weil es eine grundlegende Grenze moderner Modelle zeigt: Sprachliche Plausibilität ist kein Ersatz für verbindliche Geschäftsregeln.
 
-### Context Budget Compaction
+## Geschäftsregeln gehören in Code
 
-Ohne aktive Verwaltung wächst der Konversationskontext jeder Session in O(n). Bei langen Agenten-Loops kann dies Token-Limits sprengen und die Kosten stark erhöhen. Context Budget Compaction begrenzt den aktiven Kontext auf ein konfigurierbares Budget.
-
-**Anti-Pattern:** Rohe Transkript-Akkumulation
-
-```python
-# ❌ O(n)-Wachstum — jede Nachricht bleibt vollständig im Kontext
-messages = state["messages"]  # wächst unbegrenzt
-```
-
-**Korrekt:** Strukturierter Kontextpuffer mit Budget
-
-```python
-from dataclasses import dataclass
-
-TOKEN_BUDGET = 4000  # Maximale Token im aktiven Kontext
-
-@dataclass
-class ContextSummary:
-    summary:     str        # Verdichtete Zusammenfassung älterer Nachrichten
-    key_facts:   list[str]  # Wichtige Fakten aus dem bisherigen Verlauf
-    open_tasks:  list[str]  # Noch offene Aufgaben
-    token_count: int        # Aktueller Verbrauch
-
-def compact_context(state: AgentState) -> AgentState:
-    """Verdichtet den Kontext, wenn das Budget überschritten wird."""
-    if state["context"].token_count > TOKEN_BUDGET:
-        older_messages    = state["messages"][:-5]       # ältere Nachrichten kompaktieren
-        state["context"]  = summarize_to_budget(older_messages)
-        state["messages"] = state["messages"][-5:]       # letzte 5 vollständig behalten
-    return state
-```
-
-| Parameter | Typischer Wert | Wirkung |
-|-----------|---------------|---------|
-| `TOKEN_BUDGET` | 3000–6000 | Maximale Token im aktiven Kontext |
-| Beibehaltene Nachrichten | 3–10 | Aktuelle Nachrichten, die vollständig erhalten bleiben |
-| Kompaktierungsstrategie | Summary + Key Facts | Qualität des verdichteten Kontexts |
-
-> [!NOTE] Wann Compaction notwendig ist<br>
-> Bei ReAct-Agenten mit vielen Iterationen, langen RAG-Pipelines oder Multi-Turn-Sessions über mehrere Stunden ist Context Compaction kein optionales Feature — es ist eine Voraussetzung für stabilen Betrieb.
-
-### PolicyEngine-Pattern
-
-Geschäftsregeln gehören in deterministischen Code — nicht in den System-Prompt. LLMs vergessen Limits, Schwellenwerte und Ausnahmen. Python-Code nicht.
-
-**Anti-Pattern:** Limits im Prompt formulieren
-
-```python
-# ❌ Im System-Prompt: "Erstatte maximal 100 € für Basis-Kunden"
-# LLMs können davon abweichen — probabilistisch, nicht deterministisch
-```
-
-**Korrekt:** `PolicyEngine`-Klasse mit Limits als Konstanten
+Wenn Freigabegrenzen, Erstattungsbeträge oder Compliance-Vorgaben gelten, gehören diese Regeln in deterministischen Code und nicht in den System-Prompt. Ein Prompt kann beschrieben werden. Eine Regel im Code kann geprüft, getestet und garantiert eingehalten werden.
 
 ```python
 class PolicyEngine:
     _REFUND_LIMITS = {
-        "basic":   100.0,
-        "regular": 100.0,
+        "basic": 100.0,
         "premium": 500.0,
-        "vip":    5000.0,
+        "vip": 5000.0,
     }
-    _REVIEW_THRESHOLD = 500.0
 
     def check_policy(self, tier: str, requested_amount: float) -> dict:
         limit = self._REFUND_LIMITS[tier]
         return {
-            "approved":        requested_amount <= limit,
-            "limit":           limit,
-            "requires_review": requested_amount > self._REVIEW_THRESHOLD,
+            "approved": requested_amount <= limit,
+            "limit": limit,
         }
 ```
 
-Der Agent ruft `PolicyEngine().check_policy(tier, amount)` auf — das Ergebnis ist deterministisch. Kein LLM-Urteil, kein Prompt-Vergessen.
+Typischer Fehler: Geschäftslogik als schöne Formulierung im Prompt zu verstecken. Im Betrieb führt das zu Abweichungen, die schwer nachvollziehbar sind.
 
-> **Meta-Prinzip:** Der System-Prompt *sagt* Claude, was er tun soll. Der Code *garantiert*, dass es passiert.
+## Kontext darf nicht unbegrenzt wachsen
 
-### Prompt Caching
-
-Für Agenten, die in jeder Session dasselbe große statische Dokument (Regelwerk, Handbuch, Policy) laden, kann Prompt Caching bis zu 90 % der Token-Kosten einsparen. Der statische Block wird einmalig gecacht und bei wiederholten Anfragen aus dem Cache gelesen.
-
-**Anti-Pattern:** Batch API für Live-Support
+Je länger eine Session dauert, desto größer wird der aktive Kontext. Ohne Begrenzung steigen Token-Verbrauch, Latenz und Fehlerrisiko. Deshalb braucht ein Agent ab einer gewissen Laufzeit eine Strategie, um ältere Inhalte zu verdichten und nur das Wesentliche aktiv mitzuschleppen.
 
 ```python
-# ❌ Batch API → 24h Latenz, falsches Optimierungsziel für synchrone Anfragen
+TOKEN_BUDGET = 4000
+
+def compact_context(state: AgentState) -> AgentState:
+    if state["context"].token_count > TOKEN_BUDGET:
+        older_messages = state["messages"][:-5]
+        state["context"] = summarize_to_budget(older_messages)
+        state["messages"] = state["messages"][-5:]
+    return state
 ```
 
-**Korrekt:** `cache_control: ephemeral` auf den statischen Policy-Block
+In der Praxis relevant, wenn: ReAct-Loops viele Iterationen durchlaufen, Sitzungen lange offen bleiben oder große RAG-Kontexte wiederholt eingebunden werden.
+
+## Caching und Tests sind Architekturthemen
+
+Bestimmte Optimierungen wirken auf den ersten Blick wie Betriebsdetails, gehören aber in Wahrheit zur Architektur. Wenn in jeder Session dasselbe Regelwerk mitgeschickt wird, kann Prompt Caching die Kosten stark senken. Wenn ein Agent angeblich eine Aktion ausgeführt hat, sollte nicht nur die Modellantwort geprüft werden, sondern der persistente Zustand des Systems.
 
 ```python
 system = [
-    {"type": "text", "text": agent_instructions},        # variabel, nicht gecacht
-    {"type": "text", "text": POLICY_DOCUMENT,            # statisch, ~4100 Tokens
+    {"type": "text", "text": agent_instructions},
+    {"type": "text", "text": POLICY_DOCUMENT,
      "cache_control": {"type": "ephemeral"}},
 ]
 ```
 
-| Aspekt | Batch API | Prompt Caching |
-|--------|-----------|---------------|
-| Latenz | ~24 Stunden | Synchron |
-| Einsparung | 50 % Compute | ~90 % bei Wiederholungen |
-| Anwendungsfall | Offline-Verarbeitung | Live-Support, repetitive Sessions |
-
-> [!TIP] Wann Prompt Caching sinnvoll ist<br>
-> Ab ca. 1.000 statischen Tokens im System-Prompt und mehreren Sessions mit gleichem Kontext amortisiert sich Caching sofort. Cache-Treffer und Cache-Misses in `response.usage` messen, um den Effekt zu validieren.
-
-### Behavior-first Testing
-
-Tests prüfen oft, was das LLM *sagt* — nicht, was wirklich passiert ist. Ein Agent kann "Erstattung erfolgreich" ausgeben, ohne dass die Datenbank einen Eintrag hat. Behavior-first Testing prüft persistente Stores, nicht Modell-Antworten.
-
-**Anti-Pattern:** LLM-Antwort testen
-
 ```python
-# ❌ Beweist nur, dass das Modell das richtige Wort geschrieben hat
-assert "erfolgreich" in response["messages"][-1].content
-```
-
-**Korrekt:** Persistente Stores direkt testen
-
-```python
-# ✅ Audit-Log: PII-Redaktion verifizieren
-for entry in services.audit_log.get_entries():
-    assert "4111-1111-1111-1111" not in entry.details   # keine rohe Kartennummer
-    assert "****-****-****-1111"     in entry.details    # Redaktion aktiv
-
-# ✅ Financial System: Transaktion verifizieren
 assert financial_system.get_transaction(customer_id) is not None
-
-# ✅ Escalation Queue: Eskalation tatsächlich eingetragen
 assert escalation_queue.contains(session_id)
 ```
 
-| Store | Was testen | Warum |
-|-------|-----------|-------|
-| Audit-Log | PII nicht im Klartext | Compliance-Nachweis |
-| Financial System | Transaktion existiert | Aktion hat stattgefunden |
-| Escalation Queue | Eintrag vorhanden | Human-in-the-Loop greift |
+Der gemeinsame Punkt ist einfach: Gute Agentenarchitektur endet nicht bei der Promptlogik. Sie umfasst auch Kostenverhalten, Prüfbarkeit und Betriebssicherheit.
 
-> [!NOTE] Prinzip<br>
-> Teste das System, nicht das Modell. Die LLM-Antwort ist ein Nebenprodukt — die persistenten Stores sind die Wahrheit.
+## Wie mehrere Muster kombiniert werden
 
----
+Die vorgestellten Architekturen schließen sich nicht gegenseitig aus. Ein Workflow kann Tool-Calling-Knoten enthalten. Ein Multi-Agent-System kann intern ReAct-Worker verwenden. Ein Support-Agent kann in einfachen Fällen direkt mit Tool-Calling arbeiten und in kritischen Fällen in einen festen Eskalationsworkflow wechseln.
 
-## Entscheidungshilfe
+Gerade deshalb ist die Architekturfrage keine Entweder-oder-Entscheidung, sondern eine Frage nach sinnvollen Grenzen. Nicht jede Flexibilität ist ein Gewinn. Oft entsteht die beste Lösung dort, wo freie Modellentscheidungen nur an den Stellen erlaubt werden, an denen sie echten Mehrwert bringen.
 
-Die Wahl der Architektur hängt vom Anwendungsfall ab:
+## Was in Einsteigerprojekten zuerst wichtig ist
 
-```mermaid
-flowchart TD
-    A[Anforderung analysieren] --> B{Mehrere Agenten nötig?}
-    B -->|Ja| C[Multi-Agent]
-    B -->|Nein| D{Fester Ablauf?}
-    D -->|Ja| E[Workflow-basiert]
-    D -->|Nein| F{Tools vorhanden?}
-    F -->|Ja| G[Tool-Calling]
-    F -->|Nein| H[ReAct]
-```
+Für einen ersten Kursagenten reicht meist eine begrenzte Kombination aus Tool-Calling, klaren Geschäftsregeln und einem kleinen Workflow für Sonderfälle. Diese Struktur ist einfacher zu erklären, leichter zu debuggen und robuster zu testen als ein frei planendes Multi-Agent-System.
 
-| Situation | Empfohlene Architektur |
-|-----------|----------------------|
-| Einfache Q&A mit Datenbankzugriff | Tool-Calling |
-| Mehrstufiger Genehmigungsprozess | Workflow-basiert |
-| Recherche mit unbekanntem Umfang | ReAct |
-| Content-Pipeline (Research → Write → Review) | Multi-Agent |
-| RAG-System mit Nachbearbeitung | Workflow-basiert |
-
----
-
-## Zusammenfassung
-
-**Intelligenz-Typen (Section 2):**
-- **Simple Reflex** reagiert — schnell, aber ohne Gedächtnis
-- **Model-Based** erinnert sich — verfolgt Zustand, plant nicht
-- **Goal-Based** zielt — simuliert Zukunft, jeder Weg zum Ziel ist akzeptabel
-- **Utility-Based** bewertet — maximiert Präferenz-Score, wählt den besten Weg
-- **Learning Agent** verbessert sich — lernt aus Erfahrung, außerhalb LangGraph-Scope
-
-**Implementierungsmuster (Sections 3–6):**
-- **ReAct** eignet sich für explorative Aufgaben mit transparentem Denkprozess
-- **Tool-Calling** macht Agenten durch Werkzeuge erweiterbar
-- **Workflow-basiert** bietet Kontrolle über komplexe Abläufe
-- **Multi-Agent** skaliert für anspruchsvolle, arbeitsteilige Aufgaben
-
-Die Architekturmuster schließen sich nicht gegenseitig aus. In der Praxis kombinieren viele Systeme mehrere Ansätze: Ein Workflow kann Tool-Calling-Agenten als Knoten enthalten, oder ein Multi-Agent-System nutzt ReAct-Agenten als Worker.
-
-Im weiteren Kursverlauf werden diese Architekturen praktisch mit LangChain und LangGraph umgesetzt.
+Einsteiger profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [Welches Werkzeug?](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html) | Entscheidung: wann Agent, wann Workflow, wann RAG? |
-| [Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html) | Wie Werkzeuge technisch definiert und eingebunden werden |
-| [Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html) | Koordinationsmuster wenn mehrere Architekturen zusammenarbeiten |
-| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Wie Graph-Zustand über Architekturebenen hinweg verwaltet wird |
-
+| [Welches Werkzeug?](./Aufgabenklassen_und_Loesungswege.html) | Wann ist ein Agent sinnvoll und wann eher Workflow, RAG oder klassischer Code? |
+| [Tool Use & Function Calling](./Tool_Use_Function_Calling.html) | Wie werden Werkzeuge technisch beschrieben, aufgerufen und abgesichert? |
+| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html) | Wie arbeiten mehrere Agenten koordiniert zusammen? |
+| [State Management](./State_Management.html) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet? |
 
 ---
 
-**Version:** 1.3<br>
+**Version:** 1.4<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

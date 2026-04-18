@@ -155,6 +155,8 @@ Der Kurs bietet zwei praxisorientierte Lernformate:
 ## 📖 Dokumentation
 
 - **Kurs-Website:** [https://ralf-42.github.io/Agenten/](https://ralf-42.github.io/Agenten/)
+- **Zentrale Best Practices:** [../_docs/README.md](../_docs/README.md)
+- **Agent Evaluation & Observability:** [../_docs/Agent_Evaluation_Observability_Best_Practices.md](../_docs/Agent_Evaluation_Observability_Best_Practices.md)
 
 
 ## ⚖️ Lizenzen

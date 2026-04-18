@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wann wird aus einem Prompt ein wiederverwendbarer Skill?
+title: Skills
 parent: Konzepte
 nav_order: 14
 description: Skills als wiederverwendbare Arbeitsrezepte für Agenten mit Regeln, Referenzen und deterministischen Hilfen
 has_toc: true
 ---
 
-# Wann wird aus einem Prompt ein wiederverwendbarer Skill?
+# Skills
 {: .no_toc }
 
 > **Skills kapseln Fachlogik so, dass ein Agent sie wiederholt und kontrolliert anwenden kann.**

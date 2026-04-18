@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Woher zeigt sich, ob ein Agent gut arbeitet?
+title: Evaluation & Observability
 parent: Konzepte
 nav_order: 11
 description: Bewertung, Qualitätssicherung und Observability von KI-Agenten
 has_toc: true
 ---
 
-# Woher zeigt sich, ob ein Agent gut arbeitet?
+# Evaluation & Observability
 {: .no_toc }
 
 > **Evaluation misst Qualität. Observability zeigt, warum sie entsteht oder kippt.**

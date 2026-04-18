@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?
+title: Agenten-Sicherheit
 parent: Konzepte
 nav_order: 12
 description: Sicherheitsrisiken und Schutzprinzipien für KI-Agenten mit Tools, Datenzugriff und externen Schnittstellen
 has_toc: true
 ---
 
-# Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?
+# Agenten-Sicherheit
 {: .no_toc }
 
 > **Je handlungsfähiger ein Agent ist, desto wichtiger wird seine Absicherung.**

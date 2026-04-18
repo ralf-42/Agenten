@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie bleiben Sitzungen und Zustände erhalten?
+title: Checkpointing & Persistenz
 parent: Konzepte
 nav_order: 7
 description: Checkpointing und Persistenz in LangGraph für unterbrechbare und wiederaufnehmbare Agenten-Workflows
 has_toc: true
 ---
 
-# Wie bleiben Sitzungen und Zustände erhalten?
+# Checkpointing & Persistenz
 {: .no_toc }
 
 > **Checkpointing speichert nicht nur Nachrichten, sondern den Arbeitszustand eines Agenten.**

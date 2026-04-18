@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Lohnt es sich überhaupt?
+title: Lohnt sich KI?
 parent: Konzepte
 nav_order: 0
-description: Einschätzung vor Projektstart: ob ein KI-Vorhaben sinnvoll, machbar und verantwortbar ist
+description: "Einschätzung vor Projektstart: ob ein KI-Vorhaben sinnvoll, machbar und verantwortbar ist"
 has_toc: true
 ---
 
-# Lohnt es sich überhaupt?
+# Lohnt sich KI?
 {: .no_toc }
 
 > **Vor dem Bau steht die Frage, ob das Projekt überhaupt sinnvoll ist.**

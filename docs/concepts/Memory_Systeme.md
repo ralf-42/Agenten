@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?
+title: Memory-Systeme
 parent: Konzepte
 nav_order: 8
 description: Kurz- und Langzeitgedächtnis für KI-Agenten mit LangGraph, Vektordatenbanken und nutzerspezifischer Persistenz
 has_toc: true
 ---
 
-# Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?
+# Memory-Systeme
 {: .no_toc }
 
 > **Memory macht aus einem einmaligen Modellaufruf ein System, das Kontext behalten kann.**

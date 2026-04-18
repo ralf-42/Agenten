@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie werden gute Prompts für Agenten aufgebaut?
+title: Prompt Engineering
 parent: Konzepte
 nav_order: 4
-description: Prompt Engineering für KI-Agenten: System-Prompts, Tool-Beschreibungen, Beispiele und strukturierte Ausgaben
+description: "Prompt Engineering für KI-Agenten: System-Prompts, Tool-Beschreibungen, Beispiele und strukturierte Ausgaben"
 has_toc: true
 ---
 
-# Wie werden gute Prompts für Agenten aufgebaut?
+# Prompt Engineering
 {: .no_toc }
 
 > **Ein guter Prompt steuert nicht nur Antworten, sondern Verhalten.**

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Welches Werkzeug?
+title: Aufgaben & Lösungswege
 parent: Konzepte
 nav_order: 1
 description: "Entscheidungshilfe für Agenten-Projekte: erst den Lösungsweg klären, dann die passende Agentenarchitektur wählen"
 has_toc: true
 ---
 
-# Welches Werkzeug?
+# Aufgaben & Lösungswege
 {: .no_toc }
 
 > **Erst den Lösungsweg wählen, dann die Agentenarchitektur.**

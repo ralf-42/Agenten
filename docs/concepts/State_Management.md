@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie behalten Agenten zwischen Schritten den Überblick?
+title: State Management
 parent: Konzepte
 nav_order: 6
-description: Zustandsverwaltung in LangGraph: State, Reducer, TypedDict und Routing für mehrstufige Workflows
+description: "Zustandsverwaltung in LangGraph: State, Reducer, TypedDict und Routing für mehrstufige Workflows"
 has_toc: true
 ---
 
-# Wie behalten Agenten zwischen Schritten den Überblick?
+# State Management
 {: .no_toc }
 
 > **State Management hält zusammen, was ein mehrstufiger Workflow wissen muss.**

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Welche Architektur passt zu diesem Agenten?
+title: Agenten-Architekturen
 parent: Konzepte
 nav_order: 2
 description: Architekturmuster und Design-Prinzipien für KI-Agenten
 has_toc: true
 ---
 
-# Welche Architektur passt zu diesem Agenten?
+# Agenten-Architekturen
 {: .no_toc }
 
 > **Die Architektur entscheidet, wie ein Agent denkt, handelt, Grenzen einhält und mit Fehlern umgeht.**

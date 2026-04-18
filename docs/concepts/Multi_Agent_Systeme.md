@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?
+title: Multi-Agent-Systeme
 parent: Konzepte
 nav_order: 10
 description: Multi-Agent-Systeme, Koordinationsmuster und Arbeitsteilung in LangGraph und ähnlichen Architekturen
 has_toc: true
 ---
 
-# Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?
+# Multi-Agent-Systeme
 {: .no_toc }
 
 > **Mehrere Agenten lohnen sich erst dann, wenn echte Spezialisierung einen erkennbaren Gewinn bringt.**

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Wie bekommen Agenten Zugriff auf eigenes Wissen?
+title: RAG-Konzepte
 parent: Konzepte
 nav_order: 5
 description: RAG-Konzepte für eigene Dokumente, Retrieval, Chunking, Embeddings und Antwortgenerierung
 has_toc: true
 ---
 
-# Wie bekommen Agenten Zugriff auf eigenes Wissen?
+# RAG-Konzepte
 {: .no_toc }
 
 > **RAG verbindet Sprachmodelle mit einer eigenen Wissensbasis, ohne sie neu zu trainieren.**

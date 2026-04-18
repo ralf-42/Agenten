@@ -33,7 +33,7 @@ LangChain und LangGraph ermöglichen den Bau komplexer KI-Agenten. Doch bei der 
 LangSmith beantwortet diese Fragen durch:
 - **Vollständiges Tracing** aller LLM-Calls, Tool-Aufrufe und Chain-Schritte
 - **Visuelle Darstellung** komplexer Agent-Workflows
-- **Dataset-Management** für systematische Evaluierung
+- **Dataset-Management** für systematische Evaluierung  
 - **Performance-Monitoring** in Produktion
 - **Feedback-Collection** von Nutzern
 

@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Prompt Engineering
+title: Wie werden gute Prompts für Agenten aufgebaut?
 parent: Konzepte
 nav_order: 4
-description: "Strategien für effektive Prompts in KI-Agenten-Systemen"
+description: Prompt Engineering für KI-Agenten: System-Prompts, Tool-Beschreibungen, Beispiele und strukturierte Ausgaben
 has_toc: true
 ---
 
-# Prompt Engineering
+# Wie werden gute Prompts für Agenten aufgebaut?
 {: .no_toc }
 
-> **Strategien für effektive Prompts in KI-Agenten-Systemen**
+> **Ein guter Prompt steuert nicht nur Antworten, sondern Verhalten.**
 
 ---
 
@@ -22,49 +22,32 @@ has_toc: true
 
 ---
 
-## Überblick
+## Warum Prompt Engineering für Agenten mehr ist als gutes Formulieren
 
-Ein Prompt ist die Schnittstelle zwischen Mensch und Sprachmodell. Die Qualität der Antwort hängt maßgeblich davon ab, **wie** eine Aufgabe formuliert wird – nicht nur **was** gefragt wird.
+Ein Prompt ist nicht nur eine Eingabeaufforderung, sondern die wichtigste Steuerungsschicht zwischen Mensch, System und Modell. Bei einem Agenten betrifft das nicht nur einzelne Antworten, sondern Rolle, Grenzen, Tool-Nutzung, Format und Verhalten über mehrere Schritte hinweg.
 
-Für KI-Agenten ist Prompt Engineering besonders relevant:
+Genau deshalb ist Prompt Engineering in Agentensystemen wichtiger als in einfachen Chat-Szenarien. Ein unscharfer Prompt erzeugt nicht nur eine schwächere Antwort, sondern oft auch falsche Tool-Wahlen, unklare Eskalation oder inkonsistente Struktur.
 
-| Kontext | Bedeutung |
-|---------|-----------|
-| **System-Prompts** | Definieren Rolle, Fähigkeiten und Grenzen des Agenten |
-| **Tool-Beschreibungen** | Bestimmen, wann und wie ein Agent Werkzeuge einsetzt |
-| **Reasoning-Prompts** | Steuern den Denkprozess bei komplexen Aufgaben |
-| **Output-Formatierung** | Garantieren strukturierte, verarbeitbare Antworten |
+Typischer Fehler: Prompts als reines Sprachgefühl zu behandeln. In Agentensystemen wirken sie eher wie leichtgewichtige Verhaltensverträge.
 
-**Kernprinzip:** Ein gut formulierter Prompt reduziert Fehler, verbessert die Konsistenz und macht das Verhalten eines Agenten vorhersagbar.
+## Ein einfaches Beispiel
 
----
+Ein Support-Agent soll technische Anfragen beantworten, bei Sicherheitsfragen eskalieren und für Produktfragen auf eine Wissenssuche zugreifen. Ohne klare Prompts bleibt unklar, wann der Agent welches Tool nutzt, wie er seine Rolle versteht und wo seine Grenzen liegen. Mit einem guten System-Prompt und guten Tool-Beschreibungen wird dieses Verhalten deutlich stabiler.
 
-## Grundlegende Prompt-Strukturen
+Dieses Beispiel zeigt den Kern: Prompt Engineering bedeutet nicht nur `besser fragen`, sondern `klare Rollen, Regeln und Entscheidungsräume formulieren`.
 
-Effektive Prompts folgen einer klaren Struktur. Drei Grundmuster haben sich etabliert.
+## Drei grundlegende Prompt-Muster
 
-### Zero-Shot Prompting
-
-Das Modell erhält eine Aufgabe ohne Beispiele und löst sie basierend auf seinem Vorwissen.
+Zero-Shot bedeutet, dass das Modell ohne Beispiele direkt eine Aufgabe lösen soll. Das reicht für einfache und klare Aufgaben oft aus.
 
 ```python
-from langchain_core.prompts import ChatPromptTemplate
-
-# Zero-Shot: Keine Beispiele, direkte Aufgabe
 prompt = ChatPromptTemplate.from_messages([
     ("system", "Du bist ein hilfreicher Assistent."),
-    ("human", "Klassifiziere die folgende E-Mail als 'dringend' oder 'normal': {email}")
+    ("human", "Klassifiziere die folgende E-Mail als dringend oder normal: {email}")
 ])
 ```
 
-**Geeignet für:**
-- Einfache, eindeutige Aufgaben
-- Allgemeinwissen-Fragen
-- Standardformatierungen
-
-### Few-Shot Prompting
-
-Das Modell erhält Beispiele, die das gewünschte Verhalten demonstrieren.
+Few-Shot ergänzt Beispiele, damit das gewünschte Muster sichtbarer wird. Das ist besonders nützlich, wenn Format oder domänenspezifische Unterscheidungen zuverlässig eingehalten werden sollen.
 
 ```python
 few_shot_prompt = ChatPromptTemplate.from_messages([
@@ -77,386 +60,134 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ])
 ```
 
-**Geeignet für:**
-- Spezifische Formatvorgaben
-- Domänenspezifische Klassifikationen
-- Konsistente Ausgabestrukturen
+Chain-of-Thought versucht, schrittweises Denken explizit zu fördern. Das kann bei komplexeren Analysen oder logischen Problemen helfen, sollte aber nicht reflexhaft überall eingesetzt werden.
 
-### Chain-of-Thought (CoT)
+## System-Prompts bestimmen die Rolle des Agenten
 
-Das Modell wird angewiesen, seinen Denkprozess schrittweise darzulegen.
+Der System-Prompt ist für Agenten meist wichtiger als der eigentliche Nutzerprompt. Er definiert Rolle, Aufgabenraum, gewünschtes Verhalten und Grenzen. Ein guter System-Prompt beantwortet vier Fragen: Wer ist der Agent, was darf er tun, wie soll er vorgehen und was soll er ausdrücklich nicht tun.
 
 ```python
-cot_prompt = ChatPromptTemplate.from_template(
-    """Löse die folgende Aufgabe Schritt für Schritt.
-    
-Aufgabe: {aufgabe}
-
-Denke laut nach:
-1. Was ist gegeben?
-2. Was wird gesucht?
-3. Welche Schritte sind nötig?
-4. Führe jeden Schritt aus.
-5. Formuliere die Antwort.
-
-Lösung:"""
-)
-```
-
-**Geeignet für:**
-- Mathematische Probleme
-- Logische Schlussfolgerungen
-- Mehrstufige Analysen
-
----
-
-## System-Prompts für Agenten
-
-Der System-Prompt definiert die Identität und das Verhalten eines Agenten. Er ist der wichtigste Hebel für konsistentes Agentenverhalten.
-
-### Struktur eines effektiven System-Prompts
-
-Ein guter System-Prompt beantwortet vier Fragen:
-
-| Frage | Inhalt |
-|-------|--------|
-| **Wer?** | Rolle und Expertise des Agenten |
-| **Was?** | Aufgabenbereich und Fähigkeiten |
-| **Wie?** | Verhaltensregeln und Tonalität |
-| **Was nicht?** | Explizite Einschränkungen |
-
-### Beispiel: Vollständiger Agent-System-Prompt
-
-```python
-system_prompt = """Du bist ein technischer Support-Agent für ein Software-Unternehmen.
+system_prompt = """Du bist ein technischer Support-Agent.
 
 ROLLE:
 - Experte für die Produkte X, Y und Z
 - Erste Anlaufstelle für technische Fragen
-- Eskalation an Menschen bei komplexen Fällen
 
 FÄHIGKEITEN:
-- Zugriff auf die Wissensdatenbank (Tool: search_knowledge)
-- Ticket-Erstellung im Helpdesk (Tool: create_ticket)
-- Prüfung des Kundenstatus (Tool: check_customer)
+- Wissenssuche
+- Ticket-Erstellung
+- Prüfung des Kundenstatus
 
 VERHALTENSREGELN:
-- Antworte präzise und lösungsorientiert
-- Frage nach, wenn Informationen fehlen
-- Bestätige Verständnis bei komplexen Problemen
-- Verwende technische Begriffe nur mit Erklärung
+- antworte präzise
+- frage nach, wenn Informationen fehlen
+- eskaliere Sicherheitsfragen
 
 EINSCHRÄNKUNGEN:
-- Keine Preisauskünfte oder Vertragsänderungen
-- Keine Zusagen ohne Rücksprache mit dem Vertrieb
-- Bei Sicherheitsfragen immer an Security-Team eskalieren
+- keine Vertragsänderungen
+- keine Preiszusagen
 """
 ```
 
-### Typische Fehler bei System-Prompts
+In der Praxis relevant, wenn: Ein Agent über mehrere Sitzungen oder Aufgaben hinweg konsistent auftreten soll und sein Rollenverständnis nicht von der jeweiligen Nutzerformulierung abhängen darf.
 
-> [!WARNING] System-Prompt Anti-Patterns<br>
-> Diese Fehler führen zu inkonsistentem, unvorhersagbarem Agentenverhalten — oft erst in der Produktion erkennbar.
+## Schlechte System-Prompts sind oft zu vage oder zu überladen
 
-| Fehler | Problem | Lösung |
-|--------|---------|--------|
-| Zu vage | Agent verhält sich inkonsistent | Konkrete Beispiele und Regeln |
-| Zu lang | Wichtige Anweisungen gehen unter | Priorisieren, strukturieren |
-| Widersprüchlich | Agent "halluziniert" Kompromisse | Eindeutige Hierarchie |
-| Keine Grenzen | Agent überschreitet Kompetenz | Explizite Einschränkungen |
+Ein häufiger Fehler ist ein zu vager Prompt wie `Du bist hilfreich und kompetent`. Das klingt gut, liefert aber kaum belastbare Steuerung. Das Gegenproblem ist ein riesiger System-Prompt, in dem zentrale Regeln zwischen vielen Nebenanweisungen untergehen.
 
----
+Grenze: Ein System-Prompt kann Verhalten stark prägen, ersetzt aber keine Architektur, kein Tool-Design und keine Sicherheitslogik.
 
-## Tool-Beschreibungen optimieren
+## Tool-Beschreibungen sind Teil des Prompt Engineerings
 
-Die Beschreibung eines Tools bestimmt, ob und wann ein Agent es korrekt einsetzt. Eine präzise Beschreibung ist entscheidender als der Code dahinter.
-
-### Anatomie einer guten Tool-Beschreibung
+In Agentensystemen endet Prompt Engineering nicht beim System-Prompt. Auch Tool-Beschreibungen steuern Verhalten. Das Modell entscheidet auf Basis von Name, Beschreibung und Parametern, welches Tool wann passt. Deshalb ist die Qualität der Tool-Dokumentation direkt mit der Qualität des Agentenverhaltens verbunden.
 
 ```python
-from langchain_core.tools import tool
-
 @tool
-def search_knowledge(query: str, max_results: int = 5) -> str:
-    """Durchsucht die interne Wissensdatenbank nach relevanten Artikeln.
-    
-    WANN VERWENDEN:
-    - Bei Fragen zu Produktfunktionen
-    - Bei Fehlermeldungen und deren Lösungen
-    - Bei How-To-Anfragen
-    
-    WANN NICHT VERWENDEN:
-    - Bei Fragen zu Preisen oder Verträgen
-    - Bei persönlichen Kundendaten
-    - Wenn die Antwort bereits bekannt ist
-    
-    Args:
-        query: Suchbegriff oder Frage in natürlicher Sprache
-        max_results: Maximale Anzahl zurückgegebener Artikel (1-10)
-    
-    Returns:
-        Formatierte Liste relevanter Wissensartikel mit Titel und Zusammenfassung
+def search_company_documents(query: str) -> str:
+    """🔍 FIRMEN-DOKUMENTENSUCHE – Durchsucht interne Dokumente.
+
+    Verwende dieses Tool für Fragen zu Richtlinien, Prozessen und Handbüchern.
+    NICHT geeignet für: Allgemeinwissen, aktuelle Nachrichten, Berechnungen.
     """
-    # Implementation...
+    return document_retriever.search(query)
 ```
 
-### Checkliste für Tool-Beschreibungen
+Typischer Fehler: Zu glauben, Tool-Design und Prompt Engineering seien getrennte Themen. Für das Modell sind Tool-Beschreibungen selbst Teil des Promptkontexts.
 
-- [ ] **Zweck klar benannt** – Was macht das Tool?
-- [ ] **Anwendungsfälle** – Wann soll es verwendet werden?
-- [ ] **Gegenanzeigen** – Wann soll es NICHT verwendet werden?
-- [ ] **Parameter erklärt** – Was bedeuten die Eingaben?
-- [ ] **Rückgabewert beschrieben** – Was kommt zurück?
+## Formatvorgaben machen Antworten verarbeitbar
 
----
-
-## Ausgabeformatierung
-
-Strukturierte Ausgaben machen Agentenantworten verarbeitbar und konsistent.
-
-### Explizite Formatvorgaben
+Viele Agenten liefern Ergebnisse nicht nur für Menschen, sondern auch für weitere Verarbeitungsschritte. Deshalb ist Output-Formatierung ein zentrales Element von Prompt Engineering. Ein Modell sollte nicht nur inhaltlich antworten, sondern in einer Form, die weiterverarbeitet werden kann.
 
 ```python
 format_prompt = ChatPromptTemplate.from_template(
-    """Analysiere den folgenden Text und extrahiere die Kernaussagen.
+    """Analysiere den Text.
 
 Text: {text}
 
-Antworte EXAKT in diesem Format:
+Antworte exakt in diesem Format:
 HAUPTTHEMA: [Ein Satz]
 KERNAUSSAGEN:
 - [Punkt 1]
 - [Punkt 2]
-- [Punkt 3]
 STIMMUNG: [positiv/neutral/negativ]
-KONFIDENZ: [hoch/mittel/niedrig]
 """
 )
 ```
 
-### Strukturierte Ausgaben mit Pydantic
-
-Für maschinelle Weiterverarbeitung bietet LangChain typsichere Ausgaben:
+Für robustere Strukturen ist typisierte Ausgabe oft besser als bloße Formatbitten.
 
 ```python
-from pydantic import BaseModel, Field
-
 class Analyse(BaseModel):
-    hauptthema: str = Field(description="Zentrales Thema in einem Satz")
-    kernaussagen: list[str] = Field(description="Liste der wichtigsten Punkte")
-    stimmung: str = Field(description="positiv, neutral oder negativ")
-    konfidenz: float = Field(description="Sicherheit der Analyse (0.0-1.0)")
-
-# LLM mit strukturierter Ausgabe
-structured_llm = llm.with_structured_output(Analyse)
-result = structured_llm.invoke("Analysiere: " + text)
-
-# result ist ein typisiertes Analyse-Objekt
-print(result.hauptthema)
-print(result.konfidenz)
+    hauptthema: str
+    kernaussagen: list[str]
+    stimmung: str
+    konfidenz: float
 ```
 
----
+## Rollen helfen, aber ersetzen keine Regeln
 
-## Fortgeschrittene Strategien
+Role Prompting kann nützlich sein. Ein Modell reagiert oft stabiler, wenn eine klare Perspektive vorgegeben wird, etwa `Du bist ein erfahrener Entwickler` oder `Du bist eine Fachperson für IT-Recht`. Das hilft besonders bei domänenspezifischen Aufgaben.
 
-### Role-Prompting
+Trotzdem bleibt eine Grenze: Eine Rolle allein sagt noch nicht, welche Schritte nötig sind, welche Grenzen gelten oder wann eskaliert werden soll. Rollen helfen dem Ton und der Perspektive, aber sie ersetzen keine expliziten Regeln.
 
-Die Zuweisung einer spezifischen Rolle verbessert domänenspezifische Antworten.
+## Iteratives Prompt Design ist normal
 
-```python
-role_prompts = {
-    "jurist": "Du bist ein erfahrener Rechtsanwalt mit Spezialisierung auf IT-Recht.",
-    "mediziner": "Du bist ein Facharzt für Innere Medizin mit 20 Jahren Berufserfahrung.",
-    "entwickler": "Du bist ein Senior Software Engineer mit Expertise in Python und Cloud-Architekturen."
-}
-
-prompt = ChatPromptTemplate.from_messages([
-    ("system", role_prompts["entwickler"]),
-    ("human", "{frage}")
-])
-```
-
-### Self-Consistency
-
-Mehrere Antworten generieren und die häufigste oder konsistenteste wählen.
-
-```python
-def self_consistent_answer(question: str, n: int = 3) -> str:
-    """Generiert mehrere Antworten und wählt die konsistenteste."""
-    responses = []
-    for _ in range(n):
-        response = llm.invoke(question)
-        responses.append(response.content)
-    
-    # Häufigste Antwort oder Zusammenfassung
-    return aggregate_responses(responses)
-```
-
-### Retrieval-Augmented Prompting
-
-Kontext aus externen Quellen in den Prompt integrieren:
-
-```python
-rag_prompt = ChatPromptTemplate.from_template(
-    """Beantworte die Frage basierend auf dem bereitgestellten Kontext.
-Wenn die Antwort nicht im Kontext steht, sage das ehrlich.
-
-KONTEXT:
-{context}
-
-FRAGE: {question}
-
-ANTWORT:"""
-)
-```
-
----
-
-## Best Practices
-
-### Die CLEAR-Methode
-
-| Buchstabe | Prinzip | Umsetzung |
-|-----------|---------|-----------|
-| **C** | Concise | Präzise formulieren, Füllwörter vermeiden |
-| **L** | Logical | Logische Struktur, klare Reihenfolge |
-| **E** | Explicit | Erwartungen explizit benennen |
-| **A** | Adaptive | An Aufgabe und Modell anpassen |
-| **R** | Reproducible | Konsistente Ergebnisse ermöglichen |
-
-### Iteratives Prompt-Design
+Gute Prompts entstehen selten im ersten Versuch. Meist beginnt ein Projekt mit einem einfachen Baseline-Prompt, der getestet und dann schrittweise verfeinert wird.
 
 ```mermaid
 flowchart LR
     A[Erster Entwurf] --> B[Testen]
-    B --> C{Ergebnis OK?}
-    C -->|Nein| D[Analysieren]
-    D --> E[Anpassen]
+    B --> C{Ergebnis passend?}
+    C -->|Nein| D[Schwachstelle analysieren]
+    D --> E[Prompt anpassen]
     E --> B
     C -->|Ja| F[Dokumentieren]
 ```
 
-**Empfohlener Workflow:**
+Diese iterative Arbeit ist kein Zeichen von Unsicherheit, sondern normale Entwicklungspraxis. Entscheidend ist, pro Runde gezielt zu ändern und nicht mehrere Dinge gleichzeitig umzubauen.
 
-1. **Baseline erstellen** – Einfachster funktionierender Prompt
-2. **Schwachstellen identifizieren** – Wo versagt der Prompt?
-3. **Gezielt verbessern** – Eine Änderung pro Iteration
-4. **Testen mit Varianten** – Verschiedene Eingaben prüfen
-5. **Dokumentieren** – Warum funktioniert diese Version?
+## Häufige Fehler
 
-### Prompt-Versionierung
+Ambige Anweisungen sind einer der häufigsten Fehler. `Fasse das zusammen` ist weniger wirksam als eine klare Formatvorgabe mit Umfang und Fokus. Ebenso problematisch sind fehlende Beispiele bei komplexen Formaten oder widersprüchliche Anweisungen wie `erkläre kurz und detailliert`.
 
-```python
-PROMPTS = {
-    "classify_email_v1": "Klassifiziere als dringend/normal: {email}",
-    "classify_email_v2": """Klassifiziere die E-Mail:
-- dringend: Systemausfälle, Sicherheitsprobleme, Deadlines < 24h
-- normal: Alle anderen Anfragen
+Typischer Fehler: Ein schlechter Prompt wird durch zusätzliche Länge repariert. Oft ist nicht mehr Text nötig, sondern klarere Priorisierung.
 
-E-Mail: {email}
-Klassifikation:""",
-}
+## Was für Einsteiger zuerst wichtig ist
 
-# In Produktion: Version tracken
-current_version = "classify_email_v2"
-```
+Für Einsteiger reichen oft drei Regeln. Erstens: Rollen und Grenzen explizit formulieren. Zweitens: Ausgabeformate klar vorgeben, wenn Ergebnisse weiterverarbeitet werden sollen. Drittens: Tool-Beschreibungen und System-Prompts als zusammenhängende Steuerung betrachten.
 
----
-
-## Häufige Fehler und Lösungen
-
-### Fehler: Ambige Anweisungen
-
-**Problem:**
-```python
-# Vage und mehrdeutig
-prompt = "Fasse das zusammen: {text}"
-```
-
-**Lösung:**
-```python
-# Präzise und eindeutig
-prompt = """Erstelle eine Zusammenfassung in 3 Stichpunkten.
-Jeder Punkt maximal 15 Wörter.
-Fokus auf Handlungsempfehlungen.
-
-Text: {text}
-
-Zusammenfassung:"""
-```
-
-### Fehler: Fehlende Beispiele bei komplexen Formaten
-
-**Problem:**
-```python
-# Erwartet spezifisches Format ohne Beispiel
-prompt = "Extrahiere Entitäten aus: {text}"
-```
-
-**Lösung:**
-```python
-# Mit Beispiel (Few-Shot)
-prompt = """Extrahiere Entitäten im Format: ENTITÄT (TYP)
-
-Beispiel:
-Text: "Angela Merkel besuchte gestern Berlin."
-Entitäten: Angela Merkel (PERSON), Berlin (ORT), gestern (ZEIT)
-
-Text: {text}
-Entitäten:"""
-```
-
-### Fehler: Widersprüchliche Anweisungen
-
-**Problem:**
-```python
-# Widerspruch: kurz UND detailliert
-prompt = "Erkläre kurz und detailliert: {thema}"
-```
-
-**Lösung:**
-```python
-# Klare Priorisierung
-prompt = """Erkläre das Thema in zwei Teilen:
-1. KURZFASSUNG (1-2 Sätze): Kernaussage
-2. DETAILS (3-5 Sätze): Wichtige Aspekte
-
-Thema: {thema}"""
-```
-
----
-
-## Zusammenfassung
-
-Effektives Prompt Engineering basiert auf drei Säulen:
-
-| Säule | Kernaspekt |
-|-------|------------|
-| **Klarheit** | Eindeutige, strukturierte Anweisungen |
-| **Kontext** | Relevante Informationen und Beispiele |
-| **Kontrolle** | Explizite Formatvorgaben und Grenzen |
-
-**Für KI-Agenten besonders wichtig:**
-
-- **System-Prompts** definieren das Gesamtverhalten
-- **Tool-Beschreibungen** steuern die Werkzeugnutzung
-- **Strukturierte Ausgaben** ermöglichen Weiterverarbeitung
-- **Iteratives Testen** führt zu robusten Prompts
-
-Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents angewendet.
+Teilnehmende unterschätzen oft, dass ein guter Prompt nicht poetisch oder besonders clever wirken muss. Er muss verständlich, widerspruchsfrei und für den nächsten Verarbeitungsschritt nützlich sein.
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html) | Technische Tool-Definition — dieses Dokument beschreibt, wie Tools beschrieben werden |
-| [Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html) | Welche Architektur welche Prompt-Strategien voraussetzt |
-| [Skills](https://ralf-42.github.io/Agenten/concepts/Skills.html) | Wiederverwendbare Prompt-Strukturen als produktionsreife Muster |
-
+| [Wie nutzen Agenten Werkzeuge?](./Tool_Use_Function_Calling.html) | Wie werden Tools technisch definiert und beschrieben, damit der Agent sie korrekt nutzt? |
+| [Welche Architektur passt zu diesem Agenten?](./Agent_Architekturen.html) | Welche Agentenarchitekturen brauchen welche Prompt-Strategien? |
+| [Skills](./Skills.html) | Wann wird aus einem guten Prompt ein wiederverwendbarer, regelgeleiteter Skill? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** November 2025<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

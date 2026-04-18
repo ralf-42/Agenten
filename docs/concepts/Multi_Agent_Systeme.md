@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Multi-Agent-Systeme
+title: Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?
 parent: Konzepte
 nav_order: 10
-description: "Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten"
+description: Multi-Agent-Systeme, Koordinationsmuster und Arbeitsteilung in LangGraph und ähnlichen Architekturen
 has_toc: true
 ---
 
-# Multi-Agent-Systeme
+# Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?
 {: .no_toc }
 
-> **Zusammenarbeit und Koordination mehrerer spezialisierter KI-Agenten**
+> **Mehrere Agenten lohnen sich erst dann, wenn echte Spezialisierung einen erkennbaren Gewinn bringt.**
 
 ---
 
@@ -22,897 +22,198 @@ has_toc: true
 
 ---
 
-## Überblick
+## Warum Multi-Agent nicht automatisch besser ist
 
-Ein einzelner Agent stößt bei komplexen Aufgaben schnell an Grenzen. Multi-Agent-Systeme (MAS) lösen dieses Problem durch **Arbeitsteilung**: Mehrere spezialisierte Agenten übernehmen jeweils Teilaufgaben und koordinieren sich untereinander.
+Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell der Gedanke, die Arbeit auf mehrere spezialisierte Agenten zu verteilen. Das kann sinnvoll sein. Es kann aber auch unnötige Komplexität erzeugen. Multi-Agent-Systeme sind deshalb keine automatische Weiterentwicklung, sondern eine bewusste Architekturentscheidung.
 
-**Kernidee:** Statt einem "Alleskönner" arbeiten mehrere "Spezialisten" zusammen – ähnlich wie in einem Team aus Rechercheur, Analyst und Redakteur.
+Der Mehrwert liegt in Arbeitsteilung, Spezialisierung und möglicher Parallelität. Der Preis liegt in Koordination, zusätzlichem State, mehr Kommunikationsaufwand und schwierigerem Debugging. Genau deshalb sollte zuerst gefragt werden, ob ein einzelner Workflow mit klaren Knoten nicht bereits ausreicht.
 
-| Aspekt              | Einzelner Agent                  | Multi-Agent-System          |
-| ------------------- | -------------------------------- | --------------------------- |
-| **Komplexität**     | Begrenzt durch Kontextfenster    | Skalierbar durch Verteilung |
-| **Spezialisierung** | Generalist                       | Fokussierte Experten        |
-| **Fehlertoleranz**  | Single Point of Failure          | Redundanz möglich           |
-| **Wartbarkeit**     | Ein großer Prompt                | Modulare Komponenten        |
-| **Debugging**       | Unübersichtlich bei vielen Tools | Klare Verantwortlichkeiten  |
+Typischer Fehler: Multi-Agent zu wählen, weil es moderner oder „agentischer“ klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
 
-**Typische Anwendungsfälle:**
-- Content-Pipelines (Recherche → Schreiben → Review)
-- Komplexe Analysen (Datensammlung → Verarbeitung → Visualisierung)
-- Autonome Workflows mit Qualitätskontrolle
-- Simulationen und Debatten zwischen "Experten"
+## Ein einfaches Beispiel
 
----
+Ein System soll einen Marktanalyse-Report erstellen. Eine Person oder ein einzelner Agent müsste recherchieren, ordnen, formulieren und prüfen. In einem Multi-Agent-System kann ein Recherche-Agent Quellen sammeln, ein Schreib-Agent den Bericht formulieren und ein Review-Agent auf Konsistenz und Qualität prüfen.
 
-## Koordinationsmuster
+Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer selbst willen, sondern klar unterscheidbare Rollen mit echter Arbeitsteilung.
 
-Fünf grundlegende Muster haben sich für die Zusammenarbeit von Agenten etabliert:
+## Welche Grundmuster es gibt
 
-| Muster                       | Kernidee                                      | Koordination  | Komplexität |
-| ---------------------------- | --------------------------------------------- | ------------- | ----------- |
-| **Supervisor**               | Router delegiert *vor* der Bearbeitung        | Zentral       | ⭐⭐          |
-| **Handoff**                  | Agent übergibt *während* der Bearbeitung      | Lateral       | ⭐⭐          |
-| **Skill / Capability Loading** | Hauptagent lädt Fähigkeiten bei Bedarf      | Intern        | ⭐⭐⭐         |
-| **Hierarchisch**             | Mehrere Ebenen von Supervisors und Workern    | Kaskadierend  | ⭐⭐⭐         |
-| **Kollaborativ**             | Agenten kommunizieren direkt miteinander      | Dezentral     | ⭐⭐⭐⭐        |
+Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Einige Muster sind für Einsteiger besonders wichtig: Supervisor, Handoff, Skill-orientierte Fähigkeitstrennung, hierarchische Koordination, direkte kollaborative Zusammenarbeit und parallele Bearbeitung unabhängiger Teilaufgaben.
 
----
+| Muster | Grundidee |
+|---|---|
+| Supervisor | eine zentrale Rolle verteilt Aufgaben an Worker |
+| Handoff | ein Agent erkennt während der Bearbeitung den Zuständigkeitswechsel |
+| Skill-orientiert | Fähigkeiten werden gezielt nach Bedarf zugeladen |
+| Hierarchisch | mehrere Ebenen aus Leitrollen und Workern |
+| Kollaborativ | Agenten arbeiten direkt mit Feedbackschleifen zusammen |
+| Parallel | unabhängige Teilaufgaben laufen gleichzeitig |
 
-## Supervisor-Pattern
+## Supervisor: der naheliegende Einstieg
 
-Das Supervisor-Pattern ist der Einstiegspunkt für Multi-Agent-Systeme. Ein **Supervisor** analysiert Aufgaben und delegiert sie an spezialisierte **Worker-Agenten**.
+Das Supervisor-Pattern ist für viele erste Multi-Agent-Projekte der verständlichste Einstieg. Ein zentraler Supervisor erhält die Aufgabe, bewertet sie und delegiert an einen passenden Spezialisten.
 
 ```mermaid
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
-    S --> |"Code-Aufgabe"| C[Code-Agent]
-    S --> |"Recherche"| R[Research-Agent]
-    S --> |"Texterstellung"| W[Writer-Agent]
+    S -->|Code| C[Code-Agent]
+    S -->|Recherche| R[Research-Agent]
+    S -->|Text| W[Writer-Agent]
     C --> S
     R --> S
     W --> S
     S --> E[Finale Antwort]
 ```
 
-### Funktionsweise
-
-1. **Supervisor** erhält die Aufgabe und analysiert sie
-2. **Routing-Entscheidung**: Welcher Worker ist zuständig?
-3. **Delegation**: Aufgabe wird an Worker übergeben
-4. **Ergebnis-Sammlung**: Worker liefert Teilergebnis zurück
-5. **Iteration**: Bei Bedarf weitere Worker einbeziehen
-6. **Synthese**: Supervisor erstellt finale Antwort
-
-### Implementierung mit LangGraph
+Der Vorteil liegt in klaren Verantwortlichkeiten. Der Nachteil ist, dass der Supervisor schnell zum Engpass wird, wenn er nicht nur routet, sondern selbst beginnt, die eigentliche Facharbeit zu erledigen.
 
 ```python
-from typing import TypedDict, Annotated, Literal
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langgraph.types import Command
-from langchain.chat_models import init_chat_model
-
-# State-Definition
 class TeamState(TypedDict):
     messages: Annotated[list, add_messages]
     next_worker: str
     task_complete: bool
 
-# LLM initialisieren
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-# Supervisor-Node
 def supervisor_node(state: TeamState) -> Command:
-    """Analysiert Aufgabe und routet zum passenden Worker."""
-    messages = state["messages"]
-    last_message = messages[-1].content.lower()
-    
-    # Einfache Routing-Logik (in Produktion: LLM-basiert)
-    if "code" in last_message or "programmier" in last_message:
+    last_message = state["messages"][-1].content.lower()
+    if "code" in last_message:
         return Command(goto="code_agent")
-    elif "recherche" in last_message or "suche" in last_message:
+    if "recherche" in last_message:
         return Command(goto="research_agent")
-    elif "schreib" in last_message or "text" in last_message:
-        return Command(goto="writer_agent")
-    else:
-        return Command(goto="writer_agent")  # Default
-
-# Worker-Nodes
-def code_agent(state: TeamState) -> TeamState:
-    """Spezialisiert auf Code-Aufgaben."""
-    response = llm.invoke([
-        {"role": "system", "content": "Du bist ein Code-Experte. Schreibe sauberen, dokumentierten Code."},
-        *state["messages"]
-    ])
-    return {"messages": [response], "task_complete": True}
-
-def research_agent(state: TeamState) -> TeamState:
-    """Spezialisiert auf Recherche."""
-    response = llm.invoke([
-        {"role": "system", "content": "Du bist ein Recherche-Experte. Sammle und strukturiere Informationen."},
-        *state["messages"]
-    ])
-    return {"messages": [response], "task_complete": True}
-
-def writer_agent(state: TeamState) -> TeamState:
-    """Spezialisiert auf Texterstellung."""
-    response = llm.invoke([
-        {"role": "system", "content": "Du bist ein Redakteur. Schreibe klare, verständliche Texte."},
-        *state["messages"]
-    ])
-    return {"messages": [response], "task_complete": True}
-
-# Graph aufbauen
-graph = StateGraph(TeamState)
-
-graph.add_node("supervisor", supervisor_node)
-graph.add_node("code_agent", code_agent)
-graph.add_node("research_agent", research_agent)
-graph.add_node("writer_agent", writer_agent)
-
-graph.add_edge(START, "supervisor")
-graph.add_edge("code_agent", END)
-graph.add_edge("research_agent", END)
-graph.add_edge("writer_agent", END)
-
-team = graph.compile()
+    return Command(goto="writer_agent")
 ```
 
-### Vorteile und Grenzen
+In der Praxis relevant, wenn: Aufgaben vorab sauber klassifizierbar sind und Rollen klar voneinander getrennt bleiben.
 
-| Vorteile | Grenzen |
-|----------|---------|
-| Einfach zu verstehen und implementieren | Supervisor als Bottleneck |
-| Klare Verantwortlichkeiten | Keine direkte Worker-Kommunikation |
-| Gut für parallele Aufgaben | Begrenzte Skalierbarkeit |
+## Handoff: wenn sich die Zuständigkeit erst unterwegs zeigt
 
-> [!WARNING] Häufiger Fehler: Der Router löst auch<br>
-> Der Supervisor entscheidet *wer* zuständig ist — nicht *wie* das Problem gelöst wird. Sobald der Supervisor selbst anfängt, Aufgaben zu bearbeiten statt zu delegieren, verliert er seine Routing-Funktion und wird zum Engpass.
-
----
-
-## Handoff-Pattern
-
-Der kritische Unterschied zum Supervisor: **Der Router entscheidet vor der Bearbeitung, der Handoff-Agent während der Bearbeitung.**
+Nicht immer ist die richtige Rolle schon am Anfang klar. Manchmal beginnt ein allgemeiner Agent mit einer Anfrage und erkennt erst während der Bearbeitung, dass eine andere Spezialisierung nötig ist. Genau dann passt das Handoff-Pattern.
 
 ```mermaid
 flowchart LR
     A[Anfrage] --> B[Agent A]
-    B -->|"erkennt Domänenwechsel"| C{Handoff?}
-    C -->|Ja| D[Agent B]
+    B --> C{Domänenwechsel?}
+    C -->|Ja| D[Agent B übernimmt]
     C -->|Nein| E[Antwort]
     D --> E
 ```
 
-### Funktionsweise
+Hier entscheidet also nicht ein externer Router vorab, sondern der bearbeitende Agent selbst. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
 
-Ein Agent startet die Aufgabe und erkennt *während der Ausführung*, dass ein anderer Agent besser geeignet ist — weil sich die Domäne, das Risiko oder die Komplexität verändert hat. Er übergibt dann die Kontrolle **zusammen mit dem vollständigen Kontext**.
+Typischer Fehler: Beim Handoff den bisherigen Kontext nicht vollständig zu übergeben. Dann beginnt der übernehmende Agent praktisch blind.
 
-### Wann Handoff verwenden?
+## Skill- oder Capability-Loading statt dauerhaftem Spezialistentrupp
 
-| Situation | Beispiel |
-|-----------|---------|
-| Aufgaben entwickeln sich mid-execution | Allgemeine Anfrage → wird zu Rechtsfrage |
-| Agent erkennt Risiko oder Compliance-Relevanz | Chat-Agent → Compliance-Agent |
-| Domainwechsel während der Verarbeitung | Research-Agent → Domänenexperte |
-| Graceful Escalation in autonomen Systemen | Worker → Human-in-the-Loop |
-
-### Implementierung mit LangGraph
+Manche Systeme brauchen kein volles Multi-Agent-Team, sondern nur einen Hauptagenten, der gezielt zusätzliche Fähigkeiten lädt. Dieses Muster ist besonders dann interessant, wenn Fachwissen umfangreich, aber nur sporadisch benötigt wird. Es verhindert Prompt Bloat und hält den aktiven Kontext schlanker.
 
 ```python
-from typing import TypedDict, Annotated, Optional
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langgraph.types import Command
-from langchain.chat_models import init_chat_model
-
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-class HandoffState(TypedDict):
-    messages: Annotated[list, add_messages]
-    handoff_context: Optional[list]   # Kontext für den Zielagenten
-    active_agent: str
-
-def chat_agent(state: HandoffState) -> Command:
-    """Allgemeiner Chat-Agent — übergibt bei Compliance-Themen."""
-    response = llm.invoke([
-        {"role": "system", "content": (
-            "Du bist ein hilfreicher Assistent. "
-            "Erkennst du eine Compliance- oder Datenschutzfrage, "
-            "antworte ausschließlich mit: HANDOFF:compliance"
-        )},
-        *state["messages"]
-    ])
-
-    if "HANDOFF:compliance" in response.content:
-        # Kontext explizit übergeben — kein Kontextverlust
-        return Command(
-            goto="compliance_agent",
-            update={
-                "handoff_context": state["messages"],
-                "active_agent": "compliance"
-            }
-        )
-
-    return Command(goto=END, update={"messages": [response]})
-
-def compliance_agent(state: HandoffState) -> HandoffState:
-    """Spezialisierter Compliance-Agent — erhält den vollständigen Kontext."""
-    response = llm.invoke([
-        {"role": "system", "content": "Du bist ein Compliance-Experte für DSGVO und EU-Regulierung."},
-        *state["handoff_context"]   # Vollständiger Kontext aus dem Handoff
-    ])
-    return {"messages": [response], "active_agent": "compliance"}
-
-# Graph aufbauen
-graph = StateGraph(HandoffState)
-graph.add_node("chat_agent", chat_agent)
-graph.add_node("compliance_agent", compliance_agent)
-graph.add_edge(START, "chat_agent")
-graph.add_edge("compliance_agent", END)
-
-app = graph.compile()
-```
-
-### Vorteile und Grenzen
-
-| Vorteile | Grenzen |
-|----------|---------|
-| Graceful Escalation ohne Neustart | Kontextverlust wenn State schlecht designed |
-| Agent entscheidet selbst über Zuständigkeit | Schwerer zu debuggen als statisches Routing |
-| Kein zentraler Router nötig | Zirkuläre Handoffs möglich |
-
-> [!WARNING] Häufiger Fehler: Kontextverlust beim Handoff<br>
-> Der übernehmende Agent sieht ohne explizite Übergabe nur seinen eigenen Einstiegspunkt — nicht was Agent A bereits verarbeitet hat. Immer den relevanten Kontext (Messages, Teilresultate) im State mitführen und beim Handoff explizit befüllen.
-
----
-
-## Skill / Capability Loading
-
-Ein Hauptagent bleibt dauerhaft aktiv, lädt aber **spezialisierte Fähigkeiten nur dann**, wenn sie für die aktuelle Aufgabe gebraucht werden.
-
-```mermaid
-flowchart TD
-    A[Anfrage] --> B[Hauptagent]
-    B -->|"klassifiziert Bedarf"| C{Skill?}
-    C -->|Legal| D[Legal-Skill laden]
-    C -->|Finance| E[Finance-Skill laden]
-    C -->|Keiner| F[Direkt antworten]
-    D --> G[Aufgabe lösen]
-    E --> G
-    F --> G
-    G --> B
-```
-
-### Warum dieser Ansatz?
-
-Das Gegenteil — alle Fähigkeiten immer im System-Prompt zu halten — führt zu **Prompt Bloat**: Der Agent bekommt Anweisungen für Szenarien, die selten auftreten, und verliert Fokus. Skill Loading hält den Prompt schlank und lädt Expertise nur wenn nötig.
-
-| Problem ohne Skill Loading | Lösung mit Skill Loading |
-|----------------------------|--------------------------|
-| Riesiger System-Prompt | Minimaler Basis-Prompt |
-| Tool-Liste wächst unkontrolliert | Nur aktive Tools im Kontext |
-| Agent verwirrt durch irrelevante Capabilities | Klarer Aufgabenfokus |
-| Schlechtere Performance | Bessere Retrieval-Qualität |
-
-### Wann Skill Loading verwenden?
-
-- Die Aufgabe ist weitgehend linear (kein Multi-Agent nötig)
-- Domänenwissen ist groß, wird aber nur sporadisch gebraucht
-- Prompt Bloat ist ein messbares Problem
-- Mehrere Fachbereiche mit separaten Tool-Sets (Legal, Finance, HR)
-
-### Implementierung mit LangGraph
-
-```python
-from typing import TypedDict, Annotated
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langchain_core.tools import tool
-from langchain.agents import create_agent
-from langchain.chat_models import init_chat_model
-
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-# Skills als separate Tool-Sets definieren
-@tool
-def vertrag_pruefen(vertragstext: str) -> str:
-    """Prüft einen Vertrag auf rechtliche Risiken nach deutschem Recht."""
-    # Implementierung ...
-    return "Analyse..."
-
-@tool
-def dsgvo_check(prozessbeschreibung: str) -> str:
-    """Prüft einen Prozess auf DSGVO-Konformität."""
-    # Implementierung ...
-    return "DSGVO-Bewertung..."
-
-@tool
-def budget_analysieren(kostenstelle: str) -> str:
-    """Analysiert Budgetdaten einer Kostenstelle."""
-    # Implementierung ...
-    return "Budgetanalyse..."
-
-# Skill-Registry: Fähigkeiten nach Domäne organisiert
 SKILL_REGISTRY = {
-    "legal":   [vertrag_pruefen, dsgvo_check],
+    "legal": [vertrag_pruefen, dsgvo_check],
     "finance": [budget_analysieren],
-    "general": [],  # Kein spezieller Skill nötig
+    "general": [],
 }
-
-class SkillState(TypedDict):
-    messages: Annotated[list, add_messages]
-    active_skill: str
-    active_tools: list
-
-def klassifiziere_anfrage(state: SkillState) -> SkillState:
-    """Bestimmt, welcher Skill gebraucht wird."""
-    letzte_nachricht = state["messages"][-1].content.lower()
-
-    if any(w in letzte_nachricht for w in ["vertrag", "recht", "dsgvo", "datenschutz"]):
-        skill = "legal"
-    elif any(w in letzte_nachricht for w in ["budget", "kosten", "finanzen"]):
-        skill = "finance"
-    else:
-        skill = "general"
-
-    return {
-        "active_skill": skill,
-        "active_tools": SKILL_REGISTRY[skill]
-    }
-
-def hauptagent(state: SkillState) -> SkillState:
-    """Hauptagent — verwendet nur die aktuell geladenen Tools."""
-    agent = create_agent(
-        model=llm,
-        tools=state["active_tools"],    # Nur temporär geladene Skills
-        system_prompt=(
-            f"Du bist ein hilfreicher Assistent. "
-            f"Aktiver Modus: {state['active_skill']}. "
-            f"Nutze ausschließlich die verfügbaren Tools."
-        ),
-    )
-    result = agent.invoke({"messages": state["messages"]})
-    return {"messages": result["messages"]}
-
-# Graph aufbauen
-graph = StateGraph(SkillState)
-graph.add_node("klassifiziere", klassifiziere_anfrage)
-graph.add_node("hauptagent", hauptagent)
-
-graph.add_edge(START, "klassifiziere")
-graph.add_edge("klassifiziere", "hauptagent")
-graph.add_edge("hauptagent", END)
-
-app = graph.compile()
 ```
 
-### Vorteile und Grenzen
+Grenze: Dieses Muster ist keine echte arbeitsteilige Mehragenten-Koordination, sondern eher ein fokussierter Hauptagent mit temporären Capability-Sets.
 
-| Vorteile | Grenzen |
-|----------|---------|
-| Schlanker Kontext, bessere Performance | Klassifikationsfehler lädt falschen Skill |
-| Skaliert gut bei vielen Domänen | Overhead durch Klassifikationsschritt |
-| Klare Trennung von Fähigkeiten | Skills müssen sauber abgegrenzt sein |
+## Hierarchische Systeme für größere Teams
 
-> [!WARNING] Häufiger Fehler: Skills als dauerhafter Kontext<br>
-> Skills müssen **temporär und aufgabenspezifisch** sein. Ein Skill, der nach der Aufgabe nicht wieder entladen wird, degeneriert zum Prompt Bloat — genau das Problem, das Skill Loading lösen soll.
-
----
-
-## Hierarchisches Pattern
-
-Bei sehr komplexen Aufgaben reicht eine Ebene nicht aus. Das hierarchische Pattern führt **Team Leads** ein, die selbst wieder Teams koordinieren.
+Wenn ein Supervisor nicht mehr ausreicht, kann eine Hierarchie aus Leitrollen und Unterteams sinnvoll werden. Ein Manager verteilt Teilbereiche an Team Leads, diese koordinieren wiederum ihre eigenen Worker.
 
 ```mermaid
 flowchart TD
     A[Komplexe Aufgabe] --> M[Manager]
-    M --> TL1[Team Lead: Entwicklung]
-    M --> TL2[Team Lead: Content]
-    
-    TL1 --> D1[Backend-Dev]
-    TL1 --> D2[Frontend-Dev]
-    TL1 --> D3[Tester]
-    
-    TL2 --> C1[Rechercheur]
-    TL2 --> C2[Redakteur]
-    TL2 --> C3[Lektor]
-    
+    M --> TL1[Team Lead Entwicklung]
+    M --> TL2[Team Lead Content]
+    TL1 --> D1[Backend]
+    TL1 --> D2[Frontend]
+    TL2 --> C1[Recherche]
+    TL2 --> C2[Redaktion]
     D1 --> TL1
     D2 --> TL1
-    D3 --> TL1
     C1 --> TL2
     C2 --> TL2
-    C3 --> TL2
-    
     TL1 --> M
     TL2 --> M
-    M --> E[Finale Lösung]
 ```
 
-### Funktionsweise
+Dieses Muster lohnt sich erst, wenn Anzahl der Rollen, Aufgabenkomplexität und Abhängigkeiten hoch genug sind. Für kleine Kursbeispiele ist es meist schon die zweite oder dritte Ausbaustufe, nicht der Startpunkt.
 
-1. **Manager** zerlegt Aufgabe in Teilbereiche
-2. **Team Leads** übernehmen Teilbereiche
-3. **Worker** bearbeiten konkrete Teilaufgaben
-4. **Ergebnisse** fließen die Hierarchie hinauf
-5. **Manager** integriert alle Teilergebnisse
+## Kollaboration und Review-Schleifen
 
-### Wann hierarchisch?
-
-| Kriterium | Supervisor reicht | Hierarchie nötig |
-|-----------|-------------------|------------------|
-| Anzahl Spezialisten | < 5 | > 5 |
-| Aufgaben-Komplexität | Einzelne Schritte | Verschachtelte Teilaufgaben |
-| Domänen | Eine Domäne | Mehrere Fachbereiche |
-| Abhängigkeiten | Unabhängig | Stark verknüpft |
-
-### Implementierungshinweis
-
-Hierarchische Systeme werden als **verschachtelte Subgraphs** in LangGraph umgesetzt:
-
-```python
-# Team Lead als eigener Subgraph
-def create_dev_team():
-    team = StateGraph(TeamState)
-    team.add_node("lead", dev_lead_node)
-    team.add_node("backend", backend_node)
-    team.add_node("frontend", frontend_node)
-    # ... Edges definieren
-    return team.compile()
-
-# Manager-Graph bindet Subgraphs ein
-manager_graph = StateGraph(ManagerState)
-manager_graph.add_node("dev_team", create_dev_team())
-manager_graph.add_node("content_team", create_content_team())
-```
-
----
-
-## Kollaboratives Pattern
-
-Im kollaborativen Pattern kommunizieren Agenten **direkt miteinander**, ohne zentrale Koordination. Dies ermöglicht emergentes Verhalten und komplexe Interaktionen.
+Ein anderes Muster entsteht, wenn Agenten sich nicht nur Aufträge zuschieben, sondern einander aktiv bewerten oder überarbeiten. Ein typischer Fall ist ein Autor-Kritiker-Zyklus.
 
 ```mermaid
 flowchart LR
     A[Kritiker] <-->|Feedback| B[Autor]
     B <-->|Entwurf| C[Faktenchecker]
-    C <-->|Korrekturen| A
-    
-    D[Moderator] -.->|Beobachtet| A
-    D -.->|Beobachtet| B
-    D -.->|Beobachtet| C
 ```
 
-### Typische Szenarien
+Diese Form kann Qualität deutlich erhöhen, birgt aber das Risiko von Endlosschleifen oder instabilen Iterationen. Deshalb braucht sie klare Abbruchbedingungen und Iterationsgrenzen.
 
-**Debatte/Diskussion:**
-- Mehrere "Experten" diskutieren ein Thema
-- Unterschiedliche Perspektiven werden eingebracht
-- Konsens oder beste Lösung wird ermittelt
+## Parallelität lohnt sich nur bei unabhängigen Teilaufgaben
 
-**Iterative Verbesserung:**
-- Autor erstellt Entwurf
-- Kritiker gibt Feedback
-- Autor überarbeitet
-- Zyklus bis Qualitätsziel erreicht
-
-**Peer Review:**
-- Agent A prüft Arbeit von Agent B
-- Agent B prüft Arbeit von Agent C
-- Gegenseitige Qualitätskontrolle
-
-### Implementierung: Autor-Kritiker-Zyklus
-
-```python
-from typing import TypedDict, Annotated
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-
-class ReviewState(TypedDict):
-    messages: Annotated[list, add_messages]
-    draft: str
-    feedback: str
-    revision_count: int
-    approved: bool
-
-def author_node(state: ReviewState) -> ReviewState:
-    """Erstellt oder überarbeitet den Text."""
-    if state["revision_count"] == 0:
-        # Erster Entwurf
-        prompt = f"Schreibe einen Artikel über: {state['messages'][-1].content}"
-    else:
-        # Überarbeitung basierend auf Feedback
-        prompt = f"Überarbeite den Text basierend auf diesem Feedback:\n{state['feedback']}\n\nAktueller Text:\n{state['draft']}"
-    
-    response = llm.invoke([{"role": "user", "content": prompt}])
-    return {
-        "draft": response.content,
-        "revision_count": state["revision_count"] + 1
-    }
-
-def critic_node(state: ReviewState) -> ReviewState:
-    """Bewertet den Text und gibt Feedback."""
-    prompt = f"""Bewerte diesen Text kritisch:
-
-{state['draft']}
-
-Antworte im Format:
-APPROVED: ja/nein
-FEEDBACK: [Dein detailliertes Feedback]"""
-    
-    response = llm.invoke([{"role": "user", "content": prompt}])
-    content = response.content
-    
-    approved = "APPROVED: ja" in content.lower()
-    feedback = content.split("FEEDBACK:")[-1].strip() if "FEEDBACK:" in content else content
-    
-    return {"feedback": feedback, "approved": approved}
-
-def should_continue(state: ReviewState) -> str:
-    """Entscheidet, ob weitere Überarbeitung nötig ist."""
-    if state["approved"]:
-        return END
-    if state["revision_count"] >= 3:  # Maximum 3 Revisionen
-        return END
-    return "author"
-
-# Graph aufbauen
-graph = StateGraph(ReviewState)
-graph.add_node("author", author_node)
-graph.add_node("critic", critic_node)
-
-graph.add_edge(START, "author")
-graph.add_edge("author", "critic")
-graph.add_conditional_edges("critic", should_continue, {"author": "author", END: END})
-
-review_system = graph.compile()
-```
-
-### Herausforderungen
-
-> [!WARNING] Endlosschleifen ohne Iterationslimit<br>
-> Kollaborative Systeme können ohne Abbruchbedingung endlos zwischen Agenten iterieren. Immer `recursion_limit` in der Config setzen und Iterationszähler im State führen.
-
-| Herausforderung | Lösungsansatz |
-|-----------------|---------------|
-| Endlosschleifen | Maximale Iterationen setzen |
-| Inkonsistente Kommunikation | Strukturierte Nachrichtenformate |
-| Konvergenz-Probleme | Moderator-Agent einführen |
-| Hohe Token-Kosten | Zusammenfassungen zwischen Runden |
-
----
-
-## Paralleles Pattern (Fan-out / Fan-in)
-
-Während Supervisor und kollaborative Muster Aufgaben sequenziell verarbeiten, ermöglicht das **Parallele Pattern** die gleichzeitige Ausführung unabhängiger Teilaufgaben. Dies reduziert die Gesamtlaufzeit erheblich – besonders bei I/O-lastigen Operationen wie Websuchen oder API-Abfragen.
+Parallelität ist ein eigener Gewinn von Multi-Agent-Systemen, aber nur dann, wenn Teilaufgaben wirklich unabhängig voneinander bearbeitet werden können. Recherchen in mehreren Quellen, parallele Dokumentanalysen oder Arbeitspakete ohne gegenseitige Abhängigkeit sind gute Kandidaten.
 
 ```mermaid
 flowchart TD
     A[Aufgabe] --> S[Orchestrator]
-    S -->|Fan-out| R[Research-Agent]
-    S -->|Fan-out| D[Data-Agent]
-    S -->|Fan-out| W[Writer-Agent]
-    R -->|Fan-in| J[Aggregator]
-    D -->|Fan-in| J
-    W -->|Fan-in| J
+    S --> R[Research-Agent]
+    S --> D[Data-Agent]
+    S --> W[Writer-Agent]
+    R --> J[Aggregator]
+    D --> J
+    W --> J
     J --> E[Finale Antwort]
 ```
 
-### Wann Parallelismus sinnvoll ist
+Nicht geeignet, wenn: Schritt B inhaltlich vom Ergebnis aus Schritt A abhängt. Dann ist eine scheinbar parallele Architektur nur komplizierter, aber nicht schneller.
 
-| Geeignet | Nicht geeignet |
-|----------|----------------|
-| Unabhängige Teilaufgaben | Aufgaben mit Abhängigkeiten (B braucht Ergebnis von A) |
-| Mehrere Datenquellen gleichzeitig abfragen | Sequenzielle Verarbeitung mit Zustandsaufbau |
-| Viele Dokumente gleichzeitig analysieren | Strikte Reihenfolge erforderlich |
-| Mehrere Modell-Prompts parallel vergleichen | Kleine Aufgaben mit wenig Laufzeitvorteil |
+## Kommunikation und gemeinsamer State
 
-### Implementierung mit Send
-
-LangGraph realisiert Parallelismus über das `Send`-Primitive. Nodes geben eine Liste von `Send`-Objekten zurück, die LangGraph parallel ausführt.
+In LangGraph erfolgt Zusammenarbeit meist über Shared State. Jeder Agent liest aus demselben oder aus kompatiblen State-Strukturen und gibt gezielt Änderungen zurück. Alternativ sind direkte Aufrufe oder asynchrone Nachrichten möglich, aber für den Kurskontext ist Shared State das zentrale Modell.
 
 ```python
-import operator
-from typing import TypedDict, Annotated
-from langgraph.graph import StateGraph, START, END
-from langgraph.types import Send
-from langchain.chat_models import init_chat_model
-
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-class ParallelState(TypedDict):
-    aufgabe: str
-    teilaufgaben: list[str]
-    ergebnisse: Annotated[list, operator.add]  # Fan-in: Ergebnisse akkumulieren
-
-def fan_out(state: ParallelState) -> list[Send]:
-    """Erstellt parallele Worker-Ausführungen für jede Teilaufgabe."""
-    return [
-        Send("worker", {"aufgabe": state["aufgabe"], "teilaufgabe": t})
-        for t in state["teilaufgaben"]
-    ]
-
-def worker_node(state: dict) -> dict:
-    """Bearbeitet eine einzelne Teilaufgabe."""
-    response = llm.invoke(
-        f"Bearbeite: {state['teilaufgabe']} im Kontext von: {state['aufgabe']}"
-    )
-    return {"ergebnisse": [response.content]}
-
-def aggregator_node(state: ParallelState) -> ParallelState:
-    """Fan-in: Fasst alle Parallel-Ergebnisse zusammen."""
-    alle = "\n\n".join(f"- {e}" for e in state["ergebnisse"])
-    response = llm.invoke(f"Fasse die Teilauswertungen zusammen:\n\n{alle}")
-    return {"ergebnisse": [response.content]}
-
-# Graph mit parallelen Kanten aufbauen
-graph = StateGraph(ParallelState)
-graph.add_node("worker", worker_node)
-graph.add_node("aggregator", aggregator_node)
-
-graph.add_conditional_edges(START, fan_out, ["worker"])  # Fan-out
-graph.add_edge("worker", "aggregator")                    # Fan-in
-graph.add_edge("aggregator", END)
-
-app = graph.compile()
-
-# Ausführen
-result = app.invoke({
-    "aufgabe": "Schreibe einen Bericht über KI-Trends 2025",
-    "teilaufgaben": ["Recherche", "Analyse", "Zusammenfassung"],
-    "ergebnisse": []
-})
-```
-
-### Map-Reduce-Pattern
-
-Ein häufiges Anwendungsmuster ist Map-Reduce: Viele Dokumente gleichzeitig analysieren, dann Ergebnisse zusammenführen.
-
-```python
-class MapReduceState(TypedDict):
-    dokumente: list[str]                         # Eingabe: Liste von Dokumenten
-    analysen: Annotated[list, operator.add]      # Fan-in: alle Analysen
-    zusammenfassung: str                          # Ausgabe: finale Zusammenfassung
-
-def map_phase(state: MapReduceState) -> list[Send]:
-    """Map: Jedes Dokument wird parallel analysiert."""
-    return [
-        Send("analysiere_dokument", {"dokument": doc, "index": i})
-        for i, doc in enumerate(state["dokumente"])
-    ]
-
-def analysiere_dokument(state: dict) -> dict:
-    response = llm.invoke(f"Analysiere kurz: {state['dokument']}")
-    return {"analysen": [f"Dok {state['index']}: {response.content}"]}
-
-def reduce_phase(state: MapReduceState) -> MapReduceState:
-    """Reduce: Alle Analysen zu einer Gesamtzusammenfassung verdichten."""
-    combined = "\n".join(state["analysen"])
-    response = llm.invoke(
-        f"Gesamtzusammenfassung aus {len(state['analysen'])} Analysen:\n{combined}"
-    )
-    return {"zusammenfassung": response.content}
-```
-
-### Vorteile und Grenzen
-
-| Vorteile | Grenzen |
-|---------|---------|
-| Deutlich kürzere Laufzeit bei unabhängigen Tasks | Höherer simultaner API-Call-Verbrauch |
-| Skaliert linear mit Anzahl Teilaufgaben | Debugging komplexer als sequenziell |
-| Klare Fehler-Isolation pro Worker | Nur für wirklich unabhängige Aufgaben geeignet |
-
----
-
-## Kommunikation zwischen Agenten
-
-Die Art der Kommunikation bestimmt maßgeblich die Effektivität eines Multi-Agent-Systems.
-
-### Kommunikationsformen
-
-```mermaid
-flowchart TD
-    subgraph Direkt
-        A1[Agent A] -->|Message| A2[Agent B]
-    end
-    
-    subgraph Shared State
-        B1[Agent A] --> S[(State)]
-        B2[Agent B] --> S
-        S --> B1
-        S --> B2
-    end
-    
-    subgraph Message Queue
-        C1[Agent A] --> Q[Queue]
-        Q --> C2[Agent B]
-        C2 --> Q
-        Q --> C1
-    end
-```
-
-| Form | Beschreibung | Einsatz |
-|------|-------------|---------|
-| **Direkt** | Agent ruft anderen Agent auf | Einfache Delegation |
-| **Shared State** | Gemeinsamer Zustand (LangGraph) | Standard in LangGraph |
-| **Message Queue** | Asynchrone Nachrichten | Komplexe Systeme |
-
-> [!WARNING] Deadlocks bei falschem Kommunikationsdesign<br>
-> Wenn Agent A auf das Ergebnis von Agent B wartet und Agent B auf das Ergebnis von Agent A — entsteht ein Deadlock. Klare Kommunikationsrichtungen (keine zirkulären Abhängigkeiten) und Timeouts sind Pflicht.
-
-### Strukturierte Übergaben
-
-Für zuverlässige Kommunikation sollten Übergaben strukturiert erfolgen:
-
-```python
-from pydantic import BaseModel, Field
-
-class TaskHandoff(BaseModel):
-    """Strukturierte Aufgabenübergabe zwischen Agenten."""
-    task_description: str = Field(description="Was soll erledigt werden?")
-    context: str = Field(description="Relevanter Kontext")
-    expected_output: str = Field(description="Erwartetes Ergebnisformat")
-    priority: int = Field(description="Priorität 1-5", ge=1, le=5)
-
-class TaskResult(BaseModel):
-    """Strukturiertes Ergebnis eines Agenten."""
-    status: str = Field(description="success | partial | failed")
-    result: str = Field(description="Das eigentliche Ergebnis")
-    confidence: float = Field(description="Konfidenz 0.0-1.0", ge=0.0, le=1.0)
-    notes: str = Field(description="Zusätzliche Anmerkungen")
-```
-
----
-
-## State-Management
-
-Der gemeinsame State ist das Rückgrat eines Multi-Agent-Systems in LangGraph. Das typische Multi-Agent-State-Schema erweitert den Basis-Chat-State um koordinationsspezifische Felder:
-
-```python
-from typing import TypedDict, Annotated, Optional
-from langgraph.graph.message import add_messages
-
 class MultiAgentState(TypedDict):
-    messages: Annotated[list, add_messages]  # Kommunikation
-    current_task: str                         # Aktuelle Aufgabe
-    completed_tasks: list[str]                # Abgeschlossene Aufgaben
-    next_agent: str                           # Nächster Agent
-    iteration_count: int                      # Zähler gegen Endlosschleifen
-    final_output: Optional[str]               # Endergebnis
+    messages: Annotated[list, add_messages]
+    current_task: str
+    completed_tasks: list[str]
+    next_agent: str
+    iteration_count: int
+    final_output: Optional[str]
 ```
 
-**Kernprinzip:** Jede Komponente liest aus dem State und gibt nur Änderungen zurück – niemals den gesamten State.
+Genau hier zeigt sich, wie eng Multi-Agent-Design und State Management zusammenhängen. Ohne sauberen gemeinsamen Zustand zerfällt die Koordination schnell.
 
-Für Grundlagen zu State-Design, Reducer-Funktionen und häufigen Fehlern siehe → [State Management](./State_Management.html).
+## Was in der Praxis schnell schiefgeht
 
----
+Deadlocks, Endlosschleifen, falsches Routing und unnötig komplizierte Übergaben gehören zu den häufigsten Problemen. Ebenso kritisch ist fehlende Fehlerbehandlung: Wenn ein Worker scheitert und es keinen Fallback gibt, wird aus modularer Architektur schnell ein fragiles System.
 
-## Fehlerbehandlung
-
-In Multi-Agent-Systemen können Fehler an vielen Stellen auftreten. Robuste Fehlerbehandlung ist essenziell.
-
-### Fehlerquellen
-
-```mermaid
-flowchart TD
-    E[Fehlerquellen] --> E1[Agent-Fehler]
-    E --> E2[Kommunikations-Fehler]
-    E --> E3[Koordinations-Fehler]
-    
-    E1 --> E1a[LLM-Timeout]
-    E1 --> E1b[Tool-Fehler]
-    E1 --> E1c[Ungültige Ausgabe]
-    
-    E2 --> E2a[State-Inkonsistenz]
-    E2 --> E2b[Verlorene Nachrichten]
-    
-    E3 --> E3a[Deadlock]
-    E3 --> E3b[Endlosschleife]
-    E3 --> E3c[Falsche Routing-Entscheidung]
-```
-
-### Strategien
-
-**Retry mit Backoff:**
-```python
-from tenacity import retry, stop_after_attempt, wait_exponential
-
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=10))
-def resilient_agent_call(state):
-    return agent_node(state)
-```
-
-**Fallback-Agent:**
-```python
-def safe_routing(state: TeamState) -> str:
-    try:
-        return determine_next_agent(state)
-    except Exception:
-        return "fallback_agent"  # Generalist als Backup
-```
-
-**Iterationslimit:**
 ```python
 def should_continue(state: TeamState) -> str:
     if state["iteration_count"] >= 10:
-        return "timeout_handler"  # Graceful Degradation
+        return "timeout_handler"
     return "next_agent"
 ```
 
----
+Typischer Fehler: Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
 
-## Entscheidungshilfe
+## Welche Wahl für Einsteiger meist sinnvoll ist
 
-Die Wahl des richtigen Patterns hängt von den Anforderungen ab:
+Für Einsteigerprojekte ist ein einfacher Supervisor meist der beste Startpunkt, wenn echte Arbeitsteilung gebraucht wird. Handoff lohnt sich, wenn Zuständigkeiten erst im Verlauf sichtbar werden. Parallele oder kollaborative Muster sollten erst eingesetzt werden, wenn der Mehrwert dafür klar erkennbar ist.
 
-```mermaid
-flowchart TD
-    A[Anforderung analysieren] --> B{Routing vor oder während der Bearbeitung?}
-    B -->|Vor der Bearbeitung| C[Supervisor-Pattern]
-    B -->|Während der Bearbeitung| D[Handoff-Pattern]
-    B -->|Kein Routing nötig| E{Domänenwissen groß aber sporadisch?}
-    E -->|Ja| F[Skill / Capability Loading]
-    E -->|Nein| G{Wie viele Spezialisten?}
-    G -->|3-5| H{Kommunikation?}
-    G -->|>5| I[Hierarchisches Pattern]
-    H -->|Iterativ / Feedback| J[Kollaboratives Pattern]
-    H -->|Unabhängig parallel| K[Paralleles Pattern]
-```
-
-| Situation | Empfohlenes Pattern |
-|-----------|---------------------|
-| Einfache Aufgabenteilung, Routing vorab bekannt | Supervisor |
-| Agent erkennt mid-execution: falscher Zuständiger | Handoff |
-| Großes Domänenwissen, nur sporadisch gebraucht | Skill / Capability Loading |
-| Qualitätssicherung mit Feedback-Schleifen | Kollaborativ |
-| Großes Team mit mehreren Fachbereichen | Hierarchisch |
-| Unabhängige Teilaufgaben, Latenz kritisch | Paralleles Pattern |
-| Content-Pipeline mit festen Stages | Supervisor |
-
----
-
-## Zusammenfassung
-
-Multi-Agent-Systeme ermöglichen die Lösung komplexer Aufgaben durch spezialisierte, kooperierende Agenten.
-
-**Kernkonzepte:**
-
-| Konzept | Beschreibung |
-|---------|-------------|
-| **Supervisor** | Zentraler Router delegiert *vor* der Bearbeitung |
-| **Handoff** | Agent übergibt Kontrolle *während* der Bearbeitung |
-| **Skill / Capability Loading** | Hauptagent lädt Fähigkeiten temporär bei Bedarf |
-| **Hierarchisch** | Mehrere Ebenen für sehr komplexe Systeme |
-| **Kollaborativ** | Direkte Agent-zu-Agent-Kommunikation mit Feedback |
-| **Paralleles Pattern** | Fan-out / Fan-in für unabhängige Aufgaben |
-| **Shared State** | Gemeinsamer Zustand in LangGraph |
-| **Strukturierte Übergaben** | Pydantic-Modelle für klare Schnittstellen |
-
-**Design-Prinzipien:**
-
-- Klare Verantwortlichkeiten pro Agent
-- Minimaler, gut strukturierter State
-- Robuste Fehlerbehandlung
-- Iterationslimits gegen Endlosschleifen
-- Strukturierte Kommunikationsformate
-
-**Nächste Schritte im Kurs:**
-
-Die praktische Umsetzung erfolgt mit LangGraph. Dort werden diese Patterns Schritt für Schritt implementiert – vom einfachen Supervisor bis zum kollaborativen Review-System.
+Teilnehmende unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, sondern vor allem mehr Koordinationslogik bedeutet. Genau deshalb ist die beste erste Frage nicht `Wie viele Rollen könnten existieren?`, sondern `Welche Rollen werden wirklich gebraucht?`
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html) | Grundlegende Architekturmuster für einzelne Agenten |
-| [State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html) | Zustandsverwaltung im Multi-Agent-Graph |
-| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html) | Wann und wie Menschen in Agenten-Teams eingebunden werden |
-| [Agenten-Kommunikationsprotokolle](https://ralf-42.github.io/Agenten/concepts/Agenten_Kommunikationsprotokolle.html) | Standards für Agent-zu-Agent-Kommunikation über Systemgrenzen |
-
+| [Welche Architektur passt zu diesem Agenten?](./Agent_Architekturen.html) | Wann ist Multi-Agent überhaupt die richtige Architekturklasse? |
+| [Wie behalten Agenten zwischen Schritten den Überblick?](./State_Management.html) | Wie wird der gemeinsame Zustand im Multi-Agent-Graph verwaltet? |
+| [Wann sollten Menschen in den Ablauf eingreifen?](./Human_in_the_Loop.html) | Wann braucht ein Agententeam Freigabe, Eskalation oder menschliche Kontrolle? |
+| [Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?](./Agenten_Kommunikationsprotokolle.html) | Welche Protokolle kommen bei agentenübergreifender Kommunikation ins Spiel? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** November 2025<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

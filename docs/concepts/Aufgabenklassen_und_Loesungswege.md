@@ -3,15 +3,14 @@ layout: default
 title: Welches Werkzeug?
 parent: Konzepte
 nav_order: 1
-description: Zweistufige Entscheidungshilfe für Agenten-Projekte - von der Aufgabe zum richtigen Lösungsweg und zur passenden Agentenarchitektur.
+description: "Entscheidungshilfe für Agenten-Projekte: erst den Lösungsweg klären, dann die passende Agentenarchitektur wählen"
 has_toc: true
 ---
 
 # Welches Werkzeug?
 {: .no_toc }
 
-> **Die Aufgabe bestimmt das Tool — und die Architektur.**      
-> Erst Lösungsweg klären, dann Agentenarchitektur, dann Datenschutz und Betrieb.
+> **Erst den Lösungsweg wählen, dann die Agentenarchitektur.**
 
 ---
 
@@ -23,104 +22,95 @@ has_toc: true
 
 ---
 
-## Ziel dieses Dokuments
+## Worum es in dieser Entscheidungshilfe geht
 
-Dieses Dokument bietet eine **zweistufige Entscheidungslogik**:
+Viele KI-Projekte werden zu früh als Agentensystem gedacht. Das wirkt modern, führt aber oft zu unnötiger Komplexität. In anderen Fällen wird das Problem zu klein gedacht, obwohl mehrere Schritte, Werkzeugnutzung und Fehlerbehandlung eigentlich nach einem Agenten verlangen. Genau zwischen diesen beiden Fehlrichtungen hilft diese Seite.
 
-1. **Ebene 1 — Lösungsweg:** Braucht diese Aufgabe überhaupt ein Agenten-System, oder reicht ein einfacherer Ansatz?
-2. **Ebene 2 — Agentenarchitektur:** Welche Architektur ist die richtige — ReAct, Tool-Calling, LangGraph-Workflow oder Multi-Agent?
+Die Entscheidung verläuft in zwei Stufen. Zuerst wird geklärt, welcher Lösungsweg überhaupt passt. Nicht jede Aufgabe braucht einen Agenten. Erst wenn diese Frage beantwortet ist, folgt die zweite Stufe: Welche Agentenarchitektur ist für diesen Fall sinnvoll?
 
-Das verhindert Over-Engineering (Agent, obwohl ein Workflow reicht) und Under-Engineering (einfacher Chat, obwohl Autonomie nötig wäre).
+Typischer Fehler: Direkt über ReAct, Multi-Agent oder LangGraph zu sprechen, bevor klar ist, ob nicht schon Chat, Workflow, RAG oder klassischer Code genügen.
 
----
+## Die erste Frage: Braucht die Aufgabe überhaupt einen Agenten?
 
-## Ebene 1: Welcher Lösungsweg?
+Für Einsteiger ist dies die wichtigste Unterscheidung im ganzen Kurs. Ein Agent lohnt sich erst dann, wenn die Aufgabe nicht vollständig im Voraus festgelegt werden kann und trotzdem eigenständig auf Daten, Tools oder Zwischenergebnisse reagieren muss. Wenn dagegen der Ablauf feststeht, ist ein einfacherer Lösungsweg fast immer robuster, günstiger und leichter zu testen.
 
-### Schnellentscheidung (60 Sekunden)
+Ein einmaliger persönlicher Textentwurf ist meist eine Chat-Aufgabe. Ein wiederkehrender, triggerbarer Prozess passt eher zu Workflow-Automation. Fragen über eine eigene Wissensbasis deuten oft auf ein RAG-System hin. Sehr datenintensive Verarbeitung gehört meist in Python und APIs. Ein Werkzeug für andere Nutzer mit Oberfläche kann ein App-Builder oder eine gezielte Anwendung sein. Erst wenn das Vorgehen explorativ wird, mehrere Schritte koordiniert werden müssen und Werkzeuge aktiv eingesetzt werden, wird ein Agentensystem plausibel.
 
-| Wenn die Aufgabe so aussieht | Dann starte hier |
+## Eine grobe Schnellentscheidung
+
+| Wenn die Aufgabe so aussieht | Naheliegender Startpunkt |
 |---|---|
-| Einmalig, ad hoc, persönlich | **Chat-Anwendung** |
-| Wiederkehrender Prozess mit Triggern | **Workflow-Automation** |
-| Fragen über eigene Dokumente / Wissensbasis | **RAG-System** |
-| Sehr viele Daten oder komplexe Datenverarbeitung | **Python & APIs** |
-| Tool für andere Nutzer mit UI | **KI-App-Builder** |
-| Vorgehen unklar, explorativ, mehrstufig, Tools nötig | **→ Agenten-System** |
-| Wiederkehrende persönliche Chat-Hilfe | **Custom GPT/Skill** |
+| Einmalig, ad hoc, persönlich | Chat-Anwendung |
+| Wiederkehrender Prozess mit Triggern | Workflow-Automation |
+| Fragen über eigene Dokumente oder Wissensbasis | RAG-System |
+| Sehr viele Daten oder komplexe Berechnungen | Python und APIs |
+| Werkzeug für andere Nutzer mit UI | KI-App-Builder oder Anwendung |
+| Wiederkehrende persönliche Unterstützung | Custom GPT oder Skill |
+| Vorgehen unklar, mehrstufig, toolgestützt | Agentensystem |
 
-> Ausführliche Beschreibung aller Lösungswege: [Aufgabenklassen & Lösungswege (GenAI)](https://ralf-42.github.io/GenAI/concepts/Aufgabenklassen_und_Loesungswege.html)
+Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet eine ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege (GenAI)](https://ralf-42.github.io/GenAI/concepts/Aufgabenklassen_und_Loesungswege.html).
 
-### Wann ist ein Agenten-System die richtige Wahl?
+## Woran sich ein echter Agentenfall erkennen lässt
 
-Ein Agenten-System ist dann sinnvoll, wenn **mindestens zwei** der folgenden Bedingungen zutreffen:
+Ein Agentensystem wird vor allem dann sinnvoll, wenn mehrere Bedingungen zusammenkommen. Dazu gehört, dass das Vorgehen nicht vollständig vordefiniert werden kann, dass Werkzeuge oder externe Systeme eingebunden werden müssen und dass spätere Schritte von früheren Ergebnissen abhängen. Häufig kommt noch hinzu, dass ein System Fehler nicht nur melden, sondern selbstständig darauf reagieren oder einen alternativen Weg wählen soll.
 
-- Das Vorgehen ist nicht vollständig im Voraus definierbar
-- Die Aufgabe erfordert den Einsatz von Tools (Suche, Code, APIs, Dateien)
-- Mehrere Arbeitsschritte müssen koordiniert werden
-- Ergebnisse früherer Schritte beeinflussen den nächsten Schritt
-- Fehler sollen erkannt und eigenständig korrigiert werden
+Ein guter Praxistest lautet deshalb: Würde ein fester Ablauf mit klaren Regeln dieselbe Aufgabe zuverlässig lösen? Wenn die Antwort ja lautet, spricht meist mehr für Workflow oder Code als für einen Agenten.
 
-**Warnsignale gegen Agenten:**
-- Die Aufgabe hat immer denselben festen Ablauf → Workflow-Automation
-- Es werden nur eigene Dokumente durchsucht → RAG-System reicht
-- Es gibt keine echten Entscheidungspunkte → Python-Skript genügt
+Grenze: Auch eine offene Formulierung in natürlicher Sprache macht aus einer Aufgabe noch keinen Agentenfall. Viele scheinbar agentische Anfragen lassen sich in Wahrheit mit klaren Pipelines lösen.
 
----
+## Warnsignale gegen Agentensysteme
 
-## Ebene 2: Welche Agentenarchitektur?
+Wenn eine Aufgabe immer denselben festen Ablauf hat, ist Workflow-Automation meist die bessere Wahl. Wenn nur eigene Dokumente durchsucht und zusammengefasst werden sollen, reicht oft ein RAG-System. Wenn es überhaupt keine echten Entscheidungspunkte gibt, genügt häufig ein Skript oder eine API-Anwendung.
 
-Wenn feststeht, dass ein Agenten-System die richtige Wahl ist, folgt die Architekturentscheidung.
+Teilnehmende unterschätzen oft, wie viel zusätzliche Kosten, Testaufwand und Fehlerdiagnose ein Agent mit sich bringt. Ein Agent ist kein Qualitätsmerkmal, sondern ein Werkzeug für einen bestimmten Aufgabentyp.
 
-### Schnellentscheidung Agentenarchitektur
+## Die zweite Frage: Welche Agentenarchitektur passt dann?
 
-| Wenn das Agenten-System so aussieht | Dann wähle |
+Wenn nach der ersten Stufe klar ist, dass ein Agent wirklich nötig ist, folgt die Architekturentscheidung. Auch hier gilt: Die einfachste Struktur, die die Aufgabe zuverlässig löst, ist meist die beste.
+
+Für viele erste Projekte reicht ein Tool-Calling-Agent. Offene Recherche oder Problemlösung mit unbekanntem Weg spricht eher für ReAct. Feste Schritte, Routing oder Qualitätsgates sprechen für einen Workflow. Mehrere Spezialrollen lohnen sich erst dann, wenn die Arbeitsteilung wirklich einen erkennbaren Mehrwert erzeugt. Ein RAG-Agent ist im Kern ein Wissenszugriff mit zusätzlicher Agentenlogik und sollte nur gewählt werden, wenn Retrieval und eigenständige Weiterverarbeitung zusammen gebraucht werden.
+
+## Eine grobe Schnellentscheidung für die Architektur
+
+| Wenn das Agentensystem so aussieht | Naheliegende Architektur |
 |---|---|
-| Einfache Aufgabe, definierte Tools, klarer Auftrag | **Tool-Calling Agent** |
-| Offene Recherche, unbekannter Lösungsweg, iterativ | **ReAct Agent** |
-| Mehrstufiger Prozess mit fester Reihenfolge oder Routing | **LangGraph Workflow** |
-| Aufgabe braucht mehrere Spezialisten parallel oder sequenziell | **Multi-Agent System** |
-| Wissensabfrage + Reasoning in einem System kombiniert | **RAG-Agent (Workflow + Retriever)** |
+| Definierte Tools, klarer Auftrag, begrenzte Freiheit | Tool-Calling-Agent |
+| Offene Recherche, unbekannter Lösungsweg, iterative Schleifen | ReAct-Agent |
+| Mehrstufiger Prozess mit Reihenfolge, Routing oder Freigaben | Workflow |
+| Mehrere Spezialisten mit klarer Arbeitsteilung | Multi-Agent-System |
+| Wissenszugriff plus autonome Weiterverarbeitung | RAG-Agent |
 
-### Architekturdetails
+## Tool-Calling: oft der beste Einstieg
 
-#### Tool-Calling Agent
-- **Kernidee:** Das LLM wählt aus einer definierten Tool-Liste und ruft Tools auf
-- **Geeignet für:** Assistenten mit festen Fähigkeiten (Kalender, Datenbank, E-Mail)
-- **Stärke:** Einfach erweiterbar durch neue Tools, schnell einsatzbereit
-- **Grenze:** Kein eigenständiges Planen mehrerer Schritte
-- **LangGraph:** `create_agent()` mit Tool-Liste
+Beim Tool-Calling wählt das Modell aus einer definierten Liste von Werkzeugen aus und ruft diese mit Parametern auf. Dieses Muster eignet sich gut für Assistenten mit klaren Fähigkeiten, etwa Kalenderzugriff, CRM-Abfragen oder E-Mail-Versand. Die Stärke liegt darin, dass das Modell flexibel formulieren kann, während die eigentliche Aktion in kontrollierten Tools stattfindet.
 
-#### ReAct Agent
-- **Kernidee:** Denken → Handeln → Beobachten, iterativer Zyklus bis Ziel erreicht
-- **Geeignet für:** Offene Recherche, Debugging, Problemlösung mit unbekanntem Umfang
-- **Stärke:** Transparenter Denkprozess, adaptiv bei unerwarteten Ergebnissen
-- **Grenze:** Kann bei vielen Iterationen teuer und langsam werden
-- **LangGraph:** `create_agent()` mit ReAct-Pattern
+In der Praxis relevant, wenn: Werkzeuge klar benannt sind, der Auftrag begrenzt bleibt und kein komplexer mehrstufiger Plan nötig ist.
 
-#### LangGraph Workflow
-- **Kernidee:** Aufgabe als Graph modellieren — Knoten = Verarbeitung, Kanten = Ablauf
-- **Geeignet für:** Mehrstufige Prozesse (Research → Analyse → Bericht), Routing nach Kategorie
-- **Stärke:** Vorhersagbar, gut testbar, explizite Fehlerbehandlung möglich
-- **Grenze:** Anforderungen müssen gut verstanden sein, Ablauf muss modellierbar sein
-- **LangGraph:** `StateGraph`, `add_conditional_edges`, Checkpointing
+## ReAct: wenn der Weg zur Lösung noch offen ist
 
-#### Multi-Agent System
-- **Kernidee:** Spezialisierte Agenten (Worker) unter Koordination eines Supervisors
-- **Geeignet für:** Komplexe Aufgaben mit klarer Arbeitsteilung (Research, Writing, Code, Review)
-- **Stärke:** Parallelisierung, Spezialisierung, Fehlertoleranz durch Redundanz
-- **Grenze:** Koordination ist aufwändig, höhere Debugging-Komplexität, höhere Kosten
-- **LangGraph:** `StateGraph` + Supervisor-Node + Worker-Subgraphen
+ReAct arbeitet in einem Zyklus aus Denken, Handeln und Beobachten. Der Agent prüft eine Lage, führt eine Aktion aus und reagiert auf das Ergebnis. Dieses Muster eignet sich für Recherche, Debugging oder offene Problemlösungen, bei denen der nächste Schritt erst nach Sichtung der bisherigen Ergebnisse feststeht.
 
-#### RAG-Agent
-- **Kernidee:** LangGraph-Workflow mit integriertem Retrieval aus Vektordatenbank
-- **Geeignet für:** Wissensbasierte Fragen über eigene Dokumente + autonome Weiterverarbeitung
-- **Stärke:** Kombiniert Wissenstiefe (RAG) mit Flexibilität (Agent)
-- **Grenze:** Erhöhte Komplexität bei Chunking, Retrieval und Agent-Logik
-- **LangGraph:** Workflow mit Retriever-Node + LLM-Synthese-Node
+Grenze: ReAct kann bei unklaren Aufgaben teuer und langsam werden. Ohne Begrenzung von Iterationen oder Budget verliert die Architektur schnell ihre Kontrolle.
 
----
+## Workflow: wenn die Reihenfolge wichtiger ist als Freiheit
 
-## Vollständiger Entscheidungsbaum
+Workflow-basierte Agentensysteme eignen sich für Prozesse mit klaren Stufen. Dazu gehören Routing, Qualitätsprüfungen, Freigaben oder feste Verarbeitungsketten. Der Vorteil liegt in der Vorhersagbarkeit. Ein Workflow ist meist leichter zu testen und zu überwachen als ein frei planender Agent.
+
+Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und sich der Lösungsweg erst während der Bearbeitung ergibt.
+
+## Multi-Agent: nur wenn Arbeitsteilung wirklich hilft
+
+Ein Multi-Agent-System verteilt Aufgaben auf spezialisierte Rollen wie Recherche, Schreiben, Review oder Code. Das kann sinnvoll sein, wenn die Teilaufgaben fachlich so unterschiedlich sind, dass ein einzelner Agent an Grenzen stößt oder parallele Arbeit echten Nutzen bringt.
+
+Typischer Fehler: Multi-Agent zu wählen, weil es eindrucksvoll klingt. In vielen Kurs- und Praxisfällen löst ein einzelner Workflow mit guten Knoten dieselbe Aufgabe einfacher.
+
+## RAG-Agent: wenn Wissen und Handeln zusammenkommen
+
+Ein RAG-Agent verbindet Wissenszugriff mit weiterer Agentenlogik. Das ist mehr als eine reine Such- oder Antwortmaschine. Ein solches System liest Informationen aus einer Wissensbasis, bewertet sie im Kontext der Aufgabe und leitet daraus weitere Schritte ab.
+
+Ein Beispiel wäre ein interner Support-Agent, der nicht nur eine Richtlinie zitiert, sondern auf Basis dieser Richtlinie eine passende Maßnahme vorbereitet oder einen Folgeprozess startet. Genau dort entsteht der Mehrwert gegenüber einem reinen RAG-System.
+
+## Ein vollständiger Entscheidungsbaum
 
 ```mermaid
 flowchart TD
@@ -128,107 +118,75 @@ flowchart TD
     B -->|Ja| B1([Chat])
     B -->|Nein| C{Regelbasiert und triggerbar?}
     C -->|Ja| C1([Workflow-Automation])
-    C -->|Nein| D{Eigene Dokumente / Wissensbasis?}
-    D -->|Ja| D0{Nur Suche?}
-    D0 -->|Ja| D1([RAG-System, <br>Python & APIs])
+    C -->|Nein| D{Eigene Dokumente oder Wissensbasis?}
+    D -->|Ja| D0{Nur Suche und Antwort?}
+    D0 -->|Ja| D1([RAG-System])
     D0 -->|Nein| AG
-    D -->|Nein| E{Viel Daten oder komplexe Logik?}
-    E -->|Ja| E1([Python & APIs])
-    E -->|Nein| F{Tool für andere mit UI?}
-    F -->|Ja| F1([KI-App-Builder, <br>Python & APIs])
-    F -->|Nein| G{Vorgehen unklar und explorativ?}
-    G -->|Nein| H1([Custom GPT/Skill])
-    G -->|Ja| AG[Agenten-System, <br>Python & APIs]
+    D -->|Nein| E{Viele Daten oder komplexe Logik?}
+    E -->|Ja| E1([Python und APIs])
+    E -->|Nein| F{Tool fuer andere mit UI?}
+    F -->|Ja| F1([App-Builder oder Anwendung])
+    F -->|Nein| G{Vorgehen unklar und toolgestuetzt?}
+    G -->|Nein| H1([Custom GPT oder Skill])
+    G -->|Ja| AG[Agentensystem]
 
-    %% Ebene 2: Agentenarchitektur
-    AG --> AG1{Mehrere Spezialisten nötig?}
+    AG --> AG1{Mehrere Spezialisten noetig?}
     AG1 -->|Ja| MA([Multi-Agent])
     AG1 -->|Nein| AG2{Fester Ablauf oder Routing?}
-    AG2 -->|Ja| WF([LangGraph Workflow])
-    AG2 -->|Nein| AG3{Offene Recherche / iterativ?}
-    AG3 -->|Ja| RE([ReAct Agent])
-    AG3 -->|Nein| TC([Tool-Calling Agent])
-
-    classDef start fill:#f9f,stroke:#333,stroke-width:2px
-    classDef solution fill:#bbf,stroke:#333,stroke-width:1px
-    classDef agent fill:#bfb,stroke:#333,stroke-width:1px
-    classDef pivot fill:#ff9,stroke:#333,stroke-width:2px
-    class A start
-    class B1,C1,D1,E1,F1,H1 solution
-    class MA,WF,RE,TC agent
-    class AG pivot
+    AG2 -->|Ja| WF([Workflow])
+    AG2 -->|Nein| AG3{Offene Recherche oder iterativ?}
+    AG3 -->|Ja| RE([ReAct])
+    AG3 -->|Nein| TC([Tool-Calling])
 ```
 
-> Legende: **Blau** = Lösungsweg (Ebene 1) · **Grün** = Agentenarchitektur (Ebene 2) · **Gelb** = Verzweigungspunkt
+## Praxisbeispiele für Ebene 1
 
----
+Eine E-Mail besser zu formulieren ist typischerweise eine Chat-Aufgabe. Rechnungen automatisch zu erfassen spricht für Workflow-Automation. Fragen über interne Handbücher passen häufig zu RAG. Eine Auswertung von 50.000 Kundenbewertungen gehört meist eher in Python und APIs als in einen frei laufenden Agenten. Ein interner HR-Assistent mit Oberfläche deutet auf eine Anwendung mit UI hin. Ein persönlicher Schreibassistent mit festem Stil kann dagegen gut als Custom GPT oder Skill funktionieren.
 
-## Praxisbeispiele
+## Praxisbeispiele für Ebene 2
 
-### Ebene 1 — Lösungsweg
-
-1. **"E-Mail besser formulieren"** → Chat
-2. **"Rechnungen automatisch erfassen"** → Workflow-Automation
-3. **"Fragen über interne Handbücher"** → RAG-System, Python & APIs
-4. **"50.000 Kundenbewertungen auswerten"** → Python & APIs
-5. **"Interner HR-Assistent mit UI"** → KI-App-Builder, Python & APIs
-6. **"Persönlicher Schreibassistent mit festem Stil"** → Custom GPT/Skill
-
-### Ebene 2 — Agentenarchitektur (d.R. Python & APIs)
-
-| Aufgabe | Begründung | Architektur |
+| Aufgabe | Warum diese Wahl plausibel ist | Architektur |
 |---|---|---|
-| "Finde Informationen zu Thema X im Web" | Offene Recherche, iterativ, unbekannter Umfang | ReAct Agent |
-| "Beantworte Kundenanfragen per Kalender und CRM" | Feste Tools, klarer Auftrag | Tool-Calling Agent |
-| "Analysiere Code, schlage Refactoring vor, erstelle PR" | Feste Schritte: Analyse → Plan → Umsetzung | LangGraph Workflow |
-| "Erstelle Marktanalyse-Report (Research + Text + Grafik)" | Drei Spezialisten, klare Arbeitsteilung | Multi-Agent (Supervisor) |
-| "Beantworte Fragen über interne Docs + schlage Maßnahmen vor" | Wissen + Reasoning kombiniert | RAG-Agent |
-
----
+| Informationen zu einem Thema im Web finden | offener, iterativer Rechercheweg | ReAct-Agent |
+| Kundenanfragen per Kalender und CRM beantworten | klar definierte Tools, begrenzter Auftrag | Tool-Calling-Agent |
+| Code analysieren, Refactoring vorschlagen und Umsetzung prüfen | feste Reihenfolge mit klaren Schritten | Workflow |
+| Marktanalyse mit Recherche, Text und Visualisierung erzeugen | klare Spezialrollen und Arbeitsteilung | Multi-Agent-System |
+| Fragen über interne Dokumente beantworten und Maßnahmen ableiten | Wissenszugriff plus eigenständige Weiterverarbeitung | RAG-Agent |
 
 ## Häufige Fehlentscheidungen
 
-- **Agenten für triviale Aufgaben:** Wenn der Ablauf immer gleich ist, reicht ein Workflow — Agenten sind teurer und schwerer zu debuggen
-- **Multi-Agent zu früh:** Ein einzelner LangGraph-Workflow mit bedingten Kanten löst oft dasselbe Problem einfacher
-- **ReAct ohne Kostenkontrolle:** ReAct-Agenten können bei unklaren Aufgaben viele Iterationen machen — immer `recursion_limit` und Budgetgrenzen setzen
-- **Tool-Calling statt Workflow:** Wenn die Reihenfolge der Schritte fest ist, einen Workflow verwenden — das gibt mehr Kontrolle und ist besser testbar
-- **Datenschutz zu spät bedacht:** Agenten mit Cloud-Modellen senden Daten nach außen — bei kritischen Daten lokale Modelle oder isolierte Umgebungen prüfen
-- **Kein Human-in-the-Loop bei kritischen Aktionen:** Agenten, die Dateien löschen, E-Mails senden oder Buchungen vornehmen, müssen eine Bestätigungsstufe haben
+Agenten für triviale Aufgaben sind eine der häufigsten Fehlentscheidungen. Wenn der Ablauf immer gleich bleibt, ist ein Workflow günstiger und besser testbar. Fast ebenso häufig wird Multi-Agent zu früh gewählt, obwohl ein einzelner Workflow mit Routing genügt.
 
----
+ReAct ohne Kostenkontrolle ist ein weiteres Risiko. Wenn keine Iterationsgrenzen und Budgets definiert werden, wächst die Schleife schnell unkontrolliert. Ebenso problematisch ist es, feste Schrittfolgen als Tool-Calling-Agent zu bauen. Dann wird ein frei entscheidendes System dort eingesetzt, wo eigentlich ein deterministischer Ablauf passender wäre.
+
+Datenschutz und Human-in-the-Loop werden ebenfalls oft zu spät bedacht. Sobald sensible Daten, E-Mail-Versand, Löschaktionen oder Buchungen ins Spiel kommen, reicht eine gute Modellantwort nicht mehr aus. Dann braucht die Lösung klare Kontrollpunkte.
 
 ## Checkliste vor dem Agentenbau
 
-**Ebene 1 — Lösungsweg validiert:**
-- [ ] Reicht ein einfacherer Ansatz (Chat, Workflow, RAG)?
-- [ ] Ist das Vorgehen wirklich nicht vollständig vorher definierbar?
-- [ ] Sind Tools oder Autonomie tatsächlich notwendig?
+Vor dem Bau sollte zuerst der Lösungsweg validiert werden. Reicht Chat, Workflow, RAG oder klassischer Code aus? Ist das Vorgehen wirklich nicht vollständig definierbar? Werden Tools oder Autonomie tatsächlich benötigt?
 
-**Ebene 2 — Architektur gewählt:**
-- [ ] Agentenarchitektur bewusst gewählt (nicht einfach Multi-Agent weil es beeindruckend klingt)?
-- [ ] Komplexität der Architektur ist durch den Anwendungsfall gerechtfertigt?
-- [ ] Gibt es einen Plan für Fehlerbehandlung und Fallbacks?
+Danach folgt die Architekturfrage. Wurde die Struktur bewusst gewählt oder nur aus Faszination für Multi-Agent? Ist die Komplexität durch den Anwendungsfall gerechtfertigt? Gibt es einen Plan für Fehlerbehandlung, Fallbacks und Eskalation?
 
-**Betrieb und Kontrolle:**
-- [ ] `recursion_limit` für alle Agenten gesetzt?
-- [ ] Kosten- und Tokenkontrolle eingebaut (LangSmith Tracing aktiv)?
-- [ ] Human-in-the-Loop für kritische Aktionen definiert?
-- [ ] Datenschutzanforderungen: Cloud vs. lokale Modelle entschieden?
-- [ ] Monitoring und Alerting für Production-Deployments geplant?
+Schließlich zählt der Betrieb. Iterationsgrenzen, Kostenkontrolle, Human-in-the-Loop, Datenschutzentscheidungen und Monitoring gehören nicht ans Ende der Diskussion. Sie sind Teil der Architekturentscheidung.
 
----
+```text
+Kurzcheck:
+- Reicht ein einfacherer Lösungsweg?
+- Falls nein: Welche Agentenarchitektur löst das Problem mit der geringsten zusätzlichen Komplexität?
+- Sind Kosten, Datenschutz und kritische Aktionen von Anfang an mitgedacht?
+```
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument                                                        | Inhalt                                                           |
-| --------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [Agent-Architekturen](./Agent_Architekturen.html)               | Technische Details zu ReAct, Tool-Calling, Workflow, Multi-Agent |
-| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html)               | Supervisor-Pattern, Hierarchical, Kollaborativ im Detail         |
-| [Human-in-the-Loop](./Human_in_the_Loop.html)                   | Wann und wie Menschen eingebunden werden                         |
-| [Modell-Auswahl Guide](../frameworks/Modell_Auswahl_Guide.html) | Welches Modell für welche Rolle im Graph                         |
+| Dokument | Frage |
+|---|---|
+| [Welche Architektur passt zu diesem Agenten?](./Agent_Architekturen.html) | Wie unterscheiden sich ReAct, Tool-Calling, Workflow und Multi-Agent im Detail? |
+| [Multi-Agent-Systeme](./Multi_Agent_Systeme.html) | Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten? |
+| [Human-in-the-Loop](./Human_in_the_Loop.html) | An welchen Stellen müssen Menschen zur Kontrolle oder Freigabe eingebunden werden? |
+| [Modell-Auswahl Guide](../frameworks/Modell_Auswahl_Guide.html) | Welches Modell passt zu welcher Rolle im gewählten System? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

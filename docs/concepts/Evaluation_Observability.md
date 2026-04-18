@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Evaluation & Observability
+title: Woher zeigt sich, ob ein Agent gut arbeitet?
 parent: Konzepte
 nav_order: 11
-description: "Bewertung, Qualitätssicherung und Observability von KI-Agenten"
+description: Bewertung, Qualitätssicherung und Observability von KI-Agenten
 has_toc: true
 ---
 
-# Evaluation & Observability
+# Woher zeigt sich, ob ein Agent gut arbeitet?
 {: .no_toc }
 
-> **Bewertung und Qualitätssicherung von KI-Agenten**
+> **Evaluation misst Qualität. Observability zeigt, warum sie entsteht oder kippt.**
 
 ---
 
@@ -22,194 +22,217 @@ has_toc: true
 
 ---
 
-## Das Silent Failure Problem
+## Evaluation und Observability: der Unterschied
 
-Klassische Software scheitert laut: Exceptions, Stack Traces, rote Dashboards. Ein KI-Agent mit 99,2 % Verfügbarkeit, Latenz unter 2 Sekunden und Fehlerquote nahe null kann gleichzeitig seit zwölf Tagen falsch klassifizieren — ohne eine einzige Fehlermeldung.
+Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. Observability beantwortet die Anschlussfrage, warum ein Ergebnis gut, schlecht, teuer oder instabil war. Beides gehört zusammen: Ohne Evaluation fehlt ein belastbarer Maßstab, ohne Observability bleibt unklar, an welcher Stelle der Fehler entstanden ist.
 
-> **"Traditionelle Software bricht laut zusammen. KI-Agenten scheitern leise, mit Zuversicht und im großen Maßstab."**
+Für Einsteiger wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, Antworten und Metriken betrachtet werden. Der Unterschied liegt im Zweck. Evaluation vergleicht erwartetes Verhalten mit tatsächlichem Verhalten. Observability sammelt die Spuren, die diesen Vergleich erklärbar machen.
 
-Der Statuscode sagt dir, ob das System läuft. Das Signal liegt im Gespräch selbst — nicht im Container, in dem es läuft. Ein HTTP-200 beweist nichts über die Qualität der Antwort.
+Typischer Fehler: Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
 
-Das ist der Paradigmenwechsel: **Systeme nicht überwachen. Verhalten überwachen.**
+## Das Silent-Failure-Problem
 
----
+Klassische Software scheitert oft laut: Exceptions, Fehlermeldungen, rote Dashboards. Agentensysteme scheitern häufig leise. Eine Anfrage endet mit HTTP 200, die Laufzeit sieht sauber aus, der Container lebt weiter, und trotzdem wird eine Rückgabe falsch priorisiert, ein ungeeignetes Tool gewählt oder eine Halluzination mit großer Sicherheit formuliert.
 
-## Die 4 Observability-Schichten
+Genau hier beginnt Observability für Agenten. Nicht die Frage, ob das System läuft, steht im Mittelpunkt, sondern ob es fachlich das Richtige tut. Das Qualitätssignal liegt im Gespräch, in den Zwischenschritten und in der Nutzung von Tools oder Kontext. Infrastruktur-Monitoring bleibt nötig, reicht aber nicht aus.
 
-Vier Datenpunkte pro Session decken auf, was Standard-Monitoring nicht sieht:
+In Trainings zeigt sich oft derselbe erste Irrtum: Wenn keine Exception auftritt, wird ein Durchlauf als erfolgreich gewertet. Für Agenten ist diese Gleichsetzung zu grob.
 
-```mermaid
-flowchart TB
-    L1["1️⃣ Vollständige Prompt-Antwort-Paare\nUser-Prompt + System-Prompt + Kontext + Modellantwort\nDas Qualitätssignal"]
-    L2["2️⃣ Agent Trajectory (jeder Schritt)\nReasoning → Tool Call → Retrieval → Reasoning → ...\nWo genau ist es schiefgelaufen?"]
-    L3["3️⃣ Token- & Kostenaufschlüsselung\nPro Session, pro Span — nicht nur Gesamtkosten\nWelcher Schritt verbraucht 80 % der Token?"]
-    L4["4️⃣ Tool Call Behavior\nWelche Tools? Welche Argumente? Wie oft? Stille Fehler?\nUnterschied zwischen 'schlechte Antwort' und 'falsches Tool'"]
+## Ein einfaches Kursbeispiel
 
-    L1 --> L2 --> L3 --> L4
-```
+Ein Support-Agent soll drei häufige Aufgaben lösen: Lieferstatus nennen, Rechnung erneut senden und Öffnungszeiten beantworten. Für einen Einsteigerkurs reicht dieses kleine Szenario, um Evaluation und Observability konkret zu machen.
 
-| Schicht | Was sie zeigt | Was ohne sie verborgen bleibt |
-|---------|--------------|-------------------------------|
-| Prompt-Antwort-Paare | Vollständiger Konversationskontext | Agent klingt richtig, ist aber falsch |
-| Trajectory | Jeden Denkschritt und Tool-Aufruf | Wo in der Kette der Fehler entstand |
-| Token/Kosten | Kostenverteilung pro Span | Reasoning-Loop erzeugt $4-Session statt $0,08 |
-| Tool Behavior | Argumente, Wiederholungen, stille Fehler | Agent halluziniert statt zu eskalieren |
-
-> [!NOTE] Erst mit allen 4 Schichten ist Observability vollständig<br>
-> Latenz und Uptime sind Infrastruktur-Signale. Die 4 Schichten sind Verhaltens-Signale — sie sagen dir, ob der Agent tatsächlich das Richtige tut.
-
----
-
-## Kurzüberblick: Warum Evaluation?
-
-KI-Agenten unterscheiden sich fundamental von klassischer Software: Ihre Ausgaben sind nicht deterministisch, ihre Entscheidungswege oft überraschend, und kleine Prompt-Änderungen können große Auswirkungen haben. Ohne systematische Evaluation entstehen kritische Probleme:
-
-- **Keine Baseline:** Ist Version 2.0 wirklich besser als 1.0?
-- **Versteckte Regressionen:** Ein "Fix" verbessert einen Fall, verschlechtert zehn andere
-- **Subjektive Bewertung:** "Fühlt sich besser an" ist keine Metrik
-- **Production-Überraschungen:** Agenten verhalten sich mit echten Nutzern anders als im Test
-
-Systematische Evaluation löst diese Probleme durch:
-
-| Aspekt | Ohne Evaluation | Mit Evaluation |
-|--------|-----------------|----------------|
-| **Qualitätsmessung** | Bauchgefühl | Objektive Metriken |
-| **Vergleichbarkeit** | Nicht möglich | A/B-Tests, Experimente |
-| **Regression** | Zufällig entdeckt | Automatisch erkannt |
-| **Dokumentation** | Anekdoten | Reproduzierbare Ergebnisse |
-
-**Kernprinzip:** Was nicht gemessen wird, kann nicht verbessert werden — und bei KI-Agenten ist Messen schwieriger als bei klassischer Software.
-
----
-
-## Evaluierungsebenen
-
-### Komponenten-Evaluation
-
-Einzelne Bausteine werden isoliert getestet:
-
-| Komponente | Was wird geprüft? | Beispiel-Metrik |
-|------------|-------------------|-----------------|
-| **LLM-Ausgabe** | Qualität der Antwort | Relevanz, Kohärenz |
-| **Tool-Auswahl** | Richtiges Tool gewählt? | Accuracy |
-| **Tool-Parameter** | Korrekte Argumente? | Validierungsrate |
-| **Retriever** | Relevante Dokumente gefunden? | Precision@k, Recall |
-| **Strukturierte Ausgabe** | Schema eingehalten? | Validierungsrate |
-
-### Workflow-Evaluation
-
-Der gesamte Ablauf wird End-to-End bewertet:
-
-- Erreicht der Agent das gewünschte Ziel?
-- Wie viele Schritte werden benötigt?
-- Welche Fehler treten auf?
-- Wie lange dauert die Ausführung?
-
-### Nutzer-Evaluation
-
-Die tatsächliche Nutzererfahrung steht im Fokus:
-
-- Zufriedenheit mit der Antwort
-- War die Interaktion hilfreich?
-- Würde der Nutzer den Agenten erneut verwenden?
-
----
-
-> [!WARNING] Ohne Baseline keine belastbare Aussage<br>
-> Eine einzelne Messung sagt nichts — erst der Vergleich (vorher/nachher, Version A/B) zeigt, ob eine Änderung wirklich hilft oder nur an einem Ort verbessert und anderswo verschlechtert. Regression-Tests sind kein Optional-Feature.
-
-## Metriken für Agenten
-
-### Quantitative Metriken
-
-**Accuracy-basiert:**
-
-```python
-# Beispiel: Tool-Auswahl-Accuracy
-expected_tool = "search_database"
-actual_tool = agent_response.tool_calls[0].name
-
-accuracy = 1.0 if expected_tool == actual_tool else 0.0
-```
-
-| Metrik | Beschreibung | Berechnung |
-|--------|--------------|------------|
-| **Accuracy** | Anteil korrekter Antworten | Richtig / Gesamt |
-| **Precision** | Anteil relevanter unter gefundenen | TP / (TP + FP) |
-| **Recall** | Anteil gefundener unter relevanten | TP / (TP + FN) |
-| **F1-Score** | Harmonisches Mittel | 2 × (P × R) / (P + R) |
-
-**Performance-basiert:**
-
-| Metrik | Beschreibung | Zielwert |
-|--------|--------------|----------|
-| **Latenz (p50)** | Median der Antwortzeit | < 2 Sekunden |
-| **Latenz (p95)** | 95. Perzentil | < 5 Sekunden |
-| **Token-Verbrauch** | Kosten pro Request | Minimieren |
-| **Schritte bis Lösung** | Anzahl Tool-Calls | Minimieren |
-| **Tool Selection Accuracy** | Richtiges Tool pro Situation? | Maximieren |
-| **Trajectory Efficiency** | Schritte pro Aufgabe — konsistent? | Senken |
-| **Retrieval Hit Rate** | Anteil genutzter abgerufener Dokumente | Maximieren |
-
-**Kritische Agenten-Metrik: Cost per Successful Completion**
-
-Kosten pro Session sagen das Falsche. Ein Agent für 0,05 € pro Session mit 40 % Fehlerrate kostet **0,083 € pro gelöstem Problem**. Ein Agent für 0,10 € mit 95 % Erfolgsrate kostet **0,105 € pro gelöstem Problem**. In aggregierten Dashboards sehen beide ähnlich aus — bis man die Zahlen nebeneinanderstellt.
-
-```python
-def cost_per_successful_completion(sessions: list[dict]) -> float:
-    """Kosten pro tatsächlich gelöster Session — nicht pro Session insgesamt."""
-    total_cost = sum(s["cost"] for s in sessions)
-    successful = sum(1 for s in sessions if s["task_completed"])
-    return total_cost / successful if successful > 0 else float("inf")
-```
-
-> **"Track cost per successful completion, not cost per session. They tell completely different stories."**
-
-### Qualitative Metriken
-
-Nicht alles lässt sich in Zahlen fassen. Qualitative Bewertungen erfassen:
-
-- **Kohärenz:** Ist die Antwort in sich schlüssig?
-- **Relevanz:** Beantwortet die Antwort die Frage?
-- **Vollständigkeit:** Fehlen wichtige Aspekte?
-- **Ton:** Ist die Antwort angemessen formuliert?
-- **Sicherheit:** Enthält die Antwort problematische Inhalte?
-
----
-
-## Datasets erstellen
-
-Gute Evaluation beginnt mit guten Testdaten. Ein Dataset besteht aus Input-Output-Paaren, die das erwartete Verhalten definieren.
-
-### Grundstruktur
+Die Evaluation kann mit wenigen Testfällen beginnen. Für jede Anfrage wird festgelegt, was als gute Antwort gilt. Das kann eine exakte Lösung sein, eine erlaubte Liste von Schlüsselinformationen oder ein korrekt ausgelöstes Tool.
 
 ```python
 examples = [
     {
-        "inputs": {"question": "Was ist die Hauptstadt von Frankreich?"},
-        "outputs": {"answer": "Paris"}
+        "inputs": {"question": "Wo ist meine Bestellung 4711?"},
+        "outputs": {"tool_used": "track_order", "must_include": ["unterwegs"]},
     },
     {
-        "inputs": {"question": "Berechne 15 * 7"},
-        "outputs": {"answer": "105", "tool_used": "calculator"}
+        "inputs": {"question": "Bitte schick mir die Rechnung noch einmal."},
+        "outputs": {"tool_used": "send_invoice", "must_include": ["E-Mail"]},
+    },
+    {
+        "inputs": {"question": "Habt ihr am Samstag geöffnet?"},
+        "outputs": {"must_include": ["Samstag", "9 bis 14 Uhr"]},
     },
 ]
 ```
 
-### Dataset-Erstellung mit LangSmith
+Observability ergänzt dieses kleine Evaluationsset um die Spuren pro Anfrage: Welcher Prompt wurde gebaut, welches Tool wurde gewählt, welche Parameter wurden übergeben, wie viele Schritte waren nötig und an welcher Stelle stieg der Token-Verbrauch. Erst diese Sicht macht verständlich, warum zwei Antworten ähnlich klingen, aber nur eine davon belastbar ist.
+
+## Welche Beobachtungsdaten wirklich helfen
+
+Für einen Agenten reichen einige wenige Datentypen, um die meisten Fehler sichtbar zu machen. Am wichtigsten sind vollständige Prompt-Antwort-Paare, die Schrittfolge des Agenten, Kosten- und Tokenwerte pro Durchlauf sowie das Verhalten der Tool-Aufrufe. Diese vier Ebenen decken viele Probleme auf, die in klassischem Monitoring unsichtbar bleiben.
+
+```mermaid
+flowchart TB
+    L1["1. Prompt und Antwort\nFrage, Kontext, Systeminstruktion, Ausgabe"]
+    L2["2. Schrittfolge\nReasoning, Retrieval, Tool Calls, Zwischenergebnisse"]
+    L3["3. Kosten und Token\npro Session und pro Schritt"]
+    L4["4. Tool-Verhalten\nToolwahl, Parameter, Wiederholungen, Fehler"]
+
+    L1 --> L2 --> L3 --> L4
+```
+
+Wer nur die fertige Antwort speichert, sieht häufig nur das Symptom. Wer auch Trajectory und Tool-Verhalten speichert, erkennt meist die eigentliche Ursache: falsches Tool, leerer Retrieval-Kontext, unnötige Schleife oder ein Prompt, der dem Modell zu viel Spielraum lässt.
+
+> [!NOTE] Vier Signale mit hohem Nutzen<br>
+> Für einen Kurseinstieg genügen meist diese vier Beobachtungsebenen. Mehr Telemetrie hilft nur dann, wenn daraus auch Entscheidungen für Prompt, Tooling oder Datenbasis abgeleitet werden.
+
+## Was Evaluation konkret misst
+
+Evaluation braucht einen klaren Soll-Ist-Vergleich. Bei Agenten betrifft dieser Vergleich nicht nur den finalen Antworttext, sondern oft auch den Weg dorthin. Ein Agent kann eine inhaltlich brauchbare Antwort liefern und dabei dennoch das falsche Tool verwenden, unnötig teuer arbeiten oder bei leicht veränderten Formulierungen sofort kippen.
+
+Sinnvoll ist deshalb eine Staffelung in drei Ebenen. Auf Komponentenebene wird geprüft, ob einzelne Bausteine sauber arbeiten, etwa Tool-Auswahl, Tool-Parameter, strukturierte Ausgaben oder ein Retriever. Auf Workflow-Ebene zählt, ob die Aufgabe End-to-End gelöst wird. Auf Nutzerebene wird sichtbar, ob das Ergebnis im echten Einsatz tatsächlich hilft.
+
+Grenze: Nicht jede gute Agentenantwort lässt sich mit einer einzigen Kennzahl bewerten. Gerade bei offenen Formulierungen braucht Evaluation mehrere Kriterien gleichzeitig.
+
+## Welche Metriken für Einsteiger zuerst genügen
+
+Für den Einstieg ist keine Metrik-Bibliothek nötig. Meist reichen vier Fragen: War die Antwort fachlich korrekt, wurde das richtige Tool verwendet, wie lange dauerte der Durchlauf und wie hoch waren die Kosten. Damit entsteht bereits ein belastbares Grundbild.
+
+Eine einfache Tool-Accuracy lässt sich fast ohne Infrastruktur berechnen:
+
+```python
+expected_tool = "track_order"
+actual_tool = agent_response.tool_calls[0].name
+
+tool_accuracy = 1.0 if expected_tool == actual_tool else 0.0
+```
+
+Für textuelle Antworten helfen häufig drei Bewertungsachsen: Relevanz, Vollständigkeit und Sicherheit. Diese Kriterien sind weniger präzise als exakte Übereinstimmung, dafür aber realistischer für natürliche Sprache.
+
+| Metrik | Zeigt | In der Praxis relevant, wenn |
+|---|---|---|
+| Accuracy | Antwort oder Tool ist korrekt | klare Soll-Antworten existieren |
+| Latenz | Antwort kommt schnell genug | Wartezeit Nutzerfluss stört |
+| Kosten pro erfolgreicher Lösung | Effizienz pro gelöstem Fall | Varianten verglichen werden |
+| Erfolgsquote pro Aufgabe | Ziel wurde wirklich erreicht | Agent mehrere Schritte ausführt |
+
+Ein besonders nützlicher Wert ist nicht die Kostenhöhe pro Session, sondern die Kosten pro erfolgreicher Lösung. Zwei Varianten können ähnlich teuer erscheinen, obwohl eine davon deutlich öfter scheitert.
+
+```python
+def cost_per_successful_completion(sessions: list[dict]) -> float:
+    total_cost = sum(s["cost"] for s in sessions)
+    successful = sum(1 for s in sessions if s["task_completed"])
+    return total_cost / successful if successful else float("inf")
+```
+
+## Wie ein kleines Evaluationsset aufgebaut wird
+
+Gute Evaluation beginnt nicht mit Hunderten Beispielen, sondern mit einer kleinen, sauberen Auswahl typischer Fälle. Für einen Kurs genügen oft 20 bis 30 Testfälle, wenn sie nicht nur den Happy Path abdecken. Wichtig ist eine Mischung aus Standardfällen, Randfällen und bewusst schwierigen Eingaben.
+
+Ein häufiger erster Fehler ist ein Testset, das nur aus offensichtlichen Anfragen besteht. Dann wirkt der Agent robuster, als er später im Einsatz ist. Schon wenige Variationen machen einen großen Unterschied: Tippfehler, unvollständige Angaben, mehrdeutige Fragen oder Eingaben außerhalb des vorgesehenen Aufgabenbereichs.
+
+```text
+Dataset-Struktur:
+- Happy Path: typische Anfragen mit erwartbarem Verlauf
+- Edge Cases: unklare Formulierungen, Grenzwerte, fehlende Angaben
+- Negative Tests: Out-of-Scope, ungültige Eingaben, adversariale Inputs
+```
+
+Wenn im Betrieb ein neuer Fehler auftaucht, gehört genau dieser Fall in das Evaluationsset. So wird Qualität mit jeder Iteration weniger zufällig und stärker reproduzierbar.
+
+## Welche Evaluierungsmethoden sich eignen
+
+Die einfachste Methode ist exakte Übereinstimmung. Sie eignet sich für klar definierte Antworten wie IDs, Zahlenwerte oder Tool-Namen. Für offene Antworten ist sie oft zu streng, weil mehrere Formulierungen fachlich korrekt sein können.
+
+```python
+def exact_match(predicted: str, expected: str) -> float:
+    return 1.0 if predicted.strip().lower() == expected.strip().lower() else 0.0
+```
+
+Daneben gibt es weichere Verfahren. Teilübereinstimmung prüft, ob zentrale Informationen enthalten sind. Semantische Ähnlichkeit vergleicht Bedeutungen statt Oberflächenform. LLM-as-Judge nutzt ein Modell als Bewerter. Dieses Verfahren ist flexibel, kostet aber zusätzlich und sollte nicht als unfehlbare Instanz verstanden werden.
+
+```python
+def contains_answer(predicted: str, expected_keywords: list[str]) -> float:
+    predicted_lower = predicted.lower()
+    matches = sum(1 for keyword in expected_keywords if keyword.lower() in predicted_lower)
+    return matches / len(expected_keywords)
+```
+
+Nicht geeignet, wenn: Das Bewertungsverfahren selbst intransparent bleibt und dadurch nur eine weitere Blackbox erzeugt. Gerade in Einsteigerkursen sollte immer klar sein, warum eine Antwort als gut oder schlecht zählt.
+
+## Observability erklärt Fehlerursachen
+
+Wenn Evaluation zeigt, dass eine Aufgabe scheitert, beginnt die eigentliche Diagnose. Observability beantwortet dann Fragen wie: War der Kontext leer, obwohl Dokumente vorhanden waren? Hat der Agent das richtige Tool gewählt, aber mit falschen Parametern aufgerufen? Entstand eine teure Schleife durch wiederholtes Nachdenken ohne Fortschritt?
+
+Für die Praxis reicht oft schon ein strukturierter Trace pro Anfrage:
+
+```python
+trace = {
+    "question": "Bitte sende mir die Rechnung erneut.",
+    "tool_calls": [
+        {"name": "search_orders", "args": {"customer_id": "123"}},
+        {"name": "send_invoice", "args": {"order_id": "4711"}},
+    ],
+    "latency_ms": 1640,
+    "input_tokens": 820,
+    "output_tokens": 146,
+}
+```
+
+Ein solcher Trace ersetzt keine Bewertung, aber er macht Fehler reproduzierbar. Genau deshalb gehören Evaluation und Observability zusammen: Die eine Seite zeigt Abweichungen, die andere macht sie erklärbar.
+
+## Regressionen früh erkennen
+
+Sobald ein Agent produktiv weiterentwickelt wird, reicht eine Einmalbewertung nicht mehr aus. Jede Änderung an Prompt, Modell, Tooling oder Wissensbasis kann frühere Verbesserungen wieder zerstören. Regression Testing vergleicht daher neue Varianten immer mit einer bekannten Baseline auf demselben Datensatz.
+
+```python
+baseline_results = evaluate(
+    my_agent_v1,
+    data="Agent-Evaluation-v1",
+    evaluators=[accuracy_evaluator],
+    experiment_prefix="baseline-v1"
+)
+
+candidate_results = evaluate(
+    my_agent_v2,
+    data="Agent-Evaluation-v1",
+    evaluators=[accuracy_evaluator],
+    experiment_prefix="candidate-v2"
+)
+```
+
+Der didaktische Kern ist einfach: Erst messen, dann ändern, dann erneut messen. Ohne diesen Vergleich bleiben Verbesserungen oft Behauptungen.
+
+> [!WARNING] Baseline vor jeder Optimierung<br>
+> Eine einzelne gute Demo ist keine belastbare Evidenz. Aussagekräftig wird Qualität erst im Vergleich mit einer vorherigen Version auf denselben Fällen.
+
+## Feedback aus dem Betrieb nutzen
+
+Evaluation endet nicht mit dem ersten Release. In vielen Projekten zeigt sich erst im echten Einsatz, welche Formulierungen, Sonderfälle oder Missverständnisse im Kurslabor noch nicht sichtbar waren. Nutzerfeedback und Produktions-Traces sind deshalb keine Nebensache, sondern Rohmaterial für das nächste Evaluationsset.
+
+Der sinnvolle Kreislauf ist klein und konkret: Fehler im Betrieb beobachten, ausgewählte Fälle annotieren, dem Testset hinzufügen, Verbesserungen gegen dieses Set prüfen und erst danach erneut ausrollen. Teams, die diesen Schritt überspringen, reparieren häufig nur lokal und wiederholen denselben Fehler in anderer Form.
+
+```mermaid
+flowchart TD
+    A["Production-Fall"] --> B["Trace prüfen"]
+    B --> C["Testfall ergänzen"]
+    C --> D["Fix entwickeln"]
+    D --> E["gegen Baseline evaluieren"]
+    E --> F["erneut ausrollen"]
+```
+
+## Konkrete Umsetzung mit LangSmith
+
+Werkzeuge wie LangSmith sind für das Grundprinzip nicht notwendig, aber sie machen reproduzierbare Evaluation und Trace-Analyse deutlich einfacher. Für einen Kurs ist der Mehrwert vor allem didaktisch: Testfälle, Experimente und Feedback lassen sich an einem Ort sammeln.
+
+Ein einfaches Dataset kann direkt per SDK angelegt werden:
 
 ```python
 from langsmith import Client
 
 client = Client()
 
-# Dataset anlegen
 dataset = client.create_dataset(
     dataset_name="Agent-Evaluation-v1",
     description="Testfälle für den Support-Agenten"
 )
 
-# Beispiele hinzufügen
 for example in examples:
     client.create_example(
         dataset_id=dataset.id,
@@ -218,615 +241,63 @@ for example in examples:
     )
 ```
 
-### Best Practices für Datasets
-
-| Aspekt | Empfehlung | Begründung |
-|--------|------------|------------|
-| **Größe** | 20–50 Beispiele | Balance: Aussagekraft vs. Laufzeit |
-| **Diversität** | Edge Cases abdecken | Nicht nur "Happy Path" |
-| **Versionierung** | Namen mit Version | `v1`, `v2` für Vergleiche |
-| **Dokumentation** | Beschreibung pro Beispiel | Nachvollziehbarkeit |
-| **Aktualisierung** | Bei neuen Fehlern erweitern | Kontinuierliche Verbesserung |
-
-### Kategorien von Testfällen
-
-Ein ausgewogenes Dataset enthält verschiedene Kategorien:
-
-```
-Dataset-Struktur:
-├── Happy Path (60%)
-│   └── Typische, erwartbare Anfragen
-├── Edge Cases (25%)
-│   ├── Grenzwerte
-│   ├── Ungewöhnliche Formulierungen
-│   └── Mehrdeutige Anfragen
-└── Negative Tests (15%)
-    ├── Ungültige Eingaben
-    ├── Out-of-Scope Fragen
-    └── Adversariale Inputs
-```
-
----
-
-## Evaluierungsmethoden
-
-### Exakte Übereinstimmung
-
-Die einfachste Form: Stimmt die Ausgabe exakt mit dem Erwartungswert überein?
-
-```python
-def exact_match(predicted: str, expected: str) -> float:
-    return 1.0 if predicted.strip().lower() == expected.strip().lower() else 0.0
-```
-
-**Vorteile:** Einfach, deterministisch, schnell  
-**Nachteile:** Zu streng für natürlichsprachliche Ausgaben
-
-### Teilübereinstimmung
-
-Prüft, ob erwartete Elemente in der Antwort enthalten sind:
-
-```python
-def contains_answer(predicted: str, expected_keywords: list) -> float:
-    predicted_lower = predicted.lower()
-    matches = sum(1 for kw in expected_keywords if kw.lower() in predicted_lower)
-    return matches / len(expected_keywords)
-```
-
-### Semantische Ähnlichkeit
-
-Nutzt Embeddings, um die Bedeutungsähnlichkeit zu messen:
-
-```python
-from langchain_openai import OpenAIEmbeddings
-import numpy as np
-
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-
-def semantic_similarity(text1: str, text2: str) -> float:
-    vec1 = embeddings.embed_query(text1)
-    vec2 = embeddings.embed_query(text2)
-    # Cosine Similarity
-    return np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
-```
-
-### LLM-as-Judge
-
-Ein LLM bewertet die Qualität einer Antwort — der mächtigste, aber auch teuerste Ansatz.
-
-```python
-from langchain.chat_models import init_chat_model
-from langchain_core.prompts import ChatPromptTemplate
-
-judge_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-
-judge_prompt = ChatPromptTemplate.from_template("""
-Bewerte die folgende Antwort auf einer Skala von 1 bis 5.
-
-Frage: {question}
-Erwartete Antwort: {expected}
-Tatsächliche Antwort: {actual}
-
-Bewertungskriterien:
-- 5: Perfekt, vollständig korrekt
-- 4: Korrekt mit minimalen Abweichungen
-- 3: Teilweise korrekt
-- 2: Überwiegend falsch
-- 1: Komplett falsch oder irrelevant
-
-Antworte NUR mit einer Zahl von 1 bis 5.
-""")
-
-def llm_judge(question: str, expected: str, actual: str) -> float:
-    response = judge_llm.invoke(
-        judge_prompt.format(question=question, expected=expected, actual=actual)
-    )
-    score = int(response.content.strip())
-    return score / 5.0  # Normalisiert auf 0-1
-```
-
-**Vorteile:**
-- Flexibel bei natürlichsprachlichen Ausgaben
-- Kann komplexe Kriterien bewerten
-- Skaliert besser als menschliche Bewertung
-
-**Nachteile:**
-- Zusätzliche LLM-Kosten
-- Nicht deterministisch
-- Kann eigene Fehler haben (Bias)
-
----
-
-## Automatisierte Evaluation mit LangSmith
-
-LangSmith bietet integrierte Tools für systematische Evaluation.
-
-### Evaluator definieren
+Darauf kann eine einfache Evaluation aufsetzen:
 
 ```python
 from langsmith.evaluation import evaluate
 
-def my_agent(inputs: dict) -> dict:
-    """Wrapper für den zu testenden Agenten."""
-    response = agent.invoke({
-        "messages": [{"role": "user", "content": inputs["question"]}]
-    })
-    return {"answer": response["messages"][-1].content}
-
 def accuracy_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
-    """Custom Evaluator: Vergleicht mit Referenz."""
     predicted = outputs["answer"].lower()
     expected = reference_outputs["answer"].lower()
-    
     score = 1.0 if expected in predicted else 0.0
-    
-    return {
-        "key": "contains_answer",
-        "score": score,
-        "comment": f"Expected '{expected}' in output"
-    }
-```
+    return {"key": "contains_answer", "score": score}
 
-### Evaluation ausführen
-
-```python
 results = evaluate(
     my_agent,
     data="Agent-Evaluation-v1",
     evaluators=[accuracy_evaluator],
-    experiment_prefix="v2.0-release"
-)
-
-print(f"Durchschnittliche Accuracy: {results['contains_answer']:.1%}")
-```
-
-### Mehrere Evaluatoren kombinieren
-
-```python
-def latency_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
-    """Bewertet die Antwortzeit."""
-    latency = outputs.get("latency_ms", 0)
-    score = 1.0 if latency < 2000 else 0.5 if latency < 5000 else 0.0
-    return {"key": "latency_ok", "score": score}
-
-def length_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
-    """Prüft, ob Antwort nicht zu lang ist."""
-    word_count = len(outputs["answer"].split())
-    score = 1.0 if word_count <= 100 else 0.5 if word_count <= 200 else 0.0
-    return {"key": "concise", "score": score}
-
-# Alle Evaluatoren zusammen
-results = evaluate(
-    my_agent,
-    data="Agent-Evaluation-v1",
-    evaluators=[
-        accuracy_evaluator,
-        latency_evaluator,
-        length_evaluator,
-    ],
-    experiment_prefix="v2.0-full-eval"
+    experiment_prefix="v1-course-demo"
 )
 ```
 
----
+In der Praxis relevant, wenn: Varianten systematisch verglichen, Regressionen dokumentiert oder Nutzerfeedback später mit denselben Fällen verbunden werden soll.
 
-## Regression Testing
+## Was bei RAG-Systemen zusätzlich geprüft wird
 
-Regression Testing stellt sicher, dass Änderungen keine bestehende Funktionalität brechen.
+Bei RAG-Systemen reicht es nicht, nur die Endantwort zu betrachten. Es muss zusätzlich geprüft werden, ob die richtigen Dokumente gefunden wurden und ob die Antwort tatsächlich auf dem gefundenen Kontext basiert. Sonst bleibt unklar, ob ein Fehler im Retrieval, in der Kontextauswahl oder in der Generierung liegt.
 
-### Workflow
-
-```
-1. Baseline etablieren
-   └── Evaluation gegen Dataset → Metriken speichern
-
-2. Änderung durchführen
-   └── Prompt, Tool, Modell anpassen
-
-3. Re-Evaluation
-   └── Gleiche Tests, gleiche Metriken
-
-4. Vergleich
-   └── Ist die neue Version besser oder schlechter?
-
-5. Entscheidung
-   └── Deployment oder Rollback
-```
-
-### Praktische Umsetzung
+Eine einfache Retrieval-Evaluation prüft, ob relevante Dokumente in den Top-k Treffern liegen:
 
 ```python
-# Baseline etablieren (einmalig)
-baseline_results = evaluate(
-    my_agent_v1,
-    data="Agent-Evaluation-v1",
-    evaluators=[accuracy_evaluator],
-    experiment_prefix="baseline-v1"
-)
-
-# Nach Änderungen: Re-Evaluation
-new_results = evaluate(
-    my_agent_v2,
-    data="Agent-Evaluation-v1",
-    evaluators=[accuracy_evaluator],
-    experiment_prefix="candidate-v2"
-)
-
-# Automatischer Vergleich
-if new_results["contains_answer"] >= baseline_results["contains_answer"]:
-    print("✅ Keine Regression — Deployment möglich")
-else:
-    print("❌ Regression erkannt — Änderungen überprüfen")
-```
-
-### CI/CD-Integration
-
-```python
-# In pytest-Test integrieren
-def test_agent_regression():
-    """Regression-Test für CI/CD-Pipeline."""
-    results = evaluate(
-        my_agent,
-        data="Agent-Evaluation-v1",
-        evaluators=[accuracy_evaluator],
-        experiment_prefix="ci-test"
-    )
-    
-    # Mindest-Schwellenwert
-    assert results["contains_answer"] >= 0.8, \
-        f"Accuracy zu niedrig: {results['contains_answer']:.1%}"
-```
-
----
-
-## Feedback-Schleifen
-
-Evaluation ist kein einmaliger Vorgang, sondern ein kontinuierlicher Prozess.
-
-### Production-Feedback sammeln
-
-```python
-from langsmith import Client
-
-client = Client()
-
-# Nach jeder Agent-Antwort in Production
-def collect_user_feedback(run_id: str, rating: int, comment: str = ""):
-    """Sammelt Nutzer-Feedback für kontinuierliche Verbesserung."""
-    client.create_feedback(
-        run_id=run_id,
-        key="user_satisfaction",
-        score=rating / 5.0,  # Normalisiert auf 0-1
-        comment=comment
-    )
-```
-
-### Der Development Loop
-
-Die meisten Teams springen direkt von Produktionsfehler zu Deployment-Fix — ohne Evidenz. Der folgende Loop macht Qualität kumulativ: Jede Iteration baut auf der vorherigen auf.
-
-```mermaid
-flowchart LR
-    A["1️⃣ Production Trace\nFehler oder Edge Case\nwird sichtbar"] --> B
-    B["2️⃣ Annotation Queue\nMensch reviewed und\nlabelt den Trace"] --> C
-    C["3️⃣ Dataset\nBeispiel wird\nEvaluations-Set"] --> D
-    D["4️⃣ Playground\nFix reproduzieren\nund testen"] --> E
-    E["5️⃣ Experiment\nA/B: alt vs. neu\nauf denselben Traces"] --> F
-    F["6️⃣ Online Evals\nFix in Production\nvalidieren (15% Sampling)"] --> G
-    G["7️⃣ Next Trace\nZyklus\nwiederholt sich"] --> A
-```
-
-| Schritt | Was passiert | Häufiger Fehler |
-|---------|-------------|-----------------|
-| Production Trace | Failure wird erfasst | Gar nicht erfasst |
-| Annotation Queue | Mensch reviewed gezielt | Ocean of Logs statt fokussierter Queue |
-| Dataset | Beispiel wird Testfall | Fix deployen ohne Testfall |
-| Playground | Fix reproduzieren | Direkt in Prod deployen |
-| Experiment | Vorher/Nachher auf gleichen Daten | Auf anderen Daten vergleichen |
-| Online Evals | Validieren in Production | Kein Production-Monitoring |
-
-> **"Ship fixes backed by evidence, not hope. That is the only way agent quality compounds over time."**
-
-### Automatische Anomalie-Erkennung
-
-```python
-def monitor_agent_quality():
-    """Überwacht Agent-Qualität in Production."""
-    # Letzte 100 Runs abrufen
-    runs = client.list_runs(
-        project_name="Production-Agent",
-        limit=100
-    )
-    
-    # Feedback-Scores aggregieren
-    scores = [r.feedback_stats.get("user_satisfaction", {}).get("avg", 0) 
-              for r in runs if r.feedback_stats]
-    
-    avg_score = sum(scores) / len(scores) if scores else 0
-    
-    # Alert bei Qualitätsabfall
-    if avg_score < 0.7:
-        send_alert(f"⚠️ Agent-Qualität gesunken: {avg_score:.1%}")
-```
-
----
-
-## A/B-Testing
-
-Systematischer Vergleich verschiedener Agent-Varianten unter realen Bedingungen.
-
-### Versuchsaufbau
-
-```python
-import random
-
-def get_agent_variant(user_id: str) -> str:
-    """Deterministische Zuweisung zu Variante."""
-    # Gleicher User → immer gleiche Variante
-    random.seed(hash(user_id))
-    return random.choice(["control", "treatment"])
-
-def invoke_with_variant(user_id: str, question: str):
-    """Ruft die zugewiesene Agent-Variante auf."""
-    variant = get_agent_variant(user_id)
-    
-    if variant == "control":
-        agent = agent_v1  # Bisherige Version
-    else:
-        agent = agent_v2  # Neue Version
-    
-    response = agent.invoke({
-        "messages": [{"role": "user", "content": question}]
-    }, config={
-        "metadata": {"variant": variant, "user_id": user_id}
-    })
-    
-    return response
-```
-
-### Auswertung
-
-Nach ausreichend Datenpunkten (typischerweise > 100 pro Variante):
-
-```python
-def analyze_ab_test():
-    """Analysiert A/B-Test-Ergebnisse."""
-    control_runs = client.list_runs(
-        project_name="Production-Agent",
-        filter="eq(metadata.variant, 'control')"
-    )
-    
-    treatment_runs = client.list_runs(
-        project_name="Production-Agent",
-        filter="eq(metadata.variant, 'treatment')"
-    )
-    
-    control_satisfaction = calculate_avg_satisfaction(control_runs)
-    treatment_satisfaction = calculate_avg_satisfaction(treatment_runs)
-    
-    print(f"Control (v1): {control_satisfaction:.1%}")
-    print(f"Treatment (v2): {treatment_satisfaction:.1%}")
-    
-    if treatment_satisfaction > control_satisfaction + 0.05:
-        print("✅ Treatment signifikant besser — Rollout empfohlen")
-    elif treatment_satisfaction < control_satisfaction - 0.05:
-        print("❌ Treatment schlechter — Rollback empfohlen")
-    else:
-        print("⚖️ Kein signifikanter Unterschied — mehr Daten sammeln")
-```
-
----
-
-## Evaluation von RAG-Systemen
-
-RAG-Systeme erfordern spezialisierte Evaluation auf mehreren Ebenen.
-
-### Retrieval-Evaluation
-
-Findet der Retriever die richtigen Dokumente?
-
-```python
-def evaluate_retrieval(query: str, relevant_doc_ids: list, k: int = 5):
-    """Bewertet Retriever-Qualität."""
+def evaluate_retrieval(query: str, relevant_doc_ids: list[str], k: int = 5):
     results = retriever.invoke(query)
     retrieved_ids = [doc.metadata.get("id") for doc in results[:k]]
-    
-    # Precision@k
+
     relevant_retrieved = len(set(retrieved_ids) & set(relevant_doc_ids))
     precision = relevant_retrieved / k
-    
-    # Recall@k
     recall = relevant_retrieved / len(relevant_doc_ids)
-    
+
     return {"precision": precision, "recall": recall}
 ```
 
-### Generation-Evaluation
+Grenze: Gute Retrieval-Werte garantieren noch keine gute Antwort. Auch mit passenden Dokumenten kann die Generierung halluzinieren, auslassen oder falsch zitieren.
 
-Nutzt das LLM den Kontext korrekt?
+## Was in Einsteigerprojekten zuerst wichtig ist
 
-| Metrik | Beschreibung | Prüfung |
-|--------|--------------|---------|
-| **Faithfulness** | Basiert Antwort auf Kontext? | Keine Halluzination |
-| **Relevanz** | Beantwortet Frage? | Nicht off-topic |
-| **Groundedness** | Quellenangaben korrekt? | Zitate prüfbar |
+Für einen ersten Agenten ist keine vollständige Observability-Plattform nötig. Entscheidend ist ein sauberes Minimum: ein kleines Testset, klare Erfolgskriterien, gespeicherte Prompts und Antworten, sichtbare Tool-Aufrufe und ein Vergleich zwischen alter und neuer Version. Damit lässt sich bereits ein Großteil typischer Fehler finden.
 
-```python
-def faithfulness_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> dict:
-    """Prüft, ob Antwort auf dem Kontext basiert."""
-    context = inputs.get("context", "")
-    answer = outputs["answer"]
-    
-    # LLM-as-Judge für Faithfulness
-    prompt = f"""
-    Kontext: {context}
-    
-    Antwort: {answer}
-    
-    Basiert die Antwort ausschließlich auf dem gegebenen Kontext?
-    Antworte mit JA oder NEIN.
-    """
-    
-    response = judge_llm.invoke(prompt)
-    score = 1.0 if "JA" in response.content.upper() else 0.0
-    
-    return {"key": "faithfulness", "score": score}
-```
-
-### End-to-End RAG-Evaluation
-
-```python
-rag_evaluators = [
-    retrieval_precision_evaluator,
-    retrieval_recall_evaluator,
-    faithfulness_evaluator,
-    relevance_evaluator,
-    latency_evaluator,
-]
-
-results = evaluate(
-    my_rag_chain,
-    data="RAG-Evaluation-v1",
-    evaluators=rag_evaluators,
-    experiment_prefix="rag-v2"
-)
-```
-
----
-
-## Best Practices
-
-### Evaluations-Strategie
-
-| Phase | Fokus | Methode |
-|-------|-------|---------|
-| **Entwicklung** | Schnelles Feedback | Kleine Datasets, einfache Metriken |
-| **Pre-Release** | Umfassende Prüfung | Volle Datasets, alle Evaluatoren |
-| **Production** | Kontinuierlich | Sampling, Feedback-Loops |
-
-### Häufige Fehler vermeiden
-
-**Fehler 1: Zu kleine Datasets**
-
-```
-❌ 5 Beispiele → Keine statistische Aussagekraft
-✅ 30+ Beispiele → Belastbare Ergebnisse
-```
-
-**Fehler 2: Nur Happy Path testen**
-
-```
-❌ Nur Standardfälle → Produktions-Überraschungen
-✅ Edge Cases einbeziehen → Robustere Agenten
-```
-
-**Fehler 3: Evaluation ignorieren nach Launch**
-
-```
-❌ Einmalige Evaluation → Schleichende Qualitätsverluste
-✅ Kontinuierliches Monitoring → Frühe Problemerkennung
-```
-
-**Fehler 4: Falsche Metriken**
-
-```
-❌ Nur Accuracy → Langsame, teure Antworten unerkannt
-✅ Mehrere Dimensionen → Vollständiges Bild
-```
-
-### Dokumentation
-
-Jede Evaluation sollte dokumentiert werden:
-
-```markdown
-## Evaluation Report: Agent v2.1
-
-**Datum:** 2025-01-15
-**Dataset:** Agent-Evaluation-v1 (45 Beispiele)
-**Experiment:** v2.1-pre-release
-
-### Ergebnisse
-
-| Metrik | v2.0 | v2.1 | Δ |
-|--------|------|------|---|
-| Accuracy | 82% | 87% | +5% |
-| Latenz (p50) | 1.8s | 1.5s | -17% |
-| Kosten/Request | $0.02 | $0.018 | -10% |
-
-### Fazit
-Version 2.1 zeigt Verbesserungen in allen Metriken.
-Empfehlung: Deployment freigeben.
-```
-
----
-
-## Zusammenfassung
-
-### Kernkonzepte
-
-| Konzept | Beschreibung |
-|---------|--------------|
-| **Dataset** | Sammlung von Input-Output-Paaren für reproduzierbare Tests |
-| **Evaluator** | Funktion, die Qualität einer Antwort bewertet |
-| **Experiment** | Ein Durchlauf der Evaluation mit eindeutigem Identifier |
-| **Metrik** | Quantifizierbare Messgröße (Accuracy, Latenz, etc.) |
-| **Baseline** | Referenzwert für Vergleiche |
-| **Regression** | Qualitätsverschlechterung nach Änderungen |
-
-### Evaluierungs-Workflow
-
-```
-1. Dataset erstellen
-   └── Inputs + erwartete Outputs definieren
-
-2. Evaluatoren wählen
-   └── Accuracy, LLM-as-Judge, Custom-Metriken
-
-3. Baseline etablieren
-   └── Aktuelle Version evaluieren
-
-4. Änderungen testen
-   └── Neue Version gegen gleiches Dataset
-
-5. Vergleichen & Entscheiden
-   └── Deployment oder Iteration
-
-6. Kontinuierlich überwachen
-   └── Production-Feedback → Dataset erweitern
-```
-
-### Quick Reference
-
-```python
-# Dataset erstellen
-from langsmith import Client
-client = Client()
-dataset = client.create_dataset(dataset_name="My-Tests")
-
-# Evaluator definieren
-def my_evaluator(inputs, outputs, reference_outputs):
-    score = 1.0 if expected in outputs["answer"] else 0.0
-    return {"key": "accuracy", "score": score}
-
-# Evaluation ausführen
-from langsmith.evaluation import evaluate
-results = evaluate(my_agent, data="My-Tests", evaluators=[my_evaluator])
-
-# Feedback sammeln
-client.create_feedback(run_id=run_id, key="user_rating", score=0.8)
-```
+Teilnehmende unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen Formulierungsänderungen kippt. Genau deshalb sollte der Kurs nicht nur erfolgreiche Demos zeigen, sondern auch bewusst misslingende Fälle. Erst dort wird sichtbar, warum Evaluation und Observability keine Zusatzaufgabe, sondern Teil der Agentenentwicklung sind.
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Inhalt |
+| Dokument | Frage |
 |---|---|
-| [Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html) | Machbarkeitsbewertung vor dem Bau — Evaluation bewertet nach dem Bau |
-| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/RAG_Konzepte.html) | RAG-Architektur — dieses Dokument beschreibt deren Evaluierung |
-| [Agent Security](https://ralf-42.github.io/Agenten/concepts/Agent_Security.html) | Sicherheitstests als eigene Evaluierungsebene |
-
+| [Lohnt es sich überhaupt?](./Lohnt_es_sich.html) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
+| [RAG-Konzepte](./RAG_Konzepte.html) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
+| [Agent Security](./Agent_Security.html) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -18,97 +18,77 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./Lesepfade.html) öffnen.
 
 ## Einstieg & Entscheidung
 
-- **[Lohnt es sich überhaupt?](https://ralf-42.github.io/Agenten/concepts/Lohnt_es_sich.html)** – *Lohnt sich KI für diese Aufgabe?* Machbarkeit, Nutzen und Risiken vor dem Projektstart bewerten
-  - Problemklärung: Ist das Problem klar und messbar?
-  - Datengrundlage: Sind die richtigen Daten vorhanden und nutzbar?
-  - Nutzeneinschätzung: Lohnt sich KI gegenüber dem Status quo?
-  - Risikoeinschätzung: Technisch, organisatorisch, regulatorisch
-  - Go / No-Go Checkliste
+- **[Lohnt es sich überhaupt?](./concepts/Lohnt_es_sich.html)** – *Lohnt sich ein KI-Vorhaben fachlich, organisatorisch und wirtschaftlich?*
+  - Problemklärung vor Toolwahl und Umsetzung
+  - Datenlage, Nutzen, Risiken und Realisierbarkeit
+  - Go-/No-Go-Fragen für den Projektstart
 
-- **[Welches Werkzeug?](https://ralf-42.github.io/Agenten/concepts/Aufgabenklassen_und_Loesungswege.html)** – *Welches Werkzeug passt zur Aufgabe?* Zweistufige Entscheidungshilfe: wann Agenten, welche Architektur?
-  - Ebene 1: Chat / Workflow / RAG / Agenten / Python — was passt wann?
-  - Ebene 2: ReAct / Tool-Calling / LangGraph Workflow / Multi-Agent — wie entscheiden?
-  - Vollständiger Entscheidungsbaum (beide Ebenen kombiniert)
-  - Checkliste vor dem Agentenbau
+- **[Welches Werkzeug?](./concepts/Aufgabenklassen_und_Loesungswege.html)** – *Welcher Lösungsweg passt zur Aufgabe?*
+  - Entscheidung zwischen Chat, Workflow, RAG, Agent und klassischem Code
+  - Zweite Ebene: passende Agentenarchitektur auswählen
+  - Kursnahe Beispiele für typische Fehlentscheidungen
 
 
 ## Grundlagen & Architektur
 
-- **[Agent-Architekturen](https://ralf-42.github.io/Agenten/concepts/Agent_Architekturen.html)** – *Wie ist ein Agent aufgebaut?* Architekturmuster und Design-Prinzipien für KI-Agenten (→ M01)
-  - ReAct-Architektur: Denken → Handeln → Beobachten
-  - Tool-Calling: LLM wählt und nutzt Werkzeuge
-  - Workflow-basiert: Definierte Schritte mit Verzweigungen
-  - Multi-Agent: Spezialisierte Agenten arbeiten zusammen
+- **[Welche Architektur passt zu diesem Agenten?](./concepts/Agent_Architekturen.html)** – *Wann passt ReAct, Workflow, Tool-Calling oder Multi-Agent?* (→ M01)
+  - Einsteigerorientierte Auswahl der wichtigsten Muster
+  - Konkrete Umsetzungsbeispiele statt reiner Musterkataloge
 
-- **[Tool Use & Function Calling](https://ralf-42.github.io/Agenten/concepts/Tool_Use_Function_Calling.html)** – *Wie nutzt ein Agent Werkzeuge?* Erweiterung der Fähigkeiten durch externe Tools (→ M02)
-  - Werkzeuge für aktuelles Wissen, Berechnungen und Dateizugriff
-  - Function Calling: Schema-Definition und Parameterübergabe
-  - Tool-Auswahl durch das LLM
+- **[Wie nutzen Agenten Werkzeuge?](./concepts/Tool_Use_Function_Calling.html)** – *Wie werden Tools sauber definiert und sicher genutzt?* (→ M02)
+  - Function Calling, Tool-Schemata und Fehlerbehandlung
+  - Praktische Muster für sichere und belastbare Tool-Nutzung
 
-- **[Prompt Engineering](https://ralf-42.github.io/Agenten/concepts/Prompt_Engineering.html)** – *Wie wird ein Agent gesteuert?* Strategien für effektive Prompts in Agenten-Systemen (→ M04)
-  - System-Prompts: Rolle und Grenzen definieren
-  - Tool-Beschreibungen und Reasoning-Prompts
-  - Output-Formatierung für strukturierte Antworten
+- **[Wie werden gute Prompts für Agenten aufgebaut?](./concepts/Prompt_Engineering.html)** – *Wie steuern Prompts Rollen, Regeln und Ausgabeformate?* (→ M04)
+  - System-Prompts, Struktur und Guardrails
+  - Prompting als Verhaltensvertrag statt Formulierungsgefühl
 
 ## Wissensmanagement
 
-- **[RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/RAG_Konzepte.html)** – *Wie kommt Wissen in den Agenten?* Retrieval Augmented Generation: Architektur, Strategien und Best Practices (→ M08–M11)
-  - Warum RAG? Wissens-Cutoff, Domänenwissen, Halluzination
-  - Chunking, Embedding und Vektordatenbanken
-  - Retrieval-Strategien: Similarity Search, Reranking
+- **[Wie bekommen Agenten Zugriff auf eigenes Wissen?](./concepts/RAG_Konzepte.html)** – *Wann ist RAG sinnvoll und wie funktioniert es sauber?* (→ M08–M11)
+  - Grundidee, Chunking, Retrieval und Reranking
+  - Praxisnahe Einführung in Wissensanbindung ohne Feintuning
 
 ## Workflows & State
 
-- **[State Management](https://ralf-42.github.io/Agenten/concepts/State_Management.html)** – *Wie merkt sich ein Agent seinen Zustand?* Zustandsverwaltung in komplexen Workflows mit LangGraph (→ M12–M15)
-  - Warum State Management? Daten über Schritte hinweg erhalten
-  - TypedDict-basierter State, Reducer-Funktionen
-  - Nodes geben nur Änderungen zurück, nicht den gesamten State
+- **[Wie behalten Agenten zwischen Schritten den Überblick?](./concepts/State_Management.html)** – *Wie wird Zustand in mehrstufigen Abläufen sauber geführt?* (→ M12–M15)
+  - State als gemeinsame Arbeitsgrundlage im Workflow
+  - Praktische Muster für strukturierte Zustandsführung
 
-- **[Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/Checkpointing_Persistenz.html)** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph (→ M16–M17)
-  - MemorySaver, SqliteSaver, PostgresSaver – Wahl des richtigen Checkpointers
-  - Thread-IDs für Multi-User-Konversationen
-  - Interrupt & Resume für Human-in-the-Loop
-  - Time Travel: Zu früherem State zurückspringen
+- **[Wie bleiben Sitzungen und Zustände erhalten?](./concepts/Checkpointing_Persistenz.html)** – *Wie funktionieren Checkpointing, Resume und Persistenz?* (→ M16–M17)
+  - Sitzungen wiederaufnehmen und Arbeitsstände speichern
+  - Beispiele für Interrupt, Resume und dauerhafte Speicherung
 
-- **[Memory-Systeme](https://ralf-42.github.io/Agenten/concepts/Memory_Systeme.html)** – *Wie erinnert sich ein Agent?* Kurz- und Langzeitgedächtnis für persistente KI-Agenten (→ M16)
-  - Kurzzeit: Conversation Buffer, Sliding Window, Summarization
-  - Langzeit: Semantisches Memory (Vektordatenbank), Entity Memory
-  - Per-User-Memory für Multi-Session-Anwendungen
+- **[Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/Memory_Systeme.html)** – *Was gehört in Kurzzeit- und Langzeitgedächtnis?* (→ M16)
+  - Unterschied zwischen Kontext, State und Memory
+  - Einsteigerfreundliche Einordnung mit praktischen Beispielen
 
-- **[Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/Human_in_the_Loop.html)** – *Wann greift der Mensch ein?* Einbindung menschlicher Kontrolle in Agenten-Systeme (→ M17)
-  - Autonomie-Spektrum: von assistiert bis vollständig autonom
-  - Approval-Pattern vs. Eskalations-Pattern
-  - Entscheidungskritikalität und Vertrauensgrenzen
+- **[Wann sollten Menschen in den Ablauf eingreifen?](./concepts/Human_in_the_Loop.html)** – *Wo braucht ein Agent Freigaben, Rückfragen oder Eskalation?* (→ M17)
+  - Human-in-the-Loop als Sicherheits- und Qualitätsmechanismus
+  - Approval, Eskalation und Vertrauensgrenzen
 
-- **[Multi-Agent-Systeme](https://ralf-42.github.io/Agenten/concepts/Multi_Agent_Systeme.html)** – *Wie arbeiten mehrere Agenten zusammen?* Zusammenarbeit und Koordination spezialisierter KI-Agenten (→ M21–M22)
-  - Supervisor-Pattern, Hierarchical, Collaborative Patterns
-  - Paralleles Pattern: Fan-out / Fan-in mit Send und Map-Reduce
-  - Spezialisierung, Fehlertoleranz und Skalierbarkeit
-  - Kommunikation und Übergabe zwischen Agenten
+- **[Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?](./concepts/Multi_Agent_Systeme.html)** – *Wann hilft Multi-Agent wirklich und wann macht es Systeme nur komplizierter?* (→ M21–M22)
+  - Supervisor, Handoff, Hierarchie und Parallelisierung
+  - Fokus auf sinnvolle Abgrenzung statt Multi-Agent als Selbstzweck
 
 ## Qualität & Praxis
 
-- **[Evaluation & Testing](https://ralf-42.github.io/Agenten/concepts/Evaluation_Observability.html)** – *Wie gut ist das System wirklich?* Bewertung und Qualitätssicherung von KI-Agenten (→ M15, M24)
-  - Eval-Datasets, Metriken und Regression-Tests
-  - LangSmith Evaluation Pipeline
-  - Baseline, Drift-Erkennung und Production-Monitoring
+- **[Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/Evaluation_Observability.html)** – *Wie unterscheiden sich Evaluation und Observability?* (→ M15, M24)
+  - Testsets, Metriken, Fehlersuche und Produktionssicht
+  - Qualitätssicherung mit konkreten Praxisbeispielen
 
-- **[Agent Security](https://ralf-42.github.io/Agenten/concepts/Agent_Security.html)** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten (→ M20)
-  - Prompt Injection, Tool Missbrauch, Daten-Exfiltration
-  - Principle of Least Privilege, Tool Whitelisting, PII-Redaktion
-  - Vertrauensgrenzen und sichere Entwicklungspraxis
+- **[Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./concepts/Agent_Security.html)** – *Welche Sicherheitsprobleme entstehen durch Prompts, Tools und Rechte?* (→ M20)
+  - Prompt Injection, Least Privilege und Vertrauensgrenzen
+  - Praktische Schutzmaßnahmen für Einsteigerprojekte
 
 ## Kommunikation & Protokolle
 
-- **[Agenten-Kommunikationsprotokolle](https://ralf-42.github.io/Agenten/concepts/Agenten_Kommunikationsprotokolle.html)** – *Wie sprechen Agenten miteinander?* Kommunikationsstandards zwischen Agenten und Tools (→ MCP, A2A, AG-UI)
-  - MCP: Universelle Tool-Integration (Anthropic, 2024)
-  - A2A / ACP: Agent-zu-Agent-Kommunikation (Google / Linux Foundation, 2025)
-  - AG-UI: Echtzeit-Streaming zwischen Agent und Frontend
-  - Agent Contracts: Ressourcensteuerung und Kostenkontrolle
+- **[Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?](./concepts/Agenten_Kommunikationsprotokolle.html)** – *Welche Rolle spielen MCP, A2A, ACP und AG-UI?*
+  - Einordnung der wichtigsten Protokolle und Schnittstellen
+  - Fokus auf praktische Unterschiede und Einsatzgrenzen
 
 ## Fortgeschritten & Optional
 
-- **[Skills](https://ralf-42.github.io/Agenten/concepts/Skills.html)** – *Wie werden Agenten zuverlässig gesteuert?* Wiederverwendbare Arbeitsrezepte für verlässliche Agenten (→ M31, optional)
-  - Unterschied zwischen Prompt und Skill
-  - `SKILL.md`, `references/` und `scripts/` als Strukturmuster
-  - Guardrails, Progressive Disclosure und Auditierbarkeit
+- **[Wann wird aus einem Prompt ein wiederverwendbarer Skill?](./concepts/Skills.html)** – *Wie werden wiederkehrende Arbeitsmuster stabil gekapselt?* (→ M31, optional)
+  - Unterschied zwischen losem Prompt und belastbarem Skill
+  - `SKILL.md`, `references/` und `scripts/` als wiederverwendbare Struktur

@@ -8,6 +8,15 @@ has_toc: true
 ---
 
 # LangSmith Best Practices
+{: .no_toc }
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 

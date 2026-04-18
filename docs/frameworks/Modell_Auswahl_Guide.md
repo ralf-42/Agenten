@@ -13,10 +13,7 @@ has_toc: true
 > **Welches Modell für welche Aufgabe?**      
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
-> [!NOTE] OpenAI-Default im Kurs<br>
-> Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen.
-> Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe:
-> [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
+Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/Provider_Modell_Mapping.html)
 
 ---
 

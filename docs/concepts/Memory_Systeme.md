@@ -36,6 +36,22 @@ Ein Assistent soll sich merken, dass eine Nutzerin kurze Antworten bevorzugt, an
 
 Dieses Beispiel zeigt bereits die wichtigste Unterscheidung: Nicht alles, was ein Agent behalten soll, gehört in dieselbe Form von Memory. Für den letzten Gesprächsverlauf braucht es etwas anderes als für dauerhafte Nutzerfakten.
 
+## Stateless Agent vs. Memory-Augmented Agent
+
+Ein **Stateless Agent** kann Eingaben wahrnehmen, darüber nachdenken und Ausgaben produzieren — aber er behält keine Informationen zwischen einzelnen Turns. Jede Interaktion beginnt von vorn.
+
+Ein **Memory-Augmented Agent** ergänzt diese Fähigkeiten um eine externe Speicherkomponente. Frühere Interaktionen, Fakten und Prozessschritte bleiben erhalten und können in späteren Turns genutzt werden.
+
+| Eigenschaft | Stateless Agent | Memory-Augmented Agent |
+|---|---|---|
+| Long-Horizon-Aufgaben | nicht möglich | möglich |
+| Kontextkontinuität | endet mit dem Turn | sitzungsübergreifend |
+| Anpassungsfähigkeit | keine | wächst mit jeder Interaktion |
+| Operationskosten | hoch (immer vollständiger Kontext nötig) | niedriger (nur relevanter Kontext) |
+| Zuverlässigkeit bei mehrstufigen Abläufen | gering | hoch |
+
+Typischer Fehler: Stateless-Verhalten wird als Modellschwäche fehlgedeutet. Das Modell ist nicht "vergesslich" — es fehlt die persistente Speicherschicht.
+
 ## Zwei Grundformen von Memory
 
 Für Einsteiger ist die Trennung zwischen Kurzzeit- und Langzeit-Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Langzeit-Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
@@ -48,13 +64,18 @@ flowchart TB
     K --> K1["Conversation Buffer"]
     K --> K2["Sliding Window"]
     K --> K3["Summarization"]
+    K --> K4["Semantic Cache"]
 
-    L --> L1["Semantisches Memory"]
-    L --> L2["Episodisches Memory"]
-    L --> L3["Entity Memory"]
+    L --> L1["<b>Prozedural</b><br/>Workflow Memory"]
+    L --> L2["<b>Semantisch</b><br/>Wissensbasis"]
+    L --> L3["<b>Episodisch</b><br/>Conversational Memory"]
 ```
 
-Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb einer Sitzung den roten Faden verliert. Langzeit-Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
+Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb einer Sitzung den roten Faden verliert. **Semantic Cache** ist eine ergänzende Kurzzeit-Strategie: Ähnliche Anfragen werden auf gecachte Vektoreinträge abgebildet, sodass identische oder semantisch nahestehende Fragen ohne erneuten Modellaufruf beantwortet werden können.
+
+Für Langzeit-Memory haben sich drei Hauptkategorien etabliert: **Prozedural** speichert ausgeführte Schrittsequenzen (Workflow Memory), **Semantisch** hält domänenspezifisches Wissen für Ähnlichkeitssuche vor, und **Episodisch** bewahrt die zeitlich geordnete Interaktionshistorie (Conversational Memory).
+
+Langzeit-Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
 
 ## Conversation Buffer: der einfachste Einstieg
 
@@ -144,6 +165,31 @@ flowchart LR
 
 In der Praxis relevant, wenn: Sitzungen lang werden, aber der frühere Verlauf nicht vollständig verloren gehen darf.
 
+## Context Compaction: Kontext auslagern statt verdichten
+
+Summarization ist eine **lossy**-Technik — beim Verdichten geht immer ein Teil der Information verloren. **Context Compaction** ist die verlustfreie Alternative: Der Kontext wird vollständig in die Datenbank ausgelagert. Im aktiven Kontext bleibt nur eine ID mit einer kurzen Beschreibung. Der Agent kann den vollständigen Inhalt bei Bedarf über die ID wieder abrufen.
+
+| | Context Summarization | Context Compaction |
+|---|---|---|
+| Verfahren | Kontext durch LLM verdichten | Kontext vollständig in DB auslagern |
+| Informationsverlust | lossy (unvermeidlich) | lossless (voller Kontext abrufbar) |
+| Wiederherstellung | nicht möglich | via ID + DB-Abfrage |
+| Wann sinnvoll | ältere, weniger kritische Inhalte | Details, die vollständig erhalten bleiben müssen |
+
+```python
+def compact_context(context: str, thread_id: str, memory_manager) -> str:
+    summary_id = memory_manager.store_compacted(context, thread_id)
+    description = llm.invoke(
+        f"Beschreibe in einem Satz, was dieser Kontext enthält: {context[:500]}"
+    ).content
+    return f"[Kontext kompaktiert: ID={summary_id} — {description}]"
+
+def expand_context(summary_id: str, memory_manager) -> str:
+    return memory_manager.get_compacted(summary_id)
+```
+
+In der Praxis relevant, wenn: Der Kontext kritische Details enthält, die bei Summarization verloren gehen würden, oder wenn der vollständige Verlauf später für Debugging oder Audit benötigt wird.
+
 ## Langzeit-Memory: wenn Wissen Sitzungen überleben soll
 
 Langzeit-Memory wird nötig, sobald relevante Informationen nach Ende einer Sitzung noch verfügbar sein sollen. Dazu gehören Nutzerpräferenzen, Ziele, wichtige Fakten oder Wissen, das später semantisch wiedergefunden werden soll.
@@ -218,6 +264,37 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
 ```
 
 Typischer Fehler: Alle Fakten unstrukturiert in eine Vektordatenbank zu schreiben, obwohl bestimmte Informationen besser als klar benannte Entitäten gepflegt würden.
+
+## Workflow Memory: Prozeduralwissen speichern
+
+Workflow Memory speichert die geordnete Sequenz von Schritten, die ein Agent zur Lösung einer Aufgabe durchgeführt hat — inklusive Werkzeugaufrufe, Parameter und Zwischenergebnisse. Bei ähnlichen Aufgaben kann der Agent diese Sequenz per Semantic Search wiederfinden und direkt als Vorlage nutzen, statt den Lösungsweg neu zu planen.
+
+```python
+workflow = {
+    "name": "Aktuelles Wetter abrufen",
+    "anfrage": "Was ist das aktuelle Wetter in Berlin?",
+    "schritte": [
+        {"schritt": 1, "aktion": "get_location", "ergebnis": "Berlin, 52.5°N 13.4°E"},
+        {"schritt": 2, "aktion": "weather_api", "parameter": {"lat": 52.5, "lon": 13.4}},
+        {"schritt": 3, "aktion": "format_response", "ergebnis": "15°C, bedeckt"},
+    ],
+    "ergebnis": "Erfolg"
+}
+```
+
+```mermaid
+flowchart LR
+    ANFRAGE([Neue Aufgabe]) --> SEARCH["Semantic Search<br/>im Workflow-Speicher"]
+    SEARCH --> MATCH{"Ähnlicher Workflow gefunden?"}
+    MATCH -->|Ja| REUSE["Vorlage nutzen<br/>und anpassen"]
+    MATCH -->|Nein| NEW["Neu planen<br/>und speichern"]
+    REUSE --> DONE([Ausführen])
+    NEW --> DONE
+```
+
+Typischer Fehler: Nur Konversationen zu speichern, aber ausgeführte Prozessschritte zu verwerfen. Gerade bei mehrstufigen Tool-Sequenzen ist genau dieser Ablauf das wertvollste wiederverwendbare Wissen.
+
+In der Praxis relevant, wenn: Aufgaben aus mehreren Tool-Aufrufen bestehen, ähnliche Aufgaben häufig wiederkehren oder ein Agent zuverlässig reproduzierbare Sequenzen liefern soll.
 
 ## Per-User Memory: wenn mehrere Nutzer getrennt bleiben müssen
 
@@ -302,6 +379,36 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
 
 Genau darin liegt die eigentliche Architekturentscheidung: Nicht `ob` Memory eingesetzt wird, sondern `welche Art` von Memory für welche Information passend ist.
 
+## Agent Memory Core und Memory Manager
+
+**Agent Memory Core** bezeichnet die Datenbank als primäre Infrastruktur des gesamten Agentensystems. Durch sie fließt der größte Teil aller Datenbewegungen — Speichern, Abrufen und Optimieren aller Memory-Typen. Die drei Systemkomponenten eines Agenten haben jeweils eine eigene Form von Memory: das LLM trägt parametrisches Wissen aus dem Training, das Embedding-Modell kodiert Semantik — aber die Datenbank ist der Memory Core, weil dort der meiste Datenverkehr stattfindet.
+
+**Memory Manager** ist die Abstraktionsschicht über der Datenbank. Statt direkt auf Tabellen zuzugreifen, nutzt der Agent standardisierte Lese- und Schreiboperationen:
+
+```mermaid
+flowchart TB
+    AGENT[Agent] --> MM["Memory Manager"]
+    MM --> C[("Konversation")]
+    MM --> KB[("Wissensbasis")]
+    MM --> WF[("Workflow")]
+    MM --> EN[("Entity")]
+    MM --> SU[("Summary")]
+```
+
+```python
+class MemoryManager:
+    def read_conversational(self, thread_id: str, limit: int = 10) -> list: ...
+    def write_conversational(self, thread_id: str, role: str, content: str): ...
+    def read_knowledge_base(self, query: str, k: int = 3) -> list: ...
+    def write_workflow(self, name: str, steps: list): ...
+    def read_entity(self, entity_name: str) -> dict: ...
+    def write_summary(self, content: str, thread_id: str) -> str: ...
+```
+
+Die Vorteile dieser Abstraktion: Der Agent kennt keine Datenbanktabellen, nur Operationstypen. Das Speicher-Backend kann ausgetauscht werden, ohne den Agenten zu ändern. Alle Zugriffe sind an einer Stelle testbar und überwachbar.
+
+Typischer Fehler: Den Memory Manager als Abstraktionsschicht einzuführen, bevor klar ist, welche Memory-Typen tatsächlich gebraucht werden. Wer alle fünf Tabellen anlegt, obwohl der Agent nur Konversationshistorie braucht, schafft unnötige Infrastruktur — und verdeckt dabei, wo die eigentlichen Engpässe liegen.
+
 ## 3-Schicht-Speicher: Memory für Produktionssysteme
 
 In einfachen Agenten wird alles im aktiven Kontext gehalten. In langen Sitzungen oder komplexen Systemen führt das zwangsläufig zu Kontextüberlastung. Produktionssysteme verwenden deshalb einen gestuften Speicher mit drei Schichten:
@@ -364,7 +471,7 @@ def sollte_gespeichert_werden(nachricht: str) -> bool:
 
 Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann Langzeit-Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
 
-Teilnehmende unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Ohne Gedächtnis werden viele scheinbar intelligente Agenten schon nach wenigen Nachrichten brüchig oder müssen dieselben Informationen immer wieder neu erfragen.
+Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Ohne Gedächtnis werden viele scheinbar intelligente Agenten schon nach wenigen Nachrichten brüchig oder müssen dieselben Informationen immer wieder neu erfragen.
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -376,6 +483,6 @@ Teilnehmende unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist.
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

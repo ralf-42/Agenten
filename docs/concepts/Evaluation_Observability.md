@@ -30,6 +30,21 @@ Für Einsteiger wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, An
 
 Typischer Fehler: Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
 
+
+```mermaid
+flowchart TD
+    A["<b>Evaluation</b><br>War das Ergebnis gut?"] --> B["<b>Observability</b><br>Warum kam es dazu?"]
+    B --> C["<b>Verbesserung</b><br>Prompt, Tool, State<br>oder Policy anpassen"]
+    C -- "Optimierter Re-Run" --> A
+    
+    %% Optisches Highlight für den Loop
+    
+    style A fill:#f9f9f9,stroke:#01579b,stroke-width:2px 
+    style B fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
+    style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+```
+
+
 ## Das Silent-Failure-Problem
 
 Klassische Software scheitert oft laut: Exceptions, Fehlermeldungen, rote Dashboards. Agentensysteme scheitern häufig leise. Eine Anfrage endet mit HTTP 200, die Laufzeit sieht sauber aus, der Container lebt weiter, und trotzdem wird eine Rückgabe falsch priorisiert, ein ungeeignetes Tool gewählt oder eine Halluzination mit großer Sicherheit formuliert.
@@ -210,11 +225,15 @@ Der sinnvolle Kreislauf ist klein und konkret: Fehler im Betrieb beobachten, aus
 
 ```mermaid
 flowchart TD
-    A["Production-Fall"] --> B["Trace prüfen"]
-    B --> C["Testfall ergänzen"]
-    C --> D["Fix entwickeln"]
-    D --> E["gegen Baseline evaluieren"]
-    E --> F["erneut ausrollen"]
+    A["<b>Produktionsfall</b><br>Echtes Nutzerszenario"] --> B["<b>Trace prüfen</b><br>Schritte des Agenten analysieren"]
+    B --> C["<b>Fehlerklasse bestimmen</b><br>Logik-, Tool- oder Promptfehler?"]
+    C --> D["<b>Eval-Fall ergänzen</b><br>Szenario in Testset aufnehmen"]
+    D --> E["<b>Fix umsetzen</b><br>Code oder Prompt anpassen"]
+    E --> F["<b>Baseline-Test</b><br>Regressionen ausschließen"]
+    F --> G["<b>Deployment</b><br>Erneut ausrollen"]
+    
+    %% Der Kreislauf zum nächsten Produktionsfall
+    G -.-> A
 ```
 
 ## Konkrete Umsetzung mit LangSmith

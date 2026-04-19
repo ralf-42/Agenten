@@ -22,9 +22,9 @@ has_toc: true
 
 ---
 
-## Worum es auf dieser Seite geht
+## Intro
 
-Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/Evaluation_Observability.html). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.
+Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/Evaluation_Observability.html) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.
 
 Die Seite richtet sich an Teilnehmende, die bereits einfache Agenten mit Tools, LangGraph oder LangSmith bauen. Es geht nicht um vollständige Produktionsarchitektur, sondern um einen belastbaren Mindeststandard.
 
@@ -37,9 +37,15 @@ Evaluation und Observability gehören zusammen, erfüllen aber unterschiedliche 
 Für Einsteiger hilft eine einfache Unterscheidung. Evaluation ist der geplante Qualitätscheck gegen bekannte Fälle. Observability ist der Blick in den echten Ablauf mit Traces, Tool-Aufrufen, Latenzen und Fehlern. Erst beides zusammen ergibt ein belastbares Bild.
 
 ```mermaid
-flowchart LR
-    A["Evaluation\nWar das Ergebnis gut?"] --> B["Observability\nWarum kam es dazu?"]
-    B --> C["Verbesserung\nPrompt, Tool, State oder Policy anpassen"]
+flowchart TD
+    A["<b>Evaluation</b><br>War das Ergebnis gut?"] --> B["<b>Observability</b><br>Warum kam es dazu?"]
+    B --> C["<b>Verbesserung</b><br>Prompt, Tool, State<br>oder Policy anpassen"]
+    C -- "Optimierter Re-Run" --> A
+    
+    %% Optisches Highlight für den Loop
+    style A fill:#f9f9f9,stroke:#01579b,stroke-width:2px 
+    style B fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
+    style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
 
 Nicht geeignet, wenn: Eine einzige Metrik alles erklären soll. Agenten verhalten sich zu komplex, um nur mit Accuracy oder nur mit Laufzeit bewertet zu werden.
@@ -143,20 +149,44 @@ candidate_results = evaluate(
 
 In der Praxis relevant, wenn: Prompt, Modell, Tool-Beschreibung, Policy oder Retriever geändert wurden. Jede dieser Änderungen kann alte Verbesserungen unbemerkt zerstören.
 
-## Ein einfaches Harness-Konzept für den Kurs
+## Ein einfaches Harness-Konzept
 
-Das Wort `Harness` klingt technisch, meint aber zunächst nur eine nützliche Hülle um den Agenten. Diese Hülle sorgt dafür, dass Durchläufe reproduzierbar, Tool-Aufrufe kontrollierbar und Vergleiche zwischen Varianten möglich werden.
+Das Wort `Harness` klingt technisch, meint aber zunächst eine nützliche Infrastruktur-Hülle um den Agenten. Diese sorgt dafür, dass Durchläufe reproduzierbar, Tool-Aufrufe kontrollierbar und Vergleiche zwischen Varianten (Baselines) möglich werden.
 
-Für den Kurs reicht ein einfaches Verständnis: Ein Harness kümmert sich um Run-Kontext, Tool-Wrapper, Mocks für Tests, Policies für riskante Aktionen und die Sammlung relevanter Beobachtungsdaten.
+Es reicht ein einfaches Verständnis: Ein Harness kümmert sich um den **Run-Kontext**, die **Tool-Wrapper**, **Mocks** für Tests sowie **Policies** für riskante Aktionen. Gleichzeitig fungiert er als Messstation, die **Beobachtungsdaten (Traces)** sammelt, um Ergebnisse automatisiert mit einem **Eval-Set** vergleichen zu können.
+
+
 
 ```mermaid
 flowchart TB
-    A["Agent"] --> B["Tool Wrapper"]
-    A --> C["Trace / Beobachtung"]
-    A --> D["Policy Check"]
-    E["Eval-Set"] --> F["Vergleich mit Baseline"]
+    subgraph Runtime ["<b>Agentic Runtime</b>"]
+        A["Agent / Orchestrator"]
+        B["Tool Wrapper"]
+        C["Trace / Observability"]
+        D["Policy Check / Guardrails"]
+        
+        A <--> B
+        A --> C
+        A -.-> D
+    end
+
+    subgraph Evaluation ["<b>Quality Assurance</b>"]
+        E["Eval-Set (Golden Dataset)"]
+        F["Evaluation & Comparison"]
+        G["Baseline / Benchmarks"]
+    end
+
+    %% Datenflüsse zur Evaluation
     B --> F
     C --> F
+    E --> F
+    G --> F
+
+    %% Feedback-Loop (Optional)
+    F -.-> |Optimization| A
+    
+    style Runtime fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
+    style Evaluation fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
 
 Nicht geeignet, wenn: Der Begriff dazu verleitet, sofort ein großes Infrastrukturprojekt zu bauen. Für Einsteiger reicht oft ein kleiner, sauberer Test- und Beobachtungsrahmen.
@@ -198,12 +228,15 @@ Die wichtigste Verbesserungsschleife beginnt oft nicht im Notebook, sondern im E
 
 ```mermaid
 flowchart TD
-    A["Produktionsfall"] --> B["Trace prüfen"]
-    B --> C["Fehlerklasse bestimmen"]
-    C --> D["Eval-Fall ergänzen"]
-    D --> E["Fix umsetzen"]
-    E --> F["gegen Baseline testen"]
-    F --> G["erneut ausrollen"]
+    A["<b>Produktionsfall</b><br>Echtes Nutzerszenario"] --> B["<b>Trace prüfen</b><br>Schritte des Agenten analysieren"]
+    B --> C["<b>Fehlerklasse bestimmen</b><br>Logik-, Tool- oder Promptfehler?"]
+    C --> D["<b>Eval-Fall ergänzen</b><br>Szenario in Testset aufnehmen"]
+    D --> E["<b>Fix umsetzen</b><br>Code oder Prompt anpassen"]
+    E --> F["<b>Baseline-Test</b><br>Regressionen ausschließen"]
+    F --> G["<b>Deployment</b><br>Erneut ausrollen"]
+    
+    %% Der Kreislauf zum nächsten Produktionsfall
+    G -.-> A
 ```
 
 Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem Agentensystem.

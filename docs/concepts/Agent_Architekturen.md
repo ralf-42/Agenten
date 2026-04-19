@@ -42,6 +42,45 @@ Agenten lassen sich aus zwei Blickrichtungen beschreiben. Die erste fragt, wie e
 
 Die Intelligenzperspektive beschreibt das Entscheidungsprinzip. Handelt ein System streng regelbasiert, zustandsbasiert, zielorientiert oder nutzenmaximierend? Die Architekturperspektive beschreibt dagegen das praktische Baumuster, etwa ReAct, Tool-Calling, Workflow oder Multi-Agent. Beide Ebenen hängen zusammen, sind aber nicht identisch.
 
+## Harness Engineering: die Steuerungsschicht um das Modell
+
+Viele Agentenprobleme entstehen nicht, weil das Modell zu schwach ist, sondern weil die Steuerungsschicht um das Modell herum fehlt oder schlecht gestaltet ist. Dieses Konzept trägt den Namen **Harness Engineering**.
+
+Harness Engineering bezeichnet die Praxis, die Kontroll- und Steuerungsschicht rund um ein LLM zu gestalten — also alles, was zwischen der Rohmodellausgabe und einer realen Aktion liegt. Eine Dreiteilung hilft beim Einordnen:
+
+```mermaid
+flowchart TB
+    subgraph Harness ["<b>Harness Engineering</b>"]
+        direction TB
+        H_Info["Gesamte Steuerungsinfrastruktur"]
+        
+        subgraph Context ["<b>Context Engineering</b>"]
+            direction TB
+            C_Info["Kontextzusammenstellung & Retrieval"]
+            
+            subgraph Prompt ["<b>Prompt Engineering</b>"]
+                P_Info["Instruktionen an das Modell"]
+            end
+            
+            C_Info --> P_Info
+        end
+        
+        H_Info --> C_Info
+    end
+
+    style Harness fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style Context fill:#e1f5fe,stroke:#01579b
+    style Prompt fill:#fff9c4,stroke:#fbc02d
+```
+
+**Prompt Engineering** ist die innerste Schicht: Instruktionen, Rollenbeschreibungen, Beispiele — was dem Modell gesagt wird.
+
+**Context Engineering** bestimmt, was überhaupt in den Kontext fließt und wann: Retrieval, Kompression, Zusammensetzung.
+
+**Harness Engineering** umfasst alles darüber hinaus: Werkzeugorchestrierung, Speichersysteme, Berechtigungsgrenzen, Fehlerbehandlung und Wiederherstellungslogik.
+
+Die wichtigste Erkenntnis: Selbst das beste Modell scheitert ohne eine durchdachte Steuerungsschicht. Der häufige Fehler besteht darin, immer bessere Prompts zu schreiben, statt das System um das Modell herum zu verbessern. Instabilität, Halluzinationen oder Endlosschleifen werden dann dem Modell zugeschrieben — meistens liegt das Problem aber in einem unstrukturierten Kontext, inkonsistentem Speicher oder fehlender Fehlerbehandlung.
+
 ## Welche Entscheidungslogik hinter einem Agenten steckt
 
 Eine einfache Regelarchitektur reagiert auf klar definierte Muster. Das entspricht einem Simple-Reflex-Agenten: Wenn Bedingung A erfüllt ist, folgt Aktion B. Solche Systeme sind schnell und gut kontrollierbar, brechen aber bei unerwarteten Situationen schnell an ihre Grenzen.
@@ -69,6 +108,27 @@ flowchart LR
 Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
 
 In der Praxis relevant, wenn: Die Aufgabe offen ist, mehrere Zwischenschritte nötig sind und vorab nicht feststeht, welche Aktion als Nächstes sinnvoll ist.
+
+## Explore → Plan → Act: ReAct für den Produktionseinsatz
+
+ReAct ist flexibel, aber für den Produktionseinsatz oft zu unstrukturiert. Produktive Agenten unterteilen ihre Arbeit deshalb in **drei klar getrennte Phasen** mit unterschiedlichen Berechtigungen:
+
+```mermaid
+flowchart LR
+    E["<b>Explore</b><br/>nur lesen"] --> P["<b>Plan</b><br/>nur lesen"] --> A["<b>Act</b><br/>voller Zugriff"]
+```
+
+**Explore** — der Agent liest, sucht und sammelt Informationen, ohne etwas zu verändern. Erlaubt: Dateien lesen, Suchen, Strukturen analysieren.
+
+**Plan** — der Agent entscheidet, welche Schritte notwendig sind, und skizziert die Änderungen. Noch kein Schreiben, kein Ausführen.
+
+**Act** — erst jetzt darf der Agent verändernd eingreifen: Dateien schreiben, APIs aufrufen, Daten speichern. Voller Werkzeugzugriff.
+
+Beispiel beim Bearbeiten von Code: Explore liest relevante Dateien und versteht die Struktur. Plan skizziert die Änderungen und prüft Auswirkungen. Act schreibt den Code und führt Tests aus.
+
+Diese Phasentrennung reduziert destruktive Fehler erheblich, weil ein Agent nicht im selben Schritt erkunden und gleichzeitig schreiben kann.
+
+In der Praxis relevant, wenn: Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betroffen sind oder der Lösungsweg vor der Ausführung abgesichert sein muss.
 
 ## Tool-Calling: wenn das Modell Werkzeuge steuern soll
 
@@ -270,6 +330,6 @@ Einsteiger profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

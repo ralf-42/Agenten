@@ -302,6 +302,45 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
 
 Genau darin liegt die eigentliche Architekturentscheidung: Nicht `ob` Memory eingesetzt wird, sondern `welche Art` von Memory für welche Information passend ist.
 
+## 3-Schicht-Speicher: Memory für Produktionssysteme
+
+In einfachen Agenten wird alles im aktiven Kontext gehalten. In langen Sitzungen oder komplexen Systemen führt das zwangsläufig zu Kontextüberlastung. Produktionssysteme verwenden deshalb einen gestuften Speicher mit drei Schichten:
+
+```mermaid
+flowchart TB
+    S1["<b>Schicht 1 — Kompakter Index</b><br/>Schnelle Zusammenfassungen, immer geladen"]
+    S2["<b>Schicht 2 — On-Demand-Dateien</b><br/>Themenspezifisches Wissen, bei Bedarf"]
+    S3["<b>Schicht 3 — Archiv</b><br/>Vollständige Geschichte, selten abgerufen"]
+    S1 --> S2 --> S3
+```
+
+**Schicht 1 — Kompakter Index:** Ein komprimierter Überblick, der bei jedem Schritt automatisch im Kontext liegt. Enthält Zusammenfassungen, aktive Projektziele und häufig benötigte Fakten.
+
+**Schicht 2 — On-Demand-Dateien:** Detailliertes, themenspezifisches Wissen. Wird nur dann geladen, wenn der Agent aktiv danach sucht oder es für die aktuelle Aufgabe benötigt wird.
+
+**Schicht 3 — Archiv:** Vollständige Transkripte und historische Informationen. Selten abgerufen, aber vorhanden für Audit, Fehlersuche oder tiefe Recherche.
+
+```python
+class LayeredMemory:
+    def __init__(self):
+        self.index: str = ""           # Schicht 1: immer im Kontext
+        self.topic_files: dict = {}    # Schicht 2: bei Bedarf laden
+        self.archive: list = []        # Schicht 3: selten abgerufen
+
+    def get_context(self, topic: str | None = None) -> str:
+        ctx = self.index
+        if topic and topic in self.topic_files:
+            ctx += "\n\n" + self.topic_files[topic]
+        return ctx
+
+    def archive_session(self, transcript: str):
+        self.archive.append(transcript)
+```
+
+Der entscheidende Vorteil: Statt 50.000 Token auf einmal zu laden, ruft der Agent gezielt das ab, was gerade relevant ist. Das verhindert Kontextüberlastung und hält die Kosten stabil.
+
+In der Praxis relevant, wenn: Sitzungen viele Iterationen umfassen, das System mit mehreren Projekten arbeitet oder Wissen über lange Zeiträume erhalten bleiben soll.
+
 ## Was in der Praxis schnell schiefgeht
 
 Viele Systeme speichern zu viel, zu wahllos oder zu unsauber getrennt. Kurze Floskeln wie `ok` oder `danke` gehören selten in ein dauerhaftes Gedächtnis. Sensible personenbezogene Daten sollten nicht unreflektiert in Vektordatenbanken landen. Ebenso problematisch ist es, Memory ohne Löschstrategie aufzubauen.
@@ -337,6 +376,6 @@ Teilnehmende unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist.
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

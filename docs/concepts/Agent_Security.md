@@ -196,6 +196,7 @@ Teilnehmende unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen S
 
 | Dokument | Frage |
 |---|---|
+| [Datenschutz & DSGVO](../regulatory/Datenschutz_DSGVO.html) | Welche rechtlichen Anforderungen gelten für die Verarbeitung personenbezogener Daten durch LLM-APIs? |
 | [Human-in-the-Loop](./Human_in_the_Loop.html) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
 | [Evaluation & Observability](./Evaluation_Observability.html) | Wie werden Qualitätsprobleme, Drift und Fehlverhalten sichtbar gemacht? |
 | [Lohnt es sich überhaupt?](./Lohnt_es_sich.html) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |

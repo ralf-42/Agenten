@@ -15,7 +15,7 @@ permalink: /
 
 
 > [!TIP] Einstieg in die Dokumentation<br>
-> Für einen schnellen Überblick über sinnvolle Lesepfade, Einstiegsreihenfolgen und typische Startpunkte zuerst [Lesepfade](./Lesepfade.html) öffnen.
+> Für einen schnellen Überblick über sinnvolle Lesepfade, Einstiegsreihenfolgen und typische Startpunkte zuerst [Lesepfade](./lesepfade.html) öffnen.
 
 
 ---

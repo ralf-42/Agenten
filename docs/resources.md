@@ -14,18 +14,18 @@ Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Age
 
 `resources/` ist der pragmatische Begleitbereich der Dokumentation. Er hilft bei Setup, Troubleshooting, Standards, lokalen Umgebungen und externen Quellen. Der Bereich eignet sich deshalb selten als inhaltlicher Einstieg, aber sehr oft als Arbeitsunterstützung während der Umsetzung.
 
-Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./Lesepfade.html) öffnen.
+Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./lesepfade.html) öffnen.
 
 > [!NOTE] Bei API- oder Trace-Problemen<br>
 > Zuerst [Troubleshooting](https://ralf-42.github.io/Agenten/resources/troubleshooting.html) prüfen. LangSmith-Verbindungsprobleme fast immer durch falschen Endpoint — EU-Workspace benötigt `https://eu.api.smith.langchain.com`.
 
 ## Einstieg & Orientierung
 
-- **[Interaktive Visualisierungen](https://ralf-42.github.io/Agenten/resources/interaktive_visualisierungen.html)** – *Wie erkläre ich KI-Konzepte anschaulich?* Web-Demos für KI-Konzepte zum Erkunden und Verstehen
+- **[Interaktive Visualisierungen](https://ralf-42.github.io/Agenten/resources/interaktive-visualisierungen.html)** – *Wie erkläre ich KI-Konzepte anschaulich?* Web-Demos für KI-Konzepte zum Erkunden und Verstehen
   - Transformer-Architektur, Embeddings und Tokenizer interaktiv
   - Modellsteuerung und Prompt-Effekte live ausprobieren
 
-- **[API-Keys & Provider](https://ralf-42.github.io/Agenten/resources/API_Keys_und_Provider.html)** – *Welcher LLM-Provider ist für mich geeignet?* Übersicht über LLM-Provider, API-Keys und Colab-Integration
+- **[API-Keys & Provider](https://ralf-42.github.io/Agenten/resources/api-keys-und-provider.html)** – *Welcher LLM-Provider ist für mich geeignet?* Übersicht über LLM-Provider, API-Keys und Colab-Integration
   - OpenAI, Anthropic, Google VertexAI, Cohere im Vergleich
   - Zahlungsoptionen und Freemium-Angebote
   - API-Key-Setup in Google Colab
@@ -44,7 +44,7 @@ Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./Lesepfade.html) öffnen.
   - LangGraph: Recursion-Limit, State-Fehler, Tool-Loops
   - API-Fehler: Token-Limits, Rate-Limiting, Modell-Parameter
 
-- **[Von Colab zur lokalen Umgebung](https://ralf-42.github.io/Agenten/resources/Colab_zu_Lokal.html)** – *Wie führe ich die Notebooks lokal aus?* Anleitung zur Ausführung der Notebooks in Jupyter Lab / VS Code
+- **[Von Colab zur lokalen Umgebung](https://ralf-42.github.io/Agenten/resources/colab-zu-lokal.html)** – *Wie führe ich die Notebooks lokal aus?* Anleitung zur Ausführung der Notebooks in Jupyter Lab / VS Code
   - Einmalige Einrichtung: venv, genai_lib, API-Keys
   - Anpassungen in der Setup-Zelle (3 Zeilen)
   - Besonderheiten für M08, M09, M28, M30

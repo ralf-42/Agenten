@@ -14,19 +14,19 @@ Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-A
 
 `projects/` ist dann sinnvoll, wenn nicht mehr nur gelesen oder ausprobiert, sondern ein zusammenhängendes System gebaut werden soll. Der Bereich eignet sich vor allem zum Anwenden, Vertiefen und Prüfen, ob die Konzepte und Frameworks bereits sicher genug sitzen.
 
-Für den Weg bis zu diesem Punkt zuerst [Lesepfade](./Lesepfade.html) öffnen.
+Für den Weg bis zu diesem Punkt zuerst [Lesepfade](./lesepfade.html) öffnen.
 
 ## Übersicht
 
 ### Workshop-Format
-- **[Kursnavigator](https://ralf-42.github.io/Agenten/projects/Agenten_Workshop.html)** – *Wie lerne ich LangGraph Schritt für Schritt?* Begleitete Schritt-für-Schritt-Übung
+- **[Kursnavigator](https://ralf-42.github.io/Agenten/projects/agenten-workshop.html)** – *Wie lerne ich LangGraph Schritt für Schritt?* Begleitete Schritt-für-Schritt-Übung
 - Ein kleiner LangGraph-Lernassistent für den Kurs
 - 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
 - LangGraph 1.0+: State, Conditional Routing, Checkpointing
 - Einstieg ab M14, ausbaubar bis M35
 
 ### End-to-End Projekt
-- **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/Agenten_Challenges.html)** – *Wie entwickle ich ein eigenständiges Multi-Agent-System?* Eigenständige Implementierung
+- **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/agenten-challenges.html)** – *Wie entwickle ich ein eigenständiges Multi-Agent-System?* Eigenständige Implementierung
 - Ein Production-Ready Multi-Agent-System entwickeln
 - 4 Projektoptionen: Support-System, Research-Team, Code-Review, Workflow-Automation
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions

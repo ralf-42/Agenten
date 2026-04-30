@@ -54,7 +54,7 @@ def check_environment():
     warnings.simplefilter("ignore", ImportWarning)
 
 
-def install_packages(packages):
+def install_packages(packages, upgrade=False):
     """
     Installiert eine Liste von Python-Paketen mit 'uv pip install' in einer Google-Colab-Umgebung,
     wenn sie noch nicht importierbar sind.
@@ -67,11 +67,16 @@ def install_packages(packages):
         - ['numpy', 'pandas']
         - [('markitdown[all]', 'markitdown'), 'langchain_chroma']
 
+    upgrade : bool, optional (default=False)
+        Falls True: Pakete werden immer installiert/aktualisiert, unabhängig davon ob
+        sie bereits importierbar sind. Nützlich für Versionspins wie 'langchain-core>=1.3.0'.
+        Falls False: Pakete werden nur installiert wenn der Import fehlschlägt.
+
     Funktionsweise:
     ---------------
     - Trennt zwischen Installationsname (für pip) und Importname (für Python).
-    - Versucht, jedes angegebene Modul mit 'import' zu laden.
-    - Falls der Import fehlschlägt: führt 'uv pip install --system -q <paketname>' aus.
+    - upgrade=False: Versucht Import — bei Erfolg skip, bei Fehler installieren.
+    - upgrade=True: Führt immer 'uv pip install --system -q --upgrade' aus.
     - Gibt für jedes Paket eine Erfolgsmeldung oder eine Fehlermeldung aus.
 
     Voraussetzungen:
@@ -93,26 +98,31 @@ def install_packages(packages):
             # Falls nur ein Name gegeben ist, verwende ihn für beide
             install_name = import_name = package
 
-        try:
-            # Versuche, das Modul zu importieren
-            # Verwende importlib anstatt exec für sicheren Import
-            importlib.import_module(import_name)
-            print(f"✅ {import_name} bereits verfügbar")
-
-        except ImportError:
+        if not upgrade:
             try:
-                # Falls ImportError: Installiere das Paket über uv
-                print(f"🔄 Installiere {install_name}...")
-                shell.run_line_magic("system", f"uv pip install --system -q {install_name}")
-
-                # Versuche erneut zu importieren nach der Installation
+                # Versuche, das Modul zu importieren
                 importlib.import_module(import_name)
-                print(f"✅ {install_name} erfolgreich installiert und importiert")
+                print(f"✅ {import_name} bereits verfügbar")
+                continue
+            except ImportError:
+                pass
 
-            except ImportError as import_error:
-                print(f"❌ {install_name} installiert, aber Import von {import_name} fehlgeschlagen: {import_error}")
-            except Exception as install_error:
-                print(f"⚠️ Fehler bei der Installation von {install_name}: {install_error}")
+        try:
+            aktion = "Aktualisiere" if upgrade else "Installiere"
+            print(f"🔄 {aktion} {install_name}...")
+            upgrade_flag = "--upgrade " if upgrade else ""
+            shell.run_line_magic("system", f"uv pip install --system -q {upgrade_flag}{install_name}")
+
+            # Versuche erneut zu importieren nach der Installation
+            importlib.import_module(import_name)
+            past = "aktualisiert" if upgrade else "installiert"
+            print(f"✅ {install_name} erfolgreich {past} und importiert")
+
+        except ImportError as import_error:
+            print(f"❌ {install_name} installiert, aber Import von {import_name} fehlgeschlagen: {import_error}")
+        except Exception as install_error:
+            aktion = "Aktualisierung" if upgrade else "Installation"
+            print(f"⚠️ Fehler bei der {aktion} von {install_name}: {install_error}")
 
 
 def get_ipinfo():

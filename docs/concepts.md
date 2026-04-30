@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Konzepte
-nav_order: 2
+nav_order: 3
 has_children: true
 description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 ---

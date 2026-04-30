@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Ressourcen
-nav_order: 7
+nav_order: 8
 has_children: true
 description: "Praktische Anleitungen, Werkzeuge und Hilfestellungen"
 ---

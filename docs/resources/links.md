@@ -97,6 +97,33 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 
 ---
 
+## KI-Modelle & Benchmarks
+
+Vergleichsplattformen und Datenbanken für KI-Modelle.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard) | Benchmark für Embedding-Modelle |
+| [LMArena Leaderboard](https://lmarena.ai/de/leaderboard) | Vergleich aktueller Frontier-Modelle |
+| [Models.dev](https://models.dev/) | Offene Datenbank von KI-Modellen |
+| [Anthropic Economic Index](https://www.anthropic.com/economic-index#job-explorer) | Wirtschaftliche Auswirkungen und Nutzungsmuster von KI |
+
+---
+
+## OpenAI & Hugging Face
+
+Zentrale Plattformen für Modelle, APIs, Beispiele und Modellartefakte.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [OpenAI Platform Overview](https://platform.openai.com/docs/overview) | Übersicht der OpenAI Platform |
+| [OpenAI API Reference](https://platform.openai.com/docs/api-reference/introduction) | Vollständige API-Dokumentation |
+| [OpenAI Cookbook](https://cookbook.openai.com/) | Beispiele und Best Practices |
+| [Hugging Face](https://huggingface.co/) | Community-Plattform für Modelle, Datasets und Spaces |
+| [Transformers Docs](https://huggingface.co/docs/transformers/index) | Dokumentation der Transformers-Bibliothek |
+
+---
+
 ## Grundlagen-Paper
 
 Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.

@@ -397,6 +397,7 @@ builder.add_conditional_edges("supervisor", routing_edge,
 
 | Dokument | Frage |
 |---|---|
+| [Modellauswahl](../concepts/modellauswahl.html) | Welche Grundlagen, Benchmarks und Evaluierungskriterien stehen hinter der Modellwahl? |
 | [LangChain 1.0 Must-Haves](./langchain-best-practices.html) | Wie werden die gewählten Modelle in Chains und Agents eingesetzt? |
 | [LangGraph 1.0 Must-Haves](./langgraph-best-practices.html) | Wie werden Multi-Agent-Workflows mit den empfohlenen Modellen aufgebaut? |
 | [LangSmith Best Practices](./langsmith-best-practices.html) | Wie werden Modellkosten und -qualität über LangSmith beobachtet? |
@@ -407,3 +408,4 @@ builder.add_conditional_edges("supervisor", routing_edge,
 **Version:** 1.4<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+

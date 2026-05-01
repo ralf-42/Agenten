@@ -2,7 +2,7 @@
 layout: default
 title: LangSmith Best Practices
 parent: Frameworks
-nav_order: 12
+nav_order: 13
 description: "Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith"
 has_toc: true
 ---
@@ -767,3 +767,4 @@ callback = LangSmithCallback(
 **Version:** 1.9<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+

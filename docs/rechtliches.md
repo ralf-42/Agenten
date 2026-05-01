@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Rechtliches
-nav_order: 9
+nav_order: 10
 has_children: true
 description: "Impressum, Datenschutz und rechtliche Hinweise"
 ---

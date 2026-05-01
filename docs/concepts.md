@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Konzepte
-nav_order: 3
+nav_order: 4
 has_children: true
 description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 ---
@@ -43,11 +43,33 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
   - System-Prompts, Struktur und Guardrails
   - Prompting als Verhaltensvertrag statt Formulierungsgefühl
 
+## Modell- und Kontextgrundlagen
+
+- **[Modellauswahl](./concepts/modellauswahl.html)** – *Welches Basismodell passt zu welcher Agentenaufgabe?*
+  - Qualitäts-, Kosten-, Latenz- und Modalitätskriterien
+  - Abgrenzung zum praktischen [Modell-Auswahl Guide](./frameworks/modell-auswahl-guide.html)
+
+- **[Context Engineering](./concepts/context-engineering.html)** – *Welche Informationen braucht ein Agent zur richtigen Zeit?*
+  - Kontextauswahl, Kontextstruktur, Memory, RAG und Tool-Ausgaben
+  - Systematische Sicht auf viele scheinbare Modellfehler
+
+- **[Fine-Tuning](./concepts/fine-tuning.html)** – *Wann reichen Prompting, RAG und Tools nicht mehr aus?*
+  - Einordnung von Training als spätere Optimierungsoption
+  - Abgrenzung zu besserer Kontextstrategie und Modellwahl
+
 ## Wissensmanagement
 
 - **[Wie bekommen Agenten Zugriff auf eigenes Wissen?](./concepts/rag-konzepte.html)** – *Wann ist RAG sinnvoll und wie funktioniert es sauber?* (→ M08–M11)
   - Grundidee, Chunking, Retrieval und Reranking
   - Praxisnahe Einführung in Wissensanbindung ohne Feintuning
+
+- **[Tokenizing & Chunking](./concepts/tokenizing-chunking.html)** – *Wie wird Text für Retrieval und Kontextfenster vorbereitet?*
+  - Tokenisierung, Chunk-Größen und Overlap
+  - Grundlage für stabile RAG- und Memory-Systeme
+
+- **[Embeddings](./concepts/embeddings.html)** – *Wie wird Bedeutung als Vektor durchsuchbar?*
+  - Semantische Suche, Ähnlichkeit und Vektorräume
+  - Grundlage für RAG, ChromaDB und langfristiges Agenten-Memory
 
 ## Workflows & State
 

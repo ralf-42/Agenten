@@ -295,10 +295,12 @@ research_subagent = {
 | `description` | ✅ | Erklärt dem Hauptagenten wann er zu rufen ist |
 | `system_prompt` | ✅ | Rolle und Verhalten des Sub-Agenten |
 | `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
-| `model` | — | Eigenes Modell pro Sub-Agent (**neu seit 0.4.11**) |
+| `model` | — | Eigenes Modell pro Sub-Agent (seit 0.4.11) |
 | `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
 | `interrupt_on` | — | Freigabe vor bestimmten Tools dieses Sub-Agenten |
 | `skills` | — | SKILL.md-Dateien für den Sub-Agenten |
+| `permissions` | — | Filesystem-Zugriffsrechte einschränken (**neu seit 0.5.2**) |
+| `response_format` | — | Strukturierte Ausgabe des Sub-Agenten (**neu seit 0.5.1**) |
 
 Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
@@ -316,6 +318,32 @@ agent = create_deep_agent(
 
 Der wichtige Punkt:
 Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede interne Einzelaktion des Sub-Agenten.
+
+---
+
+## Profiles API (neu seit 0.5.4)
+
+Die **Profiles API** erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
+Eingebaute Profile existieren für OpenAI und Anthropic und liefern laut Benchmark +10–20 Punkte Verbesserung ohne Code-Änderungen.
+
+```python
+from deepagents.profiles import HarnessProfile, ProviderProfile, register_harness_profile
+
+# Eigenes Profil registrieren
+my_profile = HarnessProfile(
+    provider=ProviderProfile.OPENAI,
+    system_prompt_suffix="Antworte immer auf Deutsch.",
+)
+register_harness_profile(my_profile)
+
+# Agent nutzt automatisch das registrierte Profil
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-4o-mini"),
+    tools=[mein_tool],
+)
+```
+
+Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die eingebauten Profile wirken automatisch.
 
 ---
 
@@ -518,6 +546,6 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** März 2026<br>
+**Version:** 1.3<br>
+**Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

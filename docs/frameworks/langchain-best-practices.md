@@ -75,6 +75,10 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 **Wichtigste Neuerungen v1.1.10 (langchain-openai)** (Februar 2026):
 - ✨ **Automatic Server-Side Compaction**: `context_management=[{"type": "compaction", "compact_threshold": N}]` — OpenAI komprimiert Konversationshistorie serverseitig, keine SummarizationMiddleware nötig.
 
+**Wichtigste Neuerungen v1.2.17** (Mai 2026):
+- ✨ ****: Middleware kann jetzt direkt antworten und den Agent-Loop beenden.
+- ✨ **Content-Block-Centric Streaming v2** ( 1.3.2): Streaming liefert strukturierte Content-Block-Events.  enthält Block-Dicts mit ,  und .
+
 **Breaking Changes:** Keine! v1.2.x ist vollständig rückwärtskompatibel mit v1.0+
 
 ---
@@ -614,6 +618,16 @@ agent = create_agent(
 - ✅ Transiente Netzwerkfehler
 - ✅ Server-Timeouts
 - ✅ Production-Resilience
+
+#### HumanInTheLoopMiddleware respond()-Decision (NEU in v1.2.17)
+
+**Was neu ist:**  beendet den Agent-Loop sofort mit einer direkten Antwort.
+
+
+
+**In der Praxis relevant wenn:** Guardrails sollen dem Nutzer eine klare Fehlermeldung liefern, die das LLM nicht nochmals umformulieren muss.
+
+---
 
 #### ContentModerationMiddleware (NEU!)
 

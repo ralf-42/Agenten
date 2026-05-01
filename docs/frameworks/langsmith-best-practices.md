@@ -72,6 +72,28 @@ response = agent.invoke({"messages": [...]})
 
 ---
 
+## 🆕 UI-Änderungen (Stand 2026)
+
+### Agent Builder → LangSmith Fleet
+
+Die „Agent Builder“-Sektion in der LangSmith-UI wurde umbenannt in „LangSmith Fleet“.
+
+> LangSmith Dashboard → **Fleet** (linke Navigation)
+
+Alle bisherigen Funktionen sind erhalten — nur der Name hat sich geändert.
+
+**Notebooks:** Verweise auf „LangSmith Agent Builder“ auf „LangSmith Fleet“ aktualisieren.
+
+---
+
+###  — Terminal-basiertes Trace-Debugging
+
+
+
+**In der Praxis relevant wenn:** Debugging in Google Colab oder SSH-Umgebungen ohne Browser.
+
+---
+
 ## 📋 Die 5 Kern-Features von LangSmith
 
 ### 1. 🔍 Tracing & Debugging
@@ -721,6 +743,10 @@ callback = LangSmithCallback(
 - ✅ Empfohlenes Notebook-Pattern: `ls.tracing_context(project_name=...)` statt `os.environ`-Setzung
 - ✅ Troubleshooting: Neuer Eintrag "Projektnamen-Wechsel wird ignoriert" mit Workaround via `cache_clear()`
 
+### Version 2.0 (2026-05-01)
+- 🆕 **Fleet-Rename**: „Agent Builder“ → „LangSmith Fleet“ in der UI
+- 🆕 ** CLI** — Terminal-Trace-Debugging
+
 ### Version 1.6 (2026-03-03)
 - ✅ Tracing & Debugging: `.with_config()` – Zwei-Schritt-Pattern dokumentiert (`run_cfg = {...}` → `.with_config(**run_cfg)`)
 
@@ -764,7 +790,7 @@ callback = LangSmithCallback(
 
 ---
 
-**Version:** 1.9<br>
+**Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

@@ -470,6 +470,16 @@ def error_recovery(state: AgentState) -> AgentState:
     return {"action": choice}
 ```
 
+### 🆕 NEU in v1.1.7: Time-Travel / Replay-Fix bei Interrupt-Return
+
+**Fix ab v1.1.7:**  spult automatisch zum letzten Interrupt-Checkpoint zurück.
+
+
+
+**Typischer Fehler:**  weglassen. Ohne Checkpointer kein Replay-Punkt.
+
+---
+
 ### 📦 Advanced: Multiple Interrupt Resume (verfügbar ab v1.0)
 
 **Warum:** Parallele Tool Calls oder mehrere Interrupts gleichzeitig fortsetzen.
@@ -756,6 +766,16 @@ for event in graph.stream(
 - ✅ **Debugging**: Fehler sofort identifizieren
 - ✅ **User Feedback**: Progress-Bar, Status-Updates
 - ✅ **Production Monitoring**: Logging, Metrics
+
+### 🆕 NEU in v1.1.0: v2-Streaming-Format (StreamPart-Dicts)
+
+Ab v1.1.0 liefert  strukturierte -Dicts.  gibt  mit  und  zurück.
+
+
+
+**Grenze:** Altes -Format erzeugt ab v1.1 Deprecation-Warnings.
+
+---
 
 ### 📦 Stream Modes Übersicht
 

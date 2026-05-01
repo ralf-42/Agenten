@@ -15,7 +15,7 @@ permalink: /
 
 
 > [!TIP] Einstieg in die Dokumentation<br>
-> Für einen schnellen Überblick über sinnvolle Lesepfade, Einstiegsreihenfolgen und typische Startpunkte zuerst [Lesepfade](./lesepfade.html) öffnen.
+> Für den kürzesten Start zuerst [Zuerst lesen](./zuerst-lesen.html) öffnen. Die ausführlichen [Lesepfade](./lesepfade.html) helfen danach bei der gezielten Vertiefung.
 
 
 ---

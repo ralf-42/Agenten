@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frameworks
-nav_order: 4
+nav_order: 5
 has_children: true
 description: "Einsteiger-Guides für LangChain, LangGraph, LangSmith, ChromaDB und Agent Builder"
 ---
@@ -76,6 +76,7 @@ Die folgenden Seiten geben einen kompakten Einstieg in zentrale Frameworks und W
   - Entscheidungsbaum und Einordnung typischer Einsatzszenarien
   - Code-Muster für Mixed-Model-Setup
   - Kosten-Orientierung und Vergleichsstandard
+  - Konzeptionelle Grundlagen ergänzend unter [Modellauswahl](./concepts/modellauswahl.html)
 
 - **[Provider-Modell-Mapping](./frameworks/provider-modell-mapping.html)** – *Wie bilde ich Modellrollen auf verschiedene Provider ab?* Wie sich dieselben Modellrollen auf OpenAI, Mistral und Anthropic abbilden lassen
   - Rollenbasiertes Mapping statt reiner Modellnamen
@@ -112,4 +113,3 @@ Für jedes zentrale Framework gibt es eine dedizierte Referenz mit empfohlenen P
 - **[Agent Evaluation & Observability Best Practices](./frameworks/agent-evaluation-observability-best-practices.html)** – *Wie werden Agenten mit Baselines, Traces und Regressionen belastbar?*
   - Mindeststandard für Evaluation, Observability und kleine Harness-Logik
   - Teilnehmerfassung als Brücke zwischen Konzeptseite und Framework-Details
-

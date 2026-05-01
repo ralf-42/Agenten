@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Lesepfade
-nav_order: 2
+nav_order: 3
 description: Orientierung, Lesepfade und empfohlene Einstiege durch die Agenten-Dokumentation
 has_toc: true
 ---
 
 # Lesepfade
 
-Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Der schnellste Einstieg entsteht meist nicht durch vollständiges Lesen, sondern durch einen passenden Pfad: erst das Ziel klären, dann gezielt vertiefen.
+Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Für den kürzesten Einstieg eignet sich zuerst [Zuerst lesen](./zuerst-lesen.html). Danach helfen die Lesepfade dabei, je nach Ziel gezielt zu vertiefen.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -39,7 +39,8 @@ Empfohlener Einstieg:
 1. [Lohnt es sich überhaupt?](./concepts/lohnt-es-sich.html)
 2. [Welche Architektur passt zu diesem Agenten?](./concepts/agent-architekturen.html)
 3. [Welches Werkzeug?](./concepts/aufgabenklassen-und-loesungswege.html)
-4. [Wie nutzen Agenten Werkzeuge?](./concepts/tool-use-function-calling.html)
+4. [Modellauswahl](./concepts/modellauswahl.html)
+5. [Wie nutzen Agenten Werkzeuge?](./concepts/tool-use-function-calling.html)
 
 ### Erster Agent
 
@@ -49,8 +50,9 @@ Empfohlener Einstieg:
 
 1. [Einsteiger LangChain](./frameworks/einsteiger-langchain.html)
 2. [Prompt Engineering](./concepts/prompt-engineering.html)
-3. [State Management](./concepts/state-management.html)
-4. [Einsteiger LangGraph](./frameworks/einsteiger-langgraph.html)
+3. [Context Engineering](./concepts/context-engineering.html)
+4. [State Management](./concepts/state-management.html)
+5. [Einsteiger LangGraph](./frameworks/einsteiger-langgraph.html)
 
 ### RAG und Wissensarbeit
 
@@ -59,9 +61,11 @@ Dokumente, Wissensquellen oder Grounding spielen die Hauptrolle. Meist steht dan
 Empfohlener Einstieg:
 
 1. [RAG-Konzepte](./concepts/rag-konzepte.html)
-2. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/memory-systeme.html)
-3. [Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/evaluation-observability.html)
-4. [Einsteiger ChromaDB](./frameworks/einsteiger-chromadb.html)
+2. [Tokenizing & Chunking](./concepts/tokenizing-chunking.html)
+3. [Embeddings](./concepts/embeddings.html)
+4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/memory-systeme.html)
+5. [Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/evaluation-observability.html)
+6. [Einsteiger ChromaDB](./frameworks/einsteiger-chromadb.html)
 
 ### Robustheit und Kontrolle
 
@@ -84,7 +88,8 @@ Empfohlener Einstieg:
 2. [Vom Modell zum Produkt: LangChain-Ökosystem](./deployment/vom-modell-zum-produkt-langchain-oekosystem.html)
 3. [Aus Entwicklung ins Deployment](./deployment/aus-entwicklung-ins-deployment.html)
 4. [LangSmith Best Practices](./frameworks/langsmith-best-practices.html)
-5. [Agent Evaluation & Observability Best Practices](./frameworks/agent-evaluation-observability-best-practices.html)
+5. [Modellauswahl](./concepts/modellauswahl.html)
+6. [Agent Evaluation & Observability Best Practices](./frameworks/agent-evaluation-observability-best-practices.html)
 
 ### Governance und Rahmenbedingungen
 

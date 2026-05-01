@@ -3,7 +3,7 @@ layout: default
 title: Agent Builder Einsteiger
 parent: Frameworks
 nav_order: 7
-description: "Agenten ohne Code: Visuelle Workflow-Erstellung mit  OpenAI Agent Builder"
+description: "No-Code-Agenten und visuelle Workflows fuer Agentenprototypen"
 has_toc: true
 ---
 
@@ -26,7 +26,11 @@ has_toc: true
 
 Während LangChain ein Code-basiertes Framework für KI-Agenten ist, ermöglicht **OpenAI Agent Builder** die No-Code-Erstellung komplexer Agent-Workflows durch eine visuelle Drag-and-Drop-Oberfläche.
 
-**Zentrale Fragen, die Agent Builder beantwortet:**
+> [!NOTE] Einordnung<br>
+> Agent Builder ist stark für schnelle Workflow-Entwicklung, ersetzt aber nicht in jedem Fall codebasierte Feinsteuerung.
+> **Grenzen:** Nur OpenAI-Modelle, kein On-Premise-Deployment, eingeschränkte Code-Kontrolle (nur Export).
+
+**Zentrale Fragen des Werkzeugs:**
 
 - **Wie erstelle ich komplexe Workflows ohne Programmierung?**
 - **Wie orchestriere ich mehrere spezialisierte Agenten?**
@@ -89,6 +93,9 @@ graph TB
 - Organisation mit Admin Console
 - Zugang über [platform.openai.com/agent-builder](https://platform.openai.com/agent-builder)
 
+> [!WARNING] Zugriffsvoraussetzung<br>
+> Ohne Enterprise/Edu-Zugang ist der Funktionsumfang im Teamkontext eingeschränkt oder nicht verfügbar. **Plus/Team**-Accounts erhalten keinen Zugriff auf den Agent Builder — nur **Enterprise** und **Edu**-Accounts haben vollen Zugang.
+
 ```mermaid
 graph TB
     A[ChatGPT Account-Typen] --> B[Plus/Team]
@@ -149,6 +156,10 @@ graph TB
 ```
 
 ### Node-Typen im Detail
+
+> [!TIP] Modellierungsregel<br>
+> Sinnvoll sind fachlich eng geschnittene Nodes und klar benannte Subworkflows.
+> **Anti-Pattern:** Ein einzelner LLM-Node, der Kategorisierung, Priorität, Routing und E-Mail-Text gleichzeitig erzeugt. Das ist schwer zu debuggen und kaum wiederverwendbar.
 
 | Node-Typ | Symbol | Funktion | Beispiel |
 |----------|--------|----------|----------|
@@ -227,7 +238,7 @@ flowchart TB
 **LLM Node: "Analyze & Categorize"**
 ```yaml
 Node Type: LLM
-Model: gpt-4o-mini
+Model: gpt-4
 Temperature: 0.0
 
 System Prompt: |
@@ -298,6 +309,9 @@ Body:
 
 ### Vorteile dieser Architektur
 
+> [!SUCCESS] Betriebsvorteil       
+> Klare Node/Edge-Strukturen verbessern Nachvollziehbarkeit, Übergaben im Team und Debugging in Produktion.
+
 | Vorteil | Beschreibung |
 |---------|--------------|
 | **Multi-Step-Logik** | Mehrere LLM-Calls orchestrieren |
@@ -312,6 +326,10 @@ Body:
 ## Model Context Protocol (MCP)
 
 MCP verbindet Agent Builder mit 100+ externen Systemen durch standardisierte Server-Integrationen.
+
+> [!TIP] Integrationsstrategie<br>
+> Sinnvoll ist ein Start mit ein bis zwei geschäftskritischen MCP-Integrationen. Erst nach stabilen End-to-End-Tests sollte die Fläche erweitert werden.
+> **Anti-Pattern:** Alle verfügbaren MCP-Server auf einmal einbinden — jeder Server ist eine potenzielle Fehlerquelle und erhöht die Testfläche erheblich.
 
 ### MCP-Architektur
 
@@ -406,7 +424,7 @@ flowchart LR
 
 ### Custom MCP Server erstellen
 
-Falls kein passender MCP-Server existiert, können Sie einen eigenen erstellen:
+Falls kein passender MCP-Server existiert, lässt sich ein eigener Server erstellen:
 
 ```typescript
 // Beispiel: Simple MCP Server für Custom API
@@ -446,6 +464,10 @@ server.listen(3000);
 ---
 
 ## Entscheidungshilfe: Agent Builder vs. Code-basierte Frameworks
+
+> [!NOTE] Entscheidungsheuristik<br>
+> **Agent Builder** → Governance, schnelles Prototyping, kein Coding erforderlich.
+> **LangChain** → volle Code-Kontrolle, Multi-Provider-Support, On-Premise-Deployment.
 
 ### Vergleichsmatrix
 
@@ -546,7 +568,7 @@ sequenceDiagram
     Note over CODE,DEP: Code kann unabhängig angepasst werden
 ```
 
-### Wann sollten Sie zu LangChain migrieren?
+### Wann ist eine Migration zu LangChain sinnvoll?
 
 ```mermaid
 graph TB
@@ -567,7 +589,7 @@ graph TB
 
 **Migrations-Checkliste:**
 
-- ✅ Benötigen Sie Multi-Provider-Support? → LangChain
+- ✅ Multi-Provider-Support benötigt? → LangChain
 - ✅ On-Premise Deployment erforderlich? → LangChain
 - ✅ Custom Python-Tools notwendig? → LangChain
 - ❌ Visual Workflows ausreichend? → Agent Builder
@@ -577,6 +599,9 @@ graph TB
 ---
 
 ## Sicherheit und Governance im Agent Builder
+
+> [!WARNING] Produktionsgrenze<br>
+> Vor produktivem Einsatz sind Rechte, Datenzugriffe, Auditierbarkeit und Freigabeprozesse verbindlich zu definieren.
 
 ### Sicherheits-Architektur
 
@@ -940,7 +965,7 @@ graph TB
 
 ```mermaid
 graph LR
-    YOU[Sie sind hier] --> TRY[Agent Builder ausprobieren]
+    YOU[Aktueller Einstieg] --> TRY[Agent Builder ausprobieren]
 
     TRY --> TEMP[Templates nutzen]
     TRY --> BUILD[Eigenen Workflow bauen]
@@ -966,8 +991,20 @@ graph LR
 - **Community:** OpenAI Developer Forum
 - **Vergleich:** [AgentKit vs GPTs Guide](https://www.eesel.ai/blog/agentkit-vs-gpts)
 
+## Quellen
+
+- [OpenAI Agent Builder Dokumentation](https://platform.openai.com/docs/guides/agent-builder)          
+- [Introducing AgentKit OpenAI](https://openai.com/index/introducing-agentkit/)
+- [AgentKit vs GPTs: A complete guide](https://www.eesel.ai/blog/agentkit-vs-gpts)
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [LangChain Documentation](https://python.langchain.com/)
+- [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](https://sider.ai/blog/ai-tools/what-is-openai-chatgpt-agent-builder-a-complete-2025-guide)
+
 ---
 
-**Version:** 2.0<br>
-**Stand:** März 2026<br>
+**Version:**    2.0<br>
+**Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
+

@@ -2,7 +2,7 @@
 layout: default
 title: Eval & Observ Best Practices
 parent: Frameworks
-nav_order: 13
+nav_order: 14
 description: Wie Agenten mit Baselines, Traces, Regressionen und einfachem Harness belastbar werden
 has_toc: true
 ---
@@ -264,3 +264,4 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 **Version:** 1.0<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+

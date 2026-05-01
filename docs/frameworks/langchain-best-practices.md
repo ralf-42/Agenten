@@ -2,7 +2,7 @@
 layout: default
 title: LangChain Best Practices
 parent: Frameworks
-nav_order: 10
+nav_order: 11
 description: "Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg"
 has_toc: true
 ---
@@ -1154,3 +1154,4 @@ Beim Refactoring von altem Code:
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+

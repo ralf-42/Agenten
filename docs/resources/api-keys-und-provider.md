@@ -11,7 +11,7 @@ has_toc: true
 {: .no_toc }
 
 > **LLM-Provider im Überblick**
-> Kostenlose API-Keys, Zahlungsweisen und Google Colab Integration
+> API-Keys, Free Tiers, Guthabenmodelle und Google-Colab-Integration
 
 ---
 
@@ -25,31 +25,31 @@ has_toc: true
 
 ## Übersicht der LLM-Provider
 
-Diese Tabelle bietet eine Übersicht (Stand: 12.2025) über LLM-Provider mit ihren Zahlungsweisen, kostenlosen Optionen und der Integration in Google Colab.
+Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, LangChain-Integrationen, Kostenmodelle und kostenlose Einstiegsoptionen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig und werden deshalb nicht als verlässliches Kurskriterium geführt. Maßgeblich ist, ob ein API-Key ohne Abrechnung nutzbar ist oder ob vor der ersten produktiven Nutzung Billing aktiviert werden muss.
 
-| Model Provider          | Integration Package           | Zahlungsweisen                    | PayPal verfügbar? | Kostenloser API-Key?       | Hinweise / Besonderheiten                                                  |
-| ----------------------- | ----------------------------- | --------------------------------- | ----------------- | -------------------------- | -------------------------------------------------------------------------- |
-| openai                  | langchain-openai              | Kreditkarte, PayPal (ab 2026)     | Ja (zukünftig)    | Nein (begrenztes Freemium) | Weit verbreitet, stabil, offizielle PayPal-Koordination mit Agent Toolkit. |
-| anthropic               | langchain-anthropic           | Kreditkarte                       | Nein              | Ja (Freemium)              | Fokus auf Sicherheit und RLHF, PayPal aktuell nicht unterstützt.           |
-| azure_openai            | langchain-openai              | Kreditkarte, Microsoft Abrechnung | Nein              | Nein                       | Azure-Wrapper für OpenAI, keine PayPal-Zahlung.                            |
-| azure_ai                | langchain-azure-ai            | Kreditkarte, Rechnung             | Nein              | Ja (Freemium)              | Microsoft Azure KI-Dienste, Enterprise-fokussiert.                         |
-| google_vertexai         | langchain-google-vertexai     | Kreditkarte, PayPal               | Ja                | Ja (hohe Limits)           | Google Cloud, Gemini Modelle, PayPal möglich.                              |
-| google_genai            | langchain-google-genai        | Kreditkarte, PayPal               | Ja                | Ja (hohe Limits)           | Google Generative AI mit nativer Cloud-Integration.                        |
-| bedrock                 | langchain-aws                 | Kreditkarte                       | Nein              | Nein                       | AWS Bedrock Modelle, keine PayPal-Unterstützung.                           |
-| bedrock_converse        | langchain-aws                 | Kreditkarte                       | Nein              | Nein                       | AWS Conversational Endpoints, kein PayPal.                                 |
-| cohere                  | langchain-cohere              | Kreditkarte                       | Nein              | Ja (Freemium)              | Gute Text- und Embedding-Leistung.                                         |
-| fireworks               | langchain-fireworks           | Kreditkarte                       | Nein              | Ja                         | Multimodale Anwendungsfälle, kein PayPal.                                  |
-| together                | langchain-together            | Kreditkarte                       | Nein              | Ja (Freemium)              | Community-getriebene Modelle.                                              |
-| mistralai               | langchain-mistralai           | Kreditkarte                       | Nein              | Ja                         | Effiziente Open-Source-Modelle.                                            |
-| huggingface             | langchain-huggingface         | Kreditkarte, Open Source          | Nein              | Ja                         | Zugang zum Huggingface Hub, große Modellvielfalt.                          |
-| groq                    | langchain-groq                | Kreditkarte                       | Nein              | Ja (gute Ratenlimits)      | Hochleistungs-Hardwareoptimierte Modelle.                                  |
-| ollama                  | langchain-ollama              | Lokalinstallation                 | Nein              | Ja                         | Lokal laufende Modelle, keine Cloudabhängigkeit.                           |
-| google_anthropic_vertex | langchain-google-vertexai     | Kreditkarte, PayPal               | Ja                | Ja                         | Google Vertex AI mit Anthropic Modellen.                                   |
-| deepseek                | langchain-deepseek            | PayPal (limitierte Länder)        | Ja                | Ja                         | Nur PayPal-Zahlung, API-Key Nutzung via PayPal-Authentifizierung.          |
-| ibm                     | langchain-ibm                 | Kreditkarte                       | Nein              | Nein                       | IBM Watson KI, hauptsächlich Enterprise.                                   |
-| nvidia                  | langchain-nvidia-ai-endpoints | Kreditkarte                       | Nein              | Nein                       | NVIDIA KI mit Hardwarefokus.                                               |
-| xai                     | langchain-xai                 | Kreditkarte                       | Nein              | Nein                       | Fokus auf erklärbare KI.                                                   |
-| perplexity              | langchain-perplexity          | Kreditkarte                       | Nein              | Ja                         | Dynamische Wissensextraktion, Websuche-basiert.                            |
+| Model Provider | Integration Package | Kostenmodell | Kostenlos nutzbar? | Hinweise / Besonderheiten |
+|---|---|---|---|---|
+| openai | `langchain-openai` | Prepaid API-Credits; Mindestaufladung typischerweise 5 USD | Nein, außer ggf. zeitlich begrenztes Startguthaben | Sehr verbreitet, gute LangChain-Unterstützung. Gekaufte Credits verfallen nach einem Jahr und sind nicht erstattbar. |
+| anthropic | `langchain-anthropic` | Prepaid Usage Credits oder Enterprise-Abrechnung | Nein, außer ggf. gewährtes Startguthaben | API- und Workbench-Nutzung laufen über vorab gekaufte Credits; Credit-Verfall nach einem Jahr. |
+| azure_openai | `langchain-openai` | Azure Pay-as-you-go, Azure-Abrechnung oder Enterprise-Vertrag | Nein, ggf. Azure-Guthaben | OpenAI-Modelle über Azure-Ressourcen, häufig relevant für Unternehmen mit bestehender Azure-Umgebung. |
+| azure_ai | `langchain-azure-ai` | Azure Pay-as-you-go, Azure-Abrechnung oder Enterprise-Vertrag | Modell- und Dienstabhängig | Breiter Azure-AI-Zugang; konkrete Kosten hängen vom Dienst und Modell ab. |
+| google_vertexai | `langchain-google-vertexai` | Google-Cloud-Billing, Pay-as-you-go | Nein, ggf. Google-Cloud-Guthaben | Enterprise- und Cloud-Variante für Gemini und weitere Modelle; nicht mit dem kostenlosen Gemini-API-Tier in AI Studio gleichsetzen. |
+| google_genai | `langchain-google-genai` | Gemini API Free Tier oder Paid Tier über Google Cloud Billing | Ja, modell- und regionabhängig | Für Kurse besonders geeignet: API-Key über Google AI Studio, Free Tier mit Rate Limits; im Free Tier können Daten zur Produktverbesserung verwendet werden. |
+| bedrock | `langchain-aws` | AWS Pay-as-you-go, On-Demand, Batch oder Provisioned Throughput | Nein, ggf. AWS-Guthaben | Zugriff auf Modelle verschiedener Anbieter über AWS Bedrock; Kosten entstehen pro Modellnutzung und Token. |
+| bedrock_converse | `langchain-aws` | AWS Pay-as-you-go | Nein, ggf. AWS-Guthaben | Converse-API für einheitlichere Chat-/Conversation-Aufrufe in Bedrock. |
+| cohere | `langchain-cohere` | Trial Key oder Production Key | Ja, Trial Key mit Limits | Trial Keys sind kostenlos, aber begrenzt; Production Keys sind für produktive Nutzung vorgesehen. |
+| fireworks | `langchain-fireworks` | Pay-as-you-go; freie Startcredits für neue Nutzer möglich | Ja, als Startcredits abhängig vom Account | Serverless Inference, Deployments und Fine-Tuning werden nutzungsabhängig abgerechnet. |
+| together | `langchain-together` | Pay-as-you-go / Credits | Ja, abhängig von aktuellen Startcredits | Viele Open-Weight-Modelle und schnelle Inferenz; genaue Free-Credit-Regeln regelmäßig prüfen. |
+| mistralai | `langchain-mistralai` | Experiment Plan oder Scale Plan | Ja, Experiment Plan mit restriktiven Limits | Der kostenlose Experiment Plan dient Evaluation und Prototyping; für produktive Nutzung ist Scale vorgesehen. |
+| huggingface | `langchain-huggingface` | Hub-Zugang, Inference Provider, eigene Tokens oder lokale Modelle | Ja, abhängig vom Modell und Inference-Anbieter | Sehr große Modellvielfalt; Kosten und Limits hängen stark davon ab, ob Hub, Serverless Inference, Dedicated Endpoint oder lokale Ausführung genutzt wird. |
+| groq | `langchain-groq` | Free Tier oder Developer/Production Tier | Ja, Free Tier mit Rate Limits | Sehr schnelle Inferenz für unterstützte Modelle; Free Tier ohne Kreditkarte, aber nicht unbegrenzt. |
+| ollama | `langchain-ollama` | Lokalinstallation | Ja | Keine Cloud-API-Kosten; benötigt lokale oder Colab-Ressourcen und passende Modellgröße. |
+| google_anthropic_vertex | `langchain-google-vertexai` | Google-Cloud-Billing über Vertex AI | Nein, ggf. Google-Cloud-Guthaben | Anthropic-Modelle über Vertex AI; Abrechnung und Verfügbarkeit richten sich nach Google Cloud und Region. |
+| deepseek | `langchain-deepseek` | Guthaben-/Top-up-Modell; Abzug nach Tokenverbrauch | Teilweise, wenn gewährtes Guthaben vorhanden ist | Offizielle Preise werden pro 1M Token ausgewiesen; Nutzung wird vom aufgeladenen oder gewährten Guthaben abgezogen. |
+| ibm | `langchain-ibm` | IBM watsonx.ai / Enterprise-Abrechnung | Teilweise, abhängig vom IBM-Plan | Vor allem für Enterprise- und Governance-Szenarien relevant. |
+| nvidia | `langchain-nvidia-ai-endpoints` | NVIDIA NIM / API-Endpunkte, Credits oder Enterprise | Teilweise, abhängig vom aktuellen NVIDIA-Angebot | OpenAI-kompatible NIM-Endpunkte; stark für selbst gehostete oder GPU-nahe Szenarien. |
+| xai | `langchain-xai` | Free/Promotional Credits, Prepaid Credits oder monatliche Rechnung | Teilweise, wenn Promo- oder Free Credits vorhanden sind | API-Verbrauch wird zuerst gegen Free/Promo-Credits, dann gegen Prepaid Credits und danach ggf. Rechnungslimit gebucht. |
+| perplexity | `langchain-perplexity` | API-Preise nach Modell, Token und Such-/Tool-Nutzung | Nein, ggf. Credits abhängig vom Plan | Besonders relevant für Websuche und Sonar/Agent-APIs; Tool-Aufrufe können zusätzlich zu Modellkosten berechnet werden. |
 
 ---
 
@@ -102,8 +102,8 @@ llm = init_chat_model("groq:mixtral-8x7b-32768", temperature=0.0)
 ### Für Anfänger & Studenten
 
 **1. Google AI Studio (Gemini)**
-- ✅ **Komplett kostenlos** mit hohen Limits
-- ✅ **PayPal-Zahlung** möglich
+- ✅ **Free Tier** für die Gemini API, modell- und regionabhängig
+- ✅ **Google AI Studio** bleibt als Oberfläche kostenlos nutzbar
 - ✅ **Native Colab-Integration**
 - ✅ **Multimodal** (Text, Bild, Audio)
 
@@ -113,16 +113,16 @@ llm = init_chat_model("groq:mixtral-8x7b-32768", temperature=0.0)
 - ✅ **Open-Source-Modelle** (Llama, Mixtral)
 
 **3. Cloudflare Workers AI**
-- ✅ **Vollständig kostenlos** (mit Limits)
+- ✅ **Kostenloser Einstieg** mit Limits
 - ✅ **Keine Kreditkarte nötig**
 - ✅ **Mehrere Modelle verfügbar**
 
 ### Für Produktivnutzung
 
-**OpenAI (GPT-4)**
-- 💰 **Pay-as-you-go** (ab 5$)
+**OpenAI API**
+- 💰 **Prepaid API-Credits** mit Mindestaufladung typischerweise 5 USD
 - ✅ **Beste Qualität** für komplexe Aufgaben
-- ✅ **PayPal ab 2026**
+- ✅ **Breite LangChain-Unterstützung**
 
 **Together AI**
 - 💰 **Freemium** mit kostenlosen Credits
@@ -177,7 +177,7 @@ llm = Ollama(model="llama3")
 ## Weiterführende Links
 
 - [OpenAI Platform](https://platform.openai.com/)
-- [Google AI Studio](https://makersuite.google.com/)
+- [Google AI Studio](https://aistudio.google.com/)
 - [Groq Cloud](https://console.groq.com/)
 - [Together AI](https://www.together.ai/)
 - [Ollama](https://ollama.com/)
@@ -185,6 +185,6 @@ llm = Ollama(model="llama3")
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Dezember 2025<br>
+**Version:** 1.1<br>
+**Stand:** 1. Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

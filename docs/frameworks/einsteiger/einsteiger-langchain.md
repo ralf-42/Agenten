@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: LangChain Einsteiger
+title: LangChain
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 1
@@ -8,7 +8,7 @@ description: "Grundlagen und Best Practices für LangChain 1.0+"
 has_toc: true
 ---
 
-# LangChain Einsteiger
+# LangChain
 {: .no_toc }
 
 > **Grundlagen und Best Practices für LangChain 1.0+**

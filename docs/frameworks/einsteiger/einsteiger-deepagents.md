@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: DeepAgents Einsteiger
+title: DeepAgents
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 3
@@ -8,7 +8,7 @@ description: Einführung in DeepAgents als Harness für Planning, Filesystem und
 has_toc: true
 ---
 
-# DeepAgents Einsteiger
+# DeepAgents
 {: .no_toc }
 
 > **Harness-Ansatz für Planning, Filesystem und Sub-Agenten — provider-agnostisch, MIT-lizenziert**

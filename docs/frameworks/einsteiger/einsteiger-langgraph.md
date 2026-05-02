@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: LangGraph Einsteiger
+title: LangGraph
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 2
@@ -8,7 +8,7 @@ description: "Multi-Agent-Systeme und Workflows mit LangGraph"
 has_toc: true
 ---
 
-# LangGraph Einsteiger
+# LangGraph
 {: .no_toc }
 
 > **Multi-Agent-Systeme und Workflows mit LangGraph**

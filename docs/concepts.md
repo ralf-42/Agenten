@@ -103,13 +103,11 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
   - Prompt Injection, Least Privilege und Vertrauensgrenzen
   - Praktische Schutzmaßnahmen für Einsteigerprojekte
 
-## Kommunikation & Protokolle
+## Protokolle & Erweiterungen
 
 - **[Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?](./concepts/protokolle/agenten-kommunikationsprotokolle.html)** – *Welche Rolle spielen MCP, A2A, ACP und AG-UI?*
   - Einordnung der wichtigsten Protokolle und Schnittstellen
   - Fokus auf praktische Unterschiede und Einsatzgrenzen
-
-## Fortgeschritten & Optional
 
 - **[Wann wird aus einem Prompt ein wiederverwendbarer Skill?](./concepts/protokolle/skills.html)** – *Wie werden wiederkehrende Arbeitsmuster stabil gekapselt?* (→ M31, optional)
   - Unterschied zwischen losem Prompt und belastbarem Skill

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Agenten-Challenge
 parent: Projekte
@@ -91,7 +91,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 - **Takeaway:** Debugging ohne Traces ist unmöglich
 
 {: .info }
-> **Empfehlung:** Studieren Sie den [LangGraph Einsteiger Guide](../frameworks/einsteiger-langgraph.html) für Production-Best-Practices.
+> **Empfehlung:** Studieren Sie den [LangGraph Einsteiger Guide](../frameworks/einsteiger/einsteiger-langgraph.html) für Production-Best-Practices.
 
 ### Konkrete Tipps für Ihre Challenge
 
@@ -584,9 +584,9 @@ graph = workflow.compile(
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph Einsteiger Guide](https://ralf-42.github.io/Agenten/frameworks/einsteiger-langgraph.html)
+- [LangGraph Einsteiger Guide](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html)
 - [LangChain Standards](https://ralf-42.github.io/Agenten/resources/standards.html)
-- [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/einsteiger-langgraph.html)
+- [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html)
 
 ## Code-Beispiele
 

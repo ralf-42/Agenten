@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Zuerst lesen
 nav_order: 2
@@ -20,10 +20,10 @@ Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht d
 
 Wer neu in das Kursmaterial einsteigt, beginnt mit diesen vier Dokumenten:
 
-1. [Lohnt es sich überhaupt?](./concepts/lohnt-es-sich.html)
-2. [Agenten-Architekturen](./concepts/agent-architekturen.html)
-3. [Tool Use & Function Calling](./concepts/tool-use-function-calling.html)
-4. [Einsteiger LangChain](./frameworks/einsteiger-langchain.html)
+1. [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html)
+2. [Agenten-Architekturen](./concepts/architektur/agent-architekturen.html)
+3. [Tool Use & Function Calling](./concepts/architektur/tool-use-function-calling.html)
+4. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
 
 Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
 
@@ -31,15 +31,15 @@ Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungswe
 
 | Ziel | Zuerst anschauen |
 |---|---|
-| Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?](./concepts/lohnt-es-sich.html) |
-| Architektur auswählen | [Agenten-Architekturen](./concepts/agent-architekturen.html) |
-| Tools sicher einbinden | [Tool Use & Function Calling](./concepts/tool-use-function-calling.html) |
-| Ersten Agenten bauen | [Einsteiger LangChain](./frameworks/einsteiger-langchain.html) |
-| Mehrstufige Workflows umsetzen | [Einsteiger LangGraph](./frameworks/einsteiger-langgraph.html) |
-| Kontext, RAG und Memory verstehen | [Context Engineering](./concepts/context-engineering.html) |
-| Wissen und Dokumente anbinden | [RAG-Konzepte](./concepts/rag-konzepte.html) |
-| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz](./concepts/checkpointing-persistenz.html) |
-| Qualität sichtbar machen | [Evaluation & Observability](./concepts/evaluation-observability.html) |
+| Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html) |
+| Architektur auswählen | [Agenten-Architekturen](./concepts/architektur/agent-architekturen.html) |
+| Tools sicher einbinden | [Tool Use & Function Calling](./concepts/architektur/tool-use-function-calling.html) |
+| Ersten Agenten bauen | [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html) |
+| Mehrstufige Workflows umsetzen | [Einsteiger LangGraph](./frameworks/einsteiger/einsteiger-langgraph.html) |
+| Kontext, RAG und Memory verstehen | [Context Engineering](./concepts/modell-kontext/context-engineering.html) |
+| Wissen und Dokumente anbinden | [RAG-Konzepte](./concepts/wissensmanagement/rag-konzepte.html) |
+| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz](./concepts/workflows-state/checkpointing-persistenz.html) |
+| Qualität sichtbar machen | [Evaluation & Observability](./concepts/qualitaet-praxis/evaluation-observability.html) |
 | Produktion vorbereiten | [Minimum Viable Agent Stack](./deployment/minimum-viable-agent-stack.html) |
 
 ## Danach gezielt vertiefen

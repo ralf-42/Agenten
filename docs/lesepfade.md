@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Lesepfade
 nav_order: 3

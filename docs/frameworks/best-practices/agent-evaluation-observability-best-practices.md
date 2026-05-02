@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Eval & Observ Best Practices
 parent: Best Practices
@@ -25,7 +25,7 @@ has_toc: true
 
 ## Intro
 
-Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/qualitaet-praxis/evaluation-observability.html) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.
+Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/qualitaet-praxis/evaluation-observability.html) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.  
 
 Die Seite richtet sich an Teilnehmende, die bereits einfache Agenten mit Tools, LangGraph oder LangSmith bauen. Es geht nicht um vollständige Produktionsarchitektur, sondern um einen belastbaren Mindeststandard.
 

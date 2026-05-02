@@ -53,7 +53,7 @@ from genai_lib.utilities import load_prompt
 prompt = load_prompt("05_prompt/m04_mein_prompt.md")
 
 # Few-Shot mit ## system / ## human Sections → mode="T"
-prompt = load_prompt("05_prompt/m04_ticket_few_shot_prompt.md", mode="T")
+prompt = load_prompt("05_prompt/m04_research_few_shot_prompt.md", mode="T")
 
 # Mit Variablen befüllen
 chain = prompt | llm
@@ -69,7 +69,7 @@ result = chain.invoke({"variable1": "Wert"})
 | M03 | `m03_agent_system_prompt.md` |
 | M04 | `m04_research_template_prompt.md`, `m04_research_system_prompt.md`, `m04_research_few_shot_prompt.md`, `m04_research_zero_shot_prompt.md` |
 | M05 | `m05_kontakt_extraction_prompt.md`, `m05_person_extraction_prompt.md`, `m05_produktbewertung_prompt.md`, `m05_ticket_classification_prompt.md` |
-| M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_rechenassistent_system_prompt.md` |
+| M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_research_system_prompt.md` |
 | M09 | `m09_entwurf_prompt.md`, `m09_korrektorat_prompt.md` |
 | M10 | `m10_research_routing_prompt.md` |
 | M12 | `m12_query_rewrite_prompt.md` |

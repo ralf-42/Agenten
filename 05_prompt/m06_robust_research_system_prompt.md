@@ -1,5 +1,5 @@
 ---
-name: m06_robust_rechenassistent_system_prompt
+name: m06_robust_research_system_prompt
 description: Robuster Research Assistant mit Fehlerbehandlung
 variables: []
 ---

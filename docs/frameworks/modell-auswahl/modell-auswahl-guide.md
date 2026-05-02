@@ -14,7 +14,7 @@ has_toc: true
 > **Welches Modell für welche Aufgabe?**      
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
-Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modellauswahl/provider-modell-mapping.html)
+Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modell-auswahl/provider-modell-mapping.html)
 
 ---
 
@@ -357,7 +357,7 @@ Wenn nachfolgende Architektur- oder Migrationstexte providerneutral formuliert w
 Dadurch bleibt der Kurs konkret und die Beschreibung dennoch übertragbar.
 
 Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
-[Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modellauswahl/provider-modell-mapping.html)
+[Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modell-auswahl/provider-modell-mapping.html)
 
 ---
 

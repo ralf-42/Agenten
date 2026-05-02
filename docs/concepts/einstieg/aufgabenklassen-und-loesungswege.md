@@ -184,7 +184,7 @@ Kurzcheck:
 | [Welche Architektur passt zu diesem Agenten?](./agent-architekturen.html) | Wie unterscheiden sich ReAct, Tool-Calling, Workflow und Multi-Agent im Detail? |
 | [Multi-Agent-Systeme](./multi-agent-systeme.html) | Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten? |
 | [Human-in-the-Loop](./human-in-the-loop.html) | An welchen Stellen müssen Menschen zur Kontrolle oder Freigabe eingebunden werden? |
-| [Modell-Auswahl Guide](../frameworks/modellauswahl/modell-auswahl-guide.html) | Welches Modell passt zu welcher Rolle im gewählten System? |
+| [Modell-Auswahl Guide](../frameworks/modell-auswahl/modell-auswahl-guide.html) | Welches Modell passt zu welcher Rolle im gewählten System? |
 
 ---
 

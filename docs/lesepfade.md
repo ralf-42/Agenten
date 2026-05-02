@@ -76,7 +76,7 @@ Empfohlener Einstieg:
 1. [Checkpointing & Persistenz](./concepts/workflows-state/checkpointing-persistenz.html)
 2. [Wann sollten Menschen in den Ablauf eingreifen?](./concepts/workflows-state/human-in-the-loop.html)
 3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./concepts/qualitaet-praxis/agent-security.html)
-4. [Agent Evaluation & Observability Best Practices](./frameworks/bestpractices/agent-evaluation-observability-best-practices.html)
+4. [Agent Evaluation & Observability Best Practices](./frameworks/best-practices/agent-evaluation-observability-best-practices.html)
 
 ### Produktion und Betrieb
 
@@ -87,9 +87,9 @@ Empfohlener Einstieg:
 1. [Minimum Viable Agent Stack](./deployment/minimum-viable-agent-stack.html)
 2. [Vom Modell zum Produkt: LangChain-Ökosystem](./deployment/vom-modell-zum-produkt-langchain-oekosystem.html)
 3. [Aus Entwicklung ins Deployment](./deployment/aus-entwicklung-ins-deployment.html)
-4. [LangSmith Best Practices](./frameworks/bestpractices/langsmith-best-practices.html)
+4. [LangSmith Best Practices](./frameworks/best-practices/langsmith-best-practices.html)
 5. [Modellauswahl](./concepts/modell-kontext/modellauswahl.html)
-6. [Agent Evaluation & Observability Best Practices](./frameworks/bestpractices/agent-evaluation-observability-best-practices.html)
+6. [Agent Evaluation & Observability Best Practices](./frameworks/best-practices/agent-evaluation-observability-best-practices.html)
 
 ### Governance und Rahmenbedingungen
 

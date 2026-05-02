@@ -3,7 +3,7 @@ layout: default
 title: Datenschutz & DSGVO
 parent: Regulatorisches
 nav_order: 4
-description: DSGVO-konforme Nutzung von LLM-APIs — was in Prompts darf, welcher Dienst wann passt und wie Agenten datenschutzgerecht gebaut werden
+description: DSGVO-konforme Nutzung von LLM-APIs, Tracing, Tools, Memory und Agenten-Pipelines
 has_toc: true
 ---
 
@@ -73,24 +73,26 @@ Nicht jeder KI-Dienst eignet sich für jeden Anwendungsfall. Die Entscheidung h�
 
 | Datensensitivität | Beispiele | Geeigneter Dienst |
 |---|---|---|
-| Keine personenbezogenen Daten | Öffentliche Texte, anonymisierte Fragen | OpenAI API (Standard) |
-| Interne Unternehmensdaten, kein PII | Technische Dokumentation, anonymisierte Protokolle | OpenAI API mit Opt-out from Training |
-| Personenbezogene Daten (Standard) | Kundenfragen, interne E-Mails | Azure OpenAI mit Auftragsverarbeitungsvertrag |
-| Besondere Kategorien (Art. 9 DSGVO) | Gesundheitsdaten, Bewerbungsunterlagen | Lokales Modell (Ollama, vLLM) |
+| Keine personenbezogenen Daten | Öffentliche Texte, anonymisierte Fragen | Cloud-LLM-API meist vertretbar |
+| Interne Unternehmensdaten, kein PII | Technische Dokumentation, anonymisierte Protokolle | Cloud-LLM-API mit geprüften Datenkontrollen |
+| Personenbezogene Daten (Standard) | Kundenfragen, interne E-Mails | Dienst mit AVV/DPA, klarer Datenhaltung und dokumentiertem Zweck |
+| Besondere Kategorien (Art. 9 DSGVO) | Gesundheitsdaten, Bewerbungsunterlagen | Lokales Modell oder streng kontrollierte Unternehmensumgebung |
 
-Der wesentliche Unterschied zwischen OpenAI (Standard) und Azure OpenAI: Azure bietet ein europäisches Rechenzentrum und einen standardisierten Auftragsverarbeitungsvertrag. Daten verlassen dabei nicht die EU-Region, und Microsoft verpflichtet sich vertraglich zur DSGVO-konformen Verarbeitung.
+Bei Cloud-LLM-APIs müssen Datenkontrollen konkret geprüft werden: Werden Eingaben zum Training verwendet? Welche Logs entstehen? Wie lange werden Inhalte gespeichert? Gibt es einen Auftragsverarbeitungsvertrag, Datenresidenzoptionen oder regionale Verarbeitung? Für OpenAI API-Daten gilt beispielsweise: API-Daten werden standardmäßig nicht zum Training genutzt, sofern nicht aktiv zugestimmt wird; Abuse-Monitoring-Logs und Application State können aber je nach Endpoint und Konfiguration entstehen. Solche Details gehören in die technische und organisatorische Bewertung.
 
-Lokale Modelle über Ollama oder vLLM laufen vollständig auf eigener Infrastruktur. Kein Byte verlässt das eigene System. Das ist die sicherste Option für hochsensible Daten — allerdings mit dem Nachteil, dass lokale Modelle in Qualität und Leistung hinter den großen Cloudmodellen zurückbleiben.
+Azure OpenAI, OpenAI-Datenresidenzoptionen, Enterprise-Verträge oder andere Anbieterangebote können für personenbezogene Daten geeignet sein, müssen aber konkret geprüft werden: Region, Subprozessoren, Vertragsgrundlage, Logging, Löschfristen und tatsächliche Datenflüsse zählen mehr als der Produktname.
+
+Lokale Modelle über Ollama oder vLLM laufen vollständig auf eigener Infrastruktur. Kein Byte muss das eigene System verlassen. Das ist für hochsensible Daten oft die kontrollierbarste Option — allerdings mit dem Nachteil, dass lokale Modelle in Qualität, Geschwindigkeit oder Betriebsaufwand hinter großen Cloudmodellen zurückbleiben können.
 
 **Grenze:** Auch der Einsatz eines lokalen Modells befreit nicht von der DSGVO. Die Daten werden weiterhin verarbeitet, und alle anderen Anforderungen — Zweckbindung, Speicherbegrenzung, Betroffenenrechte — gelten unverändert.
 
 ---
 
-## Tracing und Logging — die vergessene Datenschutzfrage
+## Tracing, Logging und Evaluation — die vergessene Datenschutzfrage
 
-LangSmith speichert jeden Prompt und jede Ausgabe des Agenten. Das ist für Debugging und Qualitätssicherung wertvoll, aber auch eine Datenschutzfrage: Wenn ein Prompt personenbezogene Daten enthält, liegen diese Daten anschließend im LangSmith-System.
+Agenten erzeugen oft mehr personenbezogene Spuren als erwartet: Prompts, Modellantworten, Tool-Aufrufe, State, Memory, Retrieval-Ergebnisse, Evaluation-Datasets und Traces. LangSmith kann Inputs, Outputs, Tool-Aufrufe, Metadaten und Datasets speichern, abhängig von Konfiguration und Nutzung. Das ist für Debugging und Qualitätssicherung wertvoll, aber auch eine Datenschutzfrage.
 
-Im Kurs wird bereits der EU-Endpunkt verwendet (`eu.api.smith.langchain.com`), was bedeutet, dass die Daten in einer EU-Region gespeichert werden. Das ist ein erster wichtiger Schritt.
+Im Kurs wird bereits der EU-Endpunkt verwendet (`eu.api.smith.langchain.com`). Das ist ein wichtiger Baustein, ersetzt aber keine Datenklassifikation. Entscheidend bleibt, welche Inhalte überhaupt in Traces, Metadaten, Feedback und Evaluationsdaten gelangen.
 
 Darüber hinaus lohnt es sich, vor dem Logging sensible Felder zu maskieren oder gar nicht erst in die Trace-Metadaten aufzunehmen:
 
@@ -118,10 +120,10 @@ Für die Praxis bedeutet das: Bevor ein Unternehmen einen LLM-API-Dienst produkt
 
 | Anbieter | AVV verfügbar? | Wo |
 |---|---|---|
-| OpenAI (API) | Ja | In den API-Nutzungsbedingungen, auf Anfrage auch angepasst |
-| Azure OpenAI | Ja, standardisiert | Im Microsoft-Kundenvertrag enthalten |
-| Anthropic (Claude API) | Ja | Auf Anfrage |
-| Hugging Face (Inference API) | Ja | In den Nutzungsbedingungen |
+| OpenAI API | Ja | Data Processing Addendum / Business Terms prüfen |
+| Azure OpenAI | Ja | Microsoft-Kundenvertrag und Auftragsverarbeitungsbedingungen prüfen |
+| Anthropic Claude API | Ja | Anbieterbedingungen bzw. Enterprise-Vertrag prüfen |
+| Hugging Face Inference | Je nach Dienst und Vertrag | Nutzungsbedingungen und Enterprise-Optionen prüfen |
 
 Entwickler müssen das nicht selbst aushandeln — aber sie sollten wissen, dass diese Verträge existieren müssen, und im Zweifel die Rechtsabteilung oder den Datenschutzbeauftragten einschalten, bevor ein System produktiv geht.
 
@@ -132,6 +134,8 @@ Entwickler müssen das nicht selbst aushandeln — aber sie sollten wissen, dass
 ## Datenschutz by Design
 
 Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret, dass personenbezogene Daten möglichst früh im Datenfluss gefiltert oder anonymisiert werden — nicht erst bevor die Antwort ausgegeben wird.
+
+Datenschutz by Default ergänzt dieses Prinzip: Die voreingestellte Konfiguration sollte möglichst datensparsam sein. Tracing sollte keine Klardaten in Metadaten schreiben, Memory sollte nicht automatisch alles dauerhaft speichern, Tool-Zugriffe sollten minimal berechtigt sein und Logs sollten kurze, begründete Aufbewahrungsfristen haben.
 
 Ein einfaches Prinzip lässt sich als Tool-Prüfung umsetzen:
 
@@ -146,7 +150,7 @@ def verarbeite_anfrage(text: str) -> str:
     return weiterleiten_an_llm(text)
 ```
 
-Der Prüfschritt findet statt, bevor die Daten den Agenten überhaupt erreichen — nicht nachdem sie bereits in einem Prompt oder Trace gelandet sind.
+Der Prüfschritt findet statt, bevor die Daten den Agenten, ein Tool, einen RAG-Index oder einen Trace erreichen — nicht nachdem sie bereits in einem Prompt oder Trace gelandet sind.
 
 Darüber hinaus gilt das Prinzip der **Datensparsamkeit**: Nur die Daten erheben und verarbeiten, die für den konkreten Zweck tatsächlich nötig sind. Ein Agent, der Bestellstatus abruft, braucht keinen Zugriff auf die vollständige Bestellhistorie eines Nutzers.
 
@@ -156,16 +160,16 @@ Darüber hinaus gilt das Prinzip der **Datensparsamkeit**: Nur die Daten erheben
 
 Eine **Datenschutzfolgenabschätzung** (DSFA, englisch: Data Protection Impact Assessment, DPIA) ist nach Art. 35 DSGVO Pflicht, wenn eine Verarbeitung voraussichtlich ein hohes Risiko für Betroffene darstellt.
 
-Für LLM-basierte Systeme ist eine DSFA wahrscheinlich erforderlich, wenn mindestens zwei der folgenden Bedingungen zutreffen:
+Für LLM-basierte Systeme sollte eine DSFA spätestens geprüft werden, wenn eine oder mehrere der folgenden Bedingungen zutreffen:
 
 - Das System verarbeitet systematisch besondere Kategorien personenbezogener Daten (Gesundheit, Biometrie, Religion, politische Überzeugung)
 - Das System trifft oder bereitet automatisierte Entscheidungen mit Rechtswirkung vor (Kreditvergabe, Stellenbesetzung, medizinische Empfehlung)
 - Das System verarbeitet Daten von schutzbedürftigen Gruppen (Minderjährige, Patienten, Beschäftigte)
-- Es handelt sich um eine neue Technologie, deren Risiken noch nicht vollständig bekannt sind
+- Das System nutzt neue, schwer vorhersehbare Agenten- oder Automatisierungsmuster mit Zugriff auf sensible Daten oder wirkungsrelevante Tools
 
-Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingungen. Ein Agent, der Bewerbungsunterlagen auswertet und eine Vorauswahl trifft, erfüllt mindestens zwei.
+Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingungen. Ein Agent, der Bewerbungsunterlagen auswertet und eine Vorauswahl vorbereitet, berührt dagegen schnell mehrere Risikokriterien.
 
-**Grenze:** Die Entscheidung, ob eine DSFA erforderlich ist, liegt beim Datenschutzbeauftragten des Unternehmens — nicht beim Entwickler. Die Aufgabe des Entwicklers ist es, die relevanten Informationen bereitstellen zu können: welche Daten verarbeitet werden, wie lange sie gespeichert bleiben und welche Drittanbieter beteiligt sind.
+**Grenze:** Die Entscheidung, ob eine DSFA erforderlich ist, liegt beim Datenschutzbeauftragten des Unternehmens — nicht beim Entwickler. Die Aufgabe des Entwicklers ist es, die relevanten Informationen bereitstellen zu können: welche Daten verarbeitet werden, welche Tools Zugriff erhalten, wie lange Daten gespeichert bleiben, welche Logs entstehen und welche Drittanbieter beteiligt sind.
 
 ---
 

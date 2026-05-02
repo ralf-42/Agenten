@@ -36,7 +36,7 @@ Für Entwickler bedeutet das: Nicht der Code allein entscheidet, ob ein System e
 
 ### Medizin und Medizintechnik
 
-Agenten, die in medizinischen Kontexten eingesetzt werden — etwa zur Unterstützung klinischer Bewertungen, zur Auswertung von Patientendaten oder zur Strukturierung von Studienberichten — können unter das Medizinprodukterecht fallen. In der EU regelt das die MDR (Medical Device Regulation). Software, die eigenständig Diagnosen vorschlägt oder Therapieentscheidungen beeinflusst, gilt als Medizinprodukt und muss entsprechend zugelassen werden.
+Agenten, die in medizinischen Kontexten eingesetzt werden — etwa zur Unterstützung klinischer Bewertungen, zur Auswertung von Patientendaten oder zur Strukturierung von Studienberichten — können je nach Zweckbestimmung unter das Medizinprodukterecht fallen. In der EU regelt das die MDR (Medical Device Regulation). Software, die eigenständig Diagnosen vorschlägt oder Therapieentscheidungen beeinflusst, kann als Medizinprodukt eingeordnet werden und braucht dann ein entsprechendes Konformitäts- und Zulassungsverfahren.
 
 Was das für einen Agenten konkret bedeutet: Jede Ausgabe, die als medizinische Empfehlung interpretiert werden könnte, braucht eine klare Einschränkung und einen menschlichen Freigabeschritt. Ein RAG-Agent, der klinische Studien zusammenfasst, ist in der Regel unbedenklich — solange er Quellen nennt, keine Diagnosen stellt und explizit auf die Notwendigkeit ärztlicher Prüfung hinweist.
 
@@ -44,9 +44,9 @@ Was das für einen Agenten konkret bedeutet: Jede Ausgabe, die als medizinische 
 
 ### Legal und Rechtsdienstleistungen
 
-In rechtlichen Kontexten schützen Verschwiegenheitspflichten, Standesrecht und Haftungsregeln die Qualität der Beratung. In Deutschland ist Rechtsberatung Rechtsanwälten vorbehalten (Rechtsdienstleistungsgesetz). Ein Agent darf Rechtsinformationen bereitstellen — also erklären, was ein Paragraf sagt — aber keine Rechtsberatung erteilen, also keine Empfehlung für eine konkrete Situation im Einzelfall.
+In rechtlichen Kontexten schützen Verschwiegenheitspflichten, Standesrecht und Haftungsregeln die Qualität der Beratung. Als vereinfachte Kursregel gilt: Ein Agent darf Rechtsinformationen bereitstellen — also erklären, was ein Paragraf sagt — aber keine Rechtsberatung erteilen, also keine Empfehlung für eine konkrete Situation im Einzelfall. Ob eine konkrete Anwendung zulässig ist, muss anhand des Rechtsdienstleistungsgesetzes, des Nutzungskontexts und der organisatorischen Einbettung geprüft werden.
 
-Für Agenten in Kanzleien oder Rechtsabteilungen gelten zusätzlich das Mandantengeheimnis und strenge Dokumentationspflichten. Mandantendaten dürfen nicht in externe APIs fließen, ohne dass ein AVV besteht und der Mandant informiert wurde. Jede KI-gestützte Analyse muss nachvollziehbar und revidierbar sein.
+Für Agenten in Kanzleien oder Rechtsabteilungen gelten zusätzlich das Mandantengeheimnis und strenge Dokumentationspflichten. Mandantendaten dürfen nicht unkontrolliert in externe APIs, Logs, Traces oder Evaluation-Datasets fließen. Vor produktiver Nutzung müssen Auftragsverarbeitung, Rechtsgrundlage, Datenflüsse und Informationspflichten geklärt sein. Jede KI-gestützte Analyse muss nachvollziehbar und revidierbar sein.
 
 **Typischer Fehler:** Ein Agent beantwortet eine konkrete Rechtsfrage mit einer Handlungsempfehlung — ohne den Hinweis, dass dies keine Rechtsberatung ist und ein Anwalt konsultiert werden sollte.
 
@@ -54,7 +54,7 @@ Für Agenten in Kanzleien oder Rechtsabteilungen gelten zusätzlich das Mandante
 
 Kreditentscheidungen, Risikobeurteilungen und Anlageempfehlungen sind in der EU durch MiFID II, Kreditwesengesetz und weitere Vorschriften geregelt. Der EU AI Act stuft Systeme zur Kreditwürdigkeitsbewertung und Risikoeinschätzung in der Versicherung explizit als Hochrisiko ein (Anhang III).
 
-Das zentrale Problem bei KI in diesem Bereich ist Diskriminierung: Wenn ein Modell auf historischen Daten trainiert wurde, die bestimmte Gruppen benachteiligen, reproduziert und verstärkt es diese Ungleichheit. Für Agenten bedeutet das: Jede Entscheidung muss erklärbar und anfecht­bar sein. Betroffene Personen haben das Recht auf eine menschliche Überprüfung automatisierter Entscheidungen (Art. 22 DSGVO).
+Das zentrale Problem bei KI in diesem Bereich ist Diskriminierung: Wenn ein Modell auf historischen Daten trainiert wurde, die bestimmte Gruppen benachteiligen, reproduziert und verstärkt es diese Ungleichheit. Für Agenten bedeutet das: Jede Entscheidung muss erklärbar, überprüfbar und anfechtbar sein. Bei automatisierten Entscheidungen mit erheblicher Wirkung sind die Grenzen aus DSGVO, AI Act und branchenspezifischer Regulierung zusammen zu prüfen.
 
 **Typischer Fehler:** Ein Agent trifft eine Kreditentscheidung automatisch auf Basis von Modellergebnissen, ohne dass eine menschliche Überprüfung vorgesehen ist.
 

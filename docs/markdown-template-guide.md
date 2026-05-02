@@ -225,7 +225,7 @@ Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
 [Agent-Architekturen](./agent-architekturen.html)
-[Modell-Auswahl Guide](../frameworks/modellauswahl/modell-auswahl-guide.html)
+[Modell-Auswahl Guide](../frameworks/modell-auswahl/modell-auswahl-guide.html)
 ```
 
 Regeln:

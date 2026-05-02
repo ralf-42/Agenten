@@ -531,7 +531,7 @@ for case in test_cases:
 ```
 
 > [!TIP] Vertiefung<br>
-> Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../frameworks/bestpractices/langsmith-best-practices.html) beschrieben.
+> Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../frameworks/best-practices/langsmith-best-practices.html) beschrieben.
 
 ---
 

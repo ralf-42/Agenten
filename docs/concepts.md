@@ -47,7 +47,7 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 
 - **[Modellauswahl](./concepts/modell-kontext/modellauswahl.html)** – *Welches Basismodell passt zu welcher Agentenaufgabe?*
   - Qualitäts-, Kosten-, Latenz- und Modalitätskriterien
-  - Abgrenzung zum praktischen [Modell-Auswahl Guide](./frameworks/modellauswahl/modell-auswahl-guide.html)
+  - Abgrenzung zum praktischen [Modell-Auswahl Guide](./frameworks/modell-auswahl/modell-auswahl-guide.html)
 
 - **[Context Engineering](./concepts/modell-kontext/context-engineering.html)** – *Welche Informationen braucht ein Agent zur richtigen Zeit?*
   - Kontextauswahl, Kontextstruktur, Memory, RAG und Tool-Ausgaben

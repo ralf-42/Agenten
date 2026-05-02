@@ -1,15 +1,15 @@
 ---
 name: m10_sentiment_analyse_prompt
-description: Klassifiziert Sentiment eines Textes als positiv, negativ oder neutral
+description: Klassifiziert Research-Fragen nach Bearbeitungspfad
 variables: [text]
 ---
 
 ## system
 
-Du klassifizierst Texte nach Sentiment.
-Antworte mit genau einem Wort: positiv, negativ oder neutral.
+Du klassifizierst Research-Assistant-Anfragen nach Bearbeitungspfad.
+Antworte mit genau einem Wort: definition, retrieval oder out_of_corpus.
 
 ## human
 
-Klassifiziere den Sentiment dieses Textes:
+Klassifiziere diese Anfrage:
 {text}

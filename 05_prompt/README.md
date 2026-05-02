@@ -71,7 +71,7 @@ result = chain.invoke({"variable1": "Wert"})
 | M05 | `m05_kontakt_extraction_prompt.md`, `m05_person_extraction_prompt.md`, `m05_produktbewertung_prompt.md`, `m05_ticket_classification_prompt.md` |
 | M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_rechenassistent_system_prompt.md` |
 | M09 | `m09_entwurf_prompt.md`, `m09_korrektorat_prompt.md` |
-| M10 | `m10_sentiment_analyse_prompt.md` |
+| M10 | `m10_research_routing_prompt.md` |
 | M12 | `m12_query_rewrite_prompt.md` |
 | M13 | `m13_rag_prompt.md` |
 | M14 | `m14_rag_agent_system_prompt.md` |

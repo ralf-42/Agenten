@@ -1,5 +1,5 @@
 ---
-name: m10_sentiment_analyse_prompt
+name: m10_research_routing_prompt
 description: Klassifiziert Research-Fragen nach Bearbeitungspfad
 variables: [text]
 ---

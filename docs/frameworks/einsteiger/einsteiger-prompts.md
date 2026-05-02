@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: Prompt-Templates Einsteiger
+title: Prompt-Templates
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 8

@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: ChromaDB Einsteiger
+title: ChromaDB
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 5
@@ -8,7 +8,7 @@ description: Vektordatenbanken und ChromaDB für RAG-Systeme
 has_toc: true
 ---
 
-# ChromaDB Einsteiger
+# ChromaDB
 {: .no_toc }
 
 > **Vektordatenbanken und ChromaDB für RAG-Systeme**

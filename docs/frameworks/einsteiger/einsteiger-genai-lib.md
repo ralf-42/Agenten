@@ -1,6 +1,6 @@
 ﻿---
 layout: default
-title: GenAI_Lib Einsteiger
+title: GenAI_Lib
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 6

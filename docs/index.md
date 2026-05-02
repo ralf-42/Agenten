@@ -25,6 +25,15 @@ KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeuge
 
 Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reasoning-nahe Kernkomponente sowie Frameworks wie **LangChain** und **LangGraph** für robuste Orchestrierung. Damit werden Agenten nicht als einzelne Prompts gebaut, sondern als zustandsbasierte Systeme mit klaren Schritten, Werkzeugen und Kontrollpunkten.
 
+Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Research Assistant für Fachartikel**. Die fiktive Nutzerin Pia arbeitet mit einem kuratierten PDF-Korpus, stellt fachliche Fragen und erwartet belegbare Antworten. Der Assistant sucht semantisch, nutzt RAG, strukturiert Ergebnisse, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen Entscheidungen für menschliche Freigabe.
+
+Dieses Endprodukt ist der rote Faden vom ersten Tool bis zum Capstone:
+
+- M02-M05 legen Tools, Prompts und strukturierte Antworten an.
+- M11-M15 bauen semantische Suche, ChromaDB, RAG und Evaluation auf.
+- M17 ergänzt Human-in-the-Loop als Kontrollpunkt.
+- Die späteren Module erweitern den Assistant um Memory, Supervisor-Patterns, Skills, UI und Deployment.
+
 Der Kurs Agenten lässt sich aus drei **Perspektiven** betrachten:
 
 ## Verstehen
@@ -46,6 +55,6 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** März 2026<br>
+**Version:** 1.2<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

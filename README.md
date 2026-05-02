@@ -9,6 +9,8 @@
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.0+, LangGraph 1.0.9, LangSmith 0.4.41 und agentenbasierte KI-Architekturen.
 
+Der durchgehende Anwendungsfall ist ein **Research Assistant für Fachartikel**: Eine fiktive Wissensarbeiterin, Pia, baut schrittweise ein System, das einen PDF-Korpus semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben Endprodukts erarbeitet.
+
 ## 🌐 Kurs-Website
 
 **[→ Agenten Kurs-Website (GitHub Pages)](https://ralf-42.github.io/Agenten/)**
@@ -58,10 +60,10 @@ Agenten/
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M01 | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen |
-| M02 | Tool Use & Function Calling | @tool Decorator, eigene Tools bauen |
+| M02 | Tool Use & Function Calling | @tool Decorator, Research-Tools bauen |
 | M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
 | M04 | Prompt Engineering | ChatPromptTemplate, System/Human Messages |
-| M05 | Structured Output | Pydantic, with_structured_output() |
+| M05 | Structured Output | Pydantic, with_structured_output(), Paper-Signale |
 | M06 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
 | M07 | LCEL Chains (Brücke → LangGraph) | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
 
@@ -79,14 +81,14 @@ Agenten/
 | M12 | ChromaDB & Indexing | Chunking, Embedding, Vektordatenbank |
 | M13 | RAG-Chain mit LangChain | Retriever, Similarity Search, LCEL-Chain |
 | M14 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
-| M15 | LangSmith Evaluations Basics | Eval-Dataset, Regression-Check |
+| M15 | LangSmith Evaluations Basics | Eval-Dataset, Quellen-Treffer, Out-of-Corpus-Checks |
 
 ### Block 4: HITL & Multi-Agent (M16–M21)
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M16 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
-| M17 | Human-in-the-Loop | interrupt(), Approval-Pattern |
+| M17 | Human-in-the-Loop | interrupt(), Review und Freigabe vor finaler Research-Antwort |
 | M18 | Memory-Systeme | Konversationsspeicher (Buffer/Sliding Window/Summarization), Semantic Memory, Per-User Memory |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
@@ -141,10 +143,20 @@ uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=
 
 Alle Notebooks sind eigenständig lauffähig und für Google Colab optimiert. Das `genai_lib` Utility-Paket übernimmt das automatische Setup der Umgebung.
 
+## 🎓 Projektziel
+
+Am Ende steht ein eigener **Research Assistant** als Capstone-Variante. Der Bauplan bleibt gleich, der Korpus oder die Persona kann variieren:
+
+- PDF-Korpus reproduzierbar laden
+- semantische Suche mit ChromaDB nutzen
+- Antworten mit Quellen und Sicherheitshinweis strukturieren
+- Out-of-Corpus-Fragen klar abgrenzen
+- Human-in-the-Loop für kritische Ausgaben einsetzen
+- optional Supervisor- und Worker-Rollen ergänzen
+
 ## 🎓 Projekte & Übungen
 
-Der Kurs bietet zwei praxisorientierte Lernformate:
-
+Der Kurs bietet ergänzende Lernformate:
 
 ### [Agenten Workshop](https://ralf-42.github.io/Agenten/projekte/Agenten_Workshop.html)
 **Workshop-Format** | Begleitete Schritt-für-Schritt-Übung (Zusatzmaterial)
@@ -169,5 +181,5 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 ---
 
-**Letzte Aktualisierung:** März 2026     
+**Letzte Aktualisierung:** Mai 2026     
 **Version:** 5.0     

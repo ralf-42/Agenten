@@ -29,7 +29,9 @@ In der ersten Dekade des 21\. Jahrhunderts war das Internet noch primär von der
 
 Die Notwendigkeit einer umfassenden Auseinandersetzung mit digitaler Souveränität ergibt sich aus einer fundamentalen Asymmetrie: Während Europa über einen der größten und kaufkräftigsten Binnenmärkte der Welt verfügt und eine führende Rolle in der industriellen Fertigung (Operational Technology, OT) einnimmt, ist es in der digitalen Basisinfrastruktur (Information Technology, IT) in eine tiefgreifende Abhängigkeit geraten. Ob bei Halbleitern, Cloud-Infrastrukturen, Betriebssystemen oder KI-Modellen – die Wertschöpfungsketten werden dominiert von Hyperscalern aus den USA und Hardware-Giganten aus Asien. Diese Abhängigkeit ist nicht mehr nur ein wirtschaftlicher Nachteil, sondern ein systemisches Risiko für die staatliche Handlungsfähigkeit, die Sicherheit kritischer Infrastrukturen und die demokratische Selbstbestimmung.
 
-Dieser Forschungsbericht liefert eine erschöpfende Analyse des Status quo der digitalen Souveränität. Er untersucht die definitorischen Feinheiten und grenzt das Konzept gegen verwandte Begriffe wie Autonomie und Autarkie ab. Er dekonstruiert die verschiedenen Dimensionen und Schichten der Souveränität – von der physikalischen Hardware bis zur algorithmischen Entscheidung – und analysiert die methodischen Ansätze zu ihrer Messung durch komplexe Reifegradmodelle. Ein besonderer Schwerpunkt liegt auf der empirischen Betrachtung der europäischen Gegenstrategien: Von der regulatorischen Offensive (Chips Act, Data Act) über infrastrukturelle Großprojekte (Gaia-X, IPCEI-CIS) bis hin zu operativen Implementierungen in der Verwaltung (Open Desk) und der Industrie (Catena-X). Ziel ist es, ein differenziertes Bild zu zeichnen, das nicht bei politischen Willensbekundungen stehen bleibt, sondern die technische und ökonomische Realität der Umsetzung beleuchtet.
+Für KI-Agenten ist digitale Souveränität besonders konkret. Ein Agent nutzt nicht nur ein Modell, sondern häufig auch Tools, Vektordatenbanken, Tracing, externe APIs, Memory und Cloud-Infrastruktur. Damit entstehen Abhängigkeiten auf mehreren Ebenen zugleich: Modellanbieter, Datenresidenz, Logging, Tool-Berechtigungen, Schlüsselverwaltung und Exit-Strategien. Souveränität bedeutet im Agenten-Kontext deshalb nicht, jede Komponente selbst zu betreiben, sondern bewusst entscheiden zu können, welche Daten und Funktionen in welcher Umgebung verarbeitet werden.
+
+Dieser Forschungsbericht liefert eine Analyse des Status quo der digitalen Souveränität. Er untersucht die definitorischen Feinheiten und grenzt das Konzept gegen verwandte Begriffe wie Autonomie und Autarkie ab. Er dekonstruiert die verschiedenen Dimensionen und Schichten der Souveränität – von der physikalischen Hardware bis zur algorithmischen Entscheidung – und analysiert die methodischen Ansätze zu ihrer Messung durch komplexe Reifegradmodelle. Ein besonderer Schwerpunkt liegt auf der empirischen Betrachtung der europäischen Gegenstrategien: Von der regulatorischen Offensive (Chips Act, Data Act) über infrastrukturelle Großprojekte (Gaia-X, IPCEI-CIS) bis hin zu operativen Implementierungen in der Verwaltung (Open Desk) und der Industrie (Catena-X). Ziel ist es, ein differenziertes Bild zu zeichnen, das nicht bei politischen Willensbekundungen stehen bleibt, sondern die technische und ökonomische Realität der Umsetzung beleuchtet.
 
 ## Konzeptionelle Grundlagen und Begriffsbestimmung
 
@@ -363,6 +365,6 @@ Die digitale Souveränität Europas wird sich nicht daran entscheiden, ob ein eu
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Dezember 2025<br>
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -35,9 +35,9 @@ Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lesepf
 
 - **[Datenschutz & DSGVO](https://ralf-42.github.io/Agenten/regulatory/datenschutz-dsgvo.html)** – *Was gilt beim Einsatz von LLM-APIs unter der DSGVO?* Datenschutzkonforme KI-Entwicklung
   - PII-Grundregel und Anonymisierung
-  - Dienstauswahl nach Datensensitivität (OpenAI, Azure, lokal)
-  - Auftragsverarbeitungsvertrag und Tracing
-  - Datenschutz by Design in Agenten-Pipelines
+  - Dienstauswahl nach Datensensitivität, Datenkontrollen und Betriebsform
+  - Auftragsverarbeitung, Tracing, Logging und Evaluation
+  - Datenschutz by Design und by Default in Agenten-Pipelines
 
 - **[KI-Agenten in regulierten Branchen](https://ralf-42.github.io/Agenten/regulatory/ki-agenten-in-regulierten-branchen.html)** – *Was ändert sich für Agenten-Architektur in Medizin, Legal und Finanzwesen?*
   - HITL-Pflicht, Audit-Trail, Tool-Grenzen, Quellenbindung

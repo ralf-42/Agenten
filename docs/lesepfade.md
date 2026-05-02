@@ -100,7 +100,7 @@ Empfohlener Einstieg:
 1. [Digitale Souveränität](./regulatory/digitale-souveraenitaet.html)
 2. [Ethik und GenAI](./regulatory/ethik-und-genai.html)
 3. [EU AI Act](./regulatory/eu-ai-act.html)
-4. [Datenschutz](./legal/datenschutz.html)
+4. [Datenschutz & DSGVO](./regulatory/datenschutz-dsgvo.html)
 
 ## Drei Dokumente für fast jeden Start
 

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "q01",
+    "typ": "faktisch",
+    "frage": "Welche drei Kernbestandteile eines RAG-Frameworks nennt der RAG-Survey?",
+    "erwartete_antwort_kurz": "Retrieval, Generation und Augmentation.",
+    "erwartete_quelle": "rag_survey_2312_10997.pdf",
+    "erwartete_begriffe": ["retrieval", "generation", "augmentation"]
+  },
+  {
+    "id": "q02",
+    "typ": "vergleich",
+    "frage": "Wie unterscheidet sich naive RAG von advanced oder modular RAG?",
+    "erwartete_antwort_kurz": "Naive RAG kombiniert einfache Suche mit Generierung; advanced/modular RAG erweitert den Prozess z. B. durch Pre-Retrieval, Post-Retrieval, Re-Ranking, Query-Transformation oder modulare Komponenten.",
+    "erwartete_quelle": "rag_survey_2312_10997.pdf",
+    "erwartete_begriffe": ["naive RAG", "advanced RAG", "modular RAG"]
+  },
+  {
+    "id": "q03",
+    "typ": "faktisch",
+    "frage": "Welche vier Phasen verwendet der Survey von Huang und Huang zur Strukturierung von RAG?",
+    "erwartete_antwort_kurz": "Pre-Retrieval, Retrieval, Post-Retrieval und Generation.",
+    "erwartete_quelle": "rag_text_generation_llms_2404_10981.pdf",
+    "erwartete_begriffe": ["pre-retrieval", "retrieval", "post-retrieval", "generation"]
+  },
+  {
+    "id": "q04",
+    "typ": "anwendung",
+    "frage": "Warum kann RAG bei wissensintensiven Aufgaben die Zuverlässigkeit von LLM-Antworten verbessern?",
+    "erwartete_antwort_kurz": "RAG bindet externe, abrufbare Informationen ein und kann Antworten dadurch aktueller, nachvollziehbarer und weniger halluzinationsanfaellig machen.",
+    "erwartete_quelle": "rag_survey_2312_10997.pdf",
+    "erwartete_begriffe": ["external knowledge", "hallucination", "credibility"]
+  },
+  {
+    "id": "q05",
+    "typ": "vergleich",
+    "frage": "Welche Grundidee verfolgt retrieval-augmented text generation im Vergleich zu rein parametrischer Generierung?",
+    "erwartete_antwort_kurz": "Die Generierung wird durch zusätzlich abgerufene Texte oder Wissensquellen konditioniert, statt nur auf im Modell gespeichertes Wissen zu vertrauen.",
+    "erwartete_quelle": "retrieval_augmented_text_generation_2202_01110.pdf",
+    "erwartete_begriffe": ["retrieval-augmented", "generation", "external"]
+  },
+  {
+    "id": "q06",
+    "typ": "faktisch",
+    "frage": "Welches Problem adressiert RAGAS bei der Evaluation von RAG-Systemen?",
+    "erwartete_antwort_kurz": "RAGAS zielt auf die Evaluation von RAG-Pipelines, insbesondere Antworttreue, Kontextrelevanz und Antwortrelevanz, auch wenn nicht immer vollständige Ground-Truth-Antworten vorliegen.",
+    "erwartete_quelle": "ragas_evaluation_2309_15217.pdf",
+    "erwartete_begriffe": ["faithfulness", "context", "answer relevancy"]
+  },
+  {
+    "id": "q07",
+    "typ": "faktisch",
+    "frage": "Wofür steht ARES im Kontext von RAG-Evaluation?",
+    "erwartete_antwort_kurz": "ARES ist ein automatisiertes Evaluationsframework für Retrieval-Augmented-Generation-Systeme.",
+    "erwartete_quelle": "ares_rag_evaluation_2311_09476.pdf",
+    "erwartete_begriffe": ["Automated", "Evaluation", "Retrieval-Augmented Generation"]
+  },
+  {
+    "id": "q08",
+    "typ": "anwendung",
+    "frage": "Warum reicht für RAG-Systeme eine reine Retriever-Metrik wie Recall@k nicht immer aus?",
+    "erwartete_antwort_kurz": "Weil RAG aus Retrieval und Generierung besteht; ein guter Treffer garantiert noch keine korrekte, treue und vollständige Antwort.",
+    "erwartete_quelle": "ragchecker_2408_08067.pdf",
+    "erwartete_begriffe": ["retrieval", "generation", "diagnostic metrics"]
+  },
+  {
+    "id": "q09",
+    "typ": "grenze",
+    "frage": "Welches Risiko entsteht, wenn ein RAG-System irrelevante Kontexte in den Prompt bekommt?",
+    "erwartete_antwort_kurz": "Irrelevante Kontexte können die Antwortqualitaet verschlechtern, die Modellantwort ablenken oder zu falschen Schlussfolgerungen fuehren.",
+    "erwartete_quelle": "robust_rag_irrelevant_context_2310_01558.pdf",
+    "erwartete_begriffe": ["irrelevant context", "robustness", "retrieval-augmented"]
+  },
+  {
+    "id": "q10",
+    "typ": "anwendung",
+    "frage": "Welche Rolle spielt Unsicherheitsbehandlung in Chain-of-Note für robuste RAG-Antworten?",
+    "erwartete_antwort_kurz": "Das System erzeugt Notizen zu abgerufenen Dokumenten und kann irrelevante oder unzureichende Evidenz besser erkennen, statt direkt eine unbegründete Antwort zu geben.",
+    "erwartete_quelle": "chain_of_note_2311_09210.pdf",
+    "erwartete_begriffe": ["note", "robustness", "unknown"]
+  },
+  {
+    "id": "q11",
+    "typ": "faktisch",
+    "frage": "Was ist die Grundidee von RAFT für domänenspezifische RAG-Aufgaben?",
+    "erwartete_antwort_kurz": "RAFT trainiert oder adaptiert Modelle so, dass sie mit abgerufenen Dokumenten in domänenspezifischen RAG-Situationen besser antworten.",
+    "erwartete_quelle": "raft_domain_specific_rag_2403_10131.pdf",
+    "erwartete_begriffe": ["domain specific", "RAG", "training"]
+  },
+  {
+    "id": "q12",
+    "typ": "vergleich",
+    "frage": "Welche Idee unterscheidet RAPTOR von einer einfachen flachen Chunk-Suche?",
+    "erwartete_antwort_kurz": "RAPTOR organisiert Dokumentinformationen hierarchisch bzw. baumartig, sodass Retrieval auf verschiedenen Abstraktionsebenen erfolgen kann.",
+    "erwartete_quelle": "raptor_tree_retrieval_2401_18059.pdf",
+    "erwartete_begriffe": ["tree", "hierarchical", "retrieval"]
+  },
+  {
+    "id": "q13",
+    "typ": "anwendung",
+    "frage": "Warum kann Query Rewriting die Retrieval-Qualitaet in RAG verbessern?",
+    "erwartete_antwort_kurz": "Eine umgeschriebene oder präzisierte Anfrage kann besser zu den relevanten Dokumentstellen passen als die ursprüngliche Nutzerfrage.",
+    "erwartete_quelle": "query_rewriting_rag_2305_14283.pdf",
+    "erwartete_begriffe": ["query rewriting", "retrieval", "large language models"]
+  },
+  {
+    "id": "q14",
+    "typ": "faktisch",
+    "frage": "Was ist die Grundidee von Active Retrieval Augmented Generation?",
+    "erwartete_antwort_kurz": "Das System kann während der Generierung aktiv entscheiden, wann weitere Informationen abgerufen werden sollen.",
+    "erwartete_quelle": "active_retrieval_augmented_generation_2305_06983.pdf",
+    "erwartete_begriffe": ["active retrieval", "generation", "retrieve"]
+  },
+  {
+    "id": "q15",
+    "typ": "faktisch",
+    "frage": "Welche typischen Komponenten werden in Surveys zu LLM-basierten autonomen Agenten beschrieben?",
+    "erwartete_antwort_kurz": "Typische Komponenten sind Planung, Memory, Tool-Nutzung bzw. Handlungsausführung und Interaktion mit Umgebung oder Nutzer.",
+    "erwartete_quelle": "llm_autonomous_agents_survey_2308_11432.pdf",
+    "erwartete_begriffe": ["planning", "memory", "tool"]
+  },
+  {
+    "id": "q16",
+    "typ": "grenze",
+    "frage": "Warum sollte ein Research Assistant nicht als vollautonomes Entscheidungssystem ohne Freigabe gestaltet werden?",
+    "erwartete_antwort_kurz": "LLM-Agenten können Fehler machen, falsche Evidenz nutzen oder Aufgaben missverstehen; bei unsicheren oder folgenreichen Antworten ist menschliche Kontrolle notwendig.",
+    "erwartete_quelle": "llm_autonomous_agents_survey_2308_11432.pdf",
+    "erwartete_begriffe": ["autonomous agents", "human", "control"]
+  },
+  {
+    "id": "q17",
+    "typ": "faktisch",
+    "frage": "Welche Rolle spielt Prompt Engineering laut Prompt-Engineering-Survey für LLM-Anwendungen?",
+    "erwartete_antwort_kurz": "Prompt Engineering steuert und verbessert das Verhalten von LLMs durch Aufgabenbeschreibung, Beispiele, Rollen, Reasoning-Hinweise oder strukturierte Anweisungen ohne zwingendes Modelltraining.",
+    "erwartete_quelle": "prompt_engineering_survey_2402_07927.pdf",
+    "erwartete_begriffe": ["prompt engineering", "techniques", "large language models"]
+  },
+  {
+    "id": "q18",
+    "typ": "grenze",
+    "frage": "Welche Risiken oder Grenzen praktischer LLM-Nutzung werden im Survey 'Harnessing the Power of LLMs in Practice' diskutiert?",
+    "erwartete_antwort_kurz": "Der Survey diskutiert u. a. Aufgabenpassung, Datenqualitaet, Bias, Effizienz, Kosten, Latenz und Grenzen bei bestimmten NLP-Aufgaben.",
+    "erwartete_quelle": "llms_in_practice_2304_13712.pdf",
+    "erwartete_begriffe": ["bias", "efficiency", "cost", "latency"]
+  },
+  {
+    "id": "q19",
+    "typ": "vergleich",
+    "frage": "Wie ergänzen sich Prompt Engineering und RAG in einer praktischen LLM-Anwendung?",
+    "erwartete_antwort_kurz": "Prompt Engineering strukturiert Aufgabe und Ausgabe; RAG liefert externe Evidenz. Zusammen verbessern sie Steuerbarkeit und Quellenbindung.",
+    "erwartete_quelle": "prompt_engineering_survey_2402_07927.pdf",
+    "erwartete_begriffe": ["prompt", "retrieval", "generation"]
+  },
+  {
+    "id": "q20",
+    "typ": "synthese",
+    "frage": "Welche Mindestbestandteile sollte ein einsteigergeeigneter Research Assistant aus diesem Korpus ableiten?",
+    "erwartete_antwort_kurz": "Dokumenten-Ingestion, Chunking, Embeddings, Retrieval, quellengebundene Antwortgenerierung, Evaluation und menschliche Freigabe bei Unsicherheit.",
+    "erwartete_quelle": "rag_survey_2312_10997.pdf",
+    "erwartete_begriffe": ["retrieval", "evaluation", "human"]
+  }
+]

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Markdown Template Guide
 nav_exclude: true
@@ -225,7 +225,7 @@ Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
 [Agent-Architekturen](./agent-architekturen.html)
-[Modell-Auswahl Guide](../frameworks/modell-auswahl-guide.html)
+[Modell-Auswahl Guide](../frameworks/modellauswahl/modell-auswahl-guide.html)
 ```
 
 Regeln:
@@ -287,8 +287,8 @@ Kurze Einordnung des Bereichs in einem Absatz.
 
 ## Grundlagen
 
-- **[Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/checkpointing-persistenz.html)** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
-- **[Agent Security](https://ralf-42.github.io/Agenten/concepts/agent-security.html)** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+- **[Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/workflows-state/checkpointing-persistenz.html)** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Agent Security](https://ralf-42.github.io/Agenten/concepts/qualitaet-praxis/agent-security.html)** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
 ````
 
 Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.

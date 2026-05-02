@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Lesepfade
 nav_order: 3
@@ -36,11 +36,11 @@ Ein Gesamtbild fehlt noch, die Grundbegriffe sind unscharf oder Agenten werden n
 
 Empfohlener Einstieg:
 
-1. [Lohnt es sich überhaupt?](./concepts/lohnt-es-sich.html)
-2. [Welche Architektur passt zu diesem Agenten?](./concepts/agent-architekturen.html)
-3. [Welches Werkzeug?](./concepts/aufgabenklassen-und-loesungswege.html)
-4. [Modellauswahl](./concepts/modellauswahl.html)
-5. [Wie nutzen Agenten Werkzeuge?](./concepts/tool-use-function-calling.html)
+1. [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html)
+2. [Welche Architektur passt zu diesem Agenten?](./concepts/architektur/agent-architekturen.html)
+3. [Welches Werkzeug?](./concepts/einstieg/aufgabenklassen-und-loesungswege.html)
+4. [Modellauswahl](./concepts/modell-kontext/modellauswahl.html)
+5. [Wie nutzen Agenten Werkzeuge?](./concepts/architektur/tool-use-function-calling.html)
 
 ### Erster Agent
 
@@ -48,11 +48,11 @@ Ein erster funktionierender Agent soll entstehen, ohne gleich in zu viele Patter
 
 Empfohlener Einstieg:
 
-1. [Einsteiger LangChain](./frameworks/einsteiger-langchain.html)
-2. [Prompt Engineering](./concepts/prompt-engineering.html)
-3. [Context Engineering](./concepts/context-engineering.html)
-4. [State Management](./concepts/state-management.html)
-5. [Einsteiger LangGraph](./frameworks/einsteiger-langgraph.html)
+1. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
+2. [Prompt Engineering](./concepts/architektur/prompt-engineering.html)
+3. [Context Engineering](./concepts/modell-kontext/context-engineering.html)
+4. [State Management](./concepts/workflows-state/state-management.html)
+5. [Einsteiger LangGraph](./frameworks/einsteiger/einsteiger-langgraph.html)
 
 ### RAG und Wissensarbeit
 
@@ -60,12 +60,12 @@ Dokumente, Wissensquellen oder Grounding spielen die Hauptrolle. Meist steht dan
 
 Empfohlener Einstieg:
 
-1. [RAG-Konzepte](./concepts/rag-konzepte.html)
-2. [Tokenizing & Chunking](./concepts/tokenizing-chunking.html)
-3. [Embeddings](./concepts/embeddings.html)
-4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/memory-systeme.html)
-5. [Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/evaluation-observability.html)
-6. [Einsteiger ChromaDB](./frameworks/einsteiger-chromadb.html)
+1. [RAG-Konzepte](./concepts/wissensmanagement/rag-konzepte.html)
+2. [Tokenizing & Chunking](./concepts/wissensmanagement/tokenizing-chunking.html)
+3. [Embeddings](./concepts/wissensmanagement/embeddings.html)
+4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/workflows-state/memory-systeme.html)
+5. [Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/qualitaet-praxis/evaluation-observability.html)
+6. [Einsteiger ChromaDB](./frameworks/einsteiger/einsteiger-chromadb.html)
 
 ### Robustheit und Kontrolle
 
@@ -73,10 +73,10 @@ Die erste Demo funktioniert, aber es fehlt an Steuerbarkeit, Nachvollziehbarkeit
 
 Empfohlener Einstieg:
 
-1. [Checkpointing & Persistenz](./concepts/checkpointing-persistenz.html)
-2. [Wann sollten Menschen in den Ablauf eingreifen?](./concepts/human-in-the-loop.html)
-3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./concepts/agent-security.html)
-4. [Agent Evaluation & Observability Best Practices](./frameworks/agent-evaluation-observability-best-practices.html)
+1. [Checkpointing & Persistenz](./concepts/workflows-state/checkpointing-persistenz.html)
+2. [Wann sollten Menschen in den Ablauf eingreifen?](./concepts/workflows-state/human-in-the-loop.html)
+3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./concepts/qualitaet-praxis/agent-security.html)
+4. [Agent Evaluation & Observability Best Practices](./frameworks/bestpractices/agent-evaluation-observability-best-practices.html)
 
 ### Produktion und Betrieb
 
@@ -87,9 +87,9 @@ Empfohlener Einstieg:
 1. [Minimum Viable Agent Stack](./deployment/minimum-viable-agent-stack.html)
 2. [Vom Modell zum Produkt: LangChain-Ökosystem](./deployment/vom-modell-zum-produkt-langchain-oekosystem.html)
 3. [Aus Entwicklung ins Deployment](./deployment/aus-entwicklung-ins-deployment.html)
-4. [LangSmith Best Practices](./frameworks/langsmith-best-practices.html)
-5. [Modellauswahl](./concepts/modellauswahl.html)
-6. [Agent Evaluation & Observability Best Practices](./frameworks/agent-evaluation-observability-best-practices.html)
+4. [LangSmith Best Practices](./frameworks/bestpractices/langsmith-best-practices.html)
+5. [Modellauswahl](./concepts/modell-kontext/modellauswahl.html)
+6. [Agent Evaluation & Observability Best Practices](./frameworks/bestpractices/agent-evaluation-observability-best-practices.html)
 
 ### Governance und Rahmenbedingungen
 
@@ -106,9 +106,9 @@ Empfohlener Einstieg:
 
 Wer nicht lange wählen will, kommt mit diesen drei Dokumenten meist am schnellsten ins Thema:
 
-1. [Lohnt es sich überhaupt?](./concepts/lohnt-es-sich.html)
-2. [Welche Architektur passt zu diesem Agenten?](./concepts/agent-architekturen.html)
-3. [Einsteiger LangChain](./frameworks/einsteiger-langchain.html)
+1. [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html)
+2. [Welche Architektur passt zu diesem Agenten?](./concepts/architektur/agent-architekturen.html)
+3. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
 
 Diese Kombination klärt erst die Einsatzfrage, dann die Struktur und erst danach die Umsetzung. Genau diese Reihenfolge verhindert viele frühe Fehlstarts.
 

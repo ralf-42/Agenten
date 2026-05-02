@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Datenschutz & DSGVO
 parent: Regulatorisches
@@ -174,9 +174,9 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 | Dokument | Frage |
 |---|---|
 | [EU AI Act](./eu-ai-act.html) | Welche Risikostufen und Anforderungen definiert das europäische KI-Recht? |
-| [Agenten-Sicherheit](../concepts/agent-security.html) | Wie werden Agenten gegen technische Angriffe wie Prompt Injection und Tool-Missbrauch abgesichert? |
-| [Human-in-the-Loop](../concepts/human-in-the-loop.html) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
-| [Lohnt es sich überhaupt?](../concepts/lohnt-es-sich.html) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
+| [Agenten-Sicherheit](../concepts/qualitaet-praxis/agent-security.html) | Wie werden Agenten gegen technische Angriffe wie Prompt Injection und Tool-Missbrauch abgesichert? |
+| [Human-in-the-Loop](../concepts/workflows-state/human-in-the-loop.html) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
+| [Lohnt es sich überhaupt?](../concepts/einstieg/lohnt-es-sich.html) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
 
 ---
 

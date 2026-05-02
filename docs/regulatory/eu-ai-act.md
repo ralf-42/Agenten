@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: EU AI Act
 parent: Regulatorisches
@@ -118,9 +118,9 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 |---|---|
 | [Ethik und GenAI](./ethik-und-genai.html) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
 | [Digitale Souveränität](./digitale-souveraenitaet.html) | Wie abhängig ist ein KI-System von Cloud, Plattformen und außereuropäischer Infrastruktur? |
-| [Agent Security](../concepts/agent-security.html) | Welche technischen Risiken entstehen durch Tools, Prompts, Daten und Agenten-Verhalten? |
-| [Human-in-the-Loop](../concepts/human-in-the-loop.html) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
-| [Evaluation & Observability](../concepts/evaluation-observability.html) | Wie werden Qualität, Fehler und Drift in KI-Systemen messbar? |
+| [Agent Security](../concepts/qualitaet-praxis/agent-security.html) | Welche technischen Risiken entstehen durch Tools, Prompts, Daten und Agenten-Verhalten? |
+| [Human-in-the-Loop](../concepts/workflows-state/human-in-the-loop.html) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
+| [Evaluation & Observability](../concepts/qualitaet-praxis/evaluation-observability.html) | Wie werden Qualität, Fehler und Drift in KI-Systemen messbar? |
 
 ---
 

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Kursnavigator
 parent: Projekte
@@ -617,9 +617,9 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 - `Agenten/docs/frameworks/`
 
 **Weiterführende Dokumente:**
-- [Aufgaben & Lösungswege](../concepts/aufgabenklassen-und-loesungswege.html)
-- [State Management](../concepts/state-management.html)
-- [Checkpointing & Persistenz](../concepts/checkpointing-persistenz.html)
+- [Aufgaben & Lösungswege](../concepts/einstieg/aufgabenklassen-und-loesungswege.html)
+- [State Management](../concepts/workflows-state/state-management.html)
+- [Checkpointing & Persistenz](../concepts/workflows-state/checkpointing-persistenz.html)
 
 ---
 

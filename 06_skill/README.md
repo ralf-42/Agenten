@@ -23,7 +23,7 @@ Risikoprüfung für Lieferanten- und Transaktions-Compliance.
 | `references/checklist.md` | Prüfkriterien nach Risikoklassen |
 | `references/risk_rules.md` | Schwellenwerte und Eskalationsstufen |
 | `references/examples.md` | Musterentscheidungen mit Begründung |
-| `scripts/risk_score.py` | Deterministisches Scoring-Tool |
+| `scripts/assess_risk.py` | Deterministisches Scoring-Tool |
 
 Verwendet in: **M31** (Single-Skill), **M34** (Multi-Skill-Routing)
 

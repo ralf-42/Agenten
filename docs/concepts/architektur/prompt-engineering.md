@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Prompt Engineering
 parent: Grundlagen & Architektur
@@ -469,9 +469,9 @@ Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents an
 
 | Dokument | Frage |
 |---|---|
-| [Context Engineering](./context-engineering.html) | Wie wird aus einzelnen Prompts ein belastbarer Gesamtkontext? |
-| [RAG-Konzepte](./rag-konzepte.html) | Wann reicht bessere Promptformulierung nicht mehr ohne Retrieval? |
-| [Fine-Tuning](./fine-tuning.html) | Wann stößt Prompting an Grenzen, die Training besser löst? |
+| [Context Engineering](../modell-kontext/context-engineering.html) | Wie wird aus einzelnen Prompts ein belastbarer Gesamtkontext? |
+| [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wann reicht bessere Promptformulierung nicht mehr ohne Retrieval? |
+| [Fine-Tuning](../modell-kontext/fine-tuning.html) | Wann stößt Prompting an Grenzen, die Training besser löst? |
 
 ---
 

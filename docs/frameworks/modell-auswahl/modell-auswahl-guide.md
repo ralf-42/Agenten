@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Modell-Auswahl Guide
 parent: Modell-Auswahl
@@ -398,11 +398,11 @@ builder.add_conditional_edges("supervisor", routing_edge,
 
 | Dokument | Frage |
 |---|---|
-| [Modellauswahl](../concepts/modell-kontext/modellauswahl.html) | Welche Grundlagen, Benchmarks und Evaluierungskriterien stehen hinter der Modellwahl? |
-| [LangChain 1.0 Must-Haves](./langchain-best-practices.html) | Wie werden die gewählten Modelle in Chains und Agents eingesetzt? |
-| [LangGraph 1.0 Must-Haves](./langgraph-best-practices.html) | Wie werden Multi-Agent-Workflows mit den empfohlenen Modellen aufgebaut? |
-| [LangSmith Best Practices](./langsmith-best-practices.html) | Wie werden Modellkosten und -qualität über LangSmith beobachtet? |
-| [Provider & API-Keys](../resources/api-keys-und-provider.html) | Wie werden die jeweiligen Provider-Zugänge eingerichtet? |
+| [Modellauswahl](../../concepts/modell-kontext/modellauswahl.html) | Welche Grundlagen, Benchmarks und Evaluierungskriterien stehen hinter der Modellwahl? |
+| [LangChain 1.0 Must-Haves](../best-practices/langchain-best-practices.html) | Wie werden die gewählten Modelle in Chains und Agents eingesetzt? |
+| [LangGraph 1.0 Must-Haves](../best-practices/langgraph-best-practices.html) | Wie werden Multi-Agent-Workflows mit den empfohlenen Modellen aufgebaut? |
+| [LangSmith Best Practices](../best-practices/langsmith-best-practices.html) | Wie werden Modellkosten und -qualität über LangSmith beobachtet? |
+| [Provider & API-Keys](../../resources/api-keys-und-provider.html) | Wie werden die jeweiligen Provider-Zugänge eingerichtet? |
 
 ---
 

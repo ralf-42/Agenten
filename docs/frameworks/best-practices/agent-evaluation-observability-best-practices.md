@@ -25,7 +25,7 @@ has_toc: true
 
 ## Intro
 
-Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/qualitaet-praxis/evaluation-observability.html) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.  
+Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?](../../concepts/qualitaet-praxis/evaluation-observability.html) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.  
 
 Die Seite richtet sich an Teilnehmende, die bereits einfache Agenten mit Tools, LangGraph oder LangSmith bauen. Es geht nicht um vollständige Produktionsarchitektur, sondern um einen belastbaren Mindeststandard.
 
@@ -255,7 +255,7 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 
 | Dokument | Frage |
 |---|---|
-| [Woher zeigt sich, ob ein Agent gut arbeitet?](../concepts/qualitaet-praxis/evaluation-observability.html) | Wie unterscheiden sich Evaluation und Observability auf konzeptioneller Ebene? |
+| [Woher zeigt sich, ob ein Agent gut arbeitet?](../../concepts/qualitaet-praxis/evaluation-observability.html) | Wie unterscheiden sich Evaluation und Observability auf konzeptioneller Ebene? |
 | [LangSmith Best Practices](./langsmith-best-practices.html) | Wie werden Tracing, Datasets und Experimente konkret in LangSmith umgesetzt? |
 | [LangGraph Best Practices](./langgraph-best-practices.html) | Wie werden State, Routing und Multi-Step-Flüsse robust aufgebaut? |
 | [LangChain Best Practices](./langchain-best-practices.html) | Wie werden Tools, strukturierte Outputs und moderne LangChain-Patterns korrekt verwendet? |

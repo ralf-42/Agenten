@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Kommunikationsprotokolle
 parent: Protokolle & Erweiterungen
@@ -313,8 +313,8 @@ Teilnehmende unterschätzen oft, dass Protokolle vor allem dann wertvoll werden,
 
 | Dokument | Frage |
 |---|---|
-| [Multi-Agent-Systeme](./multi-agent-systeme.html) | Wie arbeiten mehrere Agenten organisatorisch zusammen, unabhängig vom konkreten Protokoll? |
-| [Agent Security](./agent-security.html) | Welche Sicherheitsrisiken entstehen durch offene Schnittstellen, Tool-Zugriffe und externe Agenten? |
+| [Multi-Agent-Systeme](../workflows-state/multi-agent-systeme.html) | Wie arbeiten mehrere Agenten organisatorisch zusammen, unabhängig vom konkreten Protokoll? |
+| [Agent Security](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsrisiken entstehen durch offene Schnittstellen, Tool-Zugriffe und externe Agenten? |
 | [Skills](./skills.html) | Wann reichen lokale, wiederverwendbare Arbeitsrezepte statt offener Protokollschnittstellen? |
 
 ---

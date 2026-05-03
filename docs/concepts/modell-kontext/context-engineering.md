@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Context Engineering
 parent: Modell- und Kontextgrundlagen
@@ -429,8 +429,8 @@ QUALITÄTSKRITERIEN:
 
 | Dokument | Frage |
 |---|---|
-| [Prompt Engineering](./prompt-engineering.html) | Wie wird eine einzelne Anfrage formuliert, statt den Gesamtkontext eines Systems zu gestalten? |
-| [RAG-Konzepte](./rag-konzepte.html) | Wann ist Retrieval nur ein Teil der Kontextstrategie? |
+| [Prompt Engineering](../architektur/prompt-engineering.html) | Wie wird eine einzelne Anfrage formuliert, statt den Gesamtkontext eines Systems zu gestalten? |
+| [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wann ist Retrieval nur ein Teil der Kontextstrategie? |
 | [Fine-Tuning](./fine-tuning.html) | Wann wird Verhalten ins Modell verlagert statt zur Laufzeit organisiert? |
 
 

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Evaluation & Observability
 parent: Qualität & Praxis
@@ -324,8 +324,8 @@ Teilnehmende unterschätzen oft, wie schnell ein scheinbar guter Agent bei klein
 
 | Dokument | Frage |
 |---|---|
-| [Lohnt es sich überhaupt?](./lohnt-es-sich.html) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
-| [RAG-Konzepte](./rag-konzepte.html) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
+| [Lohnt es sich überhaupt?](../einstieg/lohnt-es-sich.html) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
+| [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
 | [Agent Security](./agent-security.html) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
 
 ---

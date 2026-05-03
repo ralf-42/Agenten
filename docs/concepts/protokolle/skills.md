@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Skills
 parent: Protokolle & Erweiterungen
@@ -171,10 +171,10 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 
 | Dokument | Frage |
 |---|---|
-| [Wie werden gute Prompts für Agenten aufgebaut?](./prompt-engineering.html) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
-| [Wie nutzen Agenten Werkzeuge?](./tool-use-function-calling.html) | Wie werden deterministische Hilfsoperationen eingebunden? |
-| [Wie behalten Agenten zwischen Schritten den Überblick?](./state-management.html) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
-| [Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?](./multi-agent-systeme.html) | Wann ist ein eigener Spezialagent sinnvoller als ein Skill? |
+| [Wie werden gute Prompts für Agenten aufgebaut?](../architektur/prompt-engineering.html) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
+| [Wie nutzen Agenten Werkzeuge?](../architektur/tool-use-function-calling.html) | Wie werden deterministische Hilfsoperationen eingebunden? |
+| [Wie behalten Agenten zwischen Schritten den Überblick?](../workflows-state/state-management.html) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
+| [Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?](../workflows-state/multi-agent-systeme.html) | Wann ist ein eigener Spezialagent sinnvoller als ein Skill? |
 
 ---
 

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: RAG-Konzepte
 parent: Wissensmanagement
@@ -531,7 +531,7 @@ for case in test_cases:
 ```
 
 > [!TIP] Vertiefung<br>
-> Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../frameworks/best-practices/langsmith-best-practices.html) beschrieben.
+> Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../../frameworks/best-practices/langsmith-best-practices.html) beschrieben.
 
 ---
 
@@ -639,7 +639,7 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 |---|---|
 | [Tokenizing & Chunking](./tokenizing-chunking.html) | Wie beeinflusst die Aufbereitung der Dokumente die Retrieval-Qualität? |
 | [Embeddings](./embeddings.html) | Wie werden Dokumente und Fragen semantisch vergleichbar gemacht? |
-| [Context Engineering](./context-engineering.html) | Wie fügt sich Retrieval in die größere Kontextlogik eines Systems ein? |
+| [Context Engineering](../modell-kontext/context-engineering.html) | Wie fügt sich Retrieval in die größere Kontextlogik eines Systems ein? |
 | [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html) | Wie wird geprüft, ob Retrieval und Antwortqualität belastbar sind? |
 
 ---

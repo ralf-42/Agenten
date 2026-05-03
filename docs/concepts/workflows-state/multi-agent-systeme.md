@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Multi-Agent-Systeme
 parent: Workflows & State
@@ -208,10 +208,10 @@ Teilnehmende unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, 
 
 | Dokument | Frage |
 |---|---|
-| [Welche Architektur passt zu diesem Agenten?](./agent-architekturen.html) | Wann ist Multi-Agent überhaupt die richtige Architekturklasse? |
+| [Welche Architektur passt zu diesem Agenten?](../architektur/agent-architekturen.html) | Wann ist Multi-Agent überhaupt die richtige Architekturklasse? |
 | [Wie behalten Agenten zwischen Schritten den Überblick?](./state-management.html) | Wie wird der gemeinsame Zustand im Multi-Agent-Graph verwaltet? |
 | [Wann sollten Menschen in den Ablauf eingreifen?](./human-in-the-loop.html) | Wann braucht ein Agententeam Freigabe, Eskalation oder menschliche Kontrolle? |
-| [Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?](./agenten-kommunikationsprotokolle.html) | Welche Protokolle kommen bei agentenübergreifender Kommunikation ins Spiel? |
+| [Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?](../protokolle/agenten-kommunikationsprotokolle.html) | Welche Protokolle kommen bei agentenübergreifender Kommunikation ins Spiel? |
 
 ---
 

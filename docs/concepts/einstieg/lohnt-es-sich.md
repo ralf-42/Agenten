@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Lohnt sich KI?
 parent: Einstieg & Entscheidung
@@ -111,10 +111,10 @@ Teilnehmende unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann
 | Dokument | Frage |
 |---|---|
 | [Welches Werkzeug?](./aufgabenklassen-und-loesungswege.html) | Welcher Lösungsweg ist passend, wenn ein KI-Vorhaben grundsätzlich sinnvoll erscheint? |
-| [Evaluation & Observability](./evaluation-observability.html) | Wie wird die Qualität eines späteren Systems belastbar gemessen? |
-| [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./agent-security.html) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
-| [EU AI Act](../regulatory/eu-ai-act.html) | Welche regulatorischen Anforderungen können ein Vorhaben einschränken oder prägen? |
-| [Digitale Souveränität](../regulatory/digitale-souveraenitaet.html) | Welche Abhängigkeiten und Cloud-Fragen entstehen durch Modell- und Infrastrukturwahl? |
+| [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html) | Wie wird die Qualität eines späteren Systems belastbar gemessen? |
+| [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
+| [EU AI Act](../../regulatory/eu-ai-act.html) | Welche regulatorischen Anforderungen können ein Vorhaben einschränken oder prägen? |
+| [Digitale Souveränität](../../regulatory/digitale-souveraenitaet.html) | Welche Abhängigkeiten und Cloud-Fragen entstehen durch Modell- und Infrastrukturwahl? |
 
 ---
 

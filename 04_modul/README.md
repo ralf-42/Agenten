@@ -1,6 +1,6 @@
 # Kursbibliothek Agenten
 
-Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie erleichtert Teilnehmer:innen den Einstieg und die praktische Anwendung von Multi-Agent-Systemen mit LangChain und LangGraph in Jupyter- und Google Colab-Umgebungen.
+Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie unterstützt den durchgehenden Research-Assistant-Anwendungsfall: Umgebung einrichten, Modelle rollenbasiert auswählen, Prompts laden, Mermaid-Diagramme anzeigen, LangSmith-Traces prüfen und nur bei Bedarf zusätzliche Pakete installieren.
 
 ## 1. Installation
 
@@ -35,6 +35,8 @@ Vollständige Liste in `requirements.txt`. Wichtigste Pakete:
 - `langgraph`
 - `langsmith`
 - `chromadb`
+
+Modulspezifische Pakete wie `pypdf` oder `ragas` werden nicht global installiert, sondern im jeweiligen Notebook direkt nach der Umgebungseinrichtung über `install_packages(...)`. Dadurch bleiben Basismodule schlank.
 
 ## 4. Funktionen (utilities.py)
 
@@ -75,7 +77,7 @@ setup_api_keys(["OPENAI_API_KEY"])               # API-Keys aus Colab userdata l
 ```python
 from genai_lib.utilities import show_trace
 
-show_trace("M12-MultiAgent", limit=5, show_steps=True)
+show_trace("M24-Agent-Evaluation", limit=5, show_steps=True)
 ```
 
 - `show_trace(project_name, limit=5, show_steps=False)` - Analysiert LangSmith-Traces des angegebenen Projekts und zeigt Laufzeiten, Token-Nutzung und optional Einzelschritte
@@ -158,7 +160,7 @@ def my_tool(query: str) -> str:
 # 4. Ergebnis anzeigen und Trace analysieren
 from genai_lib.utilities import mprint, show_trace
 mprint(result)
-show_trace("M12-MultiAgent", show_steps=True)
+show_trace("M24-Agent-Evaluation", show_steps=True)
 ```
 
 ## 6. Entwicklung

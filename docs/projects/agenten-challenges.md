@@ -1,16 +1,16 @@
 ﻿---
 layout: default
-title: Agenten-Challenge
+title: Research Assistant Challenge
 parent: Projekte
 nav_order: 3
-description: "Praxisprojekt: Production-Ready Multi-Agent-System entwickeln"
+description: "Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln"
 has_toc: true
 ---
 
-# Agenten-Challenge
+# Research Assistant Challenge
 {: .no_toc }
 
-> **Praxisprojekt: Production-Ready Multi-Agent-System entwickeln**
+> **Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln**
 
 ---
 
@@ -24,11 +24,11 @@ has_toc: true
 
 # Überblick Agenten-Challenge
 
-Die Agenten-Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M21 erlernten Konzepte. Ziel ist es, ein funktionsfähiges Multi-Agent-System zu entwickeln, das **LangGraph State Machines**, **Human-in-the-Loop** und **Checkpointing** kombiniert und einen praktischen Nutzen bietet. Die Module M22–M36 sind optional und eignen sich zur Vertiefung und Erweiterung des Projekts.
+Die Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M24 erlernten Konzepte. Hauptziel ist ein funktionsfähiger **Research Assistant für Fachartikel**, der **LangGraph State Machines**, **RAG**, **Evaluation**, **Human-in-the-Loop** und **Checkpointing** kombiniert. Die Module M26-M36 sind optionale Transfer- und Produktionsvertiefungen.
 
 ## Lernziele
 
-- Integration von LangChain 1.0+ und LangGraph 1.0+ in einem Production-System
+- Integration von LangChain 1.0+ und LangGraph 1.0+ in einem Research-Assistant-System
 - Implementierung komplexer Multi-Agent-Architekturen (Supervisor, Hierarchical, Collaborative)
 - Praktische Anwendung von State Machines und Conditional Routing
 - Human-in-the-Loop Workflows für kritische Entscheidungen
@@ -37,7 +37,7 @@ Die Agenten-Challenge dient als praktische Anwendung und Integration der in den 
 
 ## Voraussetzungen
 
-- Abschluss der Module M01-M21 (Tag 1-5); M22-M33 optional für Vertiefung
+- Abschluss der Module M01-M24; M26-M33 optional für Vertiefung
 - Kenntnisse in LangChain 1.0+ und LangGraph 1.0+
 - Zugriff auf API-Keys (OpenAI)
 - Grundlegende Vertrautheit mit Gradio für UI-Entwicklung
@@ -113,9 +113,25 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 
 # Projektoptionen
 
-Zur Auswahl stehen vier verschiedene Multi-Agent-Architekturen, die jeweils unterschiedliche Aspekte von LangGraph betonen. Wählen Sie eine Option aus oder kombinieren Sie Elemente.
+Die Hauptoption ist der Research Assistant. Weitere Optionen dienen als Transfer, wenn derselbe Bauplan auf andere Domänen übertragen werden soll.
 
-## Multi-Agent Support-System
+## Research Assistant für Fachartikel
+
+**Beschreibung:** Ein Assistant beantwortet Fragen zu einem PDF-Korpus, priorisiert relevante Quellen, erzeugt eine belegte Antwort, erkennt Out-of-Corpus-Fragen und pausiert bei unsicheren oder folgenreichen Aussagen für menschliche Prüfung.
+
+**Architektur:** Supervisor + Retrieval-Worker + Synthese-Worker + Qualitäts-/Security-Gate.
+
+**Pflichtfunktionen:**
+- Dokumente laden und indexieren
+- Retrieval-Ergebnisse mit Quellenhinweisen ausgeben
+- Antwort nur aus belegtem Kontext formulieren
+- Out-of-Corpus-Fragen stoppen
+- Mindestens ein HITL-Interrupt für kritische Ausgabe
+- Regressionstest mit kleinem Eval-Set
+
+**Geeignet nach:** M11-M24.
+
+## Transferoption: Multi-Agent Support-System
 
 **Beschreibung:** Ein Support-System mit Supervisor-Agent, der Kundenanfragen an spezialisierte Worker-Agents delegiert (Technical, Billing, General Support).
 
@@ -640,7 +656,7 @@ A: Ja! Verwenden Sie dann:
 **Q: Unterschied zur RAG_Workshop.md?**
 A:
   - **RAG Workshop**: Fokus auf LangChain, RAG, Retrieval, Embeddings
-  - **Kursnavigator Workshop**: Fokus auf LangGraph, Routing, State und kleine Kursanwendung
+  - **Research Assistant Workshop**: Fokus auf LangGraph, Routing, RAG, State und Quellenbindung
   - **Agenten Challenge**: Production-Ready System mit allen 7 LangGraph Must-Haves
 
 ---

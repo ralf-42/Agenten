@@ -1,17 +1,17 @@
-﻿---
+---
 layout: default
-title: Kursnavigator
+title: Research Assistant Workshop
 parent: Projekte
 nav_order: 2
-description: "Schrittweise Übung: Einen LangGraph-Kursnavigator mit Routing, Sessions und optionaler Gradio-UI bauen"
+description: "Schrittweise Übung: Einen Research Assistant mit Routing, RAG, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
 ---
 
-# Kursnavigator Workshop
+# Research Assistant Workshop
 {: .no_toc }
 
-> **Einen kleinen LangGraph-Lernassistenten bauen**      
-> Schrittweise Entwicklung vom einfachen Routing-Graphen zum nutzbaren Kursnavigator mit optionaler Web-Oberfläche
+> **Einen quellengebundenen Research Assistant bauen**      
+> Schrittweise Entwicklung vom einfachen Routing-Graphen zum nutzbaren Research Assistant mit RAG, Quellen und optionaler Web-Oberfläche
 
 ---
 
@@ -25,12 +25,12 @@ has_toc: true
 
 ## Projektübersicht
 
-In dieser Übungsaufgabe entsteht schrittweise ein **Kursnavigator**, der Lernende durch den Agenten-Kurs führt. Der Navigator beantwortet Fragen zu Modulen, empfiehlt Lernpfade, erklärt zentrale Konzepte und erzeugt auf Wunsch kleine Quizfragen.
+In dieser Übungsaufgabe entsteht schrittweise ein **Research Assistant**, der Fragen zu einem Fachartikel-Korpus beantwortet. Der Assistant priorisiert Quellen, fasst zentrale Befunde zusammen, nennt Citation-Hinweise und erzeugt bei Bedarf Kontrollfragen zu Quellen und Aussagen.
 
 **Lernziele:**
 - LangGraph State Machines von Grund auf verstehen
 - Conditional Routing für verschiedene Anfragetypen einsetzen
-- Kurswissen als kleine lokale Wissensbasis strukturieren
+- Research-Korpuswissen als kleine lokale Wissensbasis strukturieren
 - Sessions und Verlauf mit Checkpointing speichern
 - eine einfache Gradio-Oberfläche für den Agenten bereitstellen
 
@@ -45,12 +45,12 @@ In dieser Übungsaufgabe entsteht schrittweise ein **Kursnavigator**, der Lernen
 Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ```text
-📓 Kursnavigator_Workshop.ipynb
+📓 Research_Assistant_Workshop.ipynb
    ├── 🎯 Kapitel 1: StateGraph Basics
    ├── 🔀 Kapitel 2: Intent Routing
    ├── 📚 Kapitel 3: Wissensbasis & Retrieval-Light
    ├── 💾 Kapitel 4: Checkpointing & Sessions
-   ├── 🧠 Kapitel 5: Lernpfade, Konzepte und Quiz
+   ├── 🧠 Kapitel 5: Research-Synthese, Quellen und Selbsttest
    └── 🚀 Kapitel 6: Gradio UI & Bonus Deployment
 ```
 
@@ -62,12 +62,12 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel
 |-----------------|-----------|-------|
 | Kapitel 1: StateGraph Basics | M08, M09 | Warum LangGraph? / StateGraph Basics |
 | Kapitel 2: Intent Routing | M10 | Conditional Routing & Tool-Loop |
-| Kapitel 3: Wissensbasis | M11–M14 (RAG) oder ab M10 | Kursdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
+| Kapitel 3: Wissensbasis | M11–M14 (RAG) oder ab M10 | Research-Korpusdaten strukturieren, Retrieval-light (kein vollständiges RAG erforderlich) |
 | Kapitel 4: Checkpointing & Sessions | M16 | Persistente Sitzungen |
-| Kapitel 5: Lernpfade, Konzepte und Quiz | M04, M05, M24 | Prompting, Struktur, Tests |
+| Kapitel 5: Research-Synthese, Quellen und Selbsttest | M04, M05, M24 | Prompting, Struktur, Tests |
 | Kapitel 6: Gradio UI & Bonus Deployment | M28, M35 | UI und optional Hugging Face Spaces |
 
-> **Didaktische Einordnung:** Der Kursnavigator startet fachlich in M10, eignet sich aber besonders gut als roter Faden über mehrere spätere Module hinweg.
+> **Didaktische Einordnung:** Der Workshop startet fachlich ab M11 und verbindet RAG, Routing, Checkpointing, Evaluation und Security zu einem durchgehenden Anwendungsfall.
 
 ---
 
@@ -117,7 +117,7 @@ Ein Nutzer stellt eine Anfrage wie:
 
 - "Welche Module brauche ich für RAG?"
 - "Erkläre mir Checkpointing."
-- "Gib mir eine Quizfrage zu Tool Calling."
+- "Gib mir eine Selbsttestfrage zu Tool Calling."
 
 Der Graph soll die Anfrage zunächst entgegennehmen und den Typ der Anfrage erkennen.
 
@@ -216,7 +216,7 @@ def route_by_intent(state: NavigatorState) -> Literal["module", "learning_path",
 
 ```python
 def answer_module_question(state: NavigatorState) -> NavigatorState:
-    """Beantwortet Fragen zu Modulen und Reihenfolge."""
+    """Beantwortet Fragen zu Fachartikeln und Reihenfolge."""
     ...
 
 def recommend_learning_path(state: NavigatorState) -> NavigatorState:
@@ -228,7 +228,7 @@ def explain_concept(state: NavigatorState) -> NavigatorState:
     ...
 
 def generate_quiz(state: NavigatorState) -> NavigatorState:
-    """Erzeugt kleine Quizfragen."""
+    """Erzeugt Kontrollfragen zu Quellen und Aussagen."""
     ...
 ```
 
@@ -268,9 +268,9 @@ workflow.add_conditional_edges(
 
 ## Kapitel 3: Wissensbasis & Retrieval-Light
 
-> 📚 **Kursmodul:** M11-M14 oder als vereinfachte Kursdaten-Aufgabe ab M10
+> 📚 **Kursmodul:** M11-M14 oder als vereinfachte Research-Korpusdaten-Aufgabe ab M10
 
-**Lernziel:** Kurswissen lokal strukturieren und gezielt in den Graphen einbinden
+**Lernziel:** Research-Korpuswissen lokal strukturieren und gezielt in den Graphen einbinden
 
 ### Aufgabe 3.1: Wissensbasis laden
 
@@ -319,7 +319,7 @@ workflow.add_conditional_edges(
 ```
 
 **Erfolgskriterium:**
-- ✅ Kontext wird nicht frei erfunden, sondern aus Kursdaten gezogen
+- ✅ Kontext wird nicht frei erfunden, sondern aus Research-Korpusdaten gezogen
 - ✅ Modulfragen und Konzeptfragen nutzen die Wissensbasis
 - ✅ Antworten werden konkreter und nachvollziehbarer
 
@@ -386,7 +386,7 @@ def show_session_history(thread_id: str):
 
 ---
 
-## Kapitel 5: Lernpfade, Konzepte und Quiz
+## Kapitel 5: Research-Synthese, Quellen und Selbsttest
 
 > 📚 **Kursmodul:** M04, M05, M19
 
@@ -405,11 +405,11 @@ Und mindestens drei Lernziele:
 - RAG
 - Multi-Agent
 
-### Aufgabe 5.2: Quiz-Output strukturieren
+### Aufgabe 5.2: Selbsttest-Output strukturieren
 
 ```python
 def generate_quiz(state: NavigatorState) -> NavigatorState:
-    """Erzeugt 2-3 Quizfragen in einem festen Format."""
+    """Erzeugt 2-3 Selbsttestfragen in einem festen Format."""
     # Beispiel-Ausgabe:
     # 1. Frage
     # 2. Frage
@@ -425,12 +425,12 @@ Mindestens diese fünf Fragen testen:
 - "Was macht M14?"
 - "Erkläre mir Checkpointing in zwei Sätzen."
 - "Ich bin Anfänger und will Agenten verstehen. Wo starte ich?"
-- "Gib mir drei Quizfragen zu Tool Use."
+- "Gib mir drei Selbsttestfragen zu Tool Use."
 
 **Erfolgskriterium:**
 - ✅ Antworten bleiben beim Kurskontext
 - ✅ Lernpfade sind nachvollziehbar
-- ✅ Quizfragen passen thematisch
+- ✅ Selbsttestfragen passen thematisch
 - ✅ Testfragen laufen reproduzierbar durch
 
 ---
@@ -439,7 +439,7 @@ Mindestens diese fünf Fragen testen:
 
 > 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M33 – Production Deployment
 
-**Lernziel:** Den Kursnavigator mit einer kleinen Oberfläche nutzbar machen
+**Lernziel:** Den Research Assistant mit einer kleinen Oberfläche nutzbar machen
 
 ### Aufgabe 6.1: Chat-Handler schreiben
 
@@ -449,7 +449,7 @@ Mindestens diese fünf Fragen testen:
 # ═══════════════════════════════════════════════════
 
 def chat_with_navigator(message, history, thread_id):
-    """Verarbeitet eine Nutzeranfrage mit dem Kursnavigator."""
+    """Verarbeitet eine Nutzeranfrage mit dem Research Assistant."""
     config = {"configurable": {"thread_id": thread_id}}
     result = graph.invoke(
         {
@@ -469,7 +469,7 @@ def chat_with_navigator(message, history, thread_id):
 import gradio as gr
 
 with gr.Blocks() as demo:
-    gr.Markdown("# Kursnavigator")
+    gr.Markdown("# Research Assistant")
 
     with gr.Row():
         thread_id = gr.Textbox(label="Session ID", value="user_001")
@@ -560,10 +560,10 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 
 - Lädt der Space ohne Build-Fehler?
 - Funktioniert die Gradio-Oberfläche im Browser?
-- Gibt der Kursnavigator sinnvolle Antworten wie in der lokalen Version?
+- Gibt der Research Assistant sinnvolle Antworten wie in der lokalen Version?
 - Werden Fehler im UI verständlich angezeigt?
 
-> **Hinweis:** Das Hugging-Face-Deployment ist ausdrücklich **kein Pflichtbestandteil** des Workshops. Die Kernleistung bleibt der lokale Kursnavigator mit LangGraph.
+> **Hinweis:** Das Hugging-Face-Deployment ist ausdrücklich **kein Pflichtbestandteil** des Workshops. Die Kernleistung bleibt der lokale Research Assistant mit LangGraph.
 
 ---
 
@@ -595,9 +595,9 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 |---------|--------|-----------|
 | 1: StateGraph Basics | 15 | TypedDict, State, Nodes, Grundgraph |
 | 2: Intent Routing | 20 | Router-Funktion, Conditional Edges |
-| 3: Wissensbasis | 20 | Kursdaten, Kontextsuche, nachvollziehbare Antworten |
+| 3: Wissensbasis | 20 | Research-Korpusdaten, Kontextsuche, nachvollziehbare Antworten |
 | 4: Checkpointing & Sessions | 15 | SQLite-Checkpointer, Verlauf |
-| 5: Lernpfade, Konzepte und Quiz | 20 | Antwortqualität, Quiz, Testfragen |
+| 5: Research-Synthese, Quellen und Selbsttest | 20 | Antwortqualität, Selbsttest, Testfragen |
 | 6: Gradio UI & Bonus Deployment | 10 | Nutzbare Oberfläche, optional HF Space |
 | **Gesamt** | **100** | |
 
@@ -654,7 +654,7 @@ flowchart TD
 ## Abgabe
 
 **Format:**
-- **Jupyter Notebook** (`Kursnavigator_Workshop.ipynb`)
+- **Jupyter Notebook** (`Research_Assistant_Workshop.ipynb`)
   - mit allen 6 Kapiteln ausführbar
   - mit mindestens einer Graph-Visualisierung
   - mit Testfragen und Beispielausgaben
@@ -683,7 +683,7 @@ flowchart TD
 ## FAQ
 
 **Q: Warum LangGraph statt einfachem `create_agent()`?**  
-A: Weil der Kursnavigator vor allem Routing, State und kontrollierte Antwortpfade zeigen soll. Genau dafür ist LangGraph didaktisch besser geeignet als ein freier Agenten-Loop.
+A: Weil der Research Assistant vor allem Routing, State und kontrollierte Antwortpfade zeigen soll. Genau dafür ist LangGraph didaktisch besser geeignet als ein freier Agenten-Loop.
 
 **Q: Muss ich alle Kapitel implementieren?**  
 A: Kapitel 1-3 sind Pflicht für eine brauchbare Basisversion. Kapitel 4-6 erweitern das Projekt sinnvoll und bringen die volle Punktzahl.
@@ -695,11 +695,11 @@ A: Nein. Für diese Übung reicht eine kleine lokale Wissensbasis mit einfacher 
 A: Ja. Verwenden Sie lokal Jupyter oder ein Python-Skript plus `.env` für API-Keys.
 
 **Q: Ist Hugging Face Spaces Pflicht?**  
-A: Nein. Das Deployment ist ein Bonus. Der Kern der Aufgabe ist der LangGraph-Kursnavigator selbst.
+A: Nein. Das Deployment ist ein Bonus. Der Kern der Aufgabe ist der LangGraph-Research Assistant selbst.
 
 **Q: Was ist der Unterschied zur Agenten-Challenge?**  
 A:
-  - **Kursnavigator Workshop**: Fokus auf LangGraph, Routing, State und kleine Kursanwendung
+  - **Research Assistant Workshop**: Fokus auf LangGraph, Routing, RAG, State und Quellenbindung
   - **Agenten Challenge**: größeres End-to-End-Projekt mit höherer technischer Breite
 
 ---

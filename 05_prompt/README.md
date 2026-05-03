@@ -68,7 +68,7 @@ result = chain.invoke({"variable1": "Wert"})
 |-------|---------|
 | M03 | `m03_agent_system_prompt.md` |
 | M04 | `m04_research_template_prompt.md`, `m04_research_system_prompt.md`, `m04_research_few_shot_prompt.md`, `m04_research_zero_shot_prompt.md` |
-| M05 | `m05_kontakt_extraction_prompt.md`, `m05_person_extraction_prompt.md`, `m05_produktbewertung_prompt.md`, `m05_ticket_classification_prompt.md` |
+| M05 | `m05_studien_zusammenfassung_prompt.md`, `m05_research_signal_classification_prompt.md`, `m05_citation_format_prompt.md`, `m05_research_review_prompt.md` |
 | M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_research_system_prompt.md` |
 | M09 | `m09_entwurf_prompt.md`, `m09_korrektorat_prompt.md` |
 | M10 | `m10_research_routing_prompt.md` |
@@ -90,5 +90,5 @@ result = chain.invoke({"variable1": "Wert"})
 
 ---
 
-**Letzte Aktualisierung:** März 2026
+**Letzte Aktualisierung:** Mai 2026
 **Maintainer:** Ralf

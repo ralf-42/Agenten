@@ -12,13 +12,15 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 ---
 
+Der rote Faden der Pflichtmodule ist ein **Research Assistant für Fachartikel**. Die Module M01-M24 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security und Evaluation auf dasselbe Zielsystem hin.
+
 ## Phase  1 – Konzepte & erste Agenten (M01–M03)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M01 | `M01_Was_sind_KI_Agenten.ipynb` | Definition, 4 Eigenschaften, ReAct/TAO-Prinzip, Agent-Typen | 🟢 Pflicht |
-| M02 | `M02_Tool_Use_Function_Calling.ipynb` | `@tool`-Decorator, Type Hints, Docstrings, eigene Tools | 🟢 Pflicht |
-| M03 | `M03_Erste_Agenten_LangChain.ipynb` | `create_agent()`, Deprecated-Patterns einmalig klären | 🟢 Pflicht |
+| M01 | `M01_Was_sind_KI_Agenten.ipynb` | Agentenbegriff, Research-Assistant-Zielbild, ReAct/TAO-Prinzip | 🟢 Pflicht |
+| M02 | `M02_Tool_Use_Function_Calling.ipynb` | Research-Tools mit `@tool`, Type Hints, Docstrings und Grenzen | 🟢 Pflicht |
+| M03 | `M03_Erste_Agenten_LangChain.ipynb` | Erster Research Assistant mit `create_agent()` | 🟢 Pflicht |
 
 ---
 
@@ -26,10 +28,10 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| M04   | `M04_Prompt_Engineering_fuer_Agenten.ipynb` | ChatPromptTemplate, System/Human Messages, Few-Shot        | 🟢 Pflicht |
-| M05   | `M05_Structured_Output.ipynb`               | Pydantic BaseModel, `with_structured_output()`             | 🟢 Pflicht |
-| M06   | `M06_Multi_Tool_Agents.ipynb`               | Agent mit 3–4 Tools, Tool-Auswahl, Debugging               | 🟢 Pflicht |
-| M07   | `M07_LCEL_Chains.ipynb`                     | Pipe-Operator \| , Runnable Interface, Brücke zu LangGraph | 🟢 Pflicht |
+| M04   | `M04_Prompt_Engineering_fuer_Agenten.ipynb` | Research-Rollen, Tool-Regeln, Few-Shot-Klassifikation      | 🟢 Pflicht |
+| M05   | `M05_Structured_Output.ipynb`               | Paper-Signale mit Pydantic und `with_structured_output()`  | 🟢 Pflicht |
+| M06   | `M06_Multi_Tool_Agents.ipynb`               | Research-Toolset, Tool-Auswahl, robuste Fehlerbehandlung   | 🟢 Pflicht |
+| M07   | `M07_LCEL_Chains.ipynb`                     | Research-Chain, Parallelprüfung, Brücke zu LangGraph       | 🟢 Pflicht |
 
 ---
 
@@ -37,9 +39,9 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M08 | `M08_Warum_LangGraph.ipynb` | Limitierungen von `create_agent()`, State Machine Konzept | 🟢 Pflicht |
-| M09 | `M09_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges, Graph kompilieren | 🟢 Pflicht |
-| M10 | `M10_Conditional_Routing_Tool_Loop.ipynb` | Conditional Edges, Routing-Funktion, Tool-Loop, Security-Basics | 🟢 Pflicht |
+| M08 | `M08_Warum_LangGraph.ipynb` | Warum der Research Assistant kontrollierten State braucht | 🟢 Pflicht |
+| M09 | `M09_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Research-State | 🟢 Pflicht |
+| M10 | `M10_Conditional_Routing_Tool_Loop.ipynb` | Research-Routing, Tool-Loop, Security-Gate | 🟢 Pflicht |
 
 ---
 
@@ -47,11 +49,11 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M11 | `M11_RAG_Konzepte_Embeddings.ipynb` | RAG-Architektur, Embeddings, Chunking-Strategien | 🟢 Pflicht |
-| M12 | `M12_ChromaDB_Indexing.ipynb` | ChromaDB Setup, Dokumente indexieren, Persistenz | 🟢 Pflicht |
-| M13 | `M13_RAG_Chain_LangChain.ipynb` | Retriever, Similarity Search, RAG-Chain (LCEL) | 🟢 Pflicht |
-| M14 | `M14_RAG_Agent.ipynb` | RAG als Tool, Agent entscheidet: RAG vs. eigenes Wissen | 🟢 Pflicht |
-| M15 | `M15_LangSmith_Evaluations_Basics.ipynb` | Eval-Dataset, Qualitätskriterien, Regression-Check | 🟡 Empfohlen |
+| M11 | `M11_RAG_Konzepte_Embeddings.ipynb` | Research-Korpus, RAG-Architektur, Embeddings, Chunking | 🟢 Pflicht |
+| M12 | `M12_ChromaDB_Indexing.ipynb` | Research-PDFs indexieren und testbar abfragen | 🟢 Pflicht |
+| M13 | `M13_RAG_Chain_LangChain.ipynb` | Quellengebundene RAG-Chain mit Retrieval-Treffern | 🟢 Pflicht |
+| M14 | `M14_RAG_Agent.ipynb` | Retrieval als Tool, Quellenpflicht und Out-of-Corpus-Grenze | 🟢 Pflicht |
+| M15 | `M15_LangSmith_Evaluations_Basics.ipynb` | Eval-Set, Retrieval-Score, Antwortqualität, Regression | 🟡 Empfohlen |
 
 ---
 
@@ -59,12 +61,12 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M16 | `M16_Checkpointing_Sessions.ipynb` | MemorySaver, Sessions persistieren & fortsetzen | 🟢 Pflicht |
+| M16 | `M16_Checkpointing_Sessions.ipynb` | Research-Sessions mit MemorySaver und SQLite fortsetzen | 🟢 Pflicht |
 | M17 | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Pflicht |
-| M18 | `M18_Memory_Systeme.ipynb` | InMemoryStore, Conversation Buffer, Per-User Memory | 🟢 Pflicht |
-| M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Hierarchical, Collaborative – Überblick | 🟢 Pflicht |
-| M20 | `M20_Supervisor_Pattern.ipynb` | Supervisor Deep Dive, Worker mit Tools, Iterations-Schutz | 🟢 Pflicht |
-| M21 | `M21_Hierarchical_Pattern.ipynb` | Hierarchical Teams – 3-Ebenen-Hierarchie, Sub-Supervisor, Tool-Delegation | 🟢 Pflicht |
+| M18 | `M18_Memory_Systeme.ipynb` | Kuratiertes Research-Memory und Per-User-Präferenzen | 🟢 Pflicht |
+| M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Hierarchie und Pipeline für Research-Aufgaben | 🟢 Pflicht |
+| M20 | `M20_Supervisor_Pattern.ipynb` | Research-Supervisor mit Quellen-, Kritik- und Guardrail-Gates | 🟢 Pflicht |
+| M21 | `M21_Hierarchical_Pattern.ipynb` | Quellen-, Synthese- und Qualitäts-Team als Hierarchie | 🟢 Pflicht |
 
 ---
 
@@ -74,9 +76,9 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 | Modul | Datei | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M22 | `M22_Agentic_RAG.ipynb` | Agenten steuern Retrieval aktiv, Query-Rephrasing | 🟡 Empfohlen |
-| M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, PII-Redaktion | 🟡 Empfohlen |
-| M24 | `M24_Agent_Evaluation_Testing.ipynb` | Metriken, systematisches Benchmarking, RAGAS | 🟡 Empfohlen |
+| M22 | `M22_Agentic_RAG.ipynb` | Agentic RAG mit Retrieval-Budget, Grounding und OOC-Stopp | 🟡 Empfohlen |
+| M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🟡 Empfohlen |
+| M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, RAGAS-Live-Lauf | 🟡 Empfohlen |
 | M25 | — | Reserveplatz | ⬜ |
 | M26 | `M26_Integration_Pipeline.ipynb` | Integration: Research-Report-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
@@ -93,5 +95,5 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 
 **Version:** 2.0    
-**Stand:** März 2026    
+**Stand:** Mai 2026    
 **Kursplan-Referenz:** v5.0    

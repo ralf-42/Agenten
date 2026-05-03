@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Verstehen. Anwenden. Gestalten.**
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Verstehen. Anwenden. Gestalten.** Der Hauptskill ist `research/`; `compliance/` und `meeting-briefing/` dienen als Transferbeispiele.
 
 ---
 
@@ -8,9 +8,9 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Verstehen. Anwenden. Gestalt
 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
-| `compliance/`       | Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `meeting-briefing/` | Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `research/`         | Strukturierte Recherche mit Relevanz-Scoring und Report-Synthese   | `M34_DeepAgent_Multi_Skill.ipynb`                     |
+| `research/`         | Hauptskill: strukturierte Recherche im Fachartikel-Korpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M22_Agentic_RAG.ipynb`, `M24_Agent_Evaluation_Testing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `compliance/`       | Transfer: Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `meeting-briefing/` | Transfer: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
 
 ### Skill-Details
 

@@ -3,12 +3,12 @@ layout: default
 title: Projekte
 nav_order: 6
 has_children: true
-description: "Praktische Übungen und End-to-End Projekte"
+description: "Praktische Übungen und End-to-End Projekte rund um den Research Assistant"
 ---
 
 # Projekte
 
-Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Workshop-Format führt durch einen konkreten LangGraph-Aufbau; die Challenge verlangt einen vollständigen eigenen Entwurf.
+Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Hauptprojekt ist ein **Research Assistant für Fachartikel**: Dokumente laden, relevante Quellen finden, Antworten belegen, Unsicherheit sichtbar machen und kritische Schritte kontrollieren.
 
 ## Wann dieser Bereich?
 
@@ -19,16 +19,16 @@ Für den Weg bis zu diesem Punkt zuerst [Lesepfade](./lesepfade.html) öffnen.
 ## Übersicht
 
 ### Workshop-Format
-- **[Kursnavigator](https://ralf-42.github.io/Agenten/projects/agenten-workshop.html)** – *Wie lerne ich LangGraph Schritt für Schritt?* Begleitete Schritt-für-Schritt-Übung
-- Ein kleiner LangGraph-Lernassistent für den Kurs
-- 6 Kapitel: Von StateGraph und Routing bis zu Sessions und Gradio-UI
-- LangGraph 1.0+: State, Conditional Routing, Checkpointing
-- Einstieg ab M14, ausbaubar bis M35
+- **[Research Assistant Workshop](https://ralf-42.github.io/Agenten/projects/research-assistant-workshop.html)** – *Wie entsteht aus Routing, RAG und Evaluation ein nutzbarer Assistant?* Begleitete Schritt-für-Schritt-Übung
+- Ein quellengebundener Research Assistant für einen Fachartikel-Korpus
+- 6 Kapitel: Von StateGraph und Routing bis zu RAG, Sessions und optionaler UI
+- LangGraph 1.0+: State, Conditional Routing, Checkpointing, HITL-Grenzen
+- Einstieg ab M11, ausbaubar bis M24 und M35
 
 ### End-to-End Projekt
 - **[Agenten Challenge](https://ralf-42.github.io/Agenten/projects/agenten-challenges.html)** – *Wie entwickle ich ein eigenständiges Multi-Agent-System?* Eigenständige Implementierung
-- Ein Production-Ready Multi-Agent-System entwickeln
-- 4 Projektoptionen: Support-System, Research-Team, Code-Review, Workflow-Automation
+- Hauptoption: Research Assistant als Production-Ready Multi-Agent-System entwickeln
+- Transferoptionen: Support-System, Code-Review, Workflow-Automation
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
 - Abgabe: Jupyter Notebook + SQLite-DB + README.md
-- Module M01-M22 (optional bis M32)
+- Module M01-M24 (optional bis M35)

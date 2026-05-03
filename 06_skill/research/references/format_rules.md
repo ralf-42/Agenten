@@ -42,6 +42,15 @@ Gefunden: [Anzahl] Quelle(n) mit Score ≥ 0.4.
 **Empfehlung:** Suchquery präzisieren oder anderen Suchmodus wählen.
 ```
 
+## Kurzformat bei out_of_scope
+
+```
+Nicht im Korpus.
+
+Geprüfter Suchraum: lokaler Fachartikel-Korpus.
+Begründung: Keine Quelle mit Relevanz-Score ≥ 0.4 gefunden.
+```
+
 ## Sprache & Stil
 
 - Deutsch, sachlich, präzise

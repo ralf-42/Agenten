@@ -6,15 +6,17 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 | Situation | Modus |
 |-----------|-------|
-| Aktuelle Ereignisse, News, aktuelle Daten | `search_web` |
-| Kurs-eigene Dokumente, interne Wissensbasis | `search_docs` |
-| Kombination aus beidem | Beide Tools nacheinander |
+| Fachartikel aus dem Kurskorpus | `search_docs` |
+| Out-of-Corpus-Verdacht | `search_docs`, danach Stopp-Gate |
+| Aktuelle Ereignisse, News, aktuelle Daten | `search_web` nur als explizite Transfer- oder Aktualitätsvariante |
+| Kombination aus Korpus und Aktualität | Erst `search_docs`, dann Web nur mit klarer Kennzeichnung |
 
 ## Query-Konstruktion
 
 - Thema in **2–3 unabhängige Suchqueries** zerlegen
 - Queries so formulieren, dass unterschiedliche Aspekte abgedeckt werden
-- Englisch bevorzugen bei technischen Themen
+- Begriffe aus `eval_research.json` und `eval_research_edge.json` als Prüfanker nutzen
+- Englisch nur bevorzugen, wenn die Quelle oder der Fachbegriff englisch ist
 
 ## Relevanz-Schwellwert
 
@@ -26,6 +28,7 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 - Mindestens **2 relevante Quellen** für einen vollständigen Report
 - Bei < 2 Quellen: Status `"insufficient_sources"` zurückgeben
+- Bei 0 Quellen mit Score ≥ 0.4: `"Nicht im Korpus"` zurückgeben
 - Maximal **8 Quellen** verarbeiten (Kontext-Budget)
 
 ## Konflikt-Erkennung

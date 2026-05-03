@@ -67,9 +67,9 @@ result = chain.invoke({"variable1": "Wert"})
 | Modul | Dateien |
 |-------|---------|
 | M03 | `m03_agent_system_prompt.md` |
-| M04 | `m04_research_template_prompt.md`, `m04_research_system_prompt.md`, `m04_research_few_shot_prompt.md`, `m04_research_zero_shot_prompt.md` |
+| M04 | `m04_research_template_prompt.md`, `m04_research_query_prompt.md`, `m04_research_system_prompt.md`, `m04_research_few_shot_prompt.md`, `m04_research_zero_shot_prompt.md` |
 | M05 | `m05_studien_zusammenfassung_prompt.md`, `m05_research_signal_classification_prompt.md`, `m05_citation_format_prompt.md`, `m05_research_review_prompt.md` |
-| M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_research_system_prompt.md` |
+| M06 | `m06_multi_tool_system_prompt.md`, `m06_robust_research_system_prompt.md`, `m06_format_check_prompt.md` |
 | M09 | `m09_entwurf_prompt.md`, `m09_korrektorat_prompt.md` |
 | M10 | `m10_research_routing_prompt.md` |
 | M12 | `m12_query_rewrite_prompt.md` |

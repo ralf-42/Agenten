@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Human-in-the-Loop
 parent: Workflows & State
@@ -148,8 +148,8 @@ Teilnehmende unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet.
 | Dokument | Frage |
 |---|---|
 | [Wie bleiben Sitzungen und Zustände erhalten?](./checkpointing-persistenz.html) | Wie werden Unterbrechung und Wiederaufnahme technisch gespeichert? |
-| [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./agent-security.html) | Welche Sicherheitsgrenzen ergänzen oder ersetzen menschliche Kontrolle? |
-| [Evaluation & Observability](./evaluation-observability.html) | Wie werden Agentenqualität und Fehlverhalten systematisch sichtbar gemacht? |
+| [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsgrenzen ergänzen oder ersetzen menschliche Kontrolle? |
+| [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html) | Wie werden Agentenqualität und Fehlverhalten systematisch sichtbar gemacht? |
 
 ---
 

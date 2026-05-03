@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Tool Use & Function Calling
 parent: Grundlagen & Architektur
@@ -417,8 +417,8 @@ In der Praxis relevant wenn: Ein Agent auf viele Werkzeuge zugreifen soll, diese
 | Dokument | Frage |
 |---|---|
 | [Welche Architektur passt zu diesem Agenten?](./agent-architekturen.html) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
-| [Agent Security](./agent-security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
-| [RAG Konzepte](./rag-konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
+| [Agent Security](../qualitaet-praxis/agent-security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
+| [RAG Konzepte](../wissensmanagement/rag-konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
 
 ---
 

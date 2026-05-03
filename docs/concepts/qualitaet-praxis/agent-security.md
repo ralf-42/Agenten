@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Agenten-Sicherheit
 parent: Qualität & Praxis
@@ -197,10 +197,10 @@ Teilnehmende unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen S
 
 | Dokument | Frage |
 |---|---|
-| [Datenschutz & DSGVO](../regulatory/datenschutz-dsgvo.html) | Welche rechtlichen Anforderungen gelten für die Verarbeitung personenbezogener Daten durch LLM-APIs? |
-| [Human-in-the-Loop](./human-in-the-loop.html) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
+| [Datenschutz & DSGVO](../../regulatory/datenschutz-dsgvo.html) | Welche rechtlichen Anforderungen gelten für die Verarbeitung personenbezogener Daten durch LLM-APIs? |
+| [Human-in-the-Loop](../workflows-state/human-in-the-loop.html) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
 | [Evaluation & Observability](./evaluation-observability.html) | Wie werden Qualitätsprobleme, Drift und Fehlverhalten sichtbar gemacht? |
-| [Lohnt es sich überhaupt?](./lohnt-es-sich.html) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |
+| [Lohnt es sich überhaupt?](../einstieg/lohnt-es-sich.html) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |
 
 ---
 

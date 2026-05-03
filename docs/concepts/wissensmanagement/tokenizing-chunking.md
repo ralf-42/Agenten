@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Tokenizing & Chunking
 parent: Wissensmanagement
@@ -319,7 +319,7 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 |---|---|
 | [Embeddings](./embeddings.html) | Wie werden die vorbereiteten Textstücke später semantisch repräsentiert? |
 | [RAG-Konzepte](./rag-konzepte.html) | Wie wirken Chunking-Entscheidungen auf Retrieval und Antwortqualität? |
-| [Transformer-Architektur](./agent-architekturen.html) | Warum spielen Token überhaupt eine so zentrale Rolle für Sprachmodelle? |
+| [Transformer-Architektur](../architektur/agent-architekturen.html) | Warum spielen Token überhaupt eine so zentrale Rolle für Sprachmodelle? |
 
 ---
 

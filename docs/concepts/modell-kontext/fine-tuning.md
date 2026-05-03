@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Fine-Tuning
 parent: Modell- und Kontextgrundlagen
@@ -404,8 +404,8 @@ Die Embeddings sind die **Brücke zwischen rohem Text und neuronaler Verarbeitun
 
 | Dokument | Frage |
 |---|---|
-| [Prompt Engineering](./prompt-engineering.html) | Was lässt sich noch über bessere Anweisungen statt über Training lösen? |
-| [RAG-Konzepte](./rag-konzepte.html) | Wann hilft externer Wissenszugriff mehr als Modellanpassung? |
+| [Prompt Engineering](../architektur/prompt-engineering.html) | Was lässt sich noch über bessere Anweisungen statt über Training lösen? |
+| [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wann hilft externer Wissenszugriff mehr als Modellanpassung? |
 | [Modellauswahl](./modellauswahl.html) | Wie wird entschieden, ob ein anderes Basismodell genügt? |
 
 ---

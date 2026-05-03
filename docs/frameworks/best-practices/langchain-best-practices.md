@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: LangChain Best Practices
 parent: Best Practices
@@ -13,7 +13,7 @@ has_toc: true
 
 > **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide belastbare LangChain-Muster nachschlagen möchten.**
 
-Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz für saubere, moderne Patterns, wenn die Grundlagen bereits klar sind. Für den ersten Zugang empfiehlt sich zuerst [LangChain Einsteiger](./einsteiger-langchain.html).
+Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz für saubere, moderne Patterns, wenn die Grundlagen bereits klar sind. Für den ersten Zugang empfiehlt sich zuerst [LangChain Einsteiger](../einsteiger/einsteiger-langchain.html).
 
 Im Projektkontext werden einige dieser Patterns als Standard behandelt. Für Teilnehmende im Kurs ist wichtiger, die Unterschiede zwischen älteren und robusteren Mustern zu verstehen, nicht alle Punkte sofort auswendig zu beherrschen.
 

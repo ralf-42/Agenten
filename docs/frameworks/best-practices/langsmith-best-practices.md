@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: LangSmith Best Practices
 parent: Best Practices
@@ -23,7 +23,7 @@ has_toc: true
 
 ## Übersicht
 
-Diese Seite ist eine technische Referenz und keine erste Einführung in LangSmith. Für den ersten Zugang empfiehlt sich zuerst [LangSmith Einsteiger](./einsteiger-langsmith.html). Die Stärke dieser Seite liegt in verlässlichen Setup-Regeln, Beobachtungsmustern und typischen Fehlerbildern.
+Diese Seite ist eine technische Referenz und keine erste Einführung in LangSmith. Für den ersten Zugang empfiehlt sich zuerst [LangSmith Einsteiger](../einsteiger/einsteiger-langsmith.html). Die Stärke dieser Seite liegt in verlässlichen Setup-Regeln, Beobachtungsmustern und typischen Fehlerbildern.
 
 **LangSmith** ist die **Observability-Plattform** für LangChain/LangGraph-Anwendungen und bildet die **dritte Säule** des LangChain-Ökosystems:
 
@@ -715,7 +715,7 @@ callback = LangSmithCallback(
 - [Release Notes](https://docs.smith.langchain.com/release-notes)
 
 ### Interne Dokumentation
-- [Vom Modell zum Produkt: LangChain-Ökosystem](../deployment/vom-modell-zum-produkt-langchain-oekosystem.html)
+- [Vom Modell zum Produkt: LangChain-Ökosystem](../../deployment/vom-modell-zum-produkt-langchain-oekosystem.html)
 - [LangChain 1.0 Must-Haves](./langchain-best-practices.html)
 - [LangGraph 1.0 Must-Haves](./langgraph-best-practices.html)
 
@@ -786,8 +786,8 @@ callback = LangSmithCallback(
 |---|---|
 | [LangChain 1.0 Must-Haves](./langchain-best-practices.html) | Wie werden Chains, Agents und Tools korrekt implementiert? |
 | [LangGraph 1.0 Must-Haves](./langgraph-best-practices.html) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
-| [Modell-Auswahl Guide](./modell-auswahl-guide.html) | Welches Modell eignet sich für welche Agentenrolle? |
-| [Vom Modell zum Produkt](../deployment/vom-modell-zum-produkt-langchain-oekosystem.html) | Wie wird ein LangChain-Prototyp produktionsreif? |
+| [Modell-Auswahl Guide](../modell-auswahl/modell-auswahl-guide.html) | Welches Modell eignet sich für welche Agentenrolle? |
+| [Vom Modell zum Produkt](../../deployment/vom-modell-zum-produkt-langchain-oekosystem.html) | Wie wird ein LangChain-Prototyp produktionsreif? |
 
 ---
 

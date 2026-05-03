@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Modellauswahl
 parent: Modell- und Kontextgrundlagen
@@ -309,7 +309,7 @@ Ein 2-3 seitiges Konzeptpapier mit Evaluationsschema, Testfragen und geplantem P
 
 | Dokument | Frage |
 |---|---|
-| [Modell-Auswahl Guide](../frameworks/modell-auswahl/modell-auswahl-guide.html) | Welche praktischen Designregeln gelten im Kurs für die Modellwahl? |
+| [Modell-Auswahl Guide](../../frameworks/modell-auswahl/modell-auswahl-guide.html) | Welche praktischen Designregeln gelten im Kurs für die Modellwahl? |
 | [Fine-Tuning](./fine-tuning.html) | Wann reicht Modellwahl nicht mehr und Training wird notwendig? |
 | [Context Engineering](./context-engineering.html) | Welche Kontextstrategie entscheidet mit darüber, ob ein Modell genügt? |
 

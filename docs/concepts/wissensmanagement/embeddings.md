@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Embeddings
 parent: Wissensmanagement
@@ -184,7 +184,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 |---|---|
 | [Tokenizing & Chunking](./tokenizing-chunking.html) | Wie wird Rohtext so vorbereitet, dass Embeddings später sinnvoll berechnet werden können? |
 | [RAG-Konzepte](./rag-konzepte.html) | Wie werden Embeddings praktisch in Retrieval-Systemen genutzt? |
-| [Multimodal Bild](./tool-use-function-calling.html) | Wie werden Vektorähnlichkeiten jenseits von reinem Text relevant? |
+| [Multimodal Bild](../architektur/tool-use-function-calling.html) | Wie werden Vektorähnlichkeiten jenseits von reinem Text relevant? |
 
 ---
 

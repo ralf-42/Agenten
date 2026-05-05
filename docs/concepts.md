@@ -28,6 +28,10 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
   - Zweite Ebene: passende Agentenarchitektur auswählen
   - Kursnahe Beispiele für typische Fehlentscheidungen
 
+- **[Terminologie](./concepts/terminologie.html)** – *Wie lautet die deutsche Form für state, memory, node, guardrail?*
+  - 42 Fachbegriffe mit bevorzugter deutscher Form und Verwendungshinweis
+  - Abschnitt zu häufigen Verwechslungen: Memory/State/Context, Evaluation/Observability
+
 
 ## Grundlagen & Architektur
 

@@ -4,7 +4,7 @@ title: LangGraph Best Practices
 parent: Best Practices
 grand_parent: Frameworks
 nav_order: 2
-description: "Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg"
+description: Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg
 has_toc: true
 ---
 
@@ -475,8 +475,6 @@ def error_recovery(state: AgentState) -> AgentState:
 
 **Fix ab v1.1.7:**  spult automatisch zum letzten Interrupt-Checkpoint zurück.
 
-
-
 **Typischer Fehler:**  weglassen. Ohne Checkpointer kein Replay-Punkt.
 
 ---
@@ -771,8 +769,6 @@ for event in graph.stream(
 ### 🆕 NEU in v1.1.0: v2-Streaming-Format (StreamPart-Dicts)
 
 Ab v1.1.0 liefert  strukturierte -Dicts.  gibt  mit  und  zurück.
-
-
 
 **Grenze:** Altes -Format erzeugt ab v1.1 Deprecation-Warnings.
 
@@ -1094,49 +1090,15 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 - **Human-in-the-Loop**: https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/
 - **LangGraph Studio**: Visuelle Debugging-Umgebung
 
----
-
-**Version:** 1.4<br>
-**Letzte Aktualisierung:** März 2026 (LangGraph v1.0.10 / langgraph-prebuilt v1.0.8)
-**Autor:** GenAI Projekt Team
-
-**Changelog v1.4 (März 2026):**
-- 🆕 **ToolRuntime** dokumentiert (Must-Have #6) — Dependency Injection des vollständigen Laufzeit-Kontexts in Tools via `ToolNode` (langgraph-prebuilt 1.0.8)
-- ✅ Vergleichstabelle: ToolRuntime-Felder und Wann-verwenden-Empfehlung
-
-**Changelog v1.3 (März 2026):**
-- ✅ **Graph-Visualisierung** in Section 2 dokumentiert: `draw_mermaid_png()` direkt nach `compile()` (PFLICHT)
-- ✅ Migration-Checkliste und Best Practices Zusammenfassung ergänzt
-
-**Changelog v1.2 (Februar 2026):**
-- ✅ **Deprecated APIs** Sektion hinzugefügt (`config_schema` → `context_schema`, `langgraph.prebuilt` → `langchain.agents`)
-- ✅ **Default Recursion Limit** Hinweis: Ab v1.0.6 geändert - explizites Setzen in Notebooks empfohlen
-- ✅ **Python 3.13** Kompatibilität bestätigt, Python 3.9 abgekündigt (Minimum: 3.10+)
-- ✅ Veraltete v0.x Referenzen auf v1.0 aktualisiert
-- ✅ Migration-Checkliste erweitert
-
-**Changelog v1.1 (Dezember 2025):**
-- ✅ **Node Caching** dokumentiert - Performance-Optimierung
-- ✅ **Deferred Nodes** dokumentiert - Map-Reduce & Consensus
-- ✅ **Pre/Post Model Hooks** dokumentiert - Guardrails & Context-Management
-- ✅ **Multiple Interrupt Resume** dokumentiert - Parallele Tool Calls
-- ✅ **Security Hardening** für Checkpointers
-- ✅ **LangGraph 1.0 GA** Features integriert (Oktober 2025)
-
----
-
-> [!TIP] Tipp<br>
-> Mit einfachen `create_agent()` Workflows starten und zu LangGraph migrieren, wenn die Komplexität steigt.
-
----
-
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit LangGraph Best Practices? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für LangGraph Best Practices? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

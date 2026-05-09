@@ -4,7 +4,7 @@ title: Fine-Tuning
 parent: Modell- und Kontextgrundlagen
 grand_parent: Konzepte
 nav_order: 3
-description: "Fine-Tuning als Alternative oder Ergaenzung zu Prompting, RAG, Tools und Agentenlogik"
+description: Fine-Tuning als Alternative oder Ergaenzung zu Prompting, RAG, Tools und Agentenlogik
 has_toc: true
 ---
 
@@ -22,7 +22,6 @@ has_toc: true
 {:toc}
 
 ---
-
 
 # Intro
 Fine-Tuning ist eine Technik, um ein vortrainiertes Modell auf eine engere Aufgabe oder einen klar umrissenen Datensatz anzupassen. Dabei werden bestehende Modellstrukturen weiterverwendet und gezielt verändert. Das spart im Vergleich zum Training von Grund auf Zeit und Rechenaufwand, ist aber kein Automatismus für bessere Ergebnisse.
@@ -236,16 +235,12 @@ flowchart TB
 
 - **Beispiel**: Die Prompt-Konstruktion mit relevanten Beispielen (Few-Shot-Learning) kann die Leistung signifikant verbessern, ohne das Modell neu zu trainieren.
 
-
 Embeddings spielen beim **Fine-Tuning eines Large Language Models (LLMs)** eine zentrale Rolle, da sie den **Ausgangspunkt der Verarbeitung von Eingabedaten** im Modell darstellen. Hier ist eine strukturierte Erklärung ihrer Rolle:
-
 
 # Embeddings und Fine-Tuning
 ## Recap: Was sind Embeddings?
 
 **Embeddings** sind **dichte, numerische Vektoren**, die Wörter, Tokens oder ganze Sätze in einem kontinuierlichen Vektorraum repräsentieren. Das Training ordnet **semantisch ähnliche Begriffe nahe beieinander** im Vektorraum an.
-
-
 
 ## Rolle beim Fine-Tuning eines LLMs
 
@@ -274,8 +269,6 @@ Embeddings spielen beim **Fine-Tuning eines Large Language Models (LLMs)** eine 
     - Vorteil: Die ursprünglichen Embeddings bleiben erhalten → weniger Overfitting, kleinere Modelle.
         
 
-
-
 ## Warum sind sie so wichtig?
 
 - Embeddings beeinflussen maßgeblich, **wie der Text semantisch verstanden wird**.
@@ -283,11 +276,9 @@ Embeddings spielen beim **Fine-Tuning eines Large Language Models (LLMs)** eine 
 - Eine gute Embedding-Anpassung beim Fine-Tuning verbessert die Fähigkeit des Modells, **Aufgabenkontext korrekt zu erfassen** (z. B. bei Named Entity Recognition, Sentiment Analysis, RAG-Systemen usw.).
     
 
-
 ## Fazit
 
 Die Embeddings sind die **Brücke zwischen rohem Text und neuronaler Verarbeitung**. Beim Fine-Tuning werden sie oft (aber nicht immer) mitangepasst, um eine **bessere Domänenanpassung und höhere Genauigkeit** zu erzielen.
-
 
 # Best Practices
 ## Datenstrategie
@@ -396,8 +387,6 @@ Die Embeddings sind die **Brücke zwischen rohem Text und neuronaler Verarbeitun
 > Die siebenstufige Fine-Tuning-Pipeline bietet einen strukturierten Ansatz vom Datenmanagement bis zur kontinuierlichen Überwachung, während parameter-effiziente Methoden die Ressourcennutzung optimieren. Durch den gezielten Einsatz dieser Techniken können Entwickler leistungsfähige KI-Lösungen erstellen, die genau auf ihre spezifischen Anforderungen zugeschnitten sind.
 ---
 
-
-
 ---
 
 ## Abgrenzung zu verwandten Dokumenten
@@ -413,5 +402,3 @@ Die Embeddings sind die **Brücke zwischen rohem Text und neuronaler Verarbeitun
 **Version:**    1.1<br>
 **Stand:**    Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

@@ -2,7 +2,7 @@
 layout: default
 title: Start
 nav_order: 1
-description: "KI-Agenten und Multi-Agent-Systeme mit LangChain & LangGraph"
+description: KI-Agenten und Multi-Agent-Systeme mit LangChain & LangGraph
 permalink: /
 ---
 
@@ -13,13 +13,10 @@ permalink: /
 
 ---
 
-
 > [!TIP] Einstieg in die Dokumentation<br>
 > Für den kürzesten Start zuerst [Zuerst lesen](./zuerst-lesen.html) öffnen. Die ausführlichen [Lesepfade](./lesepfade.html) helfen danach bei der gezielten Vertiefung.
 
-
 ---
-
 
 KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeugen, sondern Aufgaben eigenständig planen, Tools nutzen und Ergebnisse iterativ verbessern. Im Gegensatz zu klassischen Chat-Interaktionen geht es hier um zielorientiertes Handeln: Systeme, die analysieren, entscheiden und mehrstufige Workflows ausführen.
 
@@ -51,7 +48,6 @@ Mit zunehmender Verfügbarkeit von APIs, Open-Source-Modellen und Orchestrierung
 Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos: saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Der Weg vom Experiment zum stabilen Agentensystem ist kürzer, wenn Struktur von Anfang an mitgedacht wird — Checkpointing, Evaluation und Monitoring sind keine Nacharbeiten, sondern Bestandteile des Entwurfs.
 
 Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder fehlendem Monitoring als an der Technologie selbst. Das ist die eigentliche Herausforderung — und der Kern dieses Kurses.
-
 
 ---
 

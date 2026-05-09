@@ -3,14 +3,10 @@ layout: default
 title: Projekte
 nav_order: 6
 has_children: true
-description: "Praktische Übungen und End-to-End Projekte rund um den Research Assistant"
+description: Praktische Übungen und End-to-End Projekte rund um den Research Assistant
 ---
 
 # Projekte
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Hauptprojekt ist ein **Research Assistant für Fachartikel**: Dokumente laden, relevante Quellen finden, Antworten belegen, Unsicherheit sichtbar machen und kritische Schritte kontrollieren.
 
@@ -42,10 +38,3 @@ Für den Weg bis zu diesem Punkt zuerst [Lesepfade](./lesepfade.html) öffnen.
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
 - Abgabe: Jupyter Notebook + SQLite-DB + README.md
 - Module M01-M24 (optional bis M35)
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Projekte? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Projekte? |

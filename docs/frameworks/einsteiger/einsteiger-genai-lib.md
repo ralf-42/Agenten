@@ -4,7 +4,7 @@ title: GenAI_Lib
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 6
-description: "Projektspezifische Bibliothek für den Agenten-Kurs"
+description: Projektspezifische Bibliothek für den Agenten-Kurs
 has_toc: true
 ---
 
@@ -53,7 +53,7 @@ Die Bibliothek besteht aus drei Hauptmodulen:
 
 ### Überblick
 
-> [!INFO] utilities.py auf einen Blick<br>
+> [!NOTE] utilities.py auf einen Blick<br>
 > Das `utilities`-Modul stellt grundlegende Hilfsfunktionen bereit, die in vielen Notebooks und Projekten wiederkehrend benötigt werden. Alle Funktionen sind über `from genai_lib.utilities import ...` importierbar.
 
 ### Hauptfunktionen
@@ -92,19 +92,31 @@ install_packages(['langchain-core>=1.3.0'], upgrade=True)
 ```
 
 **Parameter:**
-- `packages` (list): Paketnamen oder Tupel `genai_lib`0
-- `genai_lib`1 (bool): `genai_lib`2 (Standard) — Skip wenn bereits importierbar. `genai_lib`3 — immer `genai_lib`4 ausführen, nützlich für Versionspins.
+- `packages` (list): Paketnamen oder Tupel `(install_name, import_name)`
+- `upgrade` (bool): `False` (Standard) — Skip wenn bereits importierbar. `True` — immer `uv pip install --upgrade` ausführen, nützlich für Versionspins.
 
 **Features:**
 - Prüft, ob Pakete bereits installiert sind
-- Verwendet `genai_lib`5 für schnelle Installation in Google Colab
+- Verwendet `uv pip install` für schnelle Installation in Google Colab
 - Gibt klare Statusmeldungen (✅ ❌ ⚠️ 🔄)
 - Unterstützt Tupel für verschiedene Install- und Import-Namen
 
-#### . `genai_lib`6
+#### . `setup_api_keys(key_names, create_globals=True)`
 Lädt API-Keys aus Google Colab userdata und setzt sie als Umgebungsvariablen.
 
-`genai_lib`7
+```python
+from genai_lib.utilities import setup_api_keys
+
+# Mit globalen Variablen (Standardverhalten)
+setup_api_keys([
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "HF_TOKEN"
+])
+
+# Nur Umgebungsvariablen (keine globalen Variablen)
+setup_api_keys(["OPENAI_API_KEY"], create_globals=False)
+```
 
 **Features:**
 - Lädt Keys sicher aus Google Colab Secrets
@@ -112,10 +124,14 @@ Lädt API-Keys aus Google Colab userdata und setzt sie als Umgebungsvariablen.
 - Gibt Statusmeldungen für jeden Key aus
 - Verhindert unbeabsichtigte Sichtbarkeit durch Return-Werte
 
-#### . `genai_lib`8
+#### . `get_ipinfo()`
 Zeigt Geoinformationen zur aktuellen IP-Adresse an.
 
-`genai_lib`9
+```python
+from genai_lib.utilities import get_ipinfo
+
+get_ipinfo()
+```
 
 **Ausgabe:**
 - IP-Adresse
@@ -123,86 +139,48 @@ Zeigt Geoinformationen zur aktuellen IP-Adresse an.
 - Provider
 - Koordinaten, Postleitzahl, Zeitzone
 
-#### . ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```0
+#### . `mprint(text)`
 Gibt Markdown-formatierten Text in Jupyter Notebooks aus.
 
-```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+```python
+from genai_lib.utilities import mprint
 
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```1
+mprint("# Überschrift\n**Fett** und *kursiv*")
+```
 
-#### . ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```2
+#### . `mermaid(code, width=None, height=None)`
 Rendert Mermaid-Diagramme direkt im Notebook mit anpassbarer Größe.
 
-```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+```python
+from genai_lib.utilities import mermaid
 
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```3
+# Standard (automatische Größe)
+mermaid('''
+graph TD
+    A[Start] --> B[Process]
+    B --> C[End]
+''')
+
+# Mit angepasster Größe
+mermaid('''
+sequenceDiagram
+    User->>Agent: Frage stellen
+    Agent->>LLM: Query senden
+    LLM-->>Agent: Antwort
+    Agent-->>User: Ergebnis
+''', width=800, height=600)
+```
 
 **Parameter:**
-- ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```4 (str): Mermaid-Code für das Diagramm
-- ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```5 (int, optional): Breite in Pixeln
-- ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```6 (int, optional): Höhe in Pixeln
+- `code` (str): Mermaid-Code für das Diagramm
+- `width` (int, optional): Breite in Pixeln
+- `height` (int, optional): Höhe in Pixeln
 
 **Unterstützte Diagrammtypen:**
-- Flowcharts (```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```7, ```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```8)
-- Sequenzdiagramme (```bash
-# Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-
-# Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-```9)
-- Gantt-Charts (`utilities`0)
-- State Machines (`utilities`1)
+- Flowcharts (`graph TD`, `graph LR`)
+- Sequenzdiagramme (`sequenceDiagram`)
+- Gantt-Charts (`gantt`)
+- State Machines (`stateDiagram`)
 
 **Features:**
 - Automatische oder manuelle Größenkontrolle
@@ -210,158 +188,180 @@ uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=
 - Robuste Fehlerbehandlung mit aussagekräftigen Fehlermeldungen
 - Funktioniert in Google Colab und JupyterLab; nicht in VS Code Notebooks
 
-#### . `utilities`2
+#### . `load_prompt(path, mode="T")`
 Lädt Prompt-Templates aus Markdown-Dateien (.md) als ChatPromptTemplate oder String.
 
-`utilities`3
+```python
+from genai_lib.utilities import load_prompt
+
+# ChatPromptTemplate (default, mode="T")
+prompt = load_prompt('05_prompt/sql_prompt.md')
+
+# Nur als String ohne Frontmatter (mode="S")
+text = load_prompt('05_prompt/sql_prompt.md', mode="S")
+
+# Von GitHub (tree oder blob URLs werden automatisch konvertiert)
+prompt = load_prompt(
+    'https://github.com/ralf-42/GenAI/blob/main/05_prompt/text_zusammenfassung.md'
+)
+```
 
 **Parameter:**
-- `utilities`4: Gibt ein `utilities`5 zurück (benötigt `utilities`6 / `utilities`7 Sections)
-- `utilities`8: Gibt den Inhalt als reinen String zurück. Ein vorhandenes YAML-Frontmatter (Metadaten-Block zwischen `utilities`9 am Dateianfang) wird dabei automatisch entfernt und das Ergebnis mit `from genai_lib.utilities import ...`0 von führenden/folgenden Leerzeichen bereinigt.
+- `mode="T"`: Gibt ein `ChatPromptTemplate` zurück (benötigt `## system` / `## human` Sections)
+- `mode="S"`: Gibt den Inhalt als reinen String zurück. Ein vorhandenes YAML-Frontmatter (Metadaten-Block zwischen `---` am Dateianfang) wird dabei automatisch entfernt und das Ergebnis mit `strip()` von führenden/folgenden Leerzeichen bereinigt.
 
 **Template-Format (Markdown):**
-`from genai_lib.utilities import ...`1
+```markdown
+---
+name: rag_prompt
+description: RAG-Prompt für Question-Answering
+variables: [system_prompt, question, context]
+---
+
+## system
+
+{system_prompt}
+
+## human
+
+Question: {question}
+
+Context: {context}
+
+Answer:
+```
 
 **Format-Konvention:**
 - YAML-Frontmatter: Metadaten (name, description, variables)
-- `from genai_lib.utilities import ...`2 / `from genai_lib.utilities import ...`3: Message-Rollen als H2-Headings
-- `from genai_lib.utilities import ...`4: Platzhalter wie bei ChatPromptTemplate
+- `## system` / `## human`: Message-Rollen als H2-Headings
+- `{variable}`: Platzhalter wie bei ChatPromptTemplate
 
-#### . `from genai_lib.utilities import ...`5 🆕
+#### . `extract_thinking(response)` 🆕
 Universeller Parser für verschiedene Thinking-Formate von LLMs. Extrahiert den Denkprozess und die eigentliche Antwort aus unterschiedlichen Response-Strukturen.
 
-`from genai_lib.utilities import ...`6
+```python
+from genai_lib.utilities import extract_thinking
+
+# Response von beliebigem LLM
+response = llm.invoke("Erkläre Schritt für Schritt, was 2+2 ergibt")
+
+# Universeller Parser für alle Formate
+thinking, answer = extract_thinking(response)
+
+print(f"Denkprozess: {thinking[:200]}...")
+print(f"Antwort: {answer}")
+```
 
 **Unterstützte Formate:**
 
 | Provider/Modell | Format | Beispiel |
 |-----------------|--------|----------|
-| Claude (Extended Thinking) | Liste mit `from genai_lib.utilities import ...`7 Blöcken | `from genai_lib.utilities import ...`8 |
-| Gemini | Liste mit `from genai_lib.utilities import ...`9 Blöcken | `check_environment()`0 |
-| Qwen3, DeepSeek R1 | String mit `check_environment()`1 Tags | `check_environment()`2 |
-| DeepSeek | `check_environment()`3 | Separates Feld im Response |
+| Claude (Extended Thinking) | Liste mit `{"type": "thinking"}` Blöcken | `content = [{"type": "thinking", "thinking": "..."}]` |
+| Gemini | Liste mit `{"type": "thinking"}` Blöcken | `content = [{"type": "thinking", "thinking": "..."}]` |
+| Qwen3, DeepSeek R1 | String mit `<think>` Tags | `"<think>Denkprozess</think>Antwort"` |
+| DeepSeek | `additional_kwargs["reasoning_content"]` | Separates Feld im Response |
 
 **Rückgabe:**
-- `check_environment()`4 (str): Extrahierter Denkprozess (leer, wenn nicht vorhanden)
-- `check_environment()`5 (str): Eigentliche Antwort
+- `thinking` (str): Extrahierter Denkprozess (leer, wenn nicht vorhanden)
+- `answer` (str): Eigentliche Antwort
 
 **Features:**
 - Provider-agnostisch: Ein Parser für alle LLMs
 - Fallback-Logik: Prüft automatisch alle bekannten Formate
 - Robust: Gibt leeren Thinking-String zurück, wenn kein Denkprozess vorhanden
 
-#### . `check_environment()`6 🆕
-Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities eines LLM-Modells. Nutzt intern `check_environment()`7 und gibt detaillierte Informationen über Structured Output, Function Calling, Vision, Token-Limits, etc. zurück.
+#### . `get_model_profile(model, print_profile=True, **kwargs)` 🆕
+Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities eines LLM-Modells. Nutzt intern `init_chat_model()` und gibt detaillierte Informationen über Structured Output, Function Calling, Vision, Token-Limits, etc. zurück.
 
-`check_environment()`8
+```python
+from genai_lib.utilities import get_model_profile
+
+# Formatierte Ausgabe aller wichtigen Capabilities
+profile = get_model_profile("openai:gpt-4o-mini")
+
+# Output:
+# 🔍 Model Profile: openai:gpt-4o-mini
+# ============================================================
+#
+# 📋 Core Capabilities:
+#   ✓ Structured Output:  True
+#   ✓ Function Calling:   True
+#   ✓ JSON Mode:          True
+#   ✓ Reasoning:          False
+#
+# 🎨 Multimodal Capabilities:
+#   ✓ Input:  📝 Text, 🖼️ Image
+#   ✓ Output: 📝 Text
+#
+# 📊 Token Limits:
+#   ✓ Max Input Tokens:   128000
+#   ✓ Max Output Tokens:  16384
+#
+# ⚙️ Model Configuration:
+#   ✓ Temperature:        Yes
+#   ✓ Knowledge Cutoff:   2023-10
+#
+# 🔧 Additional Features:
+#   ✓ Streaming:          True
+#   ✓ Async:              True
+# ============================================================
+
+# Ohne Ausgabe (nur Profile-Dict zurückgeben)
+profile = get_model_profile("anthropic:claude-3-sonnet", print_profile=False)
+
+# Verschiedene Models vergleichen (mit Fehlerbehandlung)
+for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-pro"]:
+    print(f"\n{model}:")
+    profile = get_model_profile(model, print_profile=False)
+
+    if profile:  # Nur verarbeiten, wenn Model erfolgreich initialisiert
+        print(f"  Context: {profile['max_input_tokens']} tokens")
+        print(f"  Vision: {profile['image_inputs']}")
+        print(f"  Reasoning: {profile.get('reasoning', False)}")
+        print(f"  Knowledge: {profile.get('knowledge_cutoff', 'N/A')}")
+    else:
+        print(f"  ❌ Fehler beim Initialisieren des Modells (Provider-Bibliothek fehlt?)")
+```
 
 **Parameter:**
-- `check_environment()`9 (str): Model-Name im Format "provider:model"
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```0 (bool): Formatierte Ausgabe aktivieren (Standard: True)
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```1: Zusätzliche Parameter für ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```2 (z.B. max_tokens)
+- `model` (str): Model-Name im Format "provider:model"
+- `print_profile` (bool): Formatierte Ausgabe aktivieren (Standard: True)
+- `**kwargs`: Zusätzliche Parameter für `init_chat_model()` (z.B. max_tokens)
 
 **Rückgabe:**
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```3: Vollständiges Model-Profile mit allen Capabilities
+- `dict`: Vollständiges Model-Profile mit allen Capabilities
 
 **Profile-Attribute (Auswahl):**
 
 **Core Capabilities:**
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```4: Native Structured Output API
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```5: Function Calling Support
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```6: JSON Mode Support
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```7: Extended Thinking/Reasoning Support
+- `structured_output`: Native Structured Output API
+- `tool_calling`: Function Calling Support
+- `supports_json_mode`: JSON Mode Support
+- `reasoning`: Extended Thinking/Reasoning Support
 
 **Multimodal Input:**
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```8: Text Input (Standard) - Anzeige: 📝 Text
-- ```python
-from genai_lib.utilities import check_environment
-
-check_environment()
-```9: Bild Input (Vision) - Anzeige: 🖼️ Image
-- `install_packages(packages, upgrade=False)`0: Audio Input Support - Anzeige: 🎵 Audio
-- `install_packages(packages, upgrade=False)`1: Video Input Support - Anzeige: 🎬 Video
+- `text_inputs`: Text Input (Standard) - Anzeige: 📝 Text
+- `image_inputs`: Bild Input (Vision) - Anzeige: 🖼️ Image
+- `audio_inputs`: Audio Input Support - Anzeige: 🎵 Audio
+- `video_inputs`: Video Input Support - Anzeige: 🎬 Video
 
 **Multimodal Output:**
-- `install_packages(packages, upgrade=False)`2: Text Output (Standard) - Anzeige: 📝 Text
-- `install_packages(packages, upgrade=False)`3: Bild-Generierung - Anzeige: 🖼️ Image
-- `install_packages(packages, upgrade=False)`4: Audio-Generierung (TTS) - Anzeige: 🎵 Audio
-- `install_packages(packages, upgrade=False)`5: Video-Generierung - Anzeige: 🎬 Video
+- `text_outputs`: Text Output (Standard) - Anzeige: 📝 Text
+- `image_outputs`: Bild-Generierung - Anzeige: 🖼️ Image
+- `audio_outputs`: Audio-Generierung (TTS) - Anzeige: 🎵 Audio
+- `video_outputs`: Video-Generierung - Anzeige: 🎬 Video
 
 **Token Limits:**
-- `install_packages(packages, upgrade=False)`6: Context Window Größe
-- `install_packages(packages, upgrade=False)`7: Max. Output-Länge
+- `max_input_tokens`: Context Window Größe
+- `max_output_tokens`: Max. Output-Länge
 
 **Model Configuration:**
-- `install_packages(packages, upgrade=False)`8: Temperature-Parameter Support
-- `install_packages(packages, upgrade=False)`9: Knowledge Cutoff Date
+- `temperature`: Temperature-Parameter Support
+- `knowledge_cutoff`: Knowledge Cutoff Date
 
 **Additional Features:**
-- ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```0: Streaming Support
-- ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```1: Async Support
+- `streaming`: Streaming Support
+- `async_capable`: Async Support
 
 **Features:**
 - Quelle: models.dev (Open-Source Model-Index)
@@ -380,177 +380,87 @@ install_packages(['langchain-core>=1.3.0'], upgrade=True)
 - Temperature-Unterstützung prüfen
 - Debugging und Dokumentation
 
-#### . ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```2 🆕
+#### . `copy_from_github(source, target, mask="*", ...)` 🆕
 Kopiert Dateien aus einem GitHub-Repository (oder Unterverzeichnis) in ein lokales Verzeichnis — ohne vollständigen Clone.
 
 ```python
-from genai_lib.utilities import install_packages
+from genai_lib.utilities import copy_from_github
 
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
+# Alle Notebooks aus dem Root eines Repos
+copy_from_github("ralf-42/GenAI", "./lokal", mask="*.ipynb")
 
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
+# Nur ein Unterverzeichnis, alle Python-Dateien
+copy_from_github("ralf-42/GenAI/04_modul", "./module", mask="*.py")
 
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```3
+# Vorschau: anzeigen, was kopiert würde (keine Dateien schreiben)
+copy_from_github("ralf-42/GenAI", "./ziel", dry_run=True)
+
+# Private Repos: Token übergeben oder GITHUB_TOKEN setzen
+copy_from_github("myorg/private-repo", "./ziel", token="ghp_...")
+```
 
 **Parameter:**
 
 | Parameter | Typ | Beschreibung |
 |-----------|-----|--------------|
-| ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```4 | str | ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```5 oder ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```6 (auch GitHub-URL) |
-| ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```7 | str | Lokales Zielverzeichnis (wird erstellt) |
-| ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```8 | str | Dateimaske, z.B. ```python
-from genai_lib.utilities import install_packages
-
-# Einfache Installation (überspringt bereits importierbare Pakete)
-install_packages(['numpy', 'pandas'])
-
-# Mit separaten Install- und Import-Namen
-install_packages([
-    ('markitdown[all]', 'markitdown'),
-    'langchain_chroma'
-])
-
-# Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
-```9, `packages`0 (Default: `packages`1) |
-| `packages`2 | str | GitHub-Token (alternativ: Env-Var `packages`3) |
-| `packages`4 | bool | Unterordner einschließen (Default: `packages`5) |
-| `packages`6 | str | Branch-Name (Default: wird automatisch ermittelt) |
-| `packages`7 | bool | Nur anzeigen, nichts kopieren |
+| `source` | str | `owner/repo` oder `owner/repo/unterordner` (auch GitHub-URL) |
+| `target` | str | Lokales Zielverzeichnis (wird erstellt) |
+| `mask` | str | Dateimaske, z.B. `"*.ipynb"`, `"data_*.csv"` (Default: `"*"`) |
+| `token` | str | GitHub-Token (alternativ: Env-Var `GITHUB_TOKEN`) |
+| `recursive` | bool | Unterordner einschließen (Default: `True`) |
+| `branch` | str | Branch-Name (Default: wird automatisch ermittelt) |
+| `dry_run` | bool | Nur anzeigen, nichts kopieren |
 
 **Rückgabe:**
-- `packages`8: Liste der kopierten (oder bei `packages`9: gefundenen) Dateipfade
+- `list[str]`: Liste der kopierten (oder bei `dry_run=True`: gefundenen) Dateipfade
 
 **Features:**
-- Nutzt GitHub Contents API — kein `genai_lib`00 nötig
+- Nutzt GitHub Contents API — kein `git clone` nötig
 - Unterstützt Unterverzeichnisse großer Repos direkt
 - Erhält die Verzeichnisstruktur im Zielverzeichnis
-- Automatische Branch-Erkennung (`genai_lib`01, `genai_lib`02, etc.)
+- Automatische Branch-Erkennung (`main`, `master`, etc.)
 
 ---
 
-#### . `genai_lib`03 🆕
+#### . `show_trace(project_name, limit=5, show_steps=False)` 🆕
 Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle direkt im Notebook.
 
-`genai_lib`04
+```python
+from genai_lib.utilities import show_trace
+
+# Letzte 5 Runs als Tabelle
+show_trace("M08-RAG-Projekt")
+
+# Mit Step-Analyse des letzten Runs
+show_trace("M08-RAG-Projekt", limit=3, show_steps=True)
+```
 
 **Parameter:**
-- `genai_lib`05 (str): Name des LangSmith-Projekts (z.B. `genai_lib`06)
-- `genai_lib`07 (int): Anzahl der anzuzeigenden Runs (Standard: 5)
-- `genai_lib`08 (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
+- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M08-RAG-Projekt"`)
+- `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
+- `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
 **Ausgabe (Haupttabelle):**
 
 | Run | Status | Dauer | Child-Runs |
 |-----|--------|-------|------------|
-| `genai_lib`09 | ✅ success | 2.3s | 4 |
-| `genai_lib`10 | ❌ error | 1.1s | 2 |
+| `RunnableSequence` | ✅ success | 2.3s | 4 |
+| `RunnableSequence` | ❌ error | 1.1s | 2 |
 
-**Ausgabe mit `genai_lib`11 (Step-Analyse):**
+**Ausgabe mit `show_steps=True` (Step-Analyse):**
 
 | # | Typ | Name | Status | Dauer |
 |---|-----|------|--------|-------|
-| 1 | `genai_lib`12 | `genai_lib`13 | ✅ | 1.8s |
-| 2 | `genai_lib`14 | `genai_lib`15 | ✅ | 0.4s |
+| 1 | `llm` | `ChatOpenAI` | ✅ | 1.8s |
+| 2 | `tool` | `firmenwissen_suchen` | ✅ | 0.4s |
 
-**Erkannte Anti-Patterns (`genai_lib`16):**
+**Erkannte Anti-Patterns (`show_steps=True`):**
 - **Retry-Loops:** Wiederholter Tool-Call mit gleichen Argumenten nach Fehler
 - **Over-Planning:** Viele interne Steps, wenig Ergebnis-Output
 - **Missing Tool Use:** Agent antwortet ohne Tool-Call trotz verfügbarer Tools
 - **Hohe Child-Run-Anzahl:** Deutet auf interne Loops oder Middleware hin
 
-**Voraussetzung:** LangSmith muss konfiguriert sein (`genai_lib`17, `genai_lib`18).
+**Voraussetzung:** LangSmith muss konfiguriert sein (`LANGSMITH_TRACING=true`, `LANGSMITH_API_KEY`).
 
 ---
 
@@ -558,43 +468,81 @@ Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle
 
 ### Überblick
 
-Das `genai_lib`19-Modul implementiert ein vollständiges RAG-System mit Unterstützung für Text- und Bilddokumente. Es kombiniert OpenAI-Embeddings für Text und CLIP-Embeddings für Bilder.
+Das `multimodal_rag`-Modul implementiert ein vollständiges RAG-System mit Unterstützung für Text- und Bilddokumente. Es kombiniert OpenAI-Embeddings für Text und CLIP-Embeddings für Bilder.
 
 ### Architektur
 
-`genai_lib`20
+```
+multimodal_rag
+├── Text-Pipeline: OpenAI Embeddings + ChromaDB
+├── Bild-Pipeline: CLIP Embeddings + ChromaDB
+├── Vision-LLM: GPT-4o-mini für Bildbeschreibungen (via init_chat_model)
+└── Hybride Suche: Text ↔ Bild ↔ Bild
+```
 
-> [!INFO] LangChain 1.0+ Integration (v3.1)<br>
-> Das `genai_lib`21-Modul verwendet moderne LangChain 1.0+ Patterns:
-> - Nutzt `genai_lib`22 für LLM-Initialisierung
-> - Vision-Analysen mit `genai_lib`23 und Standard Content Blocks
+> [!NOTE] LangChain 1.0+ Integration (v3.1)<br>
+> Das `multimodal_rag`-Modul verwendet moderne LangChain 1.0+ Patterns:
+> - Nutzt `init_chat_model("openai:gpt-4o-mini")` für LLM-Initialisierung
+> - Vision-Analysen mit `HumanMessage` und Standard Content Blocks
 > - Provider-agnostische Multimodal-Verarbeitung
 
 ### Hauptfunktionen
 
-#### . `genai_lib`24
+#### . `init_rag_system(config=None)`
 Initialisiert das vollständige RAG-System.
 
-`genai_lib`25
+```python
+from genai_lib.multimodal_rag import init_rag_system, RAGConfig
+
+# Mit Standard-Konfiguration
+rag = init_rag_system()
+
+# Mit eigener Konfiguration
+config = RAGConfig(
+    chunk_size=300,
+    chunk_overlap=50,
+    clip_model='clip-ViT-B-32',
+    llm_model='gpt-4o-mini',
+    db_path='./my_rag_db'
+)
+rag = init_rag_system(config)
+```
 
 **Was wird initialisiert:**
 - OpenAI Text-Embeddings
 - CLIP-Modell für Bild-Embeddings
-- GPT-4o-mini für Text und Vision (via `genai_lib`26 - LangChain 1.0+)
+- GPT-4o-mini für Text und Vision (via `init_chat_model()` - LangChain 1.0+)
 - ChromaDB mit zwei Collections (texts, images)
 - MarkItDown für Dokumentenkonvertierung
 
 **Interne LangChain 1.0+ Patterns:**
-`genai_lib`27
+```python
+# System nutzt intern moderne LangChain APIs
+llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
 
-#### . `genai_lib`28
+# Vision-Analyse mit Standard Content Blocks
+message = HumanMessage(content=[
+    {"type": "text", "text": "Beschreibe dieses Bild"},
+    {"type": "image", "url": "data:image/png;base64,...", "mime_type": "image/png"}
+])
+```
+
+#### . `process_directory(rag, directory_path, auto_describe_images=True)`
 Verarbeitet ein Verzeichnis mit Text- und Bilddateien.
 
-`genai_lib`29
+```python
+from genai_lib.multimodal_rag import process_directory
+
+# Verzeichnis mit automatischen Bildbeschreibungen
+process_directory(rag, './files', auto_describe_images=True)
+
+# Ohne Bildbeschreibungen (nur CLIP-Embeddings)
+process_directory(rag, './files', auto_describe_images=False)
+```
 
 **Unterstützte Dateitypen:**
-- **Text:** `genai_lib`30, `genai_lib`31, `genai_lib`32, `genai_lib`33, `genai_lib`34, `genai_lib`35
-- **Bilder:** `genai_lib`36, `genai_lib`37, `genai_lib`38, `genai_lib`39, `genai_lib`40
+- **Text:** `.txt`, `.md`, `.pdf`, `.docx`, `.pptx`, `.xlsx`
+- **Bilder:** `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`
 
 **Features:**
 - Automatische Dokumentenkonvertierung mit MarkItDown
@@ -603,74 +551,204 @@ Verarbeitet ein Verzeichnis mit Text- und Bilddateien.
 - CLIP-Embeddings für Bilder
 - Fortschrittsanzeige
 
-#### . `genai_lib`41
+#### . `multimodal_search(rag, query, k=5, text_only=False, images_only=False)`
 Durchsucht Text und Bilder gleichzeitig.
 
-`genai_lib`42
+```python
+from genai_lib.multimodal_rag import multimodal_search
+
+# Hybride Suche (Text + Bilder)
+results = multimodal_search(rag, "Roboter mit KI", k=5)
+
+# Nur Text
+text_results = multimodal_search(rag, "Maschinelles Lernen", text_only=True)
+
+# Nur Bilder
+image_results = multimodal_search(rag, "rote Autos", images_only=True)
+```
 
 **Rückgabe:**
-- `genai_lib`43: Liste von LangChain Documents mit Text-Chunks
-- `genai_lib`44: Liste von Dictionaries mit Bildpfaden und Metadaten
+- `text_docs`: Liste von LangChain Documents mit Text-Chunks
+- `image_results`: Liste von Dictionaries mit Bildpfaden und Metadaten
 
-#### . `genai_lib`45
+#### . `search_similar_images(rag, image_path, k=5)`
 Findet ähnliche Bilder zu einem Query-Bild (Bild → Bild Suche).
 
-`genai_lib`46
+```python
+from genai_lib.multimodal_rag import search_similar_images
+
+# Ähnliche Bilder finden
+similar = search_similar_images(rag, "./query_image.jpg", k=5)
+
+for img in similar:
+    print(f"Ähnlichkeit: {img['similarity']:.2f}")
+    print(f"Pfad: {img['image_path']}")
+```
 
 **Use Cases:**
 - Duplikate finden
 - Ähnliche Produkte vorschlagen
 - Bildkategorisierung
 
-#### . `genai_lib`47
+#### . `search_text_by_image(rag, image_path, k=3)`
 Findet Textdokumente, die zum Bildinhalt passen (Bild → Text Suche).
 
-`genai_lib`48
+```python
+from genai_lib.multimodal_rag import search_text_by_image
+
+# Passende Texte zu einem Bild finden
+texts = search_text_by_image(rag, "./product_image.jpg", k=3)
+
+for doc in texts:
+    print(doc.page_content)
+```
 
 **Use Cases:**
 - Produktbeschreibungen zu Bildern finden
 - Dokumentation zu Screenshots suchen
 - Bild-Text-Verknüpfung in Datenbanken
 
-#### . `genai_lib`49
+#### . `get_system_status(rag)`
 Gibt Statistiken über das RAG-System zurück.
 
-`genai_lib`50
+```python
+from genai_lib.multimodal_rag import get_system_status
+
+status = get_system_status(rag)
+print(f"Text-Chunks: {status['text_chunks']}")
+print(f"Bilder: {status['images']}")
+print(f"Bildbeschreibungen: {status['image_descriptions']}")
+```
 
 **Rückgabe:**
-- `genai_lib`51: Anzahl der Text-Dokument-Chunks
-- `genai_lib`52: Anzahl der Bilder in der Datenbank
-- `genai_lib`53: Anzahl der Bildbeschreibungen
-- `genai_lib`54: Gesamtanzahl aller Einträge
+- `text_chunks`: Anzahl der Text-Dokument-Chunks
+- `images`: Anzahl der Bilder in der Datenbank
+- `image_descriptions`: Anzahl der Bildbeschreibungen
+- `total_documents`: Gesamtanzahl aller Einträge
 
-#### . `genai_lib`55
+#### . `cleanup_database(db_path)`
 Löscht die Datenbank komplett für einen Neustart.
 
-`genai_lib`56
+```python
+from genai_lib.multimodal_rag import cleanup_database
+
+cleanup_database('./multimodal_rag_db')
+```
 
 ### Vollständiges Beispiel
 
-`genai_lib`57
+```python
+from genai_lib.multimodal_rag import (
+    init_rag_system,
+    process_directory,
+    multimodal_search,
+    search_similar_images,
+    get_system_status
+)
+
+# . System initialisieren
+rag = init_rag_system()
+
+# . Dokumente verarbeiten
+process_directory(rag, './knowledge_base', auto_describe_images=True)
+
+# . Status prüfen
+status = get_system_status(rag)
+print(f"Verarbeitet: {status['text_chunks']} Texte, {status['images']} Bilder")
+
+# . Multimodale Suche (Text + Bilder + Cross-Modal)
+results = multimodal_search(rag, "Neuronale Netze", k_text=3, k_images=3)
+print(results)
+
+# . Bild-zu-Bild Suche
+similar = search_similar_images(rag, "./query_image.jpg", k=5)
+for img in similar:
+    print(f"{img['filename']}: {img['similarity']}")
+```
 
 ---
 
 ## Best Practices
 
 ### . Environment-Setup in Notebooks
-`genai_lib`58
+```python
+from genai_lib.utilities import check_environment, setup_api_keys, install_packages
+
+# . Environment checken
+check_environment()
+
+# . Pakete installieren
+install_packages([
+    'langchain',
+    'langchain-openai',
+    ('markitdown[all]', 'markitdown')
+])
+
+# . API-Keys setzen
+setup_api_keys(["OPENAI_API_KEY"])
+```
 
 ### . LangSmith Trace-Analyse
-`genai_lib`59
+```python
+from genai_lib.utilities import show_trace
+
+# Letzte Runs prüfen
+show_trace("M08-RAG-Projekt")
+
+# Step-Analyse für Debugging
+show_trace("M08-RAG-Projekt", show_steps=True)
+```
 
 ### . Multimodales RAG-System
-`genai_lib`60
+```python
+from genai_lib.multimodal_rag import (
+    init_rag_system,
+    RAGConfig,
+    process_directory,
+    multimodal_search
+)
+
+# Custom Konfiguration für große Dokumente
+config = RAGConfig(
+    chunk_size=500,
+    chunk_overlap=100,
+    text_threshold=1.0,
+    db_path='./projekt_rag'
+)
+
+rag = init_rag_system(config)
+process_directory(rag, './docs', auto_describe_images=True)
+```
 
 ---
 
 ## Abhängigkeiten
 
 ### Kern-Abhängigkeiten
-`genai_lib`61
+```python
+# LangChain Stack
+langchain>=1.1.0
+langchain-core>=1.1.0
+langchain-openai>=1.0.0
+langchain-community>=0.3.0
+langchain-chroma>=0.1.0
+
+# OpenAI
+openai>=1.0.0
+
+# Multimodal
+sentence-transformers>=3.0.0
+pillow>=10.0.0
+markitdown>=0.0.1
+
+# Vektordatenbank
+chromadb>=0.5.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+langsmith>=0.1.0
+```
 
 ---
 
@@ -678,32 +756,52 @@ Löscht die Datenbank komplett für einen Neustart.
 
 ### Überblick
 
-> [!INFO] model_config.py auf einen Blick
-> Das `genai_lib`62-Modul definiert Modell-IDs als benannte Konstanten nach Rolle. Die Instanziierung erfolgt im Notebook mit `genai_lib`63, sodass API-Keys bereits gesetzt sind.
+> [!NOTE] model_config.py auf einen Blick<br>
+> Das `model_config`-Modul definiert Modell-IDs als benannte Konstanten nach Rolle. Die Instanziierung erfolgt im Notebook mit `init_chat_model()`, sodass API-Keys bereits gesetzt sind.
 
-`genai_lib`64
+```python
+from genai_lib.model_config import BASELINE, WORKER, JUDGE, TRANSLATOR
+```
 
 ### Konstanten
 
 | Konstante | Modell | Typischer Einsatz |
 |-----------|--------|------------------|
-| `genai_lib`65 | `genai_lib`66 | Grundlagen, Demos, Lernbeispiele mit `genai_lib`67 |
-| `genai_lib`68 | `genai_lib`69 | Einfache Routing- und Auswahlentscheidungen |
-| `genai_lib`70 | `genai_lib`71 | Supervisor, Evaluation, LLM-as-Judge, Security |
-| `genai_lib`72 | `genai_lib`73 | Aufgabenzerlegung, Schritt-Planung, Agentic RAG |
-| `genai_lib`74 | `genai_lib`75 | RAG-Synthese, strukturierte Ausgaben, Subagenten |
-| `genai_lib`76 | `genai_lib`77 | Komplexe RAG, finale Reports, kritische Synthese |
-| `genai_lib`78 | `genai_lib`79 | Code-Generierung, Refactoring, technische Agenten |
-| `genai_lib`80 | `genai_lib`81 | Rohübersetzung, UI-Texte, Kursmaterial |
-| `genai_lib`82 | `genai_lib`83 | Stilistisch hochwertige Übersetzungen |
-| `genai_lib`84 | `genai_lib`85 | Retrieval, Chunk-Suche, Vektorindizes |
+| `BASELINE` | `gpt-5.4-nano` | Grundlagen, günstige Demos, kurze Modellaufrufe |
+| `ROUTER` | `gpt-5.4-nano` | Einfache Routing- und Auswahlentscheidungen |
+| `WORKER` | `gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Tool-Agenten |
+| `CODING` | `gpt-5.4-mini` | Code-Generierung, Refactoring, technische Agenten |
+| `TRANSLATOR` | `gpt-5.4-mini` | Kursmaterial, Markdown, Dokumentation |
+| `TRANSLATOR_FAST` | `gpt-5.4-nano` | Rohübersetzung und kurze nicht-kritische Texte |
+| `JUDGE` | `gpt-5.4` | Evaluation, Bewertung, LLM-as-Judge |
+| `PLANNER` | `gpt-5.4` | Aufgabenzerlegung, Supervisor-Logik, Agentic RAG |
+| `WORKER_PREMIUM` | `gpt-5.4` | Komplexe RAG, finale Reports |
+| `JUDGE_PREMIUM` | `gpt-5.5` | Kritische Evaluation und maximale Qualität |
+| `PLANNER_PREMIUM` | `gpt-5.5` | Hochkomplexe Planung |
+| `TRANSLATOR_PREMIUM` | `gpt-5.5` | Stilistisch hochwertige Übersetzungen |
+| `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
-> [!DANGER] Kein temperature bei GPT-5.x und o3<br>
-> Alle Konstanten außer `genai_lib`86 basieren auf Modellen ohne `genai_lib`87-Support. Parameter einfach weglassen — bei Bedarf über `genai_lib`88 steuern.
+> [!WARNING] Keine temperature bei GPT-5.x-Modellen<br>
+> `BASELINE` zeigt auf `gpt-5.4-nano`. Für GPT-5.x-Modelle wird `temperature` im Kurs nicht gesetzt; Steuerung erfolgt über Rollenwahl, Prompt, Reasoning-Konfiguration und Ausgabeformat.
 
 ### Verwendung
 
-`genai_lib`89
+```python
+from langchain.chat_models import init_chat_model
+from genai_lib.model_config import BASELINE, WORKER, JUDGE
+
+# Demo / Grundlagen
+llm = init_chat_model(BASELINE)
+
+# RAG-Synthese
+worker_llm = init_chat_model(WORKER)
+
+# Evaluation
+judge_llm = init_chat_model(JUDGE)
+```
+
+> [!DANGER] Kein temperature bei GPT-5.x<br>
+> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM`, `TRANSLATOR` und die Premium-Rollen basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt.
 
 ---
 
@@ -714,15 +812,16 @@ MIT License - Copyright (c) 2025 Ralf
 Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte verwendet werden.
 
 
----
-
-**Version:**    3.2<br>
-**Stand:**    März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit GenAI_Lib? |
-| [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für GenAI_Lib? |
+| [Standards](../../ressourcen/standards.html) | Welche projektweiten Code- und Notebook-Regeln gelten? |
+| [Modell-Auswahl Guide](../modell-auswahl/modell-auswahl-guide.html) | Welche Modellrolle passt zu welchem Kursbeispiel? |
+
+---
+
+**Version:**    3.2<br>
+**Stand:**    März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

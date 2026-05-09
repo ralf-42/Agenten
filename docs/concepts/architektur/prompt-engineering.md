@@ -4,7 +4,7 @@ title: Prompt Engineering
 parent: Grundlagen & Architektur
 grand_parent: Konzepte
 nav_order: 3
-description: "Strategien für effektive Prompts in Agentensystemen"
+description: Strategien für effektive Prompts in Agentensystemen
 has_toc: true
 ---
 
@@ -349,8 +349,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```0
-
+```
 **Empfohlener Workflow:**
 
 1. **Baseline erstellen** – Einfachster funktionierender Prompt
@@ -370,8 +369,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```1
-
+```
 ---
 
 ## Häufige Fehler und Lösungen
@@ -391,8 +389,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```2
-
+```
 **Lösung:**
 ```python
 few_shot_prompt = ChatPromptTemplate.from_messages([
@@ -403,8 +400,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```3
-
+```
 ### Fehler: Fehlende Beispiele bei komplexen Formaten
 
 **Problem:**
@@ -417,8 +413,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```4
-
+```
 **Lösung:**
 ```python
 few_shot_prompt = ChatPromptTemplate.from_messages([
@@ -429,8 +424,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```5
-
+```
 ### Fehler: Widersprüchliche Anweisungen
 
 **Problem:**
@@ -443,8 +437,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```6
-
+```
 **Lösung:**
 ```python
 few_shot_prompt = ChatPromptTemplate.from_messages([
@@ -455,8 +448,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
     ("assistant", "normal"),
     ("human", "Betreff: {email_subject}")
 ])
-```7
-
+```
 ---
 
 ## Zusammenfassung
@@ -478,7 +470,6 @@ Effektives Prompt Engineering basiert auf drei Säulen:
 
 Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents angewendet.
 
-
 ---
 
 ## Abgrenzung zu verwandten Dokumenten
@@ -494,5 +485,3 @@ Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents an
 **Version:**    1.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

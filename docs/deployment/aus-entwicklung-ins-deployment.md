@@ -377,15 +377,15 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 - [12-Factor App Prinzipien](https://12factor.net/de/)
 - [LangServe für LangChain-Apps](https://python.langchain.com/docs/langserve)
 
----
-
-**Version:** 1.0<br>
-**Stand:** Februar 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Produktionsreife Anwendung? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Produktionsreife Anwendung? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** Februar 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

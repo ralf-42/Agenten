@@ -4,7 +4,7 @@ title: LangChain Best Practices
 parent: Best Practices
 grand_parent: Frameworks
 nav_order: 1
-description: "Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg"
+description: Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg
 has_toc: true
 ---
 
@@ -624,8 +624,6 @@ agent = create_agent(
 
 **Was neu ist:**  beendet den Agent-Loop sofort mit einer direkten Antwort.
 
-
-
 **In der Praxis relevant wenn:** Guardrails sollen dem Nutzer eine klare Fehlermeldung liefern, die das LLM nicht nochmals umformulieren muss.
 
 ---
@@ -1105,74 +1103,15 @@ Beim Refactoring von altem Code:
 - **LangChain Blog**: https://blog.langchain.com/langchain-langgraph-1dot0/
 - **Projekt CLAUDE.md**: Vollständige Projektinstruktionen im Repository
 
----
-
-**Version:** 1.6<br>
-**Letzte Aktualisierung:** März 2026 (LangChain v1.2.10 / langchain-openai v1.1.10)
-**Autor:** GenAI Projekt Team
-
----
-
-## 📝 Changelog
-
-### Version 1.6 (März 2026)
-- 🆕 Automatic Server-Side Compaction dokumentiert (langchain-openai 1.1.10) — Must-Have #6 Ergänzung
-- ✅ "What's New" Sektion um langchain-openai v1.1.10 erweitert
-- ✅ Vergleichstabelle: Server-Side vs. Client-Side Context-Management
-
-### Version 1.5 (März 2026)
-- 🆕 Abschnitt 8️⃣ hinzugefügt: `.with_retry()` und `.with_fallbacks()` für robuste Production-Chains
-- ✅ Übersichtstabelle um Must-Have #8 ergänzt
-- ✅ Import-Cheatsheet mit Hinweis auf Runnable-Methoden aktualisiert
-
-### Version 1.4 (Februar 2026)
-- 🆕 ContextOverflowError dokumentiert (Must-Have #6 - SummarizationMiddleware)
-- 🆕 Token-Zählung für Tool-Schemas (count_tokens_approximately)
-- ✅ "What's New in v1.2.1-v1.2.10" Sektion hinzugefügt
-
-### Version 1.3 (Dezember 2025)
-- 🆕 LangChain v1.2.0 Features integriert (15. Dezember 2025)
-- 🆕 Tool Extras dokumentiert (Must-Have #3) - Provider-native Features
-- 🆕 Strict Schema für Agent `response_format` (Must-Have #4)
-- 🆕 Built-in Client-Side Tools (Anthropic Computer Use, OpenAI Strict Mode)
-- ✅ "What's New in v1.2.0" Sektion aktualisiert
-- ✅ Code-Beispiele erweitert (Tool Extras, response_format)
-
-### Version 1.2 (Dezember 2025)
-- 🆕 `extract_thinking()` Utility dokumentiert (Must-Have #7)
-- ✅ Universeller Parser für Thinking-Formate (Claude, Gemini, Qwen3, DeepSeek)
-- ✅ Integration mit genai_lib.utilities
-
-### Version 1.1 (Dezember 2025)
-- ✅ LangChain v1.1.0 Features integriert
-- 🆕 Model Profile System dokumentiert (Must-Have #1)
-- 🆕 Auto-Inference für Structured Output (Must-Have #2)
-- 🆕 SystemMessage Support in create_agent (Must-Have #4)
-- 🆕 ModelRetryMiddleware & ContentModerationMiddleware (Must-Have #6)
-- 🆕 Verbesserter SummarizationMiddleware
-- ✅ Import-Cheatsheet erweitert
-- ✅ "What's New in v1.1.0" Sektion hinzugefügt
-
-### Version 1.0 (November 2025)
-- Initiale Version mit 7 MUST-HAVE Features
-- LangChain 1.0+ Best Practices
-- Breaking Changes dokumentiert
-- Migration-Checkliste
-
----
-
-> [!TIP] Tipp<br>
-> Bookmark diese Datei und konsultiere sie bei jedem neuen Notebook oder Code-Modul.
-
----
-
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit LangChain Best Practices? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für LangChain Best Practices? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

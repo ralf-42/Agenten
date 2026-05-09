@@ -23,7 +23,6 @@ has_toc: true
 
 ---
 
-
 # KI-Modelllandschaft: Ein Überblick
 Die moderne KI-Landschaft bietet verschiedene spezialisierte Modelltypen für unterschiedliche Anwendungsfälle:
 
@@ -36,7 +35,6 @@ Die moderne KI-Landschaft bietet verschiedene spezialisierte Modelltypen für un
 # Vergleich wichtiger GPT-Modelle
 Die Wahl des richtigen Modells ist entscheidend für optimale Ergebnisse, Ressourcenschonung und maximale Effizienz. Hier ein Überblick der wichtigsten Modelle:
 
-
 | Modell          | Hauptmerkmale                                                                                                                                                               | Empfohlene Anwendungsfälle                                                                                                                                 |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **GPT-5**       | Neuestes Spitzenmodell mit integriertem Denken: Automatische Reasoning-Modi, überlegene Coding-Fähigkeiten, beste Instruktionsbefolgung. 400K Context Window.               | Komplexe Coding-Projekte, Agentic Tasks, Automatisierung, Frontend-Entwicklung, anspruchsvolle Schreibaufgaben. Beste Wahl für professionelle Anwendungen. |
@@ -47,7 +45,6 @@ Die Wahl des richtigen Modells ist entscheidend für optimale Ergebnisse, Ressou
 | **o3-mini**     | Reasoning-Modell: Hohe Intelligenz bei niedrigen Kosten und geringer Latenz. Konzipiert für strukturiertes Denken.                                                          | Wissenschaftliche, mathematische und Programmieraufgaben, technische und logische Probleme, faktenbasierte Recherchen.                                     |
 | **o4-mini**     | Kompaktes Reasoning-Modell: Optimiert für Geschwindigkeit und Kosteneffizienz. Stark in mathematischen, Programmier- und visuellen Aufgaben.                                | Komplexe Argumentationsstrukturen, technische Aufgaben, Programmierprojekte, visuelles Denken, wissenschaftliche Fragestellungen.                          |
 | **o3**          | Leistungsstärkster "Denker": Herausragend in Programmierung, Mathematik, Wissenschaft und visueller Analyse. Arbeitet mit verknüpften Einzelschritten ("Chain-of-Thought"). | Komplexe Recherchen, anspruchsvolle Programmieraufgaben, Datenanalyse, strategische Planung, Code-Review und Debugging. Beste Wahl für höchste Präzision.  |
-
 
 **Schnelle Modellwahl-Hilfe**
 
@@ -123,7 +120,6 @@ flowchart LR
 
 ## Finale Auswahl und Implementierung
 - Eine fundierte Entscheidung für das am besten geeignete Modell treffen und es in die eigenen Systeme integrieren.
-
 
 [Modellauswahl](https://editor.p5js.org/ralf.bendig.rb/full/8BbTi8Ico) 😊
 
@@ -202,15 +198,11 @@ Die Modellevaluierung und -auswahl findet in verschiedenen Szenarien Anwendung:
 - Einsatz von Reasoning-Modellen für Programmierung und Fehlerbehebung
 - Bewertung nach Codequalität und Lösungsgeschwindigkeit
 
-
 # Fazit
 > [!NOTE] Fazit<br>
 > Zusammenfassend lässt sich sagen, dass die **Evaluierung von Large Language Models (LLMs) ein wichtiges Forschungsgebiet** ist, um ihre Fähigkeiten und Grenzen zu verstehen. Die Evaluierung umfasst verschiedene **Attribute wie Grammatikalität, Kohäsion, Gefallen, Relevanz, Flüssigkeit und Bedeutungserhalt**. Sowohl **menschliche Evaluatoren als auch LLMs selbst werden zur Bewertung eingesetzt**. Es gibt **spezifische Benchmarks und Datensätze** zur Bewertung von LLMs in verschiedenen Bereichen wie **Textgenerierung, Fragebeantwortung und Zusammenfassung**.
 > Ein wichtiger Aspekt der LLM-Evaluierung ist die **Sicherheitsbewertung**, die **Robustheit gegenüber adversarialen Angriffen** (manipulierte Eingaben, um LLM in die Irre zu führen) und die Identifizierung von **Risiken wie Bias und Toxizität** umfasst. Die Evaluierung kann auch auf **spezialisierte LLMs** in Bereichen wie Medizin, Recht und Finanzen zugeschnitten sein.
 > Verschiedene **Metriken, darunter Likert-Skalen und der BLEU-Score**, werden zur Quantifizierung der LLM-Leistung verwendet. Es gibt auch **Tools und Frameworks wie DeepEval**, die die Evaluierung erleichtern. Es ist wichtig zu beachten, dass **Evaluierungsbias existieren können**, beispielsweise eine Präferenz für längere Texte. Die **ethischen Aspekte** spielen ebenfalls eine Rolle bei der Entwicklung und Nutzung von LLMs.
-
-
-
 
 # A | Aufgabe
 ---
@@ -236,8 +228,6 @@ Zu entwickeln ist eine strukturierte Anforderungsanalyse für ein fiktives oder 
 
 **Abgabeformat:**
 Abgabeformat: Dokument mit der Anforderungsanalyse (1-2 Seiten).
-
-
 
 <p><font color='black' size="5">
 Vergleichsanalyse bekannter KI-Modelle
@@ -273,13 +263,9 @@ Durchzuführen ist eine vergleichende Analyse von mindestens drei verschiedenen 
 **Abgabeformat:**
 Vergleichstabelle mit Bewertungen und einer Seite mit Empfehlungen.
 
-
-
 <p><font color='black' size="5">
 Konzept für die qualitative Evaluation eines Sprachmodells
 </font></p>
-
-
 
 Zu entwickeln ist ein strukturiertes Testverfahren zur qualitativen Bewertung eines Sprachmodells.
 
@@ -302,7 +288,6 @@ Zu entwickeln ist ein strukturiertes Testverfahren zur qualitativen Bewertung ei
 **Abgabeformat:**
 Ein 2-3 seitiges Konzeptpapier mit Evaluationsschema, Testfragen und geplantem Prozess.
 
-
 ---
 
 ## Abgrenzung zu verwandten Dokumenten
@@ -318,5 +303,3 @@ Ein 2-3 seitiges Konzeptpapier mit Evaluationsschema, Testfragen und geplantem P
 **Version:**    1.1<br>
 **Stand:**    Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

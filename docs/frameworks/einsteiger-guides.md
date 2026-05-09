@@ -4,14 +4,10 @@ title: Einsteiger-Guides
 parent: Frameworks
 nav_order: 1
 has_children: true
-description: "Einsteiger-Guides für LangChain, LangGraph, DeepAgents, LangSmith, ChromaDB, GenAI_Lib, Agent Builder und Prompt-Templates"
+description: Einsteiger-Guides für LangChain, LangGraph, DeepAgents, LangSmith, ChromaDB, GenAI_Lib, Agent Builder und Prompt-Templates
 ---
 
 # Einsteiger-Guides
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 `frameworks/` passt, wenn das fachliche Ziel bereits klar ist und nun die konkrete Umsetzung folgt. Die folgenden Guides geben einen kompakten Einstieg in zentrale Frameworks und Werkzeuge.
 
@@ -23,10 +19,3 @@ description: "Einsteiger-Guides für LangChain, LangGraph, DeepAgents, LangSmith
 - **[GenAI_Lib Einsteiger](einsteiger/einsteiger-genai-lib.html)** – *Welche Utilities stellt das Projekt bereit?*
 - **[Agent Builder Einsteiger](einsteiger/einsteiger-agent-builder.html)** – *Wie erstelle ich Agenten ohne Code?*
 - **[Prompt-Templates Einsteiger](einsteiger/einsteiger-prompts.html)** – *Wie erstelle ich eigene Prompt-Dateien?*
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](einsteiger-guides.html) | Wo starte ich als Einsteiger mit Einsteiger-Guides? |
-| [Best Practices](best-practices.html) | Welche Produktionsstandards gelten für Einsteiger-Guides? |

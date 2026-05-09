@@ -403,7 +403,6 @@ flowchart TD
 | [Einsteiger genai_lib](einsteiger-genai-lib.html) |  als Ladefunktion für Prompt-Dateien |
 | [Einsteiger Agent Builder](einsteiger-agent-builder.html) | Prompt-Dateien in Agent-Builder-Workflows |
 
-
 ---
 
 **Version:** 1.0<br>

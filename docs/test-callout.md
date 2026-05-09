@@ -11,7 +11,7 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 ## Test 1: Einfacher Callout ohne Custom Title
 
 > [!NOTE]
-> Details siehe Skript: M08 - Embeddings
+> Details siehe Skript: M08 - Embeddings<br>
 
 **Erwartetes Ergebnis:**
 - Titel: "Hinweis" (Standard-Titel)
@@ -33,7 +33,7 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 ## Test 3: Warning Callout
 
 > [!WARNING]
-> Achtung: Diese Funktion ist experimentell und kann sich ändern.
+> Achtung: Diese Funktion ist experimentell und kann sich ändern.<br>
 
 **Erwartetes Ergebnis:**
 - Titel: "Warnung" (Standard-Titel)
@@ -43,8 +43,8 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 
 ## Test 4: Mehrere Callout-Typen
 
-> [!INFO]
-> Weitere Informationen finden Sie in der offiziellen Dokumentation.
+> [!NOTE]
+> Weitere Informationen finden Sie in der offiziellen Dokumentation.<br>
 
 > [!DANGER]
 > Löschen Sie niemals Produktionsdaten ohne Backup!
@@ -61,7 +61,7 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 ## Test 5: Kurzer Text (< 50 Zeichen)
 
 > [!NOTE]
-> Kurzer Hinweis
+> Kurzer Hinweis<br>
 
 **Erwartetes Ergebnis:**
 - Titel: "Hinweis" (Standard-Titel)

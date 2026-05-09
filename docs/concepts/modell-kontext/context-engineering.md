@@ -23,7 +23,6 @@ has_toc: true
 
 ---
 
-
 # Was ist Context Engineering?
 **Context Engineering** beschreibt die Aufgabe, einem KI-System die richtigen Informationen zur richtigen Zeit bereitzustellen. In einfachen Demos wirkt das oft nebensächlich. In Anwendungen mit längeren Abläufen, mehreren Datenquellen oder wiederkehrenden Anfragen entscheidet der Kontext jedoch oft stärker über die Qualität als der eigentliche Prompt.
 
@@ -65,9 +64,6 @@ Nicht jeder Qualitätsgewinn entsteht durch bessere Formulierungen im Prompt. So
 
 > [!TIP] Startpunkt<br>
 > Sinnvoll ist eine kleine, messbare Kontext-Checkliste. Erst wenn Auswahl, Struktur und Aktualität stabil funktionieren, lohnt sich zusätzliche Komplexität.
-
-
-
 
 # Die vier Grundstrategien
 ```mermaid
@@ -143,13 +139,9 @@ Agent A: Schadensprüfung (hat Zugang zu Schadensdaten)
 Agent B: Kundenberatung (hat Zugang zu Produktdaten)
 ```
 
-
-
-
 # Die drei häufigsten Fehler
 > [!WARNING] Typische Ursache für Instabilität<br>
 > Instabile KI-Antworten sind oft kein Modellproblem, sondern ein Kontextproblem (zu viel, widersprüchlich oder veraltet).
-
 
 ## Context Overload
 **Problem:** Zu viele Informationen verwirren die KI
@@ -168,9 +160,6 @@ Konflikte sind besonders tückisch, weil sie von außen oft wie zufällige Model
 **Lösung:** Regelmäßige Updates implementieren
 
 Veralteter Kontext fällt in Tests oft nicht auf, weil die Datenbasis dort klein und überschaubar bleibt. Im laufenden Betrieb wird genau das schnell zum Problem: Eine formal saubere Antwort kann fachlich falsch sein, wenn sie auf einem alten Stand beruht.
-
-
-
 
 # Praktische Anwendung
 ## Kontext analysieren
@@ -296,8 +285,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```0
-
+```
 ## Tool 3: Einfache Kontextregeln
 ```
 Kundenkontext:
@@ -307,11 +295,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```1
-
-
-
-
+```
 # Messbare Verbesserungen
 ## Vorher vs. Nachher
 
@@ -337,12 +321,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```2
-
-
-
-
-
+```
 # Sofort umsetzbare Tipps
 ## Do's
 - Mit einfachen Context-Checklisten beginnen
@@ -379,11 +358,8 @@ Kundenkontext:
 - Komplexe Gedächtnissysteme
 - Unternehmensweite Implementierung
 
-
-
 > [!NOTE] Skalierungshinweis<br>
 > Context Engineering ist keine Spezialdisziplin nur für große Systeme. Schon einfache Techniken verbessern viele Anwendungen spürbar, sofern sie konsequent und messbar eingesetzt werden.
-
 
 # Aufgabe
 ## Aufgabe 1: Kontext-Analyse
@@ -398,8 +374,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```3
-
+```
 ## Aufgabe 2: Kontext-Design
 **Aufgabe:** Ein Kontext-Template für die häufigste Aufgabe erstellen.
 
@@ -412,8 +387,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```4
-
+```
 ## Aufgabe 3: Fehler-Identifikation
 **Aufgabe:** Typische Kontextfehler im eigenen Arbeitsbereich identifizieren.
 
@@ -426,8 +400,7 @@ Kundenkontext:
 - Ziel: Familienabsicherung
 
 → KI wählt passende Produktinformationen aus
-```5
-
+```
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
@@ -436,11 +409,8 @@ Kundenkontext:
 | [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wann ist Retrieval nur ein Teil der Kontextstrategie? |
 | [Fine-Tuning](./fine-tuning.html) | Wann wird Verhalten ins Modell verlagert statt zur Laufzeit organisiert? |
 
-
 ---
 
 **Version:**    1.1<br>
 **Stand:**    Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

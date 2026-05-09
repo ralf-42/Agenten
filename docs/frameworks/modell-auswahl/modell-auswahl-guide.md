@@ -38,7 +38,6 @@ Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für ein
 > [!TIP] Faustregel<br>
 > Nicht das stärkste Modell wählen — das *passende* für den Knoten.
 
-
 ---
 
 ## Rollenlogik hinter der Modellwahl
@@ -421,4 +420,3 @@ builder.add_conditional_edges("supervisor", routing_edge,
 **Version:** 1.4<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

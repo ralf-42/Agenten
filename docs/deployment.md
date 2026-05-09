@@ -3,14 +3,10 @@ layout: default
 title: Deployment
 nav_order: 7
 has_children: true
-description: "Von der Entwicklung zur produktionsreifen Anwendung"
+description: Von der Entwicklung zur produktionsreifen Anwendung
 ---
 
 # Deployment
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für Deployment, Architektur und Provider-Migration.
 
@@ -56,10 +52,3 @@ Für einen passenden Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
   - Modell-Rollenmapping für Baseline, Router, Judge, Worker
   - Embeddings und OpenAI-spezifische Module separat bewerten
   - Empfohlene Reihenfolge für eine kontrollierte Migration
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Deployment? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Deployment? |

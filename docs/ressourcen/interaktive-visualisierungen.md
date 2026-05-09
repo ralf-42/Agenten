@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Interaktive Visualisierungen
-parent: Alle Ressourcen
+parent: Ressourcen
 nav_order: 1
 description: "Interaktive Web-Demos für KI-Agenten-Konzepte: Transformer, Embeddings, Multimodal und Modellauswahl"
 has_toc: true
-grand_parent: Ressourcen
 ---
 
 # Interaktive Visualisierungen
@@ -42,7 +41,6 @@ Transformer-Architektur und Embedding-Konzepte
 | **Neuronales Netz**       | Training eines neuronalen Netzes                       | [NN - Training](https://editor.p5js.org/ralf.bendig.rb/full/FsQx83Adk)                      |
 | **Fine-Tuning LoRA**      | Low-Rank Adaptation für effizientes Fine-Tuning        | [LoRA](https://editor.p5js.org/ralf.bendig.rb/full/6EOMAf2BZ)                               |
 | **Mixture of Experts**    | MoE-Architektur für effiziente LLM-Skalierung          | [Mixture of Experts](https://editor.p5js.org/ralf.bendig.rb/full/GT2XfGGTo)                 |
-
 
 ---
 
@@ -101,15 +99,15 @@ Weitere interaktive Visualisierungen von externen Anbietern
 |-------|--------------|------|
 | **Imaginary** | Interaktive Mathematik-Programme und Visualisierungen | [Imaginary](https://www.imaginary.org/de/programs) |
 
----
-
-**Version:** 1.0<br>
-**Stand:** Januar 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Interaktive Visualisierungen? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** Januar 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -4,7 +4,7 @@ title: LangChain
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 1
-description: "Grundlagen und Best Practices für LangChain 1.0+"
+description: Grundlagen und Best Practices für LangChain 1.0+
 has_toc: true
 ---
 
@@ -207,8 +207,6 @@ print(safe_divide.invoke({"a": 10, "b": 2}))
 print(safe_divide.invoke({"a": 10, "b": 0}))
 ```
 
-
-
 ### Tool Extras für Provider-spezifische Features (NEU v1.2.0)
 
 Tools unterstützen jetzt `extras` für provider-native Konfigurationen – eine der wichtigsten Neuerungen in LangChain v1.2.0:
@@ -258,7 +256,6 @@ def take_screenshot() -> str:
 - Anthropic Prompt Caching für häufig verwendete Tools
 - OpenAI Strict Mode für garantierte Schema-Konformität
 - Anthropic Computer Use für Browser-Automation
-
 
 ---
 
@@ -346,7 +343,6 @@ print(response.confidence)  # float (0-1)
 - Multi-Step-Reasoning mit strukturierten Zwischenschritten
 - Agent-Monitoring mit standardisierten Response-Metriken
 - Integration in typsichere Workflows
-
 
 ### Agent-Tool-Interaktion
 
@@ -688,7 +684,6 @@ Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assist
 | [Einsteiger ChromaDB](einsteiger-chromadb.html) | Vektordatenbank für die RAG-Beispiele in diesem Guide |
 | [Einsteiger Prompts](einsteiger-prompts.html) | Prompt-Dateien und  als Ergänzung zu  |
 | [RAG-Konzepte](../../concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen hinter den RAG-Patterns in Abschnitt 12 |
-
 
 ---
 

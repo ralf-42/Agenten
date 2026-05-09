@@ -156,8 +156,6 @@ Das Wort `Harness` klingt technisch, meint aber zunächst eine nützliche Infras
 
 Es reicht ein einfaches Verständnis: Ein Harness kümmert sich um den **Run-Kontext**, die **Tool-Wrapper**, **Mocks** für Tests sowie **Policies** für riskante Aktionen. Gleichzeitig fungiert er als Messstation, die **Beobachtungsdaten (Traces)** sammelt, um Ergebnisse automatisiert mit einem **Eval-Set** vergleichen zu können.
 
-
-
 ```mermaid
 flowchart TB
     subgraph Runtime ["<b>Agentic Runtime</b>"]
@@ -265,4 +263,3 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 **Version:** 1.0<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

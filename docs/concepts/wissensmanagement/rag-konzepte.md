@@ -42,7 +42,7 @@ Retrieval Augmented Generation ergänzt das Modell also nicht durch neues Traini
 Frage → Suche relevante Dokumente → Füge Kontext zum Prompt → LLM generiert Antwort
 ```
 
-> [!INFO] Kernidee RAG<br>
+> [!NOTE] Kernidee RAG<br>
 > Das LLM erhält genau die Informationen, die es für die aktuelle Frage benötigt – nicht mehr und nicht weniger. Ohne passenden Kontext halluziniert das Modell stattdessen eine Antwort.
 
 ---
@@ -196,8 +196,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```0
-
+```
 ---
 
 ## Retrieval: Die richtigen Dokumente finden
@@ -212,8 +211,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```1
-
+```
 ### Retrieval-Strategien im Vergleich
 
 | Strategie | Beschreibung | Vorteil | Nachteil |
@@ -224,13 +222,7 @@ flowchart LR
 | **Hybrid** | Keyword + Semantisch kombiniert | Beste Abdeckung | Komplexer aufzusetzen |
 
 > [!DANGER] Threshold-Retrieval: leerer Kontext<br>
-> Gibt der Threshold-Retriever keine Treffer zurück, erhält das LLM leeren Kontext — und halluziniert eine Antwort, anstatt "keine Information" zu melden. Immer ein Fallback definieren, wenn ```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```2 verwendet wird.
+> Gibt der Threshold-Retriever keine Treffer zurück, erhält das LLM leeren Kontext — und halluziniert eine Antwort, anstatt "keine Information" zu melden. Immer ein Fallback definieren, wenn `similarity_score_threshold` verwendet wird.
 
 ### Maximum Marginal Relevance (MMR)
 
@@ -242,8 +234,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```3
-
+```
 ### Score-basiertes Filtering
 
 ```mermaid
@@ -252,8 +243,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```4
-
+```
 ### Metadaten-Filter
 
 ```mermaid
@@ -262,8 +252,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```5
-
+```
 ---
 
 ## Reranking: Ergebnisse optimieren
@@ -280,8 +269,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```6
-
+```
 ### Reranking-Ansätze
 
 | Ansatz | Beschreibung | Performance |
@@ -298,8 +286,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```7
-
+```
 ---
 
 ## Advanced RAG-Techniken
@@ -318,8 +305,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```8
-
+```
 **HyDE (Hypothetical Document Embedding):** Das LLM generiert eine hypothetische Antwort, die dann für die Suche verwendet wird:
 
 ```mermaid
@@ -328,8 +314,7 @@ flowchart LR
     B --> C[Chunking]
     C --> D[Embedding]
     D --> E[Vektordatenbank]
-```9
-
+```
 ### Self-Query
 
 Das LLM extrahiert strukturierte Filter aus natürlichsprachlichen Fragen:
@@ -342,8 +327,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```0
-
+```
 ### Contextual Compression
 
 Gefundene Dokumente werden auf das Wesentliche komprimiert:
@@ -356,8 +340,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```1
-
+```
 ### Parent Document Retriever
 
 Kleine Chunks für präzises Retrieval, aber größere Kontextfenster für die Generierung:
@@ -370,8 +353,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```2
-
+```
 ---
 
 ## RAG-Chain mit LangChain
@@ -388,8 +370,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```3
-
+```
 ### RAG als Agent-Tool
 
 ```mermaid
@@ -400,23 +381,14 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```4
-
+```
 ---
 
 ## Evaluierung von RAG-Systemen
 
 Die Qualität eines RAG-Systems muss systematisch gemessen werden, weil eine einzelne gelungene Antwort wenig beweist. RAG kann auf zwei Ebenen scheitern: Der Retriever findet den falschen Kontext, oder das Modell verarbeitet den richtigen Kontext falsch. Deshalb wird nicht nur die finale Antwort bewertet, sondern auch der Weg dorthin.
 
-Für Einsteiger reicht zuerst ein kleines, wiederholbares Testset. Nach jeder Änderung an Chunking, Embedding-Modell, ```mermaid
-flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
-```5, Prompt oder Quellenbestand wird dasselbe Set erneut ausgeführt. So wird sichtbar, ob eine Änderung wirklich verbessert oder nur andere Fehler erzeugt.
+Für Einsteiger reicht zuerst ein kleines, wiederholbares Testset. Nach jeder Änderung an Chunking, Embedding-Modell, Retriever, Prompt oder Quellenbestand wird dasselbe Set erneut ausgeführt. So wird sichtbar, ob eine Änderung wirklich verbessert oder nur andere Fehler erzeugt.
 
 | Ebene | Leitfrage | Einfache Bewertung |
 |---|---|---|
@@ -446,8 +418,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```6
-
+```
 ### Manuelles Testen
 
 Für erste Iterationen ist manuelles Testen effektiver als ein großes Evaluationsframework. Wichtig ist, die Testfragen nicht nachträglich an die Stärken des Systems anzupassen, sondern typische Nutzerfragen, Randfälle und erwartete Quellen festzuhalten.
@@ -460,8 +431,7 @@ flowchart LR
     D --> E[Prompt + Kontext]
     E --> F[LLM]
     F --> G[Antwort]
-```7
-
+```
 > [!TIP] Vertiefung<br>
 > Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../../frameworks/best-practices/langsmith-best-practices.html) beschrieben.
 
@@ -475,26 +445,10 @@ Häufige Probleme und deren Lösungen.
 
 | Ursache | Diagnose | Lösung |
 |---------|----------|--------|
-| Collection leer | ```mermaid
-flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
-```8 | Dokumente indexieren |
+| Collection leer | Anzahl Dokumente prüfen | Dokumente indexieren |
 | Falsches Embedding-Modell | Dimensionen vergleichen | Gleiches Modell für Index und Query |
 | Query zu spezifisch | Mit breiterem Begriff testen | Query umformulieren |
-| k zu klein | k erhöhen | ```mermaid
-flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
-```9 |
+| k zu klein | k erhöhen | `k` erhöhen |
 
 ### Problem: Falsche Antworten trotz korrektem Kontext
 
@@ -569,11 +523,8 @@ splitter = RecursiveCharacterTextSplitter(
     chunk_overlap=100,   # Überlappung zwischen Chunks
     separators=["\n\n", "\n", ". ", " ", ""]  # Trennzeichen-Hierarchie
 )
-```0
-
+```
 RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten – ohne teures Fine-Tuning und mit voller Kontrolle über die Wissensbasis.
-
-
 
 ---
 
@@ -591,5 +542,3 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 **Version:**    1.1<br>
 **Stand:**    April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

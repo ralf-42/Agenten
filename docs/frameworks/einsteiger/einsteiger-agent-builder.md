@@ -4,7 +4,7 @@ title: Agent Builder
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 7
-description: "No-Code-Agenten und visuelle Workflows für Agentenprototypen"
+description: No-Code-Agenten und visuelle Workflows für Agentenprototypen
 has_toc: true
 ---
 
@@ -295,8 +295,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```0
-
+```
 **Tool Node: "Send Confirmation Email"**
 ```mermaid
 graph TB
@@ -316,8 +315,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```1
-
+```
 ### Vorteile dieser Architektur
 
 > [!SUCCESS] Betriebsvorteil       
@@ -362,8 +360,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```2
-
+```
 ### Verfügbare MCP-Server (Auswahl)
 
 | Kategorie | MCP-Server | Funktionen |
@@ -397,8 +394,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```3
-
+```
 **Beispiel: GitHub-Integration**
 
 ```mermaid
@@ -419,8 +415,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```4
-
+```
 **Nutzung im Workflow:**
 
 ```mermaid
@@ -441,8 +436,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```5
-
+```
 ### Custom MCP Server erstellen
 
 Falls kein passender MCP-Server existiert, lässt sich ein eigener Server erstellen:
@@ -465,8 +459,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```6
-
+```
 **Integration in Agent Builder:**
 1. Deploy MCP Server (z.B. auf Railway, Fly.io)
 2. Agent Builder → Connector Registry → Add Custom MCP Server
@@ -501,8 +494,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```7
-
+```
 | Anforderung | Agent Builder | LangChain |
 |-------------|---------------|-----------|
 | **Kein Coding erforderlich** | ✅ | ❌ |
@@ -543,8 +535,7 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```8
-
+```
 **LangChain eignet sich für:**
 
 - **Custom Tools** – Spezielle Python-Funktionen als Tools
@@ -580,12 +571,10 @@ graph TB
 
     style AB fill:#10a37f
     style LC fill:#0066cc
-```9
-
+```
 ### Wann ist eine Migration zu LangChain sinnvoll?
 
-https://platform.openai.com/agent-builder)0
-
+https://platform.openai.com/agent-builder
 **Migrations-Checkliste:**
 
 - ✅ Multi-Provider-Support benötigt? → LangChain
@@ -604,8 +593,7 @@ https://platform.openai.com/agent-builder)0
 
 ### Sicherheits-Architektur
 
-https://platform.openai.com/agent-builder)1
-
+https://platform.openai.com/agent-builder
 ### Enterprise-Kontrollen
 
 | Feature | Beschreibung | Best Practice |
@@ -621,30 +609,24 @@ https://platform.openai.com/agent-builder)1
 
 **1. Secrets Management:**
 
-https://platform.openai.com/agent-builder)2
-
+https://platform.openai.com/agent-builder
 **2. Input Validation:**
 
-https://platform.openai.com/agent-builder)3
-
+https://platform.openai.com/agent-builder
 **3. Least Privilege für MCP-Server:**
 
-https://platform.openai.com/agent-builder)4
-
+https://platform.openai.com/agent-builder
 **4. Audit Trail:**
 
-https://platform.openai.com/agent-builder)5
-
+https://platform.openai.com/agent-builder
 ### Compliance und Datenschutz
 
 **DSGVO-Konforme Workflows:**
 
-https://platform.openai.com/agent-builder)6
-
+https://platform.openai.com/agent-builder
 **Data Retention Policy:**
 
-https://platform.openai.com/agent-builder)7
-
+https://platform.openai.com/agent-builder
 ---
 
 ## Debugging und Monitoring
@@ -653,8 +635,7 @@ https://platform.openai.com/agent-builder)7
 
 Agent Builder bietet native Debugging-Features, die Code-basierte Workflows oft manuell implementieren müssen.
 
-https://platform.openai.com/agent-builder)8
-
+https://platform.openai.com/agent-builder
 **Debug-Features:**
 
 | Feature | Beschreibung | Nutzung |
@@ -667,8 +648,7 @@ https://platform.openai.com/agent-builder)8
 
 ### Monitoring Dashboard
 
-https://platform.openai.com/agent-builder)9
-
+https://platform.openai.com/agent-builder
 **Monitoring-Metriken:**
 
 ```mermaid
@@ -683,8 +663,7 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```0
-
+```
 ### Error Handling und Fallbacks
 
 ```mermaid
@@ -699,8 +678,7 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```1
-
+```
 **Fallback-Konfiguration:**
 
 ```mermaid
@@ -715,8 +693,7 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```2
-
+```
 ---
 
 ## Zusammenfassung und Lernpfad
@@ -735,8 +712,7 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```3
-
+```
 ### Kernkonzepte
 
 | Konzept | Beschreibung |
@@ -761,8 +737,7 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```4
-
+```
 **Entscheidungsbaum:**
 
 - ✅ **Agent Builder nutzen, wenn:**
@@ -778,7 +753,6 @@ graph TB
   - On-Premise Deployment erforderlich
   - Custom Python-Tools notwendig
 
-
 ### Nächste Schritte
 
 ```mermaid
@@ -793,117 +767,20 @@ graph TB
 
     style C fill:#10a37f
     style D fill:#ff6b6b
-```5
-
+```
 **Ressourcen:**
 
-- **Offizielle Docs:** [platform.openai.com/docs/guides/agent-builder](```mermaid
-graph TB
-    A[ChatGPT Account-Typen] --> B[Plus/Team]
-    A --> C[Enterprise/Edu]
-    B -.Kein Zugang.-> D[Agent Builder]
-    C --> D
-    D --> E[Workflows]
-    D --> F[Drafts]
-    D --> G[Templates]
-
-    style C fill:#10a37f
-    style D fill:#ff6b6b
-```6
-- **MCP Registry:** [modelcontextprotocol.io/registry](```mermaid
-graph TB
-    A[ChatGPT Account-Typen] --> B[Plus/Team]
-    A --> C[Enterprise/Edu]
-    B -.Kein Zugang.-> D[Agent Builder]
-    C --> D
-    D --> E[Workflows]
-    D --> F[Drafts]
-    D --> G[Templates]
-
-    style C fill:#10a37f
-    style D fill:#ff6b6b
-```7
-- **Community:** OpenAI Developer Forum
-- **Vergleich:** [AgentKit vs GPTs Guide](```mermaid
-graph TB
-    A[ChatGPT Account-Typen] --> B[Plus/Team]
-    A --> C[Enterprise/Edu]
-    B -.Kein Zugang.-> D[Agent Builder]
-    C --> D
-    D --> E[Workflows]
-    D --> F[Drafts]
-    D --> G[Templates]
-
-    style C fill:#10a37f
-    style D fill:#ff6b6b
-```8
+- **Offizielle Docs:** [Agent Builder Guide](https://platform.openai.com/docs/guides/agent-builder)
+- **MCP Registry:** [modelcontextprotocol.io/registry](https://modelcontextprotocol.io/registry)
+- **Community:** [OpenAI Developer Forum](https://community.openai.com/)
+- **Vergleich:** [AgentKit vs. GPTs Guide](https://platform.openai.com/docs/guides/agent-builder)
 
 ## Quellen
 
-- [OpenAI Agent Builder Dokumentation](```mermaid
-graph TB
-    A[ChatGPT Account-Typen] --> B[Plus/Team]
-    A --> C[Enterprise/Edu]
-    B -.Kein Zugang.-> D[Agent Builder]
-    C --> D
-    D --> E[Workflows]
-    D --> F[Drafts]
-    D --> G[Templates]
-
-    style C fill:#10a37f
-    style D fill:#ff6b6b
-```9          
-- [Introducing AgentKit OpenAI](```mermaid
-stateDiagram-v2
-    [*] --> Templates: Start
-    Templates --> Drafts: Customize
-    Drafts --> Drafts: Iterate
-    Drafts --> Workflows: Publish
-    Workflows --> Drafts: Edit/Clone
-    Workflows --> [*]: Deploy
-```0
-- [AgentKit vs GPTs: A complete guide](```mermaid
-stateDiagram-v2
-    [*] --> Templates: Start
-    Templates --> Drafts: Customize
-    Drafts --> Drafts: Iterate
-    Drafts --> Workflows: Publish
-    Workflows --> Drafts: Edit/Clone
-    Workflows --> [*]: Deploy
-```1
-- [Model Context Protocol](```mermaid
-stateDiagram-v2
-    [*] --> Templates: Start
-    Templates --> Drafts: Customize
-    Drafts --> Drafts: Iterate
-    Drafts --> Workflows: Publish
-    Workflows --> Drafts: Edit/Clone
-    Workflows --> [*]: Deploy
-```2
-- [LangChain Documentation](```mermaid
-stateDiagram-v2
-    [*] --> Templates: Start
-    Templates --> Drafts: Customize
-    Drafts --> Drafts: Iterate
-    Drafts --> Workflows: Publish
-    Workflows --> Drafts: Edit/Clone
-    Workflows --> [*]: Deploy
-```3
-- [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](```mermaid
-stateDiagram-v2
-    [*] --> Templates: Start
-    Templates --> Drafts: Customize
-    Drafts --> Drafts: Iterate
-    Drafts --> Workflows: Publish
-    Workflows --> Drafts: Edit/Clone
-    Workflows --> [*]: Deploy
-```4
-
----
-
-**Version:**    2.0<br>
-**Stand:**    November 2025<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+- [OpenAI Agent Builder Dokumentation](https://platform.openai.com/docs/guides/agent-builder)
+- [OpenAI AgentKit Dokumentation](https://platform.openai.com/docs/agentkit)
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [LangChain Documentation](https://python.langchain.com/docs/)
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -911,3 +788,9 @@ stateDiagram-v2
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit Agent Builder? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für Agent Builder? |
+
+---
+
+**Version:**    2.0<br>
+**Stand:**    November 2025<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

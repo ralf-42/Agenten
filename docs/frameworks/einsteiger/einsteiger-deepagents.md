@@ -544,16 +544,15 @@ Für den Einstieg empfiehlt sich daher folgende Reihenfolge:
 
 So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken im Hintergrund wirkt.
 
-
----
-
-**Version:** 1.3<br>
-**Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit DeepAgents? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für DeepAgents? |
+
+---
+
+**Version:** 1.3<br>
+**Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

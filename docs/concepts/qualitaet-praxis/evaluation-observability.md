@@ -31,7 +31,6 @@ Für Einsteiger wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, An
 
 Typischer Fehler: Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
 
-
 ```mermaid
 flowchart TD
     A["<b>Evaluation</b><br>War das Ergebnis gut?"] --> B["<b>Observability</b><br>Warum kam es dazu?"]
@@ -44,7 +43,6 @@ flowchart TD
     style B fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
     style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
-
 
 ## Das Silent-Failure-Problem
 

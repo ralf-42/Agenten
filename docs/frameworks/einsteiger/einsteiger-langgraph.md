@@ -4,7 +4,7 @@ title: LangGraph
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 2
-description: "Multi-Agent-Systeme und Workflows mit LangGraph"
+description: Multi-Agent-Systeme und Workflows mit LangGraph
 has_toc: true
 ---
 
@@ -485,7 +485,6 @@ Mögliche Erweiterungen:
 | [State Management](../../concepts/workflows-state/state-management.html) | Konzeptionelle Tiefe hinter TypedDict und Reducer-Funktionen |
 | [Checkpointing & Persistenz](../../concepts/workflows-state/checkpointing-persistenz.html) | Technische Details zu MemorySaver und Thread-IDs |
 | [Human-in-the-Loop](../../concepts/workflows-state/human-in-the-loop.html) | Konzept hinter Interrupt & Resume aus Abschnitt 9 |
-
 
 ---
 

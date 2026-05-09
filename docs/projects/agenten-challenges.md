@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Research Assistant Challenge
-parent: Alle Projekte
+parent: Projekte
 nav_order: 3
 description: "Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln"
 has_toc: true
-grand_parent: Projekte
 ---
 
 # Research Assistant Challenge
@@ -720,15 +719,15 @@ class SupportState(TypedDict):
     tool_results: list[dict]
 ```
 
----
-
-**Version:** 1.1<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Research Assistant Challenge? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Challenge? |
+
+---
+
+**Version:** 1.1<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -132,15 +132,15 @@ Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterst�
 | [Human-in-the-Loop](../concepts/workflows-state/human-in-the-loop.html) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
 | [Evaluation & Observability](../concepts/qualitaet-praxis/evaluation-observability.html) | Wie werden Qualität, Fehler und Regressionen messbar? |
 
----
-
-**Version:** 1.1<br>
-**Stand:** April 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Ethik und GenAI? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Ethik und GenAI? |
+
+---
+
+**Version:** 1.1<br>
+**Stand:** April 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

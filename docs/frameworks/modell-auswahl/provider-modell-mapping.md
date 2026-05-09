@@ -64,12 +64,12 @@ Der wichtigste Grundsatz lautet:
 | Rolle                              | OpenAI                   | Mistral                                              | Gemini                        | Anthropic                       | Kommentar                                                           |
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
 | **Baseline / Demo**                | `gpt-5.4-nano`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`     | schnell, günstig, gut für Grundlagen                                |
-| **Router / leichter Reasoner**     | `o3-mini`                | `magistral-medium-latest` oder `mistral-medium-latest` | `gemini-3-flash-preview`    | `claude-sonnet-4-6`             | für Routing und einfache Auswahlentscheidungen                      |
-| **Judge / starker Reasoner**       | `o3`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-6`               | für Supervisor, Security, Bewertung                                 |
+| **Router / leichter Reasoner**     | `gpt-5.4-nano`                | `mistral-small-latest`                                | `gemini-3-flash-preview`    | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-6`               | für Supervisor, Security, Bewertung                                 |
 | **Worker / Synthese**              | `gpt-5.4-mini`           | `mistral-medium-latest` oder `mistral-large-latest`  | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
 | **Worker / Synthese (hochwertig)** | `gpt-5.4`                | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-6`               | maximale Qualität: komplexe RAG, finale Reports                     |
 | **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
-| **Embeddings**                     | `text-embedding-3-small` | Mistral Embeddings                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
+| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
 
 > [!NOTE] Funktionsorientiert, nicht benchmark-orientiert<br>
 > Das Mapping ist bewusst funktionsorientiert, nicht benchmark-orientiert.
@@ -151,11 +151,11 @@ Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung is
 
 ### Router / leichter Reasoner
 
-Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder Routing-Experimente in Demo-Szenarien. Gefragt sind robuste Entscheidungen zwischen wenigen Optionen ohne übertriebene Kostenlast. OpenAI `o3-mini`, Mistral `magistral-medium-latest` oder `mistral-medium-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-sonnet-4-6`.
+Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder Routing-Experimente in Demo-Szenarien. Gefragt sind robuste Entscheidungen zwischen wenigen Optionen ohne übertriebene Kostenlast. OpenAI `gpt-5.4-nano`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
 
 ### Judge / starker Reasoner
 
-Überall dort, wo Fehlentscheidungen teuer sind: LLM-as-Judge, Security- oder Compliance-Gates, Supervisor-Routing, Fact-Check oder Konfliktbewertung. Die stärksten verfügbaren Reasoning-Modelle — OpenAI `o3`, Mistral `magistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-opus-4-6`.
+Überall dort, wo Fehlentscheidungen teuer sind: LLM-as-Judge, Security- oder Compliance-Gates, Supervisor-Routing, Fact-Check oder Konfliktbewertung. Die stärksten verfügbaren Reasoning-Modelle — OpenAI `gpt-5.4`, Mistral `magistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-opus-4-6`.
 
 ### Worker / Synthese
 
@@ -167,7 +167,7 @@ Für Code-Generierung, Refactoring, Entwicklungsagenten und technische Workflow-
 
 ### Embeddings
 
-Stabile semantische Repräsentationen für Retrieval, Chunk-Suche und Vektorindizes. OpenAI bietet `text-embedding-3-small`, Mistral eigene Embedding-Modelle, Gemini `gemini-embedding-2-preview`, Anthropic keinen direkten Standardpfad im Kurskontext. Wichtig: Bei Providerwechseln sind Chat-Modell und Embedding-Modell **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht nicht automatisch den anderen nach sich.
+Stabile semantische Repräsentationen für Retrieval, Chunk-Suche und Vektorindizes. OpenAI bietet `text-embedding-3-small`, Mistral `mistral-embed`, Gemini `gemini-embedding-2-preview`, Anthropic keinen direkten Standardpfad im Kurskontext. Wichtig: Bei Providerwechseln sind Chat-Modell und Embedding-Modell **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht nicht automatisch den anderen nach sich.
 
 ---
 
@@ -189,13 +189,13 @@ Für diese Rolle wird ein starkes Reasoning-Modell benötigt.
 Es bewertet Antworten, prüft Regelkonformität oder entscheidet zwischen Alternativen.
 
 **Geeignete Modelle je Provider:**
-- OpenAI: `o3`
+- OpenAI: `gpt-5.4`
 - Mistral: `magistral-medium-latest`
 - Gemini: `gemini-3.1-pro-preview`
 - Anthropic: `claude-opus-4-6`
 
 **Kurs-Default:**
-Im Kurs wird hierfür aktuell `o3` verwendet.
+Im Kurs wird hierfür aktuell `gpt-5.4` verwendet.
 ```
 
 Das erlaubt eine allgemeine Beschreibung, ohne die konkreten OpenAI-Implementierungen im Kurs umzuschreiben.
@@ -214,15 +214,15 @@ Beide Dokumente zusammen ergeben:
 1. **konkrete Kursrealität**
 2. **providerübergreifende Architekturperspektive**
 
----
-
-**Version:** 2.0<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
+
+---
+
+**Version:** 2.0<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

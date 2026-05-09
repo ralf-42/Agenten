@@ -1,18 +1,14 @@
 ---
 layout: default
 title: Capstone-Briefing
-parent: Alle Projekte
+parent: Projekte
 nav_order: 3
 permalink: /projects/capstone-briefing.html
 description: "Abschlussprojekt: Research Assistant mit eigenem Korpus oder eigener Variante"
-grand_parent: Projekte
+has_toc: true
 ---
 
 # Capstone-Briefing
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 Das Capstone ist das Abschlussprojekt des Kurses. Ziel ist ein lauffähiger **Research Assistant**, der Dokumente durchsucht, Antworten mit Quellen belegt und bei Unsicherheit menschliche Pruefung vorsieht.
 
@@ -89,3 +85,9 @@ Der Bauplan bleibt gleich:
 |---|---|
 | [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Capstone-Briefing? |
 | [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Capstone-Briefing? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** Mai 2026<br>
+**Kurs:** KI-Agenten

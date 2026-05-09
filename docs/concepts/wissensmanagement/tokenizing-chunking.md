@@ -4,7 +4,7 @@ title: Tokenizing & Chunking
 parent: Wissensmanagement
 grand_parent: Konzepte
 nav_order: 2
-description: "Tokenisierung und Chunking für RAG, Kontextfenster und Agenten-Wissensspeicher"
+description: Tokenisierung und Chunking für RAG, Kontextfenster und Agenten-Wissensspeicher
 has_toc: true
 ---
 
@@ -23,11 +23,9 @@ has_toc: true
 
 ---
 
-
 Die Textverarbeitung in LLM-Systemen steht und fällt oft mit drei Entscheidungen: Welcher Tokenizer wird verwendet, wie groß sind die Chunks und nach welcher Logik werden sie gebildet. Auf dem Papier wirken diese Parameter technisch und nachgeordnet. In RAG- oder Analyseaufgaben entscheiden sie jedoch oft darüber, ob relevante Informationen überhaupt wiedergefunden werden.
 
 In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvollständig oder instabil sind, wird zunächst das Modell verdächtigt. Häufig liegt das Problem jedoch früher in der Pipeline. Chunks sind zu klein, Grenzen fallen ungünstig, oder Überlappungen erzeugen unnötiges Rauschen. Genau deshalb lohnt es sich, Tokenizing und Chunking nicht als reine Vorverarbeitung zu behandeln.
-
 
 # Tokenizer-, Chunking- & Strategieauswahl
 ## Dokumenttypen
@@ -41,7 +39,6 @@ In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvoll
 
 <div style="page-break-after: always;"></div>
 
-
 ## Anwendungsszenarien
 
 | Szenario | Ziel | Empfohlenes Chunking | Strategie | Begründung |
@@ -53,10 +50,8 @@ In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvoll
 | **Textklassifikation** | Zuweisung von Labels zu Dokumenten oder Abschnitten | Ganze Dokumente oder 512 Tokens, wenig bis keine Überlappung | Semantisches Chunking (optional mit reduzierter Granularität) | Gröbere Unterteilungen verhindern Rauschen, während semantische Einheiten erhalten bleiben, die für die Klassifikation relevant sind. |
 | **Code-Kommentierung/Erklärung** | Verständnis und Erklärung von Codeabschnitten | Pro Funktion/Modul, Überlappung nur bei Bedarf | Agentisches Chunking | Agentisches Chunking berücksichtigt syntaktische und semantische Aspekte des Codes. So bleiben logische Zusammenhänge, wie Funktionsdefinitionen, erhalten und können optimal erklärt werden. |
 
-
 > [!NOTE] Pilotphase<br>
 > Vor einer konkreten Implementierung lohnt sich eine kurze Pilotphase mit echten Dokumenten. Häufig reichen schon zwei oder drei Varianten, um zu sehen, ob ein Setup eher Kontext erhält oder eher Rauschen produziert.
-
 
 # Beispiel
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/tokenizing-chunking-prozess.png" alt="Tokenizing & Chunking Prozess" width="700">
@@ -94,10 +89,8 @@ In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvoll
 
 Aus Kurssicht ist vor allem eine Erfahrung wichtig: Es gibt selten eine universell richtige Chunk-Größe. Gute Werte hängen stark davon ab, ob Absätze, Abschnitte, Funktionsblöcke oder stark strukturierte Datensätze verarbeitet werden. Wer ohne Testdaten sofort auf "Best Practices" vertraut, optimiert oft am eigentlichen Problem vorbei.
 
-
 > [!NOTE] Praxistest<br>
 > Die Eignung von Chunk-Größen und -Strategien zeigt sich am zuverlässigsten mit echten Daten, nicht mit Beispieltexten. Relevant sind dabei vor allem Abrufgenauigkeit, Antwortqualität und die Frage, ob wichtige Informationen an Chunk-Grenzen verloren gehen.
-
 
 <div style="page-break-after: always;"></div>
 
@@ -143,9 +136,7 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
 - **Nachteile:** Komplex, teuer
 - **Anwendung:** Hochspezialisierte Anwendungen, Code-Analyse
 
-
 <div style="page-break-after: always;"></div>
-
 
 # Tokenizer-Typen im Vergleich
 ## Byte-Pair Encoding (BPE)
@@ -190,9 +181,7 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
   - Probleme mit zusammengesetzten Wörtern
 - **Verwendung:** Einfache Anwendungen, Code-Analyse
 
-
 <div style="page-break-after: always;"></div>
-
 
 # Best Practices
 ## Chunk-Größe wählen
@@ -244,7 +233,6 @@ flowchart TD
     style AGENT fill:#c8e6c9,stroke:#388e3c
 ```
 
-
 # Evaluation & Monitoring
 ## Metriken für Chunking-Qualität
 
@@ -264,7 +252,6 @@ Geeignete Messgrößen sind:
 - Antwortqualität (manuell oder mit LLM-as-Judge)
 - Retrieval-Geschwindigkeit
 - Kosten (API-Calls, Compute)
-
 
 # Implementierungs-Beispiel (LangChain)
 ```python
@@ -294,7 +281,6 @@ text_splitter = TokenTextSplitter(
 chunks = text_splitter.split_text(document_text)
 ```
 
-
 # Fazit
 Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Strategie ist entscheidend für die Qualität einer NLP-Anwendung:
 
@@ -309,7 +295,6 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 - [LangChain Text Splitters](https://python.langchain.com/docs/modules/data_connection/document_transformers/)
 - [Chunking Strategies Vergleich](https://www.pinecone.io/learn/chunking-strategies/)
 - [Token vs. Character Splitting](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken)
-
 
 ---
 
@@ -326,6 +311,3 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 **Version:**    1.1<br>
 **Stand:**    Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-

@@ -9,7 +9,7 @@ Installation (einmalig):
 
 Import im Notebook:
     from genai_lib.model_config import (
-        BASELINE, ROUTER, TRANSLATOR,
+        BASELINE, ROUTER, TRANSLATOR_FAST, TRANSLATOR,
         WORKER, CODING, TRANSLATOR_PREMIUM,
         JUDGE, PLANNER, WORKER_PREMIUM,
         JUDGE_PREMIUM, PLANNER_PREMIUM,
@@ -28,10 +28,11 @@ Verwendung:
 Rollen (Nano → Mini → Standard → Premium):
     BASELINE           — Baseline / Demo              (gpt-5.4-nano)
     ROUTER             — Router / leichter Reasoner   (gpt-5.4-nano)
-    TRANSLATOR         — Übersetzer / Rohübersetzung   (gpt-5.4-nano)
+    TRANSLATOR_FAST    — Übersetzer / Rohübersetzung   (gpt-5.4-nano)
+    TRANSLATOR         — Übersetzer / Kursmaterial     (gpt-5.4-mini)
     WORKER             — Worker / Synthese             (gpt-5.4-mini)
     CODING             — Coding-Worker                 (gpt-5.4-mini)
-    TRANSLATOR_PREMIUM — Übersetzer / hochwertig       (gpt-5.4-mini)
+    TRANSLATOR_PREMIUM — Übersetzer / hochwertig       (gpt-5.5)
     JUDGE              — Judge / starker Reasoner      (gpt-5.4)
     PLANNER            — Planner / Aufgabenzerlegung   (gpt-5.4)
     WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
@@ -54,9 +55,9 @@ BASELINE = "openai:gpt-5.4-nano"
 # reasoning.effort="low" reicht für klare Routing-Entscheidungen.
 ROUTER = "openai:gpt-5.4-nano"
 
-# Übersetzer — Rohübersetzung, UI-Texte, Kursmaterial, kurze bis mittlere Texte.
+# Übersetzer (schnell) — Rohübersetzung, kurze nicht-kritische Texte.
 # reasoning.effort="none" oder "low", text.verbosity="low".
-TRANSLATOR = "openai:gpt-5.4-nano"
+TRANSLATOR_FAST = "openai:gpt-5.4-nano"
 
 # --- Mini-Tier: ausgewogen, Standard-Workhorse ---
 
@@ -68,9 +69,13 @@ WORKER = "openai:gpt-5.4-mini"
 # reasoning.effort="medium" bis "high" je nach Aufgabe.
 CODING = "openai:gpt-5.4-mini"
 
-# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung.
+# Übersetzer — Kursmaterial, Markdown, Dokumentation.
 # reasoning.effort="low", text.verbosity="medium".
-TRANSLATOR_PREMIUM = "openai:gpt-5.4-mini"
+TRANSLATOR = "openai:gpt-5.4-mini"
+
+# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung.
+# reasoning.effort="medium", text.verbosity="medium".
+TRANSLATOR_PREMIUM = "openai:gpt-5.5"
 
 # --- Standard-Tier: starke Reasoning-Qualität ---
 

@@ -956,7 +956,6 @@ results = retriever.invoke("Meine Frage")
 | [Einsteiger LangGraph](einsteiger-langgraph.html) | ChromaDB als Retrieval-Tool in LangGraph-Workflows |
 | [RAG-Konzepte](../../concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen: Chunking, Embeddings, Retrieval-Strategien |
 
-
 ---
 
 **Version:** 1.0<br>

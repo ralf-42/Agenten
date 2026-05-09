@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Von Colab zu Local
-parent: Alle Ressourcen
+parent: Ressourcen
 nav_order: 5
 description: Anleitung zur Ausführung der Kurs-Notebooks in einer lokalen Jupyter-Umgebung
 has_toc: true
-grand_parent: Ressourcen
 ---
 
 # Von Colab zur lokalen Umgebung
@@ -120,15 +119,15 @@ check_environment()
 - [ ] `#@title`- und `get_ipinfo()`-Zeilen entfernt?
 - [ ] Notebook-spezifische Zusatzpakete installiert (M08, M09, M28, M30)?
 
----
-
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Von Colab zu Local? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Von Colab zu Local? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -4,7 +4,7 @@ title: Embeddings
 parent: Wissensmanagement
 grand_parent: Konzepte
 nav_order: 3
-description: "Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory"
+description: Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory
 has_toc: true
 ---
 
@@ -22,7 +22,6 @@ has_toc: true
 {:toc}
 
 ---
-
 
 Damit Künstliche Intelligenz (KI) sinnvoll mit Sprache, Bildern oder anderen Inhalten arbeiten kann, muss sie deren Bedeutung erfassen. Allerdings verarbeitet ein Computer keine Wörter oder Bilder direkt, sondern nur Zahlen. **Embeddings** sind eine Methode, um solche Inhalte als Zahlen zu kodieren, sodass die KI Zusammenhänge und Bedeutungen erkennen kann.
 
@@ -54,9 +53,7 @@ Embeddings werden nicht nur für Sprache und Bilder genutzt, sondern auch in Emp
 | Weiblichkeit | 0,08      | 0,93        | 0,10     | 0,91        | 0,15      |
 | Alter        | 0,67      | 0,71        | 0,56     | 0,11        | 0,42      |
 
-
 [Embedding-Beispiel Fahrzeug](https://editor.p5js.org/ralf.bendig.rb/full/LPjLkzWbE)
-
 
 # Wie entstehen Embeddings?
 Embeddings werden mit **künstlichen neuronalen Netzen** oder **statistischen Methoden** erzeugt. Dabei durchläuft der Prozess mehrere Schritte:
@@ -99,12 +96,10 @@ Die Positionskodierung fügt jedem Token-Vektor (aus der Einbettungsmatrix) Info
 
 Die Positionskodierung ist wie ein kleiner Hinweiszettel, der sagt, welches Wort an welcher Stelle steht.
 
-
 ---
 
 # Embedding-Modelle
 Es gibt verschiedene Einbettungsmodelle wie Word2Vec, GloVe und FastText für Wortrepräsentationen, BERT für kontextuelle Einbettungen sowie Node2Vec und LSTM-basierte Modelle für Netzwerke und Sequenzen, die jeweils auf spezifische Anwendungsfälle und Datenstrukturen optimiert sind.
-
 
 **Übersicht Einbettungsmodelle:**
 
@@ -172,8 +167,6 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 + **Medizinische Diagnosen**: KI analysiert Krankheitsbilder und medizinische Muster durch Embeddings.  
 + **Generative KI**: Sprachmodelle wie ChatGPT nutzen Embeddings, um kontextbezogene Antworten zu generieren.
 
-
-
 > [!NOTE] Grenze<br>
 > Embeddings machen Ähnlichkeit berechenbar, ersetzen aber keine gute Datenstruktur. Wenn Texte schlecht geschnitten, uneinheitlich benannt oder ohne relevante Metadaten gespeichert werden, findet auch ein gutes Embedding-Modell nur scheinbar passende Treffer.
 ---
@@ -191,5 +184,3 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 **Version:**    1.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-

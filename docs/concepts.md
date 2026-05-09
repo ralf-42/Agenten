@@ -3,14 +3,10 @@ layout: default
 title: Konzepte
 nav_order: 4
 has_children: true
-description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
+description: Theoretische Grundlagen und technische Konzepte für KI-Agenten
 ---
 
-# Konzepte  
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
+# Konzepte
 
 Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
 
@@ -41,7 +37,6 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 - **[Terminologie](./concepts/terminologie.html)** – *Wie lautet die deutsche Form für state, memory, node, guardrail?*
   - 42 Fachbegriffe mit bevorzugter deutscher Form und Verwendungshinweis
   - Abschnitt zu häufigen Verwechslungen: Memory/State/Context, Evaluation/Observability
-
 
 ## Grundlagen & Architektur
 
@@ -126,10 +121,3 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 - **[Wann wird aus einem Prompt ein wiederverwendbarer Skill?](./concepts/protokolle/skills.html)** – *Wie werden wiederkehrende Arbeitsmuster stabil gekapselt?* (→ M31, optional)
   - Unterschied zwischen losem Prompt und belastbarem Skill
   - `SKILL.md`, `references/` und `scripts/` als wiederverwendbare Struktur
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Konzepte? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Konzepte? |

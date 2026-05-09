@@ -3,14 +3,10 @@ layout: default
 title: Regulatorisches
 nav_order: 8
 has_children: true
-description: "Rechtliche Rahmenbedingungen, Ethik und Souveränität"
+description: Rechtliche Rahmenbedingungen, Ethik und Souveränität
 ---
 
 # Regulatorisches
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 Wer KI-Agenten produktiv einsetzt, begegnet früher oder später fünf Fragekomplexen: Was regelt der EU AI Act? Was schreibt die DSGVO für den Umgang mit personenbezogenen Daten vor? Was ändert sich in regulierten Branchen wie Medizin, Legal oder Finanzwesen? Welche ethischen Anforderungen gelten? Und wie viel Abhängigkeit von externen Cloud-Providern ist vertretbar?
 
@@ -60,10 +56,3 @@ Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lesepf
   - Bias und Fairness
   - Verantwortungsvoller Umgang mit KI-Agenten
   - Best Practices
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Regulatorisches? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Regulatorisches? |

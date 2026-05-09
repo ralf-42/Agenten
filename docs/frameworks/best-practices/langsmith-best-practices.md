@@ -4,7 +4,7 @@ title: LangSmith Best Practices
 parent: Best Practices
 grand_parent: Frameworks
 nav_order: 3
-description: "Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith"
+description: Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith
 has_toc: true
 ---
 
@@ -88,8 +88,6 @@ Alle bisherigen Funktionen sind erhalten — nur der Name hat sich geändert.
 ---
 
 ###  — Terminal-basiertes Trace-Debugging
-
-
 
 **In der Praxis relevant wenn:** Debugging in Google Colab oder SSH-Umgebungen ohne Browser.
 
@@ -794,4 +792,3 @@ callback = LangSmithCallback(
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

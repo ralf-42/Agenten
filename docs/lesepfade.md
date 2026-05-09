@@ -146,6 +146,8 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 | [resources](./resources.html) | Welche Hilfen und Nachschlagepunkte unterstützen die Umsetzung? |
 | [projects](./projects.html) | Welche projektnahen Aufgaben und Kursformate stehen bereit? |
 
+---
+
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

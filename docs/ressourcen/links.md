@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Links
-parent: Alle Ressourcen
+parent: Ressourcen
 nav_order: 6
 description: Kuratierte Sammlung externer Ressourcen zu KI, LLMs und Frameworks
 has_toc: true
-grand_parent: Ressourcen
 ---
 
 # Links
@@ -186,15 +185,15 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 | [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | US-Standard für KI-Risikomanagement und Governance (→ M23) |
 | [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien (→ M23/M35) |
 
----
-
-**Version:** 1.4<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Links? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Links? |
+
+---
+
+**Version:** 1.4<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

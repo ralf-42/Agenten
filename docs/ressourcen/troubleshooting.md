@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Troubleshooting
-parent: Alle Ressourcen
+parent: Ressourcen
 nav_order: 4
 description: Lösungen für häufige Probleme
 has_toc: true
-grand_parent: Ressourcen
 ---
 
 # Troubleshooting
@@ -25,7 +24,6 @@ grand_parent: Ressourcen
 
 ## LangChain Expression Language & Chains
 
-
 | **Problem**                    | **Ursache**                                                                                                                                                                                                                        | **Symptom**                                                                                          | **Lösung/Intervention**                                                                                                                                                                                                               |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Falsches Input-Schema**      | Der Output eines `Runnable` **`<Pipe>`** passt nicht zum erwarteten Input des nächsten `Runnable`. Dies passiert oft, wenn ein LLM einen String liefert, aber das nächste Modul einen Dictionary-Key erwartet (z.B. `"messages"`). | `InputError: Key 'messages' not found` oder der Fehler `Expecting a single string input...`          | **Mappierung mit LCEL:** Nutzen Sie **`RunnablePassthrough`** oder **`RunnableParallel`** (`{...}`) explizit, um die Input-Keys zu mappen und die Datenstruktur zu transformieren.                                                    |
@@ -35,17 +33,13 @@ grand_parent: Ressourcen
 | **Asynchronität/Batching**     | Es wird versucht, `chain.batch()` oder `chain.stream()` zu verwenden, aber einer der Nodes ist nicht dafür ausgelegt.                                                                                                              | `NotImplementedError` oder die erwartete parallele Verarbeitung findet nicht statt.                  | **Interface-Check:** Prüfen Sie, ob alle Komponenten in der Kette die asynchronen Methoden (z.B. `ainvoke`, `abatch`) unterstützen. Nutzen Sie **LangSmith** zur Performance-Analyse und Validierung der Batch-Calls .                |
 | **Chain-Debugging**            | Es ist unklar, an welcher Stelle in der Chain der Fehler auftritt oder welche Zwischenergebnisse falsch sind.                                                                                                                      | Die Fehlermeldung ist unpräzise und verweist auf die Kompilierung.                                   | **Trace-Analyse:** Führen Sie die Chain über `invoke()` aus und inspizieren Sie den **LangSmith Trace** . LangSmith zeigt den Input und Output **jedes einzelnen `Runnable`** in der Kette.                                           |
 
-
 ## Structured Output & Pydantic
-
 
 | **Problem**                         | **Ursache**                                                                                                                                                | **Symptom**                                                                                       | **Lösung/Intervention**                                                                                                                                                                                                                                |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Schema-Validierung schlägt fehl** | Das LLM ignoriert das Anweisungs-Prompt und liefert ein Format, das nicht zum `PydanticBaseModel` passt, oder das Schema enthält ungültige Typen.          | `ValidationError` wird ausgelöst, da die JSON-Struktur nicht mit dem Python-Objekt übereinstimmt. | **Prompt-Verstärkung:** Verbessern Sie den **System-Prompt** des Agenten, indem Sie die Wichtigkeit der JSON-Ausgabe betonen ("Du **musst** strikt das bereitgestellte Schema verwenden!"). Nutzen Sie `Field(description="...")` im Pydantic-Modell.  |
 | **`with_structured_output` Fehler** | Die verwendete LLM-Instanz unterstützt das native Function Calling nicht (z.B. ein älteres oder lokales Modell), oder das falsche Format wird angefordert. | `ValueError: The model X does not support JSON output...`                                         | **Modell-Check:** Stellen Sie sicher, dass Sie ein Modell verwenden, das **native Tool/Function Calling** unterstützt (z.B. `gpt-4o`, `gpt-4-turbo`, `claude-3-sonnet`).                                                                               |
 | **Falsche Typ-Generierung**         | Das LLM generiert inkonsistente Typen (z.B. eine Zahl als String), obwohl der Pydantic-Typ `int` ist.                                                      | Validierung schlägt fehl oder die Logik bricht ab.                                                | **Typ-Definition:** Verwenden Sie **Python Type Hints** in Pydantic präzise (`int`, `str`, `List[str]`). Bei komplexen Listen oder verschachtelten Objekten die **Beschreibung** (`description=...`) im `Field` des Pydantic-Modells klar formulieren. |
-
-
 
 ## ChromaDB
 
@@ -56,15 +50,15 @@ grand_parent: Ressourcen
 | Keine Ergebnisse           | Falsche Embedding-Dimension | Embedding-Modell prüfen                             |
 | Langsame Queries           | Zu viele Dokumente          | Batch-Size anpassen                                 |
 
----
-
-**Version:** 1.0<br>
-**Stand:** November 2025<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Troubleshooting? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Troubleshooting? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** November 2025<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

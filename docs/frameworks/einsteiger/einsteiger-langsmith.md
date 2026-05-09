@@ -948,16 +948,9 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 **Best Practice:** Alle benötigten Keys zu Beginn im Setup-Block definieren.
 
-
 > 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
 
 > 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!
-
----
-
-**Version:** 2.1<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -965,3 +958,9 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 |---|---|
 | [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit LangSmith? |
 | [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für LangSmith? |
+
+---
+
+**Version:** 2.1<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

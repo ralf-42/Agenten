@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Agenten & Regulierung"
+title: Agenten & Regulierung
 parent: Regulatorische Themen
 nav_order: 5
 description: "Was Regulierung für Agenten-Architektur bedeutet: HITL, Logging, Tool-Grenzen und Quellenbindung in Medizin, Legal und Finanzwesen"

@@ -8,10 +8,6 @@ description: "Werkzeugkarte für den Kurs: Einsteiger-Guides, Modell-Auswahl und
 
 # Frameworks
 
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
-
 Diese Seite ist eine **thematische Werkzeugkarte** — sie ordnet die Werkzeuge nach Verwendungszweck. Die Seitennavigation folgt einer anderen Logik: sie gliedert nach Lernphase (Einsteiger-Guides → Modell-Auswahl → Best Practices). Beides zusammen ergibt das vollständige Bild.
 
 Für eine empfohlene Lesereihenfolge über mehrere Bereiche hinweg zuerst [Lesepfade](./lesepfade.html) öffnen.
@@ -70,10 +66,3 @@ Empfohlene Patterns und Anti-Patterns für die zentralen Frameworks.
 - **[LangGraph Best Practices](./frameworks/best-practices/langgraph-best-practices.html)** – *Wann LangGraph statt `create_agent()`?* StateGraph, Nodes & Edges, Conditional Routing, Checkpointing und Human-in-the-Loop.
 - **[LangSmith Best Practices](./frameworks/best-practices/langsmith-best-practices.html)** – *Wie observiere ich Agenten richtig?* `LANGSMITH_*` Umgebungsvariablen, Tracing, Evaluation und Monitoring.
 - **[Agent Evaluation & Observability Best Practices](./frameworks/best-practices/agent-evaluation-observability-best-practices.html)** – *Wie werden Agenten mit Baselines, Traces und Regressionen belastbar?* Mindeststandard für Evaluation, Observability und Harness-Logik.
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Frameworks? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Frameworks? |

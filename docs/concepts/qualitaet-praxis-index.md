@@ -1,11 +1,10 @@
 ---
 layout: default
 title: "Qualität & Praxis"
-parent: Alle Konzepte
+parent: Konzepte
 nav_order: 6
 has_children: true
 description: "Evaluation, Observability und Sicherheit: Qualitätssicherung für produktive Agenten"
-grand_parent: Konzepte
 ---
 
 # Qualität & Praxis

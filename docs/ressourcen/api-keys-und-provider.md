@@ -1,11 +1,10 @@
 ---
 layout: default
 title: "API-Keys & Provider"
-parent: Alle Ressourcen
+parent: Ressourcen
 nav_order: 2
 description: Übersicht über LLM-Provider, API-Keys und Colab-Integration
 has_toc: true
-grand_parent: Ressourcen
 ---
 
 # API-Keys & Provider
@@ -71,7 +70,6 @@ Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, La
 **So speichern Sie Keys in Colab Secrets:**
 1. Klicken Sie auf das Schlüssel-Symbol 🔑 in der linken Sidebar
 2. Fügen Sie Ihren API-Key hinzu (z.B. `OPENAI_API_KEY`)
-
 
 ### Provider-spezifische Installation
 
@@ -184,15 +182,15 @@ llm = Ollama(model="llama3")
 - [Ollama](https://ollama.com/)
 - [LangChain Provider Documentation](https://python.langchain.com/docs/integrations/chat/)
 
----
-
-**Version:** 1.1<br>
-**Stand:** 1. Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit API-Keys & Provider? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für API-Keys & Provider? |
+
+---
+
+**Version:** 1.1<br>
+**Stand:** 1. Mai 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

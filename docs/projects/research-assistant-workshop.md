@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Research Assistant Workshop
-parent: Alle Projekte
+parent: Projekte
 nav_order: 2
 description: "Schrittweise Übung: Einen Research Assistant mit Routing, RAG, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
-grand_parent: Projekte
 ---
 
 # Research Assistant Workshop
@@ -537,13 +536,11 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 >
 > **Option B: Per Code** (z.B. aus einem lokalen Notebook):
 
-
 ```python
 from huggingface_hub import HfApi
 api = HfApi()
 api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value="sk-...")
 ```
-
 
 **Empfohlener Ablauf:**
 
@@ -703,15 +700,15 @@ A:
   - **Research Assistant Workshop**: Fokus auf LangGraph, Routing, RAG, State und Quellenbindung
   - **Agenten Challenge**: größeres End-to-End-Projekt mit höherer technischer Breite
 
----
-
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Research Assistant Workshop? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Workshop? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

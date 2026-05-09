@@ -3,14 +3,10 @@ layout: default
 title: Ressourcen
 nav_order: 9
 has_children: true
-description: "Praktische Anleitungen, Werkzeuge und Hilfestellungen"
+description: Praktische Anleitungen, Werkzeuge und Hilfestellungen
 ---
 
 # Ressourcen
-
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten
 
 Praktische Anleitungen, Werkzeuge und Hilfestellungen für die Arbeit mit KI-Agenten.
 
@@ -64,10 +60,3 @@ Für einen inhaltlichen Startpunkt zuerst [Lesepfade](./lesepfade.html) öffnen.
 - **[Links](ressourcen/links.html)** – *Wo finde ich weiterführende Quellen?* Kuratierte Sammlung externer Ressourcen zu KI, LLMs und Frameworks
   - Offizielle Dokumentationen: LangChain, LangGraph, LangSmith
   - Artikel, Tutorials und Community-Ressourcen
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Ressourcen? |
-| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Ressourcen? |

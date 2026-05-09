@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Modell-Auswahl
 parent: Frameworks

@@ -1,10 +1,11 @@
-﻿---
+---
 layout: default
 title: Research Assistant Challenge
-parent: Projekte
+parent: Alle Projekte
 nav_order: 3
 description: "Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln"
 has_toc: true
+grand_parent: Projekte
 ---
 
 # Research Assistant Challenge

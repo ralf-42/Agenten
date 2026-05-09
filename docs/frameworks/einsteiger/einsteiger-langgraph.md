@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: LangGraph
 parent: Einsteiger-Guides

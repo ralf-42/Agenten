@@ -8,7 +8,7 @@ permalink: /
 
 # KI-Agenten
 
-> **Agenten. Verstehen. Anwenden. Gestalten.**       
+> **Agenten. Verstehen. Anwenden. Gestalten.**<br>
 > Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith
 
 ---

@@ -1,10 +1,11 @@
-﻿---
+---
 layout: default
-title: Datenschutz & DSGVO
-parent: Regulatorisches
+title: "Datenschutz & DSGVO"
+parent: Regulatorische Themen
 nav_order: 4
 description: DSGVO-konforme Nutzung von LLM-APIs, Tracing, Tools, Memory und Agenten-Pipelines
 has_toc: true
+grand_parent: Regulatorisches
 ---
 
 # Datenschutz & DSGVO

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Checkpointing & Persistenz
 parent: Workflows & State

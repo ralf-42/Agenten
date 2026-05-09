@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Grundlagen & Architektur
-parent: Konzepte
+title: "Grundlagen & Architektur"
+parent: Alle Konzepte
 nav_order: 2
 has_children: true
 description: "Agentenarchitekturen, Tool Use und Prompt Engineering: Grundprinzipien für KI-Agenten"
+grand_parent: Konzepte
 ---
 
 # Grundlagen & Architektur

@@ -1,10 +1,11 @@
 ---
 layout: default
 title: Interaktive Visualisierungen
-parent: Ressourcen
+parent: Alle Ressourcen
 nav_order: 1
 description: "Interaktive Web-Demos für KI-Agenten-Konzepte: Transformer, Embeddings, Multimodal und Modellauswahl"
 has_toc: true
+grand_parent: Ressourcen
 ---
 
 # Interaktive Visualisierungen

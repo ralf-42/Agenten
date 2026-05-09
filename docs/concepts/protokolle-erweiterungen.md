@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Protokolle & Erweiterungen
-parent: Konzepte
+title: "Protokolle & Erweiterungen"
+parent: Alle Konzepte
 nav_order: 7
 has_children: true
 description: "Kommunikationsprotokolle und wiederverwendbare Skills: fortgeschrittene Agenten-Konzepte"
+grand_parent: Konzepte
 ---
 
 # Protokolle & Erweiterungen

@@ -1,16 +1,17 @@
 ---
 layout: default
 title: Research Assistant Workshop
-parent: Projekte
+parent: Alle Projekte
 nav_order: 2
 description: "Schrittweise Übung: Einen Research Assistant mit Routing, RAG, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
+grand_parent: Projekte
 ---
 
 # Research Assistant Workshop
 {: .no_toc }
 
-> **Einen quellengebundenen Research Assistant bauen**      
+> **Einen quellengebundenen Research Assistant bauen**<br>
 > Schrittweise Entwicklung vom einfachen Routing-Graphen zum nutzbaren Research Assistant mit RAG, Quellen und optionaler Web-Oberfläche
 
 ---

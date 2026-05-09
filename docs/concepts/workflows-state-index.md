@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Workflows & State
-parent: Konzepte
+title: "Workflows & State"
+parent: Alle Konzepte
 nav_order: 5
 has_children: true
-description: "State Management, Checkpointing, Memory, Human-in-the-Loop und Multi-Agent-Systeme"
+description: State Management, Checkpointing, Memory, Human-in-the-Loop und Multi-Agent-Systeme
+grand_parent: Konzepte
 ---
 
 # Workflows & State

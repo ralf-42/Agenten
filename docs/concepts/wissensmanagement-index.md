@@ -1,10 +1,11 @@
 ---
 layout: default
 title: Wissensmanagement
-parent: Konzepte
+parent: Alle Konzepte
 nav_order: 4
 has_children: true
 description: "RAG, Tokenizing, Chunking und Embeddings: Wissensanbindung für KI-Agenten"
+grand_parent: Konzepte
 ---
 
 # Wissensmanagement

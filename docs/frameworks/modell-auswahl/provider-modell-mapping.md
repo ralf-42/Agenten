@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Provider-Modell-Mapping
 parent: Modell-Auswahl

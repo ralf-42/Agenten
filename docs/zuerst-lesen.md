@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Zuerst lesen
 nav_order: 2

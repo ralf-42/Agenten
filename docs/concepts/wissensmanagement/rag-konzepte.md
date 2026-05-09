@@ -4,7 +4,7 @@ title: RAG-Konzepte
 parent: Wissensmanagement
 grand_parent: Konzepte
 nav_order: 1
-description: "RAG-Konzepte fuer Agenten: Retrieval, Chunking, Embeddings, Reranking und Grounding"
+description: "RAG-Konzepte für Agenten: Retrieval, Chunking, Embeddings, Reranking und Grounding"
 has_toc: true
 ---
 
@@ -190,19 +190,13 @@ Die Ähnlichkeit zwischen Vektoren wird mathematisch berechnet:
 
 ### Beispiel: Embeddings erzeugen
 
-```python
-from langchain_openai import OpenAIEmbeddings
-
-embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
-
-# Einzelner Text (für Queries)
-query_vector = embedding_model.embed_query("Was ist ein KI-Agent?")
-
-# Mehrere Texte (für Dokumente)
-doc_vectors = embedding_model.embed_documents([
-    "Text 1", "Text 2", "Text 3"
-])
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```0
 
 ---
 
@@ -212,15 +206,13 @@ Der Retriever ist die eigentliche Arbeitsstelle des Systems. Hier entscheidet si
 
 ### Basis-Retrieval: Similarity Search
 
-```python
-from langchain_community.vectorstores import Chroma
-
-vectorstore = Chroma.from_documents(chunks, embedding_model)
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-
-# Suche
-docs = retriever.invoke("Wie funktioniert RAG?")
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```1
 
 ### Retrieval-Strategien im Vergleich
 
@@ -232,45 +224,45 @@ docs = retriever.invoke("Wie funktioniert RAG?")
 | **Hybrid** | Keyword + Semantisch kombiniert | Beste Abdeckung | Komplexer aufzusetzen |
 
 > [!DANGER] Threshold-Retrieval: leerer Kontext<br>
-> Gibt der Threshold-Retriever keine Treffer zurück, erhält das LLM leeren Kontext — und halluziniert eine Antwort, anstatt "keine Information" zu melden. Immer ein Fallback definieren, wenn `score_threshold` verwendet wird.
+> Gibt der Threshold-Retriever keine Treffer zurück, erhält das LLM leeren Kontext — und halluziniert eine Antwort, anstatt "keine Information" zu melden. Immer ein Fallback definieren, wenn ```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```2 verwendet wird.
 
 ### Maximum Marginal Relevance (MMR)
 
 MMR balanciert Relevanz und Diversität. Statt nur die ähnlichsten Dokumente zurückzugeben, werden auch unterschiedliche Perspektiven berücksichtigt.
 
-```python
-retriever = vectorstore.as_retriever(
-    search_type="mmr",
-    search_kwargs={
-        "k": 5,           # Finale Anzahl
-        "fetch_k": 20,    # Kandidaten für MMR
-        "lambda_mult": 0.7  # Balance (1.0 = nur Relevanz, 0.0 = nur Diversität)
-    }
-)
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```3
 
 ### Score-basiertes Filtering
 
-```python
-retriever = vectorstore.as_retriever(
-    search_type="similarity_score_threshold",
-    search_kwargs={
-        "score_threshold": 0.5,  # Mindest-Ähnlichkeit
-        "k": 10
-    }
-)
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```4
 
 ### Metadaten-Filter
 
-```python
-retriever = vectorstore.as_retriever(
-    search_kwargs={
-        "k": 5,
-        "filter": {"source": "handbuch.pdf", "kapitel": "Sicherheit"}
-    }
-)
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```5
 
 ---
 
@@ -282,11 +274,13 @@ Reranking verbessert die Qualität der gefundenen Dokumente durch einen zweiten 
 
 Die initiale Vektorsuche ist schnell, aber nicht perfekt. Reranking verwendet ein präziseres (aber langsameres) Modell, um die Top-Ergebnisse neu zu ordnen.
 
-```
-Schritt 1: Similarity Search → 20 Kandidaten
-Schritt 2: Reranker bewertet alle 20 → Sortiert nach Qualität
-Schritt 3: Top 5 werden verwendet
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```6
 
 ### Reranking-Ansätze
 
@@ -298,21 +292,13 @@ Schritt 3: Top 5 werden verwendet
 
 ### Beispiel: Cohere Reranker
 
-```python
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain_cohere import CohereRerank
-
-base_retriever = vectorstore.as_retriever(search_kwargs={"k": 20})
-
-reranker = CohereRerank(model="rerank-english-v3.0", top_n=5)
-
-compression_retriever = ContextualCompressionRetriever(
-    base_compressor=reranker,
-    base_retriever=base_retriever
-)
-
-docs = compression_retriever.invoke("Meine Frage")
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```7
 
 ---
 
@@ -326,53 +312,65 @@ Die ursprüngliche Frage wird umformuliert oder erweitert, um bessere Treffer zu
 
 **Multi-Query:** Eine Frage wird in mehrere Varianten umgewandelt:
 
-```
-Original: "Wie funktioniert RAG?"
-→ "Was ist Retrieval Augmented Generation?"
-→ "Erkläre die RAG-Architektur"
-→ "RAG-System Komponenten"
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```8
 
 **HyDE (Hypothetical Document Embedding):** Das LLM generiert eine hypothetische Antwort, die dann für die Suche verwendet wird:
 
-```
-Frage: "Wie funktioniert RAG?"
-→ LLM generiert: "RAG kombiniert Retrieval und Generation..."
-→ Suche nach Dokumenten ähnlich zur hypothetischen Antwort
-```
+```mermaid
+flowchart LR
+    A[Dokumente] --> B[Laden]
+    B --> C[Chunking]
+    C --> D[Embedding]
+    D --> E[Vektordatenbank]
+```9
 
 ### Self-Query
 
 Das LLM extrahiert strukturierte Filter aus natürlichsprachlichen Fragen:
 
-```
-Frage: "Zeige mir Sicherheitsrichtlinien aus 2024"
-→ Extrahiert: {"kategorie": "sicherheit", "jahr": 2024}
-→ Kombiniert semantische Suche mit Metadaten-Filter
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```0
 
 ### Contextual Compression
 
 Gefundene Dokumente werden auf das Wesentliche komprimiert:
 
-```
-Gefundener Chunk (500 Zeichen):
-"Die Firma wurde 1995 gegründet. Der Hauptsitz befindet sich in Berlin.
- Die Sicherheitsrichtlinien wurden 2023 aktualisiert und umfassen..."
-
-Nach Compression (relevanter Teil für Frage "Sicherheitsrichtlinien"):
-"Die Sicherheitsrichtlinien wurden 2023 aktualisiert und umfassen..."
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```1
 
 ### Parent Document Retriever
 
 Kleine Chunks für präzises Retrieval, aber größere Kontextfenster für die Generierung:
 
-```
-Indexierung: Kleine Chunks (200 Zeichen) → Vektordatenbank
-Retrieval: Finde relevante kleine Chunks
-Rückgabe: Hole zugehörige Parent-Dokumente (2000 Zeichen)
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```2
 
 ---
 
@@ -382,77 +380,27 @@ Die Kombination aller Komponenten zu einer funktionierenden Pipeline.
 
 ### Minimales Beispiel
 
-```python
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-from langchain.chat_models import init_chat_model
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
-
-# Komponenten
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
-embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
-vectorstore = Chroma.from_documents(chunks, embedding_model)
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-
-# Hilfsfunktion
-def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
-
-# RAG-Prompt
-rag_prompt = ChatPromptTemplate.from_template(
-    """Beantworte die Frage basierend auf dem folgenden Kontext.
-Wenn die Antwort nicht im Kontext steht, sage ehrlich, dass keine Information vorliegt.
-
-Kontext:
-{context}
-
-Frage: {question}
-
-Antwort:"""
-)
-
-# LCEL Chain
-rag_chain = (
-    {
-        "context": retriever | format_docs,
-        "question": RunnablePassthrough()
-    }
-    | rag_prompt
-    | llm
-    | StrOutputParser()
-)
-
-# Aufruf
-antwort = rag_chain.invoke("Wie funktioniert das System?")
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```3
 
 ### RAG als Agent-Tool
 
-```python
-from langchain_core.tools import tool
-
-@tool
-def firmenwissen_suchen(frage: str) -> str:
-    """🔍 FIRMENWISSEN – Durchsucht interne Dokumente.
-    
-    Verwenden für Fragen zu:
-    - Unternehmensrichtlinien
-    - Internen Prozessen
-    - Produktinformationen
-    
-    Args:
-        frage: Die Suchanfrage in natürlicher Sprache
-    
-    Returns:
-        Relevante Informationen aus den Firmendokumenten
-    """
-    try:
-        return rag_chain.invoke(frage)
-    except Exception as e:
-        return f"Fehler bei der Suche: {str(e)}"
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```4
 
 ---
 
@@ -460,7 +408,15 @@ def firmenwissen_suchen(frage: str) -> str:
 
 Die Qualität eines RAG-Systems muss systematisch gemessen werden, weil eine einzelne gelungene Antwort wenig beweist. RAG kann auf zwei Ebenen scheitern: Der Retriever findet den falschen Kontext, oder das Modell verarbeitet den richtigen Kontext falsch. Deshalb wird nicht nur die finale Antwort bewertet, sondern auch der Weg dorthin.
 
-Für Einsteiger reicht zuerst ein kleines, wiederholbares Testset. Nach jeder Änderung an Chunking, Embedding-Modell, `k`, Prompt oder Quellenbestand wird dasselbe Set erneut ausgeführt. So wird sichtbar, ob eine Änderung wirklich verbessert oder nur andere Fehler erzeugt.
+Für Einsteiger reicht zuerst ein kleines, wiederholbares Testset. Nach jeder Änderung an Chunking, Embedding-Modell, ```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```5, Prompt oder Quellenbestand wird dasselbe Set erneut ausgeführt. So wird sichtbar, ob eine Änderung wirklich verbessert oder nur andere Fehler erzeugt.
 
 | Ebene | Leitfrage | Einfache Bewertung |
 |---|---|---|
@@ -482,53 +438,29 @@ Für Einsteiger reicht zuerst ein kleines, wiederholbares Testset. Nach jeder Ä
 
 RAGAS (Retrieval Augmented Generation Assessment) bietet standardisierte Metriken:
 
-```python
-from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy, context_precision
-
-results = evaluate(
-    dataset,
-    metrics=[faithfulness, answer_relevancy, context_precision]
-)
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```6
 
 ### Manuelles Testen
 
 Für erste Iterationen ist manuelles Testen effektiver als ein großes Evaluationsframework. Wichtig ist, die Testfragen nicht nachträglich an die Stärken des Systems anzupassen, sondern typische Nutzerfragen, Randfälle und erwartete Quellen festzuhalten.
 
-```python
-test_cases = [
-    {
-        "question": "Was ist die Passwort-Policy?",
-        "expected_source": "security.md",
-        "expected_answer": "Passwortlänge, Komplexität und Wechselregel",
-    },
-    {
-        "question": "Wie beantrage ich Urlaub?",
-        "expected_source": "hr.md",
-        "expected_answer": "Antrag über das HR-System",
-    },
-    {
-        "question": "Wer ist Ansprechpartner für IT-Probleme?",
-        "expected_source": "support.md",
-        "expected_answer": "IT-Support oder Helpdesk",
-    },
-]
-
-for case in test_cases:
-    # Retrieval prüfen
-    docs = retriever.invoke(case["question"])
-    print(f"\nFrage: {case['question']}")
-    print(f"Erwartete Quelle: {case['expected_source']}")
-    print(f"Gefundene Dokumente: {len(docs)}")
-    for i, doc in enumerate(docs):
-        print(f"  {i+1}. {doc.page_content[:100]}...")
-    
-    # Antwort prüfen
-    answer = rag_chain.invoke(case["question"])
-    print(f"Antwort: {answer}")
-    print("Bewertung: korrekt / teilweise / falsch")
-```
+```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```7
 
 > [!TIP] Vertiefung<br>
 > Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices](../../frameworks/best-practices/langsmith-best-practices.html) beschrieben.
@@ -543,10 +475,26 @@ Häufige Probleme und deren Lösungen.
 
 | Ursache | Diagnose | Lösung |
 |---------|----------|--------|
-| Collection leer | `vectorstore._collection.count()` | Dokumente indexieren |
+| Collection leer | ```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```8 | Dokumente indexieren |
 | Falsches Embedding-Modell | Dimensionen vergleichen | Gleiches Modell für Index und Query |
 | Query zu spezifisch | Mit breiterem Begriff testen | Query umformulieren |
-| k zu klein | k erhöhen | `search_kwargs={"k": 10}` |
+| k zu klein | k erhöhen | ```mermaid
+flowchart LR
+    A[Frage] --> B[Embedding]
+    B --> C[Similarity Search]
+    C --> D[Top-k Dokumente]
+    D --> E[Prompt + Kontext]
+    E --> F[LLM]
+    F --> G[Antwort]
+```9 |
 
 ### Problem: Falsche Antworten trotz korrektem Kontext
 
@@ -613,19 +561,15 @@ RAG kombiniert die Stärken von Retrieval-Systemen mit generativen LLMs:
 
 **Der typische Workflow:**
 
-```
-1. Dokumente laden und chunken
-       ↓
-2. Embeddings erzeugen und speichern
-       ↓
-3. Retriever konfigurieren
-       ↓
-4. RAG-Prompt erstellen
-       ↓
-5. LCEL-Chain bauen
-       ↓
-6. Evaluieren und optimieren
-```
+```python
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,      # Maximale Chunk-Größe in Zeichen
+    chunk_overlap=100,   # Überlappung zwischen Chunks
+    separators=["\n\n", "\n", ". ", " ", ""]  # Trennzeichen-Hierarchie
+)
+```0
 
 RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten – ohne teures Fine-Tuning und mit voller Kontrolle über die Wissensbasis.
 

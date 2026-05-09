@@ -8,7 +8,17 @@ description: "Rechtliche Rahmenbedingungen, Ethik und Souveränität"
 
 # Regulatorisches
 
+**Version:** 1.0<br>
+**Stand:** Mai 2026<br>
+**Kurs:** KI-Agenten
+
 Wer KI-Agenten produktiv einsetzt, begegnet früher oder später fünf Fragekomplexen: Was regelt der EU AI Act? Was schreibt die DSGVO für den Umgang mit personenbezogenen Daten vor? Was ändert sich in regulierten Branchen wie Medizin, Legal oder Finanzwesen? Welche ethischen Anforderungen gelten? Und wie viel Abhängigkeit von externen Cloud-Providern ist vertretbar?
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ## Wann dieser Bereich?
 
@@ -19,7 +29,7 @@ Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lesepf
 ## Übersicht
 
 ### Digitale Souveränität
-- **[Digitale Souveränität](https://ralf-42.github.io/Agenten/regulatory/digitale-souveraenitaet.html)** – *Wie unabhängig ist Europa bei der KI-Infrastruktur?* Definition, Reifegrade und europäische Strategien
+- **[Digitale Souveränität](regulatory/digitale-souveraenitaet.html)** – *Wie unabhängig ist Europa bei der KI-Infrastruktur?* Definition, Reifegrade und europäische Strategien
   - Konzeptionelle Grundlagen und Begriffsbestimmung
   - Reifegradmodelle (EU Cloud Sovereignty Framework, SEAL-Stufen)
   - Europäische Initiativen (Gaia-X, Catena-X, European Chips Act)
@@ -27,26 +37,33 @@ Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lesepf
   - Zukunftstechnologien (Open RAN, Sovereign AI)
 
 ### Rechtliche Rahmenbedingungen
-- **[EU AI Act](https://ralf-42.github.io/Agenten/regulatory/eu-ai-act.html)** – *Was regelt das KI-Recht in Europa?* Europäische KI-Regulierung
+- **[EU AI Act](regulatory/eu-ai-act.html)** – *Was regelt das KI-Recht in Europa?* Europäische KI-Regulierung
   - Rechtliche Rahmenbedingungen
   - Risikostufen und Anforderungen
   - Compliance-Aspekte
   - Praktische Auswirkungen
 
-- **[Datenschutz & DSGVO](https://ralf-42.github.io/Agenten/regulatory/datenschutz-dsgvo.html)** – *Was gilt beim Einsatz von LLM-APIs unter der DSGVO?* Datenschutzkonforme KI-Entwicklung
+- **[Datenschutz & DSGVO](regulatory/datenschutz-dsgvo.html)** – *Was gilt beim Einsatz von LLM-APIs unter der DSGVO?* Datenschutzkonforme KI-Entwicklung
   - PII-Grundregel und Anonymisierung
   - Dienstauswahl nach Datensensitivität, Datenkontrollen und Betriebsform
   - Auftragsverarbeitung, Tracing, Logging und Evaluation
   - Datenschutz by Design und by Default in Agenten-Pipelines
 
-- **[KI-Agenten in regulierten Branchen](https://ralf-42.github.io/Agenten/regulatory/ki-agenten-in-regulierten-branchen.html)** – *Was ändert sich für Agenten-Architektur in Medizin, Legal und Finanzwesen?*
+- **[KI-Agenten in regulierten Branchen](regulatory/ki-agenten-in-regulierten-branchen.html)** – *Was ändert sich für Agenten-Architektur in Medizin, Legal und Finanzwesen?*
   - HITL-Pflicht, Audit-Trail, Tool-Grenzen, Quellenbindung
   - Drei exemplarische Bereiche: Medizin, Legal, Finanzwesen
   - Gemeinsame Prinzipien: Nachvollziehbarkeit, Grenzen automatisierter Entscheidungen, dokumentierter Wandel
 
 ### Ethik & Verantwortung
-- **[Ethik und GenAI](https://ralf-42.github.io/Agenten/regulatory/ethik-und-genai.html)** – *Was sind die ethischen Grenzen beim KI-Einsatz?* Verantwortungsvoller KI-Einsatz
+- **[Ethik und GenAI](regulatory/ethik-und-genai.html)** – *Was sind die ethischen Grenzen beim KI-Einsatz?* Verantwortungsvoller KI-Einsatz
   - Ethische Aspekte und Herausforderungen
   - Bias und Fairness
   - Verantwortungsvoller Umgang mit KI-Agenten
   - Best Practices
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Regulatorisches? |
+| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Regulatorisches? |

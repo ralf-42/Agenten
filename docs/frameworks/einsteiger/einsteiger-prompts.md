@@ -399,9 +399,9 @@ flowchart TD
 
 | Dokument | Inhalt |
 |---|---|
-| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langchain.html) |  als Alternative zu Prompt-Dateien |
-| [Einsteiger genai_lib](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-genai-lib.html) |  als Ladefunktion für Prompt-Dateien |
-| [Einsteiger Agent Builder](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-agent-builder.html) | Prompt-Dateien in Agent-Builder-Workflows |
+| [Einsteiger LangChain](einsteiger-langchain.html) |  als Alternative zu Prompt-Dateien |
+| [Einsteiger genai_lib](einsteiger-genai-lib.html) |  als Ladefunktion für Prompt-Dateien |
+| [Einsteiger Agent Builder](einsteiger-agent-builder.html) | Prompt-Dateien in Agent-Builder-Workflows |
 
 
 ---

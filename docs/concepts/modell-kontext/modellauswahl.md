@@ -4,7 +4,7 @@ title: Modellauswahl
 parent: Modell- und Kontextgrundlagen
 grand_parent: Konzepte
 nav_order: 1
-description: "Modellauswahl fuer Agentensysteme: Qualitaet, Kosten, Latenz und Aufgabenprofil"
+description: "Modellauswahl für Agentensysteme: Qualitaet, Kosten, Latenz und Aufgabenprofil"
 has_toc: true
 ---
 

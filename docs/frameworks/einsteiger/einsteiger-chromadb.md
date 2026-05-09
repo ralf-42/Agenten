@@ -952,9 +952,9 @@ results = retriever.invoke("Meine Frage")
 
 | Dokument | Inhalt |
 |---|---|
-| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langchain.html) | RAG-Chain und LCEL-Integration mit ChromaDB (Abschnitt 12) |
-| [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html) | ChromaDB als Retrieval-Tool in LangGraph-Workflows |
-| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen: Chunking, Embeddings, Retrieval-Strategien |
+| [Einsteiger LangChain](einsteiger-langchain.html) | RAG-Chain und LCEL-Integration mit ChromaDB (Abschnitt 12) |
+| [Einsteiger LangGraph](einsteiger-langgraph.html) | ChromaDB als Retrieval-Tool in LangGraph-Workflows |
+| [RAG-Konzepte](../../concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen: Chunking, Embeddings, Retrieval-Strategien |
 
 
 ---

@@ -4,7 +4,7 @@ title: Tokenizing & Chunking
 parent: Wissensmanagement
 grand_parent: Konzepte
 nav_order: 2
-description: "Tokenisierung und Chunking fuer RAG, Kontextfenster und Agenten-Wissensspeicher"
+description: "Tokenisierung und Chunking für RAG, Kontextfenster und Agenten-Wissensspeicher"
 has_toc: true
 ---
 

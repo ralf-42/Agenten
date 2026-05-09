@@ -601,9 +601,9 @@ graph = workflow.compile(
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph Einsteiger Guide](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html)
-- [LangChain Standards](https://ralf-42.github.io/Agenten/resources/standards.html)
-- [Einsteiger LangGraph](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html)
+- [LangGraph Einsteiger Guide](../frameworks/einsteiger/einsteiger-langgraph.html)
+- [LangChain Standards](../ressourcen/standards.html)
+- [Einsteiger LangGraph](../frameworks/einsteiger/einsteiger-langgraph.html)
 
 ## Code-Beispiele
 
@@ -725,3 +725,10 @@ class SupportState(TypedDict):
 **Version:** 1.1<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Research Assistant Challenge? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Challenge? |

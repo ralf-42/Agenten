@@ -684,10 +684,10 @@ Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assist
 
 | Dokument | Inhalt |
 |---|---|
-| [frameworks/Einsteiger_LangGraph](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langgraph.html) | LangGraph aufbauend auf LangChain — Workflows, State, Routing |
-| [Einsteiger ChromaDB](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-chromadb.html) | Vektordatenbank für die RAG-Beispiele in diesem Guide |
-| [Einsteiger Prompts](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-prompts.html) | Prompt-Dateien und  als Ergänzung zu  |
-| [RAG-Konzepte](https://ralf-42.github.io/Agenten/concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen hinter den RAG-Patterns in Abschnitt 12 |
+| [frameworks/Einsteiger_LangGraph](einsteiger-langgraph.html) | LangGraph aufbauend auf LangChain — Workflows, State, Routing |
+| [Einsteiger ChromaDB](einsteiger-chromadb.html) | Vektordatenbank für die RAG-Beispiele in diesem Guide |
+| [Einsteiger Prompts](einsteiger-prompts.html) | Prompt-Dateien und  als Ergänzung zu  |
+| [RAG-Konzepte](../../concepts/wissensmanagement/rag-konzepte.html) | Konzeptionelle Grundlagen hinter den RAG-Patterns in Abschnitt 12 |
 
 
 ---

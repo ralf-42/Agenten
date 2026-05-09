@@ -8,7 +8,17 @@ description: "Von der Entwicklung zur produktionsreifen Anwendung"
 
 # Deployment
 
+**Version:** 1.0<br>
+**Stand:** Mai 2026<br>
+**Kurs:** KI-Agenten
+
 Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für Deployment, Architektur und Provider-Migration.
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ## Wann dieser Bereich?
 
@@ -19,14 +29,14 @@ Für einen passenden Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 ## Übersicht
 
 ### Architektur & Ökosystem
-- **[Vom Modell zum Produkt](https://ralf-42.github.io/Agenten/deployment/vom-modell-zum-produkt-langchain-oekosystem.html)** – *Wie wird ein Prototyp produktionsreif?* Das LangChain-Ökosystem verstehen
+- **[Vom Modell zum Produkt](deployment/vom-modell-zum-produkt-langchain-oekosystem.html)** – *Wie wird ein Prototyp produktionsreif?* Das LangChain-Ökosystem verstehen
   - Von Prototypen zu produktionsreifen Systemen
   - LangChain, LangGraph und LangSmith im Überblick
   - Entscheidungshilfe: Wann welches Tool?
   - Alternativen zum LangChain-Ökosystem
 
 ### Deployment-Prozess
-- **[Aus Entwicklung ins Deployment](https://ralf-42.github.io/Agenten/deployment/aus-entwicklung-ins-deployment.html)** – *Wie kommt der Agent in die Produktion?* Vom Notebook zur produktionsreifen App
+- **[Aus Entwicklung ins Deployment](deployment/aus-entwicklung-ins-deployment.html)** – *Wie kommt der Agent in die Produktion?* Vom Notebook zur produktionsreifen App
   - Notebook aufräumen und Code extrahieren
   - Projektstruktur und Best Practices
   - Konfiguration externalisieren
@@ -34,15 +44,22 @@ Für einen passenden Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
   - Deployment-Optionen im Vergleich
 
 ### Stack & Infrastruktur
-- **[Minimum Viable Agent Stack](https://ralf-42.github.io/Agenten/deployment/minimum-viable-agent-stack.html)** – *Welche Schichten braucht ein Produktionsagent?* Die sechs Infrastrukturschichten zwischen LLM und Produktionssystem
+- **[Minimum Viable Agent Stack](deployment/minimum-viable-agent-stack.html)** – *Welche Schichten braucht ein Produktionsagent?* Die sechs Infrastrukturschichten zwischen LLM und Produktionssystem
   - Übersichtstabelle: Einstiegspunkt und Upgrade-Kriterium pro Schicht
   - Bewertungsrahmen: Zustand, Lock-in-Risiko, Demo-Produktions-Lücke
   - Detailanalyse aller sechs Schichten mit ehrlicher Einschätzung
   - Stack-Empfehlung nach Agententyp (Stateless bis Multi-Agent)
 
 ### Migration & Provider-Wechsel
-- **[Migration: OpenAI → Mistral](https://ralf-42.github.io/Agenten/deployment/migration-openai-mistral.html)** – *Wie wechsle ich den LLM-Provider?* Technische Analyse der Provider-Migration
+- **[Migration: OpenAI → Mistral](deployment/migration-openai-mistral.html)** – *Wie wechsle ich den LLM-Provider?* Technische Analyse der Provider-Migration
   - Kernaussage: LangChain vereinfacht die Migration strukturell
   - Modell-Rollenmapping für Baseline, Router, Judge, Worker
   - Embeddings und OpenAI-spezifische Module separat bewerten
   - Empfohlene Reihenfolge für eine kontrollierte Migration
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Deployment? |
+| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Deployment? |

@@ -8,7 +8,17 @@ description: "Theoretische Grundlagen und technische Konzepte für KI-Agenten"
 
 # Konzepte  
 
+**Version:** 1.0<br>
+**Stand:** Mai 2026<br>
+**Kurs:** KI-Agenten
+
 Theoretische Grundlagen, technische Konzepte und fundamentale Prinzipien für KI-Agenten und Multi-Agent-Systeme.    
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
 
 ## Wann dieser Bereich?
 
@@ -116,3 +126,10 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 - **[Wann wird aus einem Prompt ein wiederverwendbarer Skill?](./concepts/protokolle/skills.html)** – *Wie werden wiederkehrende Arbeitsmuster stabil gekapselt?* (→ M31, optional)
   - Unterschied zwischen losem Prompt und belastbarem Skill
   - `SKILL.md`, `references/` und `scripts/` als wiederverwendbare Struktur
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Konzepte? |
+| [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Konzepte? |

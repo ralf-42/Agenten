@@ -14,7 +14,7 @@ has_toc: true
 > **Welches Modell für welche Aufgabe?**<br>
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
-Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modell-auswahl/provider-modell-mapping.html)
+Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](provider-modell-mapping.html)
 
 ---
 
@@ -369,7 +369,7 @@ Wenn nachfolgende Architektur- oder Migrationstexte providerneutral formuliert w
 Dadurch bleibt der Kurs konkret und die Beschreibung dennoch übertragbar.
 
 Für die konkrete Zuordnung auf Mistral, Gemini und Anthropic siehe:
-[Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modell-auswahl/provider-modell-mapping.html)
+[Provider-Modell-Mapping](provider-modell-mapping.html)
 
 ---
 
@@ -414,7 +414,7 @@ builder.add_conditional_edges("supervisor", routing_edge,
 | [LangChain 1.0 Must-Haves](../best-practices/langchain-best-practices.html) | Wie werden die gewählten Modelle in Chains und Agents eingesetzt? |
 | [LangGraph 1.0 Must-Haves](../best-practices/langgraph-best-practices.html) | Wie werden Multi-Agent-Workflows mit den empfohlenen Modellen aufgebaut? |
 | [LangSmith Best Practices](../best-practices/langsmith-best-practices.html) | Wie werden Modellkosten und -qualität über LangSmith beobachtet? |
-| [Provider & API-Keys](../../resources/api-keys-und-provider.html) | Wie werden die jeweiligen Provider-Zugänge eingerichtet? |
+| [Provider & API-Keys](../../ressourcen/api-keys-und-provider.html) | Wie werden die jeweiligen Provider-Zugänge eingerichtet? |
 
 ---
 

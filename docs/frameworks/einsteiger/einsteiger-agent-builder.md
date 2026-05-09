@@ -4,7 +4,7 @@ title: Agent Builder
 parent: Einsteiger-Guides
 grand_parent: Frameworks
 nav_order: 7
-description: "No-Code-Agenten und visuelle Workflows fuer Agentenprototypen"
+description: "No-Code-Agenten und visuelle Workflows für Agentenprototypen"
 has_toc: true
 ---
 
@@ -277,35 +277,46 @@ Branches:
 ```
 
 **Tool Node: "Create JIRA Ticket"**
-```yaml
-Node Type: Tool (MCP)
-MCP Server: jira
+```mermaid
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-Function: create_issue
-Parameters:
-  project: "SUP"
-  type: "Bug"
-  summary: {output.summary}
-  priority: {output.priority}
-  description: {ticket_text}
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
 
-Output: {jira_id}
-```
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```0
 
 **Tool Node: "Send Confirmation Email"**
-```yaml
-Node Type: Tool (API)
-Endpoint: POST /api/email/send
+```mermaid
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-Body:
-  to: {customer_email}
-  subject: "Ticket #{jira_id} wurde erstellt"
-  template: "ticket_confirmation"
-  data:
-    category: {output.category}
-    priority: {output.priority}
-    summary: {output.summary}
-```
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
+
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```1
 
 ### Vorteile dieser Architektur
 
@@ -335,22 +346,23 @@ MCP verbindet Agent Builder mit 100+ externen Systemen durch standardisierte Ser
 
 ```mermaid
 graph TB
-    AB[Agent Builder Workflow] --> MCP[MCP Protocol Layer]
-    MCP --> GH[GitHub Server]
-    MCP --> SL[Slack Server]
-    MCP --> GD[Google Drive Server]
-    MCP --> DB[PostgreSQL Server]
-    MCP --> CUSTOM[Custom MCP Server]
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-    GH --> GHAPI[GitHub API]
-    SL --> SLAPI[Slack API]
-    GD --> GDAPI[Drive API]
-    DB --> DBAPI[Database]
-    CUSTOM --> CAPI[Your API]
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
 
-    style MCP fill:#10a37f
-    style AB fill:#87CEEB
-```
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```2
 
 ### Verfügbare MCP-Server (Auswahl)
 
@@ -368,92 +380,92 @@ graph TB
 **Schritt-für-Schritt:**
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant AB as Agent Builder
-    participant REG as Connector Registry
-    participant MCP as MCP Server
-    participant API as External API
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-    AB->>REG: 1. Add MCP Server
-    REG->>AB: 2. Configure Auth
-    AB->>AB: 3. Create Tool Node
-    AB->>MCP: 4. Invoke Function
-    MCP->>API: 5. API Call
-    API->>MCP: 6. Response
-    MCP->>AB: 7. Structured Data
-```
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
+
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```3
 
 **Beispiel: GitHub-Integration**
 
-```yaml
-Node: "check_critical_issues"
-Type: Tool (MCP)
-Server: github
+```mermaid
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-Authentication:
-  type: oauth
-  token: ${GITHUB_TOKEN}
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
 
-Function: list_issues
-Parameters:
-  repo: "company/product"
-  state: "open"
-  labels: ["bug", "critical"]
-  sort: "created"
-  direction: "desc"
+    AB -.Vergleichbar mit.-> LC
 
-Output Mapping:
-  issues_list: response.data
-  count: response.data.length
-```
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```4
 
 **Nutzung im Workflow:**
 
 ```mermaid
-flowchart LR
-    START([Daily Check]) --> GH[🔧 GitHub: Get Critical Issues]
-    GH --> COND{🔀 Issues > 0?}
-    COND -->|Yes| SLACK[🔧 Slack: Notify Team]
-    COND -->|No| FINISH([FINISH])
-    SLACK --> FINISH
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-    style GH fill:#FFA500
-    style SLACK fill:#4A154B
-```
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
+
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```5
 
 ### Custom MCP Server erstellen
 
 Falls kein passender MCP-Server existiert, lässt sich ein eigener Server erstellen:
 
-```typescript
-// Beispiel: Simple MCP Server für Custom API
-import { MCPServer } from "@modelcontextprotocol/server";
+```mermaid
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-const server = new MCPServer({
-  name: "my-custom-api",
-  version: "1.0.0",
-  tools: [
-    {
-      name: "search_database",
-      description: "Searches the product database",
-      inputSchema: {
-        type: "object",
-        properties: {
-          query: { type: "string" },
-          limit: { type: "number", default: 10 }
-        }
-      },
-      handler: async (input) => {
-        const results = await fetch(`https://api.mycompany.com/search?q=${input.query}&limit=${input.limit}`);
-        return results.json();
-      }
-    }
-  ]
-});
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
 
-server.listen(3000);
-```
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```6
 
 **Integration in Agent Builder:**
 1. Deploy MCP Server (z.B. auf Railway, Fly.io)
@@ -474,22 +486,22 @@ server.listen(3000);
 ```mermaid
 graph TB
     subgraph "Agent Builder (No-Code)"
-        AB1[Visuelle Workflows]
-        AB2[Built-in MCP Integration]
-        AB3[Enterprise Governance]
-        AB4[Code Export möglich]
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
     end
 
     subgraph "LangChain (Code)"
-        LC1[Full Code Control]
-        LC2[Custom Tools]
-        LC3[Multi-Provider Support]
-        LC4[On-Premise Deployment]
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
     end
 
-    style AB1 fill:#10a37f
-    style LC1 fill:#0066cc
-```
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```7
 
 | Anforderung | Agent Builder | LangChain |
 |-------------|---------------|-----------|
@@ -514,25 +526,24 @@ graph TB
 **Agent Builder eignet sich für:**
 
 ```mermaid
-mindmap
-  root((Agent Builder))
-    Automatisierung
-      Support Ticket Routing
-      Datenverarbeitung
-      Workflow Automation
-    Integration
-      Multi-System Workflows
-      CRM + Slack + DB
-      MCP-basierte Connectors
-    Enterprise
-      Team Collaboration
-      Governance & Compliance
-      Versioning & Rollback
-    Prototyping
-      Schnelle MVP-Erstellung
-      No-Code Validation
-      Business User Enablement
-```
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
+
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
+
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```8
 
 **LangChain eignet sich für:**
 
@@ -552,40 +563,28 @@ Agent Builder erlaubt Export von Workflows als TypeScript oder Python-Code für 
 ### Export-Workflow
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant AB as Agent Builder
-    participant EXP as Export Function
-    participant CODE as Code Editor
-    participant DEP as Deployment
+graph TB
+    subgraph "Agent Builder (No-Code)"
+        AB[Visual Editor] --> AB1[Drag & Drop Nodes]
+        AB --> AB2[Built-in Debugging]
+        AB --> AB3[One-Click Deploy]
+    end
 
-    AB->>EXP: Export Workflow
-    EXP->>CODE: TypeScript/Python Code
-    CODE->>CODE: Custom Modifications
-    CODE->>DEP: Deploy (Vercel, Railway, etc.)
+    subgraph "LangChain (Code)"
+        LC[Python Code] --> LC1[Full Control]
+        LC --> LC2[Custom Logic]
+        LC --> LC3[Manual Hosting]
+    end
 
-    Note over AB,EXP: Workflow bleibt in Agent Builder editierbar
-    Note over CODE,DEP: Code kann unabhängig angepasst werden
-```
+    AB -.Vergleichbar mit.-> LC
+
+    style AB fill:#10a37f
+    style LC fill:#0066cc
+```9
 
 ### Wann ist eine Migration zu LangChain sinnvoll?
 
-```mermaid
-graph TB
-    START{Anforderung prüfen} -->|Volle Code-Kontrolle| MIG[Migration zu LangChain]
-    START -->|On-Premise Deployment| MIG
-    START -->|Multi-Provider Support| MIG
-    START -->|Custom Tools notwendig| MIG
-    START -->|Visual Workflows ausreichend| STAY[Bei Agent Builder bleiben]
-    START -->|Enterprise Governance wichtig| STAY
-    START -->|Schnelles Iteration| STAY
-
-    MIG --> CODE[Code-basierte Entwicklung]
-    STAY --> AB[Agent Builder]
-
-    style MIG fill:#0066cc
-    style STAY fill:#10a37f
-```
+https://platform.openai.com/agent-builder)0
 
 **Migrations-Checkliste:**
 
@@ -605,27 +604,7 @@ graph TB
 
 ### Sicherheits-Architektur
 
-```mermaid
-graph TB
-    USER[User Request] --> RBAC{RBAC Check}
-    RBAC -->|Authorized| WORKFLOW[Workflow Execution]
-    RBAC -->|Denied| REJECT[Access Denied]
-
-    WORKFLOW --> AUDIT[Audit Log]
-    WORKFLOW --> DATA{Data Handling}
-
-    DATA -->|Sensitive| ENCRYPT[Encryption at Rest]
-    DATA -->|PII| REDACT[PII Redaction]
-    DATA -->|Public| PROCESS[Normal Processing]
-
-    ENCRYPT --> FINISH([FINISH])
-    REDACT --> FINISH
-    PROCESS --> FINISH
-
-    style RBAC fill:#FFD700
-    style ENCRYPT fill:#ff6b6b
-    style AUDIT fill:#10a37f
-```
+https://platform.openai.com/agent-builder)1
 
 ### Enterprise-Kontrollen
 
@@ -642,97 +621,29 @@ graph TB
 
 **1. Secrets Management:**
 
-```yaml
-# ❌ SCHLECHT: Hardcoded API-Key
-Tool Node: "send_email"
-API Key: "sk-1234567890abcdef"
-
-# ✅ GUT: Environment Variable
-Tool Node: "send_email"
-API Key: ${EMAIL_API_KEY}
-```
+https://platform.openai.com/agent-builder)2
 
 **2. Input Validation:**
 
-```yaml
-# ✅ Input Validation Node vor LLM
-Node: "validate_input"
-Type: Condition
-
-Checks:
-  - length: max 1000 characters
-  - content: no SQL injection patterns
-  - format: valid email/phone/etc.
-
-IF validation_failed:
-  THEN: goto "reject_request"
-```
+https://platform.openai.com/agent-builder)3
 
 **3. Least Privilege für MCP-Server:**
 
-```yaml
-# ✅ Minimale Berechtigungen für MCP-Server
-MCP Server: github
-Permissions:
-  - read:issues      ✅
-  - write:issues     ✅
-  - admin:repo       ❌  # Nicht erforderlich!
-  - delete:repo      ❌  # Gefährlich!
-```
+https://platform.openai.com/agent-builder)4
 
 **4. Audit Trail:**
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant U as User
-    participant W as Workflow
-    participant A as Audit Log
-    participant N as Notification
-
-    U->>W: Execute Workflow
-    W->>A: Log: User, Timestamp, Input
-    W->>W: Process
-    W->>A: Log: Nodes executed, Outputs
-    W->>A: Log: Tools called, API responses
-    W->>U: Result
-
-    alt Sensitive Action
-        A->>N: Alert Security Team
-    end
-
-    Note over A: 90 days retention
-```
+https://platform.openai.com/agent-builder)5
 
 ### Compliance und Datenschutz
 
 **DSGVO-Konforme Workflows:**
 
-```yaml
-# Workflow mit PII-Handling
-Node: "extract_customer_data"
-Type: LLM
-
-Output Processing:
-  - PII Detection: enabled
-  - Auto-Redaction: email, phone, address
-  - Logging: redacted version only
-
-Next:
-  - IF pii_detected: goto "consent_check"
-  - ELSE: goto "process_data"
-```
+https://platform.openai.com/agent-builder)6
 
 **Data Retention Policy:**
 
-```yaml
-Workflow Settings:
-  Data Retention:
-    execution_logs: 90 days
-    user_inputs: 30 days (anonymized after 7 days)
-    outputs: 30 days
-    audit_trail: 365 days (compliance requirement)
-```
+https://platform.openai.com/agent-builder)7
 
 ---
 
@@ -742,26 +653,7 @@ Workflow Settings:
 
 Agent Builder bietet native Debugging-Features, die Code-basierte Workflows oft manuell implementieren müssen.
 
-```mermaid
-graph TB
-    WORKFLOW[Workflow Execution] --> DEBUG{Debug Mode}
-
-    DEBUG -->|Enabled| TRACE[Step-by-Step Tracing]
-    DEBUG -->|Disabled| NORMAL[Normal Execution]
-
-    TRACE --> INSPECT[Inspect Node Outputs]
-    TRACE --> BREAKPOINT[Breakpoints setzen]
-    TRACE --> REPLAY[Replay Execution]
-
-    INSPECT --> FIX[Fix Issues]
-    BREAKPOINT --> FIX
-    REPLAY --> FIX
-
-    FIX --> REDEPLOY[Re-Deploy]
-
-    style DEBUG fill:#FFD700
-    style TRACE fill:#10a37f
-```
+https://platform.openai.com/agent-builder)8
 
 **Debug-Features:**
 
@@ -775,111 +667,55 @@ graph TB
 
 ### Monitoring Dashboard
 
-```mermaid
-graph LR
-    WORKFLOW[Workflows] --> METRICS[Metrics Collection]
-
-    METRICS --> LATENCY[Latency]
-    METRICS --> SUCCESS[Success Rate]
-    METRICS --> COST[API Costs]
-    METRICS --> VOLUME[Request Volume]
-
-    LATENCY --> DASH[Dashboard]
-    SUCCESS --> DASH
-    COST --> DASH
-    VOLUME --> DASH
-
-    DASH --> ALERT{Threshold?}
-    ALERT -->|Exceeded| NOTIFY[Alert Team]
-    ALERT -->|Normal| CONT[Continue]
-
-    style DASH fill:#10a37f
-    style ALERT fill:#FFD700
-```
+https://platform.openai.com/agent-builder)9
 
 **Monitoring-Metriken:**
 
-```yaml
-Dashboard Metrics:
-  Performance:
-    - Average Latency per Node
-    - P95 Latency
-    - Total Execution Time
+```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
 
-  Reliability:
-    - Success Rate (%)
-    - Error Rate (%)
-    - Retry Count
-
-  Cost:
-    - Total API Calls
-    - Token Usage
-    - Cost per Execution
-
-  Volume:
-    - Executions per Day
-    - Concurrent Users
-    - Peak Load Times
-```
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```0
 
 ### Error Handling und Fallbacks
 
 ```mermaid
-flowchart TB
-    START([User Request]) --> NODE[Execute Node]
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
 
-    NODE --> CHECK{Success?}
-    CHECK -->|Yes| NEXT[Next Node]
-    CHECK -->|No| RETRY{Retry?}
-
-    RETRY -->|Attempt < 3| WAIT[Wait + Backoff]
-    WAIT --> NODE
-
-    RETRY -->|Attempt >= 3| FALLBACK[Fallback Strategy]
-
-    FALLBACK --> CACHE{Cache Available?}
-    CACHE -->|Yes| CACHED[Return Cached Result]
-    CACHE -->|No| DEFAULT[Default Response]
-
-    CACHED --> LOG[Log Error]
-    DEFAULT --> LOG
-
-    LOG --> NOTIFY[Notify Team]
-
-    NEXT --> FINISH([Success])
-    NOTIFY --> FINISH
-
-    style CHECK fill:#FFD700
-    style FALLBACK fill:#FFA500
-    style LOG fill:#ff6b6b
-```
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```1
 
 **Fallback-Konfiguration:**
 
-```yaml
-Node: "call_external_api"
-Type: Tool
+```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
 
-Error Handling:
-  retry:
-    max_attempts: 3
-    backoff: exponential  # 1s, 2s, 4s
-    retry_on:
-      - timeout
-      - rate_limit
-      - server_error (5xx)
-
-  fallback:
-    strategy: cache_or_default
-    cache_ttl: 3600  # 1 hour
-    default_response:
-      status: "degraded_service"
-      message: "Using cached data"
-
-  alerting:
-    notify_on: all_retries_failed
-    channels: ["slack", "email"]
-```
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```2
 
 ---
 
@@ -888,29 +724,18 @@ Error Handling:
 ### Agent Builder im Überblick
 
 ```mermaid
-mindmap
-  root((Agent Builder))
-    Stärken
-      No-Code Workflows
-      Native MCP Integration
-      Built-in Governance
-      Visual Debugging
-      Enterprise-Ready
-    Use Cases
-      Support Automation
-      Multi-System Integration
-      Workflow Orchestration
-      Team Collaboration
-    Limitierungen
-      Nur OpenAI Models
-      Cloud-Only Hosting
-      Code-Kontrolle begrenzt
-    Migration Path
-      Start: Templates nutzen
-      Build: Custom Workflows
-      Export: Code für Anpassungen
-      Scale: LangChain für komplexe Fälle
-```
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
+
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```3
 
 ### Kernkonzepte
 
@@ -926,24 +751,17 @@ mindmap
 
 ```mermaid
 graph TB
-    START{Projekt-Anforderungen} -->|No-Code gewünscht| AB[Agent Builder]
-    START -->|Full Code Control| LC[LangChain]
-    START -->|Multi-Provider| LC
-    START -->|On-Premise| LC
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
 
-    AB --> CHECK1{Passt Agent Builder?}
-    CHECK1 -->|Ja| BUILD[Workflow bauen]
-    CHECK1 -->|Limitierung| EXPORT[Code exportieren]
-
-    EXPORT --> LC
-
-    BUILD --> PROD[Production]
-    LC --> PROD
-
-    style AB fill:#10a37f
-    style LC fill:#0066cc
-    style PROD fill:#FFD700
-```
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```4
 
 **Entscheidungsbaum:**
 
@@ -964,41 +782,122 @@ graph TB
 ### Nächste Schritte
 
 ```mermaid
-graph LR
-    YOU[Aktueller Einstieg] --> TRY[Agent Builder ausprobieren]
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
 
-    TRY --> TEMP[Templates nutzen]
-    TRY --> BUILD[Eigenen Workflow bauen]
-
-    TEMP --> LEARN[Best Practices lernen]
-    BUILD --> LEARN
-
-    LEARN --> PROD[Production Deployment]
-
-    PROD --> SCALE{Skalierung nötig?}
-    SCALE -->|Ja| MIGRATE[LangChain evaluieren]
-    SCALE -->|Nein| OPT[Workflows optimieren]
-
-    style YOU fill:#90EE90
-    style PROD fill:#FFD700
-    style MIGRATE fill:#0066cc
-```
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```5
 
 **Ressourcen:**
 
-- **Offizielle Docs:** [platform.openai.com/docs/guides/agent-builder](https://platform.openai.com/docs/guides/agent-builder)
-- **MCP Registry:** [modelcontextprotocol.io/registry](https://modelcontextprotocol.io/registry)
+- **Offizielle Docs:** [platform.openai.com/docs/guides/agent-builder](```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
+
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```6
+- **MCP Registry:** [modelcontextprotocol.io/registry](```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
+
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```7
 - **Community:** OpenAI Developer Forum
-- **Vergleich:** [AgentKit vs GPTs Guide](https://www.eesel.ai/blog/agentkit-vs-gpts)
+- **Vergleich:** [AgentKit vs GPTs Guide](```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
+
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```8
 
 ## Quellen
 
-- [OpenAI Agent Builder Dokumentation](https://platform.openai.com/docs/guides/agent-builder)          
-- [Introducing AgentKit OpenAI](https://openai.com/index/introducing-agentkit/)
-- [AgentKit vs GPTs: A complete guide](https://www.eesel.ai/blog/agentkit-vs-gpts)
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [LangChain Documentation](https://python.langchain.com/)
-- [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](https://sider.ai/blog/ai-tools/what-is-openai-chatgpt-agent-builder-a-complete-2025-guide)
+- [OpenAI Agent Builder Dokumentation](```mermaid
+graph TB
+    A[ChatGPT Account-Typen] --> B[Plus/Team]
+    A --> C[Enterprise/Edu]
+    B -.Kein Zugang.-> D[Agent Builder]
+    C --> D
+    D --> E[Workflows]
+    D --> F[Drafts]
+    D --> G[Templates]
+
+    style C fill:#10a37f
+    style D fill:#ff6b6b
+```9          
+- [Introducing AgentKit OpenAI](```mermaid
+stateDiagram-v2
+    [*] --> Templates: Start
+    Templates --> Drafts: Customize
+    Drafts --> Drafts: Iterate
+    Drafts --> Workflows: Publish
+    Workflows --> Drafts: Edit/Clone
+    Workflows --> [*]: Deploy
+```0
+- [AgentKit vs GPTs: A complete guide](```mermaid
+stateDiagram-v2
+    [*] --> Templates: Start
+    Templates --> Drafts: Customize
+    Drafts --> Drafts: Iterate
+    Drafts --> Workflows: Publish
+    Workflows --> Drafts: Edit/Clone
+    Workflows --> [*]: Deploy
+```1
+- [Model Context Protocol](```mermaid
+stateDiagram-v2
+    [*] --> Templates: Start
+    Templates --> Drafts: Customize
+    Drafts --> Drafts: Iterate
+    Drafts --> Workflows: Publish
+    Workflows --> Drafts: Edit/Clone
+    Workflows --> [*]: Deploy
+```2
+- [LangChain Documentation](```mermaid
+stateDiagram-v2
+    [*] --> Templates: Start
+    Templates --> Drafts: Customize
+    Drafts --> Drafts: Iterate
+    Drafts --> Workflows: Publish
+    Workflows --> Drafts: Edit/Clone
+    Workflows --> [*]: Deploy
+```3
+- [What Is OpenAI ChatGPT Agent Builder? A Complete 2025 Guide](```mermaid
+stateDiagram-v2
+    [*] --> Templates: Start
+    Templates --> Drafts: Customize
+    Drafts --> Drafts: Iterate
+    Drafts --> Workflows: Publish
+    Workflows --> Drafts: Edit/Clone
+    Workflows --> [*]: Deploy
+```4
 
 ---
 
@@ -1006,5 +905,9 @@ graph LR
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
+## Abgrenzung zu verwandten Dokumenten
 
-
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit Agent Builder? |
+| [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für Agent Builder? |

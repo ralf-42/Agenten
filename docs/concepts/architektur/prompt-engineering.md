@@ -4,7 +4,7 @@ title: Prompt Engineering
 parent: Grundlagen & Architektur
 grand_parent: Konzepte
 nav_order: 3
-description: "Strategien fuer effektive Prompts in Agentensystemen"
+description: "Strategien für effektive Prompts in Agentensystemen"
 has_toc: true
 ---
 
@@ -340,15 +340,16 @@ ANTWORT:"""
 
 ### Iteratives Prompt-Design
 
-```mermaid
-flowchart LR
-    A[Erster Entwurf] --> B[Testen]
-    B --> C{Ergebnis OK?}
-    C -->|Nein| D[Analysieren]
-    D --> E[Anpassen]
-    E --> B
-    C -->|Ja| F[Dokumentieren]
-```
+```python
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```0
 
 **Empfohlener Workflow:**
 
@@ -361,19 +362,15 @@ flowchart LR
 ### Prompt-Versionierung
 
 ```python
-PROMPTS = {
-    "classify_email_v1": "Klassifiziere als dringend/normal: {email}",
-    "classify_email_v2": """Klassifiziere die E-Mail:
-- dringend: Systemausfälle, Sicherheitsprobleme, Deadlines < 24h
-- normal: Alle anderen Anfragen
-
-E-Mail: {email}
-Klassifikation:""",
-}
-
-# In Produktion: Version tracken
-current_version = "classify_email_v2"
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```1
 
 ---
 
@@ -386,60 +383,79 @@ current_version = "classify_email_v2"
 
 **Problem:**
 ```python
-# Vage und mehrdeutig
-prompt = "Fasse das zusammen: {text}"
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```2
 
 **Lösung:**
 ```python
-# Präzise und eindeutig
-prompt = """Erstelle eine Zusammenfassung in 3 Stichpunkten.
-Jeder Punkt maximal 15 Wörter.
-Fokus auf Handlungsempfehlungen.
-
-Text: {text}
-
-Zusammenfassung:"""
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```3
 
 ### Fehler: Fehlende Beispiele bei komplexen Formaten
 
 **Problem:**
 ```python
-# Erwartet spezifisches Format ohne Beispiel
-prompt = "Extrahiere Entitäten aus: {text}"
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```4
 
 **Lösung:**
 ```python
-# Mit Beispiel (Few-Shot)
-prompt = """Extrahiere Entitäten im Format: ENTITÄT (TYP)
-
-Beispiel:
-Text: "Angela Merkel besuchte gestern Berlin."
-Entitäten: Angela Merkel (PERSON), Berlin (ORT), gestern (ZEIT)
-
-Text: {text}
-Entitäten:"""
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```5
 
 ### Fehler: Widersprüchliche Anweisungen
 
 **Problem:**
 ```python
-# Widerspruch: kurz UND detailliert
-prompt = "Erkläre kurz und detailliert: {thema}"
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```6
 
 **Lösung:**
 ```python
-# Klare Priorisierung
-prompt = """Erkläre das Thema in zwei Teilen:
-1. KURZFASSUNG (1-2 Sätze): Kernaussage
-2. DETAILS (3-5 Sätze): Wichtige Aspekte
-
-Thema: {thema}"""
-```
+few_shot_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
+    ("human", "Betreff: Server ausgefallen"),
+    ("assistant", "dringend"),
+    ("human", "Betreff: Quartalsbericht verfügbar"),
+    ("assistant", "normal"),
+    ("human", "Betreff: {email_subject}")
+])
+```7
 
 ---
 

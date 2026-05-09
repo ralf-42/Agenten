@@ -4,7 +4,7 @@ title: Embeddings
 parent: Wissensmanagement
 grand_parent: Konzepte
 nav_order: 3
-description: "Vektorrepräsentationen fuer semantische Suche, RAG und Agenten-Memory"
+description: "Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory"
 has_toc: true
 ---
 
@@ -161,8 +161,8 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 | `text-embedding-3-small`    | `tiktoken.encoding_for_model("text-embedding-3-small")`                                | Max. **8192 Tokens** pro Chunk Empfohlen: 512–2048 Tokens                       |
 | `text-embedding-3-large`    | `tiktoken.encoding_for_model("text-embedding-3-large")`                                | Bis zu **8192 Tokens**, optimal **gestückelt nach thematischen Abschnitten**    |
 | `all-MiniLM-L6-v2`          | `transformers.AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")` | Max. **384 Tokens** (modellabhängig) BERT-kompatible Chunking mit Overlap       |
-| `sentence-transformers/...` | `transformers.AutoTokenizer.from_pretrained(...)`                                      | Chunking nach **Max Token Length** des jeweiligen Modells (oft 384–512 Tokens)  |
-| `e5-base-v2`                | `transformers.AutoTokenizer.from_pretrained("intfloat/e5-base-v2")`                    | Max. **512 Tokens** ggf. Split mit Overlap, um Kontext zu erhalten              |
+| `sentence-transformers/...` | `text-embedding-ada-002`0                                      | Chunking nach **Max Token Length** des jeweiligen Modells (oft 384–512 Tokens)  |
+| `text-embedding-ada-002`1                | `text-embedding-ada-002`2                    | Max. **512 Tokens** ggf. Split mit Overlap, um Kontext zu erhalten              |
 
 # Warum sind Embeddings so wichtig?
 + **Sprachverarbeitung**: Chatbots, Übersetzungen und Textanalysen basieren auf Embeddings. 

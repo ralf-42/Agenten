@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Digitale Souveränität
-parent: Regulatorische Themen
+parent: Regulatorisches
 nav_order: 1
 description: Definition, Reifegrade und europäische Strategien zur digitalen Souveränität
 has_toc: true
-grand_parent: Regulatorisches
 ---
 
 # Digitale Souveränität

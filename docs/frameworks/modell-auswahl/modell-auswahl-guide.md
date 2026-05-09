@@ -28,13 +28,12 @@ Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für ein
 
 ## OpenAI-Default im Kurs
 
-| Modell        | Stärke                                                      | Typischer Einsatz                              |
-| ------------- | ----------------------------------------------------------- | ---------------------------------------------- |
-| `gpt-4o-mini` | Schnell, günstig                                            | Grundlagen, einfache Tool-Calls, Demos         |
-| `o3-mini`     | Reasoning, kompakt                                          | Leichte Entscheidungslogik, Routing            |
-| `o3`          | Starkes Reasoning                                           | Supervisor, Judge, komplexes Routing, Security |
-| `gpt-5.4-mini` | Coding & Agentic Tasks, schnell und kostengünstig          | Worker-Agenten, Code-Generierung, RAG-Synthese |
-| `gpt-5.4`      | Maximale Ausgabequalität, komplexe Synthese                | Worker (hochwertig), finale Reports, kritische RAG |
+| Modell         | Stärke                                             | Typischer Einsatz                                    |
+| -------------- | -------------------------------------------------- | ---------------------------------------------------- |
+| `gpt-5.4-nano` | Günstig, schnell, GPT-5.x-Basis                   | Grundlagen, Demos, einfaches Routing                 |
+| `gpt-5.4-mini` | Coding & Agentic Tasks, kostengünstig              | Worker, Code-Generierung, RAG-Synthese               |
+| `gpt-5.4`      | Starkes Reasoning, hohe Ausgabequalität            | Judge, Supervisor, Planner, komplexe RAG             |
+| `gpt-5.5`      | Maximale Qualität (Premium)                        | Kritische Sicherheitsentscheidungen, finale Evaluation |
 
 > [!TIP] Faustregel<br>
 > Nicht das stärkste Modell wählen — das *passende* für den Knoten.
@@ -46,14 +45,15 @@ Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für ein
 
 Auch wenn im Kurs konkrete OpenAI-Modelle verwendet werden, steckt dahinter ein allgemeines Rollenmodell:
 
-| Rolle | Bedeutung im Kurs |
-|------|--------------------|
-| **Baseline / Demo** | günstige, schnelle Läufe für Grundlagen und erste Tests |
-| **Router / leichter Reasoner** | einfache Routing- und Auswahlentscheidungen |
-| **Judge / starker Reasoner** | Supervisor, Security, Bewertung, Compliance |
-| **Worker / Synthese** | hochwertige Text-, Code- oder RAG-Ausgabe |
-| **Coding-Worker** | Code-Generierung, Refactoring, technische Agenten-Knoten |
-| **Embeddings** | Vektorrepräsentationen für Retrieval und RAG — kein Chat-Modell |
+| Rolle | Modell | Bedeutung im Kurs |
+|------|--------|-------------------|
+| **Baseline / Demo** | `gpt-5.4-nano` | günstige, schnelle Läufe für Grundlagen und erste Tests |
+| **Router / leichter Reasoner** | `gpt-5.4-nano` | einfache Routing- und Auswahlentscheidungen |
+| **Supervisor / kritisches Routing** | `gpt-5.4` | komplexe Routing-Logik, Supervisor-Pattern |
+| **Judge / starker Reasoner** | `gpt-5.4` | Bewertung, Evaluation, Compliance |
+| **Judge Premium** | `gpt-5.5` | kritische Sicherheitsentscheidungen, finale Evaluation |
+| **Worker / Synthese** | `gpt-5.4-mini` | hochwertige Text-, Code- oder RAG-Ausgabe |
+| **Embeddings** | `text-embedding-3-small` | Vektorrepräsentationen für Retrieval und RAG |
 
 Die nachfolgenden Regeln beschreiben also zwei Ebenen gleichzeitig:
 
@@ -68,43 +68,43 @@ Wer dieselbe Rollenlogik auf Mistral, Gemini oder Anthropic übertragen möchte,
 
 Diese Regeln gelten für alle Module, in denen Modelle explizit zugewiesen werden:
 
-### Regel 1 — Router und Supervisor: `o3`
+### Regel 1 — Router (einfach): `gpt-5.4-nano`
 
-Knoten, die **Entscheidungen treffen** (Routing, Supervisor-Logik, Conditional Edges), erhalten im Kurs `o3`.
-
-> [!WARNING] Schwaches Modell als Router → Fehler im gesamten Graph<br>
-> Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch alle nachgelagerten Nodes fortpflanzen. Ein einzelner falscher Route-Entscheid kann den gesamten Workflow zum Scheitern bringen.
-
-Begründung: Schwache Modelle treffen fehlerhafte Routing-Entscheidungen, die sich durch den gesamten Graphen fortpflanzen.
-
-**Rollenbeschreibung:**  
-Hier wird ein **starkes Reasoning-Modell** benötigt, nicht einfach nur ein allgemeines Chat-Modell.
-
-```python
-from langchain.chat_models import init_chat_model
-
-supervisor_llm = init_chat_model("openai:o3")
-```
-
-### Regel 1b — Kostenbewusste Routing-Baseline: `o3-mini`
-
-Für **einfache** Entscheidungslogik (2-3 Routen, geringe Fehlertoleranz, Demo/Prototyp) kann `o3-mini` als kostengünstige Baseline genutzt werden.
-Bei kritischen Entscheidungen (Supervisor, Security, Evaluation) bleibt `o3` die Standardwahl.
+Knoten, die **einfache Routing-Entscheidungen** treffen (2-3 Routen, Demos, Prototypen), erhalten `gpt-5.4-nano`.
+Begründung: Günstigstes GPT-5.x-Modell, ausreichend für klare Entscheidungslogik.
 
 **Rollenbeschreibung:**  
 Das ist die Rolle **Router / leichter Reasoner**.
 
 ```python
-router_llm = init_chat_model("openai:o3-mini")
+from langchain.chat_models import init_chat_model
+
+router_llm = init_chat_model("openai:gpt-5.4-nano")
+# Qualitätssteuerung: model_kwargs={"reasoning": {"effort": "low"}}
 ```
 
-> [!DANGER] o3 / o3-mini: kein temperature-Parameter<br>
-> Beide Modelle unterstützen `temperature` nicht. Jeder Aufruf mit `temperature=...` führt zu einem API-Fehler. Parameter einfach weglassen — der API-Default wird automatisch verwendet.
+### Regel 1b — Supervisor und kritisches Routing: `gpt-5.4`
+
+Knoten, die **kritische Entscheidungen** treffen (Supervisor-Logik, Security, komplexe Conditional Edges), erhalten `gpt-5.4`.
+
+> [!WARNING] Schwaches Modell als Supervisor → Fehler im gesamten Graph<br>
+> Fehlerhafte Routing-Entscheidungen pflanzen sich durch alle nachgelagerten Nodes fort. Ein falscher Route-Entscheid kann den gesamten Workflow zum Scheitern bringen.
+
+**Rollenbeschreibung:**  
+Supervisor, komplexer Router — starkes Reasoning erforderlich.
+
+```python
+supervisor_llm = init_chat_model("openai:gpt-5.4")
+# Qualitätssteuerung: model_kwargs={"reasoning": {"effort": "high"}}
+```
+
+> [!DANGER] Gesamte GPT-5.x-Serie: kein temperature-Parameter<br>
+> `temperature` führt zu einem API-Fehler. Qualitätssteuerung über `reasoning.effort` und `text.verbosity`.
 
 ### Regel 2 — Worker und Content: `gpt-5.4-mini`
 
 Knoten, die **Inhalte erzeugen** (Texte, Code, RAG-Antworten, strukturierte Ausgaben), erhalten im Kurs `gpt-5.4-mini`.
-Begründung: Stärkstes Mini-Modell für Coding und Subagenten, ~40 % günstiger als `gpt-5.1`, aktuellerer Knowledge Cutoff (Aug 2025).
+Begründung: Stärkstes Mini-Modell für Coding und Subagenten, aktuellerer Knowledge Cutoff (Aug 2025).
 
 Für **maximale Ausgabequalität** (komplexe RAG, finale Reports) steht `gpt-5.4` als Upgrade zur Verfügung.
 
@@ -124,38 +124,43 @@ worker_premium_llm = init_chat_model("openai:gpt-5.4")        # Worker hochwerti
 > worker_llm = init_chat_model("openai:gpt-5.4-mini")
 > ```
 
-### Regel 3 — Judge und Evaluator: `o3`
+### Regel 3 — Judge und Evaluator: `gpt-5.4`
 
-LLM-as-Judge Evaluatoren erhalten im Kurs `o3`.
-Begründung: Qualitative Bewertung erfordert Urteilsvermögen, nicht nur Textgenerierung.
+LLM-as-Judge Evaluatoren erhalten im Kurs `gpt-5.4`.
+Begründung: Qualitative Bewertung erfordert starkes Reasoning. Für kritische Sicherheitsentscheidungen steht `gpt-5.5` als Premium-Option zur Verfügung.
 
 **Rollenbeschreibung:**  
-Das ist die Rolle **Judge / starker Reasoner**.
+Das ist die Rolle **Judge / starker Reasoner** (Standard) bzw. **JUDGE_PREMIUM** (kritisch).
 
 ```python
-judge_llm = init_chat_model("openai:o3")
+judge_llm         = init_chat_model("openai:gpt-5.4")   # Standard
+judge_premium_llm = init_chat_model("openai:gpt-5.5")   # nur wenn gpt-5.4 nicht ausreicht
+# Qualitätssteuerung: model_kwargs={"reasoning": {"effort": "high"}}
 ```
 
-### Regel 4 — Grundlagen und Demos: `gpt-4o-mini`
+### Regel 4 — Grundlagen und Demos: `gpt-5.4-nano`
 
-Alle Module, in denen das Konzept im Vordergrund steht (nicht die Ausgabequalität), verwenden im Kurs `gpt-4o-mini`.
-Begründung: Didaktik, Kosteneffizienz, schnelle Iteration.
+Alle Module, in denen das Konzept im Vordergrund steht (nicht die Ausgabequalität), verwenden im Kurs `gpt-5.4-nano`.
+Begründung: Günstigstes GPT-5.x-Modell — konsistent mit der gesamten Modell-Konfiguration, kein `temperature`.
 
 **Rollenbeschreibung:**  
 Das ist die Rolle **Baseline / Demo**.
 
 ```python
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 ```
+
+> [!NOTE] temperature bei BASELINE<br>
+> `temperature` ist bei der gesamten GPT-5.x-Serie (inkl. `gpt-5.4-nano`) outdated. Deterministische Ausgaben über präzise Prompts steuern, nicht über `temperature=0`.
 
 ### Regel 5 — Baseline immer dokumentieren
 
-Jeder Mixed-Model-Einsatz startet mit einem **Single-Model-Baseline-Run** auf `gpt-4o-mini`.
+Jeder Mixed-Model-Einsatz startet mit einem **Single-Model-Baseline-Run** auf `gpt-5.4-nano`.
 Vergleich mit 4 Kennzahlen: Ergebnisqualität · Schritte bis FINISH · Latenz · Kosten.
 
 ### Regel 6 — Einfache Aufgaben nicht hochheben
 
-Extraktion, Formatierung, einfache Klassifikation: immer `gpt-4o-mini`.
+Extraktion, Formatierung, einfache Klassifikation: immer `gpt-5.4-nano`.
 Premium-Modelle für strukturierte Datenextraktion aus klar definierten Texten bringen keinen Mehrwert.
 
 ---
@@ -172,16 +177,16 @@ flowchart TD
     START --> G{"Grundlagen-Demo\nEinzel-Tool · einfache Chain?"}
     START --> U{"Unklarer Fall?"}
 
-    R -->|kritisch| O3A["🔵 o3"]
-    R -->|einfach / Demo| O3M["🔵 o3-mini"]
-    J -->|Ja| O3B["🔵 o3"]
+    R -->|kritisch| SUP["🟠 gpt-5.4"]
+    R -->|einfach / Demo| O3M["⚪ gpt-5.4-nano"]
+    J -->|Ja| JDG["🟠 gpt-5.4\n(Premium: gpt-5.5)"]
     W -->|Ja| GP["🟢 gpt-5.4-mini"]
-    G -->|Ja| MINI["⚪ gpt-4o-mini"]
-    U -->|Ja| BASE["⚪ gpt-4o-mini\nals Baseline starten\ndann gezielt upgraden"]
+    G -->|Ja| MINI["⚪ gpt-5.4-nano"]
+    U -->|Ja| BASE["⚪ gpt-5.4-nano\nals Baseline starten\ndann gezielt upgraden"]
 
-    style O3A  fill:#1565C0,color:#fff
-    style O3M  fill:#1976D2,color:#fff
-    style O3B  fill:#1565C0,color:#fff
+    style SUP  fill:#E65100,color:#fff
+    style O3M  fill:#546E7A,color:#fff
+    style JDG  fill:#E65100,color:#fff
     style GP   fill:#2E7D32,color:#fff
     style MINI fill:#546E7A,color:#fff
     style BASE fill:#546E7A,color:#fff
@@ -192,7 +197,7 @@ flowchart TD
 
 ## Modul-Mapping
 
-### Standard: `gpt-4o-mini` (Fokus Konzept, nicht Modellqualität)
+### Standard: `gpt-5.4-nano` (Fokus Konzept, nicht Modellqualität)
 
 | Module | Begründung |
 |--------|-----------|
@@ -204,14 +209,14 @@ flowchart TD
 
 ### Mixed-Model: Lerninhalt im Modul verankert
 
-| Modul         | Supervisor / Router         | Worker / Generator         | Lernziel                                               |
-| ------------- | --------------------------- | -------------------------- | ------------------------------------------------------ |
-| **M12**       | Einführung Konzept          | —                          | *Warum Routing-Knoten ein stärkeres Modell brauchen*   |
-| **M21 / M22** | `o3`                        | `gpt-4o-mini`              | Supervisor-Pattern: Modell-Rollentrennung live erleben |
-| **M18**       | `o3` (Judge)                | `gpt-4o-mini` (Candidate)  | LLM-as-Judge: Warum der Judge stark sein muss          |
-| **M26**       | `o3` (Planner)              | `gpt-5.4-mini` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese   |
-| **M19**       | `o3` (Judge, optional Demo) | `gpt-4o-mini` (Candidate)  | Evaluation: Baseline vs. starker Evaluator             |
-| **M20**       | `o3` (Policy/Risk)          | `gpt-4o-mini` (Worker)     | Security: robuste Gate-Entscheidungen                  |
+| Modul         | Supervisor / Router              | Worker / Generator         | Lernziel                                                    |
+| ------------- | -------------------------------- | -------------------------- | ----------------------------------------------------------- |
+| **M12**       | Einführung Konzept               | —                          | *Warum Routing-Knoten ein stärkeres Modell brauchen*        |
+| **M21 / M22** | `gpt-5.4` (Supervisor)          | `gpt-5.4-nano`             | Supervisor-Pattern: Modell-Rollentrennung live erleben      |
+| **M18**       | `gpt-5.4` (Judge)               | `gpt-5.4-nano` (Candidate) | LLM-as-Judge: Warum der Judge stark sein muss               |
+| **M26**       | `gpt-5.4` (Planner)             | `gpt-5.4-mini` (Generator) | Agentic RAG: Retrieval-Steuerung vs. Antwortsynthese        |
+| **M19**       | `gpt-5.4` (Judge, optional Demo) | `gpt-5.4-nano` (Candidate) | Evaluation: Baseline vs. starker Evaluator                  |
+| **M20**       | `gpt-5.5` (Policy/Risk)         | `gpt-5.4-nano` (Worker)    | Security: robuste Gate-Entscheidungen (Premium-Judge)       |
 
 ---
 
@@ -222,24 +227,24 @@ flowchart TD
 ```python
 from langchain.chat_models import init_chat_model
 
-# Supervisor: trifft Routing-Entscheidungen
-supervisor_llm = init_chat_model("openai:o3")
+# Supervisor: trifft Routing-Entscheidungen (Standard)
+supervisor_llm = init_chat_model("openai:gpt-5.4")
 
 # Worker: erzeugt Inhalte
-worker_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.2)
+worker_llm = init_chat_model("openai:gpt-5.4-mini")
 
-# Baseline: alles auf gpt-4o-mini (immer zuerst!)
-baseline_llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+# Baseline: alles auf gpt-5.4-nano (immer zuerst!)
+baseline_llm = init_chat_model("openai:gpt-5.4-nano")
 ```
 
 ### Judge + Candidate (M18)
 
 ```python
 # LLM-as-Judge: bewertet Antwortqualität
-judge_llm   = init_chat_model("openai:o3")
+judge_llm   = init_chat_model("openai:gpt-5.4")
 
 # Candidate: der evaluierte Agent
-agent_llm   = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+agent_llm   = init_chat_model("openai:gpt-5.4-nano")
 ```
 
 ### Planner + Generator (M26 — Agentic RAG)
@@ -269,16 +274,23 @@ pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```python
 from langchain.chat_models import init_chat_model
 from langchain_openai import OpenAIEmbeddings
-from genai_lib.model_config import BASELINE, ROUTER, JUDGE, PLANNER, WORKER, WORKER_PREMIUM, CODING, EMBEDDINGS
+from genai_lib.model_config import (
+    BASELINE, ROUTER, TRANSLATOR,
+    WORKER, CODING, TRANSLATOR_PREMIUM,
+    JUDGE, PLANNER, WORKER_PREMIUM,
+    JUDGE_PREMIUM, PLANNER_PREMIUM,
+    EMBEDDINGS,
+)
 
-baseline_llm       = init_chat_model(BASELINE, temperature=0.0)  # Baseline / Demo
-router_llm         = init_chat_model(ROUTER)                      # Router / leichter Reasoner
-judge_llm          = init_chat_model(JUDGE)                       # Judge / starker Reasoner
-planner_llm        = init_chat_model(PLANNER)                     # Planner / Aufgabenzerlegung
-worker_llm         = init_chat_model(WORKER)                      # Worker / Synthese
-worker_premium_llm = init_chat_model(WORKER_PREMIUM)              # Worker / Synthese (hochwertig)
-coding_llm         = init_chat_model(CODING)                      # Coding-Worker
-embed_model        = OpenAIEmbeddings(model=EMBEDDINGS)           # Embeddings
+baseline_llm       = init_chat_model(BASELINE)        # gpt-5.4-nano — Baseline / Demo
+router_llm         = init_chat_model(ROUTER)           # gpt-5.4-nano — Router / leichter Reasoner
+worker_llm         = init_chat_model(WORKER)           # gpt-5.4-mini — Worker / Synthese
+worker_premium_llm = init_chat_model(WORKER_PREMIUM)   # gpt-5.4     — Worker (hochwertig)
+coding_llm         = init_chat_model(CODING)           # gpt-5.4-mini — Coding-Worker
+judge_llm          = init_chat_model(JUDGE)            # gpt-5.4     — Judge / starker Reasoner
+planner_llm        = init_chat_model(PLANNER)          # gpt-5.4     — Planner
+judge_premium_llm  = init_chat_model(JUDGE_PREMIUM)    # gpt-5.5     — Judge (kritisch)
+embed_model        = OpenAIEmbeddings(model=EMBEDDINGS)
 ```
 
 **Beispiel-Aufrufe:**
@@ -287,7 +299,7 @@ embed_model        = OpenAIEmbeddings(model=EMBEDDINGS)           # Embeddings
 from langchain_core.messages import HumanMessage
 from langgraph.prebuilt import create_react_agent
 
-# Einfacher Modell-Aufruf (kein temperature bei o3 / gpt-5.4-mini!)
+# Einfacher Modell-Aufruf (kein temperature — gesamte GPT-5.x-Serie)
 route = judge_llm.invoke([HumanMessage(content="Bewerte diese Antwort: ...")])
 
 # Worker als ReAct-Agent

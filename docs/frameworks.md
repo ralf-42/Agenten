@@ -49,7 +49,7 @@ LangSmith ist das zentrale Observability-Werkzeug: Tracing, Eval-Datasets und Re
 
 Konkrete Provider, Modelle und Kurs-Defaults — konzeptionelle Kriterien und Trade-offs stehen unter [Konzepte → Modellauswahl](./concepts/modell-kontext/modellauswahl.html).
 
-- **[Modell-Auswahl Guide](./frameworks/modell-auswahl/modell-auswahl-guide.html)** – *Welches Modell für welche Aufgabe?* Designregeln: Router/Supervisor → `o3`, Worker → `gpt-5.1`, Demos → `gpt-4o-mini`.
+- **[Modell-Auswahl Guide](./frameworks/modell-auswahl/modell-auswahl-guide.html)** – *Welches Modell für welche Aufgabe?* Designregeln: Router/Supervisor → `o3`, Worker → `gpt-5.4-mini`, Demos → `gpt-4o-mini`.
 - **[Provider-Modell-Mapping](./frameworks/modell-auswahl/provider-modell-mapping.html)** – *Wie bilde ich Modellrollen auf verschiedene Provider ab?* Rollenbasiertes Mapping für OpenAI, Mistral und Anthropic.
 
 ## Best Practices

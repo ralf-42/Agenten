@@ -158,7 +158,7 @@ MODEL_CONFIG = {
         "baseline": "openai:gpt-4o-mini",
         "router": "openai:o3-mini",
         "judge": "openai:o3",
-        "worker": "openai:gpt-5.1",
+        "worker": "openai:gpt-5.4-mini",
     },
     "mistral": {
         "baseline": "mistral:mistral-small-latest",

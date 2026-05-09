@@ -8,55 +8,95 @@ Installation (einmalig):
     pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 Import im Notebook:
-    from genai_lib.model_config import WORKER, JUDGE, BASELINE, TRANSLATOR, TRANSLATOR_PREMIUM
+    from genai_lib.model_config import (
+        BASELINE, ROUTER, TRANSLATOR,
+        WORKER, CODING, TRANSLATOR_PREMIUM,
+        JUDGE, PLANNER, WORKER_PREMIUM,
+        JUDGE_PREMIUM, PLANNER_PREMIUM,
+        EMBEDDINGS,
+    )
 
 Verwendung:
     from langchain.chat_models import init_chat_model
-    llm        = init_chat_model(BASELINE, temperature=0.0)
+    llm        = init_chat_model(BASELINE)
     worker_llm = init_chat_model(WORKER)
     judge_llm  = init_chat_model(JUDGE)
 
-Rollen:
-    BASELINE           — Baseline / Demo              (gpt-4o-mini)
-    ROUTER             — Router / leichter Reasoner   (o3-mini)
-    JUDGE              — Judge / starker Reasoner     (o3)
-    PLANNER            — Planner / Aufgabenzerlegung  (o3)
-    WORKER             — Worker / Synthese             (gpt-5.4-mini)
-    WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
-    CODING             — Coding-Worker                 (gpt-5.4-mini)
+    # Qualitätssteuerung über reasoning.effort (nicht temperature):
+    llm = init_chat_model(JUDGE, model_kwargs={"reasoning": {"effort": "high"}})
+
+Rollen (Nano → Mini → Standard → Premium):
+    BASELINE           — Baseline / Demo              (gpt-5.4-nano)
+    ROUTER             — Router / leichter Reasoner   (gpt-5.4-nano)
     TRANSLATOR         — Übersetzer / Rohübersetzung   (gpt-5.4-nano)
+    WORKER             — Worker / Synthese             (gpt-5.4-mini)
+    CODING             — Coding-Worker                 (gpt-5.4-mini)
     TRANSLATOR_PREMIUM — Übersetzer / hochwertig       (gpt-5.4-mini)
+    JUDGE              — Judge / starker Reasoner      (gpt-5.4)
+    PLANNER            — Planner / Aufgabenzerlegung   (gpt-5.4)
+    WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
+    JUDGE_PREMIUM      — Judge / maximale Qualität     (gpt-5.5)
+    PLANNER_PREMIUM    — Planner / maximale Qualität   (gpt-5.5)
     EMBEDDINGS         — Embeddings                    (text-embedding-3-small)
 
-Hinweis: o3, o3-mini und gpt-5.4-* unterstützen keinen temperature-Parameter.
+Hinweis: GPT-5.x-Reasoning-Modelle nicht pauschal mit temperature konfigurieren.
+Stattdessen reasoning.effort und text.verbosity verwenden.
+temperature ist nur in bestimmten Konfigurationen mit reasoning.effort="none" erlaubt.
 """
 
-# Baseline / Demo — schnell, günstig, didaktisch steuerbar
-BASELINE = "openai:gpt-4o-mini"
+# --- Nano-Tier: günstig, schnell, einfache Aufgaben ---
 
-# Übersetzer — Rohübersetzung, UI-Texte, Kursmaterial, kurze bis mittlere Texte
+# Baseline / Demo — günstigstes GPT-5.x-Modell für einfache Beispiele und Demos.
+# reasoning.effort="none" oder "low". Deterministik über Prompts, nicht temperature.
+BASELINE = "openai:gpt-5.4-nano"
+
+# Router / leichter Reasoner — einfache Routing- und Auswahlentscheidungen (2-3 Wege).
+# reasoning.effort="low" reicht für klare Routing-Entscheidungen.
+ROUTER = "openai:gpt-5.4-nano"
+
+# Übersetzer — Rohübersetzung, UI-Texte, Kursmaterial, kurze bis mittlere Texte.
+# reasoning.effort="none" oder "low", text.verbosity="low".
 TRANSLATOR = "openai:gpt-5.4-nano"
 
-# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung
-TRANSLATOR_PREMIUM = "openai:gpt-5.4-mini"
+# --- Mini-Tier: ausgewogen, Standard-Workhorse ---
 
-# Router / leichter Reasoner — einfache Routing- und Auswahlentscheidungen
-ROUTER = "openai:o3-mini"
-
-# Judge / starker Reasoner — Supervisor, Security, Evaluation
-JUDGE = "openai:o3"
-
-# Planner — Aufgabenzerlegung, Schritt-Planung, Agentic RAG
-PLANNER = "openai:o3"
-
-# Worker / Synthese — RAG-Synthese, strukturierte Ausgaben, Code
+# Worker / Synthese — RAG-Synthese, strukturierte Ausgaben, Code.
+# reasoning.effort="low" bis "medium" je nach Ausgabe-Komplexität.
 WORKER = "openai:gpt-5.4-mini"
 
-# Worker / Synthese (hochwertig) — komplexe RAG, finale Reports
+# Coding-Worker — Code-Generierung, Refactoring, technische Agenten.
+# reasoning.effort="medium" bis "high" je nach Aufgabe.
+CODING = "openai:gpt-5.4-mini"
+
+# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung.
+# reasoning.effort="low", text.verbosity="medium".
+TRANSLATOR_PREMIUM = "openai:gpt-5.4-mini"
+
+# --- Standard-Tier: starke Reasoning-Qualität ---
+
+# Judge / starker Reasoner — Supervisor, Security, Evaluation, Compliance.
+# reasoning.effort="high". Für maximale Qualität: JUDGE_PREMIUM.
+JUDGE = "openai:gpt-5.4"
+
+# Planner — Aufgabenzerlegung, Schritt-Planung, Agentic RAG.
+# reasoning.effort="medium" bis "high".
+PLANNER = "openai:gpt-5.4"
+
+# Worker / Synthese (hochwertig) — komplexe RAG, finale Reports.
+# reasoning.effort="medium" bis "high".
 WORKER_PREMIUM = "openai:gpt-5.4"
 
-# Coding-Worker — Code-Generierung, Refactoring, technische Agenten
-CODING = "openai:gpt-5.4-mini"
+# --- Premium-Tier: maximale Qualität (nur wenn Standard nicht reicht) ---
+
+# Judge (Premium) — kritische Sicherheitsentscheidungen, finale Evaluation.
+# reasoning.effort="high" oder "xhigh".
+JUDGE_PREMIUM = "openai:gpt-5.5"
+
+# Planner (Premium) — hochkomplexe Aufgabenzerlegung, multi-step Planung.
+# reasoning.effort="high".
+PLANNER_PREMIUM = "openai:gpt-5.5"
+
+# --- Embeddings ---
 
 # Embeddings — Retrieval, Chunk-Suche, Vektorindizes
 EMBEDDINGS = "text-embedding-3-small"

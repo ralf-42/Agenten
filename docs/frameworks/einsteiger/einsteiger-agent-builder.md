@@ -11,8 +11,7 @@ has_toc: true
 # Agent Builder
 {: .no_toc }
 
-> **Agenten ohne Code: Visuelle Workflow-Erstellung mit OpenAI Agent Builder**     
-
+> **Agenten ohne Code: Visuelle Workflow-Erstellung mit OpenAI Agent Builder**<br>
 ---
 
 # Inhaltsverzeichnis

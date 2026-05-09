@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Markdown Template Guide
 nav_exclude: true

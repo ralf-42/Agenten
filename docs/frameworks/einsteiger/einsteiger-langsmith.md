@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: LangSmith
 parent: Einsteiger-Guides

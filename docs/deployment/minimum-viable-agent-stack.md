@@ -1,10 +1,11 @@
-﻿---
+---
 layout: default
 title: Minimum Viable Agent Stack
-parent: Deployment
+parent: Deployment-Themen
 nav_order: 4
 description: Die sechs Schichten zwischen einem LLM und einem Produktionsagenten — Einstiegspunkt, Upgrade-Kriterien und ehrliche Einschätzung pro Schicht.
 has_toc: true
+grand_parent: Deployment
 ---
 
 # Minimum Viable Agent Stack (2026)

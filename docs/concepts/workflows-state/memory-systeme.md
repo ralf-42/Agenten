@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Memory-Systeme
 parent: Workflows & State

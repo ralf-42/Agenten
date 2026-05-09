@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Einstieg & Entscheidung
-parent: Konzepte
+title: "Einstieg & Entscheidung"
+parent: Alle Konzepte
 nav_order: 1
 has_children: true
 description: "Vorprüfung und Entscheidungshilfe: ob ein KI-Vorhaben sinnvoll ist und welcher Lösungsweg passt"
+grand_parent: Konzepte
 ---
 
 # Einstieg & Entscheidung

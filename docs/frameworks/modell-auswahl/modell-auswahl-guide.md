@@ -11,7 +11,7 @@ has_toc: true
 # Modell-Auswahl Guide
 {: .no_toc }
 
-> **Welches Modell für welche Aufgabe?**      
+> **Welches Modell für welche Aufgabe?**<br>
 > Designregeln, Entscheidungsbaum und Modul-Mapping für den Agenten-Kurs.
 
 Dieser Guide beschreibt den aktuellen Kurs-Default mit OpenAI-Modellen. Für eine providerübergreifende Zuordnung zu Mistral und Anthropic siehe: [Provider-Modell-Mapping](https://ralf-42.github.io/Agenten/frameworks/modell-auswahl/provider-modell-mapping.html)

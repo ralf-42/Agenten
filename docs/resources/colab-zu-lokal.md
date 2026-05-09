@@ -1,17 +1,17 @@
 ---
 layout: default
 title: Von Colab zu Local
-parent: Ressourcen
+parent: Alle Ressourcen
 nav_order: 5
 description: Anleitung zur Ausführung der Kurs-Notebooks in einer lokalen Jupyter-Umgebung
 has_toc: true
+grand_parent: Ressourcen
 ---
 
 # Von Colab zur lokalen Umgebung
 {: .no_toc }
 
-> **Welche Anpassungen sind nötig, um die Kurs-Notebooks lokal auszuführen?**   
-
+> **Welche Anpassungen sind nötig, um die Kurs-Notebooks lokal auszuführen?**<br>
 ---
 
 # Inhaltsverzeichnis

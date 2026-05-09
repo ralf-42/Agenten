@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: ChromaDB
 parent: Einsteiger-Guides

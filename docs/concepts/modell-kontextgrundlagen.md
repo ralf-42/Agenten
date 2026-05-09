@@ -1,10 +1,11 @@
 ---
 layout: default
 title: Modell- und Kontextgrundlagen
-parent: Konzepte
+parent: Alle Konzepte
 nav_order: 3
 has_children: true
 description: "Modellauswahl, Context Engineering und Fine-Tuning: Grundlagen für optimale Agentenleistung"
+grand_parent: Konzepte
 ---
 
 # Modell- und Kontextgrundlagen

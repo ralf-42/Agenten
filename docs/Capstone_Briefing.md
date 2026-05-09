@@ -1,10 +1,11 @@
 ---
 layout: default
 title: Capstone-Briefing
-parent: Projekte
+parent: Alle Projekte
 nav_order: 3
 permalink: /projects/capstone-briefing.html
 description: "Abschlussprojekt: Research Assistant mit eigenem Korpus oder eigener Variante"
+grand_parent: Projekte
 ---
 
 # Capstone-Briefing

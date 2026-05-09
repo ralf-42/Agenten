@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Prompt-Templates
 parent: Einsteiger-Guides
@@ -11,7 +11,7 @@ has_toc: true
 # Prompt-Templates — Einsteiger-Guide
 {: .no_toc }
 
-> **Eigene Prompts erstellen, strukturieren und wiederverwenden.**    
+> **Eigene Prompts erstellen, strukturieren und wiederverwenden.**<br>
 > YAML-Frontmatter, XML-Tags und `load_prompt()` Schritt für Schritt erklärt.    
 
 ---

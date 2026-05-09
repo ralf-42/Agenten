@@ -1,16 +1,17 @@
 ---
 layout: default
 title: Produktionsreife Anwendung
-parent: Deployment
+parent: Deployment-Themen
 nav_order: 2
 description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
 has_toc: true
+grand_parent: Deployment
 ---
 
 # Aus der Entwicklung ins Deployment
 {: .no_toc }
 
-> **Vom Notebook zur Produktion**     
+> **Vom Notebook zur Produktion**<br>
 > Eine praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
 
 ---

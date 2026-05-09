@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Best Practices
 parent: Frameworks

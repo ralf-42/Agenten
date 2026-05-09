@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: DeepAgents
 parent: Einsteiger-Guides

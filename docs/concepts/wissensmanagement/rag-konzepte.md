@@ -42,7 +42,7 @@ Retrieval Augmented Generation ergänzt das Modell also nicht durch neues Traini
 Frage → Suche relevante Dokumente → Füge Kontext zum Prompt → LLM generiert Antwort
 ```
 
-> [!INFO] Kernidee RAG    
+> [!INFO] Kernidee RAG<br>
 > Das LLM erhält genau die Informationen, die es für die aktuelle Frage benötigt – nicht mehr und nicht weniger. Ohne passenden Kontext halluziniert das Modell stattdessen eine Antwort.
 
 ---

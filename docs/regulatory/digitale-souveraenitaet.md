@@ -1,16 +1,17 @@
 ---
 layout: default
 title: Digitale Souveränität
-parent: Regulatorisches
+parent: Regulatorische Themen
 nav_order: 1
 description: Definition, Reifegrade und europäische Strategien zur digitalen Souveränität
 has_toc: true
+grand_parent: Regulatorisches
 ---
 
 # Digitale Souveränität
 {: .no_toc }
 
-> **Digitale Souveränität: Definition, Reifegrade, Europa**      
+> **Digitale Souveränität: Definition, Reifegrade, Europa**<br>
 > Analyse des Status quo der digitalen Souveränität - von der Begriffsdefinition über Reifegradmodelle bis zu europäischen Strategien
 
 ---

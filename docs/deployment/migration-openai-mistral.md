@@ -1,16 +1,17 @@
 ---
 layout: default
 title: Migration-Analyse Provider
-parent: Deployment
+parent: Deployment-Themen
 nav_order: 3
 description: Migrationsleitfaden für den Wechsel von OpenAI-basierten Kursmodulen in die Mistral-Modellwelt mit LangChain als Abstraktionsschicht
 has_toc: true
+grand_parent: Deployment
 ---
 
 # Migration: OpenAI → Mistral
 {: .no_toc }
 
-> **Migrationsleitfaden für das Projekt `Agenten`**      
+> **Migrationsleitfaden für das Projekt `Agenten`**<br>
 > Zentrale Aussage: Die Migration wird vor allem dadurch vereinfacht, dass das Projekt stark auf **LangChain** und das umgebende Ökosystem setzt.
 
 > [!NOTE] Hinweis zu den Notebooks<br>

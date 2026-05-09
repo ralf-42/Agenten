@@ -1,10 +1,11 @@
-﻿---
+---
 layout: default
 title: EU AI Act
-parent: Regulatorisches
+parent: Regulatorische Themen
 nav_order: 2
-description: "Risikoklassen, Fristen und Pflichten der EU-KI-Verordnung"
+description: Risikoklassen, Fristen und Pflichten der EU-KI-Verordnung
 has_toc: true
+grand_parent: Regulatorisches
 ---
 
 # EU AI Act

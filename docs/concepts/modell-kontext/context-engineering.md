@@ -4,7 +4,7 @@ title: Context Engineering
 parent: Modell- und Kontextgrundlagen
 grand_parent: Konzepte
 nav_order: 2
-description: "Kontextmanagement fuer Agenten: Auswahl, Struktur, Memory, RAG und Tool-Ausgaben"
+description: "Kontextmanagement für Agenten: Auswahl, Struktur, Memory, RAG und Tool-Ausgaben"
 has_toc: true
 ---
 
@@ -289,22 +289,25 @@ Die Checkliste ist bewusst schlicht gehalten. In realen Projekten reicht oft sch
 
 ## Tool 2: Kontext-Templates
 ```
-**Kundenberatung-Template:**
-KUNDE: [Name, Alter, Beruf]
-SITUATION: [Aktuelle Lebensumstände]
-ZIEL: [Was möchte der Kunde erreichen?]
-BUDGET: [Verfügbare Mittel]
-PRÄFERENZEN: [Besondere Wünsche]
-```
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
+
+→ KI wählt passende Produktinformationen aus
+```0
 
 ## Tool 3: Einfache Kontextregeln
 ```
-1. Immer aktuellste Daten verwenden
-2. Maximal 3 Hauptinformationen pro Kontext
-3. Widersprüche sofort klären
-4. Kundenspezifische Informationen priorisieren
-5. Rechtliche Anforderungen immer beachten
-```
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
+
+→ KI wählt passende Produktinformationen aus
+```1
 
 
 
@@ -327,10 +330,14 @@ PRÄFERENZEN: [Besondere Wünsche]
 > [!TIP] Wirkung sichtbar machen<br>
 > Sinnvoll sind pro Use Case zwei bis drei Metriken, etwa Fehlerrate, Nachfragen oder Bearbeitungszeit. Erst der Vorher-Nachher-Vergleich zeigt, ob eine Kontextänderung tatsächlich wirkt.
 ```
-Genauigkeit: +65%
-Effizienz: +47%
-Kundenzufriedenheit: +30%
-```
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
+
+→ KI wählt passende Produktinformationen aus
+```2
 
 
 
@@ -384,46 +391,42 @@ Kundenzufriedenheit: +30%
 
 **Beispiel:**
 ```
-Kundenanfrage: "Ich suche eine günstige Hausratversicherung"
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
 
-Fehlende Kontextinformationen:
-- Wohnort und Wohnungsgröße?
-- Wert der Einrichtung?
-- Besondere Risiken?
-- Bisherige Schäden?
-- Definition von "günstig"?
-```
+→ KI wählt passende Produktinformationen aus
+```3
 
 ## Aufgabe 2: Kontext-Design
 **Aufgabe:** Ein Kontext-Template für die häufigste Aufgabe erstellen.
 
 **Vorlage:**
 ```
-AUFGABE: [Beschreibung]
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
 
-BENÖTIGTE INFORMATIONEN:
-1. [Primäre Info]
-2. [Sekundäre Info]
-3. [Ergänzende Info]
-
-AUSSCHLUSSKRITERIEN:
-- [Was nicht relevant ist]
-
-QUALITÄTSKRITERIEN:
-- [Wann ist der Kontext gut?]
-```
+→ KI wählt passende Produktinformationen aus
+```4
 
 ## Aufgabe 3: Fehler-Identifikation
 **Aufgabe:** Typische Kontextfehler im eigenen Arbeitsbereich identifizieren.
 
 **Häufige Fehler:**
 ```
-□ Veraltete Produktinformationen
-□ Fehlende Kundenpräferenzen
-□ Unvollständige Risikobewertung
-□ Ignorierte Ausschlusskriterien
-□ Widersprüchliche Datenquellen
-```
+Kundenkontext:
+- Alter: 35 Jahre
+- Familie: 2 Kinder
+- Beruf: Selbständig
+- Ziel: Familienabsicherung
+
+→ KI wählt passende Produktinformationen aus
+```5
 
 ## Abgrenzung zu verwandten Dokumenten
 

@@ -219,3 +219,10 @@ Beide Dokumente zusammen ergeben:
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
+| [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |

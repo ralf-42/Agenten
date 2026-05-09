@@ -49,7 +49,7 @@ Ein einmaliger persönlicher Textentwurf ist meist eine Chat-Aufgabe. Ein wieder
 | Wiederkehrende persönliche Unterstützung | Custom GPT oder Skill |
 | Vorgehen unklar, mehrstufig, toolgestützt | Agentensystem |
 
-Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet eine ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege (GenAI)](https://ralf-42.github.io/GenAI/concepts/einstieg/aufgabenklassen-und-loesungswege.html).
+Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet eine ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege (GenAI)](aufgabenklassen-und-loesungswege.html).
 
 ## Woran sich ein echter Agentenfall erkennen lässt
 

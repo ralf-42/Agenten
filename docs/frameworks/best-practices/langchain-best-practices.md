@@ -1170,3 +1170,9 @@ Beim Refactoring von altem Code:
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../einsteiger-guides.html) | Wo starte ich als Einsteiger mit LangChain Best Practices? |
+| [Best Practices](../best-practices.html) | Welche Produktionsstandards gelten für LangChain Best Practices? |

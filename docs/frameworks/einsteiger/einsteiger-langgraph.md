@@ -480,11 +480,11 @@ Mögliche Erweiterungen:
 
 | Dokument | Inhalt |
 |---|---|
-| [Einsteiger LangChain](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-langchain.html) | Voraussetzung: Modell-Init, Tools und Agenten mit LangChain |
-| [Einsteiger ChromaDB](https://ralf-42.github.io/Agenten/frameworks/einsteiger/einsteiger-chromadb.html) | Vektordatenbank als RAG-Tool in LangGraph-Workflows |
-| [State Management](https://ralf-42.github.io/Agenten/concepts/workflows-state/state-management.html) | Konzeptionelle Tiefe hinter TypedDict und Reducer-Funktionen |
-| [Checkpointing & Persistenz](https://ralf-42.github.io/Agenten/concepts/workflows-state/checkpointing-persistenz.html) | Technische Details zu MemorySaver und Thread-IDs |
-| [Human-in-the-Loop](https://ralf-42.github.io/Agenten/concepts/workflows-state/human-in-the-loop.html) | Konzept hinter Interrupt & Resume aus Abschnitt 9 |
+| [Einsteiger LangChain](einsteiger-langchain.html) | Voraussetzung: Modell-Init, Tools und Agenten mit LangChain |
+| [Einsteiger ChromaDB](einsteiger-chromadb.html) | Vektordatenbank als RAG-Tool in LangGraph-Workflows |
+| [State Management](../../concepts/workflows-state/state-management.html) | Konzeptionelle Tiefe hinter TypedDict und Reducer-Funktionen |
+| [Checkpointing & Persistenz](../../concepts/workflows-state/checkpointing-persistenz.html) | Technische Details zu MemorySaver und Thread-IDs |
+| [Human-in-the-Loop](../../concepts/workflows-state/human-in-the-loop.html) | Konzept hinter Interrupt & Resume aus Abschnitt 9 |
 
 
 ---

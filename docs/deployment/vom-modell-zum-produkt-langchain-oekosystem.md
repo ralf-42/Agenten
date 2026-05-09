@@ -267,3 +267,10 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 **Version:** 1.0<br>
 **Stand:** Dezember 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Vom Modell zur Anwendung? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Vom Modell zur Anwendung? |

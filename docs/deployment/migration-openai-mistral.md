@@ -301,3 +301,10 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 **Version:** 4.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Migration-Analyse Provider? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Migration-Analyse Provider? |

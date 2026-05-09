@@ -61,3 +61,10 @@ grand_parent: Ressourcen
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Troubleshooting? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Troubleshooting? |

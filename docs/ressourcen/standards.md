@@ -319,3 +319,10 @@ def test_agent_with_tools():
 **Version:** 2.0 (konsolidiert)<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Code Standards? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Code Standards? |

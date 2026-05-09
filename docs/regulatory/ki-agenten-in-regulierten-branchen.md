@@ -1,11 +1,10 @@
 ---
 layout: default
-title: Agenten & Regulierung
-parent: Regulatorische Themen
+title: "Agenten & Regulierung"
+parent: Regulatorisches
 nav_order: 5
 description: "Was Regulierung für Agenten-Architektur bedeutet: HITL, Logging, Tool-Grenzen und Quellenbindung in Medizin, Legal und Finanzwesen"
 has_toc: true
-grand_parent: Regulatorisches
 ---
 
 # KI-Agenten in regulierten Branchen

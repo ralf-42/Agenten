@@ -70,7 +70,7 @@ WORKER = "openai:gpt-5.4-mini"
 CODING = "openai:gpt-5.4-mini"
 
 # Übersetzer — Kursmaterial, Markdown, Dokumentation.
-# reasoning.effort="low", text.verbosity="medium".
+# Kein reasoning.effort setzen, wenn das Modell/API-Backend ihn nicht unterstützt.
 TRANSLATOR = "openai:gpt-5.4-mini"
 
 # Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung.

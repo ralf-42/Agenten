@@ -18,7 +18,7 @@ description: Englisch-deutsche Übersetzungstabelle für KI-Agenten-Fachbegriffe
 
 ---
 
-Viele englische KI-Fachbegriffe werden im Deutschen nicht übersetzt — nicht aus Bequemlichkeit, sondern weil die Übersetzungen oft unschärfer sind als das Original. „Prompt" ins Deutsche zu übersetzen würde das Wort aus seinem Kontext reißen; „Kontextfenster" hingegen ist präziser als „context window". Diese Tabelle legt fest, welche Form in den Kursmaterialien verwendet wird — und warum.
+Viele englische KI-Fachbegriffe werden im Deutschen nicht übersetzt — nicht aus Bequemlichkeit, sondern weil die Übersetzungen oft unschärfer sind als das Original. „Prompt" ins Deutsche zu übersetzen würde das Wort aus seinem Kontext reißen; „Kontextfenster" hingegen ist präziser als „context window". Diese Tabelle legt fest, welche Form in den Kursmaterialien verwendet wird — und warum.  
 
 ## Übersetzungsregel
 

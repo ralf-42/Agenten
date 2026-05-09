@@ -8,7 +8,7 @@ Installation (einmalig):
     pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 Import im Notebook:
-    from genai_lib.model_config import WORKER, JUDGE, BASELINE
+    from genai_lib.model_config import WORKER, JUDGE, BASELINE, TRANSLATOR, TRANSLATOR_PREMIUM
 
 Verwendung:
     from langchain.chat_models import init_chat_model
@@ -17,20 +17,28 @@ Verwendung:
     judge_llm  = init_chat_model(JUDGE)
 
 Rollen:
-    BASELINE        — Baseline / Demo              (gpt-4o-mini)
-    ROUTER          — Router / leichter Reasoner   (o3-mini)
-    JUDGE           — Judge / starker Reasoner     (o3)
-    PLANNER         — Planner / Aufgabenzerlegung  (o3)
-    WORKER          — Worker / Synthese             (gpt-5.4-mini)
-    WORKER_PREMIUM  — Worker / Synthese hochwertig  (gpt-5.4)
-    CODING          — Coding-Worker                 (gpt-5.4-mini)
-    EMBEDDINGS      — Embeddings                    (text-embedding-3-small)
+    BASELINE           — Baseline / Demo              (gpt-4o-mini)
+    ROUTER             — Router / leichter Reasoner   (o3-mini)
+    JUDGE              — Judge / starker Reasoner     (o3)
+    PLANNER            — Planner / Aufgabenzerlegung  (o3)
+    WORKER             — Worker / Synthese             (gpt-5.4-mini)
+    WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
+    CODING             — Coding-Worker                 (gpt-5.4-mini)
+    TRANSLATOR         — Übersetzer / Rohübersetzung   (gpt-5.4-nano)
+    TRANSLATOR_PREMIUM — Übersetzer / hochwertig       (gpt-5.4-mini)
+    EMBEDDINGS         — Embeddings                    (text-embedding-3-small)
 
 Hinweis: o3, o3-mini und gpt-5.4-* unterstützen keinen temperature-Parameter.
 """
 
 # Baseline / Demo — schnell, günstig, didaktisch steuerbar
 BASELINE = "openai:gpt-4o-mini"
+
+# Übersetzer — Rohübersetzung, UI-Texte, Kursmaterial, kurze bis mittlere Texte
+TRANSLATOR = "openai:gpt-5.4-nano"
+
+# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung
+TRANSLATOR_PREMIUM = "openai:gpt-5.4-mini"
 
 # Router / leichter Reasoner — einfache Routing- und Auswahlentscheidungen
 ROUTER = "openai:o3-mini"

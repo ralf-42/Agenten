@@ -10,7 +10,8 @@ has_toc: true
 # Ethik und GenAI
 {: .no_toc }
 
-> **KI-Agenten verschieben Ethikfragen von der Antwortqualität zur Handlungsverantwortung.**
+> [!IMPORTANT] Ethik bei Agenten-Systemen<br>
+> KI-Agenten verschieben Ethikfragen von der Antwortqualität zur Handlungsverantwortung.
 
 ---
 
@@ -22,11 +23,11 @@ has_toc: true
 
 ---
 
-# 1 Ethische Dimensionen
+## Ethische Dimensionen
 
-Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernter Muster. Bei KI-Agenten kommt eine zweite Ebene hinzu: Das System kann Werkzeuge nutzen, Zwischenschritte planen, Informationen speichern, Entscheidungen vorbereiten oder Aufgaben an andere Komponenten delegieren. Dadurch reicht die Frage "Ist die Antwort richtig?" nicht mehr aus. Ethisch relevant wird auch: Welche Handlung löst das System aus, welche Daten nutzt es, wer prüft das Ergebnis und wer trägt Verantwortung?
+Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernter Muster. Das System besitzt keine Verantwortungsfähigkeit, kann aber Entscheidungen, Meinungen und Handlungen beeinflussen. Bei KI-Agenten kommt eine zweite Ebene hinzu: Das System kann Werkzeuge nutzen, Zwischenschritte planen, Informationen speichern, Entscheidungen vorbereiten oder Aufgaben an andere Komponenten delegieren. Dadurch reicht die Frage "Ist die Antwort richtig?" nicht mehr aus. Ethisch relevant wird auch: Welche Handlung löst das System aus, welche Daten nutzt es, wer prüft das Ergebnis und wer trägt Verantwortung?
 
-## Zentrale Prinzipien
+### Zentrale Prinzipien
 
 - **Verantwortung:** Zuständigkeiten müssen vor dem Einsatz geklärt sein. Ein Agent darf nicht zum Verantwortungsloch zwischen Entwickler, Betreiber, Fachabteilung und Modellanbieter werden.
 - **Fairness:** Agenten können Daten-Bias nicht nur reproduzieren, sondern durch Routing, Tool-Auswahl oder automatische Vorselektion verstärken.
@@ -37,7 +38,7 @@ Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernte
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/ethik-grundsaetze-generativer-ki.png" alt="Ethische Grundsätze generativer KI" width="600">
 
-# 2 Warum Agenten Ethik verschärfen
+## Warum Agenten Ethik verschärfen
 
 Ein Chatbot gibt eine Antwort. Ein Agent kann zusätzlich handeln: Dateien lesen, APIs aufrufen, Datenbanken durchsuchen, E-Mails vorbereiten, Tickets klassifizieren oder Empfehlungen an andere Systeme übergeben. Damit entstehen vier zusätzliche Risiken:
 
@@ -46,11 +47,11 @@ Ein Chatbot gibt eine Antwort. Ein Agent kann zusätzlich handeln: Dateien lesen
 3. **Persistenz:** Memory, Checkpoints und Logs können Informationen länger speichern als beabsichtigt.
 4. **Delegation:** Multi-Agent-Systeme verteilen Verantwortung auf mehrere Rollen, Modelle und Tools.
 
-Ethisch gute Agentenarchitektur macht diese Punkte explizit. Sie begrenzt Autonomie, dokumentiert Zwischenschritte, prüft sensible Aktionen und trennt Assistenz von Entscheidung.
+Ethisch gute Agentenarchitektur macht diese Punkte explizit: begrenzte Autonomie, dokumentierte Zwischenschritte, Prüfung sensibler Aktionen und klare Trennung zwischen Assistenz und Entscheidung.
 
-# 3 Risiken und Fehlerquellen
+## Risiken und Fehlerquellen
 
-## Kernrisiken
+### Kernrisiken
 
 - **Desinformation und Halluzination:** Falsche Ausgaben wirken überzeugend und können in Workflows weiterverarbeitet werden.
 - **Bias und Diskriminierung:** Historische Verzerrungen können in Empfehlungen, Klassifikationen oder Priorisierungen eingehen.
@@ -59,9 +60,11 @@ Ethisch gute Agentenarchitektur macht diese Punkte explizit. Sie begrenzt Autono
 - **Überautomatisierung:** Nutzer verlassen sich auf Agentenausgaben, obwohl das System nur assistieren sollte.
 - **Verantwortungsdiffusion:** Niemand fühlt sich zuständig, weil Modell, Framework, Tool und Betreiber getrennt betrachtet werden.
 
+Einige Risiken entstehen als Zielkonflikt, nicht als klarer Fehler: Transparenz kann mit Datenschutz oder Geschäftsgeheimnissen kollidieren, Automatisierung kann Rollen und Verantwortlichkeiten verschieben, Open Source kann Nachvollziehbarkeit verbessern und zugleich Missbrauch erleichtern. Solche Spannungen sollten dokumentiert werden, statt sie durch allgemeine Formulierungen zu verdecken.
+
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/ki-risiken-fehlerquellen.png" alt="KI Risiken und Fehlerquellen" width="600">
 
-## Typische Fehlentscheidungen
+### Typische Fehlentscheidungen
 
 - Ein Agent erhält mehr Tools als für die Aufgabe nötig.
 - Ein RAG-System nutzt Quellen ohne Versionierung oder Qualitätsprüfung.
@@ -69,28 +72,30 @@ Ethisch gute Agentenarchitektur macht diese Punkte explizit. Sie begrenzt Autono
 - Human-in-the-Loop wird als Demo-Funktion eingebaut, aber nicht als verbindlicher Freigabeschritt.
 - Ein Prototyp wird produktiv genutzt, ohne Risikoklasse, Datenflüsse und Verantwortliche neu zu prüfen.
 
-# 4 Rahmenwerke und Regulierung
+## Rahmenwerke und Regulierung
 
 Der **EU AI Act** liefert einen risikobasierten Rechtsrahmen. Für Ethik ist daran besonders wichtig: Nicht die technische Modernität entscheidet, sondern Einsatzkontext, Betroffene und mögliche Wirkung. Ein Agent für interne Recherche ist anders zu bewerten als ein Agent, der Bewerbungen vorsortiert, medizinische Hinweise gibt oder Kreditentscheidungen vorbereitet.
 
 Die **DSGVO** ergänzt diese Perspektive durch Datenschutz, Zweckbindung, Datensparsamkeit, Betroffenenrechte und Datenschutz by Design. Für Agenten betrifft das besonders Prompts, Tool-Aufrufe, Memory, RAG-Indizes, Logs und Traces.
 
-Weitere Rahmenwerke wie OECD-Prinzipien, UNESCO-Empfehlungen, NIST AI RMF oder ISO 42001 helfen bei Governance, Risikomanagement und organisatorischer Verantwortung. Im Kurs sind sie vor allem als Denkrahmen nützlich: Sie übersetzen Werte wie Fairness, Transparenz und Rechenschaft in Prozesse, Prüfungen und Rollen.
+Weitere Rahmenwerke wie OECD-Prinzipien, UNESCO-Empfehlungen, NIST AI RMF oder ISO 42001 helfen bei Governance, Risikomanagement und organisatorischer Verantwortung. Im Kurs sind sie vor allem als Denkrahmen nützlich: Werte wie Fairness, Transparenz und Rechenschaft werden dadurch in Prozesse, Prüfungen und Rollen übersetzt.
 
-# 5 Ethics by Design im Agentenbau
+## Ethics by Design im Agentenbau
 
 Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Disclaimer anzuhängen, sondern in Architektur und Workflow einzubauen.
 
-## Technische Muster
+### Technische Muster
 
 - **Least Privilege für Tools:** Agenten erhalten nur die Werkzeuge und Rechte, die sie wirklich brauchen.
 - **Human-in-the-Loop:** Kritische Aktionen pausieren und brauchen explizite Freigabe.
 - **Quellenbindung:** RAG-Antworten müssen auf nachvollziehbare, versionierte Quellen zurückführbar sein.
 - **Evaluation:** Fehlerfälle, Bias-Risiken und Regressionen werden mit Testsets geprüft.
+- **Red Teaming und Input-Validierung:** Kritische Prompts, Jailbreaks und unerwartete Eingaben werden gezielt getestet.
+- **Schutzmaßnahmen für Ausgaben:** Inhaltsfilter, Anonymisierung und Wasserzeichen können je nach Medium und Risiko sinnvoll sein.
 - **Observability:** Traces machen Zwischenschritte sichtbar, dürfen aber keine unnötigen personenbezogenen Daten speichern.
 - **Memory-Grenzen:** Nicht alles, was technisch speicherbar ist, gehört dauerhaft ins Gedächtnis.
 
-## Organisatorische Muster
+### Organisatorische Muster
 
 - Verantwortliche Rollen benennen: fachlich, technisch, rechtlich und betrieblich.
 - Einsatzgrenzen dokumentieren: Was darf der Agent, was ausdrücklich nicht?
@@ -98,7 +103,7 @@ Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Discla
 - Nutzer klar informieren, wann KI beteiligt ist und welche Grenzen gelten.
 - Sensible Anwendungsfälle vor Produktivsetzung mit Datenschutz, Compliance oder Fachaufsicht prüfen.
 
-# 6 Chancen und Potenziale
+## Chancen und Potenziale
 
 Ethische Bewertung bedeutet nicht, GenAI zu blockieren. Gut gestaltete Systeme können echten gesellschaftlichen und organisatorischen Nutzen schaffen:
 
@@ -110,17 +115,19 @@ Ethische Bewertung bedeutet nicht, GenAI zu blockieren. Gut gestaltete Systeme k
 
 Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterstützung: Ein Agent sollte Menschen befähigen, nicht Verantwortung verdecken.
 
-# 7 Best Practices
+## Was für Entwickler zuerst wichtig ist
 
-- Starte mit Assistenz, nicht mit autonomer Entscheidung.
-- Dokumentiere Datenquellen, Modellversionen, Prompts und Tool-Rechte.
-- Baue Freigaben dort ein, wo Ausgaben Wirkung auf Menschen haben können.
-- Prüfe Bias nicht nur im Modell, sondern auch in Routing, Retrieval und Tool-Ergebnissen.
-- Nutze Tracing für Nachvollziehbarkeit, aber mit datensparsamen Metadaten.
-- Trenne Experiment, Kursdemo und produktiven Einsatz klar.
-- Formuliere Grenzen sichtbar: Was kann das System, was darf es nicht, wer prüft kritische Ergebnisse?
+- Assistenz steht vor autonomer Entscheidung.
+- Datenquellen, Modellversionen, Prompts und Tool-Rechte werden dokumentiert.
+- Freigaben gehören an Stellen, an denen Ausgaben Wirkung auf Menschen haben können.
+- Bias wird nicht nur im Modell geprüft, sondern auch in Routing, Retrieval und Tool-Ergebnissen.
+- Tracing dient der Nachvollziehbarkeit, aber mit datensparsamen Metadaten.
+- Experiment, Kursdemo und produktiver Einsatz bleiben klar getrennt.
+- Systemgrenzen werden sichtbar formuliert: erlaubte Fähigkeiten, ausgeschlossene Aktionen und Prüfinstanzen.
 
-# Abgrenzung zu verwandten Dokumenten
+Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokumentiert sein: Zweck, betroffene Gruppen, Datenquellen, mögliche Schäden, menschliche Kontrolle und Evaluationskriterien. Ohne diese Punkte bleibt unklar, ob das System nur technisch funktioniert oder auch verantwortbar eingesetzt werden kann.
+
+## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
@@ -131,15 +138,8 @@ Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterst�
 | [Human-in-the-Loop](../concepts/workflows-state/human-in-the-loop.html) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
 | [Evaluation & Observability](../concepts/qualitaet-praxis/evaluation-observability.html) | Wie werden Qualität, Fehler und Regressionen messbar? |
 
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Ethik und GenAI? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Ethik und GenAI? |
-
 ---
 
 **Version:** 1.1<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -4,14 +4,15 @@ title: Modellauswahl
 parent: Modell- und Kontextgrundlagen
 grand_parent: Konzepte
 nav_order: 1
-description: "Modellauswahl für Agentensysteme: Qualitaet, Kosten, Latenz und Aufgabenprofil"
+description: "Modellauswahl für Agentensysteme: Qualität, Kosten, Latenz und Aufgabenprofil"
 has_toc: true
 ---
 
 # Modellauswahl
 {: .no_toc }
 
-> **LLM-Auswahl: Kriterien, Benchmarks und Entscheidungshilfen**
+> [!NOTE] Kernfrage<br>
+> Welches Modell passt zur Aufgabe, zum Risiko, zum Budget und zur Latenzanforderung?
 
 ---
 
@@ -23,58 +24,30 @@ has_toc: true
 
 ---
 
-# KI-Modelllandschaft: Ein Überblick
-Die moderne KI-Landschaft bietet verschiedene spezialisierte Modelltypen für unterschiedliche Anwendungsfälle:
+## Modellrollen im Kurs
+Die Kursunterlagen verwenden keine freie Modellrangliste, sondern eine rollenbasierte Konfiguration in `genai_lib.model_config.py`. Dort ist festgelegt, welches Modell für einfache Demos, Worker, Planung, Bewertung, Übersetzung und Embeddings verwendet wird.
 
-- **Reasoning-Modelle**: Spezialisiert auf logisches Denken und systematische Problemlösung (z.B. o3-mini) - diese Modelle lösen komplexe Aufgaben durch schrittweises, strukturiertes Denken.
-- **Sprachmodelle**: Konzipiert für natürlichsprachliche Aufgaben wie Textgenerierung, Zusammenfassungen und Konversationen (z.B. GPT-4) - sie verstehen und erzeugen menschenähnliche Texte.
-- **Codex-Modelle**: Optimiert für Codegenerierung und Programmieraufgaben - diese Modelle können Code schreiben, analysieren und debuggen.
-- **Bildgenerierungsmodelle**: Erzeugen Bilder aus textlichen Beschreibungen (z.B. DALL-E) - sie wandeln Textanweisungen in visuelle Ergebnisse um.
-- **Sprachverarbeitungsmodelle**: Spezialisiert auf Spracherkennung und -transkription (z.B. Whisper) - sie wandeln gesprochene Sprache in Text um.
+Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. Für viele Agentenschritte sind Kosten, Latenz, Tool-Zuverlässigkeit oder strukturierte Ausgabe wichtiger als maximale Benchmark-Leistung.
 
-# Vergleich wichtiger GPT-Modelle
-Die Wahl des richtigen Modells ist entscheidend für optimale Ergebnisse, Ressourcenschonung und maximale Effizienz. Hier ein Überblick der wichtigsten Modelle:
+| Kursrolle | Konstante | Modell | Einsatz |
+|---|---|---|---|
+| Baseline / Demo | `BASELINE` | `openai:gpt-5.4-nano` | einfache Beispiele, erste Läufe, Kostenkontrolle |
+| Router / leichter Reasoner | `ROUTER` | `openai:gpt-5.4-nano` | klare Auswahlentscheidungen mit wenigen Wegen |
+| Worker / Synthese | `WORKER` | `openai:gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
+| Coding-Worker | `CODING` | `openai:gpt-5.4-mini` | Codegenerierung, Refactoring, technische Agenten |
+| Judge / starker Reasoner | `JUDGE` | `openai:gpt-5.4` | Bewertung, Evaluation, Supervisor, Compliance |
+| Planner | `PLANNER` | `openai:gpt-5.4` | Aufgabenzerlegung, Schrittplanung, Agentic RAG |
+| Hochwertiger Worker | `WORKER_PREMIUM` | `openai:gpt-5.4` | komplexe Synthese, finale Reports |
+| Premium Judge / Planner | `JUDGE_PREMIUM`, `PLANNER_PREMIUM` | `openai:gpt-5.5` | kritische Entscheidungen, maximale Qualität |
+| Übersetzung | `TRANSLATOR_FAST`, `TRANSLATOR`, `TRANSLATOR_PREMIUM` | `openai:gpt-5.4-nano`, `openai:gpt-5.4-mini`, `openai:gpt-5.5` | Rohübersetzung, Kursmaterial, finale Veröffentlichung |
+| Embeddings | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
-| Modell          | Hauptmerkmale                                                                                                                                                               | Empfohlene Anwendungsfälle                                                                                                                                 |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **GPT-5**       | Neuestes Spitzenmodell mit integriertem Denken: Automatische Reasoning-Modi, überlegene Coding-Fähigkeiten, beste Instruktionsbefolgung. 400K Context Window.               | Komplexe Coding-Projekte, Agentic Tasks, Automatisierung, Frontend-Entwicklung, anspruchsvolle Schreibaufgaben. Beste Wahl für professionelle Anwendungen. |
-| **GPT-5 Mini**  | Kleinere GPT-5 Version: Schneller und günstiger, behält aber die meisten GPT-5 Fähigkeiten bei. Optimiert für Geschwindigkeit und Kosteneffizienz.                          | Hochvolumen-Anwendungen, Chatbots, Content-Generierung im großen Stil, kostenbewusste Projekte mit hohen Qualitätsansprüchen.                              |
-| **GPT-5 Nano**  | Ultraschnelle GPT-5 Variante: Niedrigste Latenz und Kosten der GPT-5 Familie. Für Anwendungen die sofortige Antworten benötigen.                                            | Real-time Anwendungen, Live-Chat, schnelle API-Calls, mobile Apps, IoT-Geräte. Wo Geschwindigkeit wichtiger als maximale Intelligenz ist.                  |
-| **GPT-4o**      | Multimodales Allround-Modell: Versteht Text, Bilder und Audio, kann Bilder generieren. Sehr schnell und vielseitig.                                                         | Alltägliche Aufgaben, Brainstorming, Texterstellung, Content-Ideen, Bildanalysen, E-Mails, Konzepte. Gut für schnelle Dialoge und allgemeine Fragen.       |
-| **GPT-4o Mini** | Leichtere Version von GPT-4o: Verarbeitet Text und Bilder, ressourcenschonend und günstiger. Deutlich intelligenter als GPT-3.5-turbo.                                      | Einfachere Aufgaben, Bildverarbeitung, schnelle und unkomplizierte Anwendungen, kostengünstige Chatbots.                                                   |
-| **o3-mini**     | Reasoning-Modell: Hohe Intelligenz bei niedrigen Kosten und geringer Latenz. Konzipiert für strukturiertes Denken.                                                          | Wissenschaftliche, mathematische und Programmieraufgaben, technische und logische Probleme, faktenbasierte Recherchen.                                     |
-| **o4-mini**     | Kompaktes Reasoning-Modell: Optimiert für Geschwindigkeit und Kosteneffizienz. Stark in mathematischen, Programmier- und visuellen Aufgaben.                                | Komplexe Argumentationsstrukturen, technische Aufgaben, Programmierprojekte, visuelles Denken, wissenschaftliche Fragestellungen.                          |
-| **o3**          | Leistungsstärkster "Denker": Herausragend in Programmierung, Mathematik, Wissenschaft und visueller Analyse. Arbeitet mit verknüpften Einzelschritten ("Chain-of-Thought"). | Komplexe Recherchen, anspruchsvolle Programmieraufgaben, Datenanalyse, strategische Planung, Code-Review und Debugging. Beste Wahl für höchste Präzision.  |
+Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Worker, Planner oder Judge ist.
 
-**Schnelle Modellwahl-Hilfe**
+> [!IMPORTANT] GPT-5.x-Konfiguration<br>
+> Modelle der GPT-5.x-Serie werden in den Kursmaterialien nicht pauschal mit `temperature` konfiguriert. Qualitätssteuerung erfolgt über präzise Prompts sowie bei Bedarf über `reasoning.effort` und `text.verbosity`.
 
-| Anwendungsfall | Empfohlenes Modell |
-|---|---|
-| 🚀 **Für neue Projekte (2025)** | GPT-5 oder GPT-5 Mini |
-| 💰 **Kostenbewusst** | GPT-5 Nano oder GPT-4o Mini |
-| 🧠 **Komplexes Reasoning** | o3 oder o3-mini |
-| ⚡ **Schnelle Antworten** | GPT-5 Nano oder GPT-4o |
-| 🔧 **Coding & Development** | GPT-5 (beste Wahl) oder o3 |
-| 🖼️ **Multimodale Aufgaben** | GPT-4o oder GPT-5 |
-| 📊 **Datenanalyse** | o3 oder GPT-5 |
-| 💬 **Chatbots** | GPT-5 Mini oder GPT-4o Mini |
-
-**API-Namen Übersicht**
-
-| Modell | API-Name |
-|--------|----------|
-| GPT-5 | `gpt-5` |
-| GPT-5 Mini | `gpt-5-mini` |
-| GPT-5 Nano | `gpt-5-nano` |
-| GPT-4o | `gpt-4o` |
-| GPT-4o Mini | `gpt-4o-mini` |
-| o3 | `o3` |
-| o3-mini | `o3-mini` |
-| o4-mini | `o4-mini` |
-
-*Stand: September 2025*
-
-# Modellauswahlprozess: Schritt für Schritt
+## Modellauswahlprozess: Schritt für Schritt
 Die Auswahl des optimalen KI-Modells erfordert einen strukturierten Prozess:
 
 ```mermaid
@@ -97,198 +70,97 @@ flowchart LR
     style E fill:#c8e6c9,stroke:#388e3c
 ```
 
-## Anforderungsanalyse
-- **Definition der Aufgaben**: Festlegen, welche spezifischen Funktionen das Modell erfüllen soll (z.B. Textgenerierung, Fragebeantwortung).
+### Anforderungsanalyse
+- **Definition der Aufgaben**: Festlegen, welche spezifischen Funktionen das Modell erfüllen soll (z. B. Textgenerierung, Fragebeantwortung).
 - **Qualitätskriterien**: Bestimmen, welche Qualitätsstandards (Kohärenz, Genauigkeit) erfüllt werden müssen.
 - **Domänenkenntnisse**: Identifizieren, welches Fachwissen für die Aufgabe notwendig ist.
 - **Antwortgeschwindigkeit**: Definieren, welche Reaktionszeit akzeptabel ist.
 - **Budget**: Einen finanziellen Rahmen für die KI-Lösung setzen.
 
-## Bewertungskriterien
+### Bewertungskriterien
 - **Verständlichkeit**: Wie klar und nachvollziehbar sind die Modellausgaben?
 - **Effizienz**: Wie schnell verarbeitet das Modell Eingaben und liefert Ausgaben?
 - **Skalierbarkeit**: Kann das Modell mit steigenden Anforderungen mitwachsen?
 - **Kosten**: Wie hoch sind die Betriebs- und Nutzungskosten des Modells?
 
-## Recherche und Vorauswahl
+### Recherche und Vorauswahl
 - Verfügbare Modelle anhand der festgelegten Kriterien analysieren und eine Vorauswahl geeigneter Kandidaten bilden.
 
-## Praktische Modellbewertung
+### Praktische Modellbewertung
 - **Quantitative Methoden**: Benchmarks und Metriken verwenden, um die Leistung objektiv zu messen.
 - **Qualitative Verfahren**: Nutzerfeedback zur praktischen Verwendbarkeit sammeln.
 - **Testphase**: Die Modelle in einer realistischen Umgebung erproben.
 
-## Finale Auswahl und Implementierung
-- Eine fundierte Entscheidung für das am besten geeignete Modell treffen und es in die eigenen Systeme integrieren.
+### Finale Auswahl und Implementierung
+- Eine begründete Entscheidung für das am besten geeignete Modell treffen und es in die eigenen Systeme integrieren.
 
-[Modellauswahl](https://editor.p5js.org/ralf.bendig.rb/full/8BbTi8Ico) 😊
+[Interaktive Modellauswahl](https://editor.p5js.org/ralf.bendig.rb/full/8BbTi8Ico)
 
-# Modellkaskade: Mehrere Modelle klug kombinieren
+## Modellkaskade: Mehrere Modelle klug kombinieren
 Die Modellkaskade kombiniert mehrere KI-Modelle, um ihre jeweiligen Stärken zu nutzen und Schwächen auszugleichen:
 
-## Beispiel für eine Modellkaskade
+### Beispiel für eine Modellkaskade
 1. **Datenanalyse mit pandas**: Analysiert große Datensätze und erstellt statistische Zusammenfassungen
-2. **Logische Strukturierung mit o3-mini**: Strukturiert die Ergebnisse und erstellt eine logische Gliederung
-3. **Kreative Textgenerierung mit GPT-4o**: Verfasst ansprechende Texte basierend auf der Struktur
+2. **Planung mit `PLANNER`**: Strukturiert die Ergebnisse und erstellt eine logische Gliederung
+3. **Synthese mit `WORKER` oder `WORKER_PREMIUM`**: Verfasst den Ergebnistext auf Basis der Struktur
 4. **Multimodale Präsentation**: Ergänzt den Text mit visuellen Elementen
 
-## Vorteile einer Modellkaskade
+### Vorteile einer Modellkaskade
 1. **Effizienzsteigerung**: Jedes Modell wird für seine Stärken optimal eingesetzt
 2. **Kostenoptimierung**: Ressourcenschonende Modelle für einfache Aufgaben, teurere nur wo nötig
 3. **Flexibilität**: Bearbeitung unterschiedlichster Anforderungen durch spezialisierte Modelle
 
-# Bewertungsmethoden für KI-Modelle
-## Wichtige Benchmarks
-- **MMLU (Massive Multitask Language Understanding)**: Standard-Benchmark über 57 Fachgebiete, der die Allgemeinbildung und Fachkenntnisse von Modellen misst.
+## Bewertungsmethoden für KI-Modelle
+### Benchmarks richtig einordnen
 
-| Modell | MMLU-Score |
-|--------|------------|
-| GPT-4o | 88,7% |
-| Gemini 2.0 Ultra | 90,0% |
-| Claude 3 Opus | 88,2% |
-| Llama 3.1 405B | 87,3% |
-| gpt-4o-mini | 70,0% |
+Öffentliche Benchmarks wie MMLU können eine erste Orientierung geben, ersetzen aber keine Kursevaluation. Für Agentensysteme ist entscheidend, ob ein Modell die konkrete Rolle zuverlässig erfüllt: Routing, Tool-Aufruf, Planung, Synthese oder Bewertung. Ein hoher allgemeiner Benchmark-Wert hilft wenig, wenn strukturierte Ausgabe instabil ist oder ein Router zu teuer und zu langsam wird.
 
-## Bewertungsdimensionen
+Grenze: Statische Benchmark-Tabellen altern schnell. In Kursunterlagen werden deshalb keine konkreten Ranglisten gepflegt; die praktische Bewertung erfolgt anhand der Rollen aus `model_config.py`.
+
+### Bewertungsdimensionen
 
 Die Bewertung von KI-Modellen umfasst verschiedene Aspekte:
 
-1. **Wissens- und Fähigkeitsbewertung**:
-   - Wie gut beantwortet das Modell Fragen verschiedener Schwierigkeitsgrade?
-   - Wie zuverlässig ergänzt es fehlendes Wissen?
-   - Wie gut löst es logische und mathematische Probleme?
-   - Wie effektiv nutzt es externe Werkzeuge?
+1. **Rollenqualität**: Erfüllt das Modell die konkrete Aufgabe, etwa Routing, Planung, Synthese oder Bewertung?
+2. **Werkzeugverhalten**: Nutzt das Modell externe Tools zuverlässig und mit stabilen Argumenten?
+3. **Ausgabeformat**: Hält das Modell JSON, Tabellen, Checklisten oder andere Strukturvorgaben ein?
+4. **Sicherheit**: Bleibt das Modell bei Störungen, Injection-Versuchen und unklaren Anforderungen kontrollierbar?
+5. **Kosten und Latenz**: Passt das Modell zur erwarteten Nutzungshäufigkeit?
 
-2. **Alignment-Bewertung**:
-   - Inwieweit stimmt das Modellverhalten mit menschlichen Werten überein?
-   - Wie ethisch und moralisch sind die Antworten?
-   - Wie fair und unvoreingenommen ist das Modell?
-   - Wie wahrhaftig sind die gelieferten Informationen?
+### Konkrete Bewertungsmethoden
 
-3. **Sicherheitsbewertung**:
-   - Wie robust ist das Modell gegenüber Störungen und Angriffen?
-   - Welche potenziellen Risiken birgt die Nutzung des Modells?
-
-## Konkrete Bewertungsmethoden
-
-## Automatisierte Metriken
+### Automatisierte Metriken
 - **BLEU**: Misst die Übereinstimmung zwischen generiertem und Referenztext durch Vergleich von Wortgruppen.
 - **ROUGE**: Bewertet die Qualität von Zusammenfassungen durch Analyse übereinstimmender Wortsequenzen.
 
-## Menschliche Bewertung
+### Menschliche Bewertung
 - Bewertung nach Kriterien wie Grammatik, Zusammenhang, Lesbarkeit und Relevanz
 - Elo-System für den direkten Vergleich verschiedener Modelle (ähnlich wie bei Schach-Ratings)
 
-## KI-basierte Bewertung
-- Einsatz leistungsfähiger Modelle zur Bewertung anderer Modelle
+### KI-basierte Bewertung
+- Einsatz von `JUDGE` oder `JUDGE_PREMIUM` zur Bewertung anderer Modellrollen
 - Automatische Erkennung von Fehlinformationen in KI-Antworten
 
-# Praktische Anwendungsbereiche
+## Praktische Anwendungsbereiche
 Die Modellevaluierung und -auswahl findet in verschiedenen Szenarien Anwendung:
 
-## Kundenservice-Chatbots
-- Auswahl eines schnellen Modells mit guter Verständlichkeit und Mehrsprachigkeit
+### Kundenservice-Chatbots
+- Auswahl einer schnellen Baseline- oder Worker-Rolle mit guter Verständlichkeit und Mehrsprachigkeit
 - Bewertung nach Kundenzufriedenheit und Lösungsrate
 
-## Content-Erstellung
-- Nutzung kreativer Modelle für Marketing, Social Media und Blogbeiträge
+### Content-Erstellung
+- Nutzung einer passenden Worker-Rolle für Marketing, Social Media und Blogbeiträge
 - Bewertung nach Originalität, Engagement und Konversionsraten
 
-## Technische Assistenz
-- Einsatz von Reasoning-Modellen für Programmierung und Fehlerbehebung
+### Technische Assistenz
+- Einsatz von `CODING`, `PLANNER` oder `JUDGE` für Programmierung, Planung und Fehlerbewertung
 - Bewertung nach Codequalität und Lösungsgeschwindigkeit
 
-# Fazit
-> [!NOTE] Fazit<br>
-> Zusammenfassend lässt sich sagen, dass die **Evaluierung von Large Language Models (LLMs) ein wichtiges Forschungsgebiet** ist, um ihre Fähigkeiten und Grenzen zu verstehen. Die Evaluierung umfasst verschiedene **Attribute wie Grammatikalität, Kohäsion, Gefallen, Relevanz, Flüssigkeit und Bedeutungserhalt**. Sowohl **menschliche Evaluatoren als auch LLMs selbst werden zur Bewertung eingesetzt**. Es gibt **spezifische Benchmarks und Datensätze** zur Bewertung von LLMs in verschiedenen Bereichen wie **Textgenerierung, Fragebeantwortung und Zusammenfassung**.
-> Ein wichtiger Aspekt der LLM-Evaluierung ist die **Sicherheitsbewertung**, die **Robustheit gegenüber adversarialen Angriffen** (manipulierte Eingaben, um LLM in die Irre zu führen) und die Identifizierung von **Risiken wie Bias und Toxizität** umfasst. Die Evaluierung kann auch auf **spezialisierte LLMs** in Bereichen wie Medizin, Recht und Finanzen zugeschnitten sein.
-> Verschiedene **Metriken, darunter Likert-Skalen und der BLEU-Score**, werden zur Quantifizierung der LLM-Leistung verwendet. Es gibt auch **Tools und Frameworks wie DeepEval**, die die Evaluierung erleichtern. Es ist wichtig zu beachten, dass **Evaluierungsbias existieren können**, beispielsweise eine Präferenz für längere Texte. Die **ethischen Aspekte** spielen ebenfalls eine Rolle bei der Entwicklung und Nutzung von LLMs.
+## Was für Entwickler zuerst wichtig ist
 
-# A | Aufgabe
----
+Modellauswahl ist keine Rangliste, sondern eine Architekturentscheidung. Ein günstiges Modell kann für Routing, Klassifikation oder einfache Tool-Auswahl besser passen als ein großes Reasoning-Modell; ein stärkeres Modell lohnt sich vor allem dort, wo Fehler teuer sind oder mehrere Teilschritte wirklich verstanden werden müssen.
 
-Die Aufgabestellungen unten bieten Anregungen; ebenso möglich ist eine eigene, inhaltlich passende Herausforderung.
-
-<p><font color='black' size="5">
-Anforderungsanalyse für ein KI-Projekt
-</font></p>
-
-Zu entwickeln ist eine strukturierte Anforderungsanalyse für ein fiktives oder reales KI-Projekt.
-
-**Aufgabenstellung:**
-1. Einen konkreten Anwendungsfall wählen (z.B. Kundenservice-Chatbot für eine Bank, Content-Generator für Social Media oder Übersetzungstool für technische Dokumentation).
-2. Zu definieren sind:
-   - Die primären Funktionen, die das KI-Modell erfüllen soll
-   - Die spezifischen Anforderungen an das Sprachverständnis
-   - Notwendige Fachkenntnisse in relevanten Domänen
-   - Anforderungen an die Antwortgeschwindigkeit
-   - Budget-Rahmenbedingungen
-3. Eine Prioritätenliste dieser Anforderungen erstellen (unbedingt erforderlich, wichtig, wünschenswert).
-4. Beschreiben, welche Kompromisse bei konkurrierenden Anforderungen sinnvoll wären.
-
-**Abgabeformat:**
-Abgabeformat: Dokument mit der Anforderungsanalyse (1-2 Seiten).
-
-<p><font color='black' size="5">
-Vergleichsanalyse bekannter KI-Modelle
-</font></p>
-
-Durchzuführen ist eine vergleichende Analyse von mindestens drei verschiedenen KI-Modellen anhand vorgegebener Bewertungskriterien.
-
-**Aufgabenstellung:**
-1. Drei KI-Modelle aus der folgenden Liste auswählen:
-   - GPT-4o
-   - Claude 3 Opus
-   - Gemini 2.0 Ultra
-   - Llama 3.1
-   - Mistral 7B
-   - Ein anderes aktuelles KI-Modell nach eigener Auswahl
-
-2. Die Leistungsmerkmale dieser Modelle anhand der folgenden Kriterien recherchieren:
-   - MMLU-Score oder vergleichbare Benchmark-Ergebnisse
-   - Kontextfenstergröße
-   - Antwortlatenz
-   - Kosten (pro Token oder alternativer Maßstab)
-   - Verfügbarkeit (API, Open-Source, etc.)
-   - Unterstützte Sprachen
-   - Multimodale Fähigkeiten (falls vorhanden)
-
-3. Eine Bewertungstabelle mit den recherchierten Informationen erstellen.
-
-4. Eine begründete Empfehlung verfassen, welches dieser Modelle sich für folgende Szenarien am besten eignen würde:
-   - Entwicklung eines kostengünstigen Chatbots für ein kleines Unternehmen
-   - Erstellung von KI-generierten Inhalten für ein internationales Nachrichtenportal
-   - Unterstützung bei der Software-Entwicklung
-
-**Abgabeformat:**
-Vergleichstabelle mit Bewertungen und einer Seite mit Empfehlungen.
-
-<p><font color='black' size="5">
-Konzept für die qualitative Evaluation eines Sprachmodells
-</font></p>
-
-Zu entwickeln ist ein strukturiertes Testverfahren zur qualitativen Bewertung eines Sprachmodells.
-
-**Aufgabenstellung:**
-1. Ein Bewertungsschema mit 5-7 qualitativen Kategorien entwerfen, die für die gewählte Anwendung relevant sind (z.B. Genauigkeit, Kreativität, Nützlichkeit der Antworten, Verständnis komplexer Anweisungen, kulturelle Sensibilität).
-
-2. Für jede Kategorie ausarbeiten:
-   - Eine klare Definition, was in dieser Kategorie bewertet wird
-   - Eine Bewertungsskala (z.B. 1-5 oder 1-10)
-   - 2-3 konkrete Testfragen oder -aufgaben, die diese Kategorie prüfen
-   - Bewertungskriterien: Was wäre eine ausgezeichnete (5/5) vs. eine unzureichende (1/5) Antwort?
-
-3. Den Evaluationsprozess beschreiben:
-   - Wie viele Bewerter sollten eingesetzt werden?
-   - Wie lassen sich die Bewertungen sinnvoll zusammenfassen?
-   - Welche Maßnahmen helfen, Bewertungsverzerrungen zu vermeiden?
-
-4. Erläutern, wie sich die Ergebnisse dieser qualitativen Bewertung mit quantitativen Metriken wie MMLU zu einem Gesamtbild der Modellleistung verbinden lassen.
-
-**Abgabeformat:**
-Ein 2-3 seitiges Konzeptpapier mit Evaluationsschema, Testfragen und geplantem Prozess.
-
----
+In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte nicht ein einziges Modell alles erledigen, sondern jede Rolle nach Qualitätsbedarf, Kosten und Latenz bewertet werden.
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -300,6 +172,6 @@ Ein 2-3 seitiges Konzeptpapier mit Evaluationsschema, Testfragen und geplantem P
 
 ---
 
-**Version:**    1.1<br>
-**Stand:**    Januar 2026<br>
+**Version:** 1.3<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

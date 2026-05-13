@@ -11,7 +11,8 @@ has_toc: true
 # Evaluation & Observability
 {: .no_toc }
 
-> **Evaluation misst Qualität. Observability zeigt, warum sie entsteht oder kippt.**
+> [!NOTE] Kernfrage<br>
+> Wie wird sichtbar, ob ein Agent fachlich gut arbeitet und warum Ergebnisse kippen?
 
 ---
 
@@ -152,7 +153,7 @@ Wenn im Betrieb ein neuer Fehler auftaucht, gehört genau dieser Fall in das Eva
 
 ## Welche Evaluierungsmethoden sich eignen
 
-Die einfachste Methode ist exakte Übereinstimmung. Sie eignet sich für klar definierte Antworten wie IDs, Zahlenwerte oder Tool-Namen. Für offene Antworten ist sie oft zu streng, weil mehrere Formulierungen fachlich korrekt sein können.
+Die einfachste Methode ist exakte Übereinstimmung. Dieses Verfahren eignet sich für klar definierte Antworten wie IDs, Zahlenwerte oder Tool-Namen. Für offene Antworten ist es oft zu streng, weil mehrere Formulierungen fachlich korrekt sein können.
 
 ```python
 def exact_match(predicted: str, expected: str) -> float:
@@ -168,7 +169,7 @@ def contains_answer(predicted: str, expected_keywords: list[str]) -> float:
     return matches / len(expected_keywords)
 ```
 
-Nicht geeignet, wenn: Das Bewertungsverfahren selbst intransparent bleibt und dadurch nur eine weitere Blackbox erzeugt. Gerade in Einsteigerkursen sollte immer klar sein, warum eine Antwort als gut oder schlecht zählt.
+Nicht geeignet, wenn: Das Bewertungsverfahren selbst intransparent bleibt und dadurch nur eine weitere Blackbox erzeugt. Gerade im Kurs sollte immer klar sein, warum eine Antwort als gut oder schlecht zählt.
 
 ## Observability erklärt Fehlerursachen
 
@@ -322,12 +323,12 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 
 | Dokument | Frage |
 |---|---|
-| [Lohnt es sich überhaupt?](../einstieg/lohnt-es-sich.html) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
+| [Lohnt sich KI?](../einstieg/lohnt-es-sich.html) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
 | [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
-| [Agent Security](./agent-security.html) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
+| [Agenten-Sicherheit](./agent-security.html) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** April 2026<br>
+**Version:** 1.4<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

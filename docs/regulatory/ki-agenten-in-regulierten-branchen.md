@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Agenten & Regulierung"
+title: "KI-Agenten in regulierten Branchen"
 parent: Regulatorisches
 nav_order: 5
 description: "Was Regulierung für Agenten-Architektur bedeutet: HITL, Logging, Tool-Grenzen und Quellenbindung in Medizin, Legal und Finanzwesen"
@@ -10,7 +10,8 @@ has_toc: true
 # KI-Agenten in regulierten Branchen
 {: .no_toc }
 
-> **Ein Agent in einer regulierten Umgebung ist kein Werkzeug, das hilft — er ist ein System, das dokumentiert, begrenzt und freigegeben werden muss.**
+> [!IMPORTANT] Regulierte Agenten-Systeme<br>
+> Ein Agent in einer regulierten Umgebung ist kein Werkzeug, das hilft — er ist ein System, das dokumentiert, begrenzt und freigegeben werden muss.
 
 ---
 
@@ -142,5 +143,5 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 ---
 
 **Version:** 1.0<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -7,10 +7,12 @@ description: Das LangChain-Ökosystem verstehen und nutzen
 has_toc: true
 ---
 
-# Vom Modell zur Anwendung - Das LangChain-Ökosystem
+# Vom Modell zur Anwendung
 {: .no_toc }
 
-> **Von einfachen Prototypen zu produktionsreifen KI-Systemen**<br>
+> [!NOTE] Kernfrage<br>
+> Welche Bausteine machen aus einem Modell eine produktionsreife Anwendung?
+
 ---
 
 # Inhaltsverzeichnis
@@ -47,7 +49,7 @@ Das LangChain-Ökosystem bietet dafür ein häufig genutztes Set von Werkzeugen,
 LangChain verbindet ein Sprachmodell mit externen Ressourcen und Tools. Agenten in LangChain folgen dem Prinzip:
 
 > [!NOTE] Agent = LLM + Tools + Schleife<br>
-Damit kann eine KI nicht nur Text generieren, sondern auch Informationen abrufen, APIs ansprechen oder Berechnungen ausführen. „Chains" ermöglichen zudem, wiederkehrende Abläufe in strukturierte Workflows zu überführen – ein notwendiger Schritt, um von experimentellem Prompting zu reproduzierbaren Prozessen zu gelangen.
+> Damit kann eine KI nicht nur Text generieren, sondern auch Informationen abrufen, APIs ansprechen oder Berechnungen ausführen. „Chains" ermöglichen zudem, wiederkehrende Abläufe in strukturierte Workflows zu überführen – ein notwendiger Schritt, um von experimentellem Prompting zu reproduzierbaren Prozessen zu gelangen.
 
 ### Kernfunktionen von LangChain
 
@@ -105,8 +107,7 @@ LangSmith dient zur Beobachtung und Verbesserung von KI-Anwendungen.
 - A/B-Testing verschiedener Prompts
 - Dataset-basierte Evaluierung
 
-{: .highlight }
-> **Production-Ready Features:**
+> [!NOTE] Production-Ready Features<br>
 > - Monitoring & Alerting
 > - Cost-Tracking
 > - Collaborative Debugging
@@ -216,9 +217,9 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 ## 10. Best Practices für den Produktiv-Einsatz
 
 ### 1. Start Simple
-- Beginnen Sie mit LangChain Chains
-- Erweitern Sie zu Agents nur wenn nötig
-- Nutzen Sie LangGraph für komplexe Workflows
+- Mit LangChain Chains beginnen
+- Erst bei Bedarf zu Agents erweitern
+- LangGraph für komplexe Workflows nutzen
 
 ### 2. Monitor from Day One
 - LangSmith von Anfang an aktivieren
@@ -240,7 +241,7 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 
 ---
 
-## 11. Fazit
+## 11. Was für Entwickler zuerst wichtig ist
 
 Der Weg von einem Sprachmodell zu einem produktionsreifen KI-System erfordert mehr als gute Modelle. Er beruht auf:
 
@@ -264,11 +265,11 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Vom Modell zur Anwendung? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Vom Modell zur Anwendung? |
+| [LangChain Best Practices](../frameworks/best-practices/langchain-best-practices.html) | Welche LangChain-Konventionen gelten für produktionsnahe Anwendungen? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für LangChain-basierte Anwendungen? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Dezember 2025<br>
+**Version:** 1.1<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

@@ -11,7 +11,8 @@ has_toc: true
 # Kommunikationsprotokolle
 {: .no_toc }
 
-> **Agenten brauchen Protokolle, sobald sie nicht mehr allein arbeiten.**
+> [!NOTE] Kernfrage<br>
+> Wann brauchen Agenten eigene Kommunikationsprotokolle statt direkter Tool-Aufrufe oder gewöhnlicher APIs?
 
 ---
 
@@ -98,7 +99,7 @@ flowchart LR
     SERVER --> FS[Dateisystem]
 ```
 
-Für den Einsteigerkurs reicht zunächst eine einfache Sicht: MCP stellt lesende Zugriffe, ausführbare Aktionen und wiederverwendbare Prompt-Vorlagen bereit. Damit lassen sich viele typische Integrationsfälle sauber abbilden.
+Für Entwickler reicht zunächst eine einfache Sicht: MCP stellt lesende Zugriffe, ausführbare Aktionen und wiederverwendbare Prompt-Vorlagen bereit. Damit lassen sich viele typische Integrationsfälle sauber abbilden.
 
 | MCP-Typ | Wofür er dient | Beispiel |
 |---|---|---|
@@ -124,7 +125,7 @@ Grenze: Ein einheitliches Protokoll macht Integrationen leichter, aber es macht 
 
 ## A2A: wenn Agenten mit anderen Agenten sprechen
 
-A2A regelt die Kommunikation zwischen autonomen Agenten. Das zentrale Ziel besteht darin, dass Agenten verschiedener Hersteller oder Frameworks zusammenarbeiten können, ohne dieselbe interne Implementierung zu teilen. Für einen Einsteigerkurs ist vor allem wichtig, dass A2A Aufgabenübergabe strukturiert: Ein Agent beschreibt, was er kann, ein anderer entdeckt diese Fähigkeiten und delegiert dann einen Task.
+A2A regelt die Kommunikation zwischen autonomen Agenten. Das zentrale Ziel besteht darin, dass Agenten verschiedener Hersteller oder Frameworks zusammenarbeiten können, ohne dieselbe interne Implementierung zu teilen. Für Entwickler ist vor allem wichtig, dass A2A Aufgabenübergabe strukturiert: Ein Agent beschreibt, was er kann, ein anderer entdeckt diese Fähigkeiten und delegiert dann einen Task.
 
 Eine typische A2A-Interaktion beginnt mit Discovery, setzt Authentifizierung voraus und geht danach in die eigentliche Aufgabenkommunikation über.
 
@@ -151,15 +152,15 @@ Ein Reiseagent kann auf diese Weise einen Hotelagenten finden, seine Fähigkeite
 
 ## Agent Cards und Task-Lebenszyklus
 
-Agent Cards sind maschinenlesbare Selbstbeschreibungen. Sie sagen, welche Formate unterstützt werden, wie ein Agent erreicht wird und welche Sicherheitsanforderungen gelten. Damit wird ein Agent in gewisser Weise auffindbar und ansprechbar wie ein Web-Service.
+Agent Cards sind maschinenlesbare Selbstbeschreibungen. Darin steht, welche Formate unterstützt werden, wie ein Agent erreicht wird und welche Sicherheitsanforderungen gelten. Damit wird ein Agent in gewisser Weise auffindbar und ansprechbar wie ein Web-Service.
 
 Nach der Übergabe einer Aufgabe bleibt die Kommunikation oft asynchron. Das ist wichtig, weil viele Agentenaufgaben nicht in einem einzelnen Request-Response-Schritt enden. Eine Aufgabe kann in Bearbeitung sein, Rückfragen auslösen, scheitern oder erfolgreich ein Ergebnis liefern.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Submitted: Aufgabe uebergeben
+    [*] --> Submitted: Aufgabe übergeben
     Submitted --> Working: Bearbeitung beginnt
-    Working --> InputRequired: Rueckfrage noetig
+    Working --> InputRequired: Rückfrage nötig
     InputRequired --> Working: Antwort erhalten
     Working --> Completed: Erfolgreich
     Working --> Failed: Fehler aufgetreten
@@ -291,8 +292,8 @@ Sobald Agenten autonom Aufgaben annehmen und weiterreichen, stellt sich eine bet
 stateDiagram-v2
     [*] --> Drafted: Parameter festlegen
     Drafted --> Active: Ressourcen reservieren
-    Active --> Fulfilled: Aufgabe erfuellt
-    Active --> Violated: Limit ueberschritten
+    Active --> Fulfilled: Aufgabe erfüllt
+    Active --> Violated: Limit überschritten
     Active --> Expired: Zeit abgelaufen
     Active --> Terminated: Manuell abgebrochen
     Fulfilled --> [*]
@@ -301,7 +302,7 @@ stateDiagram-v2
     Terminated --> [*]
 ```
 
-Für den Einsteigerkurs genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
+Für den Kurs genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
 
 ## Was für Entwickler zuerst wichtig ist
 
@@ -314,11 +315,11 @@ Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, w
 | Dokument | Frage |
 |---|---|
 | [Multi-Agent-Systeme](../workflows-state/multi-agent-systeme.html) | Wie arbeiten mehrere Agenten organisatorisch zusammen, unabhängig vom konkreten Protokoll? |
-| [Agent Security](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsrisiken entstehen durch offene Schnittstellen, Tool-Zugriffe und externe Agenten? |
+| [Agenten-Sicherheit](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsrisiken entstehen durch offene Schnittstellen, Tool-Zugriffe und externe Agenten? |
 | [Skills](./skills.html) | Wann reichen lokale, wiederverwendbare Arbeitsrezepte statt offener Protokollschnittstellen? |
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** April 2026<br>
+**Version:** 1.2<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

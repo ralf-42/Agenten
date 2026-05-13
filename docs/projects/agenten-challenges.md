@@ -10,7 +10,8 @@ has_toc: true
 # Research Assistant Challenge
 {: .no_toc }
 
-> **Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln**
+> [!NOTE] Kernfrage<br>
+> Wie wird aus dem Research Assistant ein eigenständiges Multi-Agent-Projekt mit Produktionsanforderungen?
 
 ---
 
@@ -22,7 +23,7 @@ has_toc: true
 
 ---
 
-# Überblick Agenten-Challenge
+## Überblick Agenten-Challenge
 
 Die Challenge dient als praktische Anwendung und Integration der in den Kursmodulen M01-M24 erlernten Konzepte. Hauptziel ist ein funktionsfähiger **Research Assistant für Fachartikel**, der **LangGraph State Machines**, **RAG**, **Evaluation**, **Human-in-the-Loop** und **Checkpointing** kombiniert. Die Module M26-M36 sind optionale Transfer- und Produktionsvertiefungen.
 
@@ -50,11 +51,10 @@ Die Challenge dient als praktische Anwendung und Integration der in den Kursmodu
 
 ## Praxiseinblick: Von der State Machine zum Production-System
 
-{: .highlight }
-> "Ein Agent ist kein Chatbot – der Unterschied ist verstanden."
-> — Modul M01 (Kursplan)
+> [!NOTE] Kursanker<br>
+> „Ein Agent ist kein Chatbot – der Unterschied ist verstanden." — Modul M01 (Kursplan)
 
-Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, die bei Production-Deployments von KI-Agenten auftreten:
+Die Agenten-Challenge bereitet auf realistische Herausforderungen vor, die bei Production-Deployments von KI-Agenten auftreten:
 
 ### Was unterscheidet einen einfachen Agent von einem Production-System?
 
@@ -72,30 +72,30 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 
 **1. State Management ist Critical**
 - Production-Agents müssen Sessions über Tage/Wochen persistieren
-- **Ihr Projekt:** Implementieren Sie SQLite-Checkpointer für alle Sessions
+- **Projektanforderung:** SQLite-Checkpointer für alle Sessions implementieren
 - **Takeaway:** State ist die Foundation für Kontrolle
 
 **2. Human-in-the-Loop für kritische Entscheidungen**
 - Agenten sollten bei unsicheren Entscheidungen Menschen fragen
-- **Ihr Projekt:** Mindestens 1 Interrupt-Point für Approval
+- **Projektanforderung:** mindestens einen Interrupt-Point für Approval implementieren
 - **Takeaway:** Autonomie ≠ keine menschliche Kontrolle
 
 **3. Multi-Agent = Skalierung**
 - Spezialisierte Worker-Agents > ein Generalist-Agent
-- **Ihr Projekt:** Mindestens Supervisor + 2 Worker implementieren
+- **Projektanforderung:** mindestens Supervisor + 2 Worker implementieren
 - **Takeaway:** Arbeitsteilung macht Systeme robuster
 
 **4. Observability von Anfang an**
 - LangSmith-Tracing ist nicht optional für Production
-- **Ihr Projekt:** Alle Agent-Entscheidungen nachvollziehbar machen
+- **Projektanforderung:** alle Agent-Entscheidungen nachvollziehbar machen
 - **Takeaway:** Debugging ohne Traces ist unmöglich
 
-{: .info }
-> **Empfehlung:** Studieren Sie den [LangGraph Guide](../frameworks/einsteiger/einsteiger-langgraph.html) für Production-Best-Practices.
+> [!TIP] Vorbereitung<br>
+> Der [LangGraph Guide](../frameworks/einsteiger/einsteiger-langgraph.html) liefert die nötigen Grundlagen für Production-Best-Practices.
 
-### Konkrete Tipps für Ihre Challenge
+### Konkrete Tipps für die Challenge
 
-✅ **Do's:**
+**Do's:**
 - StateGraph VOR Code zeichnen (Visualisierung hilft!)
 - Checkpointing von Anfang an einbauen (nicht nachträglich)
 - Klein starten: 2 Worker besser als 5 halbfertige
@@ -111,7 +111,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 
 ---
 
-# Projektoptionen
+## Projektoptionen
 
 Die Hauptoption ist der Research Assistant. Weitere Optionen dienen als Transfer, wenn derselbe Bauplan auf andere Domänen übertragen werden soll.
 
@@ -170,10 +170,10 @@ graph TB
 ```
 
 **Erfolgskriterien:**
-- ✅ Supervisor routet korrekt zu 2+ Workers
-- ✅ Sessions werden persistent gespeichert (SQLite)
-- ✅ Mindestens 1 HITL-Interrupt implementiert
-- ✅ LangSmith zeigt vollständigen Graph-Trace
+- Supervisor routet korrekt zu 2+ Workers
+- Sessions werden persistent gespeichert (SQLite)
+- Mindestens 1 HITL-Interrupt implementiert
+- LangSmith zeigt vollständigen Graph-Trace
 
 ---
 
@@ -224,10 +224,10 @@ graph TB
 ```
 
 **Erfolgskriterien:**
-- ✅ 3-Ebenen-Hierarchie funktioniert
-- ✅ Research + Writing als Subgraphs implementiert
-- ✅ Streaming zeigt Fortschritt in Echtzeit
-- ✅ RAG-Integration für Wissensrecherche
+- 3-Ebenen-Hierarchie funktioniert
+- Research + Writing als Subgraphs implementiert
+- Streaming zeigt Fortschritt in Echtzeit
+- RAG-Integration für Wissensrecherche
 
 ---
 
@@ -272,16 +272,16 @@ graph LR
 ```
 
 **Erfolgskriterien:**
-- ✅ 3 Peer-Agents kommunizieren miteinander
-- ✅ Konsens-Mechanismus funktioniert
-- ✅ Moderator löst Konflikte
-- ✅ Structured Output (Pydantic) für Reports
+- 3 Peer-Agents kommunizieren miteinander
+- Konsens-Mechanismus funktioniert
+- Moderator löst Konflikte
+- Structured Output (Pydantic) für Reports
 
 ---
 
 ## Workflow-Automation mit Tool-Integration
 
-**Beschreibung:** Ein Workflow-Agent, der komplexe Business-Prozesse automatisiert (z.B. Onboarding, Approval-Workflows, Data Processing).
+**Beschreibung:** Ein Workflow-Agent, der komplexe Business-Prozesse automatisiert (z. B. Onboarding, Approval-Workflows, Data Processing).
 
 **Kernelemente:**
 - LangGraph State Machine für Workflow-Steps
@@ -322,14 +322,14 @@ stateDiagram-v2
 ```
 
 **Erfolgskriterien:**
-- ✅ Workflow läuft über mehrere Steps
-- ✅ Conditional Routing entscheidet Pfade
-- ✅ HITL-Interrupts für Genehmigungen
-- ✅ Sessions persistent (können pausiert/resumed werden)
+- Workflow läuft über mehrere Steps
+- Conditional Routing entscheidet Pfade
+- HITL-Interrupts für Genehmigungen
+- Sessions persistent (können pausiert/resumed werden)
 
 ---
 
-# Technische Anforderungen
+## Technische Anforderungen
 
 ## PFLICHT-Features (Must-Have)
 
@@ -439,14 +439,12 @@ with gr.Blocks() as demo:
 
 ---
 
-# Projekt-Setup
+## Projekt-Setup
 
 ## Environment Setup
 
 ```python
-# ═══════════════════════════════════════════════════
-# 📦 INSTALLATION
-# ═══════════════════════════════════════════════════
+# Installation
 
 !pip install -q langchain>=1.1.0 langchain-openai>=1.0.0 langchain-community
 !pip install -q langgraph>=1.0.0 langgraph-checkpoint-sqlite
@@ -461,9 +459,7 @@ with gr.Blocks() as demo:
 **Wichtig:** LangSmith-Account und LangSmith-API-Key im EU-Workspace anlegen (`https://eu.smith.langchain.com/`) und für `LANGSMITH_ENDPOINT` den EU-API-Endpoint setzen: `https://eu.api.smith.langchain.com`
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🔑 API-KEYS
-# ═══════════════════════════════════════════════════
+# API-Keys
 
 import os
 from google.colab import userdata
@@ -471,7 +467,7 @@ from google.colab import userdata
 # OpenAI API
 os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
-# LangSmith (PFLICHT für Challenge!)
+# LangSmith (Pflicht für Challenge)
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_PROJECT"] = "agenten-challenge-your-name"
 os.environ["LANGSMITH_API_KEY"] = userdata.get('LANGSMITH_API_KEY')
@@ -481,15 +477,14 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ## LangGraph Basis-Template
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🎯 LANGGRAPH BASIS-SETUP
-# ═══════════════════════════════════════════════════
+# LangGraph Basis-Setup
 
 from typing import TypedDict, Annotated, Literal
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langchain.chat_models import init_chat_model
+from genai_lib.model_config import WORKER
 
 # 1. State definieren
 class MultiAgentState(TypedDict):
@@ -499,7 +494,7 @@ class MultiAgentState(TypedDict):
     approved: bool
 
 # 2. LLM initialisieren
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model(WORKER)
 
 # 3. Checkpointer erstellen
 checkpointer = SqliteSaver.from_conn_string("challenge_sessions.db")
@@ -510,7 +505,7 @@ workflow = StateGraph(MultiAgentState)
 # 5. Nodes hinzufügen (Beispiel)
 def supervisor_node(state: MultiAgentState) -> MultiAgentState:
     """Supervisor entscheidet nächsten Agent."""
-    # Ihre Logik hier
+    # Projektlogik hier ergänzen
     return state
 
 workflow.add_node("supervisor", supervisor_node)
@@ -525,7 +520,7 @@ graph = workflow.compile(
 
 ---
 
-# Bewertungskriterien
+## Bewertungskriterien
 
 | Kategorie | Punkte | Kriterien |
 |-----------|--------|-----------|
@@ -542,7 +537,7 @@ graph = workflow.compile(
 
 ---
 
-# Abgabe
+## Abgabe
 
 ## Abgabeformat
 
@@ -589,7 +584,7 @@ graph = workflow.compile(
 
 ---
 
-# Hilfreiche Ressourcen
+## Hilfreiche Ressourcen
 
 ## Dokumentation
 
@@ -624,10 +619,10 @@ graph = workflow.compile(
 
 ---
 
-# FAQ
+## FAQ
 
 **Q: Muss ich alle 4 Projektoptionen implementieren?**
-A: Nein! Wählen Sie **eine** Option, die Sie vollständig implementieren. Qualität > Quantität.
+A: Nein. Eine Option vollständig zu implementieren ist besser als mehrere halbfertige Varianten. Qualität geht vor Quantität.
 
 **Q: Kann ich create_agent() statt LangGraph verwenden?**
 A: **Nein!** LangGraph ist PFLICHT für die Challenge. `create_agent()` reicht nicht für die Bewertungskriterien.
@@ -642,13 +637,13 @@ A: SQLite reicht für die Challenge. PostgreSQL ist optional (Bonuspunkte).
 A: Mindestens über Notebook-Neustart hinweg. Test: Notebook schließen, neu öffnen, Session laden.
 
 **Q: Mein Graph hat Endlos-Loops – was tun?**
-A: Fügen Sie `recursion_limit=20` bei `compile()` hinzu. Prüfen Sie, ob Supervisor-Router immer zu END führen kann.
+A: `recursion_limit=20` bei `compile()` ergänzen. Zusätzlich prüfen, ob der Supervisor-Router immer zu `END` führen kann.
 
 **Q: Brauche ich wirklich eine UI?**
 A: Ja! Gradio-UI ist Teil der Bewertung (10 Punkte). Zeigt, dass System nutzbar ist.
 
 **Q: Kann ich die Challenge lokal statt in Colab machen?**
-A: Ja! Verwenden Sie dann:
+A: Ja. Dann gilt:
   - Lokales Jupyter Notebook/Lab
   - `from dotenv import load_dotenv` für API-Keys
   - SQLite funktioniert identisch
@@ -661,7 +656,7 @@ A:
 
 ---
 
-# Beispiel-Architektur: Support-System
+## Beispiel-Architektur: Support-System
 
 Hier ein vollständiges Beispiel für Option 2.1 (Multi-Agent Support-System) als Inspiration:
 
@@ -723,11 +718,11 @@ class SupportState(TypedDict):
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Research Assistant Challenge? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Challenge? |
+| [LangGraph](../frameworks/einsteiger/einsteiger-langgraph.html) | Welche LangGraph-Grundlagen braucht die Challenge? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Multi-Agent-Projekte? |
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** März 2026<br>
+**Version:** 1.2<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

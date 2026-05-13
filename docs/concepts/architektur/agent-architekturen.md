@@ -326,7 +326,7 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 | Dokument | Frage |
 |---|---|
-| [Welches Werkzeug?](../einstieg/aufgabenklassen-und-loesungswege.html) | Wann ist ein Agent sinnvoll und wann eher Workflow, RAG oder klassischer Code? |
+| [Aufgaben & Lösungswege](../einstieg/aufgabenklassen-und-loesungswege.html) | Wann ist ein Agent sinnvoll und wann eher Workflow, RAG oder klassischer Code? |
 | [Tool Use & Function Calling](./tool-use-function-calling.html) | Wie werden Werkzeuge technisch beschrieben, aufgerufen und abgesichert? |
 | [Multi-Agent-Systeme](../workflows-state/multi-agent-systeme.html) | Wie arbeiten mehrere Agenten koordiniert zusammen? |
 | [State Management](../workflows-state/state-management.html) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet? |

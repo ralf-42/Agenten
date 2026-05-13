@@ -10,7 +10,8 @@ has_toc: true
 # Datenschutz & DSGVO
 {: .no_toc }
 
-> **Wer personenbezogene Daten an eine externe KI-API schickt, ist Verantwortlicher im Sinne der DSGVO — unabhängig davon, ob das bewusst passiert oder nicht.**
+> [!IMPORTANT] Personenbezogene Daten in KI-Systemen<br>
+> Wer personenbezogene Daten an eine externe KI-API schickt, ist Verantwortlicher im Sinne der DSGVO — unabhängig davon, ob das bewusst passiert oder nicht.
 
 ---
 
@@ -24,7 +25,7 @@ has_toc: true
 
 ## Warum Datenschutz für KI-Entwickler relevant ist
 
-Die DSGVO gilt seit 2018 in der gesamten EU. Sie schreibt vor, wie personenbezogene Daten — also Daten, die sich einer natürlichen Person zuordnen lassen — erhoben, verarbeitet und gespeichert werden dürfen. Wer einen Agenten baut, der Kundenfragen beantwortet, E-Mails analysiert oder Bewerbungsunterlagen auswertet, verarbeitet fast zwangsläufig personenbezogene Daten.
+Die DSGVO gilt seit 2018 in der gesamten EU. Die Verordnung schreibt vor, wie personenbezogene Daten — also Daten, die sich einer natürlichen Person zuordnen lassen — erhoben, verarbeitet und gespeichert werden dürfen. Wer einen Agenten baut, der Kundenfragen beantwortet, E-Mails analysiert oder Bewerbungsunterlagen auswertet, verarbeitet fast zwangsläufig personenbezogene Daten.
 
 Das Besondere bei LLM-basierten Systemen: Datenschutzverstöße entstehen oft nicht absichtlich. Ein Entwickler schickt einen Kundennamen im Prompt mit, weil es das Testen vereinfacht. Ein Agent liest eine E-Mail aus und übergibt den vollständigen Text an die API. Der LangSmith-Trace enthält eine Kundennummer. Keines dieser Szenarien erfordert böse Absicht — es reicht, nicht aktiv darüber nachgedacht zu haben.
 
@@ -55,12 +56,12 @@ from presidio_anonymizer import AnonymizerEngine
 analyzer  = AnalyzerEngine()
 anonymizer = AnonymizerEngine()
 
-text = "Bitte prüfe die Anfrage von Max Müller (max@example.com)."
+text = "Prüfung der Anfrage von Max Müller (max@example.com)."
 ergebnisse = analyzer.analyze(text=text, language="de")
 anonymisiert = anonymizer.anonymize(text=text, analyzer_results=ergebnisse)
 
 print(anonymisiert.text)
-# → "Bitte prüfe die Anfrage von <PERSON> (<EMAIL_ADDRESS>)."
+# → "Prüfung der Anfrage von <PERSON> (<EMAIL_ADDRESS>)."
 ```
 
 **Typischer Fehler:** Entwickler testen mit echten Produktionsdaten, weil das bequemer ist als Testdaten zu erstellen. Damit gelangen reale personenbezogene Daten in externe APIs, Logs und Traces — oft ohne dass das in der Datenschutzdokumentation erfasst ist.
@@ -90,7 +91,7 @@ Lokale Modelle über Ollama oder vLLM laufen vollständig auf eigener Infrastruk
 
 ## Tracing, Logging und Evaluation — die vergessene Datenschutzfrage
 
-Agenten erzeugen oft mehr personenbezogene Spuren als erwartet: Prompts, Modellantworten, Tool-Aufrufe, State, Memory, Retrieval-Ergebnisse, Evaluation-Datasets und Traces. LangSmith kann Inputs, Outputs, Tool-Aufrufe, Metadaten und Datasets speichern, abhängig von Konfiguration und Nutzung. Das ist für Debugging und Qualitätssicherung wertvoll, aber auch eine Datenschutzfrage.
+Agenten erzeugen oft mehr personenbezogene Spuren als erwartet: Prompts, Modellantworten, Tool-Aufrufe, State, Memory, Retrieval-Ergebnisse, Notebook-Ausgaben, Fehlerlogs, Evaluation-Datasets und Traces. LangSmith kann Inputs, Outputs, Tool-Aufrufe, Metadaten und Datasets speichern, abhängig von Konfiguration und Nutzung. Das ist für Debugging und Qualitätssicherung wertvoll, aber auch eine Datenschutzfrage.
 
 Im Kurs wird bereits der EU-Endpunkt verwendet (`eu.api.smith.langchain.com`). Das ist ein wichtiger Baustein, ersetzt aber keine Datenklassifikation. Entscheidend bleibt, welche Inhalte überhaupt in Traces, Metadaten, Feedback und Evaluationsdaten gelangen.
 
@@ -133,9 +134,9 @@ Entwickler müssen das nicht selbst aushandeln — aber sie sollten wissen, dass
 
 ## Datenschutz by Design
 
-Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret, dass personenbezogene Daten möglichst früh im Datenfluss gefiltert oder anonymisiert werden — nicht erst bevor die Antwort ausgegeben wird.
+Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret, dass personenbezogene Daten möglichst früh im Datenfluss gefiltert oder anonymisiert werden — bevor sie in Prompt, RAG-Index, Tool-Aufruf, Notebook-Ausgabe oder Trace landen.
 
-Datenschutz by Default ergänzt dieses Prinzip: Die voreingestellte Konfiguration sollte möglichst datensparsam sein. Tracing sollte keine Klardaten in Metadaten schreiben, Memory sollte nicht automatisch alles dauerhaft speichern, Tool-Zugriffe sollten minimal berechtigt sein und Logs sollten kurze, begründete Aufbewahrungsfristen haben.
+Datenschutz by Default ergänzt dieses Prinzip: Die voreingestellte Konfiguration sollte möglichst datensparsam sein. Tracing sollte keine Klardaten in Metadaten schreiben, RAG-Indizes sollten keine unnötigen personenbezogenen Daten enthalten, Memory sollte nicht automatisch alles dauerhaft speichern, Tool-Zugriffe sollten minimal berechtigt sein und Logs sollten kurze, begründete Aufbewahrungsfristen haben.
 
 Ein einfaches Prinzip lässt sich als Tool-Prüfung umsetzen:
 
@@ -180,10 +181,10 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 | [EU AI Act](./eu-ai-act.html) | Welche Risikostufen und Anforderungen definiert das europäische KI-Recht? |
 | [Agenten-Sicherheit](../concepts/qualitaet-praxis/agent-security.html) | Wie werden Agenten gegen technische Angriffe wie Prompt Injection und Tool-Missbrauch abgesichert? |
 | [Human-in-the-Loop](../concepts/workflows-state/human-in-the-loop.html) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
-| [Lohnt es sich überhaupt?](../concepts/einstieg/lohnt-es-sich.html) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
+| [Lohnt sich KI?](../concepts/einstieg/lohnt-es-sich.html) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
 
 ---
 
 **Version:** 1.0<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

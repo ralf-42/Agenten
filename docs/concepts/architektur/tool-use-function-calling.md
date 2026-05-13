@@ -410,15 +410,15 @@ Für einen ersten Agenten reichen meist wenige, klar benannte Werkzeuge mit gute
 
 Entwickler unterschätzen oft, dass Tool Use nicht nur neue Fähigkeiten bringt, sondern auch neue Verantwortung. Sobald ein Agent lesen, suchen, schreiben oder externe Systeme verändern kann, wird Tool-Design zur Sicherheitsfrage.
 
-In der Praxis relevant wenn: Ein Agent auf viele Werkzeuge zugreifen soll, diese aber nicht alle gleichzeitig braucht. Statt alle Tools auf einmal bereitzustellen, kann man dem Agenten zunächst nur wenige, klar beschriebene Einstiegs-Tools geben. Die vollständigen Parameter-Beschreibungen oder spezialisierte Werkzeuge werden erst dann in den Kontext injiziert, wenn der Agent durch einen ersten Tool-Aufruf signalisiert, in welche Richtung er arbeitet. Dieses Prinzip — als **Progressive Disclosure** bezeichnet — reduziert den Token-Verbrauch, verringert mehrdeutige Tool-Auswahlen und macht das Debugging einfacher, weil in jedem Schritt weniger gleichzeitig entschieden wird.
+In der Praxis relevant, wenn: Ein Agent auf viele Werkzeuge zugreifen soll, diese aber nicht alle gleichzeitig braucht. Statt alle Tools auf einmal bereitzustellen, kann man dem Agenten zunächst nur wenige, klar beschriebene Einstiegs-Tools geben. Die vollständigen Parameter-Beschreibungen oder spezialisierte Werkzeuge werden erst dann in den Kontext injiziert, wenn der Agent durch einen ersten Tool-Aufruf signalisiert, in welche Richtung er arbeitet. Dieses Prinzip — als **Progressive Disclosure** bezeichnet — reduziert den Token-Verbrauch, verringert mehrdeutige Tool-Auswahlen und macht das Debugging einfacher, weil in jedem Schritt weniger gleichzeitig entschieden wird.
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Welche Architektur passt zu diesem Agenten?](./agent-architekturen.html) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
-| [Agent Security](../qualitaet-praxis/agent-security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
-| [RAG Konzepte](../wissensmanagement/rag-konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
+| [Agenten-Architekturen](./agent-architekturen.html) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
+| [Agenten-Sicherheit](../qualitaet-praxis/agent-security.html) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
+| [RAG-Konzepte](../wissensmanagement/rag-konzepte.html) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
 
 ---
 

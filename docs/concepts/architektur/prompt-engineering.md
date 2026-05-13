@@ -451,9 +451,9 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ```
 ---
 
-## Zusammenfassung
+## Was für Entwickler zuerst wichtig ist
 
-Effektives Prompt Engineering basiert auf drei Säulen:
+Prompt Engineering ist bei Agenten kein Schreibtrick, sondern ein Verhaltensvertrag zwischen Modell, Werkzeugen und Anwendungscode. Drei Aspekte tragen diesen Vertrag:
 
 | Säule | Kernaspekt |
 |-------|------------|
@@ -461,14 +461,9 @@ Effektives Prompt Engineering basiert auf drei Säulen:
 | **Kontext** | Relevante Informationen und Beispiele |
 | **Kontrolle** | Explizite Formatvorgaben und Grenzen |
 
-**Für KI-Agenten besonders wichtig:**
+Für KI-Agenten besonders wichtig sind System-Prompts, Tool-Beschreibungen, strukturierte Ausgaben und iteratives Testen. System-Prompts definieren das Gesamtverhalten, Tool-Beschreibungen steuern die Werkzeugnutzung, strukturierte Ausgaben ermöglichen Weiterverarbeitung, und Tests zeigen, ob das gewünschte Verhalten auch bei Grenzfällen stabil bleibt.
 
-- **System-Prompts** definieren das Gesamtverhalten
-- **Tool-Beschreibungen** steuern die Werkzeugnutzung
-- **Strukturierte Ausgaben** ermöglichen Weiterverarbeitung
-- **Iteratives Testen** führt zu robusten Prompts
-
-Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents angewendet.
+Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agentensystemen sind sie Teil der Architektur. Was zuverlässig gelten muss, gehört entweder in strukturierte Ausgaben, Tool-Schemas, Validierung oder Code — nicht nur in eine gut klingende Formulierung.
 
 ---
 
@@ -482,6 +477,6 @@ Im weiteren Kursverlauf werden diese Strategien praktisch in LangChain-Agents an
 
 ---
 
-**Version:**    1.0<br>
-**Stand:**    November 2025<br>
+**Version:** 1.1<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

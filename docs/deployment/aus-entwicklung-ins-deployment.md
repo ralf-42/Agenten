@@ -7,11 +7,11 @@ description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produkti
 has_toc: true
 ---
 
-# Aus der Entwicklung ins Deployment
+# Produktionsreife Anwendung
 {: .no_toc }
 
-> **Vom Notebook zur Produktion**<br>
-> Eine praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
+> [!NOTE] Kernfrage<br>
+> Wie wird aus einem Notebook eine wartbare, testbare und deploybare GenAI-Anwendung?
 
 ---
 
@@ -113,7 +113,7 @@ client = openai.OpenAI(api_key="sk-abc123...")
 # Zelle 5
 def frage_llm(prompt):
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-5.4-nano",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
@@ -123,11 +123,12 @@ def frage_llm(prompt):
 ```python
 import os
 from openai import OpenAI
+from genai_lib.model_config import BASELINE
 
 class LLMClient:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.model = os.getenv("MODEL_NAME", "gpt-4")
+        self.model = os.getenv("MODEL_NAME", BASELINE.replace("openai:", ""))
     
     def frage(self, prompt: str) -> str:
         """Stellt eine Frage an das LLM und gibt die Antwort zurück."""
@@ -152,8 +153,8 @@ Eine `.env.example` als Vorlage:
 
 ```bash
 # .env.example - Zu .env kopieren und Werte eintragen
-OPENAI_API_KEY=dein-api-key-hier
-MODEL_NAME=gpt-4
+OPENAI_API_KEY=sk-projekt-key
+MODEL_NAME=gpt-5.4-nano
 LOG_LEVEL=INFO
 ```
 
@@ -201,7 +202,7 @@ uvicorn>=0.23.0
 
 Auch ohne tiefe Testing-Erfahrung lassen sich grundlegende Tests schreiben:
 
-> [!SUCCESS] Mindeststandard     
+> [!SUCCESS] Mindeststandard<br>
 > Schon wenige Smoke-Tests verhindern viele regressionsbedingte Ausfälle im Deployment.
 
 ```python
@@ -305,8 +306,8 @@ docker build -t meine-genai-app .
 
 # Container starten (mit Umgebungsvariablen)
 docker run -p 8000:8000 \
-  -e OPENAI_API_KEY="dein-key" \
-  -e MODEL_NAME="gpt-4" \
+  -e OPENAI_API_KEY="sk-projekt-key" \
+  -e MODEL_NAME="gpt-5.4-nano" \
   meine-genai-app
 ```
 
@@ -328,7 +329,7 @@ Je nach Anforderung gibt es verschiedene Wege ins Deployment:
 
 ---
 
-## Zusammenfassung: Die Checkliste
+## Go-Live-Checkliste
 
 Vor dem Go-Live sollten diese Punkte geprüft werden:
 
@@ -350,7 +351,7 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 ## Typische Fehler vermeiden
 
 > [!WARNING] Hardcoding-Patterns vermeiden<br>
-> API-Keys und Secrets direkt im Code oder in Notebooks sind der häufigste Sicherheitsfehler beim Deployment. Sie landen unweigerlich in der Git-Historie und sind danach praktisch nicht mehr rückholbar.
+> API-Keys und Secrets direkt im Code oder in Notebooks sind der häufigste Sicherheitsfehler beim Deployment. Solche Werte landen unweigerlich in der Git-Historie und sind danach praktisch nicht mehr rückholbar.
 
 **❌ API-Keys im Code**
 → Immer Umgebungsvariablen verwenden
@@ -380,11 +381,11 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Produktionsreife Anwendung? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Produktionsreife Anwendung? |
+| [LangChain Best Practices](../frameworks/best-practices/langchain-best-practices.html) | Welche LangChain-Konventionen helfen beim Übergang in eine produktionsreife Anwendung? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Agenten-Anwendungen? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Februar 2026<br>
+**Version:** 1.1<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

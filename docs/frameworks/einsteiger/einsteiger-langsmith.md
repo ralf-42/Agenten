@@ -78,6 +78,7 @@ flowchart TB
 > [!WARNING] EU-Endpoint verwenden<br>
 > Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
 > Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
+> APAC-Account (Asia-Pacific): `https://ap.api.smith.langchain.com` (seit SDK 0.8.x).
 
 ### API-Keys in Google Colab Secrets hinterlegen
 
@@ -962,5 +963,5 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 ---
 
 **Version:** 2.1<br>
-**Stand:** März 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

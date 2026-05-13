@@ -49,7 +49,7 @@ Ein einmaliger persönlicher Textentwurf ist meist eine Chat-Aufgabe. Ein wieder
 | Wiederkehrende persönliche Unterstützung | Custom GPT oder Skill |
 | Vorgehen unklar, mehrstufig, toolgestützt | Agentensystem |
 
-Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet eine ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege (GenAI)](aufgabenklassen-und-loesungswege.html).
+Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet eine ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege](https://ralf-42.github.io/GenAI/concepts/orientierung/aufgabenklassen-und-loesungswege.html).
 
 ## Woran sich ein echter Agentenfall erkennen lässt
 
@@ -125,13 +125,13 @@ flowchart TD
     D0 -->|Nein| AG
     D -->|Nein| E{Viele Daten oder komplexe Logik?}
     E -->|Ja| E1([Python und APIs])
-    E -->|Nein| F{Tool fuer andere mit UI?}
+    E -->|Nein| F{Tool für andere mit UI?}
     F -->|Ja| F1([App-Builder oder Anwendung])
-    F -->|Nein| G{Vorgehen unklar und toolgestuetzt?}
+    F -->|Nein| G{Vorgehen unklar und toolgestützt?}
     G -->|Nein| H1([Custom GPT oder Skill])
     G -->|Ja| AG[Agentensystem]
 
-    AG --> AG1{Mehrere Spezialisten noetig?}
+    AG --> AG1{Mehrere Spezialisten nötig?}
     AG1 -->|Ja| MA([Multi-Agent])
     AG1 -->|Nein| AG2{Fester Ablauf oder Routing?}
     AG2 -->|Ja| WF([Workflow])
@@ -181,7 +181,7 @@ Kurzcheck:
 
 | Dokument | Frage |
 |---|---|
-| [Welche Architektur passt zu diesem Agenten?](../architektur/agent-architekturen.html) | Wie unterscheiden sich ReAct, Tool-Calling, Workflow und Multi-Agent im Detail? |
+| [Agenten-Architekturen](../architektur/agent-architekturen.html) | Wie unterscheiden sich ReAct, Tool-Calling, Workflow und Multi-Agent im Detail? |
 | [Multi-Agent-Systeme](../workflows-state/multi-agent-systeme.html) | Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten? |
 | [Human-in-the-Loop](../workflows-state/human-in-the-loop.html) | An welchen Stellen müssen Menschen zur Kontrolle oder Freigabe eingebunden werden? |
 | [Modell-Auswahl Guide](../../frameworks/modell-auswahl/modell-auswahl-guide.html) | Welches Modell passt zu welcher Rolle im gewählten System? |

@@ -7,11 +7,11 @@ description: Migrationsleitfaden für den Wechsel von OpenAI-basierten Kursmodul
 has_toc: true
 ---
 
-# Migration: OpenAI → Mistral
+# Migration-Analyse Provider
 {: .no_toc }
 
-> **Migrationsleitfaden für das Projekt `Agenten`**<br>
-> Zentrale Aussage: Die Migration wird vor allem dadurch vereinfacht, dass das Projekt stark auf **LangChain** und das umgebende Ökosystem setzt.
+> [!NOTE] Kernfrage<br>
+> Welche Teile einer Agenten-Anwendung ändern sich beim Provider-Wechsel, und welche bleiben durch LangChain stabil?
 
 > [!NOTE] Hinweis zu den Notebooks<br>
 > Die in `01_notebook/` genannten Module dienen hier nur als **anfassbare Beispiele**. Relevant ist nicht das einzelne Notebook, sondern **welche Art von Änderung** durch die bestehende LangChain-Struktur vereinfacht wird.
@@ -152,13 +152,14 @@ Die wichtigste technische Maßnahme ist eine zentrale Modellinitialisierung.
 
 ```python
 from langchain.chat_models import init_chat_model
+from genai_lib.model_config import BASELINE, ROUTER, JUDGE, WORKER
 
 MODEL_CONFIG = {
     "openai": {
-        "baseline": "openai:gpt-4o-mini",
-        "router": "openai:o3-mini",
-        "judge": "openai:o3",
-        "worker": "openai:gpt-5.4-mini",
+        "baseline": BASELINE,
+        "router": ROUTER,
+        "judge": JUDGE,
+        "worker": WORKER,
     },
     "mistral": {
         "baseline": "mistral:mistral-small-latest",
@@ -180,10 +181,11 @@ Die eigentliche LangChain-/LangGraph-Logik bleibt weitgehend gleich, während di
 
 ```python
 from langchain_openai import OpenAIEmbeddings
+from genai_lib.model_config import EMBEDDINGS
 
 def get_embeddings(provider: str = "openai"):
     if provider == "openai":
-        return OpenAIEmbeddings(model="text-embedding-3-small")
+        return OpenAIEmbeddings(model=EMBEDDINGS)
     raise ValueError("Für diesen Provider ist noch kein Embedding-Backend konfiguriert.")
 ```
 
@@ -215,9 +217,8 @@ Die Notebooks dienen nur dazu, die Typen von Migrationsarbeit anschaulich zu mac
 - **Mixed-Model-Module** zeigen, dass Rollenmapping wichtiger ist als reine Modellnamen
 - **provider-spezifische Module** zeigen, wo Migration bewusst nicht das Ziel ist
 
-Die Botschaft ist also:
-
-> Die Notebooks sind keine Migrationsliste, sondern **Beleg dafür, dass die bestehende LangChain-Struktur die Migration systematisch vereinfacht**.
+> [!NOTE] Einordnung der Notebooks<br>
+> Die Notebooks sind keine Migrationsliste, sondern Beleg dafür, dass die bestehende LangChain-Struktur die Migration systematisch vereinfacht.
 
 ---
 
@@ -276,11 +277,9 @@ Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
 ---
 
-## Fazit
+## Was für Entwickler zuerst wichtig ist
 
-Die eigentliche Botschaft dieser Migration ist:
-
-> Der Wechsel von OpenAI zu Mistral wird im Projekt `Agenten` nicht deshalb handhabbar, weil Provider austauschbar wären, sondern weil **LangChain und LangGraph die LLM-Schicht bereits stark standardisieren**.
+Der Wechsel von OpenAI zu Mistral wird im Projekt `Agenten` nicht deshalb handhabbar, weil Provider austauschbar wären, sondern weil LangChain und LangGraph die LLM-Schicht bereits stark standardisieren.
 
 Damit verschiebt sich die Arbeit weg von:
 
@@ -299,11 +298,11 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Migration-Analyse Provider? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Migration-Analyse Provider? |
+| [Provider-Modell-Mapping](../frameworks/modell-auswahl/provider-modell-mapping.html) | Wie werden Modellrollen providerübergreifend zugeordnet? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Provider-Migrationen? |
 
 ---
 
-**Version:** 4.0<br>
-**Stand:** März 2026<br>
+**Version:** 4.1<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

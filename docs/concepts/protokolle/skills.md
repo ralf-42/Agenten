@@ -11,7 +11,8 @@ has_toc: true
 # Skills
 {: .no_toc }
 
-> **Skills kapseln Fachlogik so, dass ein Agent sie wiederholt und kontrolliert anwenden kann.**
+> [!NOTE] Kernfrage<br>
+> Wann wird aus einem Prompt ein wiederverwendbarer Skill mit Regeln, Referenzen und Hilfslogik?
 
 ---
 
@@ -82,7 +83,7 @@ Typischer Fehler: Alles in eine einzige riesige `SKILL.md` zu schreiben. Dadurch
 
 ## Warum die `description` wichtiger ist als viele glauben
 
-In Claude Code und ähnlichen Umgebungen entscheidet die `description` im Frontmatter oft darüber, ob ein Skill überhaupt automatisch aktiviert wird. Sie ist nicht nur Beschreibung für Menschen, sondern Trigger-Bedingung für das Routing.
+In Claude Code und ähnlichen Umgebungen entscheidet die `description` im Frontmatter oft darüber, ob ein Skill überhaupt automatisch aktiviert wird. Dieses Feld ist nicht nur Beschreibung für Menschen, sondern Trigger-Bedingung für das Routing.
 
 ```yaml
 ---
@@ -163,7 +164,7 @@ Entwickler unterschätzen oft, dass ein Skill nicht vor allem technische Komplex
 
 ## Praxisbezug im Projekt
 
-Im Projekt liegen fertige Beispiele unter `06_skill/`, etwa für Compliance, Recherche und Meeting-Briefings. Sie zeigen denselben Grundgedanken: Kernlogik in `SKILL.md`, Detailwissen in `references/`, deterministische Teilaufgaben in `scripts/`.
+Im Projekt liegen fertige Beispiele unter `06_skill/`, etwa für Compliance, Recherche und Meeting-Briefings. Diese Beispiele zeigen denselben Grundgedanken: Kernlogik in `SKILL.md`, Detailwissen in `references/`, deterministische Teilaufgaben in `scripts/`.
 
 Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau diese Beispiele eignen sich gut, um den Unterschied zwischen freiem Prompt und reproduzierbarem Skill direkt zu sehen.
 
@@ -171,13 +172,13 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 
 | Dokument | Frage |
 |---|---|
-| [Wie werden gute Prompts für Agenten aufgebaut?](../architektur/prompt-engineering.html) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
-| [Wie nutzen Agenten Werkzeuge?](../architektur/tool-use-function-calling.html) | Wie werden deterministische Hilfsoperationen eingebunden? |
-| [Wie behalten Agenten zwischen Schritten den Überblick?](../workflows-state/state-management.html) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
-| [Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?](../workflows-state/multi-agent-systeme.html) | Wann ist ein eigener Spezialagent sinnvoller als ein Skill? |
+| [Prompt Engineering](../architektur/prompt-engineering.html) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
+| [Tool Use & Function Calling](../architektur/tool-use-function-calling.html) | Wie werden deterministische Hilfsoperationen eingebunden? |
+| [State Management](../workflows-state/state-management.html) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
+| [Multi-Agent-Systeme](../workflows-state/multi-agent-systeme.html) | Wann ist ein eigener Spezialagent sinnvoller als ein Skill? |
 
 ---
 
-**Version:** 1.5<br>
-**Stand:** April 2026<br>
+**Version:** 1.6<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

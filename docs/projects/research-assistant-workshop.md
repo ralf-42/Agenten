@@ -10,8 +10,8 @@ has_toc: true
 # Research Assistant Workshop
 {: .no_toc }
 
-> **Einen quellengebundenen Research Assistant bauen**<br>
-> Schrittweise Entwicklung vom einfachen Routing-Graphen zum nutzbaren Research Assistant mit RAG, Quellen und optionaler Web-Oberfläche
+> [!NOTE] Kernfrage<br>
+> Wie entsteht schrittweise ein quellengebundener Research Assistant mit Routing, RAG, Sessions und optionaler Oberfläche?
 
 ---
 
@@ -45,13 +45,13 @@ In dieser Übungsaufgabe entsteht schrittweise ein **Research Assistant**, der F
 Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ```text
-📓 Research_Assistant_Workshop.ipynb
-   ├── 🎯 Kapitel 1: StateGraph Basics
-   ├── 🔀 Kapitel 2: Intent Routing
-   ├── 📚 Kapitel 3: Wissensbasis & Retrieval-Light
-   ├── 💾 Kapitel 4: Checkpointing & Sessions
-   ├── 🧠 Kapitel 5: Research-Synthese, Quellen und Selbsttest
-   └── 🚀 Kapitel 6: Gradio UI & Bonus Deployment
+Research_Assistant_Workshop.ipynb
+   ├── Kapitel 1: StateGraph Basics
+   ├── Kapitel 2: Intent Routing
+   ├── Kapitel 3: Wissensbasis & Retrieval-Light
+   ├── Kapitel 4: Checkpointing & Sessions
+   ├── Kapitel 5: Research-Synthese, Quellen und Selbsttest
+   └── Kapitel 6: Gradio UI & Bonus Deployment
 ```
 
 ### Modul-Zuordnung
@@ -67,7 +67,8 @@ Jedes Kapitel baut auf den entsprechenden Kursmodulen auf. Das jeweilige Kapitel
 | Kapitel 5: Research-Synthese, Quellen und Selbsttest | M04, M05, M24 | Prompting, Struktur, Tests |
 | Kapitel 6: Gradio UI & Bonus Deployment | M28, M35 | UI und optional Hugging Face Spaces |
 
-> **Didaktische Einordnung:** Der Workshop startet fachlich ab M11 und verbindet RAG, Routing, Checkpointing, Evaluation und Security zu einem durchgehenden Anwendungsfall.
+> [!NOTE] Didaktische Einordnung<br>
+> Der Workshop startet fachlich ab M11 und verbindet RAG, Routing, Checkpointing, Evaluation und Security zu einem durchgehenden Anwendungsfall.
 
 ---
 
@@ -80,9 +81,7 @@ Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets od
 ### Basis-Pakete installieren
 
 ```python
-# ═══════════════════════════════════════════════════
-# 📦 INSTALLATION
-# ═══════════════════════════════════════════════════
+# Installation
 
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 !uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite gradio
@@ -91,9 +90,7 @@ Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets od
 ### API-Key laden und Umgebung prüfen
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🔑 API-KEY SETUP
-# ═══════════════════════════════════════════════════
+# API-Key Setup
 
 from genai_lib.utilities import setup_api_keys, check_environment
 
@@ -101,13 +98,15 @@ setup_api_keys(['OPENAI_API_KEY'])
 check_environment()
 ```
 
-> **Lokal:** API-Key vorab in `.env` oder per `os.environ["OPENAI_API_KEY"] = "sk-..."` setzen — `setup_api_keys()` liest beides automatisch.
+> [!TIP] Lokales Setup<br>
+> API-Key vorab in `.env` oder per `os.environ["OPENAI_API_KEY"] = "sk-..."` setzen. `setup_api_keys()` liest beides automatisch.
 
 ---
 
 ## Kapitel 1: StateGraph Basics
 
-> 📚 **Kursmodul:** M08 – Warum LangGraph? | M09 – StateGraph Basics
+> [!NOTE] Kursmodul<br>
+> M08 – Warum LangGraph? | M09 – StateGraph Basics
 
 **Lernziel:** Einen kleinen Graphen mit TypedDict-State und einfachen Nodes aufbauen
 
@@ -124,9 +123,7 @@ Der Graph soll die Anfrage zunächst entgegennehmen und den Typ der Anfrage erke
 ### Aufgabe 1.1: State definieren
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🎯 KAPITEL 1: STATEGRAPH BASICS
-# ═══════════════════════════════════════════════════
+# Kapitel 1: StateGraph Basics
 
 from typing import TypedDict, Literal
 from langgraph.graph import StateGraph, START, END
@@ -142,8 +139,9 @@ class NavigatorState(TypedDict):
 
 ```python
 from langchain.chat_models import init_chat_model
+from genai_lib.model_config import WORKER
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model(WORKER)
 
 def classify_intent(state: NavigatorState) -> NavigatorState:
     """Erkennt, welche Art von Anfrage vorliegt."""
@@ -186,24 +184,23 @@ print(result["answer"])
 ```
 
 **Erfolgskriterium:**
-- ✅ StateGraph läuft fehlerfrei
-- ✅ State wird korrekt befüllt
-- ✅ es gibt eine sichere Fallback-Antwort
+- StateGraph läuft fehlerfrei
+- State wird korrekt befüllt
+- es gibt eine sichere Fallback-Antwort
 
 ---
 
 ## Kapitel 2: Intent Routing
 
-> 📚 **Kursmodul:** M10 – Conditional Routing & Tool-Loop
+> [!NOTE] Kursmodul<br>
+> M10 – Conditional Routing & Tool-Loop
 
 **Lernziel:** Verschiedene Anfragetypen über Conditional Edges zu spezialisierten Nodes leiten
 
 ### Aufgabe 2.1: Router-Funktion definieren
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🔀 KAPITEL 2: INTENT ROUTING
-# ═══════════════════════════════════════════════════
+# Kapitel 2: Intent Routing
 
 from typing import Literal
 
@@ -260,26 +257,25 @@ workflow.add_conditional_edges(
 ```
 
 **Erfolgskriterium:**
-- ✅ Router-Funktion entscheidet korrekt
-- ✅ verschiedene Nutzerfragen landen in verschiedenen Nodes
-- ✅ der Graph endet deterministisch
+- Router-Funktion entscheidet korrekt
+- verschiedene Nutzerfragen landen in verschiedenen Nodes
+- der Graph endet deterministisch
 
 ---
 
 ## Kapitel 3: Wissensbasis & Retrieval-Light
 
-> 📚 **Kursmodul:** M11-M14 oder als vereinfachte Research-Korpusdaten-Aufgabe ab M10
+> [!NOTE] Kursmodul<br>
+> M11-M14 oder als vereinfachte Research-Korpusdaten-Aufgabe ab M10
 
 **Lernziel:** Research-Korpuswissen lokal strukturieren und gezielt in den Graphen einbinden
 
 ### Aufgabe 3.1: Wissensbasis laden
 
-Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M36) liegt unter `02_daten/05_sonstiges/modules.json` bereit. Laden Sie diese als Ausgangspunkt:
+Eine vollständige Wissensbasis mit allen Kursmodulen (M01–M36) liegt unter `02_daten/05_sonstiges/modules.json` bereit. Diese Datei dient als Ausgangspunkt:
 
 ```python
-# ═══════════════════════════════════════════════════
-# 📚 KAPITEL 3: WISSENSBASIS & RETRIEVAL-LIGHT
-# ═══════════════════════════════════════════════════
+# Kapitel 3: Wissensbasis & Retrieval-Light
 
 import json
 
@@ -293,7 +289,8 @@ print(modules[0])
 
 Jeder Eintrag enthält: `module`, `title`, `topics`, `level`, `prerequisites`, `summary`.
 
-> **Erweiterung:** Ergänzen oder korrigieren Sie Einträge nach Bedarf — die Datei ist ein Startpunkt, keine fertige Lösung.
+> [!TIP] Erweiterung<br>
+> Einträge können nach Bedarf ergänzt oder korrigiert werden. Die Datei ist ein Startpunkt, keine fertige Lösung.
 
 ### Aufgabe 3.2: Kontextsuche implementieren
 
@@ -319,24 +316,23 @@ workflow.add_conditional_edges(
 ```
 
 **Erfolgskriterium:**
-- ✅ Kontext wird nicht frei erfunden, sondern aus Research-Korpusdaten gezogen
-- ✅ Modulfragen und Konzeptfragen nutzen die Wissensbasis
-- ✅ Antworten werden konkreter und nachvollziehbarer
+- Kontext wird nicht frei erfunden, sondern aus Research-Korpusdaten gezogen
+- Modulfragen und Konzeptfragen nutzen die Wissensbasis
+- Antworten werden konkreter und nachvollziehbarer
 
 ---
 
 ## Kapitel 4: Checkpointing & Sessions
 
-> 📚 **Kursmodul:** M16 – Checkpointing & Sessions
+> [!NOTE] Kursmodul<br>
+> M16 – Checkpointing & Sessions
 
 **Lernziel:** Verlauf und Sitzungen für wiederholte Lernfragen speichern
 
 ### Aufgabe 4.1: Checkpointer einrichten
 
 ```python
-# ═══════════════════════════════════════════════════
-# 💾 KAPITEL 4: CHECKPOINTING & SESSIONS
-# ═══════════════════════════════════════════════════
+# Kapitel 4: Checkpointing & Sessions
 
 from langgraph.checkpoint.sqlite import SqliteSaver
 
@@ -351,7 +347,7 @@ config = {"configurable": {"thread_id": "user_123"}}
 
 result1 = graph.invoke(
     {
-        "user_query": "Ich bin Anfänger. Wo starte ich?",
+        "user_query": "Ich habe wenig Vorerfahrung. Wo startet der Lernpfad?",
         "intent": None,
         "retrieved_context": "",
         "answer": "",
@@ -380,15 +376,16 @@ def show_session_history(thread_id: str):
 ```
 
 **Erfolgskriterium:**
-- ✅ Sitzungen bleiben erhalten
-- ✅ mehrere Anfragen können derselben Session zugeordnet werden
-- ✅ Verlauf kann eingesehen oder zurückgesetzt werden
+- Sitzungen bleiben erhalten
+- mehrere Anfragen können derselben Session zugeordnet werden
+- Verlauf kann eingesehen oder zurückgesetzt werden
 
 ---
 
 ## Kapitel 5: Research-Synthese, Quellen und Selbsttest
 
-> 📚 **Kursmodul:** M04, M05, M19
+> [!NOTE] Kursmodul<br>
+> M04, M05, M19
 
 **Lernziel:** Antwortqualität strukturieren und mit einfachen Tests absichern
 
@@ -396,8 +393,8 @@ def show_session_history(thread_id: str):
 
 Mindestens zwei betroffene Gruppen definieren:
 
-- Anfänger
-- Fortgeschrittene
+- Entwickler mit wenig Vorerfahrung
+- erfahrene Entwickler
 
 Und mindestens drei Lernziele:
 
@@ -424,29 +421,28 @@ Mindestens diese fünf Fragen testen:
 - "Welche Module sollte ich für RAG bearbeiten?"
 - "Was macht M14?"
 - "Erkläre mir Checkpointing in zwei Sätzen."
-- "Ich bin Anfänger und will Agenten verstehen. Wo starte ich?"
+- "Ich habe wenig Vorerfahrung und will Agenten verstehen. Wo startet der Lernpfad?"
 - "Gib mir drei Selbsttestfragen zu Tool Use."
 
 **Erfolgskriterium:**
-- ✅ Antworten bleiben beim Kurskontext
-- ✅ Lernpfade sind nachvollziehbar
-- ✅ Selbsttestfragen passen thematisch
-- ✅ Testfragen laufen reproduzierbar durch
+- Antworten bleiben beim Kurskontext
+- Lernpfade sind nachvollziehbar
+- Selbsttestfragen passen thematisch
+- Testfragen laufen reproduzierbar durch
 
 ---
 
 ## Kapitel 6: Gradio UI & Bonus Deployment
 
-> 📚 **Kursmodul:** M28 – Gradio UI für Agenten | M33 – Production Deployment
+> [!NOTE] Kursmodul<br>
+> M28 – Gradio UI für Agenten | M33 – Production Deployment
 
 **Lernziel:** Den Research Assistant mit einer kleinen Oberfläche nutzbar machen
 
 ### Aufgabe 6.1: Chat-Handler schreiben
 
 ```python
-# ═══════════════════════════════════════════════════
-# 🚀 KAPITEL 6: GRADIO UI & BONUS DEPLOYMENT
-# ═══════════════════════════════════════════════════
+# Kapitel 6: Gradio UI & Bonus Deployment
 
 def chat_with_navigator(message, history, thread_id):
     """Verarbeitet eine Nutzeranfrage mit dem Research Assistant."""
@@ -482,7 +478,7 @@ with gr.Blocks() as demo:
 
 ### Aufgabe 6.3: Bonus Deployment
 
-Optional können Sie die App als **Hugging Face Space** deployen. Dafür benötigen Sie mindestens:
+Optional kann die App als **Hugging Face Space** deployt werden. Dafür werden mindestens benötigt:
 
 - `app.py`
 - `requirements.txt`
@@ -490,9 +486,9 @@ Optional können Sie die App als **Hugging Face Space** deployen. Dafür benöti
 - gesetzte Secrets für API-Keys
 
 **Erfolgskriterium:**
-- ✅ lokale UI funktioniert
-- ✅ Sessions funktionieren auch über die UI
-- ✅ optional: die App läuft als kleiner Hugging Face Space
+- lokale UI funktioniert
+- Sessions funktionieren auch über die UI
+- optional: die App läuft als kleiner Hugging Face Space
 
 ### Hugging Face Spaces Deployment (Bonus)
 
@@ -517,10 +513,10 @@ kursnavigator-space/
 
 **Code-Anpassungen für Hugging Face Spaces:**
 
-Hugging Face Spaces stellt Secrets automatisch als Umgebungsvariablen bereit — `setup_api_keys()` funktioniert dort **nicht** (kein Colab-Secret-Manager). Ersetzen Sie den Setup-Block in `app.py` durch:
+Hugging Face Spaces stellt Secrets automatisch als Umgebungsvariablen bereit — `setup_api_keys()` funktioniert dort **nicht** (kein Colab-Secret-Manager). Der Setup-Block in `app.py` wird ersetzt durch:
 
 ```python
-# ✅ Hugging Face Spaces — API-Key aus Space Secrets laden
+# Hugging Face Spaces: API-Key aus Space Secrets laden
 import os
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
@@ -530,11 +526,10 @@ if not openai_api_key:
 os.environ["OPENAI_API_KEY"] = openai_api_key
 ```
 
-> **Space Secrets einrichten** — zwei Wege:
+> [!NOTE] Space Secrets einrichten<br>
+> Option A: im Browser über Space → Settings → Variables and secrets → New secret → Name: `OPENAI_API_KEY`, Value: `sk-...`.
 >
-> **Option A: Im Browser** — Space → Settings → Variables and secrets → New secret → Name: `OPENAI_API_KEY`, Value: `sk-...`
->
-> **Option B: Per Code** (z.B. aus einem lokalen Notebook):
+> Option B: per Code, zum Beispiel aus einem lokalen Notebook.
 
 ```python
 from huggingface_hub import HfApi
@@ -561,29 +556,30 @@ api.add_space_secret(repo_id="username/space-name", key="OPENAI_API_KEY", value=
 - Gibt der Research Assistant sinnvolle Antworten wie in der lokalen Version?
 - Werden Fehler im UI verständlich angezeigt?
 
-> **Hinweis:** Das Hugging-Face-Deployment ist ausdrücklich **kein Pflichtbestandteil** des Workshops. Die Kernleistung bleibt der lokale Research Assistant mit LangGraph.
+> [!NOTE] Bonus-Deployment<br>
+> Das Hugging-Face-Deployment ist ausdrücklich kein Pflichtbestandteil des Workshops. Die Kernleistung bleibt der lokale Research Assistant mit LangGraph.
 
 ---
 
 ## Bonusaufgaben (Optional)
 
 ### Bonus 1: Personalisierte Empfehlungen
-- berücksichtigen Sie Anfänger vs. Fortgeschrittene
-- unterscheiden Sie zwischen Interessen wie RAG, Multi-Agent oder Deployment
+- Entwickler mit wenig Vorerfahrung und erfahrene Entwickler getrennt berücksichtigen
+- zwischen Interessen wie RAG, Multi-Agent oder Deployment unterscheiden
 
 ### Bonus 2: LangSmith Integration
-- tracken Sie die Graph-Läufe
-- vergleichen Sie mehrere Beispielanfragen
-- dokumentieren Sie Fehlklassifikationen
+- Graph-Läufe tracken
+- mehrere Beispielanfragen vergleichen
+- Fehlklassifikationen dokumentieren
 
 ### Bonus 3: Erweiterte Wissensbasis
-- lesen Sie Inhalte aus `01_notebook/README.md`
-- ergänzen Sie ausgewählte Dateien aus `docs/concepts/`
-- bauen Sie eine bessere Kontextsuche
+- Inhalte aus `01_notebook/README.md` lesen
+- ausgewählte Dateien aus `docs/concepts/` ergänzen
+- eine bessere Kontextsuche bauen
 
 ### Bonus 4: Mermaid-Visualisierung
-- visualisieren Sie den Graphen
-- dokumentieren Sie Routing und Antwortpfade
+- Graphen visualisieren
+- Routing und Antwortpfade dokumentieren
 
 ---
 
@@ -690,7 +686,7 @@ A: Kapitel 1-3 sind Pflicht für eine brauchbare Basisversion. Kapitel 4-6 erwei
 A: Nein. Für diese Übung reicht eine kleine lokale Wissensbasis mit einfacher Kontextsuche. Das Ziel ist Agentensteuerung, nicht ein vollständiges RAG-System.
 
 **Q: Kann ich die Übung auch lokal statt in Colab machen?**  
-A: Ja. Verwenden Sie lokal Jupyter oder ein Python-Skript plus `.env` für API-Keys.
+A: Ja. Lokal reichen Jupyter oder ein Python-Skript plus `.env` für API-Keys.
 
 **Q: Ist Hugging Face Spaces Pflicht?**  
 A: Nein. Das Deployment ist ein Bonus. Der Kern der Aufgabe ist der LangGraph-Research Assistant selbst.
@@ -704,11 +700,11 @@ A:
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Research Assistant Workshop? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Workshop? |
+| [LangGraph](../frameworks/einsteiger/einsteiger-langgraph.html) | Welche LangGraph-Grundlagen braucht der Workshop? |
+| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research-Assistant-Projekte? |
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Version:** 1.1<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

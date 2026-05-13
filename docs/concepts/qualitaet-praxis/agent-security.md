@@ -11,7 +11,8 @@ has_toc: true
 # Agenten-Sicherheit
 {: .no_toc }
 
-> **Je handlungsfähiger ein Agent ist, desto wichtiger wird seine Absicherung.**
+> [!NOTE] Kernfrage<br>
+> Wie werden Agenten abgesichert, wenn sie Tools, Daten und externe Schnittstellen nutzen?
 
 ---
 
@@ -23,11 +24,11 @@ has_toc: true
 
 ---
 
-## Warum Agent Security ein eigenes Thema ist
+## Warum Agenten-Sicherheit ein eigenes Thema ist
 
 Ein Chatmodell, das nur Text beantwortet, kann falsche oder problematische Aussagen erzeugen. Ein Agent mit Tool-Zugriff kann deutlich mehr Schaden anrichten: Dateien lesen, E-Mails senden, Datenbanken anfragen oder APIs aufrufen. Genau dadurch verschiebt sich Sicherheit von einem reinen Modellthema zu einem Systemthema.
 
-Agent Security meint deshalb nicht nur Inhaltsfilter, sondern die Absicherung des gesamten Agentensystems. Welche Eingaben gelten als vertrauenswürdig? Welche Tools darf ein Agent überhaupt nutzen? Welche Daten dürfen in Prompts, Logs oder externe Dienste gelangen? Diese Fragen gehören nicht ans Ende eines Projekts, sondern an den Anfang.
+Agenten-Sicherheit meint deshalb nicht nur Inhaltsfilter, sondern die Absicherung des gesamten Agentensystems. Welche Eingaben gelten als vertrauenswürdig? Welche Tools darf ein Agent überhaupt nutzen? Welche Daten dürfen in Prompts, Logs oder externe Dienste gelangen? Diese Fragen gehören nicht ans Ende eines Projekts, sondern an den Anfang.
 
 Typischer Fehler: Nur auf Modell-Sicherheit des Anbieters zu vertrauen. Inhaltsfilter und RLHF helfen, ersetzen aber keine sichere Systemarchitektur.
 
@@ -92,13 +93,13 @@ Nicht jedes Tool gehört in jeden Agenten. Ein Analyse-Agent braucht andere Rech
 analysis_agent = create_agent(
     model=llm,
     tools=[read_file, search_database, web_search],
-    system_prompt="Du analysierst Daten. Du kannst nichts verändern."
+    system_prompt="Aufgabe: Daten analysieren. Veränderungen sind nicht erlaubt."
 )
 
 processing_agent = create_agent(
     model=llm,
     tools=[read_file, write_report],
-    system_prompt="Du erstellst Reports basierend auf Analysen."
+    system_prompt="Aufgabe: Reports auf Basis von Analysen erstellen."
 )
 ```
 
@@ -108,9 +109,9 @@ Typischer Fehler: Einen einzigen Generalisten mit zu vielen mächtigen Werkzeuge
 
 Alles, was von außen kommt, muss als potenziell unsicher behandelt werden. Dazu gehören Nutzereingaben, Dokumente, Webseiten, E-Mails, Datei-Uploads und Antworten externer APIs. Gute Sicherheitsarchitektur beginnt deshalb an den Systemgrenzen.
 
-Längenbegrenzung, Vorfilterung typischer Injektionsmuster, Markierung untrusted sources und Rollenprüfung vor Tool-Aufrufen sind keine kosmetischen Zusatzmaßnahmen. Sie sind die erste Schutzschicht gegen missbräuchliche Eingaben.
+Längenbegrenzung, Vorfilterung typischer Injektionsmuster, Markierung untrusted sources und Rollenprüfung vor Tool-Aufrufen sind keine kosmetischen Zusatzmaßnahmen. Diese Maßnahmen bilden die erste Schutzschicht gegen missbräuchliche Eingaben.
 
-Grenze: Validierung allein erkennt nicht jede raffinierte Injection. Sie reduziert das Risiko, ersetzt aber keine Rechtebegrenzung und keine saubere Tool-Architektur.
+Grenze: Validierung allein erkennt nicht jede raffinierte Injection. Das Risiko sinkt, aber Rechtebegrenzung und saubere Tool-Architektur bleiben notwendig.
 
 ## PII und sensible Daten dürfen nicht unkontrolliert wandern
 
@@ -152,11 +153,11 @@ flowchart TB
         CODE[Interner Code]
         CFG[Konfiguration]
     end
-    subgraph MED["Eingeschraenkt vertrauenswuerdig"]
+    subgraph MED["Eingeschränkt vertrauenswürdig"]
         AUTH[Authentifizierte Nutzereingaben]
         IAPI[Interne API-Antworten]
     end
-    subgraph LOW["Nicht vertrauenswuerdig"]
+    subgraph LOW["Nicht vertrauenswürdig"]
         ANON[Anonyme Eingaben]
         WEB[Externe Webseiten]
         EMAIL[E-Mails und Uploads]
@@ -164,11 +165,11 @@ flowchart TB
     end
 
     HIGH --> AGENT[Agent]
-    MED -->|pruefen| AGENT
+    MED -->|prüfen| AGENT
     LOW -->|validieren und markieren| AGENT
 ```
 
-Diese Einteilung hilft nicht nur technisch. Sie schafft auch Klarheit darüber, wo zusätzliche Prüfungen, Maskierungen oder Freigaben nötig sind.
+Diese Einteilung hilft nicht nur technisch. Zusätzlich wird klar, wo Prüfungen, Maskierungen oder Freigaben nötig sind.
 
 ## Security by Design statt späterer Reparatur
 
@@ -200,10 +201,10 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 | [Datenschutz & DSGVO](../../regulatory/datenschutz-dsgvo.html) | Welche rechtlichen Anforderungen gelten für die Verarbeitung personenbezogener Daten durch LLM-APIs? |
 | [Human-in-the-Loop](../workflows-state/human-in-the-loop.html) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
 | [Evaluation & Observability](./evaluation-observability.html) | Wie werden Qualitätsprobleme, Drift und Fehlverhalten sichtbar gemacht? |
-| [Lohnt es sich überhaupt?](../einstieg/lohnt-es-sich.html) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |
+| [Lohnt sich KI?](../einstieg/lohnt-es-sich.html) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** April 2026<br>
+**Version:** 1.3<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

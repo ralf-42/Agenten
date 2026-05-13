@@ -27,7 +27,7 @@ has_toc: true
 
 Viele Diskussionen über KI-Projekte springen zu früh in Modelle, Frameworks oder Agentenarchitekturen. Das ist verlockend, aber oft zu früh. Zuerst muss geklärt werden, ob ein KI-System hier überhaupt sinnvoll, machbar und verantwortbar ist. Erst danach stellt sich die Frage nach dem richtigen Lösungsweg.
 
-Diese Seite bewertet deshalb nicht, welches konkrete Werkzeug gewählt werden sollte, sondern ob ein Vorhaben überhaupt tragfähig wirkt. Sie ergänzt damit die spätere Entscheidungsseite [Welches Werkzeug?](./aufgabenklassen-und-loesungswege.html).
+Diese Seite bewertet deshalb nicht, welches konkrete Werkzeug gewählt werden sollte, sondern ob ein Vorhaben überhaupt tragfähig wirkt. Sie ergänzt damit die spätere Entscheidungsseite [Aufgaben & Lösungswege](./aufgabenklassen-und-loesungswege.html).
 
 Typischer Fehler: `Wir wollen KI einsetzen` als Problemformulierung zu behandeln. Das ist noch kein Projektziel, sondern höchstens eine Lösungsfantasie.
 
@@ -110,9 +110,9 @@ Entwickler unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann w
 
 | Dokument | Frage |
 |---|---|
-| [Welches Werkzeug?](./aufgabenklassen-und-loesungswege.html) | Welcher Lösungsweg ist passend, wenn ein KI-Vorhaben grundsätzlich sinnvoll erscheint? |
+| [Aufgaben & Lösungswege](./aufgabenklassen-und-loesungswege.html) | Welcher Lösungsweg ist passend, wenn ein KI-Vorhaben grundsätzlich sinnvoll erscheint? |
 | [Evaluation & Observability](../qualitaet-praxis/evaluation-observability.html) | Wie wird die Qualität eines späteren Systems belastbar gemessen? |
-| [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
+| [Agenten-Sicherheit](../qualitaet-praxis/agent-security.html) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
 | [EU AI Act](../../regulatory/eu-ai-act.html) | Welche regulatorischen Anforderungen können ein Vorhaben einschränken oder prägen? |
 | [Digitale Souveränität](../../regulatory/digitale-souveraenitaet.html) | Welche Abhängigkeiten und Cloud-Fragen entstehen durch Modell- und Infrastrukturwahl? |
 

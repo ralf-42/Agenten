@@ -1,13 +1,13 @@
 # Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-![LangChain 1.0+](https://img.shields.io/badge/LangChain-1.0%2B-brightgreen)
-![LangGraph 1.0.9](https://img.shields.io/badge/LangGraph-1.0.9-brightgreen)
-![LangSmith 0.4.41](https://img.shields.io/badge/LangSmith-0.4.41-brightgreen)
-![DeepAgents 0.4.12](https://img.shields.io/badge/DeepAgents-0.4.12-brightgreen)
-![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--03--05-blue)
+![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen)
+![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen)
+![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen)
+![DeepAgents 0.5.6](https://img.shields.io/badge/DeepAgents-0.5.6-brightgreen)
+![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--05--13-blue)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.0+, LangGraph 1.0.9, LangSmith 0.4.41 und agentenbasierte KI-Architekturen.
+Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.3.0, LangGraph 1.2.0, LangSmith 0.8.3 und agentenbasierte KI-Architekturen.
 
 Der durchgehende Anwendungsfall ist ein **Research Assistant für Fachartikel**: Eine fiktive Wissensarbeiterin, Pia, baut schrittweise ein System, das einen PDF-Korpus semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben Endprodukts erarbeitet.
 
@@ -42,9 +42,9 @@ Agenten/
 ## 🛠️ Technologie-Stack
 
 ### Kernframeworks
-- **LangChain** (1.0+) - Orchestrierung, Chains, Agents, RAG
-- **LangGraph** (1.0.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
-- **LangSmith** (0.x+) - Tracing, Debugging, Evaluations
+- **LangChain** (1.3.0) - Orchestrierung, Chains, Agents, RAG
+- **LangGraph** (1.2.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
+- **LangSmith** (0.8.x) - Tracing, Debugging, Evaluations
 - **OpenAI API** (>=1.0.0) - gpt-4o-mini, o3, o3-mini, gpt-5.4-mini, gpt-5.4, Embeddings
 
 ### Spezialisierte Tools

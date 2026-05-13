@@ -187,11 +187,11 @@ Modell-Sicherheit betrifft das Verhalten des zugrunde liegenden LLMs, etwa Inhal
 
 Typischer Fehler: Sicherheitsprobleme als Modellproblem zu behandeln, obwohl sie durch zu breite Rechte oder zu schwache Tool-Grenzen entstehen.
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
 Für einen ersten sicheren Agenten reichen einige wenige Grundregeln bereits weit: nur nötige Tools freigeben, externe Inhalte nie als Instruktionen behandeln, sensible Daten vor Persistierung bereinigen und bei riskanten Aktionen eine menschliche Freigabe vorsehen.
 
-Teilnehmende unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Systemen anfängt. Schon ein kleiner Agent mit Dateizugriff oder Mail-Versand braucht klare Grenzen, sonst wird aus einer guten Demo schnell ein riskanter Prozess.
+Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Systemen anfängt. Schon ein kleiner Agent mit Dateizugriff oder Mail-Versand braucht klare Grenzen, sonst wird aus einer guten Demo schnell ein riskanter Prozess.
 
 ## Abgrenzung zu verwandten Dokumenten
 

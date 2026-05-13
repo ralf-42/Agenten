@@ -83,7 +83,7 @@ Ressourcen rund um den offenen Standard für Agenten-Skills und dessen praktisch
 
 ## Framework-Dokumentation
 
-Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Referenz für Teilnehmer.
+Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Referenz für Entwickler.
 
 | Ressource | Beschreibung |
 |-----------|--------------|
@@ -189,7 +189,7 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Links? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Links? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Links? |
 
 ---

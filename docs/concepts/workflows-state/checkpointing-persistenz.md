@@ -278,7 +278,7 @@ def good_node(state):
     return {"messages": [{"role": "assistant", "content": "neue Nachricht"}]}
 ```
 
-## Best Practices für Einsteigerprojekte
+## Best Practices für Entwicklerprojekte
 
 Thread-IDs sollten eindeutig und nachvollziehbar sein. Der State sollte nicht unnötig groß werden, weil jeder Checkpoint den gesamten Zustand speichert. Deshalb kann es sinnvoll sein, ältere Nachrichten vor dem Speichern zu kürzen oder zu verdichten. Datenbank-Checkpointer sollten sauber über Context Manager geöffnet und geschlossen werden.
 
@@ -303,11 +303,11 @@ with SqliteSaver.from_conn_string("db.sqlite") as checkpointer:
 
 In der Praxis relevant, wenn: Multi-Turn-Sitzungen wachsen, viele Nachrichten im State liegen oder mehrere Nutzer gleichzeitig mit demselben System arbeiten.
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
 Für den Einstieg reicht meist schon ein klares mentales Modell: Ein Checkpointer macht aus einem flüchtigen Ablauf eine wiederaufnehmbare Sitzung. Wer Multi-Turn-Gespräche, HITL-Freigaben oder Fehlertoleranz bauen will, braucht diese Grundlage früh.
 
-Teilnehmende unterschätzen oft, dass Checkpointing kein Luxus für große Produktionssysteme ist. Schon kleine Kursprojekte mit Unterbrechung, Freigabe oder Sitzungsfortsetzung profitieren sofort davon.
+Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produktionssysteme ist. Schon kleine Kursprojekte mit Unterbrechung, Freigabe oder Sitzungsfortsetzung profitieren sofort davon.
 
 ## Abgrenzung zu verwandten Dokumenten
 

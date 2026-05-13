@@ -109,7 +109,7 @@ Ergänzend zur Technik lässt sich Souveränität nach den betroffenen Akteuren 
 2. Wirtschaftliche Souveränität:  
    Die Fähigkeit von Unternehmen, ihre Geschäftsgeheimnisse zu schützen und Innovationen zu entwickeln, ohne durch Plattform-Monopole ausgebremst oder durch Datendiebstahl (Industriespionage) geschädigt zu werden. Dies betrifft insbesondere die deutsche Exportindustrie (Automobil, Maschinenbau), die ihre Produktionsdaten (IoT) schützen muss.18  
 3. Individuelle Souveränität (Zivilgesellschaft):  
-   Die digitale Mündigkeit des Bürgers. Dies umfasst Datenschutz (informationelle Selbstbestimmung), aber auch die Kompetenz (Digital Literacy), digitale Werkzeuge zu verstehen und kritisch zu nutzen. Ein souveränes Individuum ist kein bloßer Datenlieferant („User“), sondern ein gestaltender Teilnehmer. Initiativen zur Förderung digitaler Kompetenzen sind hier essenziell, um Vertrauen in Technologien zu bilden.16
+   Die digitale Mündigkeit des Bürgers. Dies umfasst Datenschutz (informationelle Selbstbestimmung), aber auch die Kompetenz (Digital Literacy), digitale Werkzeuge zu verstehen und kritisch zu nutzen. Ein souveränes Individuum ist kein bloßer Datenlieferant („User“), sondern ein gestaltender Entwickler. Initiativen zur Förderung digitaler Kompetenzen sind hier essenziell, um Vertrauen in Technologien zu bilden.16
 
 ## Reifegradmodelle: Die Messbarkeit der Souveränität
 

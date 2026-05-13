@@ -91,7 +91,7 @@ Die Agenten-Challenge bereitet Sie auf **realistische Herausforderungen** vor, d
 - **Takeaway:** Debugging ohne Traces ist unmöglich
 
 {: .info }
-> **Empfehlung:** Studieren Sie den [LangGraph Einsteiger Guide](../frameworks/einsteiger/einsteiger-langgraph.html) für Production-Best-Practices.
+> **Empfehlung:** Studieren Sie den [LangGraph Guide](../frameworks/einsteiger/einsteiger-langgraph.html) für Production-Best-Practices.
 
 ### Konkrete Tipps für Ihre Challenge
 
@@ -600,9 +600,9 @@ graph = workflow.compile(
 - [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
 
 **Projekt-Ressourcen:**
-- [LangGraph Einsteiger Guide](../frameworks/einsteiger/einsteiger-langgraph.html)
+- [LangGraph Guide](../frameworks/einsteiger/einsteiger-langgraph.html)
 - [LangChain Standards](../ressourcen/standards.html)
-- [Einsteiger LangGraph](../frameworks/einsteiger/einsteiger-langgraph.html)
+- [LangGraph Guide](../frameworks/einsteiger/einsteiger-langgraph.html)
 
 ## Code-Beispiele
 
@@ -723,7 +723,7 @@ class SupportState(TypedDict):
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Research Assistant Challenge? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Research Assistant Challenge? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Challenge? |
 
 ---

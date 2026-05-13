@@ -35,7 +35,7 @@ Ein Vergleich mit dem Web hilft: TCP/IP und HTTP haben nicht einzelne Anwendunge
 
 Ein Reiseassistent soll eine Anfrage bearbeiten. Ein Agent spricht mit dem Nutzer im Frontend, ein zweiter fragt Flugdaten ab, ein dritter sucht Hotels, und ein Tool greift auf eine Datenbank mit Reiserichtlinien zu. Schon in diesem kleinen Beispiel entstehen mehrere Kommunikationsbeziehungen: Agent mit Mensch, Agent mit Agent und Agent mit Tool.
 
-Genau an diesen Übergängen setzen unterschiedliche Protokolle an. Ein Protokoll wie MCP regelt den Zugriff auf Werkzeuge und Datenquellen. A2A oder ACP regeln die Kommunikation zwischen Agenten. AG-UI beschreibt, wie Fortschritt und Ergebnisse an die Oberfläche zurückfließen. Für Einsteiger ist diese Trennung wichtiger als die Detailtiefe einzelner Spezifikationen.
+Genau an diesen Übergängen setzen unterschiedliche Protokolle an. Ein Protokoll wie MCP regelt den Zugriff auf Werkzeuge und Datenquellen. A2A oder ACP regeln die Kommunikation zwischen Agenten. AG-UI beschreibt, wie Fortschritt und Ergebnisse an die Oberfläche zurückfließen. Für Entwickler ist diese Trennung wichtiger als die Detailtiefe einzelner Spezifikationen.
 
 ## Drei Kommunikationsebenen
 
@@ -179,7 +179,7 @@ Ein wichtiger Gedanke in A2A ist, dass das Ergebnis einer Aufgabe nicht nur ein 
 | Strukturierte Daten | JSON mit Such- oder Analyseergebnissen |
 | Bild | Diagramm, Screenshot, Visualisierung |
 
-Für Einsteiger ist daran vor allem eines wichtig: Sobald Agenten arbeitsteilig zusammenarbeiten, müssen Ergebnisse nicht nur lesbar, sondern anschlussfähig sein.
+Für Entwickler ist daran vor allem eines wichtig: Sobald Agenten arbeitsteilig zusammenarbeiten, müssen Ergebnisse nicht nur lesbar, sondern anschlussfähig sein.
 
 ## ACP: wenn Agenten über klassisches HTTP sprechen sollen
 
@@ -245,7 +245,7 @@ Ein LangGraph-System kann intern also über State kommunizieren und nach außen 
 
 ## Wann welches Protokoll naheliegt
 
-Für Einsteiger hilft eine einfache Auswahlfrage: Geht es um Tool-Zugriff, um Agentenkoordination oder um Nutzeroberflächen? Meist ist damit schon ein Großteil der Auswahl geklärt.
+Für Entwickler hilft eine einfache Auswahlfrage: Geht es um Tool-Zugriff, um Agentenkoordination oder um Nutzeroberflächen? Meist ist damit schon ein Großteil der Auswahl geklärt.
 
 ```mermaid
 flowchart TD
@@ -303,11 +303,11 @@ stateDiagram-v2
 
 Für den Einsteigerkurs genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
 Nicht jedes Projekt braucht sofort alle hier genannten Protokolle. Für viele erste Agentensysteme reicht eine einfache Kombination: MCP für Tools, gegebenenfalls A2A oder ACP für klar abgegrenzte Delegation und AG-UI nur dann, wenn ein eigenes Frontend längere Prozesse sichtbar machen soll.
 
-Teilnehmende unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, wenn ein System wächst. Solange nur ein Agent lokal mit einem einzigen Tool arbeitet, kann vieles noch implizit bleiben. Sobald mehrere Agenten, externe Dienste und Nutzeroberflächen zusammenspielen, wird ohne klare Kommunikationsregeln jedes neue Element überproportional teuer.
+Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, wenn ein System wächst. Solange nur ein Agent lokal mit einem einzigen Tool arbeitet, kann vieles noch implizit bleiben. Sobald mehrere Agenten, externe Dienste und Nutzeroberflächen zusammenspielen, wird ohne klare Kommunikationsregeln jedes neue Element überproportional teuer.
 
 ## Abgrenzung zu verwandten Dokumenten
 

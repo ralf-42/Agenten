@@ -33,7 +33,7 @@ Typischer Fehler: Direkt über ReAct, Multi-Agent oder LangGraph zu sprechen, be
 
 ## Die erste Frage: Braucht die Aufgabe überhaupt einen Agenten?
 
-Für Einsteiger ist dies die wichtigste Unterscheidung im ganzen Kurs. Ein Agent lohnt sich erst dann, wenn die Aufgabe nicht vollständig im Voraus festgelegt werden kann und trotzdem eigenständig auf Daten, Tools oder Zwischenergebnisse reagieren muss. Wenn dagegen der Ablauf feststeht, ist ein einfacherer Lösungsweg fast immer robuster, günstiger und leichter zu testen.
+Für Entwickler ist dies die wichtigste Unterscheidung im ganzen Kurs. Ein Agent lohnt sich erst dann, wenn die Aufgabe nicht vollständig im Voraus festgelegt werden kann und trotzdem eigenständig auf Daten, Tools oder Zwischenergebnisse reagieren muss. Wenn dagegen der Ablauf feststeht, ist ein einfacherer Lösungsweg fast immer robuster, günstiger und leichter zu testen.
 
 Ein einmaliger persönlicher Textentwurf ist meist eine Chat-Aufgabe. Ein wiederkehrender, triggerbarer Prozess passt eher zu Workflow-Automation. Fragen über eine eigene Wissensbasis deuten oft auf ein RAG-System hin. Sehr datenintensive Verarbeitung gehört meist in Python und APIs. Ein Werkzeug für andere Nutzer mit Oberfläche kann ein App-Builder oder eine gezielte Anwendung sein. Erst wenn das Vorgehen explorativ wird, mehrere Schritte koordiniert werden müssen und Werkzeuge aktiv eingesetzt werden, wird ein Agentensystem plausibel.
 
@@ -63,7 +63,7 @@ Grenze: Auch eine offene Formulierung in natürlicher Sprache macht aus einer Au
 
 Wenn eine Aufgabe immer denselben festen Ablauf hat, ist Workflow-Automation meist die bessere Wahl. Wenn nur eigene Dokumente durchsucht und zusammengefasst werden sollen, reicht oft ein RAG-System. Wenn es überhaupt keine echten Entscheidungspunkte gibt, genügt häufig ein Skript oder eine API-Anwendung.
 
-Teilnehmende unterschätzen oft, wie viel zusätzliche Kosten, Testaufwand und Fehlerdiagnose ein Agent mit sich bringt. Ein Agent ist kein Qualitätsmerkmal, sondern ein Werkzeug für einen bestimmten Aufgabentyp.
+Entwickler unterschätzen oft, wie viel zusätzliche Kosten, Testaufwand und Fehlerdiagnose ein Agent mit sich bringt. Ein Agent ist kein Qualitätsmerkmal, sondern ein Werkzeug für einen bestimmten Aufgabentyp.
 
 ## Die zweite Frage: Welche Agentenarchitektur passt dann?
 

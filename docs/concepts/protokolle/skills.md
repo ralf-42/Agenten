@@ -48,7 +48,7 @@ Ein Agentensystem wird verständlicher, wenn diese Ebenen sauber getrennt bleibe
 | Tool | Welche konkrete Operation kann ausgeführt werden? | Funktion, API, Skript |
 | MCP | Womit kann verbunden oder worauf zugegriffen werden? | externe Datenquellen und Systeme |
 
-Gerade für Einsteiger ist diese Trennung wichtig, weil sonst zu viel Fachlogik im falschen Baustein landet.
+Gerade für Entwickler ist diese Trennung wichtig, weil sonst zu viel Fachlogik im falschen Baustein landet.
 
 ## Wann Skills überhaupt sinnvoll werden
 
@@ -155,11 +155,11 @@ Undertriggering und Overtriggering sind die häufigsten Probleme. Ein Skill läd
 
 Ein weiterer häufiger Fehler ist zu viel Fachlogik direkt im Body und zu wenig Trennung in Referenzen. Dann wächst der Skill in eine schwer pflegbare Anweisungssammlung hinein.
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
-Für Einsteiger sind Skills kein Pflichtstartpunkt. Zunächst wichtiger sind Tool Use, gute Prompts, State Management und Checkpointing. Skills werden dann interessant, wenn aus einem einzelnen Agenten ein wiederverwendbarer, regelgeleiteter Prozess werden soll.
+Für Entwickler sind Skills kein Pflichtstartpunkt. Zunächst wichtiger sind Tool Use, gute Prompts, State Management und Checkpointing. Skills werden dann interessant, wenn aus einem einzelnen Agenten ein wiederverwendbarer, regelgeleiteter Prozess werden soll.
 
-Teilnehmende unterschätzen oft, dass ein Skill nicht vor allem technische Komplexität, sondern organisatorische Klarheit bringt. Er macht sichtbar, welche Fachlogik immer wieder gleich laufen soll.
+Entwickler unterschätzen oft, dass ein Skill nicht vor allem technische Komplexität, sondern organisatorische Klarheit bringt. Er macht sichtbar, welche Fachlogik immer wieder gleich laufen soll.
 
 ## Praxisbezug im Projekt
 

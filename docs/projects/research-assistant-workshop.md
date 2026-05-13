@@ -394,7 +394,7 @@ def show_session_history(thread_id: str):
 
 ### Aufgabe 5.1: Lernpfad-Logik präzisieren
 
-Mindestens zwei Zielgruppen definieren:
+Mindestens zwei betroffene Gruppen definieren:
 
 - Anfänger
 - Fortgeschrittene
@@ -704,7 +704,7 @@ A:
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Research Assistant Workshop? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Research Assistant Workshop? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Research Assistant Workshop? |
 
 ---

@@ -54,7 +54,7 @@ has_toc: true
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Troubleshooting? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Troubleshooting? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Troubleshooting? |
 
 ---

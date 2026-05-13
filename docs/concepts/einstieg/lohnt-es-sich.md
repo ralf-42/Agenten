@@ -100,11 +100,11 @@ Kurzcheck:
 - Sind Risiken, Erwartungen und Verantwortung realistisch eingeordnet?
 ```
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
-Für Einsteiger reicht oft schon eine nüchterne Vorprüfung. Wenn ein Projekt nur auf Begeisterung für KI basiert, aber weder Problem noch Daten noch Erfolgskriterien sauber benannt werden können, ist der richtige nächste Schritt meist nicht Architekturarbeit, sondern Problemklärung.
+Für Entwickler reicht oft schon eine nüchterne Vorprüfung. Wenn ein Projekt nur auf Begeisterung für KI basiert, aber weder Problem noch Daten noch Erfolgskriterien sauber benannt werden können, ist der richtige nächste Schritt meist nicht Architekturarbeit, sondern Problemklärung.
 
-Teilnehmende unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann wie ein Go. Ein nicht gestartetes, aber sauber verworfenes Projekt spart oft mehr Zeit und Geld als ein vorschnell gebauter Prototyp.
+Entwickler unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann wie ein Go. Ein nicht gestartetes, aber sauber verworfenes Projekt spart oft mehr Zeit und Geld als ein vorschnell gebauter Prototyp.
 
 ## Abgrenzung zu verwandten Dokumenten
 

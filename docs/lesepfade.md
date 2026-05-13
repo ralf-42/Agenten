@@ -48,11 +48,11 @@ Ein erster funktionierender Agent soll entstehen, ohne gleich in zu viele Patter
 
 Empfohlener Einstieg:
 
-1. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
+1. [LangChain Guide](./frameworks/einsteiger/einsteiger-langchain.html)
 2. [Prompt Engineering](./concepts/architektur/prompt-engineering.html)
 3. [Context Engineering](./concepts/modell-kontext/context-engineering.html)
 4. [State Management](./concepts/workflows-state/state-management.html)
-5. [Einsteiger LangGraph](./frameworks/einsteiger/einsteiger-langgraph.html)
+5. [LangGraph Guide](./frameworks/einsteiger/einsteiger-langgraph.html)
 
 ### RAG und Wissensarbeit
 
@@ -65,7 +65,7 @@ Empfohlener Einstieg:
 3. [Embeddings](./concepts/wissensmanagement/embeddings.html)
 4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?](./concepts/workflows-state/memory-systeme.html)
 5. [Woher zeigt sich, ob ein Agent gut arbeitet?](./concepts/qualitaet-praxis/evaluation-observability.html)
-6. [Einsteiger ChromaDB](./frameworks/einsteiger/einsteiger-chromadb.html)
+6. [ChromaDB Guide](./frameworks/einsteiger/einsteiger-chromadb.html)
 
 ### Robustheit und Kontrolle
 
@@ -108,7 +108,7 @@ Wer nicht lange wählen will, kommt mit diesen drei Dokumenten meist am schnells
 
 1. [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html)
 2. [Welche Architektur passt zu diesem Agenten?](./concepts/architektur/agent-architekturen.html)
-3. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
+3. [LangChain Guide](./frameworks/einsteiger/einsteiger-langchain.html)
 
 Diese Kombination klärt erst die Einsatzfrage, dann die Struktur und erst danach die Umsetzung. Genau diese Reihenfolge verhindert viele frühe Fehlstarts.
 

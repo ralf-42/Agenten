@@ -135,7 +135,7 @@ Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterst�
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Ethik und GenAI? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Ethik und GenAI? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Ethik und GenAI? |
 
 ---

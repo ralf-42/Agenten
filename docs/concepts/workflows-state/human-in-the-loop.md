@@ -137,11 +137,11 @@ Technisch wird HITL meist über Unterbrechung und Wiederaufnahme umgesetzt. Daf�
 
 Ein Agent pausiert also nicht einfach „in der Luft“, sondern auf Basis eines gespeicherten States. Erst dadurch werden Freigabe, Rückkehr und Nachvollziehbarkeit praktisch möglich.
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
-Für Einsteiger reicht meist eine einfache Regel: Alles, was schwer reversibel ist oder Dritte direkt betrifft, sollte nicht ohne menschliche Freigabe laufen. Dazu gehören Versand, Löschung, Zahlungen, sensible Kommunikation und Regel- oder Compliance-Ausnahmen.
+Für Entwickler reicht meist eine einfache Regel: Alles, was schwer reversibel ist oder Dritte direkt betrifft, sollte nicht ohne menschliche Freigabe laufen. Dazu gehören Versand, Löschung, Zahlungen, sensible Kommunikation und Regel- oder Compliance-Ausnahmen.
 
-Teilnehmende unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. Es macht Automatisierung in vielen realen Projekten überhaupt erst akzeptabel.
+Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. Es macht Automatisierung in vielen realen Projekten überhaupt erst akzeptabel.
 
 ## Abgrenzung zu verwandten Dokumenten
 

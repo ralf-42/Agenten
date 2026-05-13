@@ -83,7 +83,7 @@ Der Bauplan bleibt gleich:
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Capstone-Briefing? |
+| [Framework-Guides](frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Capstone-Briefing? |
 | [Best Practices](frameworks/best-practices.html) | Welche Produktionsstandards gelten für Capstone-Briefing? |
 
 ---

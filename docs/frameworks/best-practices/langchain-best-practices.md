@@ -1112,6 +1112,15 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** März 2026<br>
+## 📝 Changelog
+
+### Version 1.7 (Mai 2026)
+- 🆕 **`astream_events()` v3 Protokoll** — `version="v3"` in LangChain v1.3.0 verfügbar (bisher max. v2)
+- 🆕 **langchain-core v1.4.0** — Content-Block-Streaming v2 jetzt stabil (war Beta in 1.3.2)
+- 🆕 **`HumanInTheLoopMiddleware.respond()`** — direkte Antwort aus Middleware ohne weiteren LLM-Call (v1.2.17)
+
+---
+
+**Version:** 1.7<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

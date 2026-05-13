@@ -68,7 +68,7 @@ class ChatState(TypedDict):
     step_count: int
 ```
 
-Dieses Muster ist für Einsteiger besonders hilfreich, weil es klar trennt zwischen Gesprächsverlauf und zusätzlichen Ablaufdaten.
+Dieses Muster ist für Entwickler besonders hilfreich, weil es klar trennt zwischen Gesprächsverlauf und zusätzlichen Ablaufdaten.
 
 ## Warum TypedDict für den Graph-State meist die beste Wahl ist
 
@@ -263,7 +263,7 @@ class GoodState(TypedDict):
 
 Grenze: Auch ein sauberer State ersetzt keine gute Workflow-Logik. Er sorgt nur dafür, dass die Logik nachvollziehbar und stabil mit Daten arbeiten kann.
 
-## Best Practices für Einsteigerprojekte
+## Best Practices für Entwicklerprojekte
 
 Der State sollte flach und sprechend benannt sein. Felder wie `user_query`, `current_step` oder `analysis_complete` sind hilfreicher als kryptische Kurzformen. Sensible personenbezogene Daten gehören nicht unreflektiert in den State, besonders wenn Checkpointing oder Logging mitgedacht wird.
 
@@ -277,11 +277,11 @@ def debug_node(state: MyState) -> MyState:
     return result
 ```
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
 Für einen ersten LangGraph-Workflow reichen meist drei Regeln. Erstens: State explizit definieren, statt mit beliebigen Dictionaries zu arbeiten. Zweitens: `messages` fast immer mit `add_messages` absichern. Drittens: Knoten geben nur die Änderungen zurück, nicht den gesamten State.
 
-Teilnehmende unterschätzen oft, wie stark diese drei Regeln spätere Erweiterungen erleichtern. Wer sie früh sauber anlegt, kann Routing, Checkpointing, Human-in-the-Loop und Memory wesentlich einfacher ergänzen.
+Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterungen erleichtern. Wer sie früh sauber anlegt, kann Routing, Checkpointing, Human-in-the-Loop und Memory wesentlich einfacher ergänzen.
 
 ## Abgrenzung zu verwandten Dokumenten
 

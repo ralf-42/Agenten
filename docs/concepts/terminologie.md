@@ -28,7 +28,7 @@ Erstens: Der englische Begriff ist so eingebürgert, dass die Übersetzung küns
 
 Zweitens: Beide Formen sind im Umlauf, aber je nach Kontext ist eine klarer. „Memory" wird bei der kognitiven Metapher (das Agenten-Gedächtnis) auf Deutsch erklärt, bleibt aber in Code-Kontexten englisch. „Fallback" heißt in Erklärungstexten „Rückfallstrategie", im Code `fallback`.
 
-Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → „Leitplanke" ist eingängiger für Einsteiger. „Handoff" → „Übergabe" ist eindeutiger als das englische Wort. „State" → „Zustand" ist Pflicht — wer im Kurs „state" schreibt, meint Python-Code, nicht den deutschen Fließtext.
+Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → „Leitplanke" ist eingängiger für Entwickler. „Handoff" → „Übergabe" ist eindeutiger als das englische Wort. „State" → „Zustand" ist Pflicht — wer im Kurs „state" schreibt, meint Python-Code, nicht den deutschen Fließtext.
 
 ## Vollständige Begriffsliste
 
@@ -42,7 +42,7 @@ Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → �
 | chunking          | Chunking                                  | Keine treffende deutsche Form — bleibt englisch                                |
 | context window    | Kontextfenster                            | Immer übersetzen                                                               |
 | edge              | Kante                                     | In Graph-Erklärungen immer „Kante" — nie „Edge"                                |
-| embedding         | Embedding / Einbettung                    | „Embedding" in Fachtexten, „Einbettung" für Einsteiger                         |
+| embedding         | Embedding / Einbettung                    | „Embedding" in Fachtexten, „Einbettung" für Entwickler                         |
 | evaluation        | Evaluation                                | Im ML-Kontext Standard — nicht „Bewertung"                                     |
 | fallback          | Rückfallstrategie / Fallback              | „Rückfallstrategie" in Erklärungen, `fallback` im Code                         |
 | feedback          | Feedback                                  | Meist direkt übernommen                                                        |
@@ -67,7 +67,7 @@ Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → �
 | reranking         | Reranking                                 | Im RAG-Fachkontext Standard — keine treffende Übersetzung                      |
 | retrieval         | Retrieval / Informationsabruf             | In RAG-Erklärungen „Informationsabruf" beim ersten Auftreten                   |
 | retry             | Wiederholung                              | In Erklärungstexten immer „Wiederholung"                                       |
-| routing           | Routing / Weiterleitung                   | „Routing" ist eingebürgert; „Weiterleitung" für Einsteiger-Einführungen        |
+| routing           | Routing / Weiterleitung                   | „Routing" ist eingebürgert; „Weiterleitung" für Entwickler-Einführungen        |
 | runtime           | Laufzeitumgebung                          | Standardübersetzung — immer übersetzen                                         |
 | scaffold          | Gerüst / Grundgerüst                      | Wenn etwas strukturell vorstrukturiert wird                                    |
 | state             | Zustand                                   | Pflicht: im deutschen Fließtext immer „Zustand" — „state" ist Code             |

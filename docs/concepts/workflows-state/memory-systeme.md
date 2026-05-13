@@ -55,7 +55,7 @@ Typischer Fehler: Stateless-Verhalten wird als Modellschwäche fehlgedeutet. Das
 
 ## Zwei Grundformen von Memory
 
-Für Einsteiger ist die Trennung zwischen Kurzzeit- und Langzeit-Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Langzeit-Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
+Für Entwickler ist die Trennung zwischen Kurzzeit- und Langzeit-Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Langzeit-Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
 
 ```mermaid
 flowchart TB
@@ -470,7 +470,7 @@ def sollte_gespeichert_werden(nachricht: str) -> bool:
 | Nutzerkontrolle anbieten | rechtliche und organisatorische Nachvollziehbarkeit |
 | Relevanz vor dem Speichern prüfen | sonst füllt sich das Memory mit Ballast |
 
-## Was für Einsteiger zuerst wichtig ist
+## Was für Entwickler zuerst wichtig ist
 
 Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann Langzeit-Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
 

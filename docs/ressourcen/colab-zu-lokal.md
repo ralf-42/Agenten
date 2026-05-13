@@ -123,7 +123,7 @@ check_environment()
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Von Colab zu Local? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Von Colab zu Local? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Von Colab zu Local? |
 
 ---

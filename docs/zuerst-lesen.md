@@ -23,7 +23,7 @@ Wer neu in das Kursmaterial einsteigt, beginnt mit diesen vier Dokumenten:
 1. [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html)
 2. [Agenten-Architekturen](./concepts/architektur/agent-architekturen.html)
 3. [Tool Use & Function Calling](./concepts/architektur/tool-use-function-calling.html)
-4. [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html)
+4. [LangChain Guide](./frameworks/einsteiger/einsteiger-langchain.html)
 
 Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
 
@@ -34,8 +34,8 @@ Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungswe
 | Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?](./concepts/einstieg/lohnt-es-sich.html) |
 | Architektur auswählen | [Agenten-Architekturen](./concepts/architektur/agent-architekturen.html) |
 | Tools sicher einbinden | [Tool Use & Function Calling](./concepts/architektur/tool-use-function-calling.html) |
-| Ersten Agenten bauen | [Einsteiger LangChain](./frameworks/einsteiger/einsteiger-langchain.html) |
-| Mehrstufige Workflows umsetzen | [Einsteiger LangGraph](./frameworks/einsteiger/einsteiger-langgraph.html) |
+| Ersten Agenten bauen | [LangChain Guide](./frameworks/einsteiger/einsteiger-langchain.html) |
+| Mehrstufige Workflows umsetzen | [LangGraph Guide](./frameworks/einsteiger/einsteiger-langgraph.html) |
 | Kontext, RAG und Memory verstehen | [Context Engineering](./concepts/modell-kontext/context-engineering.html) |
 | Wissen und Dokumente anbinden | [RAG-Konzepte](./concepts/wissensmanagement/rag-konzepte.html) |
 | Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz](./concepts/workflows-state/checkpointing-persistenz.html) |

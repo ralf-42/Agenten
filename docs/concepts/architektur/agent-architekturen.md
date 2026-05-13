@@ -39,7 +39,7 @@ Aus genau solchen Anforderungen ergibt sich die Architektur. Nicht jede Aufgabe 
 
 ## Zwei Blickrichtungen auf Agenten
 
-Agenten lassen sich aus zwei Blickrichtungen beschreiben. Die erste fragt, wie ein Agent grundsätzlich zu einer Entscheidung kommt. Die zweite fragt, wie diese Logik technisch organisiert wird. Für Einsteiger ist diese Trennung hilfreich, weil sie erklärt, warum ein System nach außen klug wirken kann, intern aber sehr unterschiedlich gebaut sein kann.
+Agenten lassen sich aus zwei Blickrichtungen beschreiben. Die erste fragt, wie ein Agent grundsätzlich zu einer Entscheidung kommt. Die zweite fragt, wie diese Logik technisch organisiert wird. Für Entwickler ist diese Trennung hilfreich, weil sie erklärt, warum ein System nach außen klug wirken kann, intern aber sehr unterschiedlich gebaut sein kann.
 
 Die Intelligenzperspektive beschreibt das Entscheidungsprinzip. Handelt ein System streng regelbasiert, zustandsbasiert, zielorientiert oder nutzenmaximierend? Die Architekturperspektive beschreibt dagegen das praktische Baumuster, etwa ReAct, Tool-Calling, Workflow oder Multi-Agent. Beide Ebenen hängen zusammen, sind aber nicht identisch.
 
@@ -90,7 +90,7 @@ Eine einfache Regelarchitektur reagiert auf klar definierte Muster. Das entspric
 
 Ein zustandsbasierter Agent berücksichtigt zusätzlich, was bereits bekannt ist, auch wenn diese Information nicht direkt in der aktuellen Eingabe steht. Diese Form ist nützlich, wenn ein Verlauf oder ein interner Status mitgeführt werden muss. Ein Beispiel wäre ein Agent, der weiß, dass eine Identitätsprüfung bereits erfolgt ist und deshalb im nächsten Schritt andere Optionen freischaltet.
 
-Zielorientierte Agenten bewerten, welche Aktion dem gewünschten Ergebnis näherkommt. ReAct-Systeme verhalten sich oft so: Sie planen nicht vollständig im Voraus, sondern nähern sich dem Ziel iterativ. Utility-basierte Agenten gehen noch einen Schritt weiter und vergleichen Optionen nach einem Präferenzwert, etwa Kosten, Risiko oder Erfolgswahrscheinlichkeit. Lernende Agenten wiederum verändern ihr Verhalten auf Basis früherer Rückmeldungen, spielen im Einsteigerkontext aber meist noch keine Hauptrolle.
+Zielorientierte Agenten bewerten, welche Aktion dem gewünschten Ergebnis näherkommt. ReAct-Systeme verhalten sich oft so: Sie planen nicht vollständig im Voraus, sondern nähern sich dem Ziel iterativ. Utility-basierte Agenten gehen noch einen Schritt weiter und vergleichen Optionen nach einem Präferenzwert, etwa Kosten, Risiko oder Erfolgswahrscheinlichkeit. Adaptive Agenten wiederum verändern ihr Verhalten auf Basis früherer Rückmeldungen, spielen im Entwicklerkontext aber meist noch keine Hauptrolle.
 
 Grenze: Diese Einteilung hilft beim Denken, ersetzt aber keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
 
@@ -202,11 +202,11 @@ flowchart TD
 
 Ein Beispiel ist eine Content-Pipeline: Ein Recherche-Agent sammelt Quellen, ein Schreib-Agent formuliert, ein Prüf-Agent bewertet Qualität und Konsistenz. Solch eine Trennung kann sinnvoll sein, wenn die Teilaufgaben fachlich oder technisch wirklich unterschiedlich sind. Ohne klare Zuständigkeiten entsteht allerdings schnell mehr Koordinationsaufwand als Nutzen.
 
-Teilnehmende unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
+Entwickler unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
 
 ## Welche Architektur meist zuerst gewählt werden sollte
 
-Für viele Einsteigerprojekte genügt bereits eine einfache Entscheidungslogik. Wenn eine Anfrage auf klar definierte Werkzeuge abgebildet werden kann, ist Tool-Calling meist der beste Startpunkt. Wenn ein Prozess feste Schritte und Freigaben hat, ist ein Workflow meist sinnvoller. ReAct eignet sich eher für offene Aufgaben. Multi-Agent lohnt sich erst, wenn Arbeitsteilung messbar bessere Ergebnisse liefert.
+Für viele Entwicklerprojekte genügt bereits eine einfache Entscheidungslogik. Wenn eine Anfrage auf klar definierte Werkzeuge abgebildet werden kann, ist Tool-Calling meist der beste Startpunkt. Wenn ein Prozess feste Schritte und Freigaben hat, ist ein Workflow meist sinnvoller. ReAct eignet sich eher für offene Aufgaben. Multi-Agent lohnt sich erst, wenn Arbeitsteilung messbar bessere Ergebnisse liefert.
 
 ```mermaid
 flowchart TD
@@ -250,7 +250,7 @@ def route_response(state: AgentState) -> str:
     return "continue"
 ```
 
-Dieses Muster ist für Einsteiger besonders wichtig, weil es eine grundlegende Grenze moderner Modelle zeigt: Sprachliche Plausibilität ist kein Ersatz für verbindliche Geschäftsregeln.
+Dieses Muster ist für Entwickler besonders wichtig, weil es eine grundlegende Grenze moderner Modelle zeigt: Sprachliche Plausibilität ist kein Ersatz für verbindliche Geschäftsregeln.
 
 ## Geschäftsregeln gehören in Code
 
@@ -316,11 +316,11 @@ Die vorgestellten Architekturen schließen sich nicht gegenseitig aus. Ein Workf
 
 Gerade deshalb ist die Architekturfrage keine Entweder-oder-Entscheidung, sondern eine Frage nach sinnvollen Grenzen. Nicht jede Flexibilität ist ein Gewinn. Oft entsteht die beste Lösung dort, wo freie Modellentscheidungen nur an den Stellen erlaubt werden, an denen sie echten Mehrwert bringen.
 
-## Was in Einsteigerprojekten zuerst wichtig ist
+## Was in Entwicklerprojekten zuerst wichtig ist
 
 Für einen ersten Kursagenten reicht meist eine begrenzte Kombination aus Tool-Calling, klaren Geschäftsregeln und einem kleinen Workflow für Sonderfälle. Diese Struktur ist einfacher zu erklären, leichter zu debuggen und robuster zu testen als ein frei planendes Multi-Agent-System.
 
-Einsteiger profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
+Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
 
 ## Abgrenzung zu verwandten Dokumenten
 

@@ -110,7 +110,7 @@ Für einen schnellen Gesamtpfad zuerst [Lesepfade](./lesepfade.html) öffnen.
 
 - **[Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?](./concepts/qualitaet-praxis/agent-security.html)** – *Welche Sicherheitsprobleme entstehen durch Prompts, Tools und Rechte?* (→ M20)
   - Prompt Injection, Least Privilege und Vertrauensgrenzen
-  - Praktische Schutzmaßnahmen für Einsteigerprojekte
+  - Praktische Schutzmaßnahmen für Entwicklerprojekte
 
 ## Protokolle & Erweiterungen
 

@@ -299,7 +299,7 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Migration-Analyse Provider? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Migration-Analyse Provider? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Migration-Analyse Provider? |
 
 ---

@@ -23,7 +23,7 @@ has_toc: true
 
 ## 1. Das Problem: Ein Modell allein ist noch keine Anwendung
 
-Viele Einsteiger in die Generative KI beginnen mit einem großen Sprachmodell (LLM) und entwickeln darauf aufbauend einen einfachen Chatbot. Zwischen einem funktionierenden Prototyp und einer produktionsreifen Anwendung liegt jedoch ein weiter Weg. Ein Modell, das nur Texte generiert, löst noch keine konkreten Geschäftsanforderungen wie Zuverlässigkeit, Nachvollziehbarkeit oder Integrationsfähigkeit.
+Viele Entwickler in der Generativen KI beginnen mit einem großen Sprachmodell (LLM) und entwickeln darauf aufbauend einen einfachen Chatbot. Zwischen einem funktionierenden Prototyp und einer produktionsreifen Anwendung liegt jedoch ein weiter Weg. Ein Modell, das nur Texte generiert, löst noch keine konkreten Geschäftsanforderungen wie Zuverlässigkeit, Nachvollziehbarkeit oder Integrationsfähigkeit.
 
 > [!IMPORTANT] Die zentrale Frage<br>
 > Wie lässt sich aus einem KI-Experiment ein steuerbares, überprüfbares und kontinuierlich verbesserbares System entwickeln?
@@ -264,7 +264,7 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Einsteiger mit Vom Modell zur Anwendung? |
+| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Vom Modell zur Anwendung? |
 | [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Vom Modell zur Anwendung? |
 
 ---

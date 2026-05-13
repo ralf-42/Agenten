@@ -39,7 +39,7 @@ Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer se
 
 ## Welche Grundmuster es gibt
 
-Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Einige Muster sind für Einsteiger besonders wichtig: Supervisor, Handoff, Skill-orientierte Fähigkeitstrennung, hierarchische Koordination, direkte kollaborative Zusammenarbeit und parallele Bearbeitung unabhängiger Teilaufgaben.
+Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Einige Muster sind für Entwickler besonders wichtig: Supervisor, Handoff, Skill-orientierte Fähigkeitstrennung, hierarchische Koordination, direkte kollaborative Zusammenarbeit und parallele Bearbeitung unabhängiger Teilaufgaben.
 
 | Muster | Grundidee |
 |---|---|
@@ -198,11 +198,11 @@ def should_continue(state: TeamState) -> str:
 
 Typischer Fehler: Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
 
-## Welche Wahl für Einsteiger meist sinnvoll ist
+## Welche Wahl für Entwickler meist sinnvoll ist
 
-Für Einsteigerprojekte ist ein einfacher Supervisor meist der beste Startpunkt, wenn echte Arbeitsteilung gebraucht wird. Handoff lohnt sich, wenn Zuständigkeiten erst im Verlauf sichtbar werden. Parallele oder kollaborative Muster sollten erst eingesetzt werden, wenn der Mehrwert dafür klar erkennbar ist.
+Für Entwicklerprojekte ist ein einfacher Supervisor meist der beste Startpunkt, wenn echte Arbeitsteilung gebraucht wird. Handoff lohnt sich, wenn Zuständigkeiten erst im Verlauf sichtbar werden. Parallele oder kollaborative Muster sollten erst eingesetzt werden, wenn der Mehrwert dafür klar erkennbar ist.
 
-Teilnehmende unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, sondern vor allem mehr Koordinationslogik bedeutet. Genau deshalb ist die beste erste Frage nicht `Wie viele Rollen könnten existieren?`, sondern `Welche Rollen werden wirklich gebraucht?`
+Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, sondern vor allem mehr Koordinationslogik bedeutet. Genau deshalb ist die beste erste Frage nicht `Wie viele Rollen könnten existieren?`, sondern `Welche Rollen werden wirklich gebraucht?`
 
 ## Abgrenzung zu verwandten Dokumenten
 

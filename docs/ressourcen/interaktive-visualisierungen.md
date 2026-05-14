@@ -103,11 +103,15 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Interaktive Visualisierungen? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
+| [Framework-Guides]({{ '/tool-use-prompting-erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Interaktive Visualisierungen? |
+| [Best Practices]({{ '/evaluation-security-reliability/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
 
 ---
 
 **Version:** 1.0<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
+
+

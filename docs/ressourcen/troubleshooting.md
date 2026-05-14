@@ -54,11 +54,15 @@ has_toc: true
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Troubleshooting? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Troubleshooting? |
+| [Framework-Guides]({{ '/tool-use-prompting-erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Troubleshooting? |
+| [Best Practices]({{ '/evaluation-security-reliability/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Troubleshooting? |
 
 ---
 
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
+
+

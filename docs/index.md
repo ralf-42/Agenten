@@ -14,7 +14,7 @@ permalink: /
 ---
 
 > [!TIP] Einstieg in die Dokumentation<br>
-> Für den kürzesten Start zuerst [Zuerst lesen](./zuerst-lesen.html) öffnen. Die ausführlichen [Lesepfade](./lesepfade.html) helfen danach bei der gezielten Vertiefung.
+> Für den kürzesten Start zuerst [Zuerst lesen](./zuerst-lesen.html) öffnen. Der ausführliche [Lernpfad]({{ '/lernpfad.html' | relative_url }}) hilft danach bei der gezielten Vertiefung.
 
 ---
 
@@ -47,3 +47,4 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+

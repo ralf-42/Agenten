@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Einsteiger LangChain
-parent: Frameworks
+parent: LangChain
+grand_parent: Frameworks
 nav_order: 1
 description: Grundlagen und Best Practices für LangChain 1.0+
 has_toc: true
@@ -689,7 +690,6 @@ Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assist
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Einsteiger LangSmith
-parent: Frameworks
-nav_order: 8
+parent: LangSmith
+grand_parent: Frameworks
+nav_order: 1
 description: Monitoring & Debugging mit LangSmith
 has_toc: true
 ---
@@ -964,7 +965,6 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

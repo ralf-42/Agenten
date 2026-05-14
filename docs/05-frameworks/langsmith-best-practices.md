@@ -1,8 +1,9 @@
 ---
 layout: default
 title: LangSmith Best Practices
-parent: Frameworks
-nav_order: 9
+parent: LangSmith
+grand_parent: Frameworks
+nav_order: 2
 description: Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith
 has_toc: true
 ---
@@ -716,7 +717,7 @@ callback = LangSmithCallback(
 - [Release Notes](https://docs.smith.langchain.com/release-notes)
 
 ### Interne Dokumentation
-- [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/05-frameworks/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
+- [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
 - [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }})
 - [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }})
 
@@ -794,14 +795,13 @@ callback = LangSmithCallback(
 | [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}) | Wie werden Chains, Agents und Tools korrekt implementiert? |
 | [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
 | [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Welches Modell eignet sich für welche Agentenrolle? |
-| [Vom Modell zum Produkt]({{ '/05-frameworks/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Wie wird ein LangChain-Prototyp produktionsreif? |
+| [Vom Modell zum Produkt]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Wie wird ein LangChain-Prototyp produktionsreif? |
 
 ---
 
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

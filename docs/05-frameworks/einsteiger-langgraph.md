@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Einsteiger LangGraph
-parent: Frameworks
-nav_order: 3
+parent: LangGraph
+grand_parent: Frameworks
+nav_order: 1
 description: Multi-Agent-Systeme und Workflows mit LangGraph
 has_toc: true
 ---
@@ -490,7 +491,6 @@ Mögliche Erweiterungen:
 **Version:** 2.0<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

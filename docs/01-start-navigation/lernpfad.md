@@ -4,7 +4,6 @@ title: Lernpfad
 nav_order: 3
 description: Orientierung, Lernpfade und empfohlene Einstiege durch die Agenten-Dokumentation
 has_toc: true
-parent: "Start & Navigation"
 permalink: /lernpfad.html
 ---
 
@@ -87,7 +86,7 @@ Ein System soll nicht nur funktionieren, sondern auch unter realen Bedingungen b
 Empfohlener Einstieg:
 
 1. [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }})
-2. [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/05-frameworks/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
+2. [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
 3. [Aus Entwicklung ins Deployment]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }})
 4. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
 5. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
@@ -156,6 +155,5 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 

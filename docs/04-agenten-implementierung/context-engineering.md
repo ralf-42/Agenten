@@ -2,7 +2,7 @@
 layout: default
 title: Context Engineering
 parent: Agenten-Implementierung
-nav_order: 6
+nav_order: 5
 description: "Kontextmanagement für Agenten: Auswahl, Struktur, Memory, RAG und Tool-Ausgaben"
 has_toc: true
 ---
@@ -366,7 +366,6 @@ In der Praxis relevant, wenn: Ein Agent mehrere Quellen kombiniert, Tool-Ausgabe
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Modellauswahl
-parent: "Modelle, Provider & Anpassung"
+parent: "Modelle & Provider"
 nav_order: 1
 description: "Zentrale Modellauswahl für Agentensysteme: Rollen, Kurs-Defaults, Provider, Qualität, Kosten und Latenz"
 has_toc: true

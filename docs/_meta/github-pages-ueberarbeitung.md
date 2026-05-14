@@ -44,7 +44,7 @@ Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
 | Zuerst lesen | `01-start-navigation/zuerst-lesen.md` |
 | Lernpfad | `01-start-navigation/lernpfad.md` |
 | Orientierung & Entscheidung | `02-orientierung-entscheidung/` |
-| Modelle, Provider & Anpassung | `03-modelle-provider-anpassung/` |
+| Modelle & Provider | `03-modelle-provider-anpassung/` |
 | Agenten-Implementierung | `04-agenten-implementierung/` |
 | Frameworks | `05-frameworks/` |
 | Multi-Agent & Erweiterungen | `06-multi-agent-erweiterungen/` |

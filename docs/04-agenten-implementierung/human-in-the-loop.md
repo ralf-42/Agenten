@@ -159,4 +159,3 @@ Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. E
 
 
 
-

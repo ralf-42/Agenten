@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Prompt Engineering
 parent: Entwurf
 grand_parent: Agenten-Implementierung
-nav_order: 2
+nav_order: 4
 description: Strategien für effektive Prompts in Agentensystemen
 has_toc: true
 ---

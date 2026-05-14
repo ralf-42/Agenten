@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Ablauf & Zustand
-parent: Agenten-Implementierung
-nav_order: 3
-has_children: true
+parent: Ablauf & Zustand
+grand_parent: Agenten-Implementierung
+nav_order: 1
 description: "State Management, Checkpointing, Memory und Human-in-the-Loop"
 ---
 

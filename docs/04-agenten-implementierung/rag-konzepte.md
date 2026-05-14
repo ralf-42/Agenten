@@ -1,7 +1,7 @@
----
+﻿---
 layout: default
 title: RAG-Konzepte
-parent: "Kontext & Wissen"
+parent: Kontext & Wissen
 grand_parent: Agenten-Implementierung
 nav_order: 4
 description: "RAG-Konzepte für Agenten: Retrieval, Chunking, Embeddings, Reranking und Grounding"

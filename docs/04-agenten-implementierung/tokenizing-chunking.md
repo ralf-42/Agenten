@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Tokenizing & Chunking
-parent: "Kontext & Wissen"
+parent: Kontext & Wissen
 grand_parent: Agenten-Implementierung
-nav_order: 2
+nav_order: 3
 description: Tokenisierung und Chunking für RAG, Kontextfenster und Agenten-Wissensspeicher
 has_toc: true
 ---

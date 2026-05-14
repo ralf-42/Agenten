@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Memory-Systeme
-parent: "Ablauf & Zustand"
+parent: Ablauf & Zustand
 grand_parent: Agenten-Implementierung
-nav_order: 3
+nav_order: 4
 description: Kurz- und Langzeitgedächtnis für KI-Agenten mit LangGraph, Vektordatenbanken und nutzerspezifischer Persistenz
 has_toc: true
 ---

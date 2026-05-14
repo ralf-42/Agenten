@@ -1,10 +1,9 @@
----
+﻿---
 layout: default
 title: Lernpfad
 nav_order: 3
 description: Orientierung, Lernpfade und empfohlene Einstiege durch die Agenten-Dokumentation
 has_toc: true
-permalink: /lernpfad.html
 ---
 
 # Lernpfad

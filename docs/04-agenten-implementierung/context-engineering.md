@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Context Engineering
-parent: "Kontext & Wissen"
+parent: Kontext & Wissen
 grand_parent: Agenten-Implementierung
-nav_order: 1
+nav_order: 5
 description: "Kontextmanagement für Agenten: Auswahl, Struktur, Memory, RAG und Tool-Ausgaben"
 has_toc: true
 ---

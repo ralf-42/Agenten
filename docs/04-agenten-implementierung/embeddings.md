@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Embeddings
-parent: "Kontext & Wissen"
+parent: Kontext & Wissen
 grand_parent: Agenten-Implementierung
-nav_order: 3
+nav_order: 2
 description: Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory
 has_toc: true
 ---

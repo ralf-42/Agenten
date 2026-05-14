@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Tool Use & Function Calling
 parent: Entwurf
 grand_parent: Agenten-Implementierung
-nav_order: 4
+nav_order: 5
 description: "Tool Use und Function Calling für KI-Agenten: warum Werkzeuge nötig sind und wie sie sicher eingebunden werden"
 has_toc: true
 ---

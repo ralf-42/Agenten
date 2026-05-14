@@ -10,9 +10,11 @@ description: State Management, LangGraph und steuerbare mehrstufige Agentenablä
 
 Sobald Agenten mehrere Schritte durchlaufen, werden State, Routing und kontrollierte Ausführung entscheidend. Dieser Bereich konzentriert sich auf Orchestrierung und LangGraph als Grundlage für robuste Agentenabläufe.
 
-- **[Wie behalten Agenten zwischen Schritten den Überblick?]({{ '/orchestrierung/state-management.html' | relative_url }})** – *Wie wird Zustand in mehrstufigen Abläufen sauber geführt?*
-- **[LangGraph]({{ '/orchestrierung/einsteiger-langgraph.html' | relative_url }})** – *Wie werden Agenten als Graph aus Knoten, Kanten und Bedingungen modelliert?*
-- **[LangGraph Best Practices]({{ '/orchestrierung/langgraph-best-practices.html' | relative_url }})** – *Welche Patterns machen Graphen wartbar, testbar und kontrollierbar?*
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Was** muss ein Agent zwischen Schritten behalten? | [State Management]({{ '/orchestrierung/state-management.html' | relative_url }}) | Zustand, Nachrichten, Zwischenergebnisse und Kontrollvariablen in mehrstufigen Abläufen. |
+| **Wie** wird ein Agent als Graph modelliert? | [Einsteiger LangGraph]({{ '/orchestrierung/einsteiger-langgraph.html' | relative_url }}) | Nodes, Edges, Routing, Bedingungen und erste LangGraph-Workflows. |
+| **Wie** bleiben Graphen wartbar und kontrollierbar? | [LangGraph Best Practices]({{ '/orchestrierung/langgraph-best-practices.html' | relative_url }}) | Patterns für StateGraph, Conditional Routing, Checkpointing und Human-in-the-Loop. |
 
 
 

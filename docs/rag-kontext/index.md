@@ -10,11 +10,14 @@ description: "RAG, Tokenizing, Chunking und Embeddings: Wissensanbindung für KI
 
 Diese Seiten erklären, wie Agenten den richtigen Kontext erhalten, wie externes Wissen angebunden wird und wie Text für Retrieval und Kontextfenster vorbereitet wird.
 
-- **[Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }})** – *Welche Informationen braucht ein Agent zur richtigen Zeit?*
-- **[Wie bekommen Agenten Zugriff auf eigenes Wissen?]({{ '/rag-kontext/rag-konzepte.html' | relative_url }})** – *Wann ist RAG sinnvoll und wie funktioniert es sauber?* Grundidee, Chunking, Retrieval und Reranking.
-- **[Tokenizing & Chunking]({{ '/rag-kontext/tokenizing-chunking.html' | relative_url }})** – *Wie wird Text für Retrieval und Kontextfenster vorbereitet?* Tokenisierung, Chunk-Größen und Overlap.
-- **[Embeddings]({{ '/rag-kontext/embeddings.html' | relative_url }})** – *Wie wird Bedeutung als Vektor durchsuchbar?* Semantische Suche, Ähnlichkeit und Vektorräume.
-- **[ChromaDB]({{ '/rag-kontext/einsteiger-chromadb.html' | relative_url }})** – *Wie werden Embeddings gespeichert und durchsucht?*
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Was** gehört in den Kontext eines Agenten? | [Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }}) | Auswahl, Struktur und Zeitpunkt relevanter Informationen. |
+| **Wann** reicht Prompting nicht mehr aus? | [RAG-Konzepte]({{ '/rag-kontext/rag-konzepte.html' | relative_url }}) | Grundidee von Retrieval, Quellenbindung, Reranking und Grounding. |
+| **Wie** wird Text retrievalfähig vorbereitet? | [Tokenizing & Chunking]({{ '/rag-kontext/tokenizing-chunking.html' | relative_url }}) | Tokenisierung, Chunk-Größen, Overlap und Dokumentstruktur. |
+| **Wie** wird Bedeutung suchbar? | [Embeddings]({{ '/rag-kontext/embeddings.html' | relative_url }}) | Vektoren, Ähnlichkeit, semantische Suche und Grenzen von Embeddings. |
+| **Wie** werden Vektoren praktisch gespeichert? | [Einsteiger ChromaDB]({{ '/rag-kontext/einsteiger-chromadb.html' | relative_url }}) | Collections, Similarity Search und LangChain-Integration. |
+| **Wann** ist Fine-Tuning relevant? | [Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }}) | Abgrenzung zu Prompting, RAG und Modellwahl. |
 
 
 

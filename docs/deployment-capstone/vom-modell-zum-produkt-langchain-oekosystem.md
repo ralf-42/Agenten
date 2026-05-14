@@ -266,13 +266,15 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 | Dokument | Frage |
 |---|---|
 | [LangChain Best Practices]({{ '/erste-agenten/langchain-best-practices.html' | relative_url }}) | Welche LangChain-Konventionen gelten für produktionsnahe Anwendungen? |
-| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für LangChain-basierte Anwendungen? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangChain-basierte Anwendungen? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
 
 
 

@@ -323,12 +323,12 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Frage |
-|---|---|
+| Dokument                                                                          | Frage            |                                                                                |
+| --------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------ |
 | [Aufgaben & Lösungswege]({{ '/orientierung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann ist ein Agent sinnvoll und wann eher Workflow, RAG oder klassischer Code? |
-| [Tool Use & Function Calling]({{ '/erste-agenten/tool-use-function-calling.html' | relative_url }}) | Wie werden Werkzeuge technisch beschrieben, aufgerufen und abgesichert? |
-| [Multi-Agent-Systeme]({{ '/multi-agent/multi-agent-systeme.html' | relative_url }}) | Wie arbeiten mehrere Agenten koordiniert zusammen? |
-| [State Management]({{ '/orchestrierung/state-management.html' | relative_url }}) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet? |
+| [Tool Use & Function Calling]({{ '/erste-agenten/tool-use-function-calling.html'  | relative_url }}) | Wie werden Werkzeuge technisch beschrieben, aufgerufen und abgesichert?        |
+| [Multi-Agent-Systeme]({{ '/multi-agent/multi-agent-systeme.html'                  | relative_url }}) | Wie arbeiten mehrere Agenten koordiniert zusammen?                             |
+| [State Management]({{ '/orchestrierung/state-management.html'                     | relative_url }}) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet?            |
 
 ---
 

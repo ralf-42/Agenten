@@ -10,10 +10,14 @@ description: "Vorprüfung und Entscheidungshilfe: ob ein KI-Vorhaben sinnvoll is
 
 Dieser Bereich ist der richtige Einstieg, wenn Begriffe, Muster oder Architekturentscheidungen noch unscharf sind. Zuerst wird geklärt, ob ein Agent sinnvoll ist, welcher Lösungsweg zur Aufgabe passt und welche Modell- und Providerentscheidungen früh relevant werden.
 
-- **[Lohnt sich KI?]({{ '/orientierung/lohnt-es-sich.html' | relative_url }})** – *Lohnt sich ein KI-Vorhaben fachlich, organisatorisch und wirtschaftlich?* Problemklärung vor Toolwahl, Datenlage, Nutzen, Risiken und Go-/No-Go-Fragen.
-- **[Welches Werkzeug?]({{ '/orientierung/aufgabenklassen-und-loesungswege.html' | relative_url }})** – *Welcher Lösungsweg passt zur Aufgabe?* Entscheidung zwischen Chat, Workflow, RAG, Agent und klassischem Code.
-- **[Terminologie]({{ '/orientierung/terminologie.html' | relative_url }})** – *Wie lautet die deutsche Form für state, memory, node, guardrail?* Übersetzungstabelle mit 42 Fachbegriffen und Verwendungshinweisen.
-- **[Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }})** – *Welches Basismodell passt zu welcher Agentenaufgabe?* Kriterien für Qualität, Kosten, Latenz und Einsatzgrenzen.
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Warum** überhaupt KI oder Agenten einsetzen? | [Lohnt sich KI?]({{ '/orientierung/lohnt-es-sich.html' | relative_url }}) | Vorprüfung von Nutzen, Aufwand, Datenlage und Risiken. |
+| **Was** ist die passende Lösungsklasse? | [Aufgaben & Lösungswege]({{ '/orientierung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Abgrenzung zwischen Chat, Workflow, RAG, Agent und klassischem Code. |
+| **Wie** werden zentrale Begriffe sauber verwendet? | [Terminologie]({{ '/orientierung/terminologie.html' | relative_url }}) | Gemeinsame Sprache für State, Memory, Tool Use, Guardrails und Agentenarchitektur. |
+| **Welches** Modell passt zur Aufgabe? | [Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }}) | Kriterien für Qualität, Kosten, Latenz, Kontextfenster und Einsatzgrenzen. |
+| **Wie** werden Kursmodelle praktisch zugeordnet? | [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Konkrete Designregeln für Modellrollen im Kurs. |
+| **Wie** lassen sich Modellrollen auf Provider übertragen? | [Provider-Modell-Mapping]({{ '/orientierung/provider-modell-mapping.html' | relative_url }}) | Zuordnung von Modellrollen auf OpenAI, Mistral und weitere Provider. |
 
 
 

@@ -10,48 +10,20 @@ description: Von der Entwicklung zur produktionsreifen Anwendung
 
 Vom Prototyp zur produktionsreifen Agent-Anwendung - Praktische Anleitungen für Deployment, Architektur und Provider-Migration.
 
-## Inhaltsverzeichnis
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
 ## Wann dieser Bereich?
 
 Dieser Bereich wird meist erst dann relevant, wenn ein Notebook oder Prototyp bereits funktioniert und in eine robustere Form überführt werden soll. Themen wie Projektstruktur, Konfiguration, APIs, Docker, Provider-Wechsel, Produktreife und Abschlussprojekt stehen deshalb erst nach dem konzeptionellen und technischen Einstieg im Vordergrund.
 
 Für einen passenden Gesamtpfad zuerst [Lernpfad]({{ '/lernpfad.html' | relative_url }}) öffnen.
 
-## Übersicht
-
-### Architektur & Ökosystem
-- **[Vom Modell zum Produkt]({{ '/deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})** – *Wie wird ein Prototyp produktionsreif?* Das LangChain-Ökosystem verstehen
-  - Von Prototypen zu produktionsreifen Systemen
-  - LangChain, LangGraph und LangSmith im Überblick
-  - Entscheidungshilfe: Wann welches Tool?
-  - Alternativen zum LangChain-Ökosystem
-
-### Deployment-Prozess
-- **[Aus Entwicklung ins Deployment]({{ '/deployment-capstone/aus-entwicklung-ins-deployment.html' | relative_url }})** – *Wie kommt der Agent in die Produktion?* Vom Notebook zur produktionsreifen App
-  - Notebook aufräumen und Code extrahieren
-  - Projektstruktur und Best Practices
-  - Konfiguration externalisieren
-  - Testing, API-Endpunkte, Docker
-  - Deployment-Optionen im Vergleich
-
-### Stack & Infrastruktur
-- **[Minimum Viable Agent Stack]({{ '/deployment-capstone/minimum-viable-agent-stack.html' | relative_url }})** – *Welche Schichten braucht ein Produktionsagent?* Die sechs Infrastrukturschichten zwischen LLM und Produktionssystem
-  - Übersichtstabelle: Einstiegspunkt und Upgrade-Kriterium pro Schicht
-  - Bewertungsrahmen: Zustand, Lock-in-Risiko, Demo-Produktions-Lücke
-  - Detailanalyse aller sechs Schichten mit ehrlicher Einschätzung
-  - Stack-Empfehlung nach Agententyp (Stateless bis Multi-Agent)
-
-### Migration & Provider-Wechsel
-- **[Migration: OpenAI → Mistral]({{ '/deployment-capstone/migration-openai-mistral.html' | relative_url }})** – *Wie wechsle ich den LLM-Provider?* Technische Analyse der Provider-Migration
-  - Kernaussage: LangChain vereinfacht die Migration strukturell
-  - Modell-Rollenmapping für Baseline, Router, Judge, Worker
-  - Embeddings und OpenAI-spezifische Module separat bewerten
-  - Empfohlene Reihenfolge für eine kontrollierte Migration
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Wie** wird aus einem Modell eine Anwendung? | [Vom Modell zur Anwendung]({{ '/deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Zusammenspiel von LangChain, LangGraph und LangSmith auf dem Weg zur Produktreife. |
+| **Wie** kommt ein Notebook in den Betrieb? | [Produktionsreife Anwendung]({{ '/deployment-capstone/aus-entwicklung-ins-deployment.html' | relative_url }}) | Projektstruktur, Konfiguration, Tests, API-Endpunkte und Deployment-Optionen. |
+| **Welche** Schichten braucht ein stabiler Agent? | [Minimum Viable Agent Stack]({{ '/deployment-capstone/minimum-viable-agent-stack.html' | relative_url }}) | Infrastruktur zwischen LLM und produktivem System. |
+| **Wie** wechselt man kontrolliert den Provider? | [Migration-Analyse Provider]({{ '/deployment-capstone/migration-openai-mistral.html' | relative_url }}) | Modellrollen, Embeddings, Abhängigkeiten und Migrationsreihenfolge. |
+| **Wie** wird das Gelernte praktisch angewendet? | [Projekte]({{ '/deployment-capstone/projekte.html' | relative_url }}) | Workshop, Challenge und Capstone als zusammenhängende Projektformate. |
+| **Was** ist das Abschlussprodukt? | [Capstone-Briefing]({{ '/deployment-capstone/capstone-briefing.html' | relative_url }}) | Anforderungen und Rahmen für das abschließende Agentenprojekt. |
 
 
 

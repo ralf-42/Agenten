@@ -218,13 +218,15 @@ Beide Dokumente zusammen ergeben:
 | Dokument | Frage |
 |---|---|
 | [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
-| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
 
 ---
 
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
 
 
 

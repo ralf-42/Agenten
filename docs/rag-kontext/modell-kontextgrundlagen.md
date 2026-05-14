@@ -12,7 +12,7 @@ Modellauswahl ist selten nur eine Qualitätsfrage. Diese Seiten klären, nach we
 
 - **[Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }})** – *Welches Basismodell passt zu welcher Agentenaufgabe?* Qualitäts-, Kosten-, Latenz- und Modalitätskriterien.
 - **[Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }})** – *Welche Informationen braucht ein Agent zur richtigen Zeit?* Kontextauswahl, Memory, RAG und Tool-Ausgaben.
-- **[Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }})** – *Wann reichen Prompting, RAG und Tools nicht mehr aus?* Einordnung von Training als spätere Optimierungsoption.
+- **[Fine-Tuning]({{ '/orientierung/fine-tuning.html' | relative_url }})** – *Wann reichen Prompting, RAG und Tools nicht mehr aus?* Einordnung von Training als spätere Optimierungsoption.
 
 
 

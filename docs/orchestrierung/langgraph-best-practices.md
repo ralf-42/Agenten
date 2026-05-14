@@ -1135,7 +1135,7 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit LangGraph Best Practices? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit LangGraph Best Practices? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangGraph Best Practices? |
 
 ---
@@ -1156,6 +1156,7 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 **Version:** 1.6<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

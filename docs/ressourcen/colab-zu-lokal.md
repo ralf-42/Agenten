@@ -123,7 +123,7 @@ check_environment()
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Von Colab zu Local? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Entwickler mit Von Colab zu Local? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Von Colab zu Local? |
 
 ---
@@ -131,6 +131,7 @@ check_environment()
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

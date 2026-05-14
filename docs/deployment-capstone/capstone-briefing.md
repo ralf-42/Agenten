@@ -2,7 +2,7 @@
 layout: default
 title: Capstone-Briefing
 parent: Deployment und Capstone
-nav_order: 8
+nav_order: 1
 permalink: /deployment-capstone/capstone-briefing.html
 description: "Abschlussprojekt: Research Assistant mit eigenem Korpus oder eigener Variante"
 has_toc: true
@@ -10,7 +10,7 @@ has_toc: true
 
 # Capstone-Briefing
 
-Das Capstone ist das Abschlussprojekt des Kurses. Ziel ist ein lauffähiger **Research Assistant**, der Dokumente durchsucht, Antworten mit Quellen belegt und bei Unsicherheit menschliche Pruefung vorsieht.
+Das Capstone-Briefing ist der zentrale Einstieg in diesen Bereich. Ziel ist ein lauffähiger **Research Assistant**, der Dokumente durchsucht, Antworten mit Quellen belegt und bei Unsicherheit menschliche Pruefung vorsieht.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -83,7 +83,7 @@ Der Bauplan bleibt gleich:
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Capstone-Briefing? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Entwickler mit Capstone-Briefing? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Capstone-Briefing? |
 
 ---
@@ -91,6 +91,7 @@ Der Bauplan bleibt gleich:
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten
+
 
 
 

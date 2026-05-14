@@ -16,8 +16,9 @@ Dieser Bereich ist der richtige Einstieg, wenn Begriffe, Muster oder Architektur
 | **Was** ist die passende Lösungsklasse? | [Aufgaben & Lösungswege]({{ '/orientierung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Abgrenzung zwischen Chat, Workflow, RAG, Agent und klassischem Code. |
 | **Wie** werden zentrale Begriffe sauber verwendet? | [Terminologie]({{ '/orientierung/terminologie.html' | relative_url }}) | Gemeinsame Sprache für State, Memory, Tool Use, Guardrails und Agentenarchitektur. |
 | **Welches** Modell passt zur Aufgabe? | [Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }}) | Kriterien für Qualität, Kosten, Latenz, Kontextfenster und Einsatzgrenzen. |
-| **Wie** werden Kursmodelle praktisch zugeordnet? | [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Konkrete Designregeln für Modellrollen im Kurs. |
+| **Wann** reicht Modellwahl nicht mehr aus? | [Fine-Tuning]({{ '/orientierung/fine-tuning.html' | relative_url }}) | Einordnung von Training als spätere Optimierungsoption. |
 | **Wie** lassen sich Modellrollen auf Provider übertragen? | [Provider-Modell-Mapping]({{ '/orientierung/provider-modell-mapping.html' | relative_url }}) | Zuordnung von Modellrollen auf OpenAI, Mistral und weitere Provider. |
+
 
 
 

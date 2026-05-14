@@ -317,7 +317,7 @@ def test_agent_with_tools():
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Code Standards? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Entwickler mit Code Standards? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Code Standards? |
 
 ---
@@ -325,6 +325,7 @@ def test_agent_with_tools():
 **Version:** 2.0 (konsolidiert)<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

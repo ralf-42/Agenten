@@ -547,7 +547,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit DeepAgents? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit DeepAgents? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für DeepAgents? |
 
 ---
@@ -555,6 +555,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 **Version:** 1.3<br>
 **Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

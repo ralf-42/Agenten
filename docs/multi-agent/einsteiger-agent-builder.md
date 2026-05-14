@@ -785,7 +785,7 @@ graph TB
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit Agent Builder? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit Agent Builder? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Agent Builder? |
 
 ---
@@ -793,6 +793,7 @@ graph TB
 **Version:**    2.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

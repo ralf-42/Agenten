@@ -1106,7 +1106,7 @@ Beim Refactoring von altem Code:
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit LangChain Best Practices? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit LangChain Best Practices? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangChain Best Practices? |
 
 ---
@@ -1123,6 +1123,7 @@ Beim Refactoring von altem Code:
 **Version:** 1.7<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

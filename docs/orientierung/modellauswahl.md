@@ -3,7 +3,7 @@ layout: default
 title: Modellauswahl
 parent: Orientierung
 nav_order: 4
-description: "Modellauswahl für Agentensysteme: Qualität, Kosten, Latenz und Aufgabenprofil"
+description: "Zentrale Modellauswahl für Agentensysteme: Rollen, Kurs-Defaults, Provider, Qualität, Kosten und Latenz"
 has_toc: true
 ---
 
@@ -45,6 +45,60 @@ Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nic
 
 > [!IMPORTANT] GPT-5.x-Konfiguration<br>
 > Modelle der GPT-5.x-Serie werden in den Kursmaterialien nicht pauschal mit `temperature` konfiguriert. Qualitätssteuerung erfolgt über präzise Prompts sowie bei Bedarf über `reasoning.effort` und `text.verbosity`.
+
+## OpenAI-Default und Designregeln
+
+Der Kurs nutzt konkrete OpenAI-Modelle, aber die Entscheidung dahinter bleibt rollenbasiert. Wichtig ist nicht zuerst der Produktname, sondern die Aufgabe des Knotens.
+
+| Situation | Kurs-Default | Begründung |
+|---|---|---|
+| Grundlagen, Demos, einfache Klassifikation | `gpt-5.4-nano` | schnell, günstig, ausreichend für klare Aufgaben |
+| einfaches Routing | `gpt-5.4-nano` | gute Kosten-/Latenz-Balance bei wenigen Routen |
+| Worker, Synthese, strukturierte Ausgabe | `gpt-5.4-mini` | Standardmodell für produktivere Arbeitsschritte |
+| Coding-Worker | `gpt-5.4-mini` | geeignet für Code, Refactoring und technische Aufgaben |
+| Supervisor, Judge, Planner | `gpt-5.4` | stärkeres Reasoning für Entscheidungen mit Folgewirkung |
+| kritische Entscheidung oder finale Bewertung | `gpt-5.5` | Premium-Option bei hohen Qualitäts- oder Sicherheitsanforderungen |
+
+### Entscheidungsregeln
+
+1. **Baseline zuerst:** Mit einem günstigen Standardmodell starten und erst bei messbarem Bedarf upgraden.
+2. **Rolle vor Modell:** Erst klären, ob ein Knoten Router, Worker, Judge oder Planner ist.
+3. **Fehlerkosten beachten:** Je teurer eine Fehlentscheidung wird, desto eher lohnt sich ein stärkeres Modell.
+4. **Tool- und JSON-Verhalten prüfen:** Für Agenten zählt nicht nur Textqualität, sondern auch stabiler Tool Use und strukturierte Ausgabe.
+5. **Kosten und Latenz sichtbar machen:** Modellwahl ist Teil der Architektur, nicht nur Qualitätsoptimierung.
+
+## Entscheidungsbaum
+
+```mermaid
+flowchart TD
+    START(["Welche Rolle hat der Knoten?"])
+    START --> R{"Routing oder Supervisor?"}
+    START --> J{"Judge oder Evaluation?"}
+    START --> W{"Worker, Code oder Synthese?"}
+    START --> D{"Demo oder Grundlagen?"}
+
+    R -->|einfach| ROUTER["gpt-5.4-nano"]
+    R -->|kritisch| SUP["gpt-5.4"]
+    J --> JUDGE["gpt-5.4 oder gpt-5.5"]
+    W --> WORKER["gpt-5.4-mini"]
+    D --> BASE["gpt-5.4-nano"]
+```
+
+## Provider-Mapping
+
+Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten. Der Providerwechsel ist dann eine Zuordnung von Rollen auf passende Modellfamilien.
+
+| Rolle | OpenAI | Mistral | Gemini | Anthropic |
+|---|---|---|---|---|
+| Baseline / Demo | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
+| Router / leichter Reasoner | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
+| Judge / starker Reasoner | `gpt-5.4` | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-6` |
+| Worker / Synthese | `gpt-5.4-mini` | `mistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
+| Coding-Worker | `gpt-5.4-mini` | `devstral-latest` oder `codestral-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
+| Embeddings | `text-embedding-3-small` | `mistral-embed` | `gemini-embedding-2-preview` | externer Provider nötig |
+
+> [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>
+> Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter.
 
 ## Modellauswahlprozess: Schritt für Schritt
 Die Auswahl des optimalen KI-Modells erfordert einen strukturierten Prozess:
@@ -128,15 +182,15 @@ Die Bewertung von KI-Modellen umfasst verschiedene Aspekte:
 
 ### Konkrete Bewertungsmethoden
 
-### Automatisierte Metriken
+#### Automatisierte Metriken
 - **BLEU**: Misst die Übereinstimmung zwischen generiertem und Referenztext durch Vergleich von Wortgruppen.
 - **ROUGE**: Bewertet die Qualität von Zusammenfassungen durch Analyse übereinstimmender Wortsequenzen.
 
-### Menschliche Bewertung
+#### Menschliche Bewertung
 - Bewertung nach Kriterien wie Grammatik, Zusammenhang, Lesbarkeit und Relevanz
 - Elo-System für den direkten Vergleich verschiedener Modelle (ähnlich wie bei Schach-Ratings)
 
-### KI-basierte Bewertung
+#### KI-basierte Bewertung
 - Einsatz von `JUDGE` oder `JUDGE_PREMIUM` zur Bewertung anderer Modellrollen
 - Automatische Erkennung von Fehlinformationen in KI-Antworten
 
@@ -165,9 +219,9 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 
 | Dokument | Frage |
 |---|---|
-| [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Welche praktischen Designregeln gelten im Kurs für die Modellwahl? |
-| [Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }}) | Wann reicht Modellwahl nicht mehr und Training wird notwendig? |
+| [Fine-Tuning]({{ '/orientierung/fine-tuning.html' | relative_url }}) | Wann reicht Modellwahl nicht mehr und Training wird notwendig? |
 | [Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }}) | Welche Kontextstrategie entscheidet mit darüber, ob ein Modell genügt? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Wie werden Modellqualität, Tracing und Evaluation sichtbar gemacht? |
 
 ---
 

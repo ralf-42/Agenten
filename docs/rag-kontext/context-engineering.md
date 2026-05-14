@@ -359,7 +359,7 @@ In der Praxis relevant, wenn: Ein Agent mehrere Quellen kombiniert, Tool-Ausgabe
 |---|---|
 | [Prompt Engineering]({{ '/erste-agenten/prompt-engineering.html' | relative_url }}) | Wie wird eine einzelne Anfrage formuliert, statt den Gesamtkontext eines Systems zu gestalten? |
 | [RAG-Konzepte]({{ '/rag-kontext/rag-konzepte.html' | relative_url }}) | Wann ist Retrieval nur ein Teil der Kontextstrategie? |
-| [Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }}) | Wann wird Verhalten ins Modell verlagert statt zur Laufzeit organisiert? |
+| [Fine-Tuning]({{ '/orientierung/fine-tuning.html' | relative_url }}) | Wann wird Verhalten ins Modell verlagert statt zur Laufzeit organisiert? |
 
 ---
 

@@ -225,7 +225,7 @@ Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
 [Agent-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }})
-[Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }})
+[Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }})
 ```
 
 Regeln:
@@ -337,6 +337,7 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 **Version:**    1.0<br>
 **Stand:**    März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

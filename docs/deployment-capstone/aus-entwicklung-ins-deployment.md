@@ -2,7 +2,7 @@
 layout: default
 title: Produktionsreife Anwendung
 parent: Deployment und Capstone
-nav_order: 2
+nav_order: 3
 description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
 has_toc: true
 ---

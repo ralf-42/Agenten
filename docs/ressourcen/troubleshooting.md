@@ -54,7 +54,7 @@ has_toc: true
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Troubleshooting? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Entwickler mit Troubleshooting? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Troubleshooting? |
 
 ---
@@ -62,6 +62,7 @@ has_toc: true
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

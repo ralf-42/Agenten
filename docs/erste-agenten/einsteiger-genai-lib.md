@@ -817,13 +817,14 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 | Dokument | Frage |
 |---|---|
 | [Standards]({{ '/ressourcen/standards.html' | relative_url }}) | Welche projektweiten Code- und Notebook-Regeln gelten? |
-| [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Welche Modellrolle passt zu welchem Kursbeispiel? |
+| [Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }}) | Welche Modellrolle passt zu welchem Kursbeispiel? |
 
 ---
 
 **Version:**    3.2<br>
 **Stand:**    März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

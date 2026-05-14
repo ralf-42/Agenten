@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Embeddings
-parent: Kontext und Wissensanbindung
+parent: "Kontext & Wissen"
 grand_parent: Agenten-Implementierung
 nav_order: 3
 description: Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory
@@ -184,5 +184,4 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 **Version:**    1.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prompt Engineering
-parent: Grundlagen des Agentenentwurfs
+parent: Entwurf
 grand_parent: Agenten-Implementierung
 nav_order: 2
 description: Strategien für effektive Prompts in Agentensystemen
@@ -480,7 +480,6 @@ Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agenten
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agenten-Architekturen
-parent: Grundlagen des Agentenentwurfs
+parent: Entwurf
 grand_parent: Agenten-Implementierung
 nav_order: 1
 description: Architekturmuster und Design-Prinzipien für KI-Agenten
@@ -336,7 +336,6 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 **Version:** 1.6<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

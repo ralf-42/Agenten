@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prompt-Templates
-parent: Grundlagen des Agentenentwurfs
+parent: Entwurf
 grand_parent: Agenten-Implementierung
 nav_order: 3
 description: Wie erstelle ich eigene Prompt-Dateien in 05_prompt/? YAML, XML-Tags und die drei Prompt-Typen erklärt.
@@ -408,4 +408,3 @@ flowchart TD
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

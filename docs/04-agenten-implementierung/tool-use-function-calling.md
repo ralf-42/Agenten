@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Tool Use & Function Calling
-parent: Grundlagen des Agentenentwurfs
+parent: Entwurf
 grand_parent: Agenten-Implementierung
 nav_order: 4
 description: "Tool Use und Function Calling für KI-Agenten: warum Werkzeuge nötig sind und wie sie sicher eingebunden werden"
@@ -425,6 +425,5 @@ In der Praxis relevant, wenn: Ein Agent auf viele Werkzeuge zugreifen soll, dies
 **Version:** 1.4<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 

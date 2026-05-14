@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Ablaufsteuerung und Zustand
+title: Ablauf & Zustand
 parent: Agenten-Implementierung
 nav_order: 3
 has_children: true
 description: "State Management, Checkpointing, Memory und Human-in-the-Loop"
 ---
 
-# Ablaufsteuerung und Zustand
+# Ablauf & Zustand
 
 Dieser Abschnitt behandelt die Kontrolle mehrstufiger Agentenläufe: Zustand, Persistenz, Memory und menschliche Eingriffe.
 

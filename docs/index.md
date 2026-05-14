@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Start
+title: "Start & Navigation"
 nav_order: 1
-description: KI-Agenten und Multi-Agent-Systeme mit LangChain & LangGraph
+description: "Onboarding, Kursziel und Einstieg in die Dokumentation"
 permalink: /
+has_children: true
 ---
 
 # KI-Agenten

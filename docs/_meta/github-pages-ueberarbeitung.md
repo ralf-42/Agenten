@@ -41,21 +41,19 @@ Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
 | Navigation | Verzeichnis |
 |---|---|
 | Start | `index.md` |
-| Zuerst lesen | `zuerst-lesen.md` |
-| Lernpfad | `lernpfad.md` |
-| Orientierung | `orientierung/` |
-| Erste Agenten | `erste-agenten/` |
-| Orchestrierung | `orchestrierung/` |
-| RAG und Kontext | `rag-kontext/` |
-| Memory und HITL | `memory-hitl/` |
-| Multi-Agent | `multi-agent/` |
-| Qualität und Sicherheit | `qualitaet-sicherheit/` |
-| Deployment und Capstone | `deployment-capstone/` |
-| Regulatorik | `regulatorik/` |
-| Ressourcen | `ressourcen/` |
-| Rechtliches | `rechtliches/` |
+| Zuerst lesen | `01-start-navigation/zuerst-lesen.md` |
+| Lernpfad | `01-start-navigation/lernpfad.md` |
+| Orientierung & Entscheidung | `02-orientierung-entscheidung/` |
+| Modelle, Provider & Anpassung | `03-modelle-provider-anpassung/` |
+| Implementierung: Frameworks & Praxis | `04-implementierung-frameworks-praxis/` |
+| Multi-Agent & Erweiterungen | `05-multi-agent-erweiterungen/` |
+| Qualität & Sicherheit | `06-qualitaet-sicherheit/` |
+| Deployment & Capstone | `07-deployment-capstone/` |
+| Regulatorik & Verantwortung | `08-regulatorik-verantwortung/` |
+| Ressourcen | `09-ressourcen/` |
+| Rechtliches | `10-rechtliches/` |
 
-Die ausführlicheren fachlichen Bezeichnungen bleiben auf den Indexseiten erhalten, während die Sidebar kurz bleibt.
+Die Verzeichnisnamen sind bewusst nummeriert, damit Dateisystem und Sidebar dieselbe Reihenfolge zeigen.
 
 ## Umstrukturierung der Verzeichnisse
 
@@ -63,17 +61,15 @@ Die alten langen oder technisch geprägten Ordner wurden in kurze, navigationsta
 
 | Alt | Neu |
 |---|---|
-| `concepts/einstieg...` und verwandte Seiten | `orientierung/` |
-| `concepts/architektur...` und Teile von `frameworks/einsteiger...` | `erste-agenten/` |
-| `concepts/workflows-state...` und LangGraph-Seiten | `orchestrierung/` |
-| `concepts/wissensmanagement...` und Kontextseiten | `rag-kontext/` |
-| Checkpointing, Memory, HITL | `memory-hitl/` |
-| Multi-Agent, Skills, Protokolle, DeepAgents, Agent Builder | `multi-agent/` |
-| Evaluation, Security, LangSmith | `qualitaet-sicherheit/` |
-| Deployment, Projekte, Capstone | `deployment-capstone/` |
-| Regulatorik, DSGVO, EU AI Act, Ethik | `regulatorik/` |
-| Setup, Troubleshooting, Links, Standards | `ressourcen/` |
-| Impressum, Datenschutz, Haftungsausschluss | `rechtliches/` |
+| `orientierung/` mit Bedarfsanalyse | `02-orientierung-entscheidung/` |
+| Modellauswahl, Provider-Mapping, Fine-Tuning und API-Setup | `03-modelle-provider-anpassung/` |
+| `erste-agenten/`, `orchestrierung/`, `rag-kontext/`, `memory-hitl/` | `04-implementierung-frameworks-praxis/` |
+| `multi-agent/` | `05-multi-agent-erweiterungen/` |
+| `qualitaet-sicherheit/` | `06-qualitaet-sicherheit/` |
+| `deployment-capstone/` | `07-deployment-capstone/` |
+| `regulatorik/` | `08-regulatorik-verantwortung/` |
+| `ressourcen/` | `09-ressourcen/` |
+| `rechtliches/` | `10-rechtliches/` |
 
 Leere Altverzeichnisse wie `concepts`, `frameworks`, `deployment`, `projects`, `regulatory` und `legal` wurden entfernt.
 
@@ -107,8 +103,8 @@ Damit ergibt sich folgende Logik:
 
 Regulatorik und Rechtliches wurden bewusst getrennt:
 
-- `regulatorik/` ist ein inhaltliches Kurskapitel.
-- `rechtliches/` ist der formale Pflichtbereich der Website.
+- `08-regulatorik-verantwortung/` ist ein inhaltliches Kurskapitel.
+- `10-rechtliches/` ist der formale Pflichtbereich der Website.
 
 Dadurch bleiben EU AI Act, DSGVO, Ethik und digitale Souveränität fachliche Kursthemen. Impressum, Datenschutzerklärung und Haftungsausschluss werden nicht mit diesen Inhalten vermischt.
 
@@ -135,20 +131,20 @@ Stattdessen gilt:
 
 - Generische Verweise zeigen auf den Bereich `Qualität und Sicherheit`.
 - Spezifische Verweise zeigen direkt auf die passende Fachseite, z. B.:
-  - `erste-agenten/langchain-best-practices.md`
-  - `orchestrierung/langgraph-best-practices.md`
-  - `qualitaet-sicherheit/langsmith-best-practices.md`
-  - `qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
+  - `04-implementierung-frameworks-praxis/langchain-best-practices.md`
+  - `04-implementierung-frameworks-praxis/langgraph-best-practices.md`
+  - `06-qualitaet-sicherheit/langsmith-best-practices.md`
+  - `06-qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
 
 Dadurch bleibt die Struktur flacher und Nutzer landen schneller beim konkreten Inhalt.
 
 Zusätzlich wurden weitere Redundanzen bereinigt:
 
-- technische Test- und Vorlagendateien wurden aus `ressourcen/` nach `_meta/` verschoben,
+- technische Test- und Vorlagendateien wurden aus `09-ressourcen/` nach `_meta/` verschoben,
 - die Sammelseite `erste-agenten/framework-guides.md` wurde entfernt,
-- die drei Modellauswahl-Seiten wurden in `orientierung/modellauswahl.md` zusammengeführt,
-- `fine-tuning.md` wurde von `rag-kontext/` nach `orientierung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
-- das Capstone-Briefing wurde als zentraler Einstieg in `deployment-capstone/` gesetzt,
+- die drei Modellauswahl-Seiten wurden in `03-modelle-provider-anpassung/modellauswahl.md` zusammengeführt,
+- `fine-tuning.md` wurde nach `03-modelle-provider-anpassung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
+- das Capstone-Briefing wurde als zentraler Einstieg in `07-deployment-capstone/` gesetzt,
 - Workshop, Challenge und Projekte wurden als ergänzende Umsetzungsformate eingeordnet.
 
 ## Linkpflege
@@ -156,7 +152,7 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 Nach der Umstrukturierung wurden interne Links systematisch umgestellt:
 
 - alte Pfade wie `concepts/...`, `frameworks/...`, `deployment/...`, `regulatory/...`, `projects/...` und `legal/...` wurden ersetzt,
-- Footer-Links wurden von `/legal/...` auf `/rechtliches/...` angepasst,
+- Footer-Links wurden von `/legal/...` auf `/10-rechtliches/...` angepasst,
 - Links auf gelöschte Sammelseiten wurden entfernt oder auf passende Zielseiten umgebogen,
 - interne Links wurden auf lokale Existenz geprüft.
 

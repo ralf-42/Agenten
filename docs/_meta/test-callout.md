@@ -2,8 +2,6 @@
 layout: default
 title: Callout Test
 nav_exclude: true
-parent: Ressourcen
-nav_order: 8
 ---
 # Callout Test Page
 
@@ -71,5 +69,4 @@ nav_order: 8
 **Erwartetes Ergebnis:**
 - Titel: "Hinweis" (Standard-Titel)
 - Content: "Kurzer Hinweis" (in neuer Zeile, NICHT als Custom-Titel behandelt)
-
 

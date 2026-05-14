@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Fine-Tuning
-parent: RAG und Kontext
-nav_order: 3
+parent: Orientierung
+nav_order: 5
 description: Fine-Tuning als Alternative oder Ergänzung zu Prompting, RAG, Tools und Agentenlogik
 has_toc: true
 ---

@@ -1,0 +1,176 @@
+---
+layout: default
+title: GitHub-Pages-Überarbeitung
+nav_exclude: true
+description: Dokumentation der Überarbeitungsschritte zur Struktur, Navigation und Linkpflege der GitHub Pages im Projekt Agenten
+---
+
+# GitHub-Pages-Überarbeitung im Projekt Agenten
+
+Diese Datei dokumentiert die Überarbeitungsschritte, mit denen die GitHub-Pages-Dokumentation im Projekt `Agenten` aktualisiert, verschlankt und stärker an der Kurslogik ausgerichtet wurde.
+
+## Ausgangslage
+
+Die ursprüngliche Dokumentation war vor allem nach technischen Inhaltsbereichen gegliedert:
+
+- `concepts`
+- `frameworks`
+- `deployment`
+- `regulatory`
+- `resources`
+- `projects`
+- `legal`
+
+Diese Struktur war fachlich nachvollziehbar, aber für Lernende nicht optimal. Nutzer mussten häufig zuerst wissen, ob ein Thema eher unter Konzepten, Frameworks, Deployment oder Ressourcen liegt. Für einen Kurs ist aber eine lernpfadnahe Navigation hilfreicher.
+
+## Zielbild
+
+Das Ziel war eine schlanke GitHub-Pages-Struktur, die:
+
+- der Kurs- und Notebook-Logik folgt,
+- die Navigation kürzer und verständlicher macht,
+- Regulatorik als inhaltliches Kapitel von Rechtlichem als formalem Pflichtbereich trennt,
+- Ressourcen als Servicebereich behandelt,
+- redundante Sammelseiten vermeidet,
+- interne Links konsistent hält.
+
+## Neue Hauptstruktur
+
+Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
+
+| Navigation | Verzeichnis |
+|---|---|
+| Start | `index.md` |
+| Zuerst lesen | `zuerst-lesen.md` |
+| Lernpfad | `lernpfad.md` |
+| Orientierung | `orientierung/` |
+| Erste Agenten | `erste-agenten/` |
+| Orchestrierung | `orchestrierung/` |
+| RAG und Kontext | `rag-kontext/` |
+| Memory und HITL | `memory-hitl/` |
+| Multi-Agent | `multi-agent/` |
+| Qualität und Sicherheit | `qualitaet-sicherheit/` |
+| Deployment und Capstone | `deployment-capstone/` |
+| Regulatorik | `regulatorik/` |
+| Ressourcen | `ressourcen/` |
+| Rechtliches | `rechtliches/` |
+
+Die ausführlicheren fachlichen Bezeichnungen bleiben auf den Indexseiten erhalten, während die Sidebar kurz bleibt.
+
+## Umstrukturierung der Verzeichnisse
+
+Die alten langen oder technisch geprägten Ordner wurden in kurze, navigationstaugliche Slugs überführt.
+
+| Alt | Neu |
+|---|---|
+| `concepts/einstieg...` und verwandte Seiten | `orientierung/` |
+| `concepts/architektur...` und Teile von `frameworks/einsteiger...` | `erste-agenten/` |
+| `concepts/workflows-state...` und LangGraph-Seiten | `orchestrierung/` |
+| `concepts/wissensmanagement...` und Kontextseiten | `rag-kontext/` |
+| Checkpointing, Memory, HITL | `memory-hitl/` |
+| Multi-Agent, Skills, Protokolle, DeepAgents, Agent Builder | `multi-agent/` |
+| Evaluation, Security, LangSmith | `qualitaet-sicherheit/` |
+| Deployment, Projekte, Capstone | `deployment-capstone/` |
+| Regulatorik, DSGVO, EU AI Act, Ethik | `regulatorik/` |
+| Setup, Troubleshooting, Links, Standards | `ressourcen/` |
+| Impressum, Datenschutz, Haftungsausschluss | `rechtliches/` |
+
+Leere Altverzeichnisse wie `concepts`, `frameworks`, `deployment`, `projects`, `regulatory` und `legal` wurden entfernt.
+
+## Navigation und Frontmatter
+
+Die Frontmatter-Metadaten wurden an die neue Struktur angepasst:
+
+- `title` der Hauptseiten wurde auf kurze Navigationsbezeichnungen gekürzt.
+- `parent` der Unterseiten wurde auf die neuen Haupttitel umgestellt.
+- `nav_order` wurde so gesetzt, dass die Navigation dem Lernpfad folgt.
+- `has_children: true` wurde auf den neuen Hauptbereichen gesetzt.
+- interne Hilfsseiten bleiben über `nav_exclude: true` aus der Hauptnavigation heraus.
+
+Die Einsteiger-Dokumente wurden bewusst wieder mit `Einsteiger` im Titel versehen, damit ihre Funktion in der Navigation klar erkennbar bleibt.
+
+## Lernpfad und Zuerst lesen
+
+Die Seite `lesepfade.md` wurde zu `lernpfad.md` umbenannt. Inhaltlich wurde die Seite beibehalten, aber auf die neue Struktur ausgerichtet.
+
+`zuerst-lesen.md` bleibt als kürzester Einstieg bestehen. Die Seite verweist nun auf die neuen Bereiche und nutzt die neuen Pfade.
+
+Damit ergibt sich folgende Logik:
+
+- `Start` erklärt das Gesamtbild.
+- `Zuerst lesen` gibt den kürzesten Einstieg.
+- `Lernpfad` bietet zielorientierte Vertiefungen.
+- Danach folgen die fachlichen Hauptbereiche.
+- `Rechtliches` steht als formaler Bereich am Ende.
+
+## Trennung von Regulatorik und Rechtlichem
+
+Regulatorik und Rechtliches wurden bewusst getrennt:
+
+- `regulatorik/` ist ein inhaltliches Kurskapitel.
+- `rechtliches/` ist der formale Pflichtbereich der Website.
+
+Dadurch bleiben EU AI Act, DSGVO, Ethik und digitale Souveränität fachliche Kursthemen. Impressum, Datenschutzerklärung und Haftungsausschluss werden nicht mit diesen Inhalten vermischt.
+
+## Indexseiten als Frage-Einstieg
+
+Die Indexseiten der Hauptbereiche wurden auf eine Frage-Logik umgestellt. Statt bloßer Listen zeigen sie jetzt direkt, welches Dokument welche Frage beantwortet.
+
+Beispiele:
+
+- **Warum** überhaupt KI oder Agenten einsetzen?
+- **Was** ist die passende Lösungsklasse?
+- **Wie** nutzt ein Agent Werkzeuge?
+- **Wann** reicht Prompting nicht mehr aus?
+- **Wie** bleiben Sitzungen und Zustände erhalten?
+- **Woran** erkennt man, ob ein Agent gut arbeitet?
+
+Damit übernehmen die Indexseiten die Rolle der Orientierung und ersetzen generische Hub-Seiten.
+
+## Verschlankung der Struktur
+
+Die generische Hub-Seite `qualitaet-sicherheit/best-practices.md` wurde entfernt. Sie war ein Überbleibsel der alten Framework-Struktur.
+
+Stattdessen gilt:
+
+- Generische Verweise zeigen auf den Bereich `Qualität und Sicherheit`.
+- Spezifische Verweise zeigen direkt auf die passende Fachseite, z. B.:
+  - `erste-agenten/langchain-best-practices.md`
+  - `orchestrierung/langgraph-best-practices.md`
+  - `qualitaet-sicherheit/langsmith-best-practices.md`
+  - `qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
+
+Dadurch bleibt die Struktur flacher und Nutzer landen schneller beim konkreten Inhalt.
+
+Zusätzlich wurden weitere Redundanzen bereinigt:
+
+- technische Test- und Vorlagendateien wurden aus `ressourcen/` nach `_meta/` verschoben,
+- die Sammelseite `erste-agenten/framework-guides.md` wurde entfernt,
+- die drei Modellauswahl-Seiten wurden in `orientierung/modellauswahl.md` zusammengeführt,
+- `fine-tuning.md` wurde von `rag-kontext/` nach `orientierung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
+- das Capstone-Briefing wurde als zentraler Einstieg in `deployment-capstone/` gesetzt,
+- Workshop, Challenge und Projekte wurden als ergänzende Umsetzungsformate eingeordnet.
+
+## Linkpflege
+
+Nach der Umstrukturierung wurden interne Links systematisch umgestellt:
+
+- alte Pfade wie `concepts/...`, `frameworks/...`, `deployment/...`, `regulatory/...`, `projects/...` und `legal/...` wurden ersetzt,
+- Footer-Links wurden von `/legal/...` auf `/rechtliches/...` angepasst,
+- Links auf gelöschte Sammelseiten wurden entfernt oder auf passende Zielseiten umgebogen,
+- interne Links wurden auf lokale Existenz geprüft.
+
+## Validierung
+
+Nach den Änderungen wurden Prüfungen durchgeführt:
+
+- Alle `parent`-Bezüge haben passende `title`-Ziele.
+- Es wurden keine defekten lokalen Markdown-Links gefunden.
+- Alte lange Verzeichnisnamen kommen in den lokalen Dokumentationspfaden nicht mehr vor.
+- Verweise auf die gelöschte Datei `qualitaet-sicherheit/best-practices.md` wurden entfernt.
+
+Ein lokaler Jekyll-Build wurde nicht ausgeführt, weil im Projekt kein `Gemfile` vorhanden ist.
+
+## Ergebnis
+
+Die GitHub-Pages-Dokumentation ist jetzt stärker am Lernpfad orientiert, nutzt kürzere Navigationsbezeichnungen, trennt fachliche und formale Bereiche klarer und vermeidet redundante Hub-Seiten. Die Struktur ist damit schlanker, verständlicher und besser auf einen Kurs zu KI-Agenten ausgerichtet.

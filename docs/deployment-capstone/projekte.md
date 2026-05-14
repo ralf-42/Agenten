@@ -1,13 +1,13 @@
 ---
 layout: default
 title: Projekte
-nav_order: 5
+nav_order: 6
 description: Praktische Übungen und End-to-End Projekte rund um den Research Assistant
 parent: Deployment und Capstone
 ---
 # Projekte
 
-Zwei Lernformate für unterschiedliche Phasen: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Hauptprojekt ist ein **Research Assistant für Fachartikel**: Dokumente laden, relevante Quellen finden, Antworten belegen, Unsicherheit sichtbar machen und kritische Schritte kontrollieren.
+Ergänzende Lernformate zum Capstone: geführtes Schritt-für-Schritt-Arbeiten und eigenständige Projektentwicklung. Das Hauptprojekt ist ein **Research Assistant für Fachartikel**: Dokumente laden, relevante Quellen finden, Antworten belegen, Unsicherheit sichtbar machen und kritische Schritte kontrollieren.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }

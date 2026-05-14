@@ -956,7 +956,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit LangSmith? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit LangSmith? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangSmith? |
 
 ---
@@ -964,6 +964,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

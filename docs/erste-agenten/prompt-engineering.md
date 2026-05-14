@@ -472,7 +472,7 @@ Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agenten
 |---|---|
 | [Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }}) | Wie wird aus einzelnen Prompts ein belastbarer Gesamtkontext? |
 | [RAG-Konzepte]({{ '/rag-kontext/rag-konzepte.html' | relative_url }}) | Wann reicht bessere Promptformulierung nicht mehr ohne Retrieval? |
-| [Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }}) | Wann stößt Prompting an Grenzen, die Training besser löst? |
+| [Fine-Tuning]({{ '/orientierung/fine-tuning.html' | relative_url }}) | Wann stößt Prompting an Grenzen, die Training besser löst? |
 
 ---
 

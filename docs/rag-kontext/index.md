@@ -17,7 +17,6 @@ Diese Seiten erklären, wie Agenten den richtigen Kontext erhalten, wie externes
 | **Wie** wird Text retrievalfähig vorbereitet? | [Tokenizing & Chunking]({{ '/rag-kontext/tokenizing-chunking.html' | relative_url }}) | Tokenisierung, Chunk-Größen, Overlap und Dokumentstruktur. |
 | **Wie** wird Bedeutung suchbar? | [Embeddings]({{ '/rag-kontext/embeddings.html' | relative_url }}) | Vektoren, Ähnlichkeit, semantische Suche und Grenzen von Embeddings. |
 | **Wie** werden Vektoren praktisch gespeichert? | [Einsteiger ChromaDB]({{ '/rag-kontext/einsteiger-chromadb.html' | relative_url }}) | Collections, Similarity Search und LangChain-Integration. |
-| **Wann** ist Fine-Tuning relevant? | [Fine-Tuning]({{ '/rag-kontext/fine-tuning.html' | relative_url }}) | Abgrenzung zu Prompting, RAG und Modellwahl. |
 
 
 

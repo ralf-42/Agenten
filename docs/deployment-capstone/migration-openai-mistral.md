@@ -2,7 +2,7 @@
 layout: default
 title: Migration-Analyse Provider
 parent: Deployment und Capstone
-nav_order: 4
+nav_order: 5
 description: Migrationsleitfaden für den Wechsel von OpenAI-basierten Kursmodulen in die Mistral-Modellwelt mit LangChain als Abstraktionsschicht
 has_toc: true
 ---

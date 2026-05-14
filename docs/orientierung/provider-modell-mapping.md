@@ -201,12 +201,12 @@ Das erlaubt eine allgemeine Beschreibung, ohne die konkreten OpenAI-Implementier
 
 ---
 
-## Verhältnis zum Modell-Auswahl Guide
+## Verhältnis zur Modellauswahl
 
-Dieses Dokument ersetzt den Modell-Auswahl Guide **nicht**.
+Dieses Dokument ergänzt die zentrale Modellauswahl.
 
-- Der **Modell-Auswahl Guide** erklärt, welche OpenAI-Modelle im Kurs aktuell verwendet werden und warum.
-- Das **Provider-Modell-Mapping** zeigt, wie dieselben Rollen auf Mistral, Gemini und Anthropic übertragen werden können.
+- Die **Modellauswahl** erklärt, welche Modellrollen im Kurs verwendet werden und warum.
+- Das **Provider-Modell-Mapping** vertieft, wie dieselben Rollen auf Mistral, Gemini und Anthropic übertragen werden können.
 
 Beide Dokumente zusammen ergeben:
 
@@ -217,7 +217,7 @@ Beide Dokumente zusammen ergeben:
 
 | Dokument | Frage |
 |---|---|
-| [Einsteiger-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
+| [Erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
 | [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
 
 ---
@@ -225,6 +225,7 @@ Beide Dokumente zusammen ergeben:
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

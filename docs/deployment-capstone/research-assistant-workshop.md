@@ -2,7 +2,7 @@
 layout: default
 title: Research Assistant Workshop
 parent: Deployment und Capstone
-nav_order: 6
+nav_order: 7
 description: "Schrittweise Übung: Einen Research Assistant mit Routing, RAG, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
 ---

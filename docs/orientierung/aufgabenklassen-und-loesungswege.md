@@ -183,13 +183,14 @@ Kurzcheck:
 | [Agenten-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }}) | Wie unterscheiden sich ReAct, Tool-Calling, Workflow und Multi-Agent im Detail? |
 | [Multi-Agent-Systeme]({{ '/multi-agent/multi-agent-systeme.html' | relative_url }}) | Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten? |
 | [Human-in-the-Loop]({{ '/memory-hitl/human-in-the-loop.html' | relative_url }}) | An welchen Stellen müssen Menschen zur Kontrolle oder Freigabe eingebunden werden? |
-| [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Welches Modell passt zu welcher Rolle im gewählten System? |
+| [Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }}) | Welches Modell passt zu welcher Rolle im gewählten System? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

@@ -793,7 +793,7 @@ callback = LangSmithCallback(
 |---|---|
 | [LangChain Best Practices]({{ '/erste-agenten/langchain-best-practices.html' | relative_url }}) | Wie werden Chains, Agents und Tools korrekt implementiert? |
 | [LangGraph Best Practices]({{ '/orchestrierung/langgraph-best-practices.html' | relative_url }}) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
-| [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Welches Modell eignet sich für welche Agentenrolle? |
+| [Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }}) | Welches Modell eignet sich für welche Agentenrolle? |
 | [Vom Modell zum Produkt]({{ '/deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Wie wird ein LangChain-Prototyp produktionsreif? |
 
 ---
@@ -801,6 +801,7 @@ callback = LangSmithCallback(
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

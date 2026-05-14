@@ -1,8 +1,9 @@
 ---
 layout: default
 title: LangGraph Best Practices
-parent: Frameworks
-nav_order: 4
+parent: LangGraph
+grand_parent: Frameworks
+nav_order: 2
 description: Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg
 has_toc: true
 ---
@@ -1156,7 +1157,6 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 **Version:** 1.6<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

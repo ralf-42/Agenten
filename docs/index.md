@@ -1,10 +1,9 @@
 ---
 layout: default
-title: "Start & Navigation"
+title: Start
 nav_order: 1
 description: "Onboarding, Kursziel und Einstieg in die Dokumentation"
 permalink: /
-has_children: true
 ---
 
 # KI-Agenten
@@ -48,4 +47,3 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

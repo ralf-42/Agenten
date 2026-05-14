@@ -2,7 +2,7 @@
 layout: default
 title: Research Assistant
 parent: "Deployment & Betrieb"
-nav_order: 4
+nav_order: 5
 description: "Praxisprojekt: Research Assistant als Workshop und Challenge"
 has_toc: true
 ---
@@ -1434,7 +1434,6 @@ class SupportState(TypedDict):
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

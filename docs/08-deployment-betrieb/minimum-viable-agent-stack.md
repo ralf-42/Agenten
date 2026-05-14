@@ -228,7 +228,7 @@ Der Stack wird sich konsolidieren. Provider-SDKs integrieren bereits Speicher, T
 | Dokument | Frage |
 |---|---|
 | [Produktionsreife Anwendung]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }}) | Wie wird der Übergang vom Jupyter Notebook zur produktionsreifen Anwendung technisch umgesetzt? |
-| [Vom Modell zur Anwendung]({{ '/05-frameworks/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Welche LangChain-Komponenten sind für den Produktionseinsatz relevant? |
+| [Vom Modell zur Anwendung]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Welche LangChain-Komponenten sind für den Produktionseinsatz relevant? |
 | [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) | Welche Architekturpattern gibt es für Agenten auf konzeptioneller Ebene? |
 
 ---

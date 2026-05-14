@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Einsteiger ChromaDB
-parent: Frameworks
-nav_order: 5
+parent: Weitere Tools
+grand_parent: Frameworks
+nav_order: 1
 description: Vektordatenbanken und ChromaDB für RAG-Systeme
 has_toc: true
 ---
@@ -960,7 +961,6 @@ results = retriever.invoke("Meine Frage")
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Vom Modell zur Anwendung
-parent: Frameworks
-nav_order: 7
+parent: "Deployment & Betrieb"
+nav_order: 4
 description: Das LangChain-Ökosystem verstehen und nutzen
 has_toc: true
 ---
@@ -273,8 +273,6 @@ Das Zusammenspiel aus LangChain, LangGraph und LangSmith bietet einen Ansatz, um
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
 
 
 

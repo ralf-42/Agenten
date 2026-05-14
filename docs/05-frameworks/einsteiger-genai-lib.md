@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Einsteiger GenAI_Lib
-parent: Frameworks
-nav_order: 6
+parent: Weitere Tools
+grand_parent: Frameworks
+nav_order: 2
 description: Projektspezifische Bibliothek für den Agenten-Kurs
 has_toc: true
 ---
@@ -824,7 +825,6 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 **Version:**    3.2<br>
 **Stand:**    März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

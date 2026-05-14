@@ -4,7 +4,6 @@ title: Zuerst lesen
 nav_order: 2
 description: "Kompakter Einstieg: die wichtigsten Dokumente vor dem ersten Agentenprojekt"
 has_toc: true
-parent: "Start & Navigation"
 permalink: /zuerst-lesen.html
 ---
 
@@ -62,5 +61,4 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 

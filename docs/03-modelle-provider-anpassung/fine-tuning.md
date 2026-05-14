@@ -279,8 +279,8 @@ Grenze: Fine-Tuning ersetzt keine Wissensanbindung. Wenn Antworten deshalb falsc
 
 | Dokument | Frage |
 |---|---|
-| [Prompt Engineering]({{ '/04-implementierung-frameworks-praxis/prompt-engineering.html' | relative_url }}) | Was lässt sich noch über bessere Anweisungen statt über Training lösen? |
-| [RAG-Konzepte]({{ '/04-implementierung-frameworks-praxis/rag-konzepte.html' | relative_url }}) | Wann hilft externer Wissenszugriff mehr als Modellanpassung? |
+| [Prompt Engineering]({{ '/04-agenten-implementierung/prompt-engineering.html' | relative_url }}) | Was lässt sich noch über bessere Anweisungen statt über Training lösen? |
+| [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) | Wann hilft externer Wissenszugriff mehr als Modellanpassung? |
 | [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Wie wird entschieden, ob ein anderes Basismodell genügt? |
 
 ---

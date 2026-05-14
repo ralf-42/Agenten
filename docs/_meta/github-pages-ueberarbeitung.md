@@ -45,13 +45,14 @@ Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
 | Lernpfad | `01-start-navigation/lernpfad.md` |
 | Orientierung & Entscheidung | `02-orientierung-entscheidung/` |
 | Modelle, Provider & Anpassung | `03-modelle-provider-anpassung/` |
-| Implementierung: Frameworks & Praxis | `04-implementierung-frameworks-praxis/` |
-| Multi-Agent & Erweiterungen | `05-multi-agent-erweiterungen/` |
-| Qualität & Sicherheit | `06-qualitaet-sicherheit/` |
-| Deployment & Capstone | `07-deployment-capstone/` |
-| Regulatorik & Verantwortung | `08-regulatorik-verantwortung/` |
-| Ressourcen | `09-ressourcen/` |
-| Rechtliches | `10-rechtliches/` |
+| Agenten-Implementierung | `04-agenten-implementierung/` |
+| Frameworks | `05-frameworks/` |
+| Multi-Agent & Erweiterungen | `06-multi-agent-erweiterungen/` |
+| Qualität & Sicherheit | `07-qualitaet-sicherheit/` |
+| Deployment & Betrieb | `08-deployment-betrieb/` |
+| Regulatorik & Verantwortung | `09-regulatorik-verantwortung/` |
+| Ressourcen | `10-ressourcen/` |
+| Rechtliches | `11-rechtliches/` |
 
 Die Verzeichnisnamen sind bewusst nummeriert, damit Dateisystem und Sidebar dieselbe Reihenfolge zeigen.
 
@@ -63,13 +64,13 @@ Die alten langen oder technisch geprägten Ordner wurden in kurze, navigationsta
 |---|---|
 | `orientierung/` mit Bedarfsanalyse | `02-orientierung-entscheidung/` |
 | Modellauswahl, Provider-Mapping, Fine-Tuning und API-Setup | `03-modelle-provider-anpassung/` |
-| `erste-agenten/`, `orchestrierung/`, `rag-kontext/`, `memory-hitl/` | `04-implementierung-frameworks-praxis/` |
-| `multi-agent/` | `05-multi-agent-erweiterungen/` |
-| `qualitaet-sicherheit/` | `06-qualitaet-sicherheit/` |
-| `deployment-capstone/` | `07-deployment-capstone/` |
-| `regulatorik/` | `08-regulatorik-verantwortung/` |
-| `ressourcen/` | `09-ressourcen/` |
-| `rechtliches/` | `10-rechtliches/` |
+| `erste-agenten/`, `orchestrierung/`, `rag-kontext/`, `memory-hitl/` | `04-agenten-implementierung/` und `05-frameworks/` |
+| `multi-agent/` | `06-multi-agent-erweiterungen/` |
+| `qualitaet-sicherheit/` | `07-qualitaet-sicherheit/` |
+| `deployment-capstone/` | `08-deployment-betrieb/` |
+| `regulatorik/` | `09-regulatorik-verantwortung/` |
+| `ressourcen/` | `10-ressourcen/` |
+| `rechtliches/` | `11-rechtliches/` |
 
 Leere Altverzeichnisse wie `concepts`, `frameworks`, `deployment`, `projects`, `regulatory` und `legal` wurden entfernt.
 
@@ -103,8 +104,8 @@ Damit ergibt sich folgende Logik:
 
 Regulatorik und Rechtliches wurden bewusst getrennt:
 
-- `08-regulatorik-verantwortung/` ist ein inhaltliches Kurskapitel.
-- `10-rechtliches/` ist der formale Pflichtbereich der Website.
+- `09-regulatorik-verantwortung/` ist ein inhaltliches Kurskapitel.
+- `11-rechtliches/` ist der formale Pflichtbereich der Website.
 
 Dadurch bleiben EU AI Act, DSGVO, Ethik und digitale Souveränität fachliche Kursthemen. Impressum, Datenschutzerklärung und Haftungsausschluss werden nicht mit diesen Inhalten vermischt.
 
@@ -131,20 +132,20 @@ Stattdessen gilt:
 
 - Generische Verweise zeigen auf den Bereich `Qualität und Sicherheit`.
 - Spezifische Verweise zeigen direkt auf die passende Fachseite, z. B.:
-  - `04-implementierung-frameworks-praxis/langchain-best-practices.md`
-  - `04-implementierung-frameworks-praxis/langgraph-best-practices.md`
-  - `06-qualitaet-sicherheit/langsmith-best-practices.md`
-  - `06-qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
+  - `05-frameworks/langchain-best-practices.md`
+  - `05-frameworks/langgraph-best-practices.md`
+  - `05-frameworks/langsmith-best-practices.md`
+  - `07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
 
 Dadurch bleibt die Struktur flacher und Nutzer landen schneller beim konkreten Inhalt.
 
 Zusätzlich wurden weitere Redundanzen bereinigt:
 
-- technische Test- und Vorlagendateien wurden aus `09-ressourcen/` nach `_meta/` verschoben,
+- technische Test- und Vorlagendateien wurden aus `10-ressourcen/` nach `_meta/` verschoben,
 - die Sammelseite `erste-agenten/framework-guides.md` wurde entfernt,
 - die drei Modellauswahl-Seiten wurden in `03-modelle-provider-anpassung/modellauswahl.md` zusammengeführt,
 - `fine-tuning.md` wurde nach `03-modelle-provider-anpassung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
-- das Capstone-Briefing wurde als zentraler Einstieg in `07-deployment-capstone/` gesetzt,
+- `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/research-assistant.md` zusammengeführt,
 - Workshop, Challenge und Projekte wurden als ergänzende Umsetzungsformate eingeordnet.
 
 ## Linkpflege
@@ -152,7 +153,7 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 Nach der Umstrukturierung wurden interne Links systematisch umgestellt:
 
 - alte Pfade wie `concepts/...`, `frameworks/...`, `deployment/...`, `regulatory/...`, `projects/...` und `legal/...` wurden ersetzt,
-- Footer-Links wurden von `/legal/...` auf `/10-rechtliches/...` angepasst,
+- Footer-Links wurden von `/legal/...` auf `/11-rechtliches/...` angepasst,
 - Links auf gelöschte Sammelseiten wurden entfernt oder auf passende Zielseiten umgebogen,
 - interne Links wurden auf lokale Existenz geprüft.
 

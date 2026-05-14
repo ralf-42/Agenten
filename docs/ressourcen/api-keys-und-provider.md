@@ -186,14 +186,15 @@ llm = Ollama(model="llama3")
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/tool-use-prompting-erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit API-Keys & Provider? |
-| [Best Practices]({{ '/evaluation-security-reliability/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für API-Keys & Provider? |
+| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit API-Keys & Provider? |
+| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für API-Keys & Provider? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** 1. Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

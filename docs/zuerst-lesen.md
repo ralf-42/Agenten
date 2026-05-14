@@ -20,10 +20,10 @@ Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht d
 
 Wer neu in das Kursmaterial einsteigt, beginnt mit diesen vier Dokumenten:
 
-1. [Lohnt es sich überhaupt?]({{ '/orientierung-agentenverstaendnis/lohnt-es-sich.html' | relative_url }})
-2. [Agenten-Architekturen]({{ '/tool-use-prompting-erste-agenten/agent-architekturen.html' | relative_url }})
-3. [Tool Use & Function Calling]({{ '/tool-use-prompting-erste-agenten/tool-use-function-calling.html' | relative_url }})
-4. [LangChain Guide]({{ '/tool-use-prompting-erste-agenten/einsteiger-langchain.html' | relative_url }})
+1. [Lohnt es sich überhaupt?]({{ '/orientierung/lohnt-es-sich.html' | relative_url }})
+2. [Agenten-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }})
+3. [Tool Use & Function Calling]({{ '/erste-agenten/tool-use-function-calling.html' | relative_url }})
+4. [LangChain Guide]({{ '/erste-agenten/einsteiger-langchain.html' | relative_url }})
 
 Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
 
@@ -31,16 +31,16 @@ Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungswe
 
 | Ziel | Zuerst anschauen |
 |---|---|
-| Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?]({{ '/orientierung-agentenverstaendnis/lohnt-es-sich.html' | relative_url }}) |
-| Architektur auswählen | [Agenten-Architekturen]({{ '/tool-use-prompting-erste-agenten/agent-architekturen.html' | relative_url }}) |
-| Tools sicher einbinden | [Tool Use & Function Calling]({{ '/tool-use-prompting-erste-agenten/tool-use-function-calling.html' | relative_url }}) |
-| Ersten Agenten bauen | [LangChain Guide]({{ '/tool-use-prompting-erste-agenten/einsteiger-langchain.html' | relative_url }}) |
-| Mehrstufige Workflows umsetzen | [LangGraph Guide]({{ '/orchestrierung-state-langgraph/einsteiger-langgraph.html' | relative_url }}) |
-| Kontext, RAG und Memory verstehen | [Context Engineering]({{ '/kontext-grounding-rag/context-engineering.html' | relative_url }}) |
-| Wissen und Dokumente anbinden | [RAG-Konzepte]({{ '/kontext-grounding-rag/rag-konzepte.html' | relative_url }}) |
-| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz]({{ '/sessions-memory-hitl/checkpointing-persistenz.html' | relative_url }}) |
-| Qualität sichtbar machen | [Evaluation & Observability]({{ '/evaluation-security-reliability/evaluation-observability.html' | relative_url }}) |
-| Produktion vorbereiten | [Minimum Viable Agent Stack]({{ '/deployment-governance-capstone/minimum-viable-agent-stack.html' | relative_url }}) |
+| Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?]({{ '/orientierung/lohnt-es-sich.html' | relative_url }}) |
+| Architektur auswählen | [Agenten-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }}) |
+| Tools sicher einbinden | [Tool Use & Function Calling]({{ '/erste-agenten/tool-use-function-calling.html' | relative_url }}) |
+| Ersten Agenten bauen | [LangChain Guide]({{ '/erste-agenten/einsteiger-langchain.html' | relative_url }}) |
+| Mehrstufige Workflows umsetzen | [LangGraph Guide]({{ '/orchestrierung/einsteiger-langgraph.html' | relative_url }}) |
+| Kontext, RAG und Memory verstehen | [Context Engineering]({{ '/rag-kontext/context-engineering.html' | relative_url }}) |
+| Wissen und Dokumente anbinden | [RAG-Konzepte]({{ '/rag-kontext/rag-konzepte.html' | relative_url }}) |
+| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz]({{ '/memory-hitl/checkpointing-persistenz.html' | relative_url }}) |
+| Qualität sichtbar machen | [Evaluation & Observability]({{ '/qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) |
+| Produktion vorbereiten | [Minimum Viable Agent Stack]({{ '/deployment-capstone/minimum-viable-agent-stack.html' | relative_url }}) |
 
 ## Danach gezielt vertiefen
 
@@ -51,15 +51,16 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 | Dokument | Frage |
 |---|---|
 | [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Welche Reihenfolge passt zu einem bestimmten Lernziel? |
-| [Orientierung und Agentenverständnis]({{ '/orientierung-agentenverstaendnis/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
-| [Tool Use, Prompting und erste Agenten]({{ '/tool-use-prompting-erste-agenten/' | relative_url }}) | Welche Tools und Best Practices werden im Kurs genutzt? |
-| [Deployment]({{ '/deployment-governance-capstone/' | relative_url }}) | Wie wird aus einer Demo ein betreibbares Agentensystem? |
+| [Orientierung und Agentenverständnis]({{ '/orientierung/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
+| [Tool Use, Prompting und erste Agenten]({{ '/erste-agenten/' | relative_url }}) | Welche Tools und Best Practices werden im Kurs genutzt? |
+| [Deployment]({{ '/deployment-capstone/' | relative_url }}) | Wie wird aus einer Demo ein betreibbares Agentensystem? |
 
 ---
 
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

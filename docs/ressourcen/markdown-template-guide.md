@@ -218,14 +218,14 @@ Nummern werden nicht in Überschriften geschrieben.
 In Index-Dokumenten wie `concepts.md` oder `frameworks.md` werden absolute URLs verwendet:
 
 ```markdown
-[Digitale Souveränität]({{ '/regulatorik-datenschutz-verantwortung/digitale-souveraenitaet.html' | relative_url }})
+[Digitale Souveränität]({{ '/regulatorik/digitale-souveraenitaet.html' | relative_url }})
 ```
 
 Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
-[Agent-Architekturen]({{ '/tool-use-prompting-erste-agenten/agent-architekturen.html' | relative_url }})
-[Modell-Auswahl Guide]({{ '/orientierung-agentenverstaendnis/modell-auswahl-guide.html' | relative_url }})
+[Agent-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }})
+[Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }})
 ```
 
 Regeln:
@@ -287,8 +287,8 @@ Kurze Einordnung des Bereichs in einem Absatz.
 
 ## Grundlagen
 
-- **[Checkpointing & Persistenz]({{ '/sessions-memory-hitl/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
-- **[Agent Security]({{ '/evaluation-security-reliability/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+- **[Checkpointing & Persistenz]({{ '/memory-hitl/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Agent Security]({{ '/qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
 ````
 
 Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.
@@ -337,6 +337,7 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 **Version:**    1.0<br>
 **Stand:**    März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

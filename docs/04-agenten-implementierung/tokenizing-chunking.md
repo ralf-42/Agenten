@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Tokenizing & Chunking
-parent: Agenten-Implementierung
-nav_order: 6
+parent: Kontext und Wissensanbindung
+grand_parent: Agenten-Implementierung
+nav_order: 2
 description: Tokenisierung und Chunking für RAG, Kontextfenster und Agenten-Wissensspeicher
 has_toc: true
 ---
@@ -310,6 +311,5 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 **Version:**    1.1<br>
 **Stand:**    Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 

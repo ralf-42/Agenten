@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Research Assistant als Leitaufgabe
+title: Research Assistant
 parent: "Orientierung & Entscheidung"
 nav_order: 4
 description: "Zielbild und roter Faden des Kurses: ein quellengebundener Research Assistant"
 has_toc: true
 ---
 
-# Research Assistant als Leitaufgabe
+# Research Assistant
 
 Der **Research Assistant** ist die uebergreifende Leitaufgabe des Kurses. Er dient als roter Faden, an dem zentrale Agentenkonzepte wiederholt sichtbar werden: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
 

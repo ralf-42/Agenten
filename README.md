@@ -175,7 +175,8 @@ Der Kurs bietet ergänzende Lernformate:
 
 Der **Quellcode** steht unter der [MIT License](./LICENSE).       
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
-  
+
+**Northwind SQLite-Datenbank**: basiert auf Microsofts Northwind-Beispieldatenbank. Die verwendete SQLite-Version stammt aus dem Projekt `jpwhite3/northwind-SQLite3` und steht unter der MIT License (Copyright © 2016 JP White); siehe [`Licence NorthwindDB.md`](./02_daten/05_sonstiges/Licence%20NorthwindDB.md). Microsofts SQL-Server-Samples, einschließlich Northwind/Pubs, stehen ebenfalls unter MIT License (Copyright Microsoft Corporation).     
 
 © 2025–2026 Ralf-42     
 

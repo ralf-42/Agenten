@@ -2,186 +2,95 @@
 layout: default
 title: Haftungsausschluss
 parent: Rechtliches
+description: Haftungsausschluss und Hinweise zur Nutzung der Kursmaterialien
 nav_exclude: true
-description: Haftungsausschluss (Disclaimer)
 ---
 
-# Haftungsausschluss (Disclaimer)
+# Haftungsausschluss
 
-## Haftung für Inhalte
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
 
-Die Inhalte dieses Repositories wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+1. TOC
+{:toc}
 
-Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+## 1. Inhalte des Onlineangebotes
 
-## Haftung für Links
+Die Inhalte dieser Website und des zugehörigen Repositories wurden sorgfältig erstellt und dienen der allgemeinen Information, Weiterbildung und Kursbegleitung. Eine Gewähr für Aktualität, Richtigkeit, Vollständigkeit oder dauerhafte Verfügbarkeit der bereitgestellten Informationen wird nicht übernommen.
 
-Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+Die Haftung bleibt unberührt, soweit gesetzlich zwingend gehaftet wird, insbesondere bei Vorsatz, grober Fahrlässigkeit oder Verletzung von Leben, Körper oder Gesundheit.
 
-Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+## 2. Besonderer Hinweis zu KI-Systemen und automatisierten Ausgaben
 
-## Haftungsausschluss für KI-generierte Inhalte
+Dieses Kursangebot kann KI-Systeme, externe APIs, Notebook-Beispiele, automatisierte Workflows und andere digitale Werkzeuge behandeln oder demonstrieren.
 
-### Verwendung von Large Language Models (LLMs)
+KI-generierte Inhalte und Modellausgaben:
 
-Dieses Projekt befasst sich mit generativer Künstlicher Intelligenz und nutzt Large Language Models (LLMs) wie GPT-4, Claude, und andere. Die durch diese Modelle generierten Inhalte:
+- können sachlich falsch, unvollständig, veraltet oder irreführend sein,
+- können Biases, problematische Muster oder unerwartete Fehler enthalten,
+- spiegeln nicht zwingend die Auffassung des Kursleiters wider,
+- sind nicht automatisch für produktive, rechtliche, sicherheitskritische oder geschäftskritische Zwecke geeignet,
+- müssen bei wichtigen Entscheidungen anhand verlässlicher Originalquellen geprüft werden.
 
-- Können Fehler, Ungenauigkeiten oder veraltete Informationen enthalten
-- Spiegeln nicht notwendigerweise die Meinung des Repository-Betreibers wider
-- Sollten nicht als professionelle Beratung (rechtlich, medizinisch, finanziell) verstanden werden
-- Können Biases oder diskriminierende Inhalte enthalten, die nicht beabsichtigt sind
+Maßgeblich sind die Original-Kursunterlagen, Quelltexte, offiziellen Dokumentationen und die im Kurs gegebenen Erläuterungen.
 
-### Keine Gewährleistung für KI-Outputs
+## 3. Keine professionelle Beratung
 
-Der Betreiber übernimmt keine Haftung für:
+Die bereitgestellten Informationen, Beispiele und KI-generierten Inhalte stellen keine professionelle Beratung dar. Dies gilt insbesondere für Rechtsberatung, Datenschutzberatung, Steuerberatung, medizinische Beratung, Finanzberatung, IT-Sicherheitsberatung oder verbindliche technische Prüfung.
 
-- Fehlerhafte oder irreführende Informationen, die durch KI-Modelle generiert werden
-- Schäden, die durch die Verwendung von KI-generierten Inhalten entstehen
-- Die Korrektheit, Vollständigkeit oder Eignung von KI-Outputs für einen bestimmten Zweck
-- Urheberrechtsverletzungen durch KI-generierte Inhalte
+Bei konkreten rechtlichen, datenschutzrechtlichen, sicherheitsrelevanten, medizinischen, finanziellen oder geschäftskritischen Fragen sollte fachkundiger Rat eingeholt werden.
 
-### Eigenverantwortung der Nutzer
+## 4. Code, Notebooks und Softwarebeispiele
 
-Nutzer, die die in diesem Repository bereitgestellten KI-Tools und Notebooks verwenden, tun dies auf eigene Verantwortung. Es wird dringend empfohlen:
+Der bereitgestellte Code, die Notebooks, Skripte und Konfigurationsbeispiele dienen Lern- und Demonstrationszwecken. Sie sind nicht ohne eigene Prüfung für Produktivsysteme bestimmt.
 
-- KI-generierte Inhalte stets kritisch zu prüfen
-- Bei wichtigen Entscheidungen professionelle Beratung einzuholen
-- Die Nutzungsbedingungen der verwendeten APIs (OpenAI, Anthropic, etc.) zu beachten
-- Keine sensiblen oder personenbezogenen Daten an KI-Modelle zu übermitteln
+Vor einer produktiven Nutzung sollten insbesondere geprüft werden:
 
-## Haftungsausschluss für Code und Software
+- Funktionalität und Fehlerverhalten
+- Datenschutzkonformität
+- IT-Sicherheit
+- Kosten und Limits externer APIs
+- Lizenz- und Urheberrechtsfragen
+- Kompatibilität mit der eigenen Umgebung
 
-### "As-Is" Bereitstellung
+Die Nutzung der Beispiele erfolgt in eigener Verantwortung. Dies gilt besonders für Experimente mit API-Keys, Cloud-Diensten, öffentlichen Freigaben, automatisierten Agenten und externen Datenquellen.
 
-Der in diesem Repository bereitgestellte Code wird "wie besehen" (AS IS) ohne jegliche Gewährleistung zur Verfügung gestellt. Dies umfasst insbesondere:
+## 5. API-Keys, Kosten und Credentials
 
-- Funktionalität und Fehlerfreiheit
-- Eignung für einen bestimmten Zweck
-- Sicherheit und Datenschutzkonformität
-- Kompatibilität mit bestimmten Systemen oder Bibliotheken
+Die Nutzung externer APIs oder Plattformen, etwa OpenAI, Anthropic, Google, Mistral oder LangSmith, kann Kosten verursachen und unterliegt den Bedingungen der jeweiligen Anbieter.
 
-### Keine Haftung für Schäden
+Nutzende sind selbst dafür verantwortlich:
 
-Der Betreiber haftet nicht für Schäden, die durch die Nutzung oder Unfähigkeit zur Nutzung des bereitgestellten Codes entstehen, einschließlich aber nicht beschränkt auf:
+- eigene API-Keys und Zugangsdaten sicher zu verwalten,
+- Kosten, Limits und Abrechnungen zu überwachen,
+- Secrets nicht in Code, Notebooks, Repositories, Screenshots, Issues oder Kursabgaben zu veröffentlichen,
+- `.env`-Dateien, Colab Secrets oder vergleichbare Schutzmechanismen zu nutzen,
+- keine vertraulichen, sensiblen oder personenbezogenen Daten ohne geeignete Rechtsgrundlage und Schutzmaßnahmen an externe Dienste zu übermitteln.
 
-- Datenverlust
-- Betriebsausfälle
-- Finanzielle Verluste
-- Sicherheitsverletzungen
-- Schäden durch Dritte
+## 6. Externe Links und Dienste
 
-### API-Keys und Kosten
+Diese Website enthält Links zu externen Webseiten, Dokumentationen, Repositories, Plattformen, KI-Diensten oder sonstigen Angeboten Dritter. Für Inhalte, Verfügbarkeit, Datenschutz und Sicherheit dieser externen Angebote sind die jeweiligen Anbieter verantwortlich.
 
-Die Nutzung der in diesem Projekt verwendeten APIs (OpenAI, Anthropic, Google, etc.) kann Kosten verursachen. Der Betreiber übernimmt keine Haftung für:
+Zum Zeitpunkt der Verlinkung wurden externe Inhalte nach Möglichkeit auf erkennbare Rechtsverstöße geprüft. Eine fortlaufende Kontrolle externer Inhalte ist ohne konkrete Hinweise nicht zumutbar. Bei Bekanntwerden entsprechender Rechtsverletzungen werden betroffene Links entfernt.
 
-- Durch API-Nutzung entstehende Kosten
-- Missbrauch von API-Keys
-- Datenlecks durch unsachgemäße Handhabung von Credentials
+## 7. Urheberrecht und Rechte Dritter
 
-**Wichtig:** Nutzer sind selbst dafür verantwortlich, ihre API-Keys zu sichern und ihre API-Nutzung zu überwachen.
+Die Kursunterlagen dürfen im Rahmen des Kurses für persönliche Lernzwecke genutzt werden. Eine darüber hinausgehende Nutzung, Weitergabe, Veröffentlichung oder kommerzielle Verwendung ist nur zulässig, soweit dies ausdrücklich erlaubt ist oder gesetzliche Schranken greifen.
 
-## Experimenteller Charakter
+Teilnehmende sind selbst dafür verantwortlich, bei eigenen Uploads, Prompts, Quellen, Code-Beiträgen oder Weiterverwendungen von Inhalten Urheberrechte, Persönlichkeitsrechte, Datenschutzvorgaben, Lizenzbedingungen und sonstige Rechte Dritter zu beachten.
 
-Dieses Repository dient Bildungs- und Forschungszwecken. Die bereitgestellten Notebooks, Scripts und Tools sind:
+Bei KI-generierten Inhalten können urheberrechtliche, lizenzrechtliche, markenrechtliche oder persönlichkeitsrechtliche Fragen entstehen. Vor einer Veröffentlichung oder produktiven Verwendung sollte die rechtliche Zulässigkeit eigenständig geprüft werden.
 
-- Experimentell und nicht für den Produktiveinsatz gedacht
-- Nicht vollständig getestet
-- Möglicherweise nicht für alle Anwendungsfälle geeignet
-- Nicht notwendigerweise sicher gegen Angriffe oder Missbrauch
+## 8. Datensicherheit und Vertraulichkeit
 
-**Warnung:** Verwenden Sie diesen Code NICHT in Produktionssystemen ohne gründliche Überprüfung, Testing und Sicherheitsaudits.
+Die Kursmaterialien sind für Lernzwecke ausgelegt. Sie ersetzen keine Sicherheitsprüfung und keine Datenschutz-Folgenabschätzung.
 
-## Datensicherheit und Vertraulichkeit
+Bitte verwenden Sie in Kursbeispielen keine echten Kunden-, Beschäftigten-, Patienten-, Schüler-, Teilnehmer-, Zahlungs-, Geschäftsgeheimnis- oder sonstigen sensiblen Daten. Arbeiten Sie nach Möglichkeit mit Demo-, Test- oder anonymisierten Daten.
 
-### Keine Garantie für Datensicherheit
+## 9. Rechtswirksamkeit
 
-Der Betreiber übernimmt keine Garantie dafür, dass:
-
-- Übermittelte Daten vertraulich behandelt werden
-- Daten vor unbefugtem Zugriff geschützt sind
-- Keine Datenlecks auftreten
-
-### Empfehlungen
-
-Nutzer sollten:
-
-- Keine sensiblen Daten in Issues, Pull Requests oder Code einfügen
-- Keine personenbezogenen Daten an KI-APIs übermitteln
-- API-Keys und Secrets niemals im Code committen
-- `.env`-Dateien für sensible Konfiguration verwenden
-
-## Nutzung auf eigene Verantwortung
-
-Die Nutzung dieses Repositories und aller darin enthaltenen Materialien erfolgt ausschließlich auf eigene Gefahr. Der Betreiber haftet nicht für:
-
-- Direkte oder indirekte Schäden
-- Folgeschäden
-- Entgangenen Gewinn
-- Datenverlust
-- Sonstige Schäden, die durch die Nutzung entstehen
-
-## Externe Abhängigkeiten
-
-Dieses Projekt verwendet zahlreiche externe Bibliotheken und Dienste (siehe `requirements.txt` und `CLAUDE.md`). Der Betreiber übernimmt keine Haftung für:
-
-- Fehler oder Sicherheitslücken in Drittanbieter-Bibliotheken
-- Änderungen oder Ausfälle externer APIs
-- Datenschutzverletzungen durch Drittanbieter
-- Breaking Changes in Abhängigkeiten
-
-## Geistiges Eigentum Dritter
-
-### KI-generierte Inhalte
-
-Bei der Verwendung von KI-Modellen können Inhalte generiert werden, die:
-
-- Urheberrechtlich geschützt sein könnten
-- Markenrechte Dritter verletzen könnten
-- Gegen andere Schutzrechte verstoßen könnten
-
-Der Betreiber übernimmt keine Haftung für Urheberrechtsverletzungen durch KI-generierte Inhalte. Nutzer sind selbst dafür verantwortlich, die rechtliche Zulässigkeit der Verwendung zu prüfen.
-
-### Training-Daten
-
-Die in `02_daten/` bereitgestellten Daten können urheberrechtlich geschützt sein. Nutzer sind verpflichtet:
-
-- Die Urheberrechte zu respektieren
-- Daten nur im Rahmen der Fair-Use-Regelungen zu verwenden
-- Bei kommerzieller Nutzung entsprechende Lizenzen einzuholen
-
-## Keine professionelle Beratung
-
-Die in diesem Repository bereitgestellten Informationen stellen keine professionelle Beratung dar, insbesondere:
-
-- Keine Rechtsberatung
-- Keine technische Beratung für Produktivsysteme
-- Keine Sicherheitsberatung
-- Keine Datenschutzberatung
-
-Für professionelle Beratung wenden Sie sich bitte an entsprechende Fachleute.
-
-## Salvatorische Klausel
-
-Sollten einzelne Bestimmungen dieses Haftungsausschlusses unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen davon unberührt.
-
-## Anwendbares Recht
-
-Dieser Haftungsausschluss unterliegt deutschem Recht unter Ausschluss des UN-Kaufrechts.
-
-## Kontakt
-
-Bei Fragen zu diesem Haftungsausschluss wenden Sie sich bitte an:
-
-Ralf Bendig   
-c/o flexdienst – #12150   
-Kurt-Schumacher-Straße 76   
-67663 Kaiserslautern   
-Deutschland   
-   
-E-Mail: ralf.bendig.rb@gmail.com
+Sollten einzelne Formulierungen dieses Hinweises unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Regelungen unberührt.
 
 ---
 
-**Version:** 1.0<br>
-**Letzte Aktualisierung:** Dezember 2025    
-
+**Letzte Aktualisierung:** Mai 2026

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: ChromaDB
-parent: Kontext, Grounding und RAG
+parent: RAG und Kontext
 nav_order: 7
 description: Vektordatenbanken und ChromaDB für RAG-Systeme
 has_toc: true
@@ -960,6 +960,7 @@ results = retriever.invoke("Meine Frage")
 **Version:** 1.0<br>
 **Stand:** November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

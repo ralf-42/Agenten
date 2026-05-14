@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agenten-Sicherheit
-parent: Evaluation, Security und Reliability
+parent: Qualität und Sicherheit
 nav_order: 2
 description: Sicherheitsrisiken und Schutzprinzipien für KI-Agenten mit Tools, Datenzugriff und externen Schnittstellen
 has_toc: true
@@ -207,6 +207,7 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 **Version:** 1.3<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

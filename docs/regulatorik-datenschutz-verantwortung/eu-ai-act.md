@@ -1,7 +1,7 @@
 ---
 layout: default
 title: EU AI Act
-parent: Regulatorik, Datenschutz und Verantwortung
+parent: Regulatorik
 nav_order: 2
 description: Risikoklassen, Fristen und Pflichten der EU-KI-Verordnung
 has_toc: true
@@ -128,6 +128,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

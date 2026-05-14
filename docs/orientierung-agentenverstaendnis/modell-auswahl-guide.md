@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Modell-Auswahl Guide
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 5
 description: Welches Modell für welche Aufgabe? OpenAI-Default im Kurs plus rollenbasierte Einordnung im Agentenkontext
 has_toc: true
@@ -419,6 +419,7 @@ builder.add_conditional_edges("supervisor", routing_edge,
 **Version:** 1.4<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

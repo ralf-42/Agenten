@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Datenschutz & DSGVO"
-parent: Regulatorik, Datenschutz und Verantwortung
+parent: Regulatorik
 nav_order: 4
 description: DSGVO-konforme Nutzung von LLM-APIs, Tracing, Tools, Memory und Agenten-Pipelines
 has_toc: true
@@ -188,6 +188,7 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

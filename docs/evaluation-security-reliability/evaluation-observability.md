@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Evaluation & Observability
-parent: Evaluation, Security und Reliability
+parent: Qualität und Sicherheit
 nav_order: 1
 description: Bewertung, Qualitätssicherung und Observability von KI-Agenten
 has_toc: true
@@ -331,6 +331,7 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 **Version:** 1.4<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

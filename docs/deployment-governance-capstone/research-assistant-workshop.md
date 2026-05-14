@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Research Assistant Workshop
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 6
 description: "Schrittweise Übung: Einen Research Assistant mit Routing, RAG, Sessions und optionaler Gradio-UI bauen"
 has_toc: true
@@ -709,6 +709,7 @@ A:
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

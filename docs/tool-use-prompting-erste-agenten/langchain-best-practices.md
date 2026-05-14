@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangChain Best Practices
-parent: Tool Use, Prompting und erste Agenten
+parent: Erste Agenten
 nav_order: 7
 description: Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg
 has_toc: true
@@ -1123,6 +1123,7 @@ Beim Refactoring von altem Code:
 **Version:** 1.7<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

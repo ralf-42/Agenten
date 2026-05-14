@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangSmith Best Practices
-parent: Evaluation, Security und Reliability
+parent: Qualität und Sicherheit
 nav_order: 5
 description: Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith
 has_toc: true
@@ -801,6 +801,7 @@ callback = LangSmithCallback(
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

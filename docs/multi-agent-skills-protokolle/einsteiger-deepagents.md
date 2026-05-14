@@ -1,7 +1,7 @@
 ---
 layout: default
 title: DeepAgents
-parent: Multi-Agent, Skills und Protokolle
+parent: Multi-Agent
 nav_order: 4
 description: Einführung in DeepAgents als Harness für Planning, Filesystem und Sub-Agenten
 has_toc: true
@@ -555,6 +555,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 **Version:** 1.3<br>
 **Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

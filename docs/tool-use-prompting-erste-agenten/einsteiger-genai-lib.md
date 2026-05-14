@@ -1,7 +1,7 @@
 ---
 layout: default
 title: GenAI_Lib
-parent: Tool Use, Prompting und erste Agenten
+parent: Erste Agenten
 nav_order: 6
 description: Projektspezifische Bibliothek für den Agenten-Kurs
 has_toc: true
@@ -824,6 +824,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 **Version:**    3.2<br>
 **Stand:**    März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

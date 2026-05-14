@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangSmith
-parent: Evaluation, Security und Reliability
+parent: Qualität und Sicherheit
 nav_order: 3
 description: Monitoring & Debugging mit LangSmith
 has_toc: true
@@ -964,6 +964,7 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

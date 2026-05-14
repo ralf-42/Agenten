@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Einsteiger-Guides
-parent: Tool Use, Prompting und erste Agenten
+parent: Erste Agenten
 nav_order: 8
 description: Einsteiger-Guides für LangChain, LangGraph, DeepAgents, LangSmith, ChromaDB, GenAI_Lib, Agent Builder und Prompt-Templates
 ---
@@ -18,6 +18,7 @@ Diese Seite passt, wenn das fachliche Ziel bereits klar ist und nun die konkrete
 - **[GenAI_Lib Einsteiger]({{ '/tool-use-prompting-erste-agenten/einsteiger-genai-lib.html' | relative_url }})** – *Welche Utilities stellt das Projekt bereit?*
 - **[Agent Builder Einsteiger]({{ '/multi-agent-skills-protokolle/einsteiger-agent-builder.html' | relative_url }})** – *Wie erstelle ich Agenten ohne Code?*
 - **[Prompt-Templates Einsteiger]({{ '/tool-use-prompting-erste-agenten/einsteiger-prompts.html' | relative_url }})** – *Wie erstelle ich eigene Prompt-Dateien?*
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "KI-Agenten in regulierten Branchen"
-parent: Regulatorik, Datenschutz und Verantwortung
+parent: Regulatorik
 nav_order: 5
 description: "Was Regulierung für Agenten-Architektur bedeutet: HITL, Logging, Tool-Grenzen und Quellenbindung in Medizin, Legal und Finanzwesen"
 has_toc: true
@@ -145,6 +145,7 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

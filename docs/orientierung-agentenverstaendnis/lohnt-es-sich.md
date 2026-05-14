@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Lohnt sich KI?
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 1
 description: "Einschätzung vor Projektstart: ob ein KI-Vorhaben sinnvoll, machbar und verantwortbar ist"
 has_toc: true
@@ -120,6 +120,7 @@ Entwickler unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann w
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

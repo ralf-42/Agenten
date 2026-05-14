@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agent Builder
-parent: Multi-Agent, Skills und Protokolle
+parent: Multi-Agent
 nav_order: 5
 description: No-Code-Agenten und visuelle Workflows für Agentenprototypen
 has_toc: true
@@ -793,6 +793,7 @@ graph TB
 **Version:**    2.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Kommunikationsprotokolle
-parent: Multi-Agent, Skills und Protokolle
+parent: Multi-Agent
 nav_order: 2
 description: MCP, A2A, ACP und AG-UI als Kommunikationsprotokolle für KI-Agenten
 has_toc: true
@@ -322,6 +322,7 @@ Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, w
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Fine-Tuning
-parent: Kontext, Grounding und RAG
+parent: RAG und Kontext
 nav_order: 3
 description: Fine-Tuning als Alternative oder Ergänzung zu Prompting, RAG, Tools und Agentenlogik
 has_toc: true
@@ -288,6 +288,7 @@ Grenze: Fine-Tuning ersetzt keine Wissensanbindung. Wenn Antworten deshalb falsc
 **Version:** 1.3<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

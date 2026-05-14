@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Rechtliches
-nav_order: 11
+nav_order: 13
 has_children: true
 description: "Formale Hinweise: Impressum, Datenschutz der Website und Haftungsausschluss"
 ---
 
 # Rechtliches
 
-Dieser Bereich enthaelt die formalen rechtlichen Hinweise zur Website und zu den bereitgestellten Kursmaterialien.
+Diese Orientierungsseite enthält die formalen rechtlichen Hinweise zur Website und zu den bereitgestellten Kursmaterialien.
 
 | Dokument | Inhalt |
 |---|---|

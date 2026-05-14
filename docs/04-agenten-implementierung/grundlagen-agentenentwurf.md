@@ -9,7 +9,7 @@ description: "Architekturen, Prompting, Prompt-Templates und Tool Use"
 
 # Entwurf
 
-Dieser Abschnitt bündelt die grundlegenden Entwurfsentscheidungen für Agentensysteme: Welche Architektur passt, wie werden Anweisungen formuliert, wie werden Prompts wiederverwendbar und wie nutzt ein Agent Werkzeuge?
+Diese Orientierungsseite bündelt die grundlegenden Entwurfsentscheidungen für Agentensysteme: Welche Architektur passt, wie werden Anweisungen formuliert, wie werden Prompts wiederverwendbar und wie nutzt ein Agent Werkzeuge?
 
 | Frage | Dokument | Bezug |
 |---|---|---|

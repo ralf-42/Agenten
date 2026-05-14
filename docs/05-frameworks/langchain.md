@@ -9,7 +9,7 @@ description: "LangChain-Einstieg und Best Practices"
 
 # LangChain
 
-Dieser Abschnitt bündelt die LangChain-Dokumente: Einstieg, Grundmuster, Tool-Nutzung und robuste Implementierungskonventionen.
+Diese Orientierungsseite bündelt die LangChain-Dokumente: Einstieg, Grundmuster, Tool-Nutzung und robuste Implementierungskonventionen.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

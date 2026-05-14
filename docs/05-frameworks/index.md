@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Frameworks
-nav_order: 5
+nav_order: 7
 has_children: true
 description: "LangChain, LangGraph, LangSmith, ChromaDB und GenAI_Lib"
 ---
 
 # Frameworks
 
-Dieser Bereich sammelt die konkreten Werkzeug- und Framework-Guides. Die konzeptionellen Grundlagen stehen im Bereich Agenten-Implementierung; hier geht es um die praktische Nutzung einzelner Bibliotheken und Plattformbausteine.
+Diese Orientierungsseite sammelt die konkreten Werkzeug- und Framework-Guides. Die konzeptionellen Grundlagen stehen im Bereich Agenten-Implementierung; hier geht es um die praktische Nutzung einzelner Bibliotheken und Plattformbausteine.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

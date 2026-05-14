@@ -553,7 +553,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 ---
 
 **Version:** 1.3<br>
-**Stand:** Mai 2026 (DeepAgents 0.5.6)<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

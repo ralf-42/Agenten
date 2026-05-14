@@ -118,7 +118,7 @@ Entwickler unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann w
 ---
 
 **Version:** 1.1<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

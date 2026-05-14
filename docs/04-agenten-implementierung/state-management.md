@@ -252,7 +252,7 @@ def pure_node(state: MyState) -> MyState:
 ```
 
 ```python
-# Falsch: kein Reducer fuer messages
+# Falsch: kein Reducer für messages
 class BadState(TypedDict):
     messages: list
 
@@ -294,7 +294,6 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 ---
 
 **Version:** 1.1<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 

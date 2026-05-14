@@ -60,7 +60,7 @@ has_toc: true
 ---
 
 **Version:** 1.0<br>
-**Stand:** November 2025<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

@@ -1,14 +1,14 @@
 ---
 layout: default
 title: "Qualität & Sicherheit"
-nav_order: 7
+nav_order: 9
 has_children: true
 description: "Engineering Excellence: Evaluation, Observability und Agenten-Sicherheit"
 ---
 
 # Qualität & Sicherheit
 
-Dieser Bereich macht Agenten messbar, beobachtbar und kontrollierbar. Im Mittelpunkt stehen Evaluation, Sicherheitsgrenzen und produktionsnahe Qualitaetsarbeit. Konkrete LangSmith-Anleitungen liegen im Bereich [Frameworks]({{ '/05-frameworks/' | relative_url }}).
+Diese Orientierungsseite macht Agenten messbar, beobachtbar und kontrollierbar. Im Mittelpunkt stehen Evaluation, Sicherheitsgrenzen und produktionsnahe Qualitätsarbeit. Konkrete LangSmith-Anleitungen liegen im Bereich [Frameworks]({{ '/05-frameworks/' | relative_url }}).
 
 | Frage | Dokument | Bezug |
 |---|---|---|

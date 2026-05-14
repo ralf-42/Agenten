@@ -702,13 +702,15 @@ A:
 | Dokument | Frage |
 |---|---|
 | [LangGraph]({{ '/orchestrierung/einsteiger-langgraph.html' | relative_url }}) | Welche LangGraph-Grundlagen braucht der Workshop? |
-| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Research-Assistant-Projekte? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Research-Assistant-Projekte? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
 
 
 

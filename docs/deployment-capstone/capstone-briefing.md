@@ -84,13 +84,15 @@ Der Bauplan bleibt gleich:
 | Dokument | Frage |
 |---|---|
 | [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Capstone-Briefing? |
-| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Capstone-Briefing? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Capstone-Briefing? |
 
 ---
 
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten
+
+
 
 
 

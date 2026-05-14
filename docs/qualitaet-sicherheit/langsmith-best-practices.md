@@ -717,8 +717,8 @@ callback = LangSmithCallback(
 
 ### Interne Dokumentation
 - [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
-- [LangChain 1.0 Must-Haves]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }})
-- [LangGraph 1.0 Must-Haves]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }})
+- [LangChain Best Practices]({{ '/erste-agenten/langchain-best-practices.html' | relative_url }})
+- [LangGraph Best Practices]({{ '/orchestrierung/langgraph-best-practices.html' | relative_url }})
 
 ### Related Commands
 - `/check-langsmith-changelog` - Prüft neue LangSmith-Features
@@ -791,8 +791,8 @@ callback = LangSmithCallback(
 
 | Dokument | Frage |
 |---|---|
-| [LangChain 1.0 Must-Haves]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Wie werden Chains, Agents und Tools korrekt implementiert? |
-| [LangGraph 1.0 Must-Haves]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
+| [LangChain Best Practices]({{ '/erste-agenten/langchain-best-practices.html' | relative_url }}) | Wie werden Chains, Agents und Tools korrekt implementiert? |
+| [LangGraph Best Practices]({{ '/orchestrierung/langgraph-best-practices.html' | relative_url }}) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
 | [Modell-Auswahl Guide]({{ '/orientierung/modell-auswahl-guide.html' | relative_url }}) | Welches Modell eignet sich für welche Agentenrolle? |
 | [Vom Modell zum Produkt]({{ '/deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Wie wird ein LangChain-Prototyp produktionsreif? |
 
@@ -801,6 +801,8 @@ callback = LangSmithCallback(
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
 
 
 

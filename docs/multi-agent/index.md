@@ -10,9 +10,13 @@ description: "Kommunikationsprotokolle und wiederverwendbare Skills: fortgeschri
 
 Dieser Bereich behandelt echte Arbeitsteilung zwischen Agenten, Kommunikationsprotokolle zwischen Agenten und Tools sowie die Kapselung wiederkehrender Arbeitsmuster als wiederverwendbare Skills.
 
-- **[Multi-Agent-Systeme]({{ '/multi-agent/multi-agent-systeme.html' | relative_url }})** – *Wann lohnt sich echte Arbeitsteilung zwischen mehreren Agenten?*
-- **[Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?]({{ '/multi-agent/agenten-kommunikationsprotokolle.html' | relative_url }})** – *Welche Rolle spielen MCP, A2A, ACP und AG-UI?* Einordnung der wichtigsten Protokolle und Schnittstellen.
-- **[Wann wird aus einem Prompt ein wiederverwendbarer Skill?]({{ '/multi-agent/skills.html' | relative_url }})** – *Wie werden wiederkehrende Arbeitsmuster stabil gekapselt?* `SKILL.md`, `references/` und `scripts/` als wiederverwendbare Struktur.
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Wann** lohnt sich Arbeitsteilung zwischen Agenten? | [Multi-Agent-Systeme]({{ '/multi-agent/multi-agent-systeme.html' | relative_url }}) | Rollen, Supervisor-Muster, Koordination und Grenzen von Multi-Agent-Designs. |
+| **Wie** sprechen Agenten mit Tools und anderen Agenten? | [Kommunikationsprotokolle]({{ '/multi-agent/agenten-kommunikationsprotokolle.html' | relative_url }}) | MCP, A2A, ACP, AG-UI und Schnittstellenlogik. |
+| **Wann** wird aus einem Prompt ein Skill? | [Skills]({{ '/multi-agent/skills.html' | relative_url }}) | Wiederverwendbare Arbeitsmuster mit `SKILL.md`, Referenzen und Skripten. |
+| **Wie** helfen DeepAgents bei komplexeren Aufgaben? | [Einsteiger DeepAgents]({{ '/multi-agent/einsteiger-deepagents.html' | relative_url }}) | Harness-Ansatz, Planning, Filesystem und Delegation. |
+| **Wie** können Agenten ohne Code gebaut werden? | [Einsteiger Agent Builder]({{ '/multi-agent/einsteiger-agent-builder.html' | relative_url }}) | Custom GPTs, Tool-Integration und Low-Code-Agenten. |
 
 
 

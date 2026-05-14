@@ -10,9 +10,11 @@ description: Checkpointing, Memory und Human-in-the-Loop für kontrollierbare Ag
 
 Dieser Bereich bündelt die Konzepte, mit denen Agenten über einzelne Schritte hinaus kontrollierbar bleiben: persistente Sitzungen, gespeicherter Zustand, Memory und menschliche Freigaben.
 
-- **[Checkpointing & Persistenz]({{ '/memory-hitl/checkpointing-persistenz.html' | relative_url }})** - *Wie bleiben Sitzungen und Zustände erhalten?*
-- **[Memory-Systeme]({{ '/memory-hitl/memory-systeme.html' | relative_url }})** - *Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?*
-- **[Human-in-the-Loop]({{ '/memory-hitl/human-in-the-loop.html' | relative_url }})** - *Wann sollten Menschen in den Ablauf eingreifen?*
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Wie** bleiben Sitzungen und Zustände erhalten? | [Checkpointing & Persistenz]({{ '/memory-hitl/checkpointing-persistenz.html' | relative_url }}) | Speichern, Fortsetzen und Wiederaufnehmen von Agentenläufen. |
+| **Was** sollte ein Agent erinnern? | [Memory-Systeme]({{ '/memory-hitl/memory-systeme.html' | relative_url }}) | Kurzzeitgedächtnis, Langzeitgedächtnis und Abgrenzung zu Persistenz. |
+| **Wann** muss ein Mensch eingreifen? | [Human-in-the-Loop]({{ '/memory-hitl/human-in-the-loop.html' | relative_url }}) | Freigaben, Rückfragen, Eskalationen und kontrollierte Unterbrechungen. |
 
 
 

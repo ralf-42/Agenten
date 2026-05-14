@@ -382,13 +382,15 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 | Dokument | Frage |
 |---|---|
 | [LangChain Best Practices]({{ '/erste-agenten/langchain-best-practices.html' | relative_url }}) | Welche LangChain-Konventionen helfen beim Übergang in eine produktionsreife Anwendung? |
-| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Agenten-Anwendungen? |
+| [Qualität und Sicherheit]({{ '/qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Agenten-Anwendungen? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
 
 
 

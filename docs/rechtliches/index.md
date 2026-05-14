@@ -8,13 +8,11 @@ description: Impressum, Datenschutz und rechtliche Hinweise
 
 # Rechtliches
 
-Rechtliche Informationen und Hinweise.
+Formale rechtliche Informationen zur Website und zu den bereitgestellten Materialien.
 
-## Übersicht
-
-- **Impressum** - Angaben gemäß § 5 TMG
-- **Datenschutz** - Informationen zum Datenschutz
-- **Haftungsausschluss** - Haftung für Inhalte
-
-Die rechtlichen Seiten finden Sie im Footer dieser Website.
+| Frage | Dokument | Bezug |
+|---|---|---|
+| **Wer** ist für diese Website verantwortlich? | [Impressum](impressum.html) | Anbieterkennzeichnung und Kontaktangaben. |
+| **Wie** werden personenbezogene Daten behandelt? | [Datenschutzerklärung](datenschutz.html) | Datenschutzinformationen für Website und Kursmaterialien. |
+| **Welche** Grenzen gelten für Inhalte und Links? | [Haftungsausschluss](haftungsausschluss.html) | Hinweise zu fachlicher Verantwortung, externen Links und Nutzung der Materialien. |
 

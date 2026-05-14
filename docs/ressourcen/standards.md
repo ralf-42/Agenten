@@ -26,7 +26,7 @@ has_toc: true
 
 Die 7 MUST-HAVE Features für LangChain 1.0+ sind vollständig dokumentiert in:
 
-👉 **[LangChain Guide]({{ '/tool-use-prompting-erste-agenten/einsteiger-langchain.html' | relative_url }})** - Tutorial mit ausführlichen Erklärungen und Mermaid-Diagrammen
+👉 **[LangChain Guide]({{ '/erste-agenten/einsteiger-langchain.html' | relative_url }})** - Tutorial mit ausführlichen Erklärungen und Mermaid-Diagrammen
 
 **Kurzübersicht der 7 Patterns:**
 
@@ -304,27 +304,28 @@ def test_agent_with_tools():
 
 ## 📚 Weitere Ressourcen
 
-- **LangChain Tutorial:** [LangChain Guide]({{ '/tool-use-prompting-erste-agenten/einsteiger-langchain.html' | relative_url }})
-- **LangGraph Tutorial:** [LangGraph Guide]({{ '/orchestrierung-state-langgraph/einsteiger-langgraph.html' | relative_url }})
+- **LangChain Tutorial:** [LangChain Guide]({{ '/erste-agenten/einsteiger-langchain.html' | relative_url }})
+- **LangGraph Tutorial:** [LangGraph Guide]({{ '/orchestrierung/einsteiger-langgraph.html' | relative_url }})
 - **LangChain Docs:** [python.langchain.com](https://python.langchain.com/)
 - **LangGraph Docs:** [langchain-ai.github.io/langgraph](https://langchain-ai.github.io/langgraph/)
 
 ---
 
-> 💡 **Tipp:** Für ausführliche LangChain-Beispiele mit Mermaid-Diagrammen siehe [LangChain Guide]({{ '/tool-use-prompting-erste-agenten/einsteiger-langchain.html' | relative_url }})!
+> 💡 **Tipp:** Für ausführliche LangChain-Beispiele mit Mermaid-Diagrammen siehe [LangChain Guide]({{ '/erste-agenten/einsteiger-langchain.html' | relative_url }})!
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides]({{ '/tool-use-prompting-erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Code Standards? |
-| [Best Practices]({{ '/evaluation-security-reliability/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Code Standards? |
+| [Framework-Guides]({{ '/erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Code Standards? |
+| [Best Practices]({{ '/qualitaet-sicherheit/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Code Standards? |
 
 ---
 
 **Version:** 2.0 (konsolidiert)<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

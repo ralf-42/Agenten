@@ -27,7 +27,7 @@ has_toc: true
 
 In dieser Übungsaufgabe entsteht schrittweise ein **Research Assistant**, der Fragen zu einem Fachartikel-Korpus beantwortet. Der Assistant priorisiert Quellen, fasst zentrale Befunde zusammen, nennt Citation-Hinweise und erzeugt bei Bedarf Kontrollfragen zu Quellen und Aussagen.
 
-Das didaktische Zielbild dieser Aufgabe ist in [Research Assistant als Leitaufgabe]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) beschrieben.
+Das didaktische Zielbild dieser Aufgabe ist in [Research Assistant]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines von Grund auf verstehen
@@ -1434,7 +1434,6 @@ class SupportState(TypedDict):
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Human-in-the-Loop
-parent: Agenten-Implementierung
-nav_order: 12
+parent: Ablaufsteuerung und Zustand
+grand_parent: Agenten-Implementierung
+nav_order: 4
 description: Human-in-the-Loop als Designprinzip für Kontrolle, Freigabe und Eskalation in KI-Agenten
 has_toc: true
 ---
@@ -155,7 +156,6 @@ Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. E
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

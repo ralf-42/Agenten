@@ -85,6 +85,7 @@ Die Frontmatter-Metadaten wurden an die neue Struktur angepasst:
 - interne Hilfsseiten bleiben über `nav_exclude: true` aus der Hauptnavigation heraus.
 
 Die Einsteiger-Dokumente wurden bewusst wieder mit `Einsteiger` im Titel versehen, damit ihre Funktion in der Navigation klar erkennbar bleibt.
+Eine Ausnahme ist `Prompt-Templates`: Dieses Dokument ist als allgemeine Prompt-Vorlagenseite benannt und nicht mehr als Einsteiger-Dokument geführt.
 
 ## Lernpfad und Zuerst lesen
 
@@ -124,6 +125,14 @@ Beispiele:
 
 Damit übernehmen die Indexseiten die Rolle der Orientierung und ersetzen generische Hub-Seiten.
 
+Im Bereich `04-agenten-implementierung/` wurde zusätzlich eine Binnenstruktur eingeführt:
+
+- Grundlagen des Agentenentwurfs
+- Kontext und Wissensanbindung
+- Ablaufsteuerung und Zustand
+
+Dadurch bleibt der größte Inhaltsbereich trotz vieler Dokumente leichter lesbar, ohne zusätzliche Unterordner anzulegen.
+
 ## Verschlankung der Struktur
 
 Die generische Hub-Seite `qualitaet-sicherheit/best-practices.md` wurde entfernt. Sie war ein Überbleibsel der alten Framework-Struktur.
@@ -145,8 +154,10 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 - die Sammelseite `erste-agenten/framework-guides.md` wurde entfernt,
 - die drei Modellauswahl-Seiten wurden in `03-modelle-provider-anpassung/modellauswahl.md` zusammengeführt,
 - `fine-tuning.md` wurde nach `03-modelle-provider-anpassung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
+- der Navigationspunkt wurde auf `Modelle & Provider` gekürzt,
+- LangSmith-Seiten wurden aus `07-qualitaet-sicherheit/` nach `05-frameworks/` verschoben, weil sie konkrete Tool-Anleitungen sind,
 - `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/research-assistant.md` zusammengeführt,
-- Workshop, Challenge und Projekte wurden als ergänzende Umsetzungsformate eingeordnet.
+- `02-orientierung-entscheidung/research-assistant-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
 
 ## Linkpflege
 

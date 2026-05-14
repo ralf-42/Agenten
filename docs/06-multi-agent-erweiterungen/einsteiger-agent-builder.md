@@ -791,7 +791,7 @@ graph TB
 ---
 
 **Version:**    2.0<br>
-**Stand:**    November 2025<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

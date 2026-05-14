@@ -9,7 +9,7 @@ description: "LangGraph-Einstieg und Best Practices"
 
 # LangGraph
 
-Dieser Abschnitt bündelt die LangGraph-Dokumente: StateGraph-Grundlagen, Routing, State, Checkpointing und robuste Graph-Patterns.
+Diese Orientierungsseite bündelt die LangGraph-Dokumente: StateGraph-Grundlagen, Routing, State, Checkpointing und robuste Graph-Patterns.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

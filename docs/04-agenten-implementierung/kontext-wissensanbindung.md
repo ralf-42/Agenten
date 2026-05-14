@@ -9,7 +9,7 @@ description: "Context Engineering, Tokenizing, Chunking, Embeddings und RAG"
 
 # Kontext & Wissen
 
-Dieser Abschnitt erklärt, wie Agenten mit dem richtigen Kontext arbeiten und wie Dokumente für Retrieval und quellengebundene Antworten vorbereitet werden.
+Diese Orientierungsseite bündelt die Dokumente zur Kontext- und Wissensanbindung. Sie ist keine zusätzliche Fachvertiefung, sondern führt zu den einzelnen Bausteinen: Context Engineering, Textvorbereitung, Embeddings und RAG.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

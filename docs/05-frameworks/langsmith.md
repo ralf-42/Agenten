@@ -9,7 +9,7 @@ description: "LangSmith-Tracing, Evaluation und produktionsnahe Konventionen"
 
 # LangSmith
 
-Dieser Abschnitt bündelt die LangSmith-Dokumente. LangSmith ist hier als konkretes Tool des LangChain-Ökosystems eingeordnet; die übergeordneten Qualitätskonzepte bleiben im Bereich [Qualität & Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}).
+Diese Orientierungsseite bündelt die LangSmith-Dokumente. LangSmith ist hier als konkretes Tool des LangChain-Ökosystems eingeordnet; die übergeordneten Qualitätskonzepte bleiben im Bereich [Qualität & Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}).
 
 | Frage | Dokument | Bezug |
 |---|---|---|

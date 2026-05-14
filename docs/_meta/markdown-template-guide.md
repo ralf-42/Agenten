@@ -89,7 +89,7 @@ Hier folgt der eigentliche Inhalt.
 ---
 
 **Version:**    1.0<br>
-**Stand:**    März 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 ````
 
@@ -148,11 +148,11 @@ Jedes inhaltliche Dokument endet vor dem Versionsblock mit einer Abgrenzungstabe
 
 ### Versionierungsblock
 
-Jede Seite endet mit genau diesem Block. Im Markdown-Quelltext stehen nach `**Version:**`, `**Stand:**` und `**Kurs:**` jeweils vier Leerzeichen vor dem Wert.
+Jede Seite endet mit genau diesem Block. Der `Stand` wird über alle sichtbaren Kursseiten hinweg einheitlich geführt.
 
 ```markdown
 **Version:**    1.0<br>
-**Stand:**    März 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 ```
 
@@ -335,9 +335,8 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 ---
 
 **Version:**    1.0<br>
-**Stand:**    März 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

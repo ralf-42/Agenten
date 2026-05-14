@@ -9,7 +9,7 @@ has_toc: true
 
 # Research Assistant
 
-Der **Research Assistant** ist die uebergreifende Leitaufgabe des Kurses. Er dient als roter Faden, an dem zentrale Agentenkonzepte wiederholt sichtbar werden: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
+Der **Research Assistant** ist die übergreifende Leitaufgabe des Kurses. Er dient als roter Faden, an dem zentrale Agentenkonzepte wiederholt sichtbar werden: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
 
 Die Leitfrage lautet:
 
@@ -17,7 +17,7 @@ Die Leitfrage lautet:
 
 ## Warum diese Aufgabe?
 
-Der Research Assistant ist didaktisch geeignet, weil er typische Anforderungen realer Agentensysteme in einer ueberschaubaren Aufgabe buendelt:
+Der Research Assistant ist didaktisch geeignet, weil er typische Anforderungen realer Agentensysteme in einer überschaubaren Aufgabe bündelt:
 
 - Er braucht eine klare Aufgabenabgrenzung.
 - Er muss Wissen aus Dokumenten nutzen, statt frei zu halluzinieren.
@@ -33,7 +33,7 @@ Die Leitaufgabe ist kein einzelnes Einstiegsthema, sondern begleitet mehrere Kur
 
 | Kursphase | Bezug zur Leitaufgabe |
 |---|---|
-| Orientierung | Klaeren, ob ein Agent ueberhaupt sinnvoll ist. |
+| Orientierung | Klären, ob ein Agent überhaupt sinnvoll ist. |
 | Modelle und Provider | Entscheiden, welche Modellrollen benoetigt werden. |
 | Agenten-Implementierung | Architektur, Prompting, Tool Use, RAG, State und HITL umsetzen. |
 | Frameworks | LangChain, LangGraph, ChromaDB und LangSmith praktisch einsetzen. |

@@ -406,5 +406,5 @@ flowchart TD
 ---
 
 **Version:** 1.0<br>
-**Stand:** März 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.

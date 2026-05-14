@@ -260,7 +260,7 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 ---
 
 **Version:** 1.0<br>
-**Stand:** April 2026<br>
+**Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

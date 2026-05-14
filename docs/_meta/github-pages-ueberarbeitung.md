@@ -55,6 +55,7 @@ Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
 | Rechtliches | `11-rechtliches/` |
 
 Die Verzeichnisnamen sind bewusst nummeriert, damit Dateisystem und Sidebar dieselbe Reihenfolge zeigen.
+`Start`, `Zuerst lesen` und `Lernpfad` sind in der Sidebar bewusst direkt auf der ersten Ebene sichtbar. Die fachlichen Hauptbereiche beginnen danach mit `Orientierung & Entscheidung`.
 
 ## Umstrukturierung der Verzeichnisse
 
@@ -80,7 +81,7 @@ Die Frontmatter-Metadaten wurden an die neue Struktur angepasst:
 
 - `title` der Hauptseiten wurde auf kurze Navigationsbezeichnungen gekürzt.
 - `parent` der Unterseiten wurde auf die neuen Haupttitel umgestellt.
-- `nav_order` wurde so gesetzt, dass die Navigation dem Lernpfad folgt.
+- `nav_order` wurde so gesetzt, dass `Start`, `Zuerst lesen` und `Lernpfad` direkt am Anfang stehen und erst danach die fachlichen Hauptbereiche folgen.
 - `has_children: true` wurde auf den neuen Hauptbereichen gesetzt.
 - interne Hilfsseiten bleiben über `nav_exclude: true` aus der Hauptnavigation heraus.
 
@@ -133,6 +134,17 @@ Im Bereich `04-agenten-implementierung/` wurde zusätzlich eine echte Sidebar-Un
 
 Dafür wurden drei Gruppenseiten angelegt und die fachlichen Dokumente per `parent` und `grand_parent` darunter eingeordnet. Dadurch bleibt der größte Inhaltsbereich trotz vieler Dokumente in der linken Navigation besser lesbar, ohne die Dateien in zusätzliche Unterordner zu verschieben.
 
+Auch der Bereich `05-frameworks/` erhielt eine eigene Sidebar-Unterstruktur:
+
+- LangChain
+- LangGraph
+- LangSmith
+- Weitere Tools
+
+LangSmith wurde dabei bewusst den Frameworks zugeordnet, weil die Dokumente konkrete Tool-Anleitungen enthalten. Die übergeordneten Qualitätskonzepte bleiben im Bereich `07-qualitaet-sicherheit/`.
+
+Die Gruppenseiten in `04-agenten-implementierung/` und `05-frameworks/` wurden als Orientierungsseiten formuliert. Sie sollen nicht weitere Fachinhalte duplizieren, sondern den Bezug zwischen den Dokumenten des jeweiligen Navigationspunkts erklären.
+
 ## Verschlankung der Struktur
 
 Die generische Hub-Seite `qualitaet-sicherheit/best-practices.md` wurde entfernt. Sie war ein Überbleibsel der alten Framework-Struktur.
@@ -158,6 +170,17 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 - LangSmith-Seiten wurden aus `07-qualitaet-sicherheit/` nach `05-frameworks/` verschoben, weil sie konkrete Tool-Anleitungen sind,
 - `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/research-assistant.md` zusammengeführt,
 - `02-orientierung-entscheidung/research-assistant-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
+- `08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` wurde aus den Frameworks in Deployment & Betrieb verlagert, weil der Text den Weg vom Modell zur produktionsnahen Anwendung beschreibt.
+- Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Research Assistant`.
+
+## Feinschliff und Konsistenz
+
+Nach der strukturellen Überarbeitung wurden sichtbare Inkonsistenzen bereinigt:
+
+- Die formalen Footer-Zeilen `**Stand:** ...` wurden auf den einheitlichen Stand `Mai 2026` gesetzt.
+- Sichtbare ASCII-Umlautschreibungen in Index- und Orientierungsseiten wurden korrigiert.
+- Die Hub-Seiten wurden klarer als Orientierungsseiten formuliert, damit sie nicht wie zusätzliche Inhaltsduplikate wirken.
+- Die Top-Level-Reihenfolge wurde eindeutig gesetzt: `Start`, `Zuerst lesen`, `Lernpfad`, danach die fachlichen Hauptbereiche.
 
 ## Linkpflege
 
@@ -182,3 +205,16 @@ Ein lokaler Jekyll-Build wurde nicht ausgeführt, weil im Projekt kein `Gemfile`
 ## Ergebnis
 
 Die GitHub-Pages-Dokumentation ist jetzt stärker am Lernpfad orientiert, nutzt kürzere Navigationsbezeichnungen, trennt fachliche und formale Bereiche klarer und vermeidet redundante Hub-Seiten. Die Struktur ist damit schlanker, verständlicher und besser auf einen Kurs zu KI-Agenten ausgerichtet.
+
+## Übertragbarkeit auf GenAI/docs
+
+Die hier beschriebene Überarbeitung kann als Grundlage für eine mögliche Überarbeitung von `GenAI/docs` dienen. Übertragbar sind vor allem:
+
+- die klare Trennung von Einstieg, Lernpfad, fachlichen Hauptbereichen, Ressourcen und Rechtlichem,
+- kurze Navigationsbezeichnungen mit nummerierten Verzeichnissen,
+- Indexseiten als Frage-Einstieg statt bloßer Dateilisten,
+- einheitliche Frontmatter-Logik mit `parent`, `grand_parent`, `nav_order` und `has_children`,
+- konsistente Linkpflege nach Verzeichnisumzügen,
+- einheitliche Footer- und Standangaben.
+
+Nicht eins zu eins übertragbar ist die konkrete Fachstruktur. `GenAI/docs` sollte nicht die Agenten-Gliederung kopieren, sondern dieselbe Überarbeitungslogik auf die eigenen Themen anwenden: Grundlagen, Modellnutzung, Prompting, Multimodalität, Anwendungen, Bewertung, Regulatorik, Ressourcen und Rechtliches.

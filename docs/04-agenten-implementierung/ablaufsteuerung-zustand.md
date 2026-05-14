@@ -9,7 +9,7 @@ description: "State Management, Checkpointing, Memory und Human-in-the-Loop"
 
 # Ablauf & Zustand
 
-Dieser Abschnitt behandelt die Kontrolle mehrstufiger Agentenläufe: Zustand, Persistenz, Memory und menschliche Eingriffe.
+Diese Orientierungsseite behandelt die Kontrolle mehrstufiger Agentenläufe: Zustand, Persistenz, Memory und menschliche Eingriffe.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

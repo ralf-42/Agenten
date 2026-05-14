@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Entwurf
-parent: Agenten-Implementierung
+parent: Entwurf
+grand_parent: Agenten-Implementierung
 nav_order: 1
-has_children: true
 description: "Architekturen, Prompting, Prompt-Templates und Tool Use"
 ---
 

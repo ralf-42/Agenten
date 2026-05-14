@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Human-in-the-Loop
-parent: "Ablauf & Zustand"
+parent: Ablauf & Zustand
 grand_parent: Agenten-Implementierung
-nav_order: 4
+nav_order: 5
 description: Human-in-the-Loop als Designprinzip für Kontrolle, Freigabe und Eskalation in KI-Agenten
 has_toc: true
 ---

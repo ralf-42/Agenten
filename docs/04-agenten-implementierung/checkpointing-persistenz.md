@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Checkpointing & Persistenz
-parent: "Ablauf & Zustand"
+parent: Ablauf & Zustand
 grand_parent: Agenten-Implementierung
-nav_order: 2
+nav_order: 3
 description: Checkpointing und Persistenz in LangGraph für unterbrechbare und wiederaufnehmbare Agenten-Workflows
 has_toc: true
 ---

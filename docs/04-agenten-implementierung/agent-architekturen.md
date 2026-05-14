@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Agenten-Architekturen
 parent: Entwurf
 grand_parent: Agenten-Implementierung
-nav_order: 1
+nav_order: 2
 description: Architekturmuster und Design-Prinzipien für KI-Agenten
 has_toc: true
 ---

@@ -1,10 +1,9 @@
----
+﻿---
 layout: default
 title: Zuerst lesen
 nav_order: 2
 description: "Kompakter Einstieg: die wichtigsten Dokumente vor dem ersten Agentenprojekt"
 has_toc: true
-permalink: /zuerst-lesen.html
 ---
 
 # Zuerst lesen

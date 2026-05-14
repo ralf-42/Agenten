@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Prompt-Templates
 parent: Entwurf

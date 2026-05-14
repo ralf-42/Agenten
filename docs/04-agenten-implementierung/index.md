@@ -12,6 +12,6 @@ Diese Orientierungsseite beschreibt die fachlichen und technischen Bausteine ein
 
 | Frage | Dokument | Bezug |
 |---|---|---|
-| **Wie** wird ein Agent grundlegend entworfen? | [Entwurf]({{ '/04-agenten-implementierung/grundlagen-agentenentwurf.html' | relative_url }}) | Architekturen, Prompting, Prompt-Templates und Tool Use. |
-| **Wie** arbeitet ein Agent mit Kontext und Wissen? | [Kontext & Wissen]({{ '/04-agenten-implementierung/kontext-wissensanbindung.html' | relative_url }}) | Context Engineering, Tokenizing, Chunking, Embeddings und RAG. |
-| **Wie** bleiben Abläufe kontrollierbar? | [Ablauf & Zustand]({{ '/04-agenten-implementierung/ablaufsteuerung-zustand.html' | relative_url }}) | State Management, Checkpointing, Memory und Human-in-the-Loop. |
+| **Wie** wird ein Agent grundlegend entworfen? | [Entwurf]({{ '/04-agenten-implementierung/entwurf.html' | relative_url }}) | Architekturen, Prompting, Prompt-Templates und Tool Use. |
+| **Wie** arbeitet ein Agent mit Kontext und Wissen? | [Kontext & Wissen]({{ '/04-agenten-implementierung/kontext-wissen.html' | relative_url }}) | Context Engineering, Tokenizing, Chunking, Embeddings und RAG. |
+| **Wie** bleiben Abläufe kontrollierbar? | [Ablauf & Zustand]({{ '/04-agenten-implementierung/ablauf-zustand.html' | relative_url }}) | State Management, Checkpointing, Memory und Human-in-the-Loop. |

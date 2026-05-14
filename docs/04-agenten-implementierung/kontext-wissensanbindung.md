@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: Kontext & Wissen
-parent: Agenten-Implementierung
-nav_order: 2
-has_children: true
+parent: Kontext & Wissen
+grand_parent: Agenten-Implementierung
+nav_order: 1
 description: "Context Engineering, Tokenizing, Chunking, Embeddings und RAG"
 ---
 

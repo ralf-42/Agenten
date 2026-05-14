@@ -1,9 +1,9 @@
----
+﻿---
 layout: default
 title: State Management
-parent: "Ablauf & Zustand"
+parent: Ablauf & Zustand
 grand_parent: Agenten-Implementierung
-nav_order: 1
+nav_order: 2
 description: "Zustandsverwaltung in LangGraph: State, Reducer, TypedDict und Routing für mehrstufige Workflows"
 has_toc: true
 ---

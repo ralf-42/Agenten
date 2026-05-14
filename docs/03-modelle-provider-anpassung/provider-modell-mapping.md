@@ -217,8 +217,8 @@ Beide Dokumente zusammen ergeben:
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-implementierung-frameworks-praxis/' | relative_url }}) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
-| [Qualität und Sicherheit]({{ '/06-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
+| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Einsteiger mit Provider-Modell-Mapping? |
+| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Modell-Mapping? |
 
 ---
 

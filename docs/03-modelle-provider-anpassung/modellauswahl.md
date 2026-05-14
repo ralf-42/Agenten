@@ -220,8 +220,8 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 | Dokument | Frage |
 |---|---|
 | [Fine-Tuning]({{ '/03-modelle-provider-anpassung/fine-tuning.html' | relative_url }}) | Wann reicht Modellwahl nicht mehr und Training wird notwendig? |
-| [Context Engineering]({{ '/04-implementierung-frameworks-praxis/context-engineering.html' | relative_url }}) | Welche Kontextstrategie entscheidet mit darüber, ob ein Modell genügt? |
-| [Qualität und Sicherheit]({{ '/06-qualitaet-sicherheit/' | relative_url }}) | Wie werden Modellqualität, Tracing und Evaluation sichtbar gemacht? |
+| [Context Engineering]({{ '/04-agenten-implementierung/context-engineering.html' | relative_url }}) | Welche Kontextstrategie entscheidet mit darüber, ob ein Modell genügt? |
+| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Wie werden Modellqualität, Tracing und Evaluation sichtbar gemacht? |
 
 ---
 

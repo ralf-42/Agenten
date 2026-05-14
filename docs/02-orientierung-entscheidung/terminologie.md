@@ -98,7 +98,7 @@ Drei Begriffspaare führen besonders oft zu Missverständnissen in Kursunterlage
 |---|---|
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI-Vorhaben überhaupt sinnvoll? |
 | [Welches Werkzeug?]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Welcher Lösungsweg passt zur Aufgabe? |
-| [Agenten-Architekturen]({{ '/04-implementierung-frameworks-praxis/agent-architekturen.html' | relative_url }}) | Welche Architekturmuster gibt es und wann passen sie? |
+| [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) | Welche Architekturmuster gibt es und wann passen sie? |
 
 ---
 

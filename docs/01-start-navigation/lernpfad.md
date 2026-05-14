@@ -39,10 +39,10 @@ Ein Gesamtbild fehlt noch, die Grundbegriffe sind unscharf oder Agenten werden n
 Empfohlener Einstieg:
 
 1. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-2. [Welche Architektur passt zu diesem Agenten?]({{ '/04-implementierung-frameworks-praxis/agent-architekturen.html' | relative_url }})
+2. [Welche Architektur passt zu diesem Agenten?]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }})
 3. [Welches Werkzeug?]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }})
 4. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
-5. [Wie nutzen Agenten Werkzeuge?]({{ '/04-implementierung-frameworks-praxis/tool-use-function-calling.html' | relative_url }})
+5. [Wie nutzen Agenten Werkzeuge?]({{ '/04-agenten-implementierung/tool-use-function-calling.html' | relative_url }})
 
 ### Erster Agent
 
@@ -50,11 +50,11 @@ Ein erster funktionierender Agent soll entstehen, ohne gleich in zu viele Patter
 
 Empfohlener Einstieg:
 
-1. [LangChain Guide]({{ '/04-implementierung-frameworks-praxis/einsteiger-langchain.html' | relative_url }})
-2. [Prompt Engineering]({{ '/04-implementierung-frameworks-praxis/prompt-engineering.html' | relative_url }})
-3. [Context Engineering]({{ '/04-implementierung-frameworks-praxis/context-engineering.html' | relative_url }})
-4. [State Management]({{ '/04-implementierung-frameworks-praxis/state-management.html' | relative_url }})
-5. [LangGraph Guide]({{ '/04-implementierung-frameworks-praxis/einsteiger-langgraph.html' | relative_url }})
+1. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
+2. [Prompt Engineering]({{ '/04-agenten-implementierung/prompt-engineering.html' | relative_url }})
+3. [Context Engineering]({{ '/04-agenten-implementierung/context-engineering.html' | relative_url }})
+4. [State Management]({{ '/04-agenten-implementierung/state-management.html' | relative_url }})
+5. [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})
 
 ### RAG und Wissensarbeit
 
@@ -62,12 +62,12 @@ Dokumente, Wissensquellen oder Grounding spielen die Hauptrolle. Meist steht dan
 
 Empfohlener Einstieg:
 
-1. [RAG-Konzepte]({{ '/04-implementierung-frameworks-praxis/rag-konzepte.html' | relative_url }})
-2. [Tokenizing & Chunking]({{ '/04-implementierung-frameworks-praxis/tokenizing-chunking.html' | relative_url }})
-3. [Embeddings]({{ '/04-implementierung-frameworks-praxis/embeddings.html' | relative_url }})
-4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?]({{ '/04-implementierung-frameworks-praxis/memory-systeme.html' | relative_url }})
-5. [Woher zeigt sich, ob ein Agent gut arbeitet?]({{ '/06-qualitaet-sicherheit/evaluation-observability.html' | relative_url }})
-6. [ChromaDB Guide]({{ '/04-implementierung-frameworks-praxis/einsteiger-chromadb.html' | relative_url }})
+1. [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }})
+2. [Tokenizing & Chunking]({{ '/04-agenten-implementierung/tokenizing-chunking.html' | relative_url }})
+3. [Embeddings]({{ '/04-agenten-implementierung/embeddings.html' | relative_url }})
+4. [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?]({{ '/04-agenten-implementierung/memory-systeme.html' | relative_url }})
+5. [Woher zeigt sich, ob ein Agent gut arbeitet?]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }})
+6. [ChromaDB Guide]({{ '/05-frameworks/einsteiger-chromadb.html' | relative_url }})
 
 ### Robustheit und Kontrolle
 
@@ -75,10 +75,10 @@ Die erste Demo funktioniert, aber es fehlt an Steuerbarkeit, Nachvollziehbarkeit
 
 Empfohlener Einstieg:
 
-1. [Checkpointing & Persistenz]({{ '/04-implementierung-frameworks-praxis/checkpointing-persistenz.html' | relative_url }})
-2. [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-implementierung-frameworks-praxis/human-in-the-loop.html' | relative_url }})
-3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?]({{ '/06-qualitaet-sicherheit/agent-security.html' | relative_url }})
-4. [Agent Evaluation & Observability Best Practices]({{ '/06-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
+1. [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }})
+2. [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }})
+3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }})
+4. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
 
 ### Produktion und Betrieb
 
@@ -86,12 +86,12 @@ Ein System soll nicht nur funktionieren, sondern auch unter realen Bedingungen b
 
 Empfohlener Einstieg:
 
-1. [Minimum Viable Agent Stack]({{ '/07-deployment-capstone/minimum-viable-agent-stack.html' | relative_url }})
-2. [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/07-deployment-capstone/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
-3. [Aus Entwicklung ins Deployment]({{ '/07-deployment-capstone/aus-entwicklung-ins-deployment.html' | relative_url }})
-4. [LangSmith Best Practices]({{ '/06-qualitaet-sicherheit/langsmith-best-practices.html' | relative_url }})
+1. [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }})
+2. [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/05-frameworks/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
+3. [Aus Entwicklung ins Deployment]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }})
+4. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
 5. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
-6. [Agent Evaluation & Observability Best Practices]({{ '/06-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
+6. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
 
 ### Governance und Rahmenbedingungen
 
@@ -99,18 +99,18 @@ Sobald Agentensysteme in Bildung, Verwaltung oder Unternehmen eingesetzt werden,
 
 Empfohlener Einstieg:
 
-1. [Digitale Souveränität]({{ '/08-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
-2. [Ethik und GenAI]({{ '/08-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }})
-3. [EU AI Act]({{ '/08-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
-4. [Datenschutz & DSGVO]({{ '/08-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
+1. [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
+2. [Ethik und GenAI]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }})
+3. [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
+4. [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
 
 ## Drei Dokumente für fast jeden Start
 
 Wer nicht lange wählen will, kommt mit diesen drei Dokumenten meist am schnellsten ins Thema:
 
 1. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-2. [Welche Architektur passt zu diesem Agenten?]({{ '/04-implementierung-frameworks-praxis/agent-architekturen.html' | relative_url }})
-3. [LangChain Guide]({{ '/04-implementierung-frameworks-praxis/einsteiger-langchain.html' | relative_url }})
+2. [Welche Architektur passt zu diesem Agenten?]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }})
+3. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
 
 Diese Kombination klärt erst die Einsatzfrage, dann die Struktur und erst danach die Umsetzung. Genau diese Reihenfolge verhindert viele frühe Fehlstarts.
 
@@ -127,7 +127,7 @@ Die Dokumentation ist in Bereiche gegliedert, die unterschiedliche Funktionen ha
 | Sessions, Memory und HITL | Persistenz, Erinnerung, menschliche Freigaben | Wie bleibt ein Ablauf kontrollierbar? |
 | Multi-Agent, Skills und Protokolle | Arbeitsteilung, Skills, Schnittstellen | Wie arbeiten Agenten zusammen? |
 | Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit | Wie wird ein Agent belastbar? |
-| Deployment, Governance und Capstone | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? |
+| Deployment und Betrieb | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? |
 | Regulatorik, Datenschutz und Verantwortung | EU AI Act, DSGVO, Ethik, Souveränität | Welche Rahmenbedingungen prägen den Einsatz? |
 | Ressourcen | Setup, Standards, Troubleshooting, Links | Was hilft bei der praktischen Arbeit? |
 
@@ -146,17 +146,16 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 | Dokument | Frage |
 |---|---|
 | [Orientierung & Entscheidung]({{ '/02-orientierung-entscheidung/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
-| [Implementierung: Frameworks & Praxis]({{ '/04-implementierung-frameworks-praxis/' | relative_url }}) | Welche Grundlagen brauche ich für die erste Umsetzung? |
-| [Deployment & Capstone]({{ '/07-deployment-capstone/' | relative_url }}) | Welche Dokumente begleiten den Weg in Betrieb und Projektarbeit? |
-| [Regulatorik & Verantwortung]({{ '/08-regulatorik-verantwortung/' | relative_url }}) | Welche inhaltlichen Rahmenbedingungen gelten für Agentensysteme? |
-| [Ressourcen]({{ '/09-ressourcen/' | relative_url }}) | Welche Hilfen und Nachschlagepunkte unterstützen die Umsetzung? |
+| [Agenten-Implementierung]({{ '/04-agenten-implementierung/' | relative_url }}) | Welche Grundlagen brauche ich für die erste Umsetzung? |
+| [Deployment & Betrieb]({{ '/08-deployment-betrieb/' | relative_url }}) | Welche Dokumente begleiten den Weg in Betrieb und Projektarbeit? |
+| [Regulatorik & Verantwortung]({{ '/09-regulatorik-verantwortung/' | relative_url }}) | Welche inhaltlichen Rahmenbedingungen gelten für Agentensysteme? |
+| [Ressourcen]({{ '/10-ressourcen/' | relative_url }}) | Welche Hilfen und Nachschlagepunkte unterstützen die Umsetzung? |
 
 ---
 
 **Version:** 1.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

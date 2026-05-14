@@ -110,10 +110,10 @@ Entwickler unterschätzen oft, dass ein gutes No-Go genauso wertvoll sein kann w
 | Dokument | Frage |
 |---|---|
 | [Aufgaben & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Welcher Lösungsweg ist passend, wenn ein KI-Vorhaben grundsätzlich sinnvoll erscheint? |
-| [Evaluation & Observability]({{ '/06-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie wird die Qualität eines späteren Systems belastbar gemessen? |
-| [Agenten-Sicherheit]({{ '/06-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
-| [EU AI Act]({{ '/08-regulatorik-verantwortung/eu-ai-act.html' | relative_url }}) | Welche regulatorischen Anforderungen können ein Vorhaben einschränken oder prägen? |
-| [Digitale Souveränität]({{ '/08-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Welche Abhängigkeiten und Cloud-Fragen entstehen durch Modell- und Infrastrukturwahl? |
+| [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie wird die Qualität eines späteren Systems belastbar gemessen? |
+| [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche Sicherheitsfragen müssen in kritischen Projekten zusätzlich berücksichtigt werden? |
+| [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }}) | Welche regulatorischen Anforderungen können ein Vorhaben einschränken oder prägen? |
+| [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Welche Abhängigkeiten und Cloud-Fragen entstehen durch Modell- und Infrastrukturwahl? |
 
 ---
 

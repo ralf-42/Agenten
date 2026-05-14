@@ -325,4 +325,3 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 
 
 
-

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "API-Keys & Provider"
-parent: "Modelle, Provider & Anpassung"
+parent: "Modelle & Provider"
 nav_order: 4
 description: Übersicht über LLM-Provider, API-Keys und Colab-Integration
 has_toc: true

@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Modelle, Provider & Anpassung"
+title: "Modelle & Provider"
 nav_order: 3
 has_children: true
 description: "Strategische Weichenstellung: Modellwahl, Provider, Fine-Tuning und API-Setup"
 ---
 
-# Modelle, Provider & Anpassung
+# Modelle & Provider
 
 Dieser Bereich buendelt die Entscheidungen rund um Modellrollen, Anbieter, API-Zugriff und die Frage, wann Modellanpassung statt besserer Systemgestaltung notwendig wird.
 

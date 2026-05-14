@@ -2,7 +2,7 @@
 layout: default
 title: RAG-Konzepte
 parent: Agenten-Implementierung
-nav_order: 9
+nav_order: 8
 description: "RAG-Konzepte für Agenten: Retrieval, Chunking, Embeddings, Reranking und Grounding"
 has_toc: true
 ---
@@ -541,7 +541,6 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 **Version:**    1.1<br>
 **Stand:**    April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

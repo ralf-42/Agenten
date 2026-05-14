@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Provider-Modell-Mapping
-parent: "Modelle, Provider & Anpassung"
+parent: "Modelle & Provider"
 nav_order: 2
 description: Rollenbasiertes Mapping der im Kurs verwendeten Modelltypen auf OpenAI, Mistral, Gemini und Anthropic
 has_toc: true

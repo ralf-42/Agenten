@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Aufgaben & Lösungswege
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 2
 description: "Entscheidungshilfe für Agenten-Projekte: erst den Lösungsweg klären, dann die passende Agentenarchitektur wählen"
 has_toc: true
@@ -190,6 +190,7 @@ Kurzcheck:
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

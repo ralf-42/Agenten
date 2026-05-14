@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Ethik und GenAI
-parent: Regulatorik, Datenschutz und Verantwortung
+parent: Regulatorik
 nav_order: 3
 description: "Ethische Aspekte von GenAI und KI-Agenten: Verantwortung, Bias, Autonomie, Transparenz und Kontrolle"
 has_toc: true
@@ -143,6 +143,7 @@ Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokume
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

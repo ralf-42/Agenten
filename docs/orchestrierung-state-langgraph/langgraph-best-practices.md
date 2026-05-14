@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangGraph Best Practices
-parent: Orchestrierung, State und LangGraph
+parent: Orchestrierung
 nav_order: 3
 description: Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg
 has_toc: true
@@ -1156,6 +1156,7 @@ graph = StateGraph(MyState, context_schema=ContextSchema)
 **Version:** 1.6<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LangGraph
-parent: Orchestrierung, State und LangGraph
+parent: Orchestrierung
 nav_order: 2
 description: Multi-Agent-Systeme und Workflows mit LangGraph
 has_toc: true
@@ -490,6 +490,7 @@ Mögliche Erweiterungen:
 **Version:** 2.0<br>
 **Stand:** Januar 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

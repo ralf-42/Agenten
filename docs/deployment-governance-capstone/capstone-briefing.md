@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Capstone-Briefing
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 8
 permalink: /deployment-governance-capstone/capstone-briefing.html
 description: "Abschlussprojekt: Research Assistant mit eigenem Korpus oder eigener Variante"
@@ -91,6 +91,7 @@ Der Bauplan bleibt gleich:
 **Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten
+
 
 
 

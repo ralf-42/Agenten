@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Memory-Systeme
-parent: Sessions, Memory und HITL
+parent: Memory und HITL
 nav_order: 2
 description: Kurz- und Langzeitgedächtnis für KI-Agenten mit LangGraph, Vektordatenbanken und nutzerspezifischer Persistenz
 has_toc: true
@@ -488,6 +488,7 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 **Version:** 1.4<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

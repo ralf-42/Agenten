@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Best Practices
-parent: Evaluation, Security und Reliability
+parent: Qualität und Sicherheit
 nav_order: 6
 description: Empfohlene Patterns und Anti-Patterns für LangChain, LangGraph, LangSmith und Agenten-Evaluation
 ---
@@ -14,6 +14,7 @@ Empfohlene Patterns und Anti-Patterns für die im Kurs zentralen Frameworks.
 - **[LangGraph Best Practices]({{ '/orchestrierung-state-langgraph/langgraph-best-practices.html' | relative_url }})** – *Wann LangGraph statt `create_agent()`?* StateGraph, Nodes & Edges, Conditional Routing, Checkpointing, Human-in-the-Loop.
 - **[LangSmith Best Practices]({{ '/evaluation-security-reliability/langsmith-best-practices.html' | relative_url }})** – *Wie observiere ich Agenten richtig?* `LANGSMITH_*` Umgebungsvariablen, `.with_config()`, Troubleshooting.
 - **[Agent Evaluation & Observability Best Practices]({{ '/evaluation-security-reliability/agent-evaluation-observability-best-practices.html' | relative_url }})** – *Wie werden Agenten mit Baselines, Traces und Regressionen belastbar?*
+
 
 
 

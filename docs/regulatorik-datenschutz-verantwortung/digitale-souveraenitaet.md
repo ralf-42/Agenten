@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Digitale Souveränität
-parent: Regulatorik, Datenschutz und Verantwortung
+parent: Regulatorik
 nav_order: 1
 description: Was digitale Souveränität für KI-Agenten, Cloud-Abhängigkeiten, Datenflüsse und Modellwahl bedeutet
 has_toc: true
@@ -134,6 +134,7 @@ Für Kursprojekte ist ein kurzer Souveränitätscheck ausreichend: Datenklassifi
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

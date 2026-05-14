@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Checkpointing & Persistenz
-parent: Sessions, Memory und HITL
+parent: Memory und HITL
 nav_order: 1
 description: Checkpointing und Persistenz in LangGraph für unterbrechbare und wiederaufnehmbare Agenten-Workflows
 has_toc: true
@@ -321,6 +321,7 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

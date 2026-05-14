@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Multi-Agent-Systeme
-parent: Multi-Agent, Skills und Protokolle
+parent: Multi-Agent
 nav_order: 1
 description: Multi-Agent-Systeme, Koordinationsmuster und Arbeitsteilung in LangGraph und ähnlichen Architekturen
 has_toc: true
@@ -217,6 +217,7 @@ Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, so
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Minimum Viable Agent Stack
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 3
 description: Die sechs Schichten zwischen einem LLM und einem Produktionsagenten — Einstiegspunkt, Upgrade-Kriterien und ehrliche Einschätzung pro Schicht.
 has_toc: true
@@ -236,6 +236,7 @@ Der Stack wird sich konsolidieren. Provider-SDKs integrieren bereits Speicher, T
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

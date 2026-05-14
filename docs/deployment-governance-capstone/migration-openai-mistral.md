@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Migration-Analyse Provider
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 4
 description: Migrationsleitfaden für den Wechsel von OpenAI-basierten Kursmodulen in die Mistral-Modellwelt mit LangChain als Abstraktionsschicht
 has_toc: true
@@ -306,6 +306,7 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 **Version:** 4.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

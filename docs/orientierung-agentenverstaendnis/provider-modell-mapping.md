@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Provider-Modell-Mapping
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 6
 description: Rollenbasiertes Mapping der im Kurs verwendeten Modelltypen auf OpenAI, Mistral, Gemini und Anthropic
 has_toc: true
@@ -225,6 +225,7 @@ Beide Dokumente zusammen ergeben:
 **Version:** 2.0<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

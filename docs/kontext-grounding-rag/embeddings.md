@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Embeddings
-parent: Kontext, Grounding und RAG
+parent: RAG und Kontext
 nav_order: 6
 description: Vektorrepräsentationen für semantische Suche, RAG und Agenten-Memory
 has_toc: true
@@ -183,6 +183,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 **Version:**    1.0<br>
 **Stand:**    November 2025<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

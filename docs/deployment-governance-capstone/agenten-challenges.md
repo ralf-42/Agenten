@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Research Assistant Challenge
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 7
 description: "Praxisprojekt: Research Assistant als Production-Ready Multi-Agent-System entwickeln"
 has_toc: true
@@ -726,6 +726,7 @@ class SupportState(TypedDict):
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

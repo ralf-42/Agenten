@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deployment, Governance und Capstone
+title: Deployment und Capstone
 nav_order: 11
 has_children: true
 description: Von der Entwicklung zur produktionsreifen Anwendung
@@ -52,6 +52,7 @@ Für einen passenden Gesamtpfad zuerst [Lernpfad]({{ '/lernpfad.html' | relative
   - Modell-Rollenmapping für Baseline, Router, Judge, Worker
   - Embeddings und OpenAI-spezifische Module separat bewerten
   - Empfohlene Reihenfolge für eine kontrollierte Migration
+
 
 
 

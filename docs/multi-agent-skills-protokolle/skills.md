@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Skills
-parent: Multi-Agent, Skills und Protokolle
+parent: Multi-Agent
 nav_order: 3
 description: Skills als wiederverwendbare Arbeitsrezepte für Agenten mit Regeln, Referenzen und deterministischen Hilfen
 has_toc: true
@@ -181,6 +181,7 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 **Version:** 1.6<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

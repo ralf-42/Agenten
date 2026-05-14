@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Modellauswahl
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 4
 description: "Modellauswahl für Agentensysteme: Qualität, Kosten, Latenz und Aufgabenprofil"
 has_toc: true
@@ -174,6 +174,7 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 **Version:** 1.3<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

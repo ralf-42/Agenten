@@ -1,7 +1,7 @@
 ---
 layout: default
 title: State Management
-parent: Orchestrierung, State und LangGraph
+parent: Orchestrierung
 nav_order: 1
 description: "Zustandsverwaltung in LangGraph: State, Reducer, TypedDict und Routing für mehrstufige Workflows"
 has_toc: true
@@ -295,6 +295,7 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

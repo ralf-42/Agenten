@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Produktionsreife Anwendung
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 nav_order: 2
 description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
 has_toc: true
@@ -389,6 +389,7 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

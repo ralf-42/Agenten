@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Terminologie
-parent: Orientierung und Agentenverständnis
+parent: Orientierung
 nav_order: 3
 has_toc: true
 description: Englisch-deutsche Übersetzungstabelle für KI-Agenten-Fachbegriffe mit Verwendungshinweisen
@@ -105,6 +105,7 @@ Drei Begriffspaare führen besonders oft zu Missverständnissen in Kursunterlage
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
 
 
 

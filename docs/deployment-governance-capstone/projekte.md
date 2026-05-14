@@ -3,7 +3,7 @@ layout: default
 title: Projekte
 nav_order: 5
 description: Praktische Übungen und End-to-End Projekte rund um den Research Assistant
-parent: Deployment, Governance und Capstone
+parent: Deployment und Capstone
 ---
 # Projekte
 
@@ -37,6 +37,7 @@ Für den Weg bis zu diesem Punkt zuerst [Lernpfad]({{ '/lernpfad.html' | relativ
 - LangGraph Must-Haves: Supervisor-Pattern, HITL, Persistent Sessions
 - Abgabe: Jupyter Notebook + SQLite-DB + README.md
 - Module M01-M24 (optional bis M35)
+
 
 
 

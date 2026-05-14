@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Regulatorik, Datenschutz und Verantwortung
+title: Regulatorik
 nav_order: 12
 has_children: true
 description: Rechtliche Rahmenbedingungen, Ethik und Souveränität
@@ -56,6 +56,7 @@ Für eine Orientierung über sinnvolle Einstiege und Reihenfolgen zuerst [Lernpf
   - Bias und Fairness
   - Verantwortungsvoller Umgang mit KI-Agenten
   - Best Practices
+
 
 
 

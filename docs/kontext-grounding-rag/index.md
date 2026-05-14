@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Kontext, Grounding und RAG
+title: RAG und Kontext
 nav_order: 7
 has_children: true
 description: "RAG, Tokenizing, Chunking und Embeddings: Wissensanbindung für KI-Agenten"
@@ -15,6 +15,7 @@ Diese Seiten erklären, wie Agenten den richtigen Kontext erhalten, wie externes
 - **[Tokenizing & Chunking]({{ '/kontext-grounding-rag/tokenizing-chunking.html' | relative_url }})** – *Wie wird Text für Retrieval und Kontextfenster vorbereitet?* Tokenisierung, Chunk-Größen und Overlap.
 - **[Embeddings]({{ '/kontext-grounding-rag/embeddings.html' | relative_url }})** – *Wie wird Bedeutung als Vektor durchsuchbar?* Semantische Suche, Ähnlichkeit und Vektorräume.
 - **[ChromaDB]({{ '/kontext-grounding-rag/einsteiger-chromadb.html' | relative_url }})** – *Wie werden Embeddings gespeichert und durchsucht?*
+
 
 
 

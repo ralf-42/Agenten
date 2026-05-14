@@ -218,14 +218,14 @@ Nummern werden nicht in Überschriften geschrieben.
 In Index-Dokumenten wie `concepts.md` oder `frameworks.md` werden absolute URLs verwendet:
 
 ```markdown
-[Digitale Souveränität]({{ '/regulatorik/digitale-souveraenitaet.html' | relative_url }})
+[Digitale Souveränität]({{ '/08-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
 ```
 
 Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
-[Agent-Architekturen]({{ '/erste-agenten/agent-architekturen.html' | relative_url }})
-[Modellauswahl]({{ '/orientierung/modellauswahl.html' | relative_url }})
+[Agent-Architekturen]({{ '/04-implementierung-frameworks-praxis/agent-architekturen.html' | relative_url }})
+[Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
 ```
 
 Regeln:
@@ -287,8 +287,8 @@ Kurze Einordnung des Bereichs in einem Absatz.
 
 ## Grundlagen
 
-- **[Checkpointing & Persistenz]({{ '/memory-hitl/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
-- **[Agent Security]({{ '/qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+- **[Checkpointing & Persistenz]({{ '/04-implementierung-frameworks-praxis/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Agent Security]({{ '/06-qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
 ````
 
 Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.

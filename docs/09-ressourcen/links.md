@@ -1,0 +1,207 @@
+---
+layout: default
+title: Links
+parent: Ressourcen
+nav_order: 4
+description: Kuratierte Sammlung externer Ressourcen zu KI, LLMs und Frameworks
+has_toc: true
+---
+
+# Links
+{: .no_toc }
+
+> **Kuratierte Sammlung externer Ressourcen zu KI, LLMs und Frameworks**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## KI-Agenten: Externe Ressourcen
+
+Externe Ressourcen und Artikel zum Thema KI-Agenten.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [ElevenLabs - Conversational AI (KI Agenten)](https://elevenlabs.io/de/conversational-ai?utm_source=google&utm_medium=cpc&utm_campaign=dach_nonbrandsearch_conversationalai_german&utm_id=22988695322&utm_term=ki-agenten&utm_content=conversational_ai_-_ai_agents&gad_source=1&gad_campaignid=22988695322&gbraid=0AAAAA_PU6FaZXejDuga5m8HprA2M2YZpb&gclid=CjwKCAiAssfLBhBDEiwAcLpwfiFXDfchVpl0bwBMjNMsZJixtdztxVBEwLzp7BuNMY0t54ws43_U9RoTEQAv_BwE) | Conversational AI und KI-Agenten von ElevenLabs |
+| [Google Cloud - Was sind KI-Agenten?](https://cloud.google.com/discover/what-are-ai-agents?hl=de) | Eine Einführung in KI-Agenten von Google Cloud |
+| [Inception Labs Chat](https://chat.inceptionlabs.ai/) | Chat-Interface für Mercury – Diffusion Language Model |
+| [Generative AI (Financial Times)](https://ig.ft.com/generative-ai/) | Interaktiver visueller Erklärer zu Generative AI |
+
+---
+
+## Anthropic
+
+Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und gesellschaftlichen Auswirkungen.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol) | Anthropics offener Standard zur Verbindung von KI-Modellen mit externen Datenquellen und Tools |
+| [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) | Vollständiger Leitfaden zur Entwicklung von Skills für Claude-Agenten |
+| [Anthropic Skills Repository (GitHub)](https://github.com/anthropics/skills) | Offizielle Skill-Sammlung von Anthropic als Referenz und Ausgangspunkt |
+| [Labor Market Impacts](https://www.anthropic.com/research/labor-market-impacts) | Forschungsarbeit zu den Auswirkungen von KI auf den Arbeitsmarkt |
+| [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
+| [Economic Index Primitives](https://www.anthropic.com/research/economic-index-primitives) | Grundlegende Konzepte für wirtschaftliche Indizes im KI-Kontext |
+| [Anthropic Economic Index: US Usage](https://www.anthropic.com/economic-index#us-usage) | Nutzungsmuster von KI in den USA als Teil des Anthropic Economic Index |
+| [Alignment Faking in Large Language Models](https://www.anthropic.com/research/alignment-faking) | Wie LLMs scheinbar kooperieren, aber eigene Ziele verfolgen – zentral für Agenten-Sicherheit (→ M23) |
+| [Tracing the Thoughts of a Large Language Model](https://www.anthropic.com/research/tracing-thoughts-language-model) | Interpretierbarkeit von LLM-Entscheidungen – Hintergrund zu LangSmith-Tracing (→ M15/M24) |
+| [Disempowerment Patterns in Real-World AI Usage](https://www.anthropic.com/research/disempowerment-patterns) | Reale Missbrauchsmuster bei KI-Nutzung – Grundlage für Security Best Practices (→ M23) |
+| [Constitutional Classifiers: Defending Against Universal Jailbreaks](https://www.anthropic.com/research/constitutional-classifiers) | Technische Abwehr von Jailbreaks durch regelbasierte Klassifikatoren (→ M23) |
+| [Project Vend: Phase Two](https://www.anthropic.com/research/project-vend-2) | Anthropics autonomes Einkaufs-Experiment – Praxisbeispiel für Multi-Agent-Systeme (→ M19–M21) |
+| [Claude's New Constitution](https://www.anthropic.com/news/claude-new-constitution) | Wie Agenten-Verhalten durch Constitutional AI gesteuert wird (→ M01/M23) |
+| [How AI Assistance Impacts the Formation of Coding Skills](https://www.anthropic.com/research/AI-assistance-coding-skills) | Studie zu KI-Unterstützung beim Coding-Lernen – relevant für Kurs-Kontext |
+
+---
+
+## MCP
+
+Offizielle Ressourcen zum Model Context Protocol und den zugehörigen Entwickler-Tools.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [MCP Introduction](https://modelcontextprotocol.io/docs/getting-started/intro) | Offizieller Einstieg in das Model Context Protocol mit Grundlagen, Architektur und Anwendungsfällen |
+| [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) | Offizielle Dokumentation zum Inspector für das Testen und Debuggen von MCP-Servern |
+
+---
+
+## Skills
+
+Ressourcen rund um den offenen Standard für Agenten-Skills und dessen praktische Nutzung.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Agent Skills](https://agentskills.io/home) | Überblick über den offenen Skill-Standard, Beispiele und Einstieg in plattformübergreifende Agenten-Skills |
+| [Agent Skills Specification](https://agentskills.io/specification) | Offener SKILL.md-Standard für plattformübergreifende Agenten-Skills |
+| [Claude Agent Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) | Best Practices von Claude für Konzeption, Struktur und Pflege von Agenten-Skills |
+
+---
+
+## Framework-Dokumentation
+
+Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Referenz für Entwickler.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [LangChain Docs](https://python.langchain.com/) | Offizielle Dokumentation: Chains, Agents, Tools, RAG (→ M02–M07) |
+| [LangGraph Docs](https://langchain-ai.github.io/langgraph/) | Offizielle Dokumentation: StateGraph, Nodes, Edges, HITL, Multi-Agent (→ M08–M10, M16–M21) |
+| [LangSmith Docs](https://docs.smith.langchain.com/) | Offizielle Dokumentation: Tracing, Evaluation, Datasets (→ M15, M24) |
+| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ M01–M03) |
+| [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ M12) |
+| [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ M05, täglich) |
+| [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ M30) |
+
+---
+
+## KI-Modelle & Benchmarks
+
+Vergleichsplattformen und Datenbanken für KI-Modelle.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard) | Benchmark für Embedding-Modelle |
+| [LMArena Leaderboard](https://lmarena.ai/de/leaderboard) | Vergleich aktueller Frontier-Modelle |
+| [Models.dev](https://models.dev/) | Offene Datenbank von KI-Modellen |
+| [Anthropic Economic Index](https://www.anthropic.com/economic-index#job-explorer) | Wirtschaftliche Auswirkungen und Nutzungsmuster von KI |
+
+---
+
+## OpenAI & Hugging Face
+
+Zentrale Plattformen für Modelle, APIs, Beispiele und Modellartefakte.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [OpenAI Platform Overview](https://platform.openai.com/docs/overview) | Übersicht der OpenAI Platform |
+| [OpenAI API Reference](https://platform.openai.com/docs/api-reference/introduction) | Vollständige API-Dokumentation |
+| [OpenAI Cookbook](https://cookbook.openai.com/) | Beispiele und Best Practices |
+| [Hugging Face](https://huggingface.co/) | Community-Plattform für Modelle, Datasets und Spaces |
+| [Transformers Docs](https://huggingface.co/docs/transformers/index) | Dokumentation der Transformers-Bibliothek |
+
+---
+
+## Grundlagen-Paper
+
+Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) | Grundlagenpaper zum TAO/ReAct-Prinzip – theoretisches Fundament aller Agenten im Kurs (→ M01) |
+| [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) | Grundlage für Tool Use & Function Calling (→ M02) |
+| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Originalpaper zur Transformer-Architektur – Basis aller verwendeten LLMs (→ M01) |
+| [Learning to Summarize with Human Feedback (RLHF)](https://arxiv.org/abs/2009.01325) | Grundlage für RLHF – Hintergrund zu Alignment und Agenten-Verhalten (→ M23) |
+| [Self-RAG: Learning to Retrieve, Generate, and Critique](https://arxiv.org/abs/2310.11511) | Grundlage für Agentic RAG – Agent steuert Retrieval aktiv (→ M22/M27) |
+
+---
+
+## Alternative Agent-Frameworks
+
+Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach dem Kurs.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M21) |
+| [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
+| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten – direkter Kursinhalt (→ M29) |
+| [OpenAI Skills Repository (GitHub)](https://github.com/openai/skills) | Offizielle Skill-Sammlung von OpenAI, kompatibel mit dem SKILL.md-Standard |
+| [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus (→ M08) |
+| [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
+
+---
+
+## RAG & Evaluation
+
+Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluation.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ M15/M24) |
+| [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ M11) |
+| [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ M11–M14) |
+
+---
+
+## Fine-Tuning
+
+Ressourcen zur Anpassung von Sprachmodellen auf eigene Daten.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [Unsloth Docs](https://unsloth.ai/docs/de) | Fine-Tuning von LLMs mit minimalem Speicherbedarf – unterstützt LLaMA, Mistral, Gemma u. a. |
+
+---
+
+## Sicherheit & Governance
+
+Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Standardreferenz für LLM-Sicherheitsrisiken: Prompt Injection, Insecure Output, Data Leakage (→ M23) |
+| [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | US-Standard für KI-Risikomanagement und Governance (→ M23) |
+| [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien (→ M23/M35) |
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Erste Agenten]({{ '/04-implementierung-frameworks-praxis/' | relative_url }}) | Wo starte ich als Entwickler mit Links? |
+| [Qualität und Sicherheit]({{ '/06-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Links? |
+
+---
+
+**Version:** 1.4<br>
+**Stand:** März 2026<br>
+**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
+
+
+
+
+
+

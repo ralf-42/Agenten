@@ -189,11 +189,15 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 | Dokument | Frage |
 |---|---|
-| [Framework-Guides](../frameworks/einsteiger-guides.html) | Wo starte ich als Entwickler mit Links? |
-| [Best Practices](../frameworks/best-practices.html) | Welche Produktionsstandards gelten für Links? |
+| [Framework-Guides]({{ '/tool-use-prompting-erste-agenten/framework-guides.html' | relative_url }}) | Wo starte ich als Entwickler mit Links? |
+| [Best Practices]({{ '/evaluation-security-reliability/best-practices.html' | relative_url }}) | Welche Produktionsstandards gelten für Links? |
 
 ---
 
 **Version:** 1.4<br>
 **Stand:** März 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+
+
+
+

@@ -125,13 +125,13 @@ Beispiele:
 
 Damit übernehmen die Indexseiten die Rolle der Orientierung und ersetzen generische Hub-Seiten.
 
-Im Bereich `04-agenten-implementierung/` wurde zusätzlich eine Binnenstruktur eingeführt:
+Im Bereich `04-agenten-implementierung/` wurde zusätzlich eine echte Sidebar-Unterstruktur für Just-the-Docs eingeführt. Die sichtbaren Gruppentitel wurden bewusst kurz gehalten, damit sie in der linken Navigation möglichst einzeilig bleiben:
 
-- Grundlagen des Agentenentwurfs
-- Kontext und Wissensanbindung
-- Ablaufsteuerung und Zustand
+- Entwurf
+- Kontext & Wissen
+- Ablauf & Zustand
 
-Dadurch bleibt der größte Inhaltsbereich trotz vieler Dokumente leichter lesbar, ohne zusätzliche Unterordner anzulegen.
+Dafür wurden drei Gruppenseiten angelegt und die fachlichen Dokumente per `parent` und `grand_parent` darunter eingeordnet. Dadurch bleibt der größte Inhaltsbereich trotz vieler Dokumente in der linken Navigation besser lesbar, ohne die Dateien in zusätzliche Unterordner zu verschieben.
 
 ## Verschlankung der Struktur
 

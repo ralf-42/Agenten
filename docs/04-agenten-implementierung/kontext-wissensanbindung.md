@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Kontext und Wissensanbindung
+title: Kontext & Wissen
 parent: Agenten-Implementierung
 nav_order: 2
 has_children: true
 description: "Context Engineering, Tokenizing, Chunking, Embeddings und RAG"
 ---
 
-# Kontext und Wissensanbindung
+# Kontext & Wissen
 
 Dieser Abschnitt erklärt, wie Agenten mit dem richtigen Kontext arbeiten und wie Dokumente für Retrieval und quellengebundene Antworten vorbereitet werden.
 

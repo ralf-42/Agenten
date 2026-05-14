@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Memory-Systeme
-parent: Ablaufsteuerung und Zustand
+parent: "Ablauf & Zustand"
 grand_parent: Agenten-Implementierung
 nav_order: 3
 description: Kurz- und Langzeitgedächtnis für KI-Agenten mit LangGraph, Vektordatenbanken und nutzerspezifischer Persistenz
@@ -489,6 +489,5 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 **Version:** 1.4<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 

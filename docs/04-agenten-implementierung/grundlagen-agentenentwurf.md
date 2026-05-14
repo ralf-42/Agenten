@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Grundlagen des Agentenentwurfs
+title: Entwurf
 parent: Agenten-Implementierung
 nav_order: 1
 has_children: true
 description: "Architekturen, Prompting, Prompt-Templates und Tool Use"
 ---
 
-# Grundlagen des Agentenentwurfs
+# Entwurf
 
 Dieser Abschnitt bündelt die grundlegenden Entwurfsentscheidungen für Agentensysteme: Welche Architektur passt, wie werden Anweisungen formuliert, wie werden Prompts wiederverwendbar und wie nutzt ein Agent Werkzeuge?
 

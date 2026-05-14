@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Checkpointing & Persistenz
-parent: Ablaufsteuerung und Zustand
+parent: "Ablauf & Zustand"
 grand_parent: Agenten-Implementierung
 nav_order: 2
 description: Checkpointing und Persistenz in LangGraph für unterbrechbare und wiederaufnehmbare Agenten-Workflows
@@ -322,6 +322,5 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 **Version:** 1.1<br>
 **Stand:** April 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 

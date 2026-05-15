@@ -167,6 +167,26 @@ print(result["messages"][-1].content)
 
 `create_deep_agent()` gibt einen kompilierten LangGraph-Graphen zurück — Streaming, LangGraph Studio, Checkpointer und Persistenz funktionieren damit automatisch.
 
+### Alle create_deep_agent()-Parameter
+
+| Parameter | Beschreibung |
+|-----------|-------------|
+| `model` | LangChain-Chatmodell (`init_chat_model(...)`) |
+| `tools` | Liste eigener Tools |
+| `system_prompt` | Systemrolle des Agenten |
+| `subagents` | Liste von Sub-Agent-Dicts |
+| `interrupt_on` | HITL-Freigabe vor bestimmten Tools |
+| `memory` | Kontext-Dateien (z.B. AGENTS.md) beim Start laden |
+| `skills` | SKILL.md-Dateien laden |
+| `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`, seit 0.5.2) |
+| `response_format` | Strukturierte Ausgabe — Pydantic-Modell oder `dict` (seit 0.5.1) |
+| `name` | Agent-Name für LangSmith-Tracing |
+| `cache` | Response-Caching — `BaseCache`-Instanz |
+| `backend` | Filesystem-Backend — In-Memory, Local, LangGraph Store oder Sandbox |
+| `store` | LangGraph Memory Store für thread-übergreifende Persistenz |
+| `context_schema` | Pydantic-Schema für den geteilten Agenten-Kontext |
+| `debug` | Debug-Ausgaben aktivieren |
+
 ---
 
 ## Die Grundidee: Planning, Dateien, Delegation
@@ -347,6 +367,39 @@ Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die einge
 
 ---
 
+## Middleware (experimentell, ab 0.6.0)
+
+Middleware erlaubt es, Tool-Aufrufe transparent zu wrappen — ohne die Tools selbst zu ändern.
+Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts übergeben.
+
+| Middleware-Klasse | Paket | Beschreibung |
+|-------------------|-------|-------------|
+| `LoggingMiddleware` | `deepagents` | Loggt jeden Tool-Call mit Input/Output |
+| `RateLimitMiddleware` | `deepagents` | Begrenzt Tool-Calls pro Zeiteinheit |
+| `RetryMiddleware` | `deepagents` | Automatische Wiederholungen bei transienten Fehlern |
+| `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
+| `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
+
+```python
+from deepagents.middleware import LoggingMiddleware, RetryMiddleware
+
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-4o-mini"),
+    tools=[mein_tool],
+    middleware=[LoggingMiddleware(), RetryMiddleware(max_retries=3)],
+)
+```
+
+`CodeInterpreterMiddleware` erfordert das Zusatz-Paket:
+
+```bash
+pip install deepagents[quickjs]
+```
+
+> ⚠️ `CodeInterpreterMiddleware` ist als experimentell markiert — API kann sich noch ändern.
+
+---
+
 ## CLI und erweiterte Features
 
 Neben dem Python-SDK gibt es eine eigenständige **DeepAgents CLI** — die interaktive Terminal-Variante für den direkten Einsatz.
@@ -469,6 +522,19 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
 - Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
+### Reifegrad (Stand 0.6.1)
+
+| Dimension | Bewertung | Begründung |
+|-----------|-----------|------------|
+| API-Stabilität | ⚠️ Mittel | `subagents=`-Interface hatte Breaking Change ohne Migration-Guide |
+| Versionsstabilität | ✅ Besser | 0.5.x → 0.6.x ohne Breaking Changes |
+| Features | ✅ Solide | Planning, Filesystem, Sub-Agenten, Profiles, Middleware vollständig |
+| Dokumentation | ⚠️ Lückenhaft | Parameter wie `backend`, `context_schema` kaum dokumentiert |
+| Produktionsreife | ❌ Nicht empfohlen | < 1 Jahr Praxiserfahrung, kein 1.0, kein SLA |
+| Ökosystem | ✅ Gut | LangGraph-nativ — Checkpointer, Streaming, LangSmith out-of-the-box |
+
+**Gesamturteil:** Für Experimente, Prototypen und Kurse gut geeignet. Für Production-Einsatz LangGraph direkt bevorzugen — bis v1.0 sich das ändert.
+
 ### Das "Trust the LLM"-Modell und Security
 
 DeepAgents verfolgt eine bewusst offene Philosophie — aus dem README:
@@ -529,10 +595,14 @@ DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 - Sub-Agenten für parallele Delegation
 - Integrierter Tool-Nutzung
 - Provider-Agnostik (100+ Anbieter)
+- Profiles API — modell-spezifische Optimierung, eingebaute OpenAI/Anthropic-Profile
+- Middleware — Tool-Call-Wrapping, `CodeInterpreterMiddleware` (experimentell, ab 0.6.0)
 - CLI mit Web-Suche, HITL, MCP und persistentem Gedächtnis
 
 Die Stärke liegt in schneller Umsetzung komplexerer, langlaufender Aufgaben — ohne Provider-Bindung.
-Die Kehrseite ist geringere Transparenz gegenüber einem manuell modellierten LangGraph sowie fehlende Produktionsreife gegenüber spezialisierten SDKs wie dem Claude Agent SDK.
+Die Kehrseite ist geringere Transparenz gegenüber einem manuell modellierten LangGraph sowie noch fehlende Produktionsreife (kein v1.0, kein SLA).
+
+**Reifegrad auf einen Blick:** Gut für Experimente und Kurse — für Production-Einsatz bis v1.0 warten.
 
 Für den Einstieg empfiehlt sich daher folgende Reihenfolge:
 
@@ -552,8 +622,8 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.4<br>
+**Stand:** Mai 2026 (DeepAgents 0.6.1)<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

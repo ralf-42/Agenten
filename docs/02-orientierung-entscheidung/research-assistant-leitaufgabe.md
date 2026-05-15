@@ -27,7 +27,7 @@ Das Ziel ist kein vollautomatischer Agent ohne Kontrollmöglichkeit, sondern ein
  
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png" class="logo" width="950"/>
 <p><font color='black' size="2">
-Bild mit ChatGPT erstellt
+KI-generiertes Bild
 </font></p>
 
 

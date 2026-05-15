@@ -55,6 +55,10 @@ In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvoll
 
 # Beispiel
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/tokenizing-chunking-prozess.png" alt="Tokenizing & Chunking Prozess" width="700">
+<p><font color='black' size="2">
+KI-generiertes Bild
+</font></p>
+
 + Tokenizing:
 	+ Zerlegt Text in kleinste Einheiten (Token)
 	+ Diese Token werden in Zahlen (IDs) umgewandelt
@@ -311,4 +315,3 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 **Version:**    1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

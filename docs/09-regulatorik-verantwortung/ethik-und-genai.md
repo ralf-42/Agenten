@@ -37,6 +37,9 @@ Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernte
 - **Sicherheit:** Prompt Injection, Jailbreaks, Tool-Missbrauch und Datenabfluss sind technische Risiken mit ethischen Folgen.
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/ethik-grundsaetze-generativer-ki.png" alt="Ethische Grundsätze generativer KI" width="600">
+<p><font color='black' size="2">
+KI-generiertes Bild
+</font></p>
 
 ## Warum Agenten Ethik verschärfen
 
@@ -63,6 +66,9 @@ Ethisch gute Agentenarchitektur macht diese Punkte explizit: begrenzte Autonomie
 Einige Risiken entstehen als Zielkonflikt, nicht als klarer Fehler: Transparenz kann mit Datenschutz oder Geschäftsgeheimnissen kollidieren, Automatisierung kann Rollen und Verantwortlichkeiten verschieben, Open Source kann Nachvollziehbarkeit verbessern und zugleich Missbrauch erleichtern. Solche Spannungen sollten dokumentiert werden, statt sie durch allgemeine Formulierungen zu verdecken.
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/ki-risiken-fehlerquellen.png" alt="KI Risiken und Fehlerquellen" width="600">
+<p><font color='black' size="2">
+KI-generiertes Bild
+</font></p>
 
 ### Typische Fehlentscheidungen
 
@@ -143,7 +149,6 @@ Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokume
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -24,7 +24,7 @@ Die Leitaufgabe orientiert sich an einer typischen Wissensarbeits-Situation:
 Das Ziel ist deshalb kein vollautomatischer Agent ohne Kontrollmöglichkeit, sondern ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit auf menschliche Freigabe wartet.
 
 
-**Markdown aus GitHub:** ![My Image](https://raw.githubusercontent.com/ralf-42/Image/main/genai-banner-2.jpg)
+**Markdown aus GitHub:** ![My Image|86](https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia#2.png)
 
 
 

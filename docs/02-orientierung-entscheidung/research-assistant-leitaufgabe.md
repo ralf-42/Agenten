@@ -19,24 +19,20 @@ Die Leitfrage lautet:
 
 Die Leitaufgabe orientiert sich an einer typischen Wissensarbeits-Situation:
 
-**Pia** muss regelmäßig neue Fachartikel sichten. Sie sucht relevante Passagen, liest dafür oft ganze Artikel und findet den gesuchten Abschnitt trotzdem nicht schnell genug. Eine einfache Volltext-Suche nach Stichwörtern liefert entweder zu viele Treffer oder gar keine passenden Ergebnisse.
+> **Pia** muss regelmäßig neue Fachartikel sichten. Sie sucht relevante Passagen, liest dafür oft ganze Artikel und findet den gesuchten Abschnitt trotzdem nicht schnell genug. Eine einfache Volltext-Suche nach Stichwörtern liefert entweder zu viele Treffer oder gar keine passenden Ergebnisse.
 
-Das Ziel ist deshalb kein vollautomatischer Agent ohne Kontrollmöglichkeit, sondern ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit auf menschliche Freigabe wartet.
-
-
- ![My Image|1000](https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png)
+Das Ziel ist kein vollautomatischer Agent ohne Kontrollmöglichkeit, sondern ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit auf menschliche Freigabe wartet.
 
 
-
-<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png" class="logo" width="750"/>
-
+ 
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png" class="logo" width="950"/>
 
 
 
 
 ## Warum diese Aufgabe?
 
-Der Research Assistant ist didaktisch geeignet, weil er typische Anforderungen realer Agentensysteme in einer überschaubaren Aufgabe bündelt:
+Der Research Assistant ist sehr gut geeignet, weil er typische Anforderungen realer Agentensysteme in einer überschaubaren Aufgabe bündelt:
 
 - Er braucht eine klare Aufgabenabgrenzung.
 - Er muss Wissen aus Dokumenten nutzen, statt frei zu halluzinieren.

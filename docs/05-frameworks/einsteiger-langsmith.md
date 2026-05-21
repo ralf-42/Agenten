@@ -15,7 +15,7 @@ has_toc: true
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -25,15 +25,15 @@ has_toc: true
 
 ## Kurzüberblick: Warum LangSmith?
 
-LangChain und LangGraph ermöglichen den Bau komplexer KI-Agenten. Doch bei der Entwicklung stellen sich schnell Fragen:
-- **Warum** hat der Agent eine bestimmte Entscheidung getroffen?
-- **Welche** Tools wurden in welcher Reihenfolge aufgerufen?
-- **Wo** ist der Fehler in einer 10-Schritte-Chain?
+LangChain und LangGraph ermöglichen den Bau komplexer KI-Anwendungen. Doch bei der Entwicklung stellen sich schnell Fragen:
+- **Warum** hat die Chain eine bestimmte Antwort produziert?
+- **Welche** Retrieval-Schritte wurden in welcher Reihenfolge ausgeführt?
+- **Wo** ist der Fehler in einer 10-Schritte-RAG-Pipeline?
 - **Wie gut** funktioniert das System mit echten Nutzerfragen?
 
 LangSmith beantwortet diese Fragen durch:
 - **Vollständiges Tracing** aller LLM-Calls, Tool-Aufrufe und Chain-Schritte
-- **Visuelle Darstellung** komplexer Agent-Workflows
+- **Visuelle Darstellung** komplexer Workflows
 - **Dataset-Management** für systematische Evaluierung  
 - **Performance-Monitoring** in Produktion
 - **Feedback-Collection** von Nutzern
@@ -45,7 +45,7 @@ Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvoll
 ```mermaid
 flowchart TB
     DEV[Development<br/>LangChain/LangGraph Code]
-    RUN[Code Execution<br/>Agent/Chain/Tool Runs]
+    RUN[Code Execution<br/>Chain/RAG/Tool Runs]
     LANGSMITH[LangSmith Platform<br/>Automatic Tracing]
     UI[LangSmith Web UI<br/>Visualization & Analysis]
     DEBUG[Debug & Optimize<br/>Based on Insights]
@@ -67,7 +67,20 @@ flowchart TB
 
 ---
 
-## Setup: API-Key und Umgebung
+## Zentrale Konzepte
+
+| Konzept | Bedeutung im Agenten-Kontext |
+|---|---|
+| Trace | Vollständige Ausführung eines Agenten-, Chain- oder Graph-Laufs |
+| Run | Einzelner Schritt innerhalb eines Trace |
+| Thread | Zusammengehörige Gesprächs- oder Session-Historie |
+| Dataset | Testfälle für Evaluation und Regression |
+| Feedback | Manuelle oder automatische Qualitätsbewertung |
+| Project | Arbeitsbereich für Traces, Experimente und Monitoring |
+
+---
+
+## Quickstart: API-Key und Umgebung
 
 ### LangSmith-Account erstellen
 
@@ -123,7 +136,7 @@ get_ipinfo()
 
 ---
 
-## Das kleinstmögliche funktionierende Beispiel
+## Grundaufbau: Das kleinstmögliche funktionierende Beispiel
 
 Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tracing.
 
@@ -131,7 +144,7 @@ Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tr
 from langchain.chat_models import init_chat_model
 
 # Normaler LLM-Setup (wie gewohnt)
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # Einfacher Call - wird automatisch getrackt!
 response = llm.invoke("Erkläre LangSmith in einem Satz.")
@@ -156,13 +169,13 @@ LangSmith organisiert alle Daten in einer klaren Hierarchie:
 
 ```mermaid
 flowchart TB
-    PROJECT["Project\nContainer für alle Traces\nz.B. 'M03-Erste-Agenten'"]
-    THREAD["Thread\nGesprächs-Sequenz\nsession_id / conversation_id"]
-    TRACE["Trace\nEine vollständige Anfrage\nz.B. Agent-Ausführung"]
-    RUN["Run\nEinzelne Operation\nllm · chain · tool · ..."]
-    TAGS["Tags\nFilterbare Labels"]
-    META["Metadata\nKey-Value-Paare"]
-    FEEDBACK["Feedback\nScore 0.0 – 1.0"]
+    PROJECT["Project<br>Container für alle Traces<br>z.B. 'M08-RAG-Chain'"]
+    THREAD["Thread<br>Gesprächs-Sequenz<br>session_id / conversation_id"]
+    TRACE["Trace<br>Eine vollständige Anfrage<br>z.B. RAG-Ausführung"]
+    RUN["Run<br>Einzelne Operation<br>llm · chain · tool · ..."]
+    TAGS["Tags<br>Filterbare Labels"]
+    META["Metadata<br>Key-Value-Paare"]
+    FEEDBACK["Feedback<br>Score 0.0 – 1.0"]
 
     PROJECT --> THREAD
     THREAD --> TRACE
@@ -208,9 +221,9 @@ LangSmith kennt 7 Run-Typen (Werte immer **lowercase**):
 
 **Wichtige Hinweise:**
 
-- **`chain` ist der häufigste Typ** — er deckt alles ab, was kein direkter LLM-Call, kein Tool etc. ist. Agenten-Schritte in LangGraph erscheinen typischerweise als `chain`.
+- **`chain` ist der häufigste Typ** — er deckt alles ab, was kein direkter LLM-Call, kein Tool etc. ist. RAG-Pipelines und LCEL-Chains erscheinen typischerweise als `chain`.
 - **Default-Fallback:** Unbekannte oder falsch geschriebene `run_type`-Werte (z.B. `"LLM"` statt `"llm"`) fallen automatisch auf `"chain"` zurück.
-- **Kosten-Tracking (ab 2026):** LangSmith bietet eine einheitliche Kostenübersicht über den gesamten Agenten-Workflow — nicht nur für `llm`-Runs. Custom Cost Metadata kann für beliebige Run-Typen übergeben werden.
+- **Kosten-Tracking (ab 2026):** LangSmith bietet eine einheitliche Kostenübersicht über den gesamten Workflow — nicht nur für `llm`-Runs. Custom Cost Metadata kann für beliebige Run-Typen übergeben werden.
 
 ### Beispiel: Chain mit mehreren Runs
 
@@ -275,11 +288,10 @@ response = agent.invoke(
 
 **Im LangSmith-Dashboard:** Threads-Ansicht zeigt den vollständigen Gesprächsverlauf über alle Traces hinweg — ideal für Debugging von Multi-Turn-Gesprächen.
 
-> 💡 **Kurskontext:** Threads werden in **M16 (Checkpointing)** und **M18 (Memory-Systeme)** praktisch eingesetzt.
 
 ---
 
-## Praktisches Beispiel: Agent mit Tools tracken
+## Typische Workflows: Agenten tracken und evaluieren
 
 Tools und Agents profitieren besonders von LangSmith, da ihre Entscheidungswege oft komplex sind.
 
@@ -345,15 +357,6 @@ sequenceDiagram
 
     Note over LangSmith: Every step logged:<br/>Inputs, Outputs,<br/>Latency, Tokens
 ```
-
-**Text-Version:**
-1. Agent erhält Frage
-2. Agent entscheidet: "Ich brauche multiply(5, 8)"
-3. Tool wird ausgeführt → Ergebnis: 40
-4. Agent erhält Tool-Output
-5. Agent entscheidet: "Ich brauche add(40, 3)"
-6. Tool wird ausgeführt → Ergebnis: 43
-7. Agent formuliert finale Antwort: "Das Ergebnis ist 43."
 
 **Wichtig:** Jeder Schritt ist einzeln inspizierbar – Input, Output, Latenz, Fehler.
 
@@ -465,8 +468,6 @@ if runs:
     )
 ```
 
-> [!WARNING] Veraltetes Muster — nicht verwenden<br>
-> `response["__run"].id` ist ein veraltetes, undokumentiertes Muster aus LangChain <1.0. Run-IDs immer über `@traceable` + `list_runs()` oder direkt im LangSmith-Dashboard ermitteln.
 
 ### Automatische Evaluierung mit LLM-as-Judge
 
@@ -488,9 +489,9 @@ def llm_judge(run, example) -> dict:
     predicted = run.outputs.get("answer", "")
     expected  = example.outputs.get("answer", "")
     prompt = (
-        f"Bewerte die Antwort auf einer Skala von 0 bis 1.\n"
-        f"Erwartete Antwort: {expected}\n"
-        f"Tatsächliche Antwort: {predicted}\n"
+        f"Bewerte die Antwort auf einer Skala von 0 bis 1.<br>"
+        f"Erwartete Antwort: {expected}<br>"
+        f"Tatsächliche Antwort: {predicted}<br>"
         f"Antworte nur mit einer Zahl zwischen 0 und 1."
     )
     try:
@@ -558,9 +559,8 @@ result = compiled_graph.invoke(
 
 ---
 
-## Best Practices für den Kurs
+## Best Practices
 
-> **Übersicht:** Konfiguration & Organisation (9.1–9.6) · Analyse & Debugging (9.7–9.9)
 
 ### Projekt-Organisation
 
@@ -606,11 +606,11 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 
 **Konventionen:**
 
-| Kontext | Projektname |
-|---------|-------------|
-| Kurs-Notebook | `"M##-Thema"` z.B. `"M05-Structured-Output"` |
-| Produktion | `"chatbot-production"` |
-| Experiment | `"rag-experiment-2026-03"` |
+| Kontext    | Projektname                                  |
+| ---------- | -------------------------------------------- |
+| Notebook   | `"M##-Thema"` z.B. `"M05-Structured-Output"` |
+| Produktion | `"chatbot-production"`                       |
+| Experiment | `"rag-experiment-2026-03"`                   |
 
 > 💡 **Edge Case:** Falls ein Projekt-Wechsel nach Notebook-Start nötig ist (z.B. kein Kernel-Neustart möglich), kann `ls.tracing_context(project_name=...)` als Workaround verwendet werden.
 
@@ -632,11 +632,11 @@ def my_rag_chain(question: str):
 
 ```mermaid
 flowchart LR
-    FAIL[Agent fails<br/>Wrong tool chosen]
+    FAIL[Chain fails<br/>Wrong answer]
     OPEN[Open LangSmith UI<br/>Find failed run]
     INSPECT[Inspect Trace<br/>Identify issue]
-    FIX[Fix Code<br/>System prompt or<br/>Tool description]
-    RETEST[Re-run Agent<br/>New trace created]
+    FIX[Fix Code<br/>Prompt or<br/>Retrieval config]
+    RETEST[Re-run Chain<br/>New trace created]
     COMPARE[Compare in UI<br/>Before vs After]
     SUCCESS{Fixed?}
 
@@ -655,10 +655,10 @@ flowchart LR
 ```
 
 **Typischer Workflow:**
-1. Agent schlägt fehl (z.B. falsches Tool gewählt)
+1. Chain liefert falsche Antwort
 2. LangSmith öffnen → Run finden
 3. Trace inspizieren: An welcher Stelle ging es schief?
-4. System-Prompt oder Tool-Description anpassen
+4. Prompt oder Retrieval-Konfiguration anpassen
 5. Erneut testen → Vergleichen im UI
 
 **Vorteil:** Direkter Vorher/Nachher-Vergleich im LangSmith-UI.
@@ -671,7 +671,7 @@ from langsmith import traceable
 
 @traceable(metadata={"user_id": "student_42", "environment": "colab"})
 def process_query(query: str):
-    return agent.invoke({"messages": [{"role": "user", "content": query}]})
+    return chain.invoke({"question": query})
 ```
 
 **Nutzen:**
@@ -769,35 +769,32 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 ---
 
-**Analyse & Debugging**
 
 ### Trace-Patterns erkennen
 
 Traces sind mehr als ein Debug-Log — sie machen systematische Verhaltensmuster sichtbar.
-Die folgenden Patterns treten immer wieder auf, quer durch alle Agenten-Typen:
+Die folgenden Patterns treten immer wieder auf, quer durch alle Chain- und RAG-Typen:
 
 | Pattern | Erkennungszeichen im Trace | Ursache / Gegenmittel |
 |---------|---------------------------|----------------------|
-| **Unexpected Tool Calls** | Agent ruft Tools auf, die für die Aufgabe nicht sinnvoll sind (z.B. `grep` bei reiner Wissensfrage) | Default-Bias im Harness oder System-Prompt zu vage → explizite Anweisung im System-Prompt |
-| **Retry-Loop** | Gleicher Tool-Call mit identischen Args wiederholt, jeweils `error` | Fehlende Fehlerbehandlung im Tool oder Agent → Error-Handling im Tool ergänzen |
-| **Over-Planning** | Viele `write_todos`-Steps, danach nur ein Tool-Call | Mismatch zwischen Aufgabenkomplexität und Planning-Tiefe → Aufgabe präziser formulieren |
-| **Missing Tool Use** | Agent antwortet direkt ohne Tools, obwohl passende Tools verfügbar | Tool-Beschreibung unklar oder System-Prompt zu dominant → Tool-Docstring verbessern |
-| **Token-Akkumulation** | LLM-Input wächst mit jedem Schritt stark an | Kein Context-Management → Sliding-Window oder Summarization (M16) |
-| **Hohe Child-Run-Anzahl** | Viele Child-Runs pro Parent, obwohl Aufgabe einfach | Middleware-Overhead (z.B. DeepAgents) oder interne Loops → `recursion_limit` prüfen |
+| **Over-Retrieval** | Retriever läuft bei Fragen, die kein Dokument benötigen (z.B. reine Wissensfragen) | RAG-Routing zu pauschal → Conditional-Routing vor Retriever einbauen |
+| **Retry-Loop** | Gleicher LLM-Call mit identischen Inputs wiederholt, jeweils `error` | Fehlende Fehlerbehandlung in der Chain → Error-Handling ergänzen |
+| **Token-Akkumulation** | LLM-Input wächst mit jedem Schritt stark an | Kein Context-Management → Sliding-Window oder Summarization |
+| **Missing Tool Use** | Agent antwortet direkt ohne Tools, obwohl passende Tools verfügbar | Tool-Beschreibung unklar → Tool-Docstring verbessern |
+| **Langsamer Retriever** | `retriever`-Run dominiert die Gesamtlatenz | Zu viele `k` Dokumente oder langsamer Vectorstore → `k` reduzieren |
+| **Leere Retrieval-Ergebnisse** | `retriever`-Run liefert 0 Dokumente | Query-Formulierung passt nicht zu Chunk-Stil → Query-Rewriting oder MMR |
 
-**Reales Beispiel — Filesystem-first-Bias (DeepAgents M32):**
+**Reales Beispiel — Over-Retrieval in einer RAG-Chain:**
 
 ```
-User: "Beantworte in je einem Satz: Was ist LangGraph? Was ist LangSmith?"
-→ AI: tool_call: grep(pattern="LangGraph")     ← Unexpected!
-→ Tool: "No matches found"
-→ AI: tool_call: grep(pattern="LangSmith")     ← Retry mit anderem Pattern
-→ Tool: "No matches found"
-→ AI: antwortet aus Modell-Wissen               ← erst jetzt
+User: "Was ist LangSmith?"
+→ Retriever: retrieve_documents(query="LangSmith")   ← unnötig bei Wissensfrage
+→ Tool: 0 relevante Dokumente gefunden
+→ LLM: antwortet aus Modell-Wissen                  ← hätte direkt funktioniert
 ```
 
-Ohne LangSmith-Trace wäre der Grund für die hohe Latenz nicht erkennbar gewesen.
-**Gegenmittel:** System-Prompt mit `"Beantworte direkt aus deinem Wissen — keine Filesystem-Suche"`.
+Ohne LangSmith-Trace wäre der Grund für die erhöhte Latenz nicht erkennbar gewesen.
+**Gegenmittel:** Routing-Schritt vor dem Retriever — nur bei dokumentenspezifischen Fragen retrieven.
 
 **Programmatische Pattern-Analyse mit `show_trace()`:**
 
@@ -805,27 +802,26 @@ Ohne LangSmith-Trace wäre der Grund für die hohe Latenz nicht erkennbar gewese
 from genai_lib.utilities import show_trace
 
 # Letzte 3 Runs anzeigen
-show_trace("M32-DeepAgents-Harness", limit=3)
+show_trace("M08-RAG-Chain", limit=3)
 
-# Mit Step-Analyse des letzten Runs (zeigt alle Tool-Calls)
-show_trace("M32-DeepAgents-Harness", show_steps=True)
+# Mit Step-Analyse des letzten Runs (zeigt alle Retrieval-Schritte)
+show_trace("M08-RAG-Chain", show_steps=True)
 ```
 
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
-Unexpected Tool Calls und Retry-Loops direkt im Notebook sichtbar zu machen.
+Over-Retrieval und leere Retrieval-Ergebnisse direkt im Notebook sichtbar zu machen.
 
 ### Problembereiche systematisch finden (Quick Workflow)
 
-Wenn ein Agent "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad-hoc-Debugging:
+Wenn eine Chain "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad-hoc-Debugging:
 
 1. **Failed/Slow/Expensive Runs filtern** (Projekt + Tags + Zeitraum)
-2. **Top-Pattern clustern** (z.B. Retry-Loop, Tool-Error, Token-Akkumulation — siehe 9.7)
-3. **Einen Fix pro Pattern** umsetzen (Prompt, Tool-Description, Routing, Limits)
+2. **Top-Pattern clustern** (z.B. Over-Retrieval, Token-Akkumulation, leere Ergebnisse — siehe 9.7)
+3. **Einen Fix pro Pattern** umsetzen (Prompt, Retrieval-Konfiguration, Routing)
 4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
 
 **Im Kurs** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
-(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind ab M35 relevant —
-wenn Agenten außerhalb von Colab betrieben werden.
+(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind für Production-Deployments relevant.
 
 ### Web-UI Filter: Traces gezielt finden
 
@@ -838,8 +834,8 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 |----------|--------|-------|
 | Nur Fehler anzeigen | `Status` | `Error` |
 | Langsame Runs finden | `Latency` | `> 10s` |
-| Viele Tool-Calls | `Child Runs` | `> 5` |
-| Spezifischer Agent | `Name` | `contains "coordinator"` |
+| Viele Child-Runs | `Child Runs` | `> 5` |
+| Spezifische Chain | `Name` | `contains "rag"` |
 | Experiment A vs. B | `Tags` | `experiment-A` / `experiment-B` |
 | Zeitraum eingrenzen | `Start Time` | `Last 1 hour` / `Last 24 hours` |
 
@@ -862,7 +858,9 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ---
 
-## Vergleich: LangSmith vs. Alternatives
+## Erweiterungen / Fortgeschrittene Themen
+
+### Vergleich: LangSmith vs. Alternatives
 
 | Aspekt | LangSmith | Print/Logs | LangGraph Debug |
 |--------|-----------|-----------|-----------------|
@@ -874,13 +872,13 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 | **Produktion** | Monitoring | Nicht skalierbar | Nur Development |
 
 **Fazit für den Kurs:**
-- **Tag 1-2:** LangSmith parallel zu Print-Debugging einführen
-- **Tag 3-4:** LangSmith als primäres Debug-Tool etablieren
-- **Tag 5:** LangSmith für Multi-Agent-Vergleiche und Evaluierung nutzen
+- **Woche 1:** LangSmith parallel zu Print-Debugging einführen
+- **Woche 2:** LangSmith als primäres Debug-Tool etablieren
+- **Ab Woche 3:** LangSmith für RAG-Evaluation und Chain-Optimierung nutzen
 
 ---
 
-## Häufige Fragen (FAQ)
+## Troubleshooting
 
 ### "Werden alle Daten an LangSmith gesendet?"
 
@@ -896,10 +894,9 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ### "Kostet LangSmith extra?"
 
-**Free Tier:** Kostenloser Einstieg verfügbar (ausreichend für Kurszwecke)
+**Free Tier:** Kostenloser Einstieg verfügbar (ausreichend für erstes Ausprobieren)
 **Paid Tiers:** Verschiedene Pläne für Production-Nutzung
 
-> 💡 Aktuelle Preise: [smith.langchain.com/pricing](https://smith.langchain.com/pricing) — Pläne ändern sich regelmäßig.
 
 ### "Wie lange werden Traces gespeichert?"
 
@@ -949,26 +946,26 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 
 **Best Practice:** Alle benötigten Keys zu Beginn im Setup-Block definieren.
 
+
 > 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
 
 > 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!
+
+## Zusammenfassung
+
+LangSmith macht Agenten nachvollziehbar: Traces zeigen einzelne Schritte, Datasets ermöglichen systematische Tests und Feedback verbindet Entwicklung mit Qualitätssicherung. Für den Agenten-Kurs ist LangSmith vor allem das Werkzeug, um Tool-Aufrufe, Routing-Entscheidungen und Fehlerpfade sichtbar zu machen.
+
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Einsteiger mit LangSmith? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangSmith? |
+| [LangSmith Best Practices](./langsmith-best-practices.html) | Welche Tracing- und Evaluationsmuster gelten in produktionsnahen Projekten? |
+| [Evaluation & Observability](../07-qualitaet-sicherheit/evaluation-observability.html) | Welche Qualitätsfragen werden mit Traces und Testsets beantwortet? |
 
 ---
 
-**Version:** 2.1<br>
+**Version:** 1.0<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-
-
 

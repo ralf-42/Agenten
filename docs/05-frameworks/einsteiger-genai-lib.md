@@ -4,7 +4,7 @@ title: Einsteiger GenAI_Lib
 parent: Weitere Tools
 grand_parent: Frameworks
 nav_order: 2
-description: Projektspezifische Bibliothek für den Agenten-Kurs
+description: "Projektspezifische Python-Bibliothek für Kursanwendungen"
 has_toc: true
 ---
 
@@ -17,7 +17,7 @@ has_toc: true
 
 Die `genai_lib` ist eine projektspezifische Python-Bibliothek, die speziell für die Anforderungen dieses Kurses entwickelt wurde. Sie bündelt wichtige Funktionen für multimodale RAG-Systeme und allgemeine Hilfsfunktionen.
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -25,19 +25,37 @@ Die `genai_lib` ist eine projektspezifische Python-Bibliothek, die speziell für
 
 ---
 
-## Installation
+## Kurzüberblick: Was ist GenAI_Lib?
+
+Die `genai_lib` bündelt wiederkehrende Hilfsfunktionen für den Agenten-Kurs: Environment-Checks, API-Key-Setup, Modellprofile, Rollenmodelle und multimodales RAG. Sie ist keine externe Produktbibliothek, sondern die gemeinsame Kursbibliothek für Notebooks und Beispiele.
+
+---
+
+## Zentrale Konzepte
+
+| Konzept | Bedeutung |
+|---|---|
+| `utilities.py` | Setup-, Diagnose- und Komfortfunktionen für Notebooks |
+| `multimodal_rag.py` | Hilfen für Text-, Bild- und Cross-Modal-Retrieval |
+| `model_config.py` | Rollenbasierte Modellwahl für Agenten-Komponenten |
+| Environment-Setup | Reproduzierbare Colab- und lokale Laufzeitumgebung |
+| Model Roles | Trennung von Baseline, Worker, Judge, Planner, Router und Vision |
+
+---
+
+## Quickstart: Installation
 
 Die `genai_lib` kann direkt aus dem GitHub-Repository installiert werden:
 
 ```bash
 # Mit pip
-pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+pip install git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
 
 # Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+uv pip install --system git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
 ```
 
-## Module im Überblick
+## Grundaufbau: Module im Überblick
 
 Die Bibliothek besteht aus drei Hauptmodulen:
 
@@ -45,7 +63,13 @@ Die Bibliothek besteht aus drei Hauptmodulen:
 |-------|-------------|----------------|
 | **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, GitHub-Datei-Download |
 | **multimodal_rag.py** | Multimodales RAG-System (v3.1) | Text- und Bildsuche, Bild-zu-Bild-Suche, Cross-Modal-Retrieval, System-Status |
-| **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, WORKER_PREMIUM, TRANSLATOR, TRANSLATOR_PREMIUM, EMBEDDINGS |
+| **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, TRANSLATOR, VISION, Medien- und Premium-Rollen, EMBEDDINGS |
+
+---
+
+## Typische Workflows
+
+Die folgenden Modulabschnitte zeigen typische Kurs-Workflows: Umgebung prüfen, API-Keys laden, Modellprofile vergleichen, multimodales RAG aufbauen und Modellrollen zentral konfigurieren.
 
 ---
 
@@ -277,10 +301,10 @@ Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities eine
 from genai_lib.utilities import get_model_profile
 
 # Formatierte Ausgabe aller wichtigen Capabilities
-profile = get_model_profile("openai:gpt-4o-mini")
+profile = get_model_profile("openai:gpt-5.4-nano")
 
 # Output:
-# 🔍 Model Profile: openai:gpt-4o-mini
+# 🔍 Model Profile: openai:gpt-5.4-nano
 # ============================================================
 #
 # 📋 Core Capabilities:
@@ -307,10 +331,10 @@ profile = get_model_profile("openai:gpt-4o-mini")
 # ============================================================
 
 # Ohne Ausgabe (nur Profile-Dict zurückgeben)
-profile = get_model_profile("anthropic:claude-3-sonnet", print_profile=False)
+profile = get_model_profile("openai:gpt-5.4-mini", print_profile=False)
 
 # Verschiedene Models vergleichen (mit Fehlerbehandlung)
-for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-pro"]:
+for model in ["openai:gpt-5.4-nano", "openai:gpt-5.4-mini", "openai:gpt-5.4"]:
     print(f"\n{model}:")
     profile = get_model_profile(model, print_profile=False)
 
@@ -482,7 +506,7 @@ multimodal_rag
 
 > [!NOTE] LangChain 1.0+ Integration (v3.1)<br>
 > Das `multimodal_rag`-Modul verwendet moderne LangChain 1.0+ Patterns:
-> - Nutzt `init_chat_model("openai:gpt-4o-mini")` für LLM-Initialisierung
+> - Nutzt `init_chat_model(f"openai:{config.llm_model}")` für LLM-Initialisierung
 > - Vision-Analysen mit `HumanMessage` und Standard Content Blocks
 > - Provider-agnostische Multimodal-Verarbeitung
 
@@ -503,6 +527,7 @@ config = RAGConfig(
     chunk_overlap=50,
     clip_model='clip-ViT-B-32',
     llm_model='gpt-4o-mini',
+    vision_model='gpt-4o-mini',
     db_path='./my_rag_db'
 )
 rag = init_rag_system(config)
@@ -518,7 +543,8 @@ rag = init_rag_system(config)
 **Interne LangChain 1.0+ Patterns:**
 ```python
 # System nutzt intern moderne LangChain APIs
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model(f"openai:{config.llm_model}")
+vision_llm = init_chat_model(f"openai:{config.vision_model}")
 
 # Vision-Analyse mit Standard Content Blocks
 message = HumanMessage(content=[
@@ -551,25 +577,36 @@ process_directory(rag, './files', auto_describe_images=False)
 - CLIP-Embeddings für Bilder
 - Fortschrittsanzeige
 
-#### . `multimodal_search(rag, query, k=5, text_only=False, images_only=False)`
-Durchsucht Text und Bilder gleichzeitig.
+#### . `multimodal_search(rag, query, k_text=3, k_images=3, enable_cross_modal=True)`
+Durchsucht Text und Bilder gleichzeitig und kann Bildtreffer zusätzlich über gefundene Bildbeschreibungen ableiten.
 
 ```python
-from genai_lib.multimodal_rag import multimodal_search
+from genai_lib.multimodal_rag import (
+    multimodal_search,
+    search_texts,
+    search_images,
+)
 
 # Hybride Suche (Text + Bilder)
-results = multimodal_search(rag, "Roboter mit KI", k=5)
+results = multimodal_search(
+    rag,
+    "Roboter mit KI",
+    k_text=5,
+    k_images=5,
+    enable_cross_modal=True,
+)
 
 # Nur Text
-text_results = multimodal_search(rag, "Maschinelles Lernen", text_only=True)
+text_results = search_texts(rag, "Maschinelles Lernen", k=5)
 
 # Nur Bilder
-image_results = multimodal_search(rag, "rote Autos", images_only=True)
+image_results = search_images(rag, "rote Autos", k=5)
 ```
 
 **Rückgabe:**
-- `text_docs`: Liste von LangChain Documents mit Text-Chunks
-- `image_results`: Liste von Dictionaries mit Bildpfaden und Metadaten
+- `multimodal_search`: formatierter Markdown-String mit LLM-Antwort, Quellen und Bildtreffern
+- `search_texts`: formatierter Markdown-String mit LLM-Antwort und Quellen
+- `search_images`: formatierter String mit Bildtreffern
 
 #### . `search_similar_images(rag, image_path, k=5)`
 Findet ähnliche Bilder zu einem Query-Bild (Bild → Bild Suche).
@@ -582,7 +619,7 @@ similar = search_similar_images(rag, "./query_image.jpg", k=5)
 
 for img in similar:
     print(f"Ähnlichkeit: {img['similarity']:.2f}")
-    print(f"Pfad: {img['image_path']}")
+    print(f"Pfad: {img['path']}")
 ```
 
 **Use Cases:**
@@ -590,17 +627,15 @@ for img in similar:
 - Ähnliche Produkte vorschlagen
 - Bildkategorisierung
 
-#### . `search_text_by_image(rag, image_path, k=3)`
+#### . `search_text_by_image(rag, image_path, k=3, k_text=3)`
 Findet Textdokumente, die zum Bildinhalt passen (Bild → Text Suche).
 
 ```python
 from genai_lib.multimodal_rag import search_text_by_image
 
 # Passende Texte zu einem Bild finden
-texts = search_text_by_image(rag, "./product_image.jpg", k=3)
-
-for doc in texts:
-    print(doc.page_content)
+result = search_text_by_image(rag, "./product_image.jpg", k=3, k_text=3)
+print(result)
 ```
 
 **Use Cases:**
@@ -712,7 +747,8 @@ from genai_lib.multimodal_rag import (
 config = RAGConfig(
     chunk_size=500,
     chunk_overlap=100,
-    text_threshold=1.0,
+    text_min_similarity=0.3,
+    image_threshold=0.8,
     db_path='./projekt_rag'
 )
 
@@ -722,16 +758,37 @@ process_directory(rag, './docs', auto_describe_images=True)
 
 ---
 
-## Abhängigkeiten
+## Troubleshooting
+
+### Installation schlägt fehl
+
+Prüfe, ob `uv` verfügbar ist oder nutze den `pip`-Befehl aus dem Quickstart. In Colab muss die Installation vor Imports aus `genai_lib` erfolgen.
+
+### API-Key wird nicht gefunden
+
+Lege den Key in Google Colab Secrets an und rufe `setup_api_keys([...], create_globals=False)` erneut aus.
+
+### Modellrolle liefert unerwartetes Modell
+
+Prüfe die Rollen-Konfiguration in `model_config.py` und ob lokale Overrides oder Umgebungsvariablen gesetzt sind.
+
+---
+
+## Erweiterungen / Fortgeschrittene Themen
+
+### Abhängigkeiten
 
 ### Kern-Abhängigkeiten
 ```python
 # LangChain Stack
 langchain>=1.1.0
-langchain-core>=1.1.0
+langchain-core>=1.3.0
 langchain-openai>=1.0.0
+langgraph>=1.0.0
 langchain-community>=0.3.0
+langchain-text-splitters>=1.1.0
 langchain-chroma>=0.1.0
+langchain-ollama>=0.2.0
 
 # OpenAI
 openai>=1.0.0
@@ -745,14 +802,13 @@ markitdown>=0.0.1
 chromadb>=0.5.0
 
 # Utilities
-python-dotenv>=1.0.0
 requests>=2.31.0
 langsmith>=0.1.0
 ```
 
 ---
 
-## model_config.py - Rollenbasierte Modell-Konfiguration
+### model_config.py - Rollenbasierte Modell-Konfiguration
 
 ### Überblick
 
@@ -779,10 +835,14 @@ from genai_lib.model_config import BASELINE, WORKER, JUDGE, TRANSLATOR
 | `JUDGE_PREMIUM` | `gpt-5.5` | Kritische Evaluation und maximale Qualität |
 | `PLANNER_PREMIUM` | `gpt-5.5` | Hochkomplexe Planung |
 | `TRANSLATOR_PREMIUM` | `gpt-5.5` | Stilistisch hochwertige Übersetzungen |
+| `VISION_FAST` | `gpt-5.4-mini` | Bildanalyse in Kursbeispielen |
+| `VISION_PREMIUM` | `gpt-5.4-mini` | Multimodale Analyse |
+| `IMAGE_GENERATION` | `gpt-image-1` | Bildgenerierung |
+| `IMAGE_GENERATION_PREMIUM` | `gpt-image-2` | Hochwertige Bildgenerierung |
+| `VIDEO_GENERATION` | `sora-2` | Videoerzeugung |
+| `TRANSCRIPTION` | `whisper-1` | Audio-Transkription |
 | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
-> [!WARNING] Keine temperature bei GPT-5.x-Modellen<br>
-> `BASELINE` zeigt auf `gpt-5.4-nano`. Für GPT-5.x-Modelle wird `temperature` im Kurs nicht gesetzt; Steuerung erfolgt über Rollenwahl, Prompt, Reasoning-Konfiguration und Ausgabeformat.
 
 ### Verwendung
 
@@ -801,7 +861,13 @@ judge_llm = init_chat_model(JUDGE)
 ```
 
 > [!DANGER] Kein temperature bei GPT-5.x<br>
-> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM`, `TRANSLATOR` und die Premium-Rollen basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt.
+> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM`, `TRANSLATOR` und die Premium-Rollen basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt. Das gilt nicht automatisch für Medienmodelle wie `IMAGE_GENERATION`, `VIDEO_GENERATION` oder `TRANSCRIPTION`.
+
+---
+
+## Zusammenfassung
+
+GenAI_Lib ist die gemeinsame technische Basis für Kurs-Notebooks im Agenten-Projekt. Für Einsteiger sind zuerst Installation, Environment-Check und API-Key-Setup wichtig; danach folgen Modellrollen und multimodales RAG als fortgeschrittene Bausteine.
 
 ---
 
@@ -817,18 +883,12 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 | Dokument | Frage |
 |---|---|
-| [Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Welche projektweiten Code- und Notebook-Regeln gelten? |
-| [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Welche Modellrolle passt zu welchem Kursbeispiel? |
+| [Standards](../13-ressourcen/standards.html) | Welche projektweiten Code- und Notebook-Regeln gelten? |
+| [Modell-Auswahl Guide](../04-modelle-provider/modellauswahl.html) | Welche Modellrolle passt zu welchem Kursbeispiel? |
 
 ---
 
-**Version:**    3.2<br>
+**Version:** 3.3<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-
-
 

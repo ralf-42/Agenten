@@ -38,6 +38,7 @@ Transformer-Architektur und Embedding-Konzepte
 | **Tokenizer**             | OpenAI Tokenizer - Token-Visualisierung                | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |
 | **Tokenizer Playground**  | Token-Visualisierung mit Kontextfenster                | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |
 | **Kontext-Management**    | Beispiel Kontext-Management                            | [Kontextfenster](https://editor.p5js.org/ralf.bendig.rb/full/tLnUgyZRK)                     |
+| **Token-Verbrauch & Caching** | Token-Kosten und Prompt Caching visualisiert       | [Token-Verbrauch & Caching](https://editor.p5js.org/ralf.bendig.rb/full/uAPjZBhtW)          |
 | **Neuronales Netz**       | Training eines neuronalen Netzes                       | [NN - Training](https://editor.p5js.org/ralf.bendig.rb/full/FsQx83Adk)                      |
 | **Fine-Tuning LoRA**      | Low-Rank Adaptation für effizientes Fine-Tuning        | [LoRA](https://editor.p5js.org/ralf.bendig.rb/full/6EOMAf2BZ)                               |
 | **Mixture of Experts**    | MoE-Architektur für effiziente LLM-Skalierung          | [Mixture of Experts](https://editor.p5js.org/ralf.bendig.rb/full/GT2XfGGTo)                 |
@@ -51,6 +52,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | Thema        | Beschreibung                                  | Link                                                                |
 | ------------ | --------------------------------------------- | ------------------------------------------------------------------- |
 | **KI-Agent** | Visualisierung eines LLM-basierten KI-Agenten | [KI_Agenten](https://editor.p5js.org/ralf.bendig.rb/full/u3Ee0jtFo) |
+| **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer](https://editor.p5js.org/ralf.bendig.rb/full/EUzaFq4C4) |
 
 ---
 
@@ -108,10 +110,9 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 ---
 
-**Version:** 1.0<br>
+**Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

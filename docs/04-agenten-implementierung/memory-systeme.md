@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Memory-Systeme
 parent: Ablauf & Zustand
@@ -55,12 +55,12 @@ Typischer Fehler: Stateless-Verhalten wird als Modellschwäche fehlgedeutet. Das
 
 ## Zwei Grundformen von Memory
 
-Für Entwickler ist die Trennung zwischen Kurzzeit- und Langzeit-Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Langzeit-Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
+Für Entwickler ist die Trennung zwischen Kurzzeit-Memory und persistentem Memory zentral. Kurzzeit-Memory hält fest, was in der aktuellen Sitzung gerade relevant ist. Persistentes Memory bewahrt Informationen über das Ende einer einzelnen Sitzung hinaus auf.
 
 ```mermaid
 flowchart TB
     M[Memory-Systeme] --> K[Kurzzeit-Memory]
-    M --> L[Langzeit-Memory]
+    M --> L[Persistentes Memory]
 
     K --> K1["Conversation Buffer"]
     K --> K2["Sliding Window"]
@@ -74,9 +74,9 @@ flowchart TB
 
 Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb einer Sitzung den roten Faden verliert. **Semantic Cache** ist eine ergänzende Kurzzeit-Strategie: Ähnliche Anfragen werden auf gecachte Vektoreinträge abgebildet, sodass identische oder semantisch nahestehende Fragen ohne erneuten Modellaufruf beantwortet werden können.
 
-Für Langzeit-Memory haben sich drei Hauptkategorien etabliert: **Prozedural** speichert ausgeführte Schrittsequenzen (Workflow Memory), **Semantisch** hält domänenspezifisches Wissen für Ähnlichkeitssuche vor, und **Episodisch** bewahrt die zeitlich geordnete Interaktionshistorie (Conversational Memory).
+Für persistentes Memory haben sich drei Hauptkategorien etabliert: **Prozedural** speichert ausgeführte Schrittsequenzen (Workflow Memory), **Semantisch** hält domänenspezifisches Wissen für Ähnlichkeitssuche vor, und **Episodisch** bewahrt die zeitlich geordnete Interaktionshistorie (Conversational Memory).
 
-Langzeit-Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
+Persistentes Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
 
 ## Conversation Buffer: der einfachste Einstieg
 
@@ -191,9 +191,9 @@ def expand_context(summary_id: str, memory_manager) -> str:
 
 In der Praxis relevant, wenn: Der Kontext kritische Details enthält, die bei Summarization verloren gehen würden, oder wenn der vollständige Verlauf später für Debugging oder Audit benötigt wird.
 
-## Langzeit-Memory: wenn Wissen Sitzungen überleben soll
+## Persistentes Memory: wenn Wissen Sitzungen überleben soll
 
-Langzeit-Memory wird nötig, sobald relevante Informationen nach Ende einer Sitzung noch verfügbar sein sollen. Dazu gehören Nutzerpräferenzen, Ziele, wichtige Fakten oder Wissen, das später semantisch wiedergefunden werden soll.
+Persistentes Memory wird nötig, sobald relevante Informationen nach Ende einer Sitzung noch verfügbar sein sollen. Dazu gehören Nutzerpräferenzen, Ziele, wichtige Fakten oder Wissen, das später semantisch wiedergefunden werden soll.
 
 Ein typischer technischer Weg ist semantisches Memory über eine Vektordatenbank. Gespeicherte Fakten werden eingebettet und bei Bedarf per Ähnlichkeitssuche wieder abgerufen.
 
@@ -345,7 +345,7 @@ flowchart TD
     INPUT[Nutzereingabe] --> AGENT[Agent]
 
     AGENT -->|liest| ST[Kurzzeit-Memory]
-    AGENT -->|liest| LT[Langzeit-Memory]
+    AGENT -->|liest| LT[Persistentes Memory]
     AGENT -->|liest| EM[Entity Memory]
 
     AGENT --> RESPONSE[Antwort]
@@ -472,7 +472,7 @@ def sollte_gespeichert_werden(nachricht: str) -> bool:
 
 ## Was für Entwickler zuerst wichtig ist
 
-Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann Langzeit-Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
+Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann persistentes Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
 
 Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Ohne Gedächtnis werden viele scheinbar intelligente Agenten schon nach wenigen Nachrichten brüchig oder müssen dieselben Informationen immer wieder neu erfragen.
 
@@ -489,5 +489,4 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 **Version:** 1.4<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 

@@ -15,7 +15,7 @@ has_toc: true
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -25,7 +25,7 @@ has_toc: true
 
 ## Kurzüberblick: Warum LangChain?
 
-Große Sprachmodelle (LLMs) wie GPT-4 sind beeindruckend – doch für den Einsatz in der Praxis stoßen sie schnell an Grenzen:
+Große Sprachmodelle (LLMs) wie GPT-5 sind beeindruckend – doch für den Einsatz in der Praxis stoßen sie schnell an Grenzen:
 
 - **Wie verbindet man ein LLM mit eigenen Datenquellen?** (Dokumente, Datenbanken, APIs)
 - **Wie wechselt man zwischen verschiedenen Anbietern?** (OpenAI, Anthropic, Google – ohne Code-Änderungen)
@@ -78,6 +78,41 @@ graph TB
 
 ---
 
+## Zentrale Konzepte
+
+| Konzept | Rolle im LangChain-Workflow |
+|---|---|
+| Prompt | Formuliert Aufgabe, Rolle und Kontext für das Modell |
+| Modell | Liefert Antworten über eine einheitliche Provider-Schnittstelle |
+| Strukturierte Ausgabe | Erzwingt verlässliche Objekte statt Freitext |
+| Tool | Erweitert das Modell um externe Funktionen |
+| Chain | Verkettet mehrere Schritte mit LCEL |
+| Agent | Entscheidet dynamisch, welche Tools und Schritte nötig sind |
+| RAG | Verbindet Modellantworten mit eigenen Wissensquellen |
+
+---
+
+## Quickstart
+
+```python
+from langchain.chat_models import init_chat_model
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+
+llm = init_chat_model("openai:gpt-5-nano")
+prompt = ChatPromptTemplate.from_template("Erkläre {thema} in drei Sätzen.")
+chain = prompt | llm | StrOutputParser()
+
+antwort = chain.invoke({"thema": "LangChain"})
+print(antwort)
+```
+
+Der Quickstart zeigt das Standardmuster: Prompt vorbereiten, Modell initialisieren, Schritte mit LCEL verbinden und ausführen.
+
+---
+
+## Grundaufbau
+
 ## Prompts mit `ChatPromptTemplate`
 
 Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 das `ChatPromptTemplate` im Mittelpunkt. Es beschreibt, welche Nachrichtenrollen im Dialog verwendet werden und welche Platzhalter dynamisch zur Laufzeit gefüllt werden.
@@ -89,7 +124,7 @@ Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 da
 - Wiederverwendbarkeit desselben Templates in unterschiedlichen Chains und Agenten
 - Klare Trennung von Prompt‑Design und Geschäftslogik
 
-### 2.1 Beispiel 1: Einfacher Frage-Antwort-Prompt
+### Beispiel 1: Einfacher Frage-Antwort-Prompt
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
@@ -105,7 +140,7 @@ rendered_messages = prompt.format_messages(frage="Was ist ein LLM?")
 rendered_messages
 ```
 
-### 2.2 Beispiel 2: Prompt für RAG (mit Kontext)
+### Beispiel 2: Prompt für RAG (mit Kontext)
 
 ```python
 rag_prompt = ChatPromptTemplate.from_messages([
@@ -130,13 +165,13 @@ Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sp
 ```python
 from langchain.chat_models import init_chat_model
 
-# ✨ Kurznotation "provider:model" (STANDARD seit Dezember 2025)
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+# Kurznotation "provider:model"
+llm = init_chat_model("openai:gpt-5-nano")
 
 # Weitere Beispiele:
-# llm = init_chat_model("anthropic:claude-3-sonnet", temperature=0.3)
-# llm = init_chat_model("groq:llama-3.1-70b", temperature=0.7)
-# llm = init_chat_model("google:gemini-pro", temperature=0.5)
+# llm = init_chat_model("anthropic:claude-sonnet-4-5", temperature=0.3)
+# llm = init_chat_model("groq:llama-3.3-70b-versatile", temperature=0.7)
+# llm = init_chat_model("google_genai:gemini-2.5-flash", temperature=0.5)
 
 # Testaufruf
 response = llm.invoke("Nenne drei typische Einsatzgebiete von KI-Agenten.")
@@ -207,14 +242,15 @@ print(safe_divide.invoke({"a": 10, "b": 2}))
 print(safe_divide.invoke({"a": 10, "b": 0}))
 ```
 
+
+
 ### Tool Extras für Provider-spezifische Features (NEU v1.2.0)
 
-Tools unterstützen jetzt `extras` für provider-native Konfigurationen – eine der wichtigsten Neuerungen in LangChain v1.2.0:
+Der extras-Parameter beim @tool-Dekorator erlaubt es, provider‑spezifische Features und Flags (z. B. Anthropic‑Caching, OpenAI‑strict‑Mode oder spezielle „computer“/Display‑Flags) an ein LangChain‑Tool zu hängen, die die Standard‑Tool‑API nicht abbildet. Diese Extras werden nur wirksam, wenn der jeweilige Provider‑Adapter/Integration die entsprechenden Keys interpretiert; andernfalls haben sie keine Wirkung.
 
 ```python
 from langchain_core.tools import tool
 
-# ✨ NEU in v1.2.0: Provider-spezifische Tool-Parameter
 @tool(extras={
     "anthropic": {
         "cache_control": {"type": "ephemeral"},  # Anthropic Prompt Caching
@@ -257,6 +293,9 @@ def take_screenshot() -> str:
 - OpenAI Strict Mode für garantierte Schema-Konformität
 - Anthropic Computer Use für Browser-Automation
 
+> [!WARNING] Cache-Typ beachten<br>
+> `cache_control: {"type": "ephemeral"}` erzeugt einen kurzlebigen Cache innerhalb derselben Sitzung. Damit der Cache wiederverwendet werden kann, sollte die `extras`-Konfiguration eines Tools konsistent bleiben. Wird dasselbe Tool später mit einer anderen `extras`-Konfiguration registriert oder verwendet, entsteht ein Cache-Miss — die Anfrage wird erneut vollständig verarbeitet und verursacht erneut volle Kosten.
+
 ---
 
 ## Agenten erstellen: `create_agent()`
@@ -296,7 +335,7 @@ result
 
 Hier liefert `create_agent()` bereits ein kompiliertes LangGraph‑Objekt (CompiledStateGraph). Dadurch kann derselbe Agent später in komplexere Workflows eingebettet werden.
 
-### Strict Schema für Agent-Responses (NEU v1.2.0)
+### Strict Schema für Agent-Responses
 
 Agents unterstützen jetzt `response_format` für strikte Validierung von Agent-Outputs:
 
@@ -312,23 +351,21 @@ class AgentResponse(BaseModel):
     tool_to_use: str | None = Field(description="Zu verwendendes Tool (optional)")
     confidence: float = Field(description="Konfidenz 0-1", ge=0, le=1)
 
-# ✨ NEU in v1.2.0: response_format für garantierte Schema-Konformität
 agent = create_agent(
     model=llm,
-    tools=[search_tool, calculator_tool],
+    tools=[multiply, safe_divide],
     system_prompt="You are a helpful research assistant",
-    response_format=AgentResponse,  # Strikte Validierung!
-    provider_strategy="strict"  # Nutzt OpenAI Structured Output (wenn verfügbar)
+    response_format=AgentResponse,  # Strikte Validierung
 )
 
-# Agent-Response ist garantiert schema-konform
 response = agent.invoke({
     "messages": [{"role": "user", "content": "Recherchiere die Bevölkerung von Berlin"}]
 })
 
-# Typsicherer Zugriff auf strukturierte Felder
-print(response.reasoning)  # str
-print(response.confidence)  # float (0-1)
+# Strukturierte Antwort liegt im Agent-State.
+structured = response["structured_response"]
+print(structured.reasoning)
+print(structured.confidence)
 ```
 
 **Vorteile:**
@@ -343,6 +380,7 @@ print(response.confidence)  # float (0-1)
 - Multi-Step-Reasoning mit strukturierten Zwischenschritten
 - Agent-Monitoring mit standardisierten Response-Metriken
 - Integration in typsichere Workflows
+
 
 ### Agent-Tool-Interaktion
 
@@ -411,29 +449,41 @@ print(output)
 
 ### Beispiel: LCEL-Chain mit zusätzlicher Eingabe (Pass-Through)
 
+`RunnablePassthrough` ergänzt Daten innerhalb einer Chain, ohne den ursprünglichen Input zu verändern. Dadurch können zusätzliche Informationen wie Kontext, Metadaten oder Zwischenergebnisse einfach ergänzt werden.
+
 ```python
 from langchain_core.runnables import RunnablePassthrough
+from langchain_core.prompts import ChatPromptTemplate
 
 qa_prompt = ChatPromptTemplate.from_template(
     "Kontext:\n{context}\n\nFrage: {question}"
 )
 
+# Die Chain erhält ein Dictionary, z. B. {"question": "..."}.
+# RunnablePassthrough.assign ergänzt daraus ein weiteres Feld: "context".
+
 qa_chain = (
-    {
-        "context": RunnablePassthrough(),  # hier könnte auch ein Retriever stehen
-        "question": RunnablePassthrough(),
-    }
+    RunnablePassthrough.assign(
+        context=lambda x: "Hier stehen z.B. Infos aus einer Datenbank."
+    )
     | qa_prompt
     | llm
     | StrOutputParser()
 )
 
-answer = qa_chain.invoke({
-    "context": "LangChain bietet Tools, Agents und RAG-Bausteine.",
-    "question": "Wofür nutzt man LangChain?",
-})
+# Aufruf:
+# "question" wird unverändert weitergegeben.
+# "context" wird von der Chain automatisch ergänzt.
+
+answer = qa_chain.invoke({"question": "Was ist RAG?"})
 print(answer)
 ```
+
+---
+
+## Typische Workflows
+
+Die folgenden Abschnitte zeigen typische Einsteiger-Workflows: multimodale Eingaben, Chunking, Embeddings und ein vollständiges RAG-Pattern.
 
 ---
 
@@ -441,7 +491,7 @@ print(answer)
 
 Middleware ergänzt Agenten um wichtige Kontrollmechanismen, etwa Sicherheitsprüfungen oder automatische Kontextverdichtung.
 
-**Beispiel: Ein Agent mit Human-in-the-Loop für sensible Tools**
+**Ein Agent mit Human-in-the-Loop für sensible Tools**
 
 ```python
 from langchain.agents.middleware import HumanInTheLoopMiddleware
@@ -465,7 +515,8 @@ secure_agent = create_agent(
 )
 ```
 
-In Notebooks kann hier didaktisch gezeigt werden, wie der Agent vor einer heiklen Tool‑Ausführung explizit um Bestätigung fragt.
+Für produktionsnähere Human-in-the-Loop-Abläufe mit explizitem Pause/Resume ist LangGraph `interrupt()` meist besser nachvollziehbar. Die Middleware eignet sich für einfache Agenten, bei denen bestimmte Tools vor der Ausführung bestätigt werden sollen.
+
 
 **Kontext-Management bei langen Konversationen**
 
@@ -478,13 +529,18 @@ from langchain.agents.middleware import SummarizationMiddleware
 agent_summarize = create_agent(
     model=llm,
     tools=tools,
-    middleware=[SummarizationMiddleware(model=llm)]
+    middleware=[
+        SummarizationMiddleware(
+            model=llm,
+            max_tokens_before_summary=4000,
+        )
+    ]
     # Fasst Konversation automatisch zusammen, wenn Token-Limit überschritten
 )
 
-# Ansatz 2: OpenAI Server-Side Compaction (nur OpenAI, langchain-openai 1.1.10)
+# Ansatz 2: OpenAI Server-Side Compaction (nur OpenAI, wenn vom Modell unterstützt)
 llm_compact = init_chat_model(
-    "openai:gpt-4o-mini",
+    "openai:gpt-5-nano",
     context_management=[{"type": "compaction", "compact_threshold": 10_000}]
 )
 agent_compact = create_agent(model=llm_compact, tools=tools)
@@ -561,7 +617,7 @@ Embeddings repräsentieren Texte als Vektoren und bilden die Basis für semantis
 
 ```python
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 
 ## 1. Dokumente (z.B. Ergebnis des Chunkings)
 documents = [
@@ -598,42 +654,55 @@ Retrieval‑Augmented Generation (RAG) ist eines der wichtigsten Einsatzszenarie
 
 ```mermaid
 flowchart TB
-    START([User Query])
-    EMBED[Embedding Model<br/>Convert query to vector]
-    RETRIEVE[Vector Store Retrieval<br/>Similarity search]
-    FORMAT[Format Documents<br/>Combine retrieved chunks]
-    PROMPT[RAG Prompt Template<br/>Context + Question]
-    LLM[Language Model<br/>Generate answer]
-    FINISH([Answer to User])
 
-    START --> EMBED
-    EMBED --> RETRIEVE
-    RETRIEVE -->|Top-k documents| FORMAT
-    FORMAT -->|context| PROMPT
-    START -->|question| PROMPT
-    PROMPT --> LLM
-    LLM --> FINISH
+START([Benutzeranfrage])
 
-    subgraph "Vector Database"
-        RETRIEVE
-    end
+EMBED[Embedding-Modell
+Anfrage in Vektor umwandeln]
 
-    subgraph "LCEL Chain"
-        FORMAT
-        PROMPT
-        LLM
-    end
+RETRIEVE[Vektordatenbank-Abfrage
+Ähnlichkeitssuche]
 
-    style EMBED fill:#ffe6cc
-    style RETRIEVE fill:#f8cecc
-    style FORMAT fill:#d5e8d4
-    style PROMPT fill:#dae8fc
-    style LLM fill:#d5e8d4
+FORMAT[Dokumente formatieren
+Gefundene Chunks kombinieren]
+
+PROMPT[RAG Prompt-Vorlage
+Kontext + Frage]
+
+LLM[Sprachmodell
+Antwort generieren]
+
+FINISH([Antwort an Benutzer])
+
+START --> EMBED
+EMBED --> RETRIEVE
+RETRIEVE -->|Top-k Dokumente| FORMAT
+FORMAT -->|Kontext| PROMPT
+START -->|Frage| PROMPT
+PROMPT --> LLM
+LLM --> FINISH
+
+subgraph "<b>Vektordatenbank</b>"
+    RETRIEVE
+end
+
+subgraph "<b>LCEL Chain (Kette)</b>"
+    FORMAT
+    PROMPT
+    LLM
+end
+
+style EMBED fill:#ffe6cc
+style RETRIEVE fill:#f8cecc
+style FORMAT fill:#d5e8d4
+style PROMPT fill:#dae8fc
+style LLM fill:#d5e8d4
 ```
 
 **Beispiel: Minimaler RAG-Workflow mit LCEL**
 
 ```python
+from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
 ## 1. Retriever aus bestehendem Chroma-Store
@@ -657,11 +726,13 @@ Frage: {question}
 """
 )
 
-## 4. LCEL-Chain
+# 4. LCEL-Chain
 rag_chain = (
     {
+        # Hier wird die Frage an den Retriever gegeben und das Ergebnis formatiert
         "context": doc_retriever | format_docs,
-        "question": RunnablePassthrough(),
+        # Hier wird die ursprüngliche Frage ("Wozu wird Chroma verwendet?") einfach durchgereicht
+        "question": RunnablePassthrough(), 
     }
     | rag_prompt
     | llm
@@ -676,22 +747,60 @@ print(antwort)
 
 Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assistenten oder interne Suchsysteme im Kurs und kann schrittweise um Evaluierung, Feedback‑Schleifen oder LangGraph‑Workflows erweitert werden.
 
-## Abgrenzung zu verwandten Dokumenten
+---
 
-| Dokument | Inhalt |
-|---|---|
-| [LangGraph]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }}) | LangGraph aufbauend auf LangChain — Workflows, State, Routing |
-| [Einsteiger ChromaDB]({{ '/05-frameworks/einsteiger-chromadb.html' | relative_url }}) | Vektordatenbank für die RAG-Beispiele in diesem Guide |
-| [Einsteiger Prompts]({{ '/04-agenten-implementierung/einsteiger-prompts.html' | relative_url }}) | Prompt-Dateien und  als Ergänzung zu  |
-| [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) | Konzeptionelle Grundlagen hinter den RAG-Patterns in Abschnitt 12 |
+## Best Practices
+
+- `init_chat_model()` statt provider-spezifischer Modellklassen verwenden.
+- Prompts mit `ChatPromptTemplate` statt zusammengesetzten Strings bauen.
+- Strukturierte Daten mit `with_structured_output()` erzeugen.
+- Tools mit `@tool`, Type Hints und klaren Docstrings definieren.
+- LCEL `|` für lineare Chains verwenden.
+- Für RAG zuerst Chunking, Embeddings und Retrieval-Qualität testen, bevor der Agent komplexer wird.
 
 ---
 
-**Version:** 1.0<br>
+## Troubleshooting
+
+### Import funktioniert nicht
+
+Prüfe, ob die benötigten Pakete installiert sind und ob du die aktuellen LangChain-Importpfade verwendest.
+
+### Modell liefert Freitext statt Schema
+
+Nutze `with_structured_output()` mit einem Pydantic-Modell. Prompt-Anweisungen allein reichen für robuste strukturierte Daten nicht aus.
+
+### RAG-Antworten sind ungenau
+
+Prüfe zuerst Chunk-Größe, Overlap, Embedding-Modell und Retriever-Parameter. Das Modell kann nur mit dem Kontext arbeiten, den der Retriever liefert.
+
+---
+
+## Erweiterungen / Fortgeschrittene Themen
+
+- Middleware zur Agentensteuerung
+- Multimodale Content-Blöcke
+- Provider-spezifische Tool Extras
+- Strict Schema für Agent-Responses
+- RAG mit Vektordatenbanken
+
+---
+
+## Zusammenfassung
+
+LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, strukturierte Ausgaben, Tools, Chains, Agents und RAG. Für Einsteiger ist die wichtigste Reihenfolge: erst einen einfachen Modellaufruf stabil bekommen, dann LCEL-Chains bauen, anschließend Tools und Retrieval ergänzen.
+
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [LangGraph](einsteiger-langgraph.html) | Wann reicht eine Chain nicht mehr aus und ein Graph wird sinnvoll? |
+| [LangChain Best Practices](./langchain-best-practices.html) | Welche Muster gelten für produktionsnähere LangChain-Anwendungen? |
+
+---
+
+**Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
 

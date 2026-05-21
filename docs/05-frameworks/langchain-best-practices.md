@@ -4,49 +4,63 @@ title: LangChain Best Practices
 parent: LangChain
 grand_parent: Frameworks
 nav_order: 2
-description: Vertiefungs- und Referenzseite für saubere LangChain-Patterns nach dem Einsteiger-Einstieg
+description: "7 MUST-HAVE Features für LangChain 1.0+: init_chat_model, with_structured_output, @tool, create_agent, LCEL"
 has_toc: true
 ---
 
-# LangChain Best Practices
-{: .no_toc }
+# LangChain 1.0+ MUST-HAVE Features
 
-> **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide belastbare LangChain-Muster nachschlagen möchten.**
+> **Pflichtlektüre für alle neuen Notebooks und Code im Agenten-Projekt**
 
-Diese Seite ist keine erste Einführung in LangChain. Sie dient als Referenz für saubere, moderne Patterns, wenn die Grundlagen bereits klar sind. Für den ersten Zugang empfiehlt sich zuerst [LangChain Einsteiger]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}).
-
-Im Projektkontext werden einige dieser Patterns als Standard behandelt. Für Teilnehmende im Kurs ist wichtiger, die Unterschiede zwischen älteren und robusteren Mustern zu verstehen, nicht alle Punkte sofort auswendig zu beherrschen.
-
-Typischer Fehler: Diese Seite wie eine lineare Einführung zu lesen. Als Lernpfad ist sie zu dicht. Als Nachschlagewerk bei konkreten Umsetzungsfragen ist sie deutlich nützlicher.
+Dieses Dokument fasst die 8 verpflichtenden bzw. empfohlenen Features für LangChain 1.0+ zusammen, die in neuen Implementierungen verwendet werden **MÜSSEN** oder als Produktionsstandard empfohlen sind.
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
 
+## Überblick / Zweck
+
+LangChain ist die Standardbibliothek für Modellinitialisierung, strukturierte Ausgaben, Tools, Agents, LCEL-Chains und robuste Runnable-Kompositionen im Agenten-Projekt. Dieses Dokument legt fest, welche APIs in neuen Notebooks und Code-Modulen als Standard gelten.
+
+Ziel ist nicht, jede LangChain-Funktion vollständig zu erklären, sondern verlässliche Muster für Kursmaterial, Beispiele und produktionsnahe Prototypen festzuhalten.
+
 ---
 
-## Überblick der wichtigsten LangChain-Standards
+## Wann nutzen?
+
+LangChain ist die richtige Ebene, wenn ein einzelner Agent, eine Chain oder ein überschaubarer LLM-Workflow gebaut wird. Sobald langlebiger State, explizites Routing, Human-in-the-Loop oder Multi-Agent-Koordination nötig werden, gehört der Kontrollfluss in LangGraph.
+
+| Situation | Empfehlung |
+|---|---|
+| Modell aufrufen, Prompt bauen, Output parsen | LangChain |
+| Tool-fähigen Agent erstellen | LangChain `create_agent()` |
+| Lineare LCEL-Pipeline | LangChain |
+| Robuste Retries oder Modell-Fallbacks | LangChain Runnable-Methoden |
+| Zustandsbehafteter Workflow mit Routing | LangGraph |
+| Tracing, Evaluation, Monitoring | LangSmith |
+
+---
+
+## Standards / Kern-Features
 
 | # | Feature | Priorität | Ersetzt | Hauptvorteil |
 |---|---------|-----------|---------|--------------|
-| 1 | `init_chat_model()` | Kernstandard | `ChatOpenAI()` direkt | Provider-Unabhängigkeit |
-| 2 | `with_structured_output()` | Kernstandard | `PydanticOutputParser` | Garantierte Schema-Konformität |
-| 3 | `@tool` Decorator | Kernstandard | `Tool()` wrapper | Automatische Schema-Generierung |
-| 4 | `create_agent()` | Kernstandard | `initialize_agent()` + `AgentExecutor` | Moderne Agenten-Erstellung |
-| 5 | LCEL `\|` Chains | Kernstandard | Legacy Chain-Syntax | Moderne Pipe-Operator-Syntax |
-| 6 | Middleware für Agents | Vertiefung | Hook-Pattern | Robusteres Laufzeitverhalten |
-| 7 | Standard Content Blocks | Vertiefung | Provider-spezifische Formate | Multimodal-Support |
-| 8 | `.with_retry()` / `.with_fallbacks()` | Empfehlung | Manuelle try/except-Blöcke | Robustere Chains |
+| 1 | `init_chat_model()` | ⭐ PFLICHT | `ChatOpenAI()` direkt | Provider-Unabhängigkeit |
+| 2 | `with_structured_output()` | ⭐ PFLICHT | `PydanticOutputParser` | Garantierte Schema-Konformität |
+| 3 | `@tool` Decorator | ⭐ PFLICHT | `Tool()` wrapper | Automatische Schema-Generierung |
+| 4 | `create_agent()` | ⭐ PFLICHT | `initialize_agent()` + `AgentExecutor` | LangGraph-basierte State Machine |
+| 5 | LCEL `\|` Chains | ⭐ PFLICHT | Legacy Chain-Syntax | Moderne Pipe-Operator-Syntax |
+| 6 | Middleware für Agents | ⭐ PFLICHT | Hook-Pattern | Production-Ready Features |
+| 7 | Standard Content Blocks | ⭐ PFLICHT | Provider-spezifische Formate | Multimodal-Support |
+| 8 | `.with_retry()` / `.with_fallbacks()` | 💡 EMPFOHLEN | Manuelle try/except-Blöcke | Robuste Production-Chains |
 
 ---
 
-## 🆕 What's New in LangChain v1.2.0 (December 15, 2025)
-
-Hinweis für Einsteiger: Diese Versionssektion ist nur dann wichtig, wenn bestehender Code modernisiert oder Unterschiede zwischen älteren und neueren Beispielen verstanden werden sollen. Für die ersten Kursmodule kann sie zunächst übersprungen werden.
+## What's New in LangChain v1.2.0 (December 15, 2025)
 
 LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 
@@ -84,25 +98,25 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 
 ---
 
-## 1️⃣ `init_chat_model()` - Unified Model Initialization
+## 1 `init_chat_model()` - Unified Model Initialization
 
-### ❌ ALT (nicht mehr verwenden)
+### ALT (nicht mehr verwenden)
 ```python
 from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # Auch veraltet: Langnotation mit separaten Variablen
 model_provider = "openai"
-model_name = "gpt-4o-mini"
+model_name = "gpt-5.4-nano"
 llm = init_chat_model(model_name, model_provider=model_provider, temperature=0)
 ```
 
-### ✅ NEU (PFLICHT) - Kurznotation "provider:model"
+### NEU (PFLICHT) - Kurznotation "provider:model"
 ```python
 from langchain.chat_models import init_chat_model
 
 # ✨ Kurznotation: "provider:model" (STANDARD seit Dezember 2025)
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # Weitere Beispiele:
 llm = init_chat_model("anthropic:claude-3-sonnet", temperature=0.3)
@@ -110,16 +124,16 @@ llm = init_chat_model("groq:llama-3.1-70b", temperature=0.7)
 llm = init_chat_model("google:gemini-pro", temperature=0.5)
 
 # Mit zusätzlichen Parametern:
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0, max_tokens=1000)
+llm = init_chat_model("openai:gpt-5.4-nano", max_tokens=1000)
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ Kompakte, lesbare Syntax
 - ✅ Provider-übergreifende Kompatibilität
 - ✅ Einfacher Modell-Wechsel
 - ✅ Zukunftssichere API
 
-### 🆕 NEU in v1.1.0: Model Profile System
+### NEU in v1.1.0: Model Profile System
 
 Chat-Modelle exposieren jetzt ihre Capabilities über das `.profile` Attribut:
 
@@ -127,7 +141,7 @@ Chat-Modelle exposieren jetzt ihre Capabilities über das `.profile` Attribut:
 from langchain.chat_models import init_chat_model
 
 # Kurznotation verwenden
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # ✨ NEU: Model Profiles (sourced from models.dev)
 print(llm.profile.supports_structured_output)  # True (deprecated: use 'structured_output')
@@ -158,10 +172,10 @@ Für einfachere Nutzung gibt es in `genai_lib.utilities` eine Hilfsfunktion:
 from genai_lib.utilities import get_model_profile
 
 # Formatierte Ausgabe aller wichtigen Capabilities
-profile = get_model_profile("openai:gpt-4o-mini")
+profile = get_model_profile("openai:gpt-5.4-nano")
 
 # Output:
-# 🔍 Model Profile: openai:gpt-4o-mini
+# 🔍 Model Profile: openai:gpt-5.4-nano
 # ============================================================
 #
 # 📋 Core Capabilities:
@@ -191,7 +205,7 @@ profile = get_model_profile("openai:gpt-4o-mini")
 profile = get_model_profile("anthropic:claude-3-sonnet", print_profile=False)
 
 # Verschiedene Models vergleichen (mit Fehlerbehandlung)
-for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-pro"]:
+for model in ["openai:gpt-5.4-nano", "anthropic:claude-3-sonnet", "google:gemini-pro"]:
     print(f"\n{model}:")
     profile = get_model_profile(model, print_profile=False)
 
@@ -213,9 +227,9 @@ for model in ["openai:gpt-4o-mini", "anthropic:claude-3-sonnet", "google:gemini-
 
 ---
 
-## 2️⃣ `with_structured_output()` - Native Structured Outputs
+## 2 `with_structured_output()` - Native Structured Outputs
 
-### ❌ ALT (nicht mehr verwenden)
+### ALT (nicht mehr verwenden)
 ```python
 from langchain.output_parsers import PydanticOutputParser
 
@@ -227,7 +241,7 @@ prompt = PromptTemplate(
 )
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from pydantic import BaseModel, Field
 
@@ -241,13 +255,13 @@ result = structured_llm.invoke("Max ist 25 Jahre alt")
 # result ist direkt ein Person-Objekt!
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ Garantierte Schema-Konformität (nutzt OpenAI's Native API)
 - ✅ Keine manuelle `format_instructions` mehr
 - ✅ Robuster und weniger fehleranfällig
 - ✅ Kein JSON-Parsing mehr nötig
 
-### 🆕 NEU in v1.1.0: Auto-Inference von ProviderStrategy
+### NEU in v1.1.0: Auto-Inference von ProviderStrategy
 
 `ProviderStrategy` wird jetzt automatisch aus Model Profiles abgeleitet:
 
@@ -278,9 +292,9 @@ structured_llm = llm.with_structured_output(
 
 ---
 
-## 3️⃣ `@tool` Decorator - Tool Definitions
+## 3 `@tool` Decorator - Tool Definitions
 
-### ❌ ALT (nicht mehr verwenden)
+### ALT (nicht mehr verwenden)
 ```python
 from langchain.agents import Tool
 
@@ -291,7 +305,7 @@ multiply_tool = Tool(
 )
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from langchain_core.tools import tool
 
@@ -301,13 +315,13 @@ def multiply(a: int, b: int) -> int:
     return a * b
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ Automatische Schema-Generierung aus Docstring
 - ✅ Type-Safety durch Python Type Hints
 - ✅ Weniger Boilerplate-Code
 - ✅ Bessere IDE-Unterstützung
 
-### 🆕 NEU in v1.2.0: Tool Extras für Provider-spezifische Features
+### NEU in v1.2.0: Tool Extras für Provider-spezifische Features
 
 Tools unterstützen jetzt `extras` für provider-native Konfigurationen:
 
@@ -360,9 +374,9 @@ def take_screenshot() -> str:
 
 ---
 
-## 4️⃣ `create_agent()` - Modern Agent API
+## 4 `create_agent()` - Modern Agent API
 
-### ❌ ALT (nicht mehr verwenden)
+### ALT (nicht mehr verwenden)
 ```python
 from langchain.agents import initialize_agent, AgentType
 
@@ -374,7 +388,7 @@ agent = initialize_agent(
 )
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from langchain.agents import create_agent
 
@@ -391,13 +405,13 @@ response = agent.invoke({
 })
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ Basiert auf LangGraph (State Machine)
 - ✅ Kein `AgentExecutor` mehr nötig
 - ✅ Besseres Debugging mit `debug=True`
 - ✅ Middleware-Support (siehe Feature #6)
 
-### 🆕 NEU in v1.1.0: SystemMessage Support
+### NEU in v1.1.0: SystemMessage Support
 
 `system_prompt` akzeptiert jetzt `SystemMessage` mit erweiterten Features:
 
@@ -441,7 +455,7 @@ agent = create_agent(
 - ✅ **Richer System-Level Instructions** mit Metadata
 - ✅ **Backwards-compatible**: String-Prompts funktionieren weiterhin
 
-### 🆕 NEU in v1.2.0: Strict Schema für Agent-Responses
+### NEU in v1.2.0: Strict Schema für Agent-Responses
 
 Agents unterstützen jetzt `response_format` für strikte Validierung von Agent-Outputs:
 
@@ -504,9 +518,9 @@ agent = create_agent(
 
 ---
 
-## 5️⃣ LCEL `|` Chains - Expression Language
+## 5 LCEL `|` Chains - Expression Language
 
-### ❌ ALT (vermeiden)
+### ALT (vermeiden)
 ```python
 from langchain.chains import LLMChain
 
@@ -514,7 +528,7 @@ chain = LLMChain(llm=llm, prompt=prompt)
 result = chain.run(input="text")
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
@@ -529,7 +543,7 @@ result = chain.invoke({"input": "text"})
 result = await chain.ainvoke({"input": "text"})
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ Moderne, lesbare Syntax
 - ✅ Automatisches Streaming-Support
 - ✅ Parallele Ausführung wo möglich
@@ -537,15 +551,15 @@ result = await chain.ainvoke({"input": "text"})
 
 ---
 
-## 6️⃣ Middleware für Agents - Production-Ready Features
+## 6 Middleware für Agents - Production-Ready Features
 
-### ❌ ALT (deprecated)
+### ALT (deprecated)
 ```python
 # Hooks sind in 1.0+ deprecated
 agent_executor.register_hook("before_agent", my_hook)
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import (
@@ -574,13 +588,13 @@ agent = create_agent(
 )
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ **Human-in-the-Loop** für sensible Operationen (Essential für Production!)
 - ✅ **Automatische Kontextverwaltung** bei langen Sessions (verhindert Token-Overflow)
 - ✅ **PII-Redaktion** für Datenschutz (DSGVO-konform)
 - ✅ **Custom Middleware** für spezifische Anforderungen
 
-### 📦 Built-in Middleware
+### Built-in Middleware
 
 | Middleware | Zweck | Wann verwenden? |
 |-----------|-------|-----------------|
@@ -590,7 +604,7 @@ agent = create_agent(
 | `ModelRetryMiddleware` 🆕 | Automatische Retries mit exponential backoff | Flaky APIs, Rate Limits |
 | `ContentModerationMiddleware` 🆕 | OpenAI Moderation für User/Model/Tool-Outputs | Safety-Layer, Content-Filter |
 
-### 🆕 NEU in v1.1.0: Erweiterte Middleware
+### NEU in v1.1.0: Erweiterte Middleware
 
 #### ModelRetryMiddleware (NEU!)
 
@@ -679,7 +693,7 @@ middleware = SummarizationMiddleware(
 - ✅ Flexible Trigger-Points (nicht nur hard limit)
 - ✅ Bessere Performance auf langen Sessions
 
-#### 🆕 ContextOverflowError (v1.2.1+, Januar 2026)
+#### ContextOverflowError (v1.2.1+, Januar 2026)
 
 Neuer Fehlertyp für automatisches Context-Window-Management:
 
@@ -702,7 +716,7 @@ middleware = SummarizationMiddleware(
 - ✅ Kein manuelles Context-Window-Management mehr nötig
 - ✅ `count_tokens_approximately()` zählt jetzt auch Tool-Schema-Tokens
 
-#### 🆕 Automatic Server-Side Compaction (langchain-openai 1.1.10, Feb 2026)
+#### Automatic Server-Side Compaction (langchain-openai 1.1.10, Feb 2026)
 
 **Alternative zu SummarizationMiddleware:** OpenAI komprimiert die Konversationshistorie **serverseitig** – kein extra Middleware-Layer nötig.
 
@@ -711,7 +725,7 @@ from langchain.chat_models import init_chat_model
 
 # OpenAI komprimiert automatisch bei langen Konversationen
 llm = init_chat_model(
-    "openai:gpt-4o",
+    "openai:gpt-5.4-nano",
     context_management=[{"type": "compaction", "compact_threshold": 10_000}]
     # compact_threshold: Token-Schwellenwert, ab dem komprimiert wird
 )
@@ -730,9 +744,9 @@ llm = init_chat_model(
 
 ---
 
-## 7️⃣ Standard Message Content Blocks - Multimodal Support
+## 7 Standard Message Content Blocks - Multimodal Support
 
-### ❌ ALT (provider-spezifisch)
+### ALT (provider-spezifisch)
 ```python
 # OpenAI-spezifisch
 message.additional_kwargs["image_url"]
@@ -741,7 +755,7 @@ message.additional_kwargs["image_url"]
 message.additional_kwargs["content"]
 ```
 
-### ✅ NEU (PFLICHT)
+### NEU (PFLICHT)
 ```python
 from langchain_core.messages import AIMessage, HumanMessage
 
@@ -763,13 +777,13 @@ for block in message.content_blocks:
         play_audio(block["url"])
 ```
 
-### 🎯 Vorteile
+### Vorteile
 - ✅ **Einheitliches Interface** über alle Provider (OpenAI, Anthropic, Google, Cohere)
 - ✅ **Multimodal-Support**: Text, Bilder, Audio, Video
 - ✅ **Reasoning Traces & Citations** für transparente KI-Entscheidungen
 - ✅ **Einfacher Provider-Wechsel** ohne Code-Änderungen
 
-### 📦 Unterstützte Content-Typen
+### Unterstützte Content-Typen
 
 ```python
 # Text
@@ -791,13 +805,13 @@ for block in message.content_blocks:
 {"type": "citation", "text": "...", "source": "..."}
 ```
 
-### 🎨 Anwendungsfälle
+### Anwendungsfälle
 - ✅ Multimodale RAG-Systeme (perfekt für `04_modul/genai_lib/multimodal_rag.py`)
 - ✅ Bild-zu-Text und Text-zu-Bild Pipelines
 - ✅ Audio/Video-Analyse mit LLMs
 - ✅ Provider-unabhängige Chatbots
 
-### 🧠 Thinking-Formate parsen mit `extract_thinking()`
+### Thinking-Formate parsen mit `extract_thinking()`
 
 Verschiedene LLMs liefern "Thinking" (Denkprozess) in unterschiedlichen Formaten. Die Utility-Funktion `extract_thinking()` aus `genai_lib.utilities` bietet einen universellen Parser:
 
@@ -830,7 +844,7 @@ print(f"Antwort: {answer}")
 
 ---
 
-## 8️⃣ `.with_retry()` und `.with_fallbacks()` - Robuste Chains
+## 8 `.with_retry()` und `.with_fallbacks()` - Robuste Chains
 
 Beide Methoden gehören zum **Runnable-Interface** (LCEL) und lassen sich auf jede Chain, jedes LLM oder jeden OutputParser anwenden.
 
@@ -840,7 +854,7 @@ Beide Methoden gehören zum **Runnable-Interface** (LCEL) und lassen sich auf je
 
 Wiederholt einen Runnable automatisch bei definierten Fehlern (z. B. Rate Limits, Timeouts).
 
-#### ❌ ALT (manuell)
+#### ALT (manuell)
 ```python
 import time
 
@@ -852,7 +866,7 @@ for attempt in range(3):
         time.sleep(2 ** attempt)
 ```
 
-#### ✅ NEU (EMPFOHLEN)
+#### NEU (EMPFOHLEN)
 ```python
 # Einfachste Form: 3 Versuche bei allen Fehlern
 robust_llm = llm.with_retry(stop_after_attempt=3)
@@ -884,7 +898,7 @@ chain = (
 result = chain.invoke({"frage": "Was ist LangChain?"})
 ```
 
-#### 🎯 Vorteile
+#### Vorteile
 - ✅ Kein Boilerplate-Code für Retry-Logik
 - ✅ Konfigurierbare Fehlertypen (nur relevante Exceptions)
 - ✅ Exponential Backoff mit Jitter verhindert API-Überlastung
@@ -902,14 +916,14 @@ result = chain.invoke({"frage": "Was ist LangChain?"})
 
 Schaltet automatisch auf ein Fallback-LLM oder eine alternative Chain um, wenn der primäre Runnable fehlschlägt.
 
-#### ✅ Verwendung
+#### Verwendung
 ```python
 from langchain.chat_models import init_chat_model
 
-primary_llm   = init_chat_model("openai:gpt-4o",      temperature=0.0)
-fallback_llm  = init_chat_model("openai:gpt-4o-mini",  temperature=0.0)
+primary_llm   = init_chat_model("openai:gpt-5.4")
+fallback_llm  = init_chat_model("openai:gpt-5.4-nano")
 
-# Bei Fehler des primären LLMs → automatisch gpt-4o-mini
+# Bei Fehler des primären LLMs → automatisch gpt-5.4-nano
 safe_llm = primary_llm.with_fallbacks([fallback_llm])
 
 result = safe_llm.invoke("Erkläre Transformer-Modelle.")
@@ -917,11 +931,11 @@ result = safe_llm.invoke("Erkläre Transformer-Modelle.")
 
 #### Mehrere Fallbacks (Kaskade)
 ```python
-llm_gpt4        = init_chat_model("openai:gpt-4o",       temperature=0.0)
-llm_gpt4_mini   = init_chat_model("openai:gpt-4o-mini",  temperature=0.0)
-llm_anthropic   = init_chat_model("anthropic:claude-3-haiku", temperature=0.0)
+llm_gpt4        = init_chat_model("openai:gpt-5.4")
+llm_gpt4_mini   = init_chat_model("openai:gpt-5.4-nano")
+llm_anthropic   = init_chat_model("anthropic:claude-3-haiku")
 
-# Kaskade: gpt-4o → gpt-4o-mini → claude-3-haiku
+# Kaskade: gpt-5.4 → gpt-5.4-nano → claude-3-haiku
 resilient_llm = llm_gpt4.with_fallbacks([llm_gpt4_mini, llm_anthropic])
 ```
 
@@ -944,7 +958,7 @@ safe_structured = structured_primary.with_fallbacks([structured_fallback])
 result = safe_structured.invoke("Anna Müller ist 32 Jahre alt.")
 ```
 
-#### 🎯 Vorteile
+#### Vorteile
 - ✅ Zero-Downtime bei Provider-Ausfällen
 - ✅ Kostenkontrolle (teures Modell → günstiges Fallback)
 - ✅ Provider-Diversität als Resilienz-Strategie
@@ -958,14 +972,14 @@ result = safe_structured.invoke("Anna Müller ist 32 Jahre alt.")
 
 ---
 
-## 🚀 Quick Start: Komplettes Beispiel
+## Quick Start: Komplettes Beispiel
 
 ```python
 # 1. Model Initialization
 from langchain.chat_models import init_chat_model
 
 llm = init_chat_model(
-    "gpt-4o-mini",
+    "gpt-5.4-nano",
     model_provider="openai",
     temperature=0.0
 )
@@ -1024,7 +1038,21 @@ response = llm.invoke([message])
 
 ---
 
-## 📚 Import-Cheatsheet
+## Production-Checkliste
+
+- [ ] Modelle ausschließlich über `init_chat_model()` initialisieren.
+- [ ] Strukturierte Antworten mit `with_structured_output()` statt manueller Parser erzwingen.
+- [ ] Tools mit `@tool` und Type Hints definieren.
+- [ ] Agents mit `create_agent()` statt Legacy-Agent-APIs bauen.
+- [ ] LCEL-Pipelines mit `|` zusammensetzen.
+- [ ] Middleware für produktionsnahe Agenten einsetzen, sobald Policies, PII, Retry oder HITL nötig sind.
+- [ ] Multimodale Inhalte als Standard Content Blocks übergeben.
+- [ ] Transiente Fehler mit `.with_retry()` behandeln und kritische Pfade mit `.with_fallbacks()` absichern.
+- [ ] Traces für relevante Beispiele mit LangSmith benennen und taggen.
+
+---
+
+## Import-Cheatsheet
 
 ```python
 # Models
@@ -1067,7 +1095,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 ---
 
-## ⚠️ Breaking Changes von 0.x zu 1.0+
+## Breaking Changes von 0.x zu 1.0+
 
 | Alt (0.x) | Neu (1.0+) | Status |
 |-----------|------------|--------|
@@ -1080,7 +1108,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 ---
 
-## 🎯 Migration-Checkliste
+## Migration-Checkliste
 
 Beim Refactoring von altem Code:
 
@@ -1096,39 +1124,102 @@ Beim Refactoring von altem Code:
 
 ---
 
-## 📖 Weitere Ressourcen
+## Troubleshooting
+
+### Problem: Legacy-Imports tauchen wieder auf
+
+**Symptom:** Neuer Code verwendet `ChatOpenAI()`, `initialize_agent()` oder `PydanticOutputParser`.
+
+**Fix:** Gegen die Must-Have-Tabelle oben prüfen und die moderne API verwenden: `init_chat_model()`, `create_agent()`, `with_structured_output()`.
+
+### Problem: Strukturierte Ausgabe ist instabil
+
+**Symptom:** Das Modell liefert JSON-ähnlichen Text statt eines validierten Objekts.
+
+**Fix:** Ein Pydantic-Schema definieren und `llm.with_structured_output(Schema)` verwenden. Prompt-only JSON-Anweisungen sind kein Ersatz für native Structured Outputs.
+
+### Problem: Agent-Code wächst zu einem Workflow
+
+**Symptom:** Der Agent enthält viele Bedingungen, manuelle Resume-Logik oder Freigabeschritte.
+
+**Fix:** Den Kontrollfluss nach LangGraph verschieben und LangChain nur noch für Modell-, Tool- und Chain-Bausteine verwenden.
+
+---
+
+## Weitere Ressourcen
 
 - **LangChain Docs**: https://python.langchain.com/
 - **Migration Guide**: https://docs.langchain.com/oss/python/migrate/langchain-v1
 - **LangChain Blog**: https://blog.langchain.com/langchain-langgraph-1dot0/
 - **Projekt CLAUDE.md**: Vollständige Projektinstruktionen im Repository
 
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument | Frage |
-|---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Einsteiger mit LangChain Best Practices? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangChain Best Practices? |
-
 ---
 
-## 📝 Changelog
+## Changelog
 
 ### Version 1.7 (Mai 2026)
 - 🆕 **`astream_events()` v3 Protokoll** — `version="v3"` in LangChain v1.3.0 verfügbar (bisher max. v2)
 - 🆕 **langchain-core v1.4.0** — Content-Block-Streaming v2 jetzt stabil (war Beta in 1.3.2)
 - 🆕 **`HumanInTheLoopMiddleware.respond()`** — direkte Antwort aus Middleware ohne weiteren LLM-Call (v1.2.17)
 
+### Version 1.6 (März 2026)
+- 🆕 Automatic Server-Side Compaction dokumentiert (langchain-openai 1.1.10) — Must-Have #6 Ergänzung
+- ✅ "What's New" Sektion um langchain-openai v1.1.10 erweitert
+- ✅ Vergleichstabelle: Server-Side vs. Client-Side Context-Management
+
+### Version 1.5 (März 2026)
+- 🆕 Abschnitt 8️⃣ hinzugefügt: `.with_retry()` und `.with_fallbacks()` für robuste Production-Chains
+- ✅ Übersichtstabelle um Must-Have #8 ergänzt
+- ✅ Import-Cheatsheet mit Hinweis auf Runnable-Methoden aktualisiert
+
+### Version 1.4 (Februar 2026)
+- 🆕 ContextOverflowError dokumentiert (Must-Have #6 - SummarizationMiddleware)
+- 🆕 Token-Zählung für Tool-Schemas (count_tokens_approximately)
+- ✅ "What's New in v1.2.1-v1.2.10" Sektion hinzugefügt
+
+### Version 1.3 (Dezember 2025)
+- 🆕 LangChain v1.2.0 Features integriert (15. Dezember 2025)
+- 🆕 Tool Extras dokumentiert (Must-Have #3) - Provider-native Features
+- 🆕 Strict Schema für Agent `response_format` (Must-Have #4)
+- 🆕 Built-in Client-Side Tools (Anthropic Computer Use, OpenAI Strict Mode)
+- ✅ "What's New in v1.2.0" Sektion aktualisiert
+- ✅ Code-Beispiele erweitert (Tool Extras, response_format)
+
+### Version 1.2 (Dezember 2025)
+- 🆕 `extract_thinking()` Utility dokumentiert (Must-Have #7)
+- ✅ Universeller Parser für Thinking-Formate (Claude, Gemini, Qwen3, DeepSeek)
+- ✅ Integration mit genai_lib.utilities
+
+### Version 1.1 (Dezember 2025)
+- ✅ LangChain v1.1.0 Features integriert
+- 🆕 Model Profile System dokumentiert (Must-Have #1)
+- 🆕 Auto-Inference für Structured Output (Must-Have #2)
+- 🆕 SystemMessage Support in create_agent (Must-Have #4)
+- 🆕 ModelRetryMiddleware & ContentModerationMiddleware (Must-Have #6)
+- 🆕 Verbesserter SummarizationMiddleware
+- ✅ Import-Cheatsheet erweitert
+- ✅ "What's New in v1.1.0" Sektion hinzugefügt
+
+### Version 1.0 (November 2025)
+- Initiale Version mit 7 MUST-HAVE Features
+- LangChain 1.0+ Best Practices
+- Breaking Changes dokumentiert
+- Migration-Checkliste
+
+---
+
+> 💡 **Tipp:** Bookmark diese Datei und konsultiere sie bei jedem neuen Notebook oder Code-Modul!
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [LangGraph Best Practices](langgraph-best-practices.html) | Wann und wie entwerfe ich zustandsbehaftete Workflows mit LangGraph? |
+| [LangSmith Best Practices](langsmith-best-practices.html) | Wie aktiviere und nutze ich LangSmith für Tracing und Evaluation? |
+
 ---
 
 **Version:** 1.7<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-
-
-
 

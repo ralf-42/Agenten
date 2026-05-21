@@ -4,22 +4,22 @@ title: LangGraph Best Practices
 parent: LangGraph
 grand_parent: Frameworks
 nav_order: 2
-description: Vertiefungs- und Referenzseite für robuste LangGraph-Workflows nach dem Einsteiger-Einstieg
+description: "Best Practices für zustandsbehaftete Agenten-Workflows mit LangGraph"
 has_toc: true
 ---
 
 # LangGraph Best Practices
 {: .no_toc }
 
-> **Vertiefung für Teilnehmende, die nach dem Einsteiger-Guide robuste LangGraph-Muster für echte Workflows nachschlagen möchten.**
+> **Vertiefung für Entwickler, die nach dem Einsteiger-Guide robuste LangGraph-Muster für echte Workflows nachschlagen möchten.**
 
-Diese Seite ist keine erste Einführung in LangGraph. Sie richtet sich an Teilnehmende, die bereits verstanden haben, warum ein Graph nötig ist und nun stabilere Muster für State, Routing, Checkpointing oder Multi-Agent-Flüsse suchen. Für den ersten Zugang empfiehlt sich zuerst [LangGraph Einsteiger]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }}).
+Diese Seite ist keine erste Einführung in LangGraph. Sie richtet sich an Entwickler, die bereits verstanden haben, warum ein Graph nötig ist und nun stabilere Muster für State, Routing, Checkpointing oder Multi-Agent-Flüsse suchen. Für den ersten Zugang empfiehlt sich zuerst [LangGraph Einsteiger](./einsteiger-langgraph.html).
 
 Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerseiten. Im Kurs bedeutet das nicht, dass jede Funktion sofort verwendet werden muss. Wichtiger ist zu verstehen, wann ein Pattern wirklich nötig ist und wann es für den aktuellen Schritt noch überdimensioniert wäre.
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -27,1141 +27,370 @@ Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerse
 
 ---
 
-## 🎯 Wann LangGraph statt einfachem `create_agent()`?
+## Überblick / Zweck
 
-Für Einsteiger ist diese Tabelle wichtiger als viele Detailabschnitte weiter unten. Erst wenn der Anwendungsfall wirklich mehrstufig, verzweigt oder langlebig wird, lohnt sich die Vertiefung in die restlichen Patterns.
+LangGraph ist die Standardebene für zustandsbehaftete, verzweigte und wiederaufnehmbare Agenten-Workflows. Dieses Dokument sammelt die Patterns, die im Kurs und in produktionsnahen Beispielen als robuste Grundlage gelten.
+
+Ziel ist ein expliziter Kontrollfluss: State, Nodes, Edges, Routing, Checkpointing und Freigaben sollen im Graph sichtbar sein, statt in Prompts oder großen Python-Funktionen versteckt zu werden.
+
+---
+
+## Wann nutzen?
+
+LangGraph lohnt sich, wenn ein Agent nicht mehr linear arbeitet. Sobald Routing, langlebiger State, Wiederaufnahme, mehrere Agenten oder menschliche Freigaben eine Rolle spielen, wird ein expliziter Graph robuster als eine lose Folge von Tool-Aufrufen.
 
 | Use Case | LangChain `create_agent()` | LangGraph |
-|----------|---------------------------|-----------|
-| **Einfacher Agent** mit Tools | ✅ Perfekt | ❌ Overkill |
-| **Multi-Step Workflows** mit Bedingungen | ⚠️ Begrenzt | ✅ Ideal |
-| **Multi-Agent-Systeme** (Supervisor, Hierarchie) | ❌ Nicht möglich | ✅ Essential |
-| **Langlebige Sessions** mit Checkpointing | ❌ Nicht möglich | ✅ Essential |
-| **Human-in-the-Loop** (erweitert) | ⚠️ Basic (via Middleware) | ✅ Advanced |
-| **Conditional Routing** | ❌ Nicht möglich | ✅ Essential |
-| **State Persistence** über Tage/Wochen | ❌ Nicht möglich | ✅ Essential |
+|---|---|---|
+| Einfacher Agent mit Tools | Gut geeignet | Meist zu schwergewichtig |
+| Mehrstufiger Workflow mit Bedingungen | Begrenzt | Gut geeignet |
+| Multi-Agent-System | Nicht ausreichend | Kernfall |
+| Langlebige Session mit Checkpointing | Nicht ausreichend | Kernfall |
+| Human-in-the-Loop | Nur einfache Fälle | Gut geeignet |
+| State über Tage oder Wochen | Nicht ausreichend | Kernfall |
 
-**Faustregel:**
-- ✅ **LangChain** für einfache, lineare Agent-Tasks
-- ✅ **LangGraph** für komplexe, verzweigte Workflows und Multi-Agent-Systeme
+Typischer Fehler: LangGraph wird zu früh eingesetzt, nur weil es flexibler klingt. Ein einfacher Agent mit zwei Tools braucht meistens noch keinen Graph. Umgekehrt wird es teuer, eine gewachsene Tool-Kette ohne Graph weiter zu pflegen, sobald Bedingungen, Wiederaufnahme und Fehlerpfade dazukommen.
 
----
+## Standards / Kern-Features
 
-## Überblick der wichtigsten LangGraph-Standards
+| Standard | Priorität | Zweck |
+|---|---|---|
+| `StateGraph` mit `TypedDict` | Kernstandard | State explizit und typisiert halten |
+| Kleine Nodes | Kernstandard | Workflow testbar und austauschbar machen |
+| Conditional Routing | Kernstandard | Entscheidungen im Graph statt im Fließtext verstecken |
+| Checkpointing | Produktionsstandard | Unterbrechung, Resume und Recovery ermöglichen |
+| Human-in-the-Loop | Produktionsstandard | Kritische Aktionen freigeben lassen |
+| Subgraphs | Vertiefung | große Workflows modularisieren |
+| Streaming und Tracing | Vertiefung | Abläufe beobachtbar machen |
 
-| # | Feature | Priorität | Hauptvorteil | Use Case |
-|---|---------|-----------|--------------|----------|
-| 1 | StateGraph mit TypedDict | Kernstandard | Type-safe State Management | Alle Workflows |
-| 2 | Nodes & Edges | Kernstandard | Workflow-Definition | Alle Workflows |
-| 3 | Conditional Routing | Kernstandard | Dynamische Entscheidungen | Verzweigte Logik |
-| 4 | Checkpointing & Memory | Aufbauend | Persistenz & Recovery | Langlebige Sessions |
-| 5 | Human-in-the-Loop (erweitert) | Aufbauend | Interrupt & Resume | Kritische Entscheidungen |
-| 6 | Subgraphs & Multi-Agent | Vertiefung | Modulare Systeme | Komplexe Workflows |
-| 7 | Stream Modes | Vertiefung | Debugging & Monitoring | Beobachtbare Apps |
+## Quick Start
 
----
-
-## 1️⃣ StateGraph mit TypedDict - Type-Safe State Management
-
-### ❌ ALT (fehleranfällig)
 ```python
-# Untyped State - Runtime-Fehler möglich
-graph = StateGraph(dict)
-state = {"messages": [], "count": 0}  # Keine Type-Checks!
-```
+from typing import Annotated, TypedDict
 
-### ✅ NEU (PFLICHT)
-```python
-from typing import TypedDict, Annotated
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
+
 class AgentState(TypedDict):
-    """State-Definition mit TypedDict für Type-Safety."""
-    messages: Annotated[list, add_messages]  # Reducer für Message-Akkumulation
-    user_id: str
-    session_id: str
-    current_step: int
-
-# StateGraph mit typisiertem State
-graph = StateGraph(AgentState)
-```
-
-### 🎯 Vorteile
-- ✅ **Type-Safety**: Fehler zur Entwicklungszeit, nicht zur Laufzeit
-- ✅ **IDE-Unterstützung**: Autocomplete und IntelliSense
-- ✅ **Reducer-Support**: `add_messages` für Message-Akkumulation
-- ✅ **Minimal Overhead**: TypedDict ist stdlib, keine Runtime-Kosten
-
-### 📦 Best Practices: TypedDict vs. Pydantic
-
-| Kriterium | TypedDict | Pydantic BaseModel |
-|-----------|-----------|-------------------|
-| **Performance** | ✅ Schnell (kein Overhead) | ⚠️ Langsamer (Validation) |
-| **Use Case** | Interne State Machines | API Boundaries, User Input |
-| **Validation** | ❌ Keine Runtime-Validation | ✅ Strikte Validation |
-| **Empfehlung** | **LangGraph State (intern)** | **Input/Output-Validierung** |
-
-```python
-# ✅ Best Practice: TypedDict für State
-class GraphState(TypedDict):
     messages: Annotated[list, add_messages]
+    task_status: str
 
-# ✅ Pydantic für User Input
-from pydantic import BaseModel
-class UserInput(BaseModel):
-    query: str
-    temperature: float = 0.7
+
+def agent_node(state: AgentState) -> dict:
+    response = llm.invoke(state["messages"])
+    return {"messages": [response], "task_status": "answered"}
+
+
+builder = StateGraph(AgentState)
+builder.add_node("agent", agent_node)
+builder.add_edge(START, "agent")
+builder.add_edge("agent", END)
+
+graph = builder.compile()
+result = graph.invoke({"messages": [("user", "Fasse LangGraph kurz zusammen.")], "task_status": "new"})
 ```
 
----
+Der Quick Start zeigt nur den minimalen Graph. Für echte Workflows kommen danach Routing, Checkpointing, Human-in-the-Loop und Observability gezielt dazu.
 
-## 2️⃣ Nodes & Edges - Workflow-Definition
+## State Design
 
-### 🔄 Workflow-Bausteine
+State ist die gemeinsame Datenstruktur des Graphen. Er sollte klein, explizit und stabil sein. Alles, was nur temporär in einer Node gebraucht wird, gehört nicht automatisch in den State.
 
-#### **Nodes** = Funktionen, die State transformieren
 ```python
-def agent_node(state: AgentState) -> AgentState:
-    """Ein Node ist eine Funktion, die State empfängt und transformiert."""
-    messages = state["messages"]
-    response = llm.invoke(messages)
+from typing import Annotated, TypedDict
+
+from langgraph.graph import StateGraph
+from langgraph.graph.message import add_messages
+
+
+class AgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+    user_id: str
+    task_status: str
+    retry_count: int
+
+
+graph_builder = StateGraph(AgentState)
+```
+
+`TypedDict` ist für internen LangGraph-State meist die richtige Wahl, weil es wenig Overhead erzeugt und den State für Editor, Tests und Code-Review sichtbar macht. Pydantic eignet sich besser an Systemgrenzen: Eingaben aus APIs, Formulare, strukturierte Modellantworten oder Daten, die zur Laufzeit validiert werden müssen.
+
+| Bedarf | Empfehlung |
+|---|---|
+| Interner Graph-State | `TypedDict` |
+| API-Input oder UI-Formular | Pydantic-Modell |
+| Modellantwort mit Schema | Pydantic oder `with_structured_output()` |
+| Message-Historie | `Annotated[list, add_messages]` |
+
+Grenze: Ein großer State wirkt bequem, macht Graphen aber schwer testbar. Wenn jede Node auf dieselbe breite Datenstruktur zugreift, entstehen verdeckte Abhängigkeiten.
+
+## Nodes Und Edges
+
+Nodes sind normale Funktionen, die State lesen und Teil-State zurückgeben. Eine Node sollte eine fachliche Verantwortung haben: Modell aufrufen, Tool ausführen, Entscheidung vorbereiten, Ergebnis validieren oder Fehler behandeln.
+
+```python
+def agent_node(state: AgentState) -> dict:
+    response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
-def tool_node(state: AgentState) -> AgentState:
-    """Tool-Ausführung als Node."""
+
+def tool_node(state: AgentState) -> dict:
     result = execute_tool(state["messages"][-1])
     return {"messages": [result]}
 ```
 
-#### **Edges** = Verbindungen zwischen Nodes
-```python
-from langgraph.graph import StateGraph, START, END
-
-graph = StateGraph(AgentState)
-
-# Nodes hinzufügen
-graph.add_node("agent", agent_node)
-graph.add_node("tools", tool_node)
-
-# Edges definieren
-graph.add_edge(START, "agent")  # Start → agent
-graph.add_edge("tools", "agent")  # tools → agent (Loop)
-graph.add_edge("agent", END)  # agent → END
-```
-
-### 📦 Graph-Visualisierung (PFLICHT nach compile())
-
-Nach `graph_builder.compile()` den Graphen immer grafisch darstellen – als sofortige Sichtprüfung der Struktur (Nodes, Edges, Routing).
+Edges verbinden Nodes. Der Graph sollte direkt nach dem Kompilieren visualisiert werden, weil falsche Kanten, vergessene Endpunkte oder ungewollte Schleifen so schneller auffallen als im Debugger.
 
 ```python
 from IPython.display import Image, display
+from langgraph.graph import END, START
 
-# Direkt nach graph.compile():
+graph_builder.add_node("agent", agent_node)
+graph_builder.add_node("tools", tool_node)
+
+graph_builder.add_edge(START, "agent")
+graph_builder.add_edge("tools", "agent")
+graph_builder.add_edge("agent", END)
+
 graph = graph_builder.compile()
 
 try:
     display(Image(graph.get_graph().draw_mermaid_png()))
-except Exception as e:
-    print(f"⚠️ Graph-Visualisierung nicht verfügbar: {e}")
+except Exception as exc:
+    print(f"Graph-Visualisierung nicht verfügbar: {exc}")
 ```
 
-**Warum `try/except`:** `draw_mermaid_png()` benötigt `pygraphviz` oder einen Playwright-Browser.
-In Colab und Jupyter meist verfügbar – `try/except` verhindert Abbruch falls nicht installiert.
+Typischer Fehler: In einer Node wird zu viel Logik gesammelt. Wenn eine Funktion Modellaufruf, Tool-Auswahl, Validierung und Fehlerbehandlung gleichzeitig übernimmt, ist der Graph nur noch optisch modular.
 
-**Was die Visualisierung zeigt:**
-- Alle Nodes mit Namen
-- Edges und deren Richtung
-- Conditional Edges als Verzweigungen
-- START- und END-Knoten
+## Conditional Routing
 
-### 🎯 Vorteile
-- ✅ **Klarheit**: Workflow ist visuell verständlich
-- ✅ **Testbarkeit**: Nodes sind isolierte Funktionen
-- ✅ **Wiederverwendbarkeit**: Nodes können geteilt werden
-- ✅ **Debugging**: Einzelne Nodes testbar
-
-### 📦 Advanced: Node Caching (verfügbar ab v1.0)
-
-**Warum:** Eliminiere redundante Berechnungen und spare API-Kosten während der Entwicklung.
+Conditional Routing macht Entscheidungen explizit. Statt in einer großen Node mehrere Fälle zu verschachteln, entscheidet eine Routing-Funktion, welcher Pfad als Nächstes ausgeführt wird.
 
 ```python
-from langgraph.graph import StateGraph
+from typing import Literal
 
-graph = StateGraph(AgentState)
 
-# Node mit Caching
-def expensive_research(state: AgentState) -> AgentState:
-    """Teurer Research-Node - Ergebnis wird gecacht."""
-    result = expensive_api_call(state["query"])
-    return {"research_data": result}
+def route_after_agent(state: AgentState) -> Literal["tools", "review", "__end__"]:
+    last_message = state["messages"][-1]
 
-# Node mit Cache aktivieren
-graph.add_node("research", expensive_research, cache=True)
+    if has_tool_calls(last_message):
+        return "tools"
+    if needs_human_review(last_message):
+        return "review"
+    return "__end__"
 
-# Optional: Cache TTL setzen (in Sekunden)
-graph.add_node("research", expensive_research, cache=True, cache_ttl=3600)  # 1 Stunde
-```
 
-**Use Cases:**
-- ✅ Teure API-Calls (Web Search, Database Queries)
-- ✅ Development & Testing (schnellere Iteration)
-- ✅ Wiederholbare Berechnungen mit gleichen Inputs
-
-**Vorteile:**
-- 🚀 Entwicklungsgeschwindigkeit erhöhen
-- 💰 API-Kosten reduzieren
-- ⚡ Workflow-Iterationen beschleunigen
-
-### 📦 Advanced: Node Defaults — `set_node_defaults()` (neu in v1.2.0)
-
-**Warum:** Setze Default-Konfigurationen für alle Nodes an einer zentralen Stelle.
-
-```python
-graph = StateGraph(AgentState)
-graph.set_node_defaults(retry=RetryPolicy(max_attempts=3), tags=["production"])
-graph.add_node("agent", agent_node)   # erbt retry + tags automatisch
-graph.add_node("tools", tool_node)    # erbt retry + tags automatisch
-```
-
-**Use Cases:** Einheitliche Retry-Policy · Globale Tags für Observability · Weniger Boilerplate
-
-### 📦 Advanced: Durable Error-Handler Resume (neu in v1.2.0)
-
-**Warum:** Fehler-Recovery über Host-Neustarts hinweg — kein Zustandsverlust bei Absturz.
-
-```python
-config = {"configurable": {"thread_id": "session-123"}}
-try:
-    result = graph.invoke(state, config)
-except Exception:
-    pass  # Host neu gestartet
-result = graph.invoke(None, config)  # setzt ab letztem Checkpoint fort
-```
-
-### 📦 Advanced: Deferred Nodes (verfügbar ab v1.0)
-
-**Warum:** Verzögere Node-Ausführung bis alle Upstream-Pfade abgeschlossen sind (Map-Reduce, Consensus).
-
-```python
-from langgraph.graph import StateGraph
-
-graph = StateGraph(AgentState)
-
-# Parallel Research Nodes
-def web_search_node(state: AgentState) -> AgentState:
-    return {"web_results": search_web(state["query"])}
-
-def db_query_node(state: AgentState) -> AgentState:
-    return {"db_results": query_database(state["query"])}
-
-def api_fetch_node(state: AgentState) -> AgentState:
-    return {"api_results": fetch_from_api(state["query"])}
-
-# Deferred Node wartet auf ALLE Upstream-Nodes
-def aggregate_results(state: AgentState) -> AgentState:
-    """Aggregiert Ergebnisse von allen parallelen Research-Nodes."""
-    all_results = (
-        state.get("web_results", []) +
-        state.get("db_results", []) +
-        state.get("api_results", [])
-    )
-    return {"aggregated_data": all_results}
-
-# Nodes hinzufügen
-graph.add_node("web_search", web_search_node)
-graph.add_node("db_query", db_query_node)
-graph.add_node("api_fetch", api_fetch_node)
-
-# Deferred Node - wartet auf alle Upstream-Nodes!
-graph.add_node("aggregate", aggregate_results, deferred=True)
-
-# Alle Worker-Nodes führen zum Aggregator
-graph.add_edge("web_search", "aggregate")
-graph.add_edge("db_query", "aggregate")
-graph.add_edge("api_fetch", "aggregate")
-```
-
-**Use Cases:**
-- ✅ **Map-Reduce Patterns**: Parallele Verarbeitung + Aggregation
-- ✅ **Consensus Mechanisms**: Mehrere Agents einigen sich auf Ergebnis
-- ✅ **Multi-Agent Collaboration**: Warte auf alle Agent-Antworten vor Entscheidung
-
-**Vorteile:**
-- 🔄 Saubere Map-Reduce-Semantik
-- 🤝 Perfekt für Multi-Agent-Consensus
-- ⚡ Maximale Parallelisierung + saubere Aggregation
-
----
-
-## 3️⃣ Conditional Routing - Dynamische Entscheidungen
-
-### ❌ ALT (statische Edges)
-```python
-graph.add_edge("agent", "tools")  # Immer gleicher Pfad
-```
-
-### ✅ NEU (PFLICHT für verzweigte Logik)
-```python
-def should_continue(state: AgentState) -> str:
-    """Routing-Funktion: Entscheidet zur Laufzeit, welcher Node als nächstes."""
-    messages = state["messages"]
-    last_message = messages[-1]
-
-    # Entscheidungslogik
-    if last_message.tool_calls:
-        return "tools"  # Agent will Tool aufrufen
-    return END  # Agent ist fertig
-
-# Conditional Edge hinzufügen
-graph.add_conditional_edges(
-    "agent",  # Von welchem Node
-    should_continue,  # Routing-Funktion
+graph_builder.add_conditional_edges(
+    "agent",
+    route_after_agent,
     {
-        "tools": "tools",  # Wenn "tools" → zum tools-Node
-        END: END  # Wenn END → Workflow beenden
-    }
+        "tools": "tools",
+        "review": "human_review",
+        "__end__": END,
+    },
 )
 ```
 
-### 🎯 Vorteile
-- ✅ **Dynamische Workflows**: Pfad abhängig von State
-- ✅ **Komplexe Logik**: Beliebige Bedingungen möglich
-- ✅ **Fehlerbehandlung**: Routing zu Error-Nodes
-- ✅ **Multi-Agent**: Routing zu verschiedenen Agents
+In der Praxis relevant, wenn: Ein Workflow nicht nur erfolgreich oder fehlgeschlagen sein kann, sondern mehrere fachliche Zustände kennt. Beispiele sind Freigabe nötig, Daten fehlen, Tool fehlgeschlagen, Ergebnis ausreichend oder Eskalation erforderlich.
 
-### 📦 Advanced: Routing zu mehreren Nodes
+## Checkpointing Und Persistenz
+
+Checkpointing speichert Graph-Zustand zwischen Ausführungsschritten. Das ist nicht nur ein Produktionsfeature. Schon im Kurs ist es hilfreich, wenn ein Workflow unterbrochen, inspiziert oder mit derselben `thread_id` fortgesetzt werden soll.
+
 ```python
-def route_to_specialists(state: AgentState) -> list[str]:
-    """Routing zu mehreren Nodes parallel."""
-    task_type = state["task_type"]
+from langgraph.checkpoint.memory import InMemorySaver
 
-    if task_type == "research":
-        return ["web_search", "database_query"]  # Parallel
-    elif task_type == "analysis":
-        return ["data_analyzer"]
-    return [END]
-
-graph.add_conditional_edges(
-    "supervisor",
-    route_to_specialists
-)
-```
-
----
-
-## 4️⃣ Checkpointing & Memory - Persistenz & Recovery
-
-### ❌ ALT (State verloren bei Neustart)
-```python
-graph = graph_builder.compile()  # Kein Checkpointing!
-# Bei Crash oder Neustart: Alles weg ❌
-```
-
-### ✅ NEU (PFLICHT für Production)
-```python
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.checkpoint.sqlite import SqliteSaver
-
-# Option 1: In-Memory (Development)
-memory = MemorySaver()
-graph = graph_builder.compile(checkpointer=memory)
-
-# Option 2: SQLite (Production)
-checkpointer = SqliteSaver.from_conn_string("checkpoints.db")
+checkpointer = InMemorySaver()
 graph = graph_builder.compile(checkpointer=checkpointer)
 
-# Workflow mit Thread-ID starten (für Persistenz)
-config = {"configurable": {"thread_id": "user-123-session-456"}}
-result = graph.invoke(initial_state, config)
-
-# Später fortsetzen (auch nach Tagen!)
-result = graph.invoke(None, config)  # Lädt automatisch letzten Checkpoint
+config = {"configurable": {"thread_id": "demo-session-1"}}
+result = graph.invoke(initial_state, config=config)
 ```
 
-### 🎯 Vorteile
-- ✅ **Crash-Recovery**: Kein Datenverlust bei Absturz
-- ✅ **Langlebige Sessions**: Workflows über Tage/Wochen
-- ✅ **Debugging**: State-Historie verfügbar
-- ✅ **Rollback**: Zurück zu früheren Checkpoints
+Für lokale Demos reicht ein In-Memory-Checkpointer. Für produktive Systeme braucht es einen persistenten Store und ein Löschkonzept. Besonders bei nutzerspezifischem Memory muss klar sein, welche Informationen nur zur Session gehören und welche dauerhaft gespeichert werden.
 
-### 📦 Checkpoint-Backends
+| Umgebung | Checkpointing |
+|---|---|
+| Notebook-Demo | `InMemorySaver` |
+| Lokale Entwicklung | SQLite oder lokaler Store |
+| Produktion | Datenbank-Checkpointer |
+| Sensible Daten | Persistenz nur mit Lösch- und Zugriffskonzept |
 
-| Backend | Use Case | Persistenz | Version |
-|---------|----------|-----------|---------|
-| `MemorySaver` | Development, Testing | ❌ Nur RAM | - |
-| `SqliteSaver` | Production (single instance) | ✅ Disk | v3.0.1+ (Security Hardening) |
-| `PostgresSaver` | Production (distributed) | ✅ Database | v3.0.2+ (Security Hardening) |
-| Custom | Spezielle Anforderungen | ✅ Anpassbar | - |
+Nicht geeignet, wenn: Checkpointing als Ersatz für gutes State-Design verstanden wird. Persistenz macht unklare Zustände nicht besser, sondern nur langlebiger.
 
-**⚠️ Security Update (v1.0.5):**
-- **SQLite Checkpoint v3.0.1**: Security Hardening für Production-Deployments
-- **PostgreSQL Checkpoint v3.0.2**: Security Hardening + Custom Encryption at Rest
-- **Empfehlung**: Update auf v3.x für sichere Production-Umgebungen
+## Human-in-the-Loop
 
-```python
-# SQLite mit Security Features (v3.0.1+)
-from langgraph.checkpoint.sqlite import SqliteSaver
-
-checkpointer = SqliteSaver.from_conn_string(
-    "checkpoints.db",
-    encryption_key="your-encryption-key"  # Optional: Custom Encryption
-)
-
-# PostgreSQL mit Security Features (v3.0.2+)
-from langgraph.checkpoint.postgres import PostgresSaver
-
-checkpointer = PostgresSaver.from_conn_string(
-    "postgresql://user:pass@localhost/db",
-    encryption_at_rest=True  # NEU: Encryption at Rest
-)
-```
-
----
-
-## 5️⃣ Human-in-the-Loop (erweitert) - Interrupt & Resume
-
-### ❌ ALT (LangChain Middleware - basic)
-```python
-# LangChain HumanInTheLoopMiddleware ist limitiert
-middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
-```
-
-### ✅ NEU (PFLICHT für erweiterte Kontrolle)
-```python
-from langgraph.types import interrupt, Command
-
-def approval_node(state: AgentState) -> AgentState:
-    """Node mit Human-in-the-Loop Interrupt."""
-    action = state["proposed_action"]
-
-    # Workflow pausieren und auf Benutzer warten
-    approved = interrupt(
-        f"Approve this action? {action}\nType 'yes' or 'no'"
-    )
-
-    if approved == "yes":
-        return {"status": "approved"}
-    else:
-        return {"status": "rejected"}
-
-# Graph mit Interrupt kompilieren
-graph = graph_builder.compile(checkpointer=checkpointer)
-
-# Workflow starten
-config = {"configurable": {"thread_id": "session-123"}}
-try:
-    result = graph.invoke(initial_state, config)
-except GraphInterrupt as e:
-    # Interrupt wurde ausgelöst
-    print(f"Waiting for user input: {e.message}")
-
-# Nach User-Input: Fortsetzen mit Command
-from langgraph.types import Command
-
-result = graph.invoke(
-    Command(resume="yes"),  # User-Antwort übergeben
-    config
-)
-```
-
-### 🎯 Vorteile
-- ✅ **Volle Kontrolle**: Workflow pausiert exakt an definiertem Punkt
-- ✅ **Asynchron**: User kann Stunden/Tage später antworten
-- ✅ **Multiple Interrupts**: Mehrere Pausen im Workflow
-- ✅ **State-Preservation**: Kompletter State bleibt erhalten
-
-### 📦 Interrupt-Patterns
-
-#### Pattern 1: Approval Gate
-```python
-def requires_approval(state: AgentState) -> AgentState:
-    action = state["action"]
-    approved = interrupt(f"Approve: {action}?")
-    return {"approved": approved == "yes"}
-```
-
-#### Pattern 2: Data Collection
-```python
-def collect_user_data(state: AgentState) -> AgentState:
-    name = interrupt("What is your name?")
-    age = interrupt("What is your age?")
-    return {"name": name, "age": age}
-```
-
-#### Pattern 3: Error Handling
-```python
-def error_recovery(state: AgentState) -> AgentState:
-    error = state["error"]
-    choice = interrupt(f"Error: {error}\nRetry or Skip?")
-    return {"action": choice}
-```
-
-### 🆕 NEU in v1.1.7: Time-Travel / Replay-Fix bei Interrupt-Return
-
-**Fix ab v1.1.7:**  spult automatisch zum letzten Interrupt-Checkpoint zurück.
-
-**Typischer Fehler:**  weglassen. Ohne Checkpointer kein Replay-Punkt.
-
----
-
-### 📦 Advanced: Multiple Interrupt Resume (verfügbar ab v1.0)
-
-**Warum:** Parallele Tool Calls oder mehrere Interrupts gleichzeitig fortsetzen.
-
-**Problem (vor v1.0):** Interrupts mussten sequenziell bearbeitet werden.
-
-**Lösung (ab v1.0):** Alle Interrupts können gleichzeitig mit einem einzigen `Command(resume=...)` fortgesetzt werden.
+Human-in-the-Loop wird nötig, wenn ein Agent schwer reversible Aktionen vorbereitet: E-Mails senden, Daten löschen, externe Systeme ändern, Zahlungen auslösen oder sensible Inhalte weitergeben. LangGraph macht solche Unterbrechungen explizit, statt sie als nachträglichen UI-Hack anzubauen.
 
 ```python
 from langgraph.types import Command, interrupt
-from langgraph.errors import GraphInterrupt
 
-# Workflow mit parallelen Tool Calls
-def parallel_tool_node(state: AgentState) -> AgentState:
-    """Mehrere Tools parallel ausführen - jedes braucht Approval."""
-    tool_calls = state["tool_calls"]
 
-    # Jeder Tool Call löst eigenen Interrupt aus
-    results = []
-    for tool in tool_calls:
-        approved = interrupt(f"Approve tool: {tool.name}?")
-        results.append({"tool": tool.name, "approved": approved})
-
-    return {"tool_results": results}
-
-# Graph ausführen
-config = {"configurable": {"thread_id": "session-1"}}
-
-try:
-    result = graph.invoke(initial_state, config)
-except GraphInterrupt as e:
-    # Mehrere Interrupts (z.B. 3 parallele Tool Calls)
-    interrupts = e.interrupts  # Liste von Interrupt-Objekten
-    print(f"Got {len(interrupts)} interrupts to resolve")
-
-    # User gibt Feedback für ALLE Interrupts
-    resume_values = {
-        interrupts[0].id: "yes",  # Approve tool1
-        interrupts[1].id: "yes",  # Approve tool2
-        interrupts[2].id: "no"    # Reject tool3
-    }
-
-    # Resume ALLE Interrupts gleichzeitig! (verfügbar ab v1.0)
-    result = graph.invoke(
-        Command(resume=resume_values),
-        config
+def approval_node(state: AgentState) -> dict:
+    decision = interrupt(
+        {
+            "action": "send_email",
+            "preview": state["messages"][-1].content,
+        }
     )
 
-    print(f"All interrupts resolved: {result}")
+    if decision["approved"]:
+        return {"task_status": "approved"}
+    return {"task_status": "rejected"}
+
+
+graph_builder.add_node("approval", approval_node)
 ```
 
-**Use Cases:**
-- ✅ **Parallel Tool Calls**: Agent will mehrere Tools gleichzeitig ausführen
-- ✅ **Batch Approvals**: User kann mehrere Aktionen auf einmal genehmigen
-- ✅ **Out-of-Order Resume**: Interrupts können in beliebiger Reihenfolge beantwortet werden
+Nach einem Interrupt wird mit einem `Command` fortgesetzt. Wichtig ist, dass Interrupts stabil und vorhersehbar bleiben: dieselbe Node, dieselbe Reihenfolge, dieselbe erwartete Datenstruktur.
 
-**Vorteile:**
-- 🚀 **Effizienz**: Keine sequenzielle Bearbeitung mehr nötig
-- 🤝 **User Experience**: User kann alle Entscheidungen auf einmal treffen
-- ⚡ **Performance**: Parallele Tool Calls bleiben parallel
-
-**Best Practice:**
 ```python
-# Interrupt-IDs tracken für bessere UX
-interrupts_map = {}
-for interrupt in e.interrupts:
-    print(f"[{interrupt.id}] {interrupt.message}")
-    interrupts_map[interrupt.id] = interrupt.message
-
-# User gibt Antworten basierend auf IDs
-user_responses = collect_user_input(interrupts_map)
-
-# Resume mit allen Antworten
-result = graph.invoke(Command(resume=user_responses), config)
+resume_command = Command(resume={"approved": True})
+result = graph.invoke(resume_command, config=config)
 ```
 
-### ⚠️ Best Practices (2025)
+Typischer Fehler: Freigaben werden nur als Text im Prompt formuliert. Das Modell "weiß" dann zwar, dass es fragen soll, aber der Workflow erzwingt die Freigabe technisch nicht.
 
-1. **Verwende `interrupt()` (Standard seit v1.0)**
-   ```python
-   # ✅ NEU
-   value = interrupt("message")
+## Subgraphs Und Multi-Agent-Muster
 
-   # ❌ ALT (deprecated)
-   raise NodeInterrupt("message")
-   ```
+Subgraphs helfen, große Workflows in kleinere Graphen zu zerlegen. Das ist sinnvoll, wenn ein Teilprozess eine eigene Struktur hat: Recherche, Validierung, Zusammenfassung, Review oder Eskalation.
 
-2. **Interrupt-Reihenfolge ist wichtig**
-   ```python
-   # ✅ Konsistente Reihenfolge
-   name = interrupt("Name?")
-   age = interrupt("Age?")
-
-   # ❌ Dynamische Reihenfolge (kann Probleme verursachen)
-   if random.choice([True, False]):
-       interrupt("A")
-   interrupt("B")  # Index-basiertes Matching kann fehlschlagen
-   ```
-
-3. **Resume mit Command-Object**
-   ```python
-   # ✅ Empfohlen
-   graph.invoke(Command(resume="value"), config)
-
-   # ❌ Vermeiden (deprecated)
-   graph.invoke({"resume": "value"}, config)
-   ```
-
----
-
-## 6️⃣ Subgraphs & Multi-Agent - Modulare Systeme
-
-### 🏗️ Multi-Agent-Patterns
-
-#### Pattern 1: Supervisor Pattern
 ```python
-from langchain.agents import create_agent
+research_graph = research_builder.compile()
+review_graph = review_builder.compile()
 
-# Spezialisierte Worker-Agents
-research_agent = create_agent(
-    model=llm,
-    tools=[web_search, database_query],
-    system_prompt="You are a research specialist"
-)
-
-writer_agent = create_agent(
-    model=llm,
-    tools=[write_document],
-    system_prompt="You are a writing specialist"
-)
-
-# Supervisor-Node
-def supervisor(state: AgentState) -> Command:
-    """Supervisor entscheidet, welcher Agent als nächstes."""
-    task = state["current_task"]
-
-    if "research" in task:
-        return Command(goto="research_agent")
-    elif "write" in task:
-        return Command(goto="writer_agent")
-    return Command(goto=END)
-
-# Graph mit Supervisor
-graph = StateGraph(AgentState)
-graph.add_node("supervisor", supervisor)
-graph.add_node("research_agent", research_agent)
-graph.add_node("writer_agent", writer_agent)
-
-graph.add_edge(START, "supervisor")
-graph.add_edge("research_agent", "supervisor")
-graph.add_edge("writer_agent", "supervisor")
+graph_builder.add_node("research", research_graph)
+graph_builder.add_node("review", review_graph)
 ```
 
-#### Pattern 2: Hierarchical Teams mit Subgraphs
-```python
-def create_research_team() -> StateGraph:
-    """Subgraph für Research-Team."""
-    team_graph = StateGraph(AgentState)
-    team_graph.add_node("web_searcher", web_search_node)
-    team_graph.add_node("db_analyst", db_analyst_node)
-    team_graph.add_node("summarizer", summarizer_node)
-    # ... Edges definieren
-    return team_graph.compile()
+Multi-Agent-Systeme brauchen mehr als mehrere Modellaufrufe. Entscheidend ist die Koordination: Wer entscheidet über die nächste Aufgabe? Wer prüft Ergebnisse? Wann wird an einen anderen Agenten übergeben? Ohne klare Koordination entsteht schnell ein System, das viel kommuniziert, aber wenig verlässlich abschließt.
 
-def create_writing_team() -> StateGraph:
-    """Subgraph für Writing-Team."""
-    team_graph = StateGraph(AgentState)
-    team_graph.add_node("writer", writer_node)
-    team_graph.add_node("editor", editor_node)
-    # ... Edges definieren
-    return team_graph.compile()
+| Muster | Geeignet Wenn |
+|---|---|
+| Supervisor | Ein zentraler Agent verteilt Aufgaben |
+| Handoff | Zuständigkeit wechselt zwischen spezialisierten Agenten |
+| Hierarchie | Teams oder Teilgraphen eigene Verantwortung haben |
+| Parallele Bearbeitung | unabhängige Teilaufgaben gleichzeitig laufen können |
 
-# Top-Level Graph mit Subgraphs
-main_graph = StateGraph(AgentState)
-main_graph.add_node("research_team", create_research_team())
-main_graph.add_node("writing_team", create_writing_team())
-main_graph.add_node("coordinator", coordinator_node)
+Grenze: Multi-Agent ist selten der beste Einstieg. Erst wenn Rollen wirklich unterschiedliche Werkzeuge, Daten oder Bewertungskriterien haben, lohnt sich die zusätzliche Koordination.
 
-main_graph.add_edge(START, "coordinator")
-main_graph.add_conditional_edges("coordinator", route_to_team)
-```
+## ToolRuntime Und ToolNode-Handoff
 
-### 🎯 Vorteile
-- ✅ **Modularität**: Teams als wiederverwendbare Komponenten
-- ✅ **Skalierbarkeit**: Einfache Erweiterung durch neue Teams
-- ✅ **Klarheit**: Klare Verantwortlichkeiten
-- ✅ **Testing**: Subgraphs isoliert testbar
-
-### 📦 Wann welches Pattern?
-
-| Pattern | Use Case | Komplexität | Vorteile |
-|---------|----------|-------------|----------|
-| **Supervisor** | 3-5 Agents, flache Struktur | ⭐ Niedrig | Einfach, schnell |
-| **Hierarchical** | >5 Agents, mehrere Ebenen | ⭐⭐ Mittel | Skalierbar, strukturiert |
-| **Collaborative** | Agents arbeiten parallel | ⭐⭐⭐ Hoch | Effizient, komplex |
-
-### 🆕 ToolRuntime – Dependency Injection in Tools *(langgraph-prebuilt 1.0.8, Feb 2026)*
-
-**ToolRuntime** ermöglicht Tools den Zugriff auf den vollständigen LangGraph-Laufzeit-Kontext via Dependency Injection – ähnlich wie `InjectedState` und `InjectedStore`, aber mit Zugang zum gesamten Runtime-Bundle.
+`ToolRuntime` ist relevant, wenn Tools Zugriff auf Laufzeitkontext brauchen, etwa `thread_id`, Store, Stream Writer oder Konfiguration. Einfache Tools sollten weiter einfach bleiben; Runtime-Kontext ist kein Standardargument für jede Funktion.
 
 ```python
-from dataclasses import dataclass
-from langgraph.prebuilt import ToolNode
 from langchain_core.tools import tool
-from typing import Any
-from langchain_core.runnables import RunnableConfig
 
-# ToolRuntime wird automatisch von ToolNode injiziert
-@tool
-def kontext_bewusstes_tool(query: str, runtime: ToolRuntime) -> str:
-    """Tool mit vollständigem Zugriff auf den LangGraph-Laufzeit-Kontext."""
-    # Aktuellen State lesen (ohne State-Parameter im Tool)
-    aktueller_user = runtime.state.get("user_id", "unbekannt")
-    # Persistenten Store nutzen
-    if runtime.store:
-        vergangene_anfragen = runtime.store.get("anfragen", runtime.state["session_id"])
-    # Tool-Call-ID für Tracking
-    call_id = runtime.tool_call_id
-    return f"Antwort für {aktueller_user}: {query}"
-
-# ToolNode injiziert ToolRuntime automatisch
-tools = [kontext_bewusstes_tool]
-tool_node = ToolNode(tools)
-
-graph = StateGraph(AgentState)
-graph.add_node("tools", tool_node)  # ToolRuntime wird automatisch übergeben
-```
-
-**ToolRuntime-Felder:**
-
-| Feld | Typ | Beschreibung |
-|------|-----|--------------|
-| `state` | `dict` | Aktueller Graph-State |
-| `context` | `Any` | LangGraph Runtime-Context |
-| `config` | `RunnableConfig` | Runnable-Konfiguration |
-| `stream_writer` | `StreamWriter` | Für direktes Streaming aus dem Tool |
-| `tool_call_id` | `str` | ID des aktuellen Tool-Calls |
-| `store` | `BaseStore \| None` | Persistenter Store (falls konfiguriert) |
-
-**Wann ToolRuntime verwenden:**
-- ✅ Tool braucht Zugriff auf State-Felder (ohne `InjectedState`-Annotation)
-- ✅ Dynamisch registrierte Tools (zur Laufzeit hinzugefügt)
-- ✅ Tool soll direkt in den Stream schreiben (`runtime.stream_writer`)
-- ❌ Einfache Tools ohne Kontext-Bedarf → kein Overhead nötig
-
-### 🆕 NEU in v1.1.10: ToolNode Command Handoff
-
-`ToolNode` kann `Command`-Objekte zurückgeben — direktes Routing aus dem Tool heraus, ohne separate Conditional Edges.
-
-```python
-from langgraph.types import Command
-from langchain_core.tools import tool
 
 @tool
-def eskaliere_zu_mensch(grund: str) -> Command:
-    """Eskaliert direkt zum Human-Approval-Node."""
-    return Command(goto="human_approval", update={"eskalierungsgrund": grund})
-
-tool_node = ToolNode([eskaliere_zu_mensch, normales_tool])
+def lookup_customer(customer_id: str) -> str:
+    """Fetch customer data by ID."""
+    return customer_store.get(customer_id)
 ```
+
+Bei komplexeren Tool-Flows kann ein Tool nicht nur Daten zurückgeben, sondern einen nächsten Graph-Schritt auslösen. Das ist nützlich für Handoffs, sollte aber sparsam eingesetzt werden, weil Routing dann teilweise aus dem Graph in Tool-Code wandert.
+
+> [!WARNING] Routing Im Tool<br>
+> Tool-Handoffs sind mächtig, aber sie verstecken Kontrollfluss leichter als `add_conditional_edges`. Für Kurs- und Review-Zwecke bleibt explizites Routing im Graph meist besser nachvollziehbar.
+
+## Streaming Und Observability
+
+Streaming macht sichtbar, was ein Graph gerade tut. Für Debugging sind Zwischenzustände oft wichtiger als die finale Antwort: Welche Node lief? Welche Tool-Calls wurden ausgeführt? Wo wurde unterbrochen?
+
+```python
+config = {"configurable": {"thread_id": "demo-session-1"}}
+
+for event in graph.stream(initial_state, config=config, stream_mode="updates"):
+    print(event)
+```
+
+| Stream Mode | Zweck |
+|---|---|
+| `updates` | Änderungen pro Node beobachten |
+| `values` | vollständigen State nach Schritten sehen |
+| `messages` | Token- oder Message-Ausgabe streamen |
+| `debug` | detaillierte Debug-Informationen |
+
+In produktiven Systemen gehört Tracing dazu. LangSmith oder ein vergleichbares Observability-Setup hilft, Graphläufe später zu untersuchen, Regressionen zu finden und Evals aus echten Fehlerfällen abzuleiten.
+
+## Migration Von LangChain Zu LangGraph
+
+Eine Migration ist sinnvoll, wenn ein bestehender Agent immer mehr Kontrolllogik bekommt: verschachtelte Bedingungen, manuelle Wiederaufnahme, separate Freigabeschritte, komplexe Fehlerbehandlung oder mehrere spezialisierte Rollen.
+
+| Symptom | LangGraph-Nutzen |
+|---|---|
+| Bedingungen wachsen im Prompt | Routing wird Code |
+| manuelle Session-Fortsetzung | Checkpointing übernimmt Resume |
+| Freigaben sind nur Textregeln | Interrupts erzwingen Gates |
+| mehrere Agenten koordinieren sich lose | Graph macht Zuständigkeiten sichtbar |
+| Fehlerbehandlung verteilt sich über Tools | Error-Nodes bündeln Pfade |
+
+Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Graph modelliert, ohne das Verhalten fachlich zu ändern. Danach werden Routing, Checkpointing und Freigaben einzeln ergänzt und getestet.
+
+## Production-Checkliste
+
+- State als `TypedDict` modellieren.
+- Message-Historie mit `add_messages` reduzieren lassen.
+- Nodes klein halten und isoliert testen.
+- Routing-Funktionen typisieren und benennen.
+- Graph nach `compile()` visualisieren.
+- Für längere Sessions Checkpointing aktivieren.
+- Kritische Aktionen mit Interrupts absichern.
+- Produktionsläufe streamen oder tracen.
+- Multi-Agent-Muster nur einsetzen, wenn Rollen wirklich getrennte Verantwortung haben.
+- Migrationen gegen bestehende Testfälle prüfen.
+
+## Troubleshooting
+
+### Problem: Der Graph ist nur eine große Node
+
+**Symptom:** Eine Node enthält Modellaufruf, Tool-Auswahl, Validierung, Fehlerbehandlung und Routing.
+
+**Fix:** Verantwortlichkeiten trennen. Modellaufruf, Tool-Ausführung, Entscheidung und Review gehören in eigene Nodes oder explizite Routing-Funktionen.
+
+### Problem: State wächst unkontrolliert
+
+**Symptom:** Jede Node liest und schreibt viele Felder, Abhängigkeiten sind im Review schwer nachvollziehbar.
+
+**Fix:** State klein halten, temporäre Werte lokal lassen und nur langlebige Workflow-Daten aufnehmen.
+
+### Problem: Resume funktioniert nicht zuverlässig
+
+**Symptom:** Unterbrochene Läufe starten neu oder landen in falschen Zuständen.
+
+**Fix:** Checkpointer aktivieren, stabile `thread_id` verwenden und Interrupts in fixer Reihenfolge halten.
+
+## Weitere Ressourcen
+
+- **LangGraph Docs**: <https://langchain-ai.github.io/langgraph/>
+- **LangGraph Changelog**: <https://changelog.langchain.com/>
+- **Multi-Agent Tutorial**: <https://langchain-ai.github.io/langgraph/tutorials/multi_agent/>
+- **Checkpointing Guide**: <https://langchain-ai.github.io/langgraph/concepts/persistence/>
+- **Human-in-the-Loop**: <https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/>
+
+> [!TIP] Tipp<br>
+> Mit einem linearen Agenten starten und erst zu LangGraph wechseln, wenn State, Routing, Checkpointing oder Freigaben echte Anforderungen sind. Das hält frühe Prototypen klein und macht die spätere Migration nachvollziehbar.
 
 ---
 
-## 7️⃣ Stream Modes - Debugging & Monitoring
+## Changelog
 
-### ❌ ALT (keine Einsicht in Workflow)
-```python
-result = graph.invoke(state)  # Blackbox - keine Zwischenschritte
-```
-
-### ✅ NEU (PFLICHT für Production)
-```python
-# Stream Mode: "values" - Full State nach jedem Node
-for event in graph.stream(initial_state, config):
-    print(f"Node: {event['node']}")
-    print(f"State: {event['values']}")
-
-# Stream Mode: "updates" - Nur State-Deltas
-for event in graph.stream(initial_state, config, stream_mode="updates"):
-    print(f"Update from {event['node']}: {event['updates']}")
-
-# Stream Mode: "debug" - Detaillierte Traces
-for event in graph.stream(initial_state, config, stream_mode="debug"):
-    print(f"Debug: {event}")
-
-# Kombination mehrerer Modes
-for event in graph.stream(
-    initial_state,
-    config,
-    stream_mode=["values", "updates", "debug"]
-):
-    if event["type"] == "values":
-        print(f"State: {event['values']}")
-    elif event["type"] == "updates":
-        print(f"Update: {event['updates']}")
-```
-
-### 🎯 Vorteile
-- ✅ **Real-time Monitoring**: Workflow-Progress live verfolgen
-- ✅ **Debugging**: Fehler sofort identifizieren
-- ✅ **User Feedback**: Progress-Bar, Status-Updates
-- ✅ **Production Monitoring**: Logging, Metrics
-
-### 🆕 NEU in v1.1.0: v2-Streaming-Format (StreamPart-Dicts)
-
-Ab v1.1.0 liefert  strukturierte -Dicts.  gibt  mit  und  zurück.
-
-**Grenze:** Altes -Format erzeugt ab v1.1 Deprecation-Warnings.
+### Version 1.7 (Mai 2026)
+- Zielstruktur an die Framework-Best-Practice-Dokumente angeglichen.
+- Quick Start, Production-Checkliste und Troubleshooting ergänzt.
 
 ---
-
-### 📦 Stream Modes Übersicht
-
-| Mode | Output | Use Case | Performance |
-|------|--------|----------|-------------|
-| **values** | Full State | Simple Workflows, Debugging | ⚠️ Viel Daten |
-| **updates** | State Deltas | Production, Monitoring | ✅ Effizient |
-| **debug** | Execution Traces | Development, Fehlersuche | ⚠️ Verbose |
-| **messages** | LLM Tokens | Streaming Chat UIs | ✅ Real-time |
-| **custom** | User-defined | Spezielle Anforderungen | ✅ Flexibel |
-
-### 📦 Practical Example: Progress Bar
-```python
-from tqdm import tqdm
-
-def run_with_progress(graph, state, config):
-    """Workflow mit Progress Bar."""
-    nodes = ["node1", "node2", "node3", "node4"]
-
-    with tqdm(total=len(nodes), desc="Workflow") as pbar:
-        for event in graph.stream(state, config, stream_mode="updates"):
-            node_name = list(event.keys())[0]
-            pbar.set_description(f"Running: {node_name}")
-            pbar.update(1)
-
-    return graph.invoke(state, config)
-```
-
-### 📦 Advanced: Pre/Post Model Hooks (verfügbar ab v1.0)
-
-**Warum:** Custom Logic vor/nach Model Calls für Context-Management, Guardrails und Human-in-Loop Gates.
-
-**Use Cases:**
-- **Pre-Hook:** Context-Size-Management (Token-Bloat verhindern), Custom Prompt Injection
-- **Post-Hook:** Guardrails, Content Moderation, Compliance-Checks, Human Review Gates
-
-```python
-# Ausnahme: create_react_agent aus langgraph.prebuilt (nicht create_agent aus langchain.agents),
-# da pre_model_hook / post_model_hook LangGraph-exklusive Parameter sind.
-from langgraph.prebuilt import create_react_agent
-
-def pre_model_hook(state):
-    """Vor Model Call: Verhindere Token-Bloat."""
-    messages = state["messages"]
-    token_count = sum(len(m.content) for m in messages)
-
-    if token_count > 100000:
-        # Fasse alte Messages zusammen
-        summary = llm_summarize(messages[:40])
-        return {
-            "messages": [
-                SystemMessage(content=summary),
-                *messages[40:]
-            ]
-        }
-    return state
-
-def post_model_hook(state, response):
-    """Nach Model Call: Content Moderation & Guardrails."""
-    # Guardrail 1: Sensitive Content Detection
-    if contains_pii(response.content):
-        return {"needs_review": True, "reason": "PII detected"}
-
-    # Guardrail 2: Policy Violation
-    if violates_policy(response.content):
-        return interrupt(f"Policy violation detected. Review required:\n{response.content}")
-
-    # Guardrail 3: Confidence Check
-    if response.confidence < 0.7:
-        return {"approved": False, "reason": "Low confidence"}
-
-    return {"response": response, "approved": True}
-
-# Agent mit Hooks erstellen
-agent = create_react_agent(
-    model=llm,
-    tools=[tool1, tool2],
-    pre_model_hook=pre_model_hook,   # NEU!
-    post_model_hook=post_model_hook  # NEU!
-)
-```
-
-**Vorteile:**
-- 🛡️ **Safety-Layer**: Automatische Guardrails vor Production-Deployment
-- 💰 **Token-Management**: Verhindere teure Token-Overflows
-- 🔍 **Compliance**: DSGVO-konforme PII-Redaktion
-- 🤝 **Human-in-Loop**: Pause bei kritischen Entscheidungen
-
-**Best Practices:**
-
-1. **Pre-Hook für Context-Management**
-   ```python
-   def pre_hook(state):
-       """Optimiere Context-Size."""
-       if len(state["messages"]) > 50:
-           return summarize_old_messages(state)
-       return state
-   ```
-
-2. **Post-Hook für Guardrails**
-   ```python
-   def post_hook(state, response):
-       """Multi-Layer Safety."""
-       # Layer 1: Content Moderation
-       if is_unsafe(response):
-           return {"blocked": True}
-
-       # Layer 2: Fact-Check
-       if needs_verification(response):
-           return interrupt("Verify facts before proceeding")
-
-       return {"response": response}
-   ```
-
-3. **Kombination mit Human-in-Loop**
-   ```python
-   def post_hook(state, response):
-       """Human Review für kritische Aktionen."""
-       if response.tool_calls:
-           for call in response.tool_calls:
-               if call.name in ["delete_database", "send_email"]:
-                   return interrupt(f"Approve tool call: {call.name}?")
-       return {"response": response}
-   ```
-
----
-
-## 🚀 Complete Example: Multi-Agent Research System
-
-```python
-from typing import TypedDict, Annotated, Literal
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langgraph.checkpoint.sqlite import SqliteSaver
-from langgraph.types import interrupt, Command
-
-# 1. State Definition mit TypedDict
-class ResearchState(TypedDict):
-    messages: Annotated[list, add_messages]
-    topic: str
-    research_data: str
-    report: str
-    approved: bool
-
-# 2. Nodes definieren
-def supervisor(state: ResearchState) -> Command:
-    """Supervisor entscheidet über nächsten Schritt."""
-    if not state.get("research_data"):
-        return Command(goto="researcher")
-    elif not state.get("report"):
-        return Command(goto="writer")
-    elif not state.get("approved"):
-        return Command(goto="approval")
-    return Command(goto=END)
-
-def researcher(state: ResearchState) -> ResearchState:
-    """Research Agent sammelt Daten."""
-    topic = state["topic"]
-    # Simuliere Research
-    data = f"Research data about {topic}..."
-    return {"research_data": data}
-
-def writer(state: ResearchState) -> ResearchState:
-    """Writer Agent erstellt Report."""
-    data = state["research_data"]
-    report = f"Report based on: {data}"
-    return {"report": report}
-
-def approval(state: ResearchState) -> ResearchState:
-    """Human-in-the-Loop Approval."""
-    report = state["report"]
-    approved = interrupt(f"Approve this report?\n{report}\n(yes/no)")
-    return {"approved": approved == "yes"}
-
-# 3. Graph mit Conditional Routing
-graph_builder = StateGraph(ResearchState)
-
-graph_builder.add_node("supervisor", supervisor)
-graph_builder.add_node("researcher", researcher)
-graph_builder.add_node("writer", writer)
-graph_builder.add_node("approval", approval)
-
-graph_builder.add_edge(START, "supervisor")
-graph_builder.add_edge("researcher", "supervisor")
-graph_builder.add_edge("writer", "supervisor")
-graph_builder.add_edge("approval", "supervisor")
-
-# 4. Checkpointing für Persistenz
-checkpointer = SqliteSaver.from_conn_string("research.db")
-graph = graph_builder.compile(checkpointer=checkpointer)
-
-# 5. Workflow mit Streaming ausführen
-config = {"configurable": {"thread_id": "research-session-1"}}
-initial_state = {"topic": "LangGraph Best Practices"}
-
-try:
-    for event in graph.stream(initial_state, config, stream_mode="updates"):
-        print(f"Update: {event}")
-except GraphInterrupt as e:
-    print(f"Waiting for approval: {e.message}")
-
-    # User gibt Feedback
-    user_input = input("Your decision: ")
-
-    # Resume mit Command
-    result = graph.invoke(Command(resume=user_input), config)
-    print(f"Final result: {result}")
-```
-
----
-
-## 📚 Import-Cheatsheet
-
-```python
-# Core
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from typing import TypedDict, Annotated
-
-# Checkpointing
-from langgraph.checkpoint.memory import MemorySaver
-from langgraph.checkpoint.sqlite import SqliteSaver
-
-# Human-in-the-Loop
-from langgraph.types import interrupt, Command
-from langgraph.errors import GraphInterrupt
-
-# Integration mit LangChain Agents
-from langchain.agents import create_agent
-from langchain.chat_models import init_chat_model
-from langchain_core.tools import tool
-```
-
----
-
-## ⚠️ Migration von LangChain zu LangGraph
-
-### Wann migrieren?
-
-- ✅ Multi-Step Workflows mit Verzweigungen
-- ✅ Multi-Agent-Systeme (>2 Agents)
-- ✅ Langlebige Sessions (>1 Stunde)
-- ✅ Human-in-the-Loop mit erweiterten Features
-- ✅ State Persistence erforderlich
-
-### Migration-Checkliste
-
-- [ ] State als TypedDict definieren
-- [ ] Agent-Logik in Nodes umwandeln
-- [ ] Conditional Routing für Verzweigungen
-- [ ] Checkpointer hinzufügen (SQLite/Postgres)
-- [ ] Interrupt-Punkte für Human-in-the-Loop
-- [ ] Stream Modes für Monitoring
-- [ ] Tests für einzelne Nodes schreiben
-- [ ] **Graph nach `compile()` visualisieren** (`draw_mermaid_png()`)
-- [ ] `config_schema` → `context_schema` ersetzen (deprecated seit v1.0)
-- [ ] `langgraph.prebuilt` Imports → `langchain.agents` migrieren
-
-### ⚠️ Deprecated APIs (ab v1.0)
-
-| Deprecated | Ersatz | Status |
-|-----------|--------|--------|
-| `config_schema` Parameter in `StateGraph` | `context_schema` | Deprecation-Warning, Entfernung in v2.0 |
-| `langgraph.prebuilt.create_react_agent` | `langchain.agents.create_react_agent` / `create_agent` | Deprecation-Warning, Entfernung in v2.0 |
-| `langgraph.prebuilt.AgentState` | `langchain.agents.AgentState` | Deprecation-Warning, Entfernung in v2.0 |
-| `raise NodeInterrupt()` | `interrupt()` Funktion | Deprecation-Warning |
-
-```python
-# ❌ ALT (deprecated)
-graph = StateGraph(MyState, config_schema=ConfigSchema)
-
-# ✅ NEU (v1.0+)
-graph = StateGraph(MyState, context_schema=ContextSchema)
-```
-
----
-
-## 🎯 Best Practices Zusammenfassung
-
-### 1. State Design
-- ✅ **TypedDict** für LangGraph State (Performance)
-- ✅ **Pydantic** für Input/Output-Validierung
-- ✅ **Minimal State**: Nur nötige Daten im State
-- ✅ **Reducer**: `add_messages` für Message-Akkumulation
-
-### 2. Workflow-Design
-- ✅ **Kleine Nodes**: Eine Verantwortung pro Node
-- ✅ **Conditional Routing**: Statt viele kleine Edges
-- ✅ **Subgraphs**: Für >5 Nodes gruppieren
-- ✅ **Error Handling**: Dedicated Error-Nodes
-- ✅ **Graph-Visualisierung**: Direkt nach `compile()` mit `draw_mermaid_png()`
-
-### 3. Production-Ready
-- ✅ **Checkpointing**: Immer in Production
-- ✅ **Stream Modes**: Für Monitoring
-- ✅ **Thread-IDs**: User/Session-spezifisch
-- ✅ **Testing**: Nodes isoliert testen
-- ✅ **Recursion Limit**: Explizit setzen (Default geändert in v1.0.6)
-- ✅ **Python**: Minimum 3.10+ (3.13 kompatibel, 3.9 abgekündigt)
-
-### 4. Human-in-the-Loop
-- ✅ **`interrupt()`** verwenden (nicht `NodeInterrupt`)
-- ✅ **Konsistente Reihenfolge** der Interrupts
-- ✅ **Command-Object** für Resume
-- ✅ **Approval Gates** für kritische Aktionen
-
----
-
-## 📖 Weitere Ressourcen
-
-- **LangGraph Docs**: https://langchain-ai.github.io/langgraph/
-- **LangGraph Changelog**: https://changelog.langchain.com/ (Node Caching, Deferred Nodes, Hooks)
-- **Multi-Agent Tutorial**: https://langchain-ai.github.io/langgraph/tutorials/multi_agent/
-- **Checkpointing Guide**: https://langchain-ai.github.io/langgraph/concepts/persistence/
-- **Human-in-the-Loop**: https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/
-- **LangGraph Studio**: Visuelle Debugging-Umgebung
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Einsteiger mit LangGraph Best Practices? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangGraph Best Practices? |
+| [LangChain Best Practices](langchain-best-practices.html) | Welche LangChain-Patterns bilden die Grundlage für Graph-Workflows? |
+| [LangSmith Best Practices](langsmith-best-practices.html) | Wie werden LangGraph-Runs beobachtet, verglichen und ausgewertet? |
 
 ---
 
-## 📝 Changelog
-
-**Changelog v1.6 (Mai 2026):**
-- 🆕 **`set_node_defaults()`** — Node-Level Default-Konfigurationen (LangGraph v1.2.0)
-- 🆕 **Durable Error-Handler Resume** — Fehler-Recovery über Host-Neustarts hinweg (v1.2.0)
-- 🆕 **ToolNode Command Handoff** — direktes Routing aus Tools via `Command` (v1.1.10)
-
-**Changelog v1.5 (Mai 2026):**
-- 🆕 **HITL Replay-Fix** — `Command(resume=...)` spult zum Interrupt-Checkpoint zurück (v1.1.7)
-- 🆕 **v2-Streaming-Format** — `StreamPart`-Dicts, `GraphOutput.value/.interrupts` (v1.1.0+)
-
----
-
-**Version:** 1.6<br>
+**Version:** 1.7<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-
-
-
 

@@ -4,26 +4,23 @@ title: LangSmith Best Practices
 parent: LangSmith
 grand_parent: Frameworks
 nav_order: 2
-description: Vertiefungs- und Referenzseite für Tracing, Evaluation und Monitoring mit LangSmith
+description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, with_config, Troubleshooting"
 has_toc: true
 ---
 
 # LangSmith Best Practices
-{: .no_toc }
+
+**Projekt:** KI-Agenten mit LangChain 1.1+
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
 
----
-
-## Übersicht
-
-Diese Seite ist eine technische Referenz und keine erste Einführung in LangSmith. Für den ersten Zugang empfiehlt sich zuerst [LangSmith Einsteiger]({{ '/05-frameworks/einsteiger-langsmith.html' | relative_url }}). Die Stärke dieser Seite liegt in verlässlichen Setup-Regeln, Beobachtungsmustern und typischen Fehlerbildern.
+## Überblick / Zweck
 
 **LangSmith** ist die **Observability-Plattform** für LangChain/LangGraph-Anwendungen und bildet die **dritte Säule** des LangChain-Ökosystems:
 
@@ -31,15 +28,11 @@ Diese Seite ist eine technische Referenz und keine erste Einführung in LangSmit
 - **LangGraph** - Kontrolle (Workflows, State Machines, Multi-Agent)
 - **LangSmith** - Observability (Monitoring, Debugging, Evaluation)
 
-> **Referenz:** Siehe `docs/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` für das Zusammenspiel aller drei Komponenten.
-
-Typischer Fehler: LangSmith nur als Debugging-Ansicht zu verstehen. Im Kurs wird LangSmith besonders dann wertvoll, wenn Traces, Datasets, Baselines und Vergleiche zusammengedacht werden.
+> **📘 Referenz:** Siehe `docs/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` für das Zusammenspiel aller drei Komponenten.
 
 ---
 
-## 🎯 Warum LangSmith?
-
-Für Einsteiger reicht zunächst diese Grundidee: LangSmith zeigt nicht nur die Endantwort, sondern den Weg dorthin. Viele spätere Detailabschnitte, etwa zu Import-Reihenfolge, Endpoint-Varianten oder Caching, sind erst wichtig, wenn konkrete Probleme auftreten.
+## Wann nutzen?
 
 ### Das Problem ohne LangSmith
 ```python
@@ -71,31 +64,9 @@ response = agent.invoke({"messages": [...]})
 # - Fehler-Details mit Stack-Trace
 ```
 
----
+## Standards / Kern-Features
 
-## 🆕 UI-Änderungen (Stand 2026)
-
-### Agent Builder → LangSmith Fleet
-
-Die „Agent Builder“-Sektion in der LangSmith-UI wurde umbenannt in „LangSmith Fleet“.
-
-> LangSmith Dashboard → **Fleet** (linke Navigation)
-
-Alle bisherigen Funktionen sind erhalten — nur der Name hat sich geändert.
-
-**Notebooks:** Verweise auf „LangSmith Agent Builder“ auf „LangSmith Fleet“ aktualisieren.
-
----
-
-###  — Terminal-basiertes Trace-Debugging
-
-**In der Praxis relevant wenn:** Debugging in Google Colab oder SSH-Umgebungen ohne Browser.
-
----
-
-## 📋 Die 5 Kern-Features von LangSmith
-
-### 1. 🔍 Tracing & Debugging
+### 1. Tracing & Debugging
 
 **Was es macht:**
 - Erfasst jeden Schritt einer LLM-Interaktion
@@ -172,8 +143,7 @@ tags=["M05", "lcel", "parallel"]
 tags=["production", "rag", "v2"]
 ```
 
-> [WARNING] Regel
-> ** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* –
+> ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* –
 > nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig
 > demonstrieren (z. B. in einem eigenen „LangSmith"-Kapitel), in den
 > vorherigen LCEL-Beispielen weglassen.
@@ -202,12 +172,11 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 - ✅ Wenn Tracing-Unterdrückung via Context Manager nicht zuverlässig funktioniert
 - ❌ Nicht verwenden, wenn das Runnable-Verhalten (Schema-Validierung, Callbacks) getestet werden soll
 
-> [TIP] Didaktischer Mehrwert
-> ** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
+> 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
 
 ---
 
-### 2. 📊 Datasets & Evaluation
+### 2. Datasets & Evaluation
 
 **Was es macht:**
 - Test-Datasets für LLM-Anwendungen erstellen
@@ -273,7 +242,7 @@ Side-by-Side Vergleich zweier Agent-Outputs für subjektive Evaluation:
 
 ---
 
-### 3. 📈 Monitoring & Observability
+### 3. Monitoring & Observability
 
 **Was es macht:**
 - Production-Monitoring in Echtzeit
@@ -302,7 +271,7 @@ os.environ["LANGSMITH_PROJECT"] = "production"  # Projekt-Name
 
 ---
 
-### 4. 💰 Cost Tracking & Budget Management
+### 4. Cost Tracking & Budget Management
 
 **Was es macht:**
 - Token-Nutzung pro Request tracken
@@ -347,7 +316,7 @@ client.update_run(
 
 ---
 
-### 5. 📝 Prompt Hub
+### 5. Prompt Hub
 
 **Was es macht:**
 - Zentrale Verwaltung von Prompts
@@ -378,7 +347,25 @@ agent = create_agent(
 
 ---
 
-## 🚀 Quick Start: LangSmith aktivieren
+## Aktuelle Änderungen
+
+### Agent Builder → LangSmith Fleet
+
+Die „Agent Builder“-Sektion in der LangSmith-UI wurde umbenannt in „LangSmith Fleet“.
+
+> LangSmith Dashboard → **Fleet** (linke Navigation)
+
+Alle bisherigen Funktionen sind erhalten — nur der Name hat sich geändert.
+
+**Notebooks:** Verweise auf „LangSmith Agent Builder“ auf „LangSmith Fleet“ aktualisieren.
+
+### Terminal-basiertes Trace-Debugging
+
+**In der Praxis relevant wenn:** Debugging in Google Colab oder SSH-Umgebungen ohne Browser.
+
+---
+
+## Quick Start: LangSmith aktivieren
 
 ### 1. API-Key generieren
 ```bash
@@ -401,8 +388,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 # os.environ["LANGSMITH_ENDPOINT"] = "https://ap.api.smith.langchain.com"
 ```
 
-> [WARNING] Reihenfolge-Regel
-> ** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der LangChain-Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert.
+> ⚠️ **Reihenfolge-Regel:** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der LangChain-Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert.
 >
 > **In Notebooks:** Env-Vars in die Setup-Cell (ganz oben), vor alle anderen Imports.
 
@@ -414,8 +400,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 | `LANGSMITH_TRACING` | Einmalig beim **ersten LangChain-Import** | ❌ Nein – muss vor Imports stehen |
 | `LANGSMITH_PROJECT` | Beim **ersten Trace** – dann gecacht via `lru_cache` | ⚠️ Nur wenn **vor dem ersten Trace** gesetzt |
 
-> [NOTE] LangSmith-SDK Verhalten
-> ** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
+> ⚠️ **LangSmith-SDK Verhalten:** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
 >
 > **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Projekt-Wechsel nach Notebook-Start sind nicht vorgesehen.
 
@@ -452,7 +437,7 @@ result = chain.invoke("...")
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 
-llm = init_chat_model("openai:gpt-4o-mini")
+llm = init_chat_model("openai:gpt-5.4-nano")
 agent = create_agent(model=llm, tools=[...])
 
 # Automatisch geloggt in LangSmith!
@@ -466,32 +451,32 @@ response = agent.invoke({"messages": [...]})
 
 ---
 
-## 📊 Production-Deployment Checklist
+## Production-Checkliste
 
 Bevor du in Production gehst:
 
-### ✅ MUST-HAVES
+### MUST-HAVES
 - [ ] **LangSmith aktiviert** (`LANGSMITH_TRACING=true`)
 - [ ] **Project Name gesetzt** (`LANGSMITH_PROJECT=production`)
 - [ ] **API-Key konfiguriert** (Environment Variable oder Secret Manager)
 - [ ] **Monitoring-Dashboard** für Production-Projekt erstellt
 - [ ] **Alerts konfiguriert** (Fehlerrate, Latenz, Budget)
 
-### ✅ EMPFOHLEN
+### EMPFOHLEN
 - [ ] **Dataset für Regression-Tests** erstellt
 - [ ] **Baseline-Evaluation** durchgeführt (vor Deployment)
 - [ ] **Budget-Limits** gesetzt
 - [ ] **Team-Zugriff** konfiguriert
 - [ ] **Prompt Hub** für kritische Prompts verwendet
 
-### ✅ OPTIONAL
+### OPTIONAL
 - [ ] **Custom Evaluators** für domänen-spezifische Metriken
 - [ ] **Automated Testing** im CI/CD-Pipeline integriert
 - [ ] **Weekly Review** der Traces und Metrics
 
 ---
 
-## 🔗 Integration mit LangChain/LangGraph
+## Integration mit LangChain/LangGraph
 
 ### LangChain Chains
 ```python
@@ -538,7 +523,7 @@ worker2 = create_agent(model=llm, tools=[...])
 
 ---
 
-## 📚 Best Practices für verschiedene Use Cases
+## Best Practices für verschiedene Use Cases
 
 ### RAG-Systeme
 **LangSmith-Features nutzen:**
@@ -604,7 +589,7 @@ def chatbot_with_feedback(message: str, session_id: str):
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Problem: Traces landen in falschem Projekt (`default` statt Modulname)
 
@@ -709,7 +694,7 @@ callback = LangSmithCallback(
 
 ---
 
-## 📖 Weiterführende Ressourcen
+## Weitere Ressourcen
 
 ### Offizielle Dokumentation
 - [LangSmith Docs](https://docs.smith.langchain.com/)
@@ -717,9 +702,8 @@ callback = LangSmithCallback(
 - [Release Notes](https://docs.smith.langchain.com/release-notes)
 
 ### Interne Dokumentation
-- [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
-- [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }})
-- [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }})
+- [Vom Modell zum Produkt: LangChain-Ökosystem](../08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html)
+- [LangChain 1.0 Must-Haves](./langchain-best-practices.html)
 
 ### Related Commands
 - `/check-langsmith-changelog` - Prüft neue LangSmith-Features
@@ -727,7 +711,7 @@ callback = LangSmithCallback(
 
 ---
 
-## 📝 Changelog
+## Changelog
 
 ### Version 2.1 (2026-05-13)
 - 🆕 **APAC Region** — Endpoint `https://ap.api.smith.langchain.com` für Asia-Pacific-Accounts dokumentiert
@@ -786,26 +770,16 @@ callback = LangSmithCallback(
 - ✅ Best Practices für RAG, Agents, Chatbots
 - ✅ Troubleshooting-Sektion
 
----
-
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}) | Wie werden Chains, Agents und Tools korrekt implementiert? |
-| [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | Wie werden komplexe Multi-Agent-Workflows mit StateGraph aufgebaut? |
-| [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Welches Modell eignet sich für welche Agentenrolle? |
-| [Vom Modell zum Produkt]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }}) | Wie wird ein LangChain-Prototyp produktionsreif? |
+| [LangChain Best Practices](langchain-best-practices.html) | Welche LangChain-Patterns erzeugen sinnvolle LangSmith-Traces? |
+| [LangGraph Best Practices](langgraph-best-practices.html) | Wie instrumentiere ich LangGraph-Graphen für LangSmith-Monitoring? |
 
 ---
 
 **Version:** 2.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-
-
 

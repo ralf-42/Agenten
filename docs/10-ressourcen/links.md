@@ -30,6 +30,7 @@ Externe Ressourcen und Artikel zum Thema KI-Agenten.
 |-----------|--------------|
 | [ElevenLabs - Conversational AI (KI Agenten)](https://elevenlabs.io/de/conversational-ai?utm_source=google&utm_medium=cpc&utm_campaign=dach_nonbrandsearch_conversationalai_german&utm_id=22988695322&utm_term=ki-agenten&utm_content=conversational_ai_-_ai_agents&gad_source=1&gad_campaignid=22988695322&gbraid=0AAAAA_PU6FaZXejDuga5m8HprA2M2YZpb&gclid=CjwKCAiAssfLBhBDEiwAcLpwfiFXDfchVpl0bwBMjNMsZJixtdztxVBEwLzp7BuNMY0t54ws43_U9RoTEQAv_BwE) | Conversational AI und KI-Agenten von ElevenLabs |
 | [Google Cloud - Was sind KI-Agenten?](https://cloud.google.com/discover/what-are-ai-agents?hl=de) | Eine Einführung in KI-Agenten von Google Cloud |
+| [KI-Agenten-Orchestrierung](https://editor.p5js.org/ralf.bendig.rb/full/Viso2emNI) | Interaktive Visualisierung zur Funktionsweise von KI-Agenten |
 | [Inception Labs Chat](https://chat.inceptionlabs.ai/) | Chat-Interface für Mercury – Diffusion Language Model |
 | [Generative AI (Financial Times)](https://ig.ft.com/generative-ai/) | Interaktiver visueller Erklärer zu Generative AI |
 
@@ -197,7 +198,6 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 **Version:** 1.4<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

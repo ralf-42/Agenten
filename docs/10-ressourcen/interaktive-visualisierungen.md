@@ -33,6 +33,7 @@ Transformer-Architektur und Embedding-Konzepte
 | **LLM-Parameter**         | Bedeutung und Einstellung LLM-Parameter                | [LLM_Parameter](https://editor.p5js.org/ralf.bendig.rb/full/LBc3t3yP4)                      |
 | **Transformer**           | Interaktive Visualisierung der Transformer-Architektur | [Transformer](https://editor.p5js.org/ralf.bendig.rb/full/I1TTpJk-D)                        |
 | **Transformer Explainer** | GPT-2 Transformer interaktiv erklärt (Georgia Tech)    | [Transformer Explainer](https://poloclub.github.io/transformer-explainer/)                  |
+| **Self-Attention**        | Transformer Self-Attention Simulator                   | [Self-Attention Simulator](https://editor.p5js.org/ralf.bendig.rb/full/4X4ftP1Ev)          |
 | **Embeddings**            | Fahrzeug-Beispiel für Vektorräume                      | [Embedding-Beispiel Fahrzeug](https://editor.p5js.org/ralf.bendig.rb/full/LPjLkzWbE)        |
 | **Embeddings 3D**         | Fahrzeug-Beispiel für Vektorräume - 3D                 | [Embedding_Visual_3D](https://editor.p5js.org/ralf.bendig.rb/full/gFBwB2E8n)                |
 | **Tokenizer**             | OpenAI Tokenizer - Token-Visualisierung                | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |

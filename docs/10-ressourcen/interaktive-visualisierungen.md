@@ -22,27 +22,55 @@ has_toc: true
 
 ---
 
-## 🧠 LLM-Grundlagen
+## 🧠 Transformer & Architektur
 
-Transformer-Architektur und Embedding-Konzepte
+Transformer-Architektur, neuronale Netze und Modellvarianten
 
 | Thema                     | Beschreibung                                           | Link                                                                                        |
 | ------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| **Modellsteuerung**       | Möglichkeiten der Modellsteuerung                      | [Modellsteuerung](https://editor.p5js.org/ralf.bendig.rb/full/um423ggnD)                    |
-| **Entscheidungshilfe**    | Entscheidungshilfe Modellsteuerung                     | [Modellsteuerung](https://editor.p5js.org/ralf.bendig.rb/full/xb3zPgRSr)                    |
-| **LLM-Parameter**         | Bedeutung und Einstellung LLM-Parameter                | [LLM_Parameter](https://editor.p5js.org/ralf.bendig.rb/full/LBc3t3yP4)                      |
 | **Transformer**           | Interaktive Visualisierung der Transformer-Architektur | [Transformer](https://editor.p5js.org/ralf.bendig.rb/full/I1TTpJk-D)                        |
 | **Transformer Explainer** | GPT-2 Transformer interaktiv erklärt (Georgia Tech)    | [Transformer Explainer](https://poloclub.github.io/transformer-explainer/)                  |
 | **Self-Attention**        | Transformer Self-Attention Simulator                   | [Self-Attention Simulator](https://editor.p5js.org/ralf.bendig.rb/full/4X4ftP1Ev)          |
-| **Embeddings**            | Fahrzeug-Beispiel für Vektorräume                      | [Embedding-Beispiel Fahrzeug](https://editor.p5js.org/ralf.bendig.rb/full/LPjLkzWbE)        |
-| **Embeddings 3D**         | Fahrzeug-Beispiel für Vektorräume - 3D                 | [Embedding_Visual_3D](https://editor.p5js.org/ralf.bendig.rb/full/gFBwB2E8n)                |
-| **Tokenizer**             | OpenAI Tokenizer - Token-Visualisierung                | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |
-| **Tokenizer Playground**  | Token-Visualisierung mit Kontextfenster                | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |
-| **Kontext-Management**    | Beispiel Kontext-Management                            | [Kontextfenster](https://editor.p5js.org/ralf.bendig.rb/full/tLnUgyZRK)                     |
-| **Token-Verbrauch & Caching** | Token-Kosten und Prompt Caching visualisiert       | [Token-Verbrauch & Caching](https://editor.p5js.org/ralf.bendig.rb/full/uAPjZBhtW)          |
+| **Architektur-Explainer** | Transformer-Architektur interaktiv erklärt             | [Architektur-Explainer](https://editor.p5js.org/ralf.bendig.rb/full/RSI_9AiMJ)             |
 | **Neuronales Netz**       | Training eines neuronalen Netzes                       | [NN - Training](https://editor.p5js.org/ralf.bendig.rb/full/FsQx83Adk)                      |
-| **Fine-Tuning LoRA**      | Low-Rank Adaptation für effizientes Fine-Tuning        | [LoRA](https://editor.p5js.org/ralf.bendig.rb/full/6EOMAf2BZ)                               |
 | **Mixture of Experts**    | MoE-Architektur für effiziente LLM-Skalierung          | [Mixture of Experts](https://editor.p5js.org/ralf.bendig.rb/full/GT2XfGGTo)                 |
+
+---
+
+## 🔤 Tokenizer & Kontext
+
+Tokenisierung, Kontextfenster und Token-Kosten
+
+| Thema                         | Beschreibung                                         | Link                                                                                        |
+| ----------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Tokenizer**                 | OpenAI Tokenizer - Token-Visualisierung              | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |
+| **Tokenizer Playground**      | Token-Visualisierung mit Kontextfenster              | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |
+| **Kontext-Management**        | Beispiel Kontext-Management                          | [Kontextfenster](https://editor.p5js.org/ralf.bendig.rb/full/tLnUgyZRK)                     |
+| **Token-Verbrauch & Caching** | Token-Kosten und Prompt Caching visualisiert         | [Token-Verbrauch & Caching](https://editor.p5js.org/ralf.bendig.rb/full/uAPjZBhtW)          |
+
+---
+
+## 📊 Embeddings
+
+Vektorräume und semantische Repräsentationen
+
+| Thema             | Beschreibung                           | Link                                                                                  |
+| ----------------- | -------------------------------------- | ------------------------------------------------------------------------------------- |
+| **Embeddings**    | Fahrzeug-Beispiel für Vektorräume - 2D | [Embedding-Beispiel Fahrzeug](https://editor.p5js.org/ralf.bendig.rb/full/LPjLkzWbE) |
+| **Embeddings 3D** | Fahrzeug-Beispiel für Vektorräume - 3D | [Embedding_Visual_3D](https://editor.p5js.org/ralf.bendig.rb/full/gFBwB2E8n)          |
+
+---
+
+## ⚙️ Modellsteuerung & Parameter
+
+Steuerung, Parametrierung und Anpassung von Sprachmodellen
+
+| Thema                  | Beschreibung                                    | Link                                                                             |
+| ---------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------- |
+| **Modellsteuerung**    | Möglichkeiten der Modellsteuerung               | [Modellsteuerung](https://editor.p5js.org/ralf.bendig.rb/full/um423ggnD)         |
+| **Entscheidungshilfe** | Entscheidungshilfe Modellsteuerung              | [Modellsteuerung](https://editor.p5js.org/ralf.bendig.rb/full/xb3zPgRSr)         |
+| **LLM-Parameter**      | Bedeutung und Einstellung LLM-Parameter         | [LLM_Parameter](https://editor.p5js.org/ralf.bendig.rb/full/LBc3t3yP4)           |
+| **Fine-Tuning LoRA**   | Low-Rank Adaptation für effizientes Fine-Tuning | [LoRA](https://editor.p5js.org/ralf.bendig.rb/full/6EOMAf2BZ)                    |
 
 ---
 

@@ -130,10 +130,12 @@ Für wiederverwendbare und klar strukturierte Prompts steht in LangChain 1.0 da
 from langchain_core.prompts import ChatPromptTemplate
 
 # Template mit System- und Nutzerrolle
-prompt = ChatPromptTemplate.from_messages([
+prompt = ChatPromptTemplate([
     ("system", "Du bist ein hilfreicher KI-Assistent für Einsteiger in LangChain."),
     ("human", "Beantworte die folgende Frage in 3-5 Sätzen: {frage}")
 ])
+
+# ❌ Anti-Pattern (veraltet): ChatPromptTemplate.from_messages([...])
 
 # Später in einer Chain oder direkt:
 rendered_messages = prompt.format_messages(frage="Was ist ein LLM?")
@@ -143,7 +145,7 @@ rendered_messages
 ### Beispiel 2: Prompt für RAG (mit Kontext)
 
 ```python
-rag_prompt = ChatPromptTemplate.from_messages([
+rag_prompt = ChatPromptTemplate([
     ("system", "Nutze ausschließlich den bereitgestellten Kontext, um die Frage zu beantworten."),
     ("human", "Kontext:\n{kontext}\n\nFrage: {frage}")
 ])

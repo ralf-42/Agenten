@@ -55,7 +55,7 @@ Das Modell erhält eine Aufgabe ohne Beispiele und löst sie basierend auf seine
 from langchain_core.prompts import ChatPromptTemplate
 
 # Zero-Shot: Keine Beispiele, direkte Aufgabe
-prompt = ChatPromptTemplate.from_messages([
+prompt = ChatPromptTemplate([
     ("system", "Du bist ein hilfreicher Assistent."),
     ("human", "Klassifiziere die folgende E-Mail als 'dringend' oder 'normal': {email}")
 ])
@@ -71,7 +71,7 @@ prompt = ChatPromptTemplate.from_messages([
 Das Modell erhält Beispiele, die das gewünschte Verhalten demonstrieren.
 
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -284,7 +284,7 @@ role_prompts = {
     "entwickler": "Du bist ein Senior Software Engineer mit Expertise in Python und Cloud-Architekturen."
 }
 
-prompt = ChatPromptTemplate.from_messages([
+prompt = ChatPromptTemplate([
     ("system", role_prompts["entwickler"]),
     ("human", "{frage}")
 ])
@@ -341,7 +341,7 @@ ANTWORT:"""
 ### Iteratives Prompt-Design
 
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -361,7 +361,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ### Prompt-Versionierung
 
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -381,7 +381,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 
 **Problem:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -392,7 +392,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ```
 **Lösung:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -405,7 +405,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 
 **Problem:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -416,7 +416,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ```
 **Lösung:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -429,7 +429,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 
 **Problem:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),
@@ -440,7 +440,7 @@ few_shot_prompt = ChatPromptTemplate.from_messages([
 ```
 **Lösung:**
 ```python
-few_shot_prompt = ChatPromptTemplate.from_messages([
+few_shot_prompt = ChatPromptTemplate([
     ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
     ("human", "Betreff: Server ausgefallen"),
     ("assistant", "dringend"),

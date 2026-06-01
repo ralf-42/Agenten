@@ -551,6 +551,32 @@ result = await chain.ainvoke({"input": "text"})
 
 ---
 
+## 5.1 `ChatPromptTemplate` — Direkter Konstruktor
+
+### ALT (vermeiden)
+```python
+# ❌ from_messages() ist veraltet
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "Du bist ein hilfreicher Assistent."),
+    ("human", "{frage}")
+])
+```
+
+### NEU (PFLICHT)
+```python
+from langchain_core.prompts import ChatPromptTemplate
+
+# ✅ Direkter Konstruktor (LangChain 1.0+ Standard)
+prompt = ChatPromptTemplate([
+    ("system", "Du bist ein hilfreicher Assistent."),
+    ("human", "{frage}")
+])
+```
+
+> **Hinweis:** `ChatPromptTemplate.from_template("...")` (einfaches String-Template ohne Rollen) bleibt gültig und muss nicht migriert werden.
+
+---
+
 ## 6 Middleware für Agents - Production-Ready Features
 
 ### ALT (deprecated)

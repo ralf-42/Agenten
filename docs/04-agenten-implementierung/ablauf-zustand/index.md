@@ -14,7 +14,6 @@ Dieser Bereich behandelt, wie Agenten Zustände verwalten, Sitzungen persistent 
 
 | Dokument | Inhalt |
 |---|---|
-| [Ablaufsteuerung & Zustand](./ablaufsteuerung-zustand.html) | Überblick: Routing-Logik, Zustandsmodelle und Steuerungsmuster |
 | [State Management](./state-management.html) | Zustandsführung in LangGraph: TypedDict, Reducer und Übergänge |
 | [Checkpointing & Persistenz](./checkpointing-persistenz.html) | Sitzungen speichern, fortsetzen und Fehler überstehen |
 | [Memory-Systeme](./memory-systeme.html) | Kurzzeit-, Langzeit- und semantisches Memory in Agenten |

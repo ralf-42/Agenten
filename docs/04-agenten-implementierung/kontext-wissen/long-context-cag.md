@@ -172,7 +172,6 @@ Nicht das richtige Schlagwort entscheidet. Die Architektur muss zur Änderungsra
 
 | Dokument | Frage |
 |---|---|
-| [Kontext- und Wissensanbindung](./kontext-wissensanbindung.html) | Wie binden Agenten Wissen grundsätzlich ein? |
 | [RAG-Konzepte](./rag-konzepte.html) | Wie funktioniert eine Retrieval-Pipeline im Detail? |
 | [Context Engineering](./context-engineering.html) | Wie wird Kontext gezielt ausgewählt, strukturiert und begrenzt? |
 | [Memory-Systeme]({{ '/04-agenten-implementierung/ablauf-zustand/memory-systeme.html' | relative_url }}) | Was soll ein Agent über Sitzungen hinweg behalten? |

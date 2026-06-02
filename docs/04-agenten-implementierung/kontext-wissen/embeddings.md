@@ -175,9 +175,9 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 
 | Dokument | Frage |
 |---|---|
-| [Tokenizing & Chunking]({{ '/04-agenten-implementierung/tokenizing-chunking.html' | relative_url }}) | Wie wird Rohtext so vorbereitet, dass Embeddings später sinnvoll berechnet werden können? |
-| [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) | Wie werden Embeddings praktisch in Retrieval-Systemen genutzt? |
-| [Multimodal Bild]({{ '/04-agenten-implementierung/tool-use-function-calling.html' | relative_url }}) | Wie werden Vektorähnlichkeiten jenseits von reinem Text relevant? |
+| [Tokenizing & Chunking]({{ '/04-agenten-implementierung/kontext-wissen/tokenizing-chunking.html' | relative_url }}) | Wie wird Rohtext so vorbereitet, dass Embeddings später sinnvoll berechnet werden können? |
+| [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) | Wie werden Embeddings praktisch in Retrieval-Systemen genutzt? |
+| [Multimodal Bild]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }}) | Wie werden Vektorähnlichkeiten jenseits von reinem Text relevant? |
 
 ---
 

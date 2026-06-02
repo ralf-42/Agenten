@@ -313,9 +313,9 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 
 | Dokument | Frage |
 |---|---|
-| [State Management]({{ '/04-agenten-implementierung/state-management.html' | relative_url }}) | Wie ist der State aufgebaut, der durch Checkpoints gespeichert wird? |
-| [Memory-Systeme]({{ '/04-agenten-implementierung/memory-systeme.html' | relative_url }}) | Wie unterscheidet sich langfristiges Gedächtnis von sitzungsbezogener Persistenz? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wie werden Unterbrechung, Freigabe und Wiederaufnahme praktisch gestaltet? |
+| [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}) | Wie ist der State aufgebaut, der durch Checkpoints gespeichert wird? |
+| [Memory-Systeme]({{ '/04-agenten-implementierung/ablauf-zustand/memory-systeme.html' | relative_url }}) | Wie unterscheidet sich langfristiges Gedächtnis von sitzungsbezogener Persistenz? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie werden Unterbrechung, Freigabe und Wiederaufnahme praktisch gestaltet? |
 
 ---
 

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Markdown Template Guide
 nav_exclude: true
@@ -224,7 +224,7 @@ In Index-Dokumenten wie `concepts.md` oder `frameworks.md` werden absolute URLs 
 Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
-[Agent-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }})
+[Agent-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
 [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
 ```
 
@@ -287,7 +287,7 @@ Kurze Einordnung des Bereichs in einem Absatz.
 
 ## Grundlagen
 
-- **[Checkpointing & Persistenz]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
 - **[Agent Security]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
 ````
 

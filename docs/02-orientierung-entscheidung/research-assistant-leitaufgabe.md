@@ -9,7 +9,7 @@ has_toc: true
 
 # Research Assistant
 
-Der **Research Assistant** ist die übergreifende Leitaufgabe. Er dient als roter Faden, an dem zentrale Agentenkonzepte wiederholt sichtbar werden: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
+Der **Research Assistant** ist die übergreifende Leitaufgabe. Er bildet den roten Faden, an dem zentrale Agentenideen immer wieder auftauchen: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
 
 Die Leitfrage lautet:
 
@@ -17,12 +17,11 @@ Die Leitfrage lautet:
 
 ## Ausgangssituation
 
-Die Leitaufgabe orientiert sich an einer typischen Wissensarbeits-Situation:
+Die Leitaufgabe orientiert sich an einer typischen Arbeitssituation aus dem Wissensbereich:
 
-> **Pia** muss regelmäßig neue Fachartikel sichten. Sie sucht relevante Passagen, liest dafür oft ganze Artikel und findet den gesuchten Abschnitt trotzdem nicht schnell genug. Eine einfache Volltext-Suche nach Stichwörtern liefert entweder zu viele Treffer oder gar keine passenden Ergebnisse.
+> **Pia** muss regelmäßig neue Fachartikel sichten. Sie sucht nach relevanten Passagen, liest dafür oft ganze Artikel und findet den gesuchten Abschnitt trotzdem nicht schnell genug. Eine einfache Volltext-Suche nach Stichwörtern liefert entweder zu viele Treffer oder gar keine passenden Ergebnisse.
 
-Das Ziel ist kein vollautomatischer Agent ohne Kontrollmöglichkeit, sondern ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit auf menschliche Freigabe wartet.
-
+Ziel ist kein komplett autonomer Agent ohne Kontrollmöglichkeit. Stattdessen geht es um ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit erst einmal auf menschliche Freigabe wartet.
 
  
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png" class="logo" width="950"/>
@@ -33,32 +32,32 @@ KI-generiertes Bild
 
 ## Warum diese Aufgabe?
 
-Der Research Assistant ist sehr gut geeignet, weil er typische Anforderungen realer Agentensysteme in einer überschaubaren Aufgabe bündelt:
+Der Research Assistant passt besonders gut, weil er viele typische Anforderungen realer Agentensysteme in einer klar überschaubaren Aufgabe bündelt:
 
-- Er braucht eine klare Aufgabenabgrenzung.
-- Er muss Wissen aus Dokumenten nutzen, statt frei zu halluzinieren.
-- Er muss Quellen und Unsicherheit sichtbar machen.
-- Er benötigt State, Sessions und kontrollierte Zwischenschritte.
-- Er zeigt, wann Evaluation, Security und menschliche Freigabe notwendig werden.
+- Es braucht eine verständliche Aufgabenabgrenzung.
+- Das System soll Wissen aus Dokumenten nutzen—nicht einfach frei formulieren.
+- Quellen und Unsicherheit müssen sichtbar werden.
+- State, Sessions und kontrollierte Zwischenschritte spielen eine zentrale Rolle.
+- Evaluation, Security und menschliche Freigabe werden dann wichtig, wenn es wirklich nötig ist.
 
-Damit verbindet die Aufgabe konzeptionelles Verstehen mit praktischer Umsetzung.
+So verbindet die Leitaufgabe konzeptionelles Verstehen mit einer praktischen Umsetzung.
 
 ## Zielbild
 
-Am Ende entsteht ein Research Assistant, der:
+Am Ende steht ein Research Assistant, der:
 
 1. Einen PDF-Korpus reproduzierbar lädt.
 2. Die Dokumente in eine Vektordatenbank einbettet.
 3. Fragen in natürlicher Sprache beantwortet.
 4. Jede Antwort mit Quelltitel und Passagen-Zitat belegt.
 5. Unsicherheit sichtbar macht und bei Bedarf eine Freigabe einholt.
-6. Spezialisierte Teilaufgaben an passende Worker delegieren kann, zum Beispiel Tabellenanalyse und Fließtext-Zusammenfassung.
+6. Spezialisierte Teilaufgaben an passende Worker delegiert—zum Beispiel Tabellenanalyse und Fließtext-Zusammenfassung.
 
-Eine spätere Variante kann einen eigenen Korpus, eine andere Persona oder eine andere Fachdomäne verwenden. Der Bauplan bleibt gleich: Korpus, Retrieval, strukturierte Antwort, Quellenbindung, Kontrolle und Reflexion.
+Eine spätere Variante kann dann einen eigenen Korpus nutzen, mit anderer Persona arbeiten oder in einer anderen Fachdomäne stattfinden. Der Bauplan bleibt gleich: Korpus, Retrieval, strukturierte Antwort, Quellenbindung, Kontrolle und Reflexion.
 
 ## Leitplanken
 
-Der Research Assistant ist ein Assistenzsystem, kein autonomes Entscheidungssystem. Daraus folgen feste Leitplanken:
+Der Research Assistant ist ein Assistenzsystem—kein autonomes Entscheidungssystem. Genau das bestimmt die Leitplanken:
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -71,7 +70,7 @@ Der Research Assistant ist ein Assistenzsystem, kein autonomes Entscheidungssyst
 
 ## Bauplan
 
-Der technische Bauplan entwickelt sich schrittweise:
+Der technische Bauplan wächst Schritt für Schritt:
 
 | Baustein | Was der Research Assistant bekommt |
 |---|---|
@@ -98,9 +97,9 @@ class ResearchAntwort(BaseModel):
 
 ## Korpus und Evaluation
 
-Der Startpunkt ist ein kuratierter PDF-Korpus aus öffentlichen Fachtexten. Er soll unterschiedliche Perspektiven enthalten, keine duplizierten Texte nutzen und sowohl kurze als auch längere Dokumente abdecken.
+Startpunkt ist ein kuratierter PDF-Korpus aus öffentlichen Fachtexten. Er soll unterschiedliche Perspektiven enthalten, keine duplizierten Texte nutzen und sowohl kurze als auch längere Dokumente abdecken.
 
-Die Evaluation prüft nicht nur, ob eine Antwort gut klingt. Sie fragt gezielt:
+Die Evaluation schaut nicht nur auf die „Klingt gut“-Ebene. Sie prüft gezielt:
 
 - Findet die semantische Suche die relevanten Passagen besser als eine naive Stichwortsuche?
 - Werden Quellen nachvollziehbar angegeben?
@@ -110,7 +109,7 @@ Die Evaluation prüft nicht nur, ob eine Antwort gut klingt. Sie fragt gezielt:
 
 ## Rolle im Kurs
 
-Die Leitaufgabe ist kein einzelnes Einstiegsthema, sondern begleitet mehrere Kursphasen:
+Die Leitaufgabe begleitet mehrere Kursphasen—nicht nur ein einzelnes Einstiegsthema:
 
 | Kursphase | Bezug zur Leitaufgabe |
 |---|---|

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Ethik und GenAI
 parent: "Regulatorik & Verantwortung"
@@ -141,7 +141,7 @@ Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokume
 | [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}) | Wie werden personenbezogene Daten in Prompts, Tools, Memory und Traces geschützt? |
 | [KI-Agenten in regulierten Branchen]({{ '/09-regulatorik-verantwortung/ki-agenten-in-regulierten-branchen.html' | relative_url }}) | Was ändert sich in Medizin, Legal, Finanzwesen und anderen sensiblen Kontexten? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden technische Angriffe, Tool-Missbrauch und Prompt Injection begrenzt? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
 | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie werden Qualität, Fehler und Regressionen messbar? |
 
 ---

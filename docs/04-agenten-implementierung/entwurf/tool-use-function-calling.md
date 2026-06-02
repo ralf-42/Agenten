@@ -416,9 +416,9 @@ In der Praxis relevant, wenn: Ein Agent auf viele Werkzeuge zugreifen soll, dies
 
 | Dokument | Frage |
 |---|---|
-| [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
+| [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) | Wie werden Werkzeuge in ReAct, Workflows oder Multi-Agent-Systeme eingebettet? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden Tool-Aufrufe abgesichert und Missbrauch begrenzt? |
-| [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
+| [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) | Wann ist Retrieval die bessere Alternative zu direkten Tool-Aufrufen? |
 
 ---
 

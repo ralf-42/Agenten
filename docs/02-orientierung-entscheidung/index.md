@@ -8,7 +8,7 @@ description: "Bedarfsanalyse: Nutzen, Aufgabenklasse und gemeinsame Begriffe"
 
 # Orientierung & Entscheidung
 
-Diese Orientierungsseite klärt, ob ein Agentenvorhaben fachlich sinnvoll ist, welcher Lösungsweg passt und welche Begriffe im Kurs einheitlich verwendet werden. Sie hilft dabei, vor der technischen Umsetzung die richtige Lösungsklasse und den roten Faden des Kurses einzuordnen.
+Bevor mit der technischen Umsetzung begonnen wird, hilft diese Seite dabei, das Vorhaben richtig einzuordnen: Lohnt sich der Einsatz von KI oder Agenten überhaupt, welcher Lösungsweg passt zur Aufgabenstellung, und welche Begriffe werden im Kurs durchgehend gleich verwendet. So findet ihr früh den roten Faden und vermeidet unnötige Umwege.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

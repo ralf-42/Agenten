@@ -145,6 +145,7 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 
 | Ressource | Beschreibung |
 |-----------|--------------|
+| [OpenCode](https://opencode.de/de) | Open-Source KI-Coding-Assistent für das Terminal – Alternative zu Claude Code |
 | [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M21) |
 | [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
 | [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten – direkter Kursinhalt (→ M29) |

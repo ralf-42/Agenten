@@ -532,9 +532,9 @@ RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten
 
 | Dokument | Frage |
 |---|---|
-| [Tokenizing & Chunking]({{ '/04-agenten-implementierung/tokenizing-chunking.html' | relative_url }}) | Wie beeinflusst die Aufbereitung der Dokumente die Retrieval-Qualität? |
-| [Embeddings]({{ '/04-agenten-implementierung/embeddings.html' | relative_url }}) | Wie werden Dokumente und Fragen semantisch vergleichbar gemacht? |
-| [Context Engineering]({{ '/04-agenten-implementierung/context-engineering.html' | relative_url }}) | Wie fügt sich Retrieval in die größere Kontextlogik eines Systems ein? |
+| [Tokenizing & Chunking]({{ '/04-agenten-implementierung/kontext-wissen/tokenizing-chunking.html' | relative_url }}) | Wie beeinflusst die Aufbereitung der Dokumente die Retrieval-Qualität? |
+| [Embeddings]({{ '/04-agenten-implementierung/kontext-wissen/embeddings.html' | relative_url }}) | Wie werden Dokumente und Fragen semantisch vergleichbar gemacht? |
+| [Context Engineering]({{ '/04-agenten-implementierung/kontext-wissen/context-engineering.html' | relative_url }}) | Wie fügt sich Retrieval in die größere Kontextlogik eines Systems ein? |
 | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie wird geprüft, ob Retrieval und Antwortqualität belastbar sind? |
 
 ---

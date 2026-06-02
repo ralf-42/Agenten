@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Skills
 parent: "Multi-Agent & Erweiterungen"
@@ -171,9 +171,9 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 
 | Dokument | Frage |
 |---|---|
-| [Prompt Engineering]({{ '/04-agenten-implementierung/prompt-engineering.html' | relative_url }}) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
-| [Tool Use & Function Calling]({{ '/04-agenten-implementierung/tool-use-function-calling.html' | relative_url }}) | Wie werden deterministische Hilfsoperationen eingebunden? |
-| [State Management]({{ '/04-agenten-implementierung/state-management.html' | relative_url }}) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
+| [Prompt Engineering]({{ '/04-agenten-implementierung/entwurf/prompt-engineering.html' | relative_url }}) | Wie werden einzelne Anweisungen und System-Prompts wirksam formuliert? |
+| [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }}) | Wie werden deterministische Hilfsoperationen eingebunden? |
+| [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}) | Wie werden mehrstufige Abläufe kontrolliert ausgeführt? |
 | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) | Wann ist ein eigener Spezialagent sinnvoller als ein Skill? |
 
 ---

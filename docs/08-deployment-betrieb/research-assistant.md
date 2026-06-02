@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Research Assistant
 parent: "Deployment & Betrieb"
@@ -524,8 +524,8 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 
 **Projektinterne Dokumente:**
 - [Research Assistant Leitaufgabe]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }})
-- [State Management]({{ '/04-agenten-implementierung/state-management.html' | relative_url }})
-- [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }})
+- [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }})
+- [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 - [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})
 
 ---

@@ -17,24 +17,24 @@ description: Englisch-deutsche Übersetzungstabelle für KI-Agenten-Fachbegriffe
 
 ---
 
-Viele englische KI-Fachbegriffe werden im Deutschen nicht übersetzt — nicht aus Bequemlichkeit, sondern weil die Übersetzungen oft unschärfer sind als das Original. „Prompt" ins Deutsche zu übersetzen würde das Wort aus seinem Kontext reißen; „Kontextfenster" hingegen ist präziser als „context window". Diese Tabelle legt fest, welche Form in den Kursmaterialien verwendet wird — und warum.  
+Viele englische KI-Fachbegriffe werden im Deutschen nicht übersetzt. Das passiert nicht aus Bequemlichkeit, sondern weil die deutschen Varianten oft weniger genau treffen. „Prompt" würde im Deutschen den Zusammenhang verlieren; „Kontextfenster" ist dagegen klarer als „context window". Diese Tabelle legt fest, welche Form in den Kursmaterialien genutzt wird — und warum.
 
 ## Übersetzungsregel
 
-Drei Fälle lassen sich unterscheiden.
+Es gibt drei Fälle.
 
-Erstens: Der englische Begriff ist so eingebürgert, dass die Übersetzung künstlich wirkt. Das gilt für „Prompt", „Embedding", „Chunking" und „Streaming" — hier bleibt die englische Form auch in deutschen Erklärungstexten stehen.
+Erstens: Der englische Begriff ist so stark etabliert, dass eine Übersetzung unnatürlich wirken würde. Das gilt für „Prompt", „Embedding", „Chunking" und „Streaming" — hier bleibt die englische Form auch in deutschen Erklärungstexten stehen.
 
-Zweitens: Beide Formen sind im Umlauf, aber je nach Kontext ist eine klarer. „Memory" wird bei der kognitiven Metapher (das Agenten-Gedächtnis) auf Deutsch erklärt, bleibt aber in Code-Kontexten englisch. „Fallback" heißt in Erklärungstexten „Rückfallstrategie", im Code `fallback`.
+Zweitens: Die Begriffe kursieren auf Englisch und Deutsch, aber je nach Kontext ist eine Form passender. „Memory" wird bei der kognitiven Metapher (das Agenten-Gedächtnis) auf Deutsch erklärt, im Code-Kontext bleibt es jedoch englisch. „Fallback" heißt in Erklärungstexten „Rückfallstrategie", im Code `fallback`.
 
-Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → „Leitplanke" ist eingängiger für Entwickler. „Handoff" → „Übergabe" ist eindeutiger als das englische Wort. „State" → „Zustand" ist Pflicht — wer im Kurs „state" schreibt, meint Python-Code, nicht den deutschen Fließtext.
+Drittens: Die deutsche Übersetzung ist tatsächlich die bessere Wahl. „Guardrail" → „Leitplanke" ist für Entwickler schneller greifbar. „Handoff" → „Übergabe" ist eindeutiger als das englische Wort. „State" → „Zustand" ist Pflicht — wer im Kurs „state" schreibt, meint den Python-Code, nicht den deutschen Fließtext.
 
 ## Vollständige Begriffsliste
 
 | Englisch          | Deutsch (bevorzugt)                       | Hinweis                                                                        |
 | ----------------- | ----------------------------------------- | ------------------------------------------------------------------------------ |
 | action            | Aktion                                    | Standardübersetzung — immer übersetzen                                         |
-| agent framework   | Agenten-Framework                         | Hybrid: „Framework" bleibt englisch                                            |
+| agent framework   | Agenten-Framework                         | Hybrid: „Framework" bleibt englisch                                          |
 | agent loop        | Agentenschleife                           | In Erklärungstexten immer ausschreiben                                         |
 | chain             | Kette / Verarbeitungskette                | „Kette" bei LCEL-Kontexten                                                     |
 | checkpoint        | Checkpoint / Sicherungspunkt              | „Checkpoint" ist in LangGraph-Kontexten Standard                               |
@@ -81,16 +81,16 @@ Drittens: Die deutsche Übersetzung ist tatsächlich klarer. „Guardrail" → �
 
 ## Häufige Verwechslungen
 
-Drei Begriffspaare führen besonders oft zu Missverständnissen in Kursunterlagen.
+Bestimmte Begriffspaare werden besonders oft durcheinandergebracht.
 
-**Memory, State und Context** bezeichnen unterschiedliche Speicherkonzepte, werden aber häufig synonym verwendet. State ist der strukturierte Arbeitsspeicher eines einzelnen Graphdurchlaufs — er entsteht und endet mit der Ausführung. Memory ist persistenter: ein Agent kann Informationen aus früheren Sitzungen abrufen. Context ist das Kontextfenster des Modells, also das, was das LLM beim nächsten Token-Aufruf tatsächlich „sieht".
+**Memory, State und Context** meinen unterschiedliche Speicherkonzepte, werden aber in Texten häufig als Synonyme behandelt. State ist der strukturierte Arbeitsspeicher eines einzelnen Graphdurchlaufs — er entsteht und endet mit der Ausführung. Memory ist persistenter: Ein Agent kann Informationen aus früheren Sitzungen wieder abrufen. Context ist das Kontextfenster des Modells, also das, was das LLM beim nächsten Token-Aufruf tatsächlich „sieht“.
 
 > [!WARNING] Typischer Fehler<br>
-> „Memory" und „State" werden in Erklärungstexten oft vertauscht. Der Test: Überlebt die Information einen Neustart der Anwendung? Wenn nein → State. Wenn ja → Memory.
+> „Memory" und „State" werden in Erklärungstexten oft vertauscht. Der Test: Bleibt die Information nach einem Neustart der Anwendung erhalten? Wenn nein → State. Wenn ja → Memory.
 
-**Node und Graph** klingen nach Mathematik, meinen aber in LangGraph konkrete Python-Objekte: ein `StateGraph` ist der Graph, jede Funktion darin ist ein Knoten. In Erklärungstexten helfen die Übersetzungen „Knoten" und „Ausführungsgraph" beim ersten Kontakt — danach darf der Code-Begriff stehen.
+**Node und Graph** klingen nach Mathematik, meinen aber in LangGraph konkrete Python-Objekte: Ein `StateGraph` ist der Graph, jede Funktion darin ist ein Knoten. In Erklärungstexten machen die Begriffe „Knoten" und „Ausführungsgraph" den Einstieg leichter — danach darf der Code-Begriff stehen.
 
-**Evaluation und Observability** werden oft als Synonyme behandelt. Evaluation bewertet die Qualität eines Agenten anhand von Testfällen. Observability zeigt, was ein laufendes System im Produktionsbetrieb tut. Beides ist nötig — aber zu unterschiedlichen Zeitpunkten im Entwicklungszyklus.
+**Evaluation und Observability** werden oft gegeneinander gehalten, obwohl sie unterschiedliche Ziele haben. Evaluation misst die Qualität eines Agenten anhand von Testfällen. Observability zeigt, was ein laufendes System im Produktionsbetrieb tatsächlich macht. Beides ist wichtig — aber zu unterschiedlichen Zeitpunkten im Entwicklungszyklus.
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -98,15 +98,10 @@ Drei Begriffspaare führen besonders oft zu Missverständnissen in Kursunterlage
 |---|---|
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI-Vorhaben überhaupt sinnvoll? |
 | [Welches Werkzeug?]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Welcher Lösungsweg passt zur Aufgabe? |
-| [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) | Welche Architekturmuster gibt es und wann passen sie? |
+| [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) | Welche Architekturmuster gibt es und wann passen sie? |
 
 ---
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
-
-
-
-

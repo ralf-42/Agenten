@@ -104,7 +104,7 @@ Nicht geeignet, wenn: die Aufgabe stark explorativ ist und der Lösungsweg sich 
 
 Ein Multi-Agent-System verteilt Aufgaben auf spezialisierte Rollen wie Recherche, Schreiben, Review oder Code. Das kann sinnvoll sein, wenn die Teilaufgaben fachlich so unterschiedlich sind, dass ein einzelner Agent an Grenzen stößt oder parallele Arbeit tatsächlich Nutzen bringt.
 
-Typischer Fehler: Multi-Agent zu wählen, weil es eindrucksvoll klingt. Häufig löst ein einzelner Workflow mit guten Knoten dieselbe Aufgabe einfacher.
+Typischer Fehler: Multi-Agent zu wählen, weil es eindrucksvoll klingt. Häufig löst ein einzelner Workflow mit guten Knoten dieselbe Aufgabe einfacher. 
 
 ## RAG-Agent: wenn Wissen und Handeln zusammenkommen
 

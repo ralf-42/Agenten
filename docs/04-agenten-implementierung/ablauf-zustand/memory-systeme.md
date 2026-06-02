@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Memory-Systeme
 parent: Ablauf & Zustand
@@ -31,7 +31,7 @@ Memory-Systeme lösen genau diese Lücke. Sie speichern nicht nur Gesprächsverl
 
 Typischer Fehler: Alles, was ein Agent behalten soll, einfach im Prompt zu wiederholen. Das skaliert schlecht, wird teuer und verliert bei langen Sitzungen schnell die Übersicht.
 
-## Ein einfaches Beispiel
+## Beispiel: Kurzzeit- vs. persistentes Memory
 
 Ein Assistent soll sich merken, dass eine Nutzerin kurze Antworten bevorzugt, an einem Python-Kurs arbeitet und in einer späteren Sitzung nach genau diesem Thema weiterlernen will. Ohne Memory müsste diese Information jedes Mal neu genannt werden. Mit einem geeigneten Gedächtnissystem kann der Agent in der laufenden Sitzung den unmittelbaren Kontext halten und zusätzlich langfristig relevante Fakten speichern.
 
@@ -77,6 +77,69 @@ Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb eine
 Für persistentes Memory haben sich drei Hauptkategorien etabliert: **Prozedural** speichert ausgeführte Schrittsequenzen (Workflow Memory), **Semantisch** hält domänenspezifisches Wissen für Ähnlichkeitssuche vor, und **Episodisch** bewahrt die zeitlich geordnete Interaktionshistorie (Conversational Memory).
 
 Persistentes Memory wird dann wichtig, wenn Personalisierung, Nutzerprofile oder sitzungsübergreifendes Wissen gebraucht werden.
+
+## CoALA: vier Memory-Typen für Language Agents
+
+Die Kurzzeit/Persistent-Unterscheidung ist pragmatisch — gut für den Einstieg. Die Forschung strukturiert Memory feiner: Das **CoALA-Modell** (*Cognitive Architectures for Language Agents*) unterscheidet vier Typen und ordnet sich in die Zwei-Teilung ein: Working Memory entspricht Kurzzeit-Memory; Semantic Memory, Procedural Memory und Episodic Memory sind Formen von persistentem Memory.
+
+| CoALA-Typ | Bedeutung für Agenten | Typische Umsetzung |
+|---|---|---|
+| Working Memory | Was der Agent gerade aktiv sieht und bearbeitet | Kontextfenster, Nachrichtenverlauf, Scratchpad, geladene Dateien |
+| Semantic Memory | Allgemeines Fakten-, Regel- und Projektwissen | Markdown-Dateien, Wissensbasis, Vektordatenbank, Knowledge Graph |
+| Procedural Memory | Wie der Agent Aufgaben ausführt | Tools, Skills, Checklisten, Workflow-Vorlagen |
+| Episodic Memory | Was in früheren Interaktionen passiert ist | verdichtete Sitzungsnotizen, Lessons Learned, Fehlerhistorie |
+
+Diese Begriffe beschreiben keine völlig neuen Speichertechnologien, sondern helfen bei der Einordnung: Working Memory liegt im aktiven Kontext. Semantic, Procedural und Episodic Memory können persistent gespeichert und je nach Bedarf in den Kontext geladen werden.
+
+Ein wichtiges Praxisdetail: Semantisches Wissen muss nicht immer automatisch im Prompt liegen. Projektdateien wie `AGENTS.md`, `CLAUDE.md` oder kursinterne Markdown-Notizen können als semantisches Memory dienen, wenn sie beim Start oder bei Bedarf geladen werden. Entscheidend ist nicht das Format, sondern die Funktion: Der Agent erhält stabiles Hintergrundwissen, damit er nicht in jeder Sitzung dieselben Grundlagen neu erschließen muss.
+
+## Welche Agenten brauchen welche Memory-Typen?
+
+Nicht jeder Agent braucht alle vier Memory-Typen. Je einfacher und enger die Aufgabe, desto weniger Memory ist nötig.
+
+```mermaid
+flowchart LR
+
+%% Speicher-Klassen (Einheitlich Olivgrün)
+classDef memType fill:#d4e6c3,stroke:#5a8a3d
+
+%% Kontrastreiche Agenten-Klassen
+classDef router fill:#ffe5d9,stroke:#e63946
+classDef support fill:#f4f1de,stroke:#3d405b
+classDef knowledge fill:#e0f2fe,stroke:#0284c7
+classDef coding fill:#fae8ff,stroke:#c084fc
+
+%% Diagramm-Struktur
+R["Reflex-Agent / Router"]:::router --> WM
+SA["Schmaler Support-Agent"]:::support --> WM
+SA --> PM
+WA["Wissensassistent"]:::knowledge --> WM
+WA --> SM
+CA["Coding / Recherche-Agent"]:::coding --> WM
+CA --> SM
+CA --> PM
+CA --> EM
+
+%% Speicher-Knoten
+WM["Working Memory"]:::memType
+SM["Semantic Memory"]:::memType
+PM["Procedural Memory"]:::memType
+EM["Episodic Memory"]:::memType
+
+%% Pfeil-Colorierung (Farblich exakt an die Agenten-Rahmen angepasst)
+linkStyle 0 stroke:#e63946,stroke-width:2.5px;
+linkStyle 1,2 stroke:#3d405b,stroke-width:2.5px;
+linkStyle 3,4 stroke:#0284c7,stroke-width:2.5px;
+linkStyle 5,6,7,8 stroke:#c084fc,stroke-width:2.5px;
+```
+
+Typischer Fehler: Einen einfachen Agenten mit dauerhaftem Memory zu überfrachten. Memory erhöht nicht automatisch die Qualität. Es bringt nur dann Nutzen, wenn klar ist, welche Information später tatsächlich wiederverwendet werden soll.
+
+---
+
+**Kurzzeit-Memory — Mechanismen im Detail**
+
+---
 
 ## Conversation Buffer: der einfachste Einstieg
 
@@ -191,6 +254,12 @@ def expand_context(summary_id: str, memory_manager) -> str:
 
 In der Praxis relevant, wenn: Der Kontext kritische Details enthält, die bei Summarization verloren gehen würden, oder wenn der vollständige Verlauf später für Debugging oder Audit benötigt wird.
 
+---
+
+**Sitzungsübergreifende Speicherformen — Mechanismen im Detail**
+
+---
+
 ## Persistentes Memory: wenn Wissen Sitzungen überleben soll
 
 Persistentes Memory wird nötig, sobald relevante Informationen nach Ende einer Sitzung noch verfügbar sein sollen. Dazu gehören Nutzerpräferenzen, Ziele, wichtige Fakten oder Wissen, das später semantisch wiedergefunden werden soll.
@@ -266,9 +335,13 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
 
 Typischer Fehler: Alle Fakten unstrukturiert in eine Vektordatenbank zu schreiben, obwohl bestimmte Informationen besser als klar benannte Entitäten gepflegt würden.
 
-## Workflow Memory: Prozeduralwissen speichern
+## Workflow Memory: wenn Abläufe wiederverwendet werden sollen
 
 Workflow Memory speichert die geordnete Sequenz von Schritten, die ein Agent zur Lösung einer Aufgabe durchgeführt hat — inklusive Werkzeugaufrufe, Parameter und Zwischenergebnisse. Bei ähnlichen Aufgaben kann der Agent diese Sequenz per Semantic Search wiederfinden und direkt als Vorlage nutzen, statt den Lösungsweg neu zu planen.
+
+Prozedurales Memory hat in Agentensystemen zwei Ausprägungen. Erstens können erfolgreiche Abläufe nachträglich gespeichert werden, wie im Workflow Memory. Zweitens können Fähigkeiten vorab als **Skills** beschrieben werden. Ein Skill ist eine abgegrenzte Handlungsanweisung, oft in einer Datei wie `SKILL.md`: Was kann der Agent damit tun, wann soll er den Skill nutzen, welche Schritte sind auszuführen und welche Hilfsdateien oder Skripte gehören dazu?
+
+Der Vorteil von Skills ist **Progressive Disclosure**: Der Agent muss nicht alle detaillierten Anweisungen dauerhaft im Kontext halten. Er sieht zunächst nur einen kurzen Index mit Name und Beschreibung verfügbarer Skills. Erst wenn eine Aufgabe zu einem Skill passt, lädt er die vollständigen Anweisungen und danach nur die zusätzlichen Ressourcen, die für die Ausführung wirklich gebraucht werden. Das schützt das Working Memory vor Überladung.
 
 ```python
 workflow = {
@@ -335,6 +408,12 @@ def get_user_facts(user_id: str) -> list[str]:
     data = user_store.get(namespace, "facts")
     return data["facts"] if data else []
 ```
+
+---
+
+**Systemarchitektur — Bausteine kombinieren**
+
+---
 
 ## Warum gute Systeme mehrere Memory-Formen kombinieren
 
@@ -412,7 +491,7 @@ Typischer Fehler: Den Memory Manager als Abstraktionsschicht einzuführen, bevor
 
 ## 3-Schicht-Speicher: Memory für Produktionssysteme
 
-In einfachen Agenten wird alles im aktiven Kontext gehalten. In langen Sitzungen oder komplexen Systemen führt das zwangsläufig zu Kontextüberlastung. Produktionssysteme verwenden deshalb einen gestuften Speicher mit drei Schichten:
+Conversation Buffer, Entity Memory, Workflow Memory — die Bausteine aus den vorherigen Abschnitten lassen sich zu einer Produktionsarchitektur kombinieren. Das 3-Schicht-Modell definiert, welcher Baustein wann aktiv ist: In langen Sitzungen oder komplexen Systemen führt es zu Kontextüberlastung, alles im aktiven Kontext zu halten. Produktionssysteme verwenden deshalb einen gestuften Speicher mit drei Schichten:
 
 ```mermaid
 flowchart TB
@@ -449,6 +528,12 @@ Der entscheidende Vorteil: Statt 50.000 Token auf einmal zu laden, ruft der Agen
 
 In der Praxis relevant, wenn: Sitzungen viele Iterationen umfassen, das System mit mehreren Projekten arbeitet oder Wissen über lange Zeiträume erhalten bleiben soll.
 
+---
+
+**Praxis — Einstieg und häufige Fehler**
+
+---
+
 ## Was in der Praxis schnell schiefgeht
 
 Viele Systeme speichern zu viel, zu wahllos oder zu unsauber getrennt. Kurze Floskeln wie `ok` oder `danke` gehören selten in ein dauerhaftes Gedächtnis. Sensible personenbezogene Daten sollten nicht unreflektiert in Vektordatenbanken landen. Ebenso problematisch ist es, Memory ohne Löschstrategie aufzubauen.
@@ -480,13 +565,13 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 
 | Dokument | Frage |
 |---|---|
-| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }}) | Wie wird der State technisch gespeichert und wiederaufgenommen? |
-| [State Management]({{ '/04-agenten-implementierung/state-management.html' | relative_url }}) | Wie sind Nachrichten, Variablen und andere Zustandsdaten im Graph organisiert? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wie wirkt sich gespeicherter Kontext auf Unterbrechung und Freigabe aus? |
+| [Long Context, RAG und CAG]({{ '/04-agenten-implementierung/kontext-wissen/long-context-cag.html' | relative_url }}) | Wie kommt externes Wissen zur Laufzeit effizient in den Modellkontext? |
+| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }}) | Wie wird der State technisch gespeichert und wiederaufgenommen? |
+| [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}) | Wie sind Nachrichten, Variablen und andere Zustandsdaten im Graph organisiert? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie wirkt sich gespeicherter Kontext auf Unterbrechung und Freigabe aus? |
 
 ---
 
 **Version:** 1.4<br>
 **Stand:** Mai 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-

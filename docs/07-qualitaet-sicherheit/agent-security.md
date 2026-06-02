@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Agenten-Sicherheit
 parent: "Qualität & Sicherheit"
@@ -198,7 +198,7 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 | Dokument | Frage |
 |---|---|
 | [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}) | Welche rechtlichen Anforderungen gelten für die Verarbeitung personenbezogener Daten durch LLM-APIs? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wann und wie werden Menschen als zusätzliche Kontrollinstanz eingebunden? |
 | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie werden Qualitätsprobleme, Drift und Fehlverhalten sichtbar gemacht? |
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Welche Risiken und Rahmenbedingungen sollten schon vor Projektstart geprüft werden? |
 

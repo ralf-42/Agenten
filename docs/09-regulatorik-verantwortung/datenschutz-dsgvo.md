@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: "Datenschutz & DSGVO"
 parent: "Regulatorik & Verantwortung"
@@ -180,7 +180,7 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 |---|---|
 | [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }}) | Welche Risikostufen und Anforderungen definiert das europäische KI-Recht? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden Agenten gegen technische Angriffe wie Prompt Injection und Tool-Missbrauch abgesichert? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
 
 ---

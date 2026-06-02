@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Evaluation & Observability
 parent: "Qualität & Sicherheit"
@@ -323,7 +323,7 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 | Dokument | Frage |
 |---|---|
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
-| [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
+| [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
 
 ---

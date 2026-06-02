@@ -21,8 +21,8 @@ Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht d
 Wer neu in das Kursmaterial einsteigt, beginnt mit diesen vier Dokumenten:
 
 1. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-2. [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }})
-3. [Tool Use & Function Calling]({{ '/04-agenten-implementierung/tool-use-function-calling.html' | relative_url }})
+2. [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
+3. [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }})
 4. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
 
 Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
@@ -32,13 +32,13 @@ Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungswe
 | Ziel | Zuerst anschauen |
 |---|---|
 | Agentenvorhaben einschätzen | [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) |
-| Architektur auswählen | [Agenten-Architekturen]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) |
-| Tools sicher einbinden | [Tool Use & Function Calling]({{ '/04-agenten-implementierung/tool-use-function-calling.html' | relative_url }}) |
+| Architektur auswählen | [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) |
+| Tools sicher einbinden | [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }}) |
 | Ersten Agenten bauen | [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}) |
 | Mehrstufige Workflows umsetzen | [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }}) |
-| Kontext, RAG und Memory verstehen | [Context Engineering]({{ '/04-agenten-implementierung/context-engineering.html' | relative_url }}) |
-| Wissen und Dokumente anbinden | [RAG-Konzepte]({{ '/04-agenten-implementierung/rag-konzepte.html' | relative_url }}) |
-| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }}) |
+| Kontext, RAG und Memory verstehen | [Context Engineering]({{ '/04-agenten-implementierung/kontext-wissen/context-engineering.html' | relative_url }}) |
+| Wissen und Dokumente anbinden | [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) |
+| Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }}) |
 | Qualität sichtbar machen | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) |
 | Produktion vorbereiten | [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }}) |
 

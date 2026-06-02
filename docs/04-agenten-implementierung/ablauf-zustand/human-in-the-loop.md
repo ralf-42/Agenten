@@ -147,7 +147,7 @@ Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. E
 
 | Dokument | Frage |
 |---|---|
-| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }}) | Wie werden Unterbrechung und Wiederaufnahme technisch gespeichert? |
+| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }}) | Wie werden Unterbrechung und Wiederaufnahme technisch gespeichert? |
 | [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche Sicherheitsgrenzen ergänzen oder ersetzen menschliche Kontrolle? |
 | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie werden Agentenqualität und Fehlverhalten systematisch sichtbar gemacht? |
 

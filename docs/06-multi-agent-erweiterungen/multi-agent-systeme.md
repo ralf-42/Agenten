@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Multi-Agent-Systeme
 parent: "Multi-Agent & Erweiterungen"
@@ -207,9 +207,9 @@ Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, so
 
 | Dokument | Frage |
 |---|---|
-| [Welche Architektur passt zu diesem Agenten?]({{ '/04-agenten-implementierung/agent-architekturen.html' | relative_url }}) | Wann ist Multi-Agent überhaupt die richtige Architekturklasse? |
-| [Wie behalten Agenten zwischen Schritten den Überblick?]({{ '/04-agenten-implementierung/state-management.html' | relative_url }}) | Wie wird der gemeinsame Zustand im Multi-Agent-Graph verwaltet? |
-| [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wann braucht ein Agententeam Freigabe, Eskalation oder menschliche Kontrolle? |
+| [Welche Architektur passt zu diesem Agenten?]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) | Wann ist Multi-Agent überhaupt die richtige Architekturklasse? |
+| [Wie behalten Agenten zwischen Schritten den Überblick?]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}) | Wie wird der gemeinsame Zustand im Multi-Agent-Graph verwaltet? |
+| [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wann braucht ein Agententeam Freigabe, Eskalation oder menschliche Kontrolle? |
 | [Wie sprechen Agenten mit Tools, anderen Agenten und Nutzern?]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | Welche Protokolle kommen bei agentenübergreifender Kommunikation ins Spiel? |
 
 ---

@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: "KI-Agenten in regulierten Branchen"
 parent: "Regulatorik & Verantwortung"
@@ -136,7 +136,7 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 |---|---|
 | [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }}) | Welche Risikostufen und gesetzlichen Anforderungen definiert das europäische KI-Recht für Hochrisikosysteme? |
 | [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}) | Was gilt für die Verarbeitung personenbezogener Daten durch LLM-APIs — unabhängig von der Branche? |
-| [Human-in-the-Loop]({{ '/04-agenten-implementierung/human-in-the-loop.html' | relative_url }}) | Wie wird der Freigabeschritt technisch umgesetzt — Interrupt-Pattern, Approval-Flow, Eskalation? |
+| [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie wird der Freigabeschritt technisch umgesetzt — Interrupt-Pattern, Approval-Flow, Eskalation? |
 | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie werden reproduzierbare Testprotokolle und Regression-Checks implementiert? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden Tool-Grenzen, Whitelisting und Vertrauensgrenzen technisch abgesichert? |
 

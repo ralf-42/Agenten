@@ -287,8 +287,8 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 
 | Dokument | Frage |
 |---|---|
-| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/checkpointing-persistenz.html' | relative_url }}) | Wie wird State über Sitzungen hinweg gespeichert und wiederaufgenommen? |
-| [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?]({{ '/04-agenten-implementierung/memory-systeme.html' | relative_url }}) | Wie wird aus dem laufenden State ein längerfristiges Gedächtnis? |
+| [Wie bleiben Sitzungen und Zustände erhalten?]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }}) | Wie wird State über Sitzungen hinweg gespeichert und wiederaufgenommen? |
+| [Wie erinnern sich Agenten über mehrere Schritte und Sitzungen hinweg?]({{ '/04-agenten-implementierung/ablauf-zustand/memory-systeme.html' | relative_url }}) | Wie wird aus dem laufenden State ein längerfristiges Gedächtnis? |
 | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) | Wie wird State zwischen mehreren Rollen oder Knoten eines Systems übergeben? |
 
 ---

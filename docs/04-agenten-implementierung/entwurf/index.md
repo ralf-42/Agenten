@@ -14,7 +14,6 @@ Dieser Bereich behandelt die konzeptionellen und technischen Grundlagen, die vor
 
 | Dokument | Inhalt |
 |---|---|
-| [Grundlagen Agentenentwurf](./grundlagen-agentenentwurf.html) | Einstieg: Denkweisen, Entwurfsprinzipien und typische Fehler beim ersten Agenten |
 | [Agenten-Architekturen](./agent-architekturen.html) | ReAct, TAO, Supervisor-Patterns und wann welche Architektur passt |
 | [Einsteiger Prompt-Templates](./einsteiger-prompts.html) | Fertige Prompt-Vorlagen für häufige Agenten-Aufgaben |
 | [Prompt Engineering](./prompt-engineering.html) | Systematische Prompt-Gestaltung für zuverlässige Agenten-Outputs |

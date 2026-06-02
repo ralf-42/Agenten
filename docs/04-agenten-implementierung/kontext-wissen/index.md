@@ -14,7 +14,6 @@ Dieser Bereich behandelt, wie Agenten externen Kontext aufnehmen, Wissensquellen
 
 | Dokument | Inhalt |
 |---|---|
-| [Kontext- und Wissensanbindung](./kontext-wissensanbindung.html) | Überblick: wie Agenten Wissen strukturiert einbinden |
 | [Embeddings](./embeddings.html) | Semantische Einbettungen als Grundlage für Retrieval |
 | [Tokenizing & Chunking](./tokenizing-chunking.html) | Dokumente aufteilen und für den Retriever vorbereiten |
 | [RAG-Konzepte](./rag-konzepte.html) | Retrieval-Augmented Generation: Architektur und Qualitätsfaktoren |

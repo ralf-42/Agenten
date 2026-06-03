@@ -43,7 +43,7 @@ Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos:
 Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder fehlendem Monitoring als an der Technologie selbst. Das ist die eigentliche Herausforderung — und der Kern dieses Kurses.
 
 
-> [!TIP] Hinweis<br>
+> [!Hinweis] Hinweis<br>
 >  Bei der Erstellung dieser Unterlagen wurden KI-gestützte Werkzeuge unterstützend eingesetzt. Alle Inhalte wurden fachlich geprüft und überarbeitet.
 
 ---

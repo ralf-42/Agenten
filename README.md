@@ -180,7 +180,7 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 © 2025–2026 Ralf-42     
 
-> [!Hinweis]
+> [!NOTE]
 > Bei der Erstellung dieser Unterlagen wurden KI-gestützte Werkzeuge unterstützend eingesetzt. Alle Inhalte wurden fachlich geprüft und überarbeitet.
 
 ---

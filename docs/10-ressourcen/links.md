@@ -177,6 +177,16 @@ Ressourcen zur Anpassung von Sprachmodellen auf eigene Daten.
 
 ---
 
+## Computer Vision
+
+Browser-Demos und Tools für Bildverarbeitung und Gesichtserkennung.
+
+| Ressource | Beschreibung |
+|-----------|--------------|
+| [MediaPipe Samples — Face Detector](https://google-ai-edge.github.io/mediapipe-samples-web/#/vision/face_detector) | Browser-Demo zur Gesichtserkennung mit MediaPipe |
+
+---
+
 ## Sicherheit & Governance
 
 Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
@@ -196,8 +206,8 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.5<br>
+**Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

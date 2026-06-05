@@ -70,12 +70,12 @@ Die `thread_id` entscheidet, ob ein neuer Aufruf als Fortsetzung oder als neue S
 config = {"configurable": {"thread_id": "nutzer-123-session-1"}}
 
 result1 = app.invoke(
-    {"messages": [{"role": "user", "content": "Mein Name ist Anna."}]},
+    {"messages": [{"role": "human", "content": "Mein Name ist Anna."}]},
     config=config
 )
 
 result2 = app.invoke(
-    {"messages": [{"role": "user", "content": "Wie heisse ich?"}]},
+    {"messages": [{"role": "human", "content": "Wie heisse ich?"}]},
     config=config
 )
 ```
@@ -88,14 +88,14 @@ In der Praxis relevant, wenn: Mehrere Nutzer gleichzeitig arbeiten, Sessions unt
 
 LangGraph bietet unterschiedliche Checkpointer für unterschiedliche Reifestufen eines Projekts. Für erste Demos reicht In-Memory-Speicherung. Für lokale Prototypen ist SQLite oft ausreichend. Für produktive Umgebungen mit mehreren Nutzern wird typischerweise eine persistente Datenbank wie PostgreSQL benötigt.
 
-### MemorySaver
+### InMemorySaver
 
-`MemorySaver` ist schnell und ohne externe Abhängigkeit nutzbar, verliert aber alle Daten beim Neustart. Deshalb eignet er sich gut für Entwicklung, Tests und kleine Demos, aber nicht für echte Sitzungsfortsetzung nach Prozessende.
+`InMemorySaver` ist schnell und ohne externe Abhängigkeit nutzbar, verliert aber alle Daten beim Neustart. Deshalb eignet er sich gut für Entwicklung, Tests und kleine Demos, aber nicht für echte Sitzungsfortsetzung nach Prozessende.
 
 ```python
-from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.memory import InMemorySaver
 
-checkpointer = MemorySaver()
+checkpointer = InMemorySaver()
 app = graph.compile(checkpointer=checkpointer)
 ```
 
@@ -127,7 +127,7 @@ with psycopg.connect("postgresql://user:pass@host/db") as conn:
 
 | Checkpointer | Geeignet für | Grenze |
 |---|---|---|
-| MemorySaver | Entwicklung, Tests, Demos | kein Zustand nach Neustart |
+| InMemorySaver | Entwicklung, Tests, Demos | kein Zustand nach Neustart |
 | SqliteSaver | lokale Prototypen, kleinere Anwendungen | begrenzter als echte Produktionsdatenbank |
 | PostgresSaver | Produktionssysteme, mehrere Nutzer | höherer Betriebsaufwand |
 
@@ -136,7 +136,7 @@ with psycopg.connect("postgresql://user:pass@host/db") as conn:
 ```mermaid
 flowchart TD
     A{Persistenz nötig?}
-    A -->|Nein| B[MemorySaver]
+    A -->|Nein| B[InMemorySaver]
     A -->|Ja| C{Produktionsumgebung?}
     C -->|Nein| D[SqliteSaver]
     C -->|Ja| E[PostgresSaver]
@@ -152,7 +152,7 @@ Das folgende Minimalbeispiel zeigt, wie ein Checkpointer an einen einfachen Chat
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
-from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.memory import InMemorySaver
 from langchain.chat_models import init_chat_model
 
 class ConversationState(TypedDict):
@@ -169,18 +169,18 @@ graph.add_node("chat", chat_node)
 graph.add_edge(START, "chat")
 graph.add_edge("chat", END)
 
-checkpointer = MemorySaver()
+checkpointer = InMemorySaver()
 app = graph.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "user-42"}}
 
 app.invoke(
-    {"messages": [{"role": "user", "content": "Mein Name ist Anna."}]},
+    {"messages": [{"role": "human", "content": "Mein Name ist Anna."}]},
     config=config
 )
 
 result = app.invoke(
-    {"messages": [{"role": "user", "content": "Wie heisse ich?"}]},
+    {"messages": [{"role": "human", "content": "Wie heisse ich?"}]},
     config=config
 )
 ```
@@ -248,7 +248,7 @@ history = list(app.get_state_history(config))
 earlier = history[3]
 
 result = app.invoke(
-    {"messages": [{"role": "user", "content": "Versuche es anders."}]},
+    {"messages": [{"role": "human", "content": "Versuche es anders."}]},
     config=earlier.config
 )
 ```

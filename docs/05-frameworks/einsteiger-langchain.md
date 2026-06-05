@@ -328,7 +328,7 @@ agent = create_agent(
 
 ## 4. Aufruf
 messages = [
-    {"role": "user", "content": "Multipliziere 12 mit 8."},
+    {"role": "human", "content": "Multipliziere 12 mit 8."},
 ]
 
 result = agent.invoke({"messages": messages})
@@ -361,7 +361,7 @@ agent = create_agent(
 )
 
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "Recherchiere die Bevölkerung von Berlin"}]
+    "messages": [{"role": "human", "content": "Recherchiere die Bevölkerung von Berlin"}]
 })
 
 # Strukturierte Antwort liegt im Agent-State.

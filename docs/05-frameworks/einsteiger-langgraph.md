@@ -215,7 +215,7 @@ Nodes sollen klein, fokussiert und deterministisch sein.
 ```python
 def summarize_node(state: ChatState) -> ChatState:
     text = "\n".join([m.content for m in state["messages"]])
-    summary = llm.invoke([{"role": "user", "content": f"Fasse zusammen: {text}"}])
+    summary = llm.invoke([{"role": "human", "content": f"Fasse zusammen: {text}"}])
     return {"messages": [summary]}
 ```
 
@@ -376,8 +376,8 @@ Checkpointing ermöglicht:
 - stabile Interaktion
 
 ```python
-from langgraph.checkpoint.memory import MemorySaver
-checkpointer = MemorySaver()
+from langgraph.checkpoint.memory import InMemorySaver
+checkpointer = InMemorySaver()
 graph = g.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "session-01"}}
@@ -407,14 +407,14 @@ stateDiagram-v2
     Session2 --> [*]: complete
 
     note right of Checkpoint
-        MemorySaver (Dev)
+        InMemorySaver (Dev)
         SQLite (Staging)
         Postgres (Production)
     end note
 ```
 
 Hinweise:
-- Optimale Einstiegsvariante: MemorySaver.
+- Optimale Einstiegsvariante: InMemorySaver.
 - Für produktive Systeme: SQLite/Postgres.
 - Graphänderungen können Sessions invalidieren.
 

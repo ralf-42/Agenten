@@ -401,7 +401,6 @@ flowchart TD
 |---|---|
 | [Einsteiger LangChain]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}) |  als Alternative zu Prompt-Dateien |
 | [Einsteiger genai_lib]({{ '/05-frameworks/einsteiger-genai-lib.html' | relative_url }}) |  als Ladefunktion für Prompt-Dateien |
-| [Einsteiger Agent Builder]({{ '/06-multi-agent-erweiterungen/einsteiger-agent-builder.html' | relative_url }}) | Prompt-Dateien in Agent-Builder-Workflows |
 
 ---
 

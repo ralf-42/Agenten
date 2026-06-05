@@ -156,7 +156,7 @@ agent = create_deep_agent(
 ```python
 result = agent.invoke({
     "messages": [
-        {"role": "user", "content": "Was ist ein Harness und was ist DeepAgents?"}
+        {"role": "human", "content": "Was ist ein Harness und was ist DeepAgents?"}
     ]
 })
 

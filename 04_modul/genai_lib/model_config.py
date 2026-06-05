@@ -13,6 +13,9 @@ Import im Notebook:
         WORKER, CODING, TRANSLATOR_PREMIUM,
         JUDGE, PLANNER, WORKER_PREMIUM,
         JUDGE_PREMIUM, PLANNER_PREMIUM,
+        VISION_FAST, VISION_PREMIUM,
+        IMAGE_GENERATION, IMAGE_GENERATION_PREMIUM, IMAGE_GENERATION_LEGACY,
+        VIDEO_GENERATION, TRANSCRIPTION, TRANSCRIPTION_SEGMENTS,
         EMBEDDINGS,
     )
 
@@ -38,11 +41,23 @@ Rollen (Nano → Mini → Standard → Premium):
     WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
     JUDGE_PREMIUM      — Judge / maximale Qualität     (gpt-5.5)
     PLANNER_PREMIUM    — Planner / maximale Qualität   (gpt-5.5)
+    VISION_FAST        — Bildanalyse                   (gpt-5.4-mini)
+    VISION_PREMIUM     — Multimodale Analyse           (gpt-5.4-mini)
+    IMAGE_GENERATION   — Bildgenerierung               (gpt-image-2)
+    IMAGE_GENERATION_PREMIUM — Bildgenerierung high     (gpt-image-2)
+    IMAGE_GENERATION_LEGACY — Bildgenerierung alt       (gpt-image-1)
+    VIDEO_GENERATION   — Videoerzeugung                (sora-2)
+    TRANSCRIPTION      — Audio-Transkription           (gpt-4o-mini-transcribe)
+    TRANSCRIPTION_SEGMENTS — Zeitstempel/Segmente      (whisper-1)
     EMBEDDINGS         — Embeddings                    (text-embedding-3-small)
 
 Hinweis: GPT-5.x-Reasoning-Modelle nicht pauschal mit temperature konfigurieren.
 Stattdessen reasoning.effort und text.verbosity verwenden.
 temperature ist nur in bestimmten Konfigurationen mit reasoning.effort="none" erlaubt.
+
+Multimodale Modelle sind eine bewusste Ausnahme von der Textrollen-Logik:
+Bild-, Video- und Audio-Endpunkte werden teils direkt über die OpenAI-API
+verwendet, weil LangChain nicht alle Medien-Endpunkte abbildet.
 """
 
 # --- Nano-Tier: günstig, schnell, einfache Aufgaben ---
@@ -100,6 +115,36 @@ JUDGE_PREMIUM = "openai:gpt-5.5"
 # Planner (Premium) — hochkomplexe Aufgabenzerlegung, multi-step Planung.
 # reasoning.effort="high".
 PLANNER_PREMIUM = "openai:gpt-5.5"
+
+# --- Multimodal / Medien-Endpunkte ---
+
+# Vision — Bildanalyse über Chat/Vision.
+# Nicht pauschal durch BASELINE ersetzen: Bildinput muss unterstützt werden.
+VISION_FAST = "openai:gpt-5.4-mini"
+
+# Vision (hochwertig) — anspruchsvollere Bild-/Frame-Analyse.
+VISION_PREMIUM = "openai:gpt-5.4-mini"
+
+# Bildgenerierung — direkte OpenAI Images API, daher ohne Provider-Präfix.
+IMAGE_GENERATION = "gpt-image-2"
+
+# Bildgenerierung hochwertig — direkte OpenAI Images API.
+IMAGE_GENERATION_PREMIUM = "gpt-image-2"
+
+# Bildgenerierung Legacy — nur für alte Beispiele oder Vergleichszwecke.
+IMAGE_GENERATION_LEGACY = "gpt-image-1"
+
+# Videoerzeugung — direkte OpenAI Videos API.
+# Vor produktiver Nutzung aktuelle Verfügbarkeit/Deprecation prüfen.
+VIDEO_GENERATION = "sora-2"
+
+# Audio-Transkription — direkte OpenAI Audio API.
+# Für normale Transkription aktueller und genauer als whisper-1.
+TRANSCRIPTION = "gpt-4o-mini-transcribe"
+
+# Audio-Transkription mit Segmenten/Zeitstempeln.
+# whisper-1 unterstützt response_format="verbose_json" mit segments.
+TRANSCRIPTION_SEGMENTS = "whisper-1"
 
 # --- Embeddings ---
 

@@ -837,10 +837,12 @@ from genai_lib.model_config import BASELINE, WORKER, JUDGE, TRANSLATOR
 | `TRANSLATOR_PREMIUM` | `gpt-5.5` | Stilistisch hochwertige Übersetzungen |
 | `VISION_FAST` | `gpt-5.4-mini` | Bildanalyse in Kursbeispielen |
 | `VISION_PREMIUM` | `gpt-5.4-mini` | Multimodale Analyse |
-| `IMAGE_GENERATION` | `gpt-image-1` | Bildgenerierung |
+| `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung |
 | `IMAGE_GENERATION_PREMIUM` | `gpt-image-2` | Hochwertige Bildgenerierung |
+| `IMAGE_GENERATION_LEGACY` | `gpt-image-1` | Ältere Bildgenerierung, nur für Vergleich oder Altbeispiele |
 | `VIDEO_GENERATION` | `sora-2` | Videoerzeugung |
-| `TRANSCRIPTION` | `whisper-1` | Audio-Transkription |
+| `TRANSCRIPTION` | `gpt-4o-mini-transcribe` | Audio-Transkription |
+| `TRANSCRIPTION_SEGMENTS` | `whisper-1` | Audio-Transkription mit `verbose_json` und Segment-Zeitstempeln |
 | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
 

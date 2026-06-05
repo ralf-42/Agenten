@@ -3,7 +3,7 @@
 ![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen)
 ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen)
 ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen)
-![DeepAgents 0.5.6](https://img.shields.io/badge/DeepAgents-0.5.6-brightgreen)
+![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen)
 ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--06--05-blue)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 

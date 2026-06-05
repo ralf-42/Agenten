@@ -175,7 +175,7 @@ print(result["messages"][-1].content)
 | `tools` | Liste eigener Tools |
 | `system_prompt` | Systemrolle des Agenten |
 | `subagents` | Liste von Sub-Agent-Dicts |
-| `interrupt_on` | HITL-Freigabe vor bestimmten Tools |
+| `interrupt_on` | HITL-Freigabe vor bestimmten Tool-Calls; seit 0.6.8 auch für Filesystem-Permissions |
 | `memory` | Kontext-Dateien (z.B. AGENTS.md) beim Start laden |
 | `skills` | SKILL.md-Dateien laden |
 | `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`, seit 0.5.2) |
@@ -185,7 +185,10 @@ print(result["messages"][-1].content)
 | `backend` | Filesystem-Backend — In-Memory, Local, LangGraph Store oder Sandbox |
 | `store` | LangGraph Memory Store für thread-übergreifende Persistenz |
 | `context_schema` | Pydantic-Schema für den geteilten Agenten-Kontext |
+| `state_schema` | Eigenes State-Schema übergeben (**neu seit 0.6.6**) |
 | `debug` | Debug-Ausgaben aktivieren |
+
+> 🆕 **Neu seit 0.6.7:** `DeepAgentState` ist jetzt direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
 
 ---
 
@@ -379,6 +382,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 | `RetryMiddleware` | `deepagents` | Automatische Wiederholungen bei transienten Fehlern |
 | `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
 | `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
+| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**) |
 
 ```python
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
@@ -522,7 +526,7 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
 - Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
-### Reifegrad (Stand 0.6.1)
+### Reifegrad (Stand 0.6.8)
 
 | Dimension | Bewertung | Begründung |
 |-----------|-----------|------------|
@@ -622,8 +626,8 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Mai 2026 (DeepAgents 0.6.1)<br>
+**Version:** 1.5<br>
+**Stand:** Juni 2026 (DeepAgents 0.6.8)<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

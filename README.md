@@ -4,7 +4,7 @@
 ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen)
 ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen)
 ![DeepAgents 0.5.6](https://img.shields.io/badge/DeepAgents-0.5.6-brightgreen)
-![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--05--13-blue)
+![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--06--05-blue)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.3.0, LangGraph 1.2.0, LangSmith 0.8.3 und agentenbasierte KI-Architekturen.
@@ -110,7 +110,6 @@ Agenten/
 | M26   | Integration Pipeline                    | 🔵 Optional  | ✅      |
 | M27   | Advanced RAG – Pipeline-Patterns        | 🔵 Optional  | ✅      |
 | M28   | Gradio UI für Agenten                   | 🔵 Optional  | ✅      |
-| M29   | OpenAI Agent Builder                    | 🔵 Optional  | ✅      |
 | M30a  | MCP Local                               | 🔵 Optional  | ✅      |
 | M30b  | MCP HuggingFace                         | 🔵 Optional  | ✅      |
 | M31   | Agent Skill – Compliance                | 🔵 Optional  | ✅      |
@@ -185,5 +184,5 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 ---
 
-**Letzte Aktualisierung:** Mai 2026     
-**Version:** 5.0     
+**Letzte Aktualisierung:** Juni 2026     
+**Version:** 5.1     

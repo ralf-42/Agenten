@@ -294,7 +294,7 @@ def test_agent_with_tools():
 
     agent = create_agent(model=llm, tools=[get_weather])
     response = agent.invoke({
-        "messages": [{"role": "user", "content": "Weather in Berlin?"}]
+        "messages": [{"role": "human", "content": "Weather in Berlin?"}]
     })
 
     assert "Berlin" in response["messages"][-1].content

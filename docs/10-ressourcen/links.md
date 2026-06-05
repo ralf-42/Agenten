@@ -33,6 +33,8 @@ Externe Ressourcen und Artikel zum Thema KI-Agenten.
 | [KI-Agenten-Orchestrierung](https://editor.p5js.org/ralf.bendig.rb/full/Viso2emNI) | Interaktive Visualisierung zur Funktionsweise von KI-Agenten |
 | [Inception Labs Chat](https://chat.inceptionlabs.ai/) | Chat-Interface für Mercury – Diffusion Language Model |
 | [Generative AI (Financial Times)](https://ig.ft.com/generative-ai/) | Interaktiver visueller Erklärer zu Generative AI |
+| [KV Cache (YouTube)](https://youtu.be/tGp6Ns9GtSU?si=vENFJCSD62RtF7vM) | Erklärvideo zum Key-Value Cache bei Transformer-Modellen |
+| [Prompt Cache (YouTube)](https://youtu.be/u57EnkQaUTY?si=5prPK8YpW7oAF8K7) | Erklärvideo zu Prompt Caching und wiederverwendeten Kontexten |
 
 ---
 
@@ -148,7 +150,7 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 | [OpenCode](https://opencode.de/de) | Open-Source KI-Coding-Assistent für das Terminal – Alternative zu Claude Code |
 | [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M21) |
 | [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
-| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten – direkter Kursinhalt (→ M29) |
+| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten (alternatives SDK) |
 | [OpenAI Skills Repository (GitHub)](https://github.com/openai/skills) | Offizielle Skill-Sammlung von OpenAI, kompatibel mit dem SKILL.md-Standard |
 | [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus (→ M08) |
 | [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
@@ -209,7 +211,6 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 **Version:** 1.5<br>
 **Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
-
 
 
 

@@ -281,7 +281,7 @@ config = {
 }
 
 response = agent.invoke(
-    {"messages": [{"role": "user", "content": "Hallo!"}]},
+    {"messages": [{"role": "human", "content": "Hallo!"}]},
     config=config,
 )
 ```
@@ -320,7 +320,7 @@ agent = create_agent(
 
 # Agent ausführen - komplexe Frage
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "Berechne (5 * 8) + 3"}]
+    "messages": [{"role": "human", "content": "Berechne (5 * 8) + 3"}]
 })
 ```
 
@@ -404,7 +404,7 @@ from langsmith.evaluation import evaluate
 def predict(inputs: dict) -> dict:
     """Wrapper für Agent-Aufruf"""
     response = agent.invoke({
-        "messages": [{"role": "user", "content": inputs["question"]}]
+        "messages": [{"role": "human", "content": inputs["question"]}]
     })
     # Antwort aus letzter Message extrahieren
     return {"answer": response["messages"][-1].content}
@@ -448,7 +448,7 @@ client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 def agent_ausfuehren(frage: str, run_tree=None) -> str:
     """Agent-Ausführung – run_tree wird automatisch injiziert."""
     response = agent.invoke({
-        "messages": [{"role": "user", "content": frage}]
+        "messages": [{"role": "human", "content": frage}]
     })
     return response["messages"][-1].content
 
@@ -522,7 +522,7 @@ LangSmith trackt auch komplexe LangGraph-State-Machines automatisch.
 
 ```python
 from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.memory import InMemorySaver
 from typing import TypedDict, Annotated
 from langgraph.graph.message import add_messages
 
@@ -540,13 +540,13 @@ graph.add_edge(START, "agent")
 graph.add_edge("agent", END)
 
 # Mit Checkpointer kompilieren
-checkpointer = MemorySaver()
+checkpointer = InMemorySaver()
 compiled_graph = graph.compile(checkpointer=checkpointer)
 
 # Ausführen - wird automatisch getrackt!
 config = {"configurable": {"thread_id": "demo-session"}}
 result = compiled_graph.invoke(
-    {"messages": [{"role": "user", "content": "Hallo!"}]},
+    {"messages": [{"role": "human", "content": "Hallo!"}]},
     config=config,
 )
 ```

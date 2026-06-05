@@ -157,7 +157,7 @@ tools = [
 ]
 
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "Bitte sende mir die Rechnung erneut."}]
+    "messages": [{"role": "human", "content": "Bitte sende mir die Rechnung erneut."}]
 })
 ```
 

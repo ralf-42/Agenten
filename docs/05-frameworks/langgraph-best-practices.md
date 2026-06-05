@@ -87,7 +87,7 @@ builder.add_edge(START, "agent")
 builder.add_edge("agent", END)
 
 graph = builder.compile()
-result = graph.invoke({"messages": [("user", "Fasse LangGraph kurz zusammen.")], "task_status": "new"})
+result = graph.invoke({"messages": [("human", "Fasse LangGraph kurz zusammen.")], "task_status": "new"})
 ```
 
 Der Quick Start zeigt nur den minimalen Graph. Für echte Workflows kommen danach Routing, Checkpointing, Human-in-the-Loop und Observability gezielt dazu.

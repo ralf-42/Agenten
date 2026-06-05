@@ -313,7 +313,7 @@ agent = create_agent(
 )
 
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "Berechne 15 mal 23"}]
+    "messages": [{"role": "human", "content": "Berechne 15 mal 23"}]
 })
 ```
 

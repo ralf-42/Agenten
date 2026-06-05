@@ -401,7 +401,7 @@ agent = create_agent(
 
 # Agent aufrufen (gibt CompiledStateGraph zurück)
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "your question"}]
+    "messages": [{"role": "human", "content": "your question"}]
 })
 ```
 
@@ -482,7 +482,7 @@ agent = create_agent(
 
 # Agent-Response ist garantiert schema-konform
 response = agent.invoke({
-    "messages": [{"role": "user", "content": "Recherchiere die Bevölkerung von Berlin"}]
+    "messages": [{"role": "human", "content": "Recherchiere die Bevölkerung von Berlin"}]
 })
 
 # Typsicherer Zugriff auf strukturierte Felder

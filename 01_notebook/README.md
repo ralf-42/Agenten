@@ -8,6 +8,12 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 ---
 
+## Snippet-Sammlung
+
+| Datei | Inhalt | Einsatz |
+|---|---|---|
+| `A00_snippets_agenten.ipynb` | Copy/Paste-Bausteine für LangChain, LangGraph, Checkpointing, HITL, Multi-Agent-Patterns und LangSmith | Referenz für Übungen und eigene Varianten |
+
 
 
 ---

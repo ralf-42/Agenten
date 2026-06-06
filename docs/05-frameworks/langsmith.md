@@ -15,3 +15,4 @@ Diese Orientierungsseite bündelt die LangSmith-Dokumente. LangSmith ist hier al
 |---|---|---|
 | **Wie** wird Tracing praktisch umgesetzt? | [Einsteiger LangSmith]({{ '/05-frameworks/einsteiger-langsmith.html' | relative_url }}) | Runs, Traces, Feedback und erste Evaluation mit LangSmith. |
 | **Welche** Konventionen gelten produktionsnah? | [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) | Datasets, Experimente, Monitoring und Setup-Regeln. |
+| **Wo** passt LangSmith in LangChain/LangGraph-Workflows? | [Cheatsheet]({{ '/05-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | Kurzreferenz für Tracing-Konfiguration, `run_name`, Tags und Session-IDs. |

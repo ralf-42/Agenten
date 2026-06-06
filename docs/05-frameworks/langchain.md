@@ -15,3 +15,4 @@ Diese Orientierungsseite bündelt die LangChain-Dokumente: Einstieg, Grundmuster
 |---|---|---|
 | **Wie** starte ich mit LangChain? | [Einsteiger LangChain]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}) | Chains, Tools und erste Agentenlogik. |
 | **Welche** Konventionen gelten produktionsnah? | [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}) | Strukturierte Outputs, Tool-Muster und robuste Umsetzung. |
+| **Welche** Bausteine brauche ich schnell im Notebook? | [Cheatsheet]({{ '/05-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | Wann LangChain reicht und wann State, Routing oder Memory nach LangGraph gehören. |

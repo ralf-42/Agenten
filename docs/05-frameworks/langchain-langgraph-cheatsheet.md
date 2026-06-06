@@ -3,13 +3,13 @@ layout: default
 title: Cheatsheet
 parent: Frameworks
 nav_order: 5
-description: Kompakte Referenz fuer LangChain, LangGraph, State, Routing, Checkpointing, Memory und LangSmith im Agenten-Kurs
+description: Kompakte Referenz für LangChain, LangGraph, State, Routing, Checkpointing, Memory und LangSmith im Agenten-Kurs
 has_toc: true
 ---
 
 # Cheatsheet
 
-> **Kurzreferenz fuer Agenten-Notebooks: Wann reicht LangChain, wann braucht es LangGraph, und wo gehoeren State, Memory und LangSmith hin?**
+> **Kurzreferenz für Agenten-Notebooks: Wann reicht LangChain, wann braucht es LangGraph, und wo gehören State, Memory und LangSmith hin?**
 
 ---
 
@@ -33,11 +33,11 @@ KI-generiertes Bild
 | Einzelner Modellaufruf, Prompt oder Parser? | LangChain |
 | Lineare Pipeline ohne Verzweigung? | LangChain LCEL |
 | Agent mit wenigen Tools, ohne eigene Ablaufsteuerung? | LangChain `create_agent()` |
-| LLM soll selbst Tools waehlen, Ablauf aber sichtbar bleiben? | LangGraph `ToolNode` + `tools_condition` |
+| LLM soll selbst Tools wählen, Ablauf aber sichtbar bleiben? | LangGraph `ToolNode` + `tools_condition` |
 | Mehrere Schritte mit Routing, Schleifen oder Gates? | LangGraph `StateGraph` |
 | Review, Freigabe oder Unterbrechung? | LangGraph `interrupt()` + `Command(resume=...)` |
-| Gespraechsverlauf in einer laufenden Session? | LangGraph Checkpointer + stabile `thread_id` |
-| Dauerhafte Praeferenzen, Nutzerprofile oder Fakten? | Separates Memory-System |
+| Gesprächsverlauf in einer laufenden Session? | LangGraph Checkpointer + stabile `thread_id` |
+| Dauerhafte Präferenzen, Nutzerprofile oder Fakten? | Separates Memory-System |
 | Debugging, Tracing oder Evaluation? | LangSmith |
 
 ## Import-Spickzettel
@@ -50,6 +50,8 @@ from pydantic import BaseModel, Field
 
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
+from langchain_core.caches import InMemoryCache
+from langchain_core.globals import set_llm_cache
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -78,14 +80,28 @@ antwort = chain.invoke({"frage": "Was ist ein KI-Agent?"})
 print(antwort)
 ```
 
-**Hierher gehoeren:** Modellaufrufe, Prompt-Vorlagen, Output Parser, Structured Output, lineare RAG-Chains und einfache Agenten mit `create_agent()`.
+## LLM-Caching
+
+```python
+from langchain_core.caches import InMemoryCache
+from langchain_core.globals import set_llm_cache
+
+set_llm_cache(InMemoryCache())
+
+antwort = llm.invoke("Erkläre Tool-Use bei Agenten in einem Satz.")
+print(antwort.content)
+```
+
+**Regel:** Caching ist für wiederholte Demo-Aufrufe nützlich. Es ist kein Memory: Cache speichert Modellantworten zu identischen Requests, Checkpointing speichert Session- oder Graph-Zustand. Agenten- und Tool-Läufe mit Seiteneffekten nicht blind cachen.
+
+**Hierher gehören:** Modellaufrufe, Prompt-Vorlagen, Output Parser, Structured Output, lineare RAG-Chains und einfache Agenten mit `create_agent()`.
 
 ## Einfacher Agent mit Tools
 
 ```python
 @tool
 def quellen_check(thema: str) -> str:
-    """Prueft grob, ob ein Thema zum Research-Korpus passt."""
+    """Prüft grob, ob ein Thema zum Research-Korpus passt."""
     if thema.lower() in {"rag", "retrieval", "evaluation"}:
         return "Korpusnah: Antwort mit Quelle belegen."
     return "Korpusabdeckung unklar."
@@ -94,16 +110,16 @@ def quellen_check(thema: str) -> str:
 agent = create_agent(
     model=init_chat_model("openai:gpt-5.4-mini"),
     tools=[quellen_check],
-    system_prompt="Du bist ein Research Assistant. Nutze Tools fuer Korpusfragen.",
+    system_prompt="Du bist ein Research Assistant. Nutze Tools für Korpusfragen.",
 )
 
 result = agent.invoke({
-    "messages": [{"role": "user", "content": "Pruefe RAG-Evaluation."}]
+    "messages": [{"role": "user", "content": "Prüfe RAG-Evaluation."}]
 })
 print(result["messages"][-1].content)
 ```
 
-**Regel:** `create_agent()` ist gut fuer schnelle Agenten. Wenn Routing, Gates, Checkpointing oder HITL explizit sichtbar sein sollen, wechsle zu LangGraph.
+**Regel:** `create_agent()` ist gut für schnelle Agenten. Wenn Routing, Gates, Checkpointing oder HITL explizit sichtbar sein sollen, wechsle zu LangGraph.
 
 ## Structured Output
 
@@ -115,11 +131,11 @@ class FrageTyp(BaseModel):
 
 
 router = llm.with_structured_output(FrageTyp)
-ergebnis = router.invoke("Warum verbessert RAG die Zuverlaessigkeit?")
+ergebnis = router.invoke("Warum verbessert RAG die Zuverlässigkeit?")
 print(ergebnis.kategorie)
 ```
 
-**Regel:** Fuer robuste Klassifikation oder Extraktion nicht nur JSON im Prompt verlangen, sondern `with_structured_output()` mit Pydantic-Schema nutzen.
+**Regel:** Für robuste Klassifikation oder Extraktion nicht nur JSON im Prompt verlangen, sondern `with_structured_output()` mit Pydantic-Schema nutzen.
 
 ## Minimaler LangGraph-State
 
@@ -130,13 +146,13 @@ class ResearchState(TypedDict):
     antwort: str
 ```
 
-**State enthaelt nur, was zwischen Nodes gebraucht wird.**
+**State enthält nur, was zwischen Nodes gebraucht wird.**
 
 | Gehoert in den State | Besser nicht in den State |
 |---|---|
 | Nachrichtenverlauf | grosse Dokumente |
 | Routing-Entscheidung | komplette Vektorindizes |
-| Zwischenergebnis fuer naechste Node | temporaere lokale Hilfsvariablen |
+| Zwischenergebnis für nächste Node | temporäre lokale Hilfsvariablen |
 | Freigabe-Status | API-Keys oder Secrets |
 | Fehlerstatus | rohe Debug-Logs |
 
@@ -150,7 +166,7 @@ def analyse_node(state: ResearchState) -> dict:
 
 
 def antwort_node(state: ResearchState) -> dict:
-    return {"antwort": f"Gewaehlter Pfad: {state['routing']}"}
+    return {"antwort": f"Gewählter Pfad: {state['routing']}"}
 
 
 builder = StateGraph(ResearchState)
@@ -171,7 +187,7 @@ def route_by_category(state: ResearchState) -> str:
 
 
 def definition_node(state: ResearchState) -> dict:
-    return {"antwort": "Definitionspfad: kurz erklaeren."}
+    return {"antwort": "Definitionspfad: kurz erklären."}
 
 
 def retrieval_node(state: ResearchState) -> dict:
@@ -197,9 +213,9 @@ builder.add_edge("retrieval", END)
 graph = builder.compile()
 ```
 
-**Regel:** Router-Funktionen entscheiden nur. Die eigentliche Arbeit gehoert in Nodes.
+**Regel:** Router-Funktionen entscheiden nur. Die eigentliche Arbeit gehört in Nodes.
 
-## Qualitaetsgate mit Schleife
+## Qualitätsgate mit Schleife
 
 ```python
 class QualityState(TypedDict):
@@ -263,7 +279,7 @@ builder.add_edge("tools", "agent")
 graph = builder.compile()
 ```
 
-**Merksatz:** `bind_tools()` macht Tools dem Modell bekannt. `ToolNode` fuehrt Tool-Calls aus. `tools_condition` routet zwischen Tool-Ausfuehrung und `END`.
+**Merksatz:** `bind_tools()` macht Tools dem Modell bekannt. `ToolNode` führt Tool-Calls aus. `tools_condition` routet zwischen Tool-Ausführung und `END`.
 
 ## Checkpointing ist Session-Gedaechtnis
 
@@ -284,15 +300,15 @@ result = graph.invoke(
 )
 ```
 
-**Checkpointing speichert den Graph-State pro `thread_id`.** Das ist ideal fuer laufende Sessions, Wiederaufnahme und Human-in-the-Loop.
+**Checkpointing speichert den Graph-State pro `thread_id`.** Das ist ideal für laufende Sessions, Wiederaufnahme und Human-in-the-Loop.
 
 | Begriff | Bedeutung |
 |---|---|
-| `checkpointer` | Speicher fuer Graph-Zustaende |
+| `checkpointer` | Speicher für Graph-Zustände |
 | `thread_id` | eindeutige Session-ID |
-| `InMemorySaver` | fluechtiger Speicher fuer Notebooks und Demos |
-| `SqliteSaver` | persistenter Speicher fuer lokale Prototypen |
-| Postgres-Checkpointer | persistenter Speicher fuer produktionsnahe Umgebungen |
+| `InMemorySaver` | flüchtiger Speicher für Notebooks und Demos |
+| `SqliteSaver` | persistenter Speicher für lokale Prototypen |
+| Postgres-Checkpointer | persistenter Speicher für produktionsnahe Umgebungen |
 
 ## Persistenter Checkpointer
 
@@ -306,7 +322,7 @@ checkpointer = SqliteSaver(conn)
 app = builder.compile(checkpointer=checkpointer)
 ```
 
-**Regel:** `InMemorySaver()` ist fuer Demos. Sobald ein Notebook-Neustart oder mehrere Sessions relevant sind, persistenten Checkpointer nutzen.
+**Regel:** `InMemorySaver()` ist für Demos. Sobald ein Notebook-Neustart oder mehrere Sessions relevant sind, persistenten Checkpointer nutzen.
 
 ## Human-in-the-Loop
 
@@ -327,7 +343,7 @@ def review_node(state: ReviewState) -> dict:
 
 def publish_node(state: ReviewState) -> dict:
     if not state["genehmigt"]:
-        return {"finaler_text": "Nicht veroeffentlicht."}
+        return {"finaler_text": "Nicht veröffentlicht."}
     return {"finaler_text": state["entwurf"]}
 
 
@@ -348,7 +364,7 @@ result = graph.invoke(Command(resume="ja"), config=config)
 | Message History | Bisheriger Dialog | `add_messages` |
 | Checkpointing | Session fortsetzen | LangGraph Checkpointer |
 | RAG-Memory | Wissen abrufen | ChromaDB, Retriever |
-| Semantisches Memory | Praeferenzen/Fakten suchen | Vektorstore + Regeln |
+| Semantisches Memory | Präferenzen/Fakten suchen | Vektorstore + Regeln |
 | Langzeit-Memory | Nutzerprofile, Policies | Datenbank + explizite Freigabe |
 
 **Nicht verwechseln:** Ein Checkpointer speichert Zustand. Er entscheidet nicht, was dauerhaft sinnvoll, erlaubt oder relevant ist.
@@ -393,11 +409,11 @@ builder.add_conditional_edges(
 )
 ```
 
-**Regel:** Supervisor-Pattern nutzen, wenn mehrere spezialisierte Worker koordiniert werden muessen und die Entscheidung im Trace sichtbar sein soll.
+**Regel:** Supervisor-Pattern nutzen, wenn mehrere spezialisierte Worker koordiniert werden müssen und die Entscheidung im Trace sichtbar sein soll.
 
 ## LangSmith im Agenten-Workflow
 
-LangSmith gehoert ins Cheatsheet, aber nicht als Memory- oder State-System. Es macht Runs, Node-Schritte, Tool-Calls, HITL-Unterbrechungen und Evaluationen sichtbar.
+LangSmith gehört ins Cheatsheet, aber nicht als Memory- oder State-System. Es macht Runs, Node-Schritte, Tool-Calls, HITL-Unterbrechungen und Evaluationen sichtbar.
 
 ### Setup-Regel
 
@@ -410,7 +426,7 @@ os.environ["LANGSMITH_PROJECT"] = "Agenten-Cheatsheet"
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
-**Regel:** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` muessen vor LangChain-/LangGraph-Imports gesetzt sein. `LANGSMITH_PROJECT` gehoert in die Setup-Zelle, bevor der erste Trace entsteht.
+**Regel:** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen vor LangChain-/LangGraph-Imports gesetzt sein. `LANGSMITH_PROJECT` gehört in die Setup-Zelle, bevor der erste Trace entsteht.
 
 ### Run-Konfiguration
 
@@ -443,7 +459,7 @@ result = graph.invoke(start_state, config={
 })
 ```
 
-### `with_config()` fuer wiederverwendbare Chains
+### `with_config()` für wiederverwendbare Chains
 
 ```python
 chain = (prompt | llm | StrOutputParser()).with_config({
@@ -455,7 +471,7 @@ chain = (prompt | llm | StrOutputParser()).with_config({
 antwort = chain.invoke({"frage": "Was ist Checkpointing?"})
 ```
 
-**Regel:** `with_config()` eignet sich fuer wiederverwendbare Chains oder Sub-Komponenten. Pro konkretem Lauf kann `invoke(..., config=...)` weitere Tags, Metadaten oder `thread_id` ergaenzen.
+**Regel:** `with_config()` eignet sich für wiederverwendbare Chains oder Sub-Komponenten. Pro konkretem Lauf kann `invoke(..., config=...)` weitere Tags, Metadaten oder `thread_id` ergänzen.
 
 ### Was LangSmith bei LangGraph zeigt
 
@@ -478,7 +494,7 @@ client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 dataset_name = "A00 Research Assistant Smoke Test"
 dataset = client.create_dataset(
     dataset_name=dataset_name,
-    description="Kleine Regressionstests fuer Research-Antworten.",
+    description="Kleine Regressionstests für Research-Antworten.",
 )
 
 client.create_example(
@@ -497,41 +513,41 @@ def contains_expected(outputs: dict, reference_outputs: dict) -> bool:
     return reference_outputs["must_contain"].lower() in outputs["antwort"].lower()
 ```
 
-**Regel:** Evaluation gehoert nicht in jede kleine Demo-Zelle. Sie lohnt sich fuer wiederkehrende Tests: Routing, Quellenpflicht, Out-of-Corpus-Regel, Tool-Gates und HITL-Entscheidungen.
+**Regel:** Evaluation gehört nicht in jede kleine Demo-Zelle. Sie lohnt sich für wiederkehrende Tests: Routing, Quellenpflicht, Out-of-Corpus-Regel, Tool-Gates und HITL-Entscheidungen.
 
 ## Typische Fehler
 
 | Fehler | Besser |
 |---|---|
-| LangGraph fuer jeden kleinen Modellaufruf verwenden | Erst LangChain, bei Routing/State zu LangGraph wechseln |
+| LangGraph für jeden kleinen Modellaufruf verwenden | Erst LangChain, bei Routing/State zu LangGraph wechseln |
 | Riesigen State bauen | State klein, explizit und typisiert halten |
-| Pydantic als internen Graph-State nutzen | `TypedDict` fuer State, Pydantic fuer Ein-/Ausgaben |
+| Pydantic als internen Graph-State nutzen | `TypedDict` für State, Pydantic für Ein-/Ausgaben |
 | Routing im Prompt verstecken | Routing als `add_conditional_edges` sichtbar machen |
 | Router-Funktion laesst LLM arbeiten | Router liest State und entscheidet nur |
-| Schleife ohne Abbruch bauen | `versuche`, `max_iter` oder Qualitaetsgrenze im State |
+| Schleife ohne Abbruch bauen | `versuche`, `max_iter` oder Qualitätsgrenze im State |
 | Checkpointing als Langzeit-Memory verstehen | Session-State und Langzeit-Memory trennen |
-| `thread_id` jedes Mal neu erzeugen | stabile ID pro Gespraech/Sitzung verwenden |
+| `thread_id` jedes Mal neu erzeugen | stabile ID pro Gespräch/Sitzung verwenden |
 | `interrupt()` ohne Checkpointer nutzen | Graph mit `checkpointer=...` kompilieren |
-| Tools direkt riskante Aktionen ausfuehren lassen | HITL-Gate vor irreversible Aktionen setzen |
+| Tools direkt riskante Aktionen ausführen lassen | HITL-Gate vor irreversible Aktionen setzen |
 | API-Keys oder Rohdaten im State speichern | Secrets extern halten, State datensparsam gestalten |
-| LangSmith als Speicher verstehen | LangSmith fuer Tracing, Evaluation und Monitoring nutzen |
+| LangSmith als Speicher verstehen | LangSmith für Tracing, Evaluation und Monitoring nutzen |
 
-## Mini-Checkliste fuer neue Agenten-Notebooks
+## Mini-Checkliste für neue Agenten-Notebooks
 
 - [ ] Reicht LangChain oder ist LangGraph wirklich noetig?
 - [ ] State als `TypedDict` definiert?
 - [ ] Nachrichtenliste mit `Annotated[list, add_messages]` modelliert?
 - [ ] Routing als eigene Funktion sichtbar?
-- [ ] `with_structured_output()` fuer Klassifikation/Extraktion genutzt?
+- [ ] `with_structured_output()` für Klassifikation/Extraktion genutzt?
 - [ ] Tool-Loop mit `bind_tools`, `ToolNode` und `tools_condition` sauber getrennt?
 - [ ] Checkpointer nur dort aktiviert, wo Session-State gebraucht wird?
-- [ ] Stabile `thread_id` fuer mehrturnige Beispiele gesetzt?
+- [ ] Stabile `thread_id` für mehrturnige Beispiele gesetzt?
 - [ ] LangSmith `run_name`, `tags` und `metadata` gesetzt?
 - [ ] RAG-Retriever ausserhalb des State gehalten?
 - [ ] Riskante Aktion mit `interrupt()` oder HITL-Gate abgesichert?
-- [ ] Beispiel laeuft deterministisch genug fuer Kurs und Colab?
+- [ ] Beispiel läuft deterministisch genug für Kurs und Colab?
 
-## Weiterfuehrende Kursseiten
+## Weiterführende Kursseiten
 
 | Thema | Seite |
 |---|---|

@@ -47,6 +47,7 @@ Tokenisierung, Kontextfenster und Token-Kosten
 | **Tokenizer Playground**      | Token-Visualisierung mit Kontextfenster              | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |
 | **Kontext-Management**        | Beispiel Kontext-Management                          | [Kontextfenster](https://editor.p5js.org/ralf.bendig.rb/full/tLnUgyZRK)                     |
 | **Token-Verbrauch & Caching** | Token-Kosten und Prompt Caching visualisiert         | [Token-Verbrauch & Caching](https://editor.p5js.org/ralf.bendig.rb/full/uAPjZBhtW)          |
+| **Caching**                   | LLM-Response-Caching (InMemory, SQLite) visualisiert | [Caching](https://editor.p5js.org/ralf.bendig.rb/full/3YjAbYaLb)                            |
 
 ---
 
@@ -152,8 +153,8 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

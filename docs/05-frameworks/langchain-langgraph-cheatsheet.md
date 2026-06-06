@@ -55,7 +55,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
 
-from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -268,7 +268,7 @@ graph = builder.compile()
 ## Checkpointing ist Session-Gedaechtnis
 
 ```python
-checkpointer = MemorySaver()
+checkpointer = InMemorySaver()
 graph = builder.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "research-pia-rag-01"}}
@@ -290,7 +290,7 @@ result = graph.invoke(
 |---|---|
 | `checkpointer` | Speicher fuer Graph-Zustaende |
 | `thread_id` | eindeutige Session-ID |
-| `MemorySaver` | fluechtiger Speicher fuer Notebooks und Demos |
+| `InMemorySaver` | fluechtiger Speicher fuer Notebooks und Demos |
 | `SqliteSaver` | persistenter Speicher fuer lokale Prototypen |
 | Postgres-Checkpointer | persistenter Speicher fuer produktionsnahe Umgebungen |
 
@@ -306,7 +306,7 @@ checkpointer = SqliteSaver(conn)
 app = builder.compile(checkpointer=checkpointer)
 ```
 
-**Regel:** `MemorySaver()` ist fuer Demos. Sobald ein Notebook-Neustart oder mehrere Sessions relevant sind, persistenten Checkpointer nutzen.
+**Regel:** `InMemorySaver()` ist fuer Demos. Sobald ein Notebook-Neustart oder mehrere Sessions relevant sind, persistenten Checkpointer nutzen.
 
 ## Human-in-the-Loop
 
@@ -331,7 +331,7 @@ def publish_node(state: ReviewState) -> dict:
     return {"finaler_text": state["entwurf"]}
 
 
-graph = builder.compile(checkpointer=MemorySaver())
+graph = builder.compile(checkpointer=InMemorySaver())
 config = {"configurable": {"thread_id": "review-42"}}
 
 graph.invoke(start_state, config=config)

@@ -109,7 +109,7 @@ flowchart TB
 
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
-!uv pip install --system -q git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 import os
 
@@ -576,7 +576,7 @@ os.environ["LANGSMITH_PROJECT"] = "M05-Structured-Output"
 **Standard-Setup im Notebook-Header**
 ```python
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
-!uv pip install --system -q git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 import os
 

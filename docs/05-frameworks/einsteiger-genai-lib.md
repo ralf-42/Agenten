@@ -49,10 +49,10 @@ Die `genai_lib` kann direkt aus dem GitHub-Repository installiert werden:
 
 ```bash
 # Mit pip
-pip install git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 # Mit uv (empfohlen für Google Colab)
-uv pip install --system git+https://github.com/ralf-42/GenAI.git#subdirectory=04_modul
+uv pip install --system git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 ```
 
 ## Grundaufbau: Module im Überblick

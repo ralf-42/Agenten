@@ -100,12 +100,12 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 
 ## 1 `init_chat_model()` - Unified Model Initialization
 
-### ALT (nicht mehr verwenden)
+### ALT (nicht Kursstandard)
 ```python
 from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-# Auch veraltet: Langnotation mit separaten Variablen
+# Nicht bevorzugt im Kurs: Langnotation mit separaten Variablen
 model_provider = "openai"
 model_name = "gpt-5.4-nano"
 llm = init_chat_model(model_name, model_provider=model_provider, temperature=0)
@@ -1125,7 +1125,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 | Alt (0.x) | Neu (1.0+) | Status |
 |-----------|------------|--------|
-| `ChatOpenAI()` direkt | `init_chat_model()` | ⛔ Deprecated |
+| `ChatOpenAI()` direkt | `init_chat_model()` | Nicht Zielstil |
 | `PydanticOutputParser` | `with_structured_output()` | ⛔ Deprecated |
 | `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
 | `initialize_agent()` + `AgentExecutor` | `create_agent()` | ⛔ Deprecated |

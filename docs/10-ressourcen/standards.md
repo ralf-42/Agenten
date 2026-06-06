@@ -180,7 +180,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 ---
 
 {: .important }
-> **Migrationspflicht bei LangChain 0.x-Code.** Alle veralteten Patterns (`ChatOpenAI()`, `initialize_agent()`, `LLMChain`, `PydanticOutputParser`) funktionieren in neuen Projekten nicht mehr korrekt oder erzeugen Deprecation-Warnings. Bestehenden Code vor der Nutzung im Kurs auf 1.0+ migrieren.
+> **Migrationspflicht bei LangChain 0.x-Code.** Alte Chain-/Agent-Patterns (`initialize_agent()`, `AgentExecutor`, `LLMChain`, `PydanticOutputParser`) erzeugen in neuen Projekten Deprecation-Warnings oder passen nicht mehr zum 1.x-Stil. Direkte Provider-Klassen wie `ChatOpenAI()` sind nicht der Kursstandard; im Kurs wird `init_chat_model()` verwendet. Bestehenden Code vor der Nutzung im Kurs auf 1.0+ migrieren.
 
 ## ⚠️ Breaking Changes: 0.x → 1.0+
 
@@ -188,7 +188,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 
 | Alt (0.x) | Neu (1.0+) | Status |
 |-----------|------------|--------|
-| `ChatOpenAI()` direkt | `init_chat_model()` | ⛔ Deprecated |
+| `ChatOpenAI()` direkt | `init_chat_model()` | Nicht Zielstil |
 | `PydanticOutputParser` | `with_structured_output()` | ⛔ Deprecated |
 | `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
 | `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
@@ -198,7 +198,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 
 **ALT (0.x):**
 ```python
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)

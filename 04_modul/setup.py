@@ -9,7 +9,7 @@ setup(
     name='genai_lib',
     version='2.1.0',
     author='Ralf Bendig',
-    author_email='deine_email@example.com',
+    author_email='ralf.bendig.rb@gmail.com',
     description='Leichtgewichtige Bibliothek für den Kurs GenAI mit LangChain 1.0+ Support.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

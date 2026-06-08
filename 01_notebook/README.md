@@ -68,7 +68,7 @@ Der rote Faden der Pflichtmodule ist ein **Research Assistant für Fachartikel**
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
 | M16 | `M16_Checkpointing_Sessions.ipynb` | Research-Sessions mit InMemorySaver und SQLite fortsetzen | 🟢 Pflicht |
-| M17 | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Pflicht |
+| M17 | `M17_user_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Pflicht |
 | M18 | `M18_Memory_Systeme.ipynb` | Kuratiertes Research-Memory und Per-User-Präferenzen | 🟢 Pflicht |
 | M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Hierarchie und Pipeline für Research-Aufgaben | 🟢 Pflicht |
 | M20 | `M20_Supervisor_Pattern.ipynb` | Research-Supervisor mit Quellen-, Kritik- und Guardrail-Gates | 🟢 Pflicht |

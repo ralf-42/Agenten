@@ -22,6 +22,16 @@ has_toc: true
 
 ---
 
+## 🧭 Grundlagen & Einordnung
+
+Einordnung von KI-Systemen, Lernparadigmen und Anwendungsbereichen
+
+| Thema                    | Beschreibung                                                                                          | Link                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| **Taxonomie AI-System**  | Mehrdimensionale Einordnung von KI-Systemen nach Lernparadigma, Funktion, Repräsentation und Anwendungsbereich | [Taxonomie AI-System](https://editor.p5js.org/ralf.bendig.rb/full/sgwVL8Ey9) |
+
+---
+
 ## 🧠 Transformer & Architektur
 
 Transformer-Architektur, neuronale Netze und Modellvarianten
@@ -85,6 +95,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | ------------ | --------------------------------------------- | ------------------------------------------------------------------- |
 | **KI-Agent** | Visualisierung eines LLM-basierten KI-Agenten | [KI_Agenten](https://editor.p5js.org/ralf.bendig.rb/full/u3Ee0jtFo) |
 | **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer](https://editor.p5js.org/ralf.bendig.rb/full/EUzaFq4C4) |
+| **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (M18) | [DSPy](https://editor.p5js.org/ralf.bendig.rb/full/Q_dUC2-lV) |
 
 ---
 
@@ -135,6 +146,16 @@ Tools für KI-gestützte Prozessoptimierung und Entscheidungshilfen
 
 ---
 
+## 🐳 Deployment & Produktion
+
+Containerisierung und Betrieb von Agenten-Anwendungen
+
+| Thema      | Beschreibung                                                              | Link                                                                |
+| ---------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Docker** | Containerisierung einer Anwendung für reproduzierbares Deployment visualisiert | [Docker](https://editor.p5js.org/ralf.bendig.rb/full/dbBJ9BhRP) |
+
+---
+
 ## 🌐 Externe Bildungsressourcen
 
 Weitere interaktive Visualisierungen von externen Anbietern
@@ -153,7 +174,7 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

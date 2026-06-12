@@ -3,125 +3,168 @@ layout: default
 title: Research Assistant
 parent: "Orientierung & Entscheidung"
 nav_order: 4
-description: "Zielbild und roter Faden: ein quellengebundener Research Assistant für Fachartikel"
+description: "Zielbild und roter Faden: quellengebundene Recherche mit RAG, Evaluation und Freigabe"
 has_toc: true
 ---
 
 # Research Assistant
+{: .no_toc }
 
-Der **Research Assistant** ist die übergreifende Leitaufgabe. Er bildet den roten Faden, an dem zentrale Agentenideen immer wieder auftauchen: Aufgabenanalyse, Tool Use, Routing, RAG, State, Memory, Evaluation, Human-in-the-Loop und Betrieb.
+Ein Research Assistant beantwortet Fachfragen zu einem Dokumentenkorpus, findet relevante Passagen und belegt Aussagen mit Quellen. Er ist kein autonomes Entscheidungssystem, sondern eine kontrollierte Recherchehilfe: Retrieval liefert Evidenz, Structured Output macht Antworten prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. Genau deshalb eignet sich diese Leitaufgabe gut, um Agenten nicht als Chatbot mit Werkzeugen zu verstehen, sondern als Zusammenspiel aus Aufgabe, Daten, Kontrolle und Evaluation.
 
 Die Leitfrage lautet:
 
-> Wie entsteht ein Agent, der fachliche Fragen zu Dokumenten beantwortet, relevante Quellen findet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
+> Wie entsteht ein Assistant, der Fachfragen zu Dokumenten beantwortet, relevante Passagen findet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ## Ausgangssituation
 
-Die Leitaufgabe orientiert sich an einer typischen Arbeitssituation aus dem Wissensbereich:
+Pia sichtet regelmäßig neue Fachartikel, Berichte und Guidances. Dabei geht es um relevante Passagen in langen Dokumenten, die mit einfacher Volltextsuche oft nicht schnell genug auffindbar sind. Eine Suche nach Schlagwörtern liefert entweder zu viele Treffer oder übersieht semantisch passende Stellen.
 
-> **Pia** muss regelmäßig neue Fachartikel sichten. Sie sucht nach relevanten Passagen, liest dafür oft ganze Artikel und findet den gesuchten Abschnitt trotzdem nicht schnell genug. Eine einfache Volltext-Suche nach Stichwörtern liefert entweder zu viele Treffer oder gar keine passenden Ergebnisse.
+Das Ziel ist kein Agent, der beliebige Antworten erzeugt. Der Mehrwert entsteht erst, wenn das System einen begrenzten Korpus nutzt, Quellen sichtbar macht und fehlende Evidenz nicht durch Modellwissen ersetzt. Ein Research Assistant muss daher drei Dinge gleichzeitig können: relevante Passagen finden, Antworten strukturieren und Grenzen offenlegen.
 
-Ziel ist kein komplett autonomer Agent ohne Kontrollmöglichkeit. Stattdessen geht es um ein Assistenzsystem, das einen Korpus von Fachartikeln semantisch durchsucht, strukturierte Zusammenfassungen mit Quellenangaben liefert und bei Unsicherheit erst einmal auf menschliche Freigabe wartet.
-
- 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/pia_2.png" class="logo" width="950"/>
 <p><font color='black' size="2">
 KI-generiertes Bild
 </font></p>
 
-
-## Warum diese Aufgabe?
-
-Der Research Assistant passt besonders gut, weil er viele typische Anforderungen realer Agentensysteme in einer klar überschaubaren Aufgabe bündelt:
-
-- Es braucht eine verständliche Aufgabenabgrenzung.
-- Das System soll Wissen aus Dokumenten nutzen—nicht einfach frei formulieren.
-- Quellen und Unsicherheit müssen sichtbar werden.
-- State, Sessions und kontrollierte Zwischenschritte spielen eine zentrale Rolle.
-- Evaluation, Security und menschliche Freigabe werden dann wichtig, wenn es wirklich nötig ist.
-
-So verbindet die Leitaufgabe konzeptionelles Verstehen mit einer praktischen Umsetzung.
-
 ## Zielbild
 
-Am Ende steht ein Research Assistant, der:
+Ein brauchbarer Research Assistant lädt einen Fachartikel-Korpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Recherchefragen in natürlicher Sprache. Die Antwort enthält nicht nur eine Zusammenfassung, sondern auch Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
-1. Einen PDF-Korpus reproduzierbar lädt.
-2. Die Dokumente in eine Vektordatenbank einbettet.
-3. Fragen in natürlicher Sprache beantwortet.
-4. Jede Antwort mit Quelltitel und Passagen-Zitat belegt.
-5. Unsicherheit sichtbar macht und bei Bedarf eine Freigabe einholt.
-6. Spezialisierte Teilaufgaben an passende Worker delegiert—zum Beispiel Tabellenanalyse und Fließtext-Zusammenfassung.
+In der Praxis relevant, wenn: Fachtexte häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
-Eine spätere Variante kann dann einen eigenen Korpus nutzen, mit anderer Persona arbeiten oder in einer anderen Fachdomäne stattfinden. Der Bauplan bleibt gleich: Korpus, Retrieval, strukturierte Antwort, Quellenbindung, Kontrolle und Reflexion.
+Das Zielbild lässt sich in fünf Ausbaustufen lesen:
+
+| Stufe | Was der Assistant bekommt |
+|---|---|
+| Einfacher Agent | Such-Tool, erster Korpuszugriff und nachvollziehbare Tool-Entscheidungen |
+| Robuster Agent | Antwortschema, Quellenpflicht, Fehlerbehandlung und Multi-Tool-Logik |
+| Kontrollierter Agent | StateGraph, Routing nach Fragetyp, Tool-Gating und Security-Leitplanken |
+| Wissensfähiger Agent | RAG mit Vektordatenbank, semantische Suche, Eval-Set und Regression-Check |
+| Kooperierendes System | HITL, Memory, Supervisor und spezialisierte Worker |
+
+## Korpus und Metadaten
+
+Der Korpus sollte klein genug sein, um verstanden zu werden, und sauber genug, um Evaluation zu ermöglichen. Zehn bis zwanzig PDF-Dokumente aus einem klaren Themenfeld reichen für einen ersten Prototyp oft aus. Ein größerer, aber unsauberer Bestand verschlechtert die Lern- und Prüfbarkeit: Retrieval-Fehler lassen sich dann schwer von Datenproblemen unterscheiden.
+
+Geeignete Quellen sind öffentlich zugängliche Fachartikel, technische Berichte, Open-Data-Publikationen oder Guidances. Urheberrechtlich geschützte Lehrbücher, interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
+
+Für jede Passage sollten mindestens diese Metadaten verfügbar sein:
+
+| Feld | Bedeutung |
+|---|---|
+| `dokument_id` | stabile interne ID |
+| `titel` | Titel des Dokuments |
+| `autor_oder_organisation` | Autor, Institution oder Herausgeber |
+| `jahr` | Veröffentlichungsjahr, soweit vorhanden |
+| `dokumenttyp` | Paper, Bericht, Guidance oder Kurztext |
+| `dateiname` | Datei im Korpus |
+| `quelle_url` | reproduzierbare Abrufquelle |
+| `seite` | Seite oder Seitenbereich, soweit verfügbar |
+| `passage` | zitierfähiger Textausschnitt |
+| `thema` | grobe fachliche Einordnung |
+
+## Antwortschema
+
+Freitext reicht für einen Research Assistant nicht aus. Ohne Schema bleibt unklar, ob eine Antwort belegt ist, wie sicher sie ist und ob sie eine Korpusgrenze überschreitet. Ein minimales Antwortformat trennt deshalb Antwort, Quellen, Sicherheit und Hinweis.
+
+```python
+from pydantic import BaseModel, Field
+
+
+class Quellenangabe(BaseModel):
+    dokument: str = Field(description="Dateiname oder Titel der Quelle")
+    passage: str = Field(description="Zitierter Textausschnitt, maximal 2 Sätze")
+
+
+class ResearchAntwort(BaseModel):
+    antwort: str = Field(description="Synthese-Antwort auf die Frage")
+    quellen: list[Quellenangabe] = Field(description="Mindestens eine Quellenangabe")
+    sicherheit: str = Field(description="hoch / mittel / niedrig")
+    hinweis: str = Field(description="'Nicht im Korpus' wenn out-of-scope")
+```
+
+Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das klingt plausibel, erzwingt aber keine prüfbare Struktur. Erst ein Schema macht sichtbar, ob eine Antwort ohne Quelle, mit niedriger Sicherheit oder außerhalb des Korpus entstanden ist.
 
 ## Leitplanken
 
-Der Research Assistant ist ein Assistenzsystem—kein autonomes Entscheidungssystem. Genau das bestimmt die Leitplanken:
+Der Research Assistant bleibt ein Assistenzsystem für Recherche. Diese Grenze ist fachlich wichtiger als die konkrete Modellwahl: Ein System, das fehlende Evidenz frei ergänzt, kann trotz guter Architektur unbrauchbar sein.
 
 | Leitplanke | Bedeutung |
 |---|---|
-| Keine personenbezogenen Trainingsdaten | Beispiele nutzen öffentliche Fachtexte oder synthetische Daten, keine echten Teilnehmer-, Kunden- oder Patientendaten. |
-| Quellenpflicht | Fachliche Antworten brauchen Quellenangaben oder den Hinweis "Nicht im Korpus". |
-| HITL bei Unsicherheit | Unsichere, folgenreiche oder regulierte Ausgaben werden vor der finalen Ausgabe menschlich geprüft. |
-| Tool-Grenzen | Tools dürfen nur klar definierte Aufgaben ausführen; offene Seiteneffekte brauchen Freigabe. |
-| Bewusstes Logging | Tracing und Evaluation sind hilfreich, sensible Inhalte dürfen aber nicht unbedacht protokolliert werden. |
-| Out-of-Corpus-Regel | Fehlendes Wissen wird nicht frei erfunden. |
+| Quellenpflicht | Jede fachliche Aussage braucht eine nachvollziehbare Quelle oder den Hinweis "Nicht im Korpus". |
+| Out-of-Corpus-Regel | Fehlendes Wissen wird nicht frei ergänzt. |
+| HITL bei Unsicherheit | Unsichere, folgenreiche oder regulierte Aussagen werden vor der finalen Ausgabe geprüft. |
+| Tool-Grenzen | Tools haben klar definierte Aufgaben und keine offenen Seiteneffekte ohne Freigabe. |
+| Datenschutz | Keine personenbezogenen, vertraulichen oder regulierten Echtdaten im Korpus. |
+| Bewusstes Logging | Traces und Eval-Daten dürfen keine vertraulichen Inhalte unbedacht speichern. |
+| Evaluation vor Optimierung | Verbesserungen werden gegen ein Eval-Set geprüft, nicht nur nach Bauchgefühl bewertet. |
 
-## Bauplan
+## Evaluation
 
-Der technische Bauplan wächst Schritt für Schritt:
+Evaluation prüft, ob relevante Passagen gefunden werden und Antworten im belegbaren Rahmen bleiben. Eine plausibel klingende Antwort zählt nicht als Erfolg, wenn sie die falsche Quelle nutzt oder eine Korpusgrenze überschreitet.
 
-| Baustein | Was der Research Assistant bekommt |
+Ein erstes Eval-Set sollte verschiedene Fragetypen enthalten:
+
+| Fragetyp | Erwartung |
 |---|---|
-| Einfacher Agent | Suche-Tool, erster Korpus-Zugriff und Research-System-Prompt. |
-| Robuster Agent | Strukturiertes Antwortschema, Citation-Pflicht und Error Handling. |
-| Kontrollierter Agent | Approval-Flow, Routing nach Fragetyp und Security-Leitplanken. |
-| Wissensfähiger Agent | RAG mit Vektordatenbank, semantische Suche und Eval-Messung. |
-| Kooperierendes System | HITL, Memory, Supervisor und spezialisierte Worker. |
-| Ausbau | UI, Tool-Integration, Skills, Evaluation, Deployment und Betrieb. |
+| Faktische Frage | richtige Quelle und passende Passage |
+| Methodenfrage | korrekt erkannte Methode oder Empfehlung |
+| Vergleichsfrage | zwei Quellen sauber gegenübergestellt |
+| Inferenzfrage | begründete Zusammenführung mehrerer Passagen |
+| Negativbeispiel | Antwort "Nicht im Korpus" |
 
-Das Antwortformat bleibt dabei bewusst strukturiert:
+Für eine erste Version ist eine pragmatische Schwelle sinnvoll: Die semantische Suche findet bei mindestens 70 Prozent der Testfragen die relevante Passage unter den Top-3-Treffern. Zusätzlich enthält jede finale Antwort mindestens eine Quelle oder verweigert kontrolliert.
 
-```python
-class Quellenangabe(BaseModel):
-    dokument: str
-    passage: str
+## Vom Einzelagenten zum Multi-Agent-System
 
-class ResearchAntwort(BaseModel):
-    antwort: str
-    quellen: list[Quellenangabe]
-    sicherheit: str
-    hinweis: str
+Der Research Assistant beginnt nicht als Multi-Agent-System. Zuerst muss der einfache Pfad funktionieren: Korpus laden, Passage finden, Antwort strukturieren, Quelle belegen. Erst danach lohnt sich Rollenaufteilung.
+
+Eine sinnvolle Multi-Agent-Variante trennt nicht künstlich ähnliche Aufgaben, sondern unterschiedliche Dokument- oder Fragetypen:
+
+```text
+Supervisor
+├── Tabellen-Worker   -> verarbeitet Daten, Tabellen und strukturierte Abschnitte
+└── Fließtext-Worker  -> verarbeitet Prosa, Argumentationen und Zusammenfassungen
 ```
 
-## Korpus und Evaluation
+Der Supervisor entscheidet nach Fragetyp, welche Rolle gebraucht wird. Bei Unsicherheit oder fehlender Evidenz geht die Antwort vor der Ausgabe in eine menschliche Prüfung.
 
-Startpunkt ist ein kuratierter PDF-Korpus aus öffentlichen Fachtexten. Er soll unterschiedliche Perspektiven enthalten, keine duplizierten Texte nutzen und sowohl kurze als auch längere Dokumente abdecken.
+## Capstone und Transfer
 
-Die Evaluation schaut nicht nur auf die „Klingt gut“-Ebene. Sie prüft gezielt:
+Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird, semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche und Antworten ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis nutzen. HITL oder eine vergleichbare Freigabelogik muss erkennbar sein. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte?
 
-- Findet die semantische Suche die relevanten Passagen besser als eine naive Stichwortsuche?
-- Werden Quellen nachvollziehbar angegeben?
-- Erkennt der Assistant Fragen, die nicht aus dem Korpus beantwortet werden können?
-- Bleibt die Antwort im vorgesehenen Schema?
-- Wird Unsicherheit sichtbar und kontrollierbar?
+Der Bauplan ist domänenübertragbar. Eine Legal-Research-Variante ergänzt etwa Aktenzeichen, Fundstellen und strengere Freigaberegeln; eine Compliance-Variante braucht Audit-Trail und Rollenklärung; ein Meeting-Briefing verschiebt den Schwerpunkt auf Zusammenfassung und Skills. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
 
-## Rolle im Kurs
-
-Die Leitaufgabe begleitet mehrere Kursphasen—nicht nur ein einzelnes Einstiegsthema:
-
-| Kursphase | Bezug zur Leitaufgabe |
+| Transferfall | Rolle |
 |---|---|
-| Orientierung | Klären, ob ein Agent überhaupt sinnvoll ist. |
-| Modelle und Provider | Entscheiden, welche Modellrollen benötigt werden. |
-| Agenten-Implementierung | Architektur, Prompting, Tool Use, RAG, State und HITL umsetzen. |
-| Frameworks | LangChain, LangGraph, ChromaDB und LangSmith praktisch einsetzen. |
-| Qualität und Sicherheit | Antworten prüfbar, beobachtbar und sicher machen. |
-| Deployment und Betrieb | Aus der Uebung ein betreibbares Projekt ableiten. |
+| Legal Research Assistant | regulierte Recherche, Fundstellenpflicht, HITL und Quellenqualität |
+| Compliance-Prüfung | regulierte Branchen, Audit-Trail und Out-of-Corpus-Regel |
+| Meeting-Briefing | Skills, Zusammenfassung und Rollenlogik |
+| Support-Triage | Klassifikation, Tool-Use, HITL und Routing |
+| Code-Review-Agent | strukturierte Analyse, Quellen-/Diff-Bezug und Security |
 
-## Abgrenzung
+## Abgrenzung zu verwandten Dokumenten
 
-Diese Seite beschreibt das **Warum** und das Zielbild der Leitaufgabe.
+| Dokument | Frage |
+|---|---|
+| [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI- oder Agentenvorhaben überhaupt sinnvoll? |
+| [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann reicht Prompting, wann braucht es RAG, Workflow oder Agent? |
+| [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Welche Begriffe werden für Tools, State, Memory und Guardrails verwendet? |
+| [Research Assistant Workshop]({{ '/08-deployment-betrieb/research-assistant.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
 
-Die konkrete Umsetzung mit Workshop, Challenge, Notebook-Struktur, Bewertung und Abgabe steht im Dokument [Research Assistant]({{ '/08-deployment-betrieb/research-assistant.html' | relative_url }}).
+---
+
+**Version:** 1.0<br>
+**Stand:** Juni 2026<br>
+**Kurs:** KI-Agenten mit Python bauen

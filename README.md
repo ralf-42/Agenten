@@ -1,13 +1,8 @@
 # Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen)
-![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen)
-![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen)
-![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen)
-![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--06--05-blue)
-![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen) ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen) ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen) ![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen) ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--06--05-blue) ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain 1.3.0, LangGraph 1.2.0, LangSmith 0.8.3 und agentenbasierte KI-Architekturen.
+Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain, LangGraph, LangSmith und agentenbasierte KI-Architekturen.
 
 Der durchgehende Anwendungsfall ist ein **Research Assistant für Fachartikel**: Eine fiktive Wissensarbeiterin, Pia, baut schrittweise ein System, das einen PDF-Korpus semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben Endprodukts erarbeitet.
 
@@ -54,18 +49,18 @@ Agenten/
   - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `WORKER`, ...)
 
 
-## 📚 Kursmodule (Kursplan v5.0)
+## 📚 Kursmodule
 
 ### Block 1: Agenten-Basics (M01–M07)
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| M01 | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen |
-| M02 | Tool Use & Function Calling | @tool Decorator, Research-Tools bauen |
-| M03 | Erste Agenten mit LangChain | create_agent(), Deprecated Patterns (EINMALIG) |
-| M04 | Prompt Engineering | ChatPromptTemplate, System/Human Messages |
-| M05 | Structured Output | Pydantic, with_structured_output(), Paper-Signale |
-| M06 | Multi-Tool Agents | Agent mit 3-4 Tools, Error Handling, Debugging |
-| M07 | LCEL Chains (Brücke → LangGraph) | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
+| Modul | Thema                             | Beschreibung                                                    |
+| ----- | --------------------------------- | --------------------------------------------------------------- |
+| M01   | Kurs-Intro & Was sind KI-Agenten? | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen         |
+| M02   | Tool Use & Function Calling       | @tool Decorator, Research-Tools bauen                           |
+| M03   | Erste Agenten mit LangChain       | create_agent(), Deprecated Patterns (EINMALIG)                  |
+| M04   | Prompt Engineering                | ChatPromptTemplate, System/Human Messages                       |
+| M05   | Structured Output                 | Pydantic, with_structured_output(), Paper-Signale               |
+| M06   | Multi-Tool Agents                 | Agent mit 3-4 Tools, Error Handling, Debugging                  |
+| M07   | LCEL Chains (Brücke → LangGraph)  | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
 
 ### Block 2: Agenten-Kontrolle / LangGraph (M08–M10)
 | Modul | Thema | Beschreibung |
@@ -153,29 +148,16 @@ Am Ende steht ein eigener **Research Assistant** als Capstone-Variante. Der Baup
 - Human-in-the-Loop für kritische Ausgaben einsetzen
 - optional Supervisor- und Worker-Rollen ergänzen
 
-## 🎓 Projekte & Übungen
-
-Der Kurs bietet ergänzende Lernformate:
-
-### [Agenten Workshop](https://ralf-42.github.io/Agenten/projekte/Agenten_Workshop.html)
-**Workshop-Format** | Begleitete Schritt-für-Schritt-Übung (Zusatzmaterial)
-
-### [KI-Challenge](https://ralf-42.github.io/Agenten/projekte/Agenten_Challenges.html)
-**End-to-End Projekt** | Eigenständige Implementierung (Zusatzmaterial)
 
 ## 📖 Dokumentation
 
 - **Kurs-Website:** [https://ralf-42.github.io/Agenten/](https://ralf-42.github.io/Agenten/)
-- **Zentrale Best Practices:** [../_docs/README.md](../_docs/README.md)
-- **Agent Evaluation & Observability:** [../_docs/Agent_Evaluation_Observability_Best_Practices.md](../_docs/Agent_Evaluation_Observability_Best_Practices.md)
 
 
 ## ⚖️ Lizenzen
 
 Der **Quellcode** steht unter der [MIT License](./LICENSE).       
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
-
-**Northwind SQLite-Datenbank**: basiert auf Microsofts Northwind-Beispieldatenbank. Die verwendete SQLite-Version stammt aus dem Projekt `jpwhite3/northwind-SQLite3` und steht unter der MIT License (Copyright © 2016 JP White); siehe [`Licence NorthwindDB.md`](./02_daten/05_sonstiges/Licence%20NorthwindDB.md). Microsofts SQL-Server-Samples, einschließlich Northwind/Pubs, stehen ebenfalls unter MIT License (Copyright Microsoft Corporation).     
 
 © 2025–2026 Ralf-42     
 

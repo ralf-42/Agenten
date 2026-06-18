@@ -97,22 +97,22 @@ Agenten/
 
 ### Erweiterte Module (M22–M36, optional)
 
-| Modul | Thema                                   | Priorität    | Status |
-| ----- | --------------------------------------- | ------------ | ------ |
-| M22   | Agentic RAG                             | 🟡 Empfohlen | ✅      |
-| M23   | Agent Security & Best Practices         | 🟡 Empfohlen | ✅      |
-| M24   | Agent Evaluation & Testing              | 🟡 Empfohlen | ✅      |
-| M26   | Integration Pipeline                    | 🔵 Optional  | ✅      |
-| M27   | Advanced RAG – Pipeline-Patterns        | 🔵 Optional  | ✅      |
-| M28   | Gradio UI für Agenten                   | 🔵 Optional  | ✅      |
-| M30a  | MCP Local                               | 🔵 Optional  | ✅      |
-| M30b  | MCP HuggingFace                         | 🔵 Optional  | ✅      |
-| M31   | Agent Skill – Compliance                | 🔵 Optional  | ✅      |
-| M32   | DeepAgents: Autonomes Harness-Pattern   | 🔵 Optional  | ✅      |
-| M33   | DeepAgents Skill: Meeting-Briefing      | 🔵 Optional  | ✅      |
-| M34   | DeepAgent Multi-Skill                   | 🔵 Optional  | ✅      |
-| M35   | Production Deployment                   | 🔵 Optional  | ✅      |
-| M36   | Capstone                                | 🔵 Optional  | ✅      |
+| Modul | Thema                                 | Priorität    | Status |
+| ----- | ------------------------------------- | ------------ | ------ |
+| M22   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
+| M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
+| M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
+| M26   | Integration Pipeline                  | 🔵 Optional  | ✅      |
+| M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
+| M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
+| M30a  | MCP Local                             | 🔵 Optional  | ✅      |
+| M30b  | MCP HuggingFace                       | 🔵 Optional  | ✅      |
+| M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
+| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
+| M33   | DeepAgents Skill: Meeting-Briefing    | 🔵 Optional  | ✅      |
+| M34   | DeepAgent Multi-Skill                 | 🔵 Optional  | ✅      |
+| M35   | Production Deployment                 | 🔵 Optional  | ✅      |
+| M36   | Capstone                              | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen
 

@@ -167,6 +167,9 @@ Im Projekt liegen fertige Beispiele unter `06_skill/`, etwa für Compliance, Rec
 
 Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau diese Beispiele eignen sich gut, um den Unterschied zwischen freiem Prompt und reproduzierbarem Skill direkt zu sehen.
 
+> [!NOTE] Ausblick: Skills iterativ verbessern<br>
+> Eine SKILL.md ist kein fertiger Endzustand, sondern lässt sich wie ein Stück Code über Testfälle weiterentwickeln. Der Ansatz SkillOpt formalisiert das: Ein Lauf mit der aktuellen Skill-Version erzeugt Beispiele, Fehlschläge werden auf wiederkehrende Muster untersucht, daraus entsteht eine gezielte Ergänzung, Streichung oder Ersetzung einzelner Sätze. Entscheidend ist die Prüfung auf einem separaten Testset, das bei der Analyse nicht verwendet wurde — sonst wirkt eine Änderung nur auf den Beispielen, aus denen sie entstanden ist.
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
@@ -178,8 +181,8 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 
 ---
 
-**Version:** 1.6<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.7<br>
+**Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

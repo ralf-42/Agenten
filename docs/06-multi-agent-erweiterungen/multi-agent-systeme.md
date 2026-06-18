@@ -28,7 +28,17 @@ Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell d
 
 Der Mehrwert liegt in Arbeitsteilung, Spezialisierung und möglicher Parallelität. Der Preis liegt in Koordination, zusätzlichem State, mehr Kommunikationsaufwand und schwierigerem Debugging. Genau deshalb sollte zuerst gefragt werden, ob ein einzelner Workflow mit klaren Knoten nicht bereits ausreicht.
 
-Typischer Fehler: Multi-Agent zu wählen, weil es moderner oder „agentischer“ klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
+Typischer Fehler: Multi-Agent zu wählen, weil es moderner oder „agentischer” klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
+
+Konkret scheitert ein einzelner Agent typischerweise an einer von drei strukturellen Grenzen:
+
+| Grenze | Ursache | Wann Multi-Agent hilft |
+|---|---|---|
+| Context Exhaustion | Aufgabe übersteigt das verfügbare Kontextfenster | Kontext aufteilen, jeder Agent verwaltet seinen Teil |
+| Spezialisierung vs. Generalisierung | Ein Generalist trifft Fachentscheidungen schlechter als ein Spezialist | Separate Rollen mit fokussiertem Prompt und Fachtiefe |
+| Parallelisierungsgrenze | Unabhängige Teilaufgaben laufen trotzdem sequenziell | Mehrere Agenten arbeiten gleichzeitig an unabhängigen Paketen |
+
+Multi-Agent lohnt sich, wenn mindestens einer dieser Punkte zum echten Engpass wird.
 
 ## Ein einfaches Beispiel
 
@@ -38,12 +48,14 @@ Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer se
 
 ## Welche Grundmuster es gibt
 
-Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Einige Muster sind für Entwickler besonders wichtig: Supervisor, Handoff, Skill-orientierte Fähigkeitstrennung, hierarchische Koordination, direkte kollaborative Zusammenarbeit und parallele Bearbeitung unabhängiger Teilaufgaben.
+Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Die folgenden Muster decken die wesentlichen Fälle ab:
 
 | Muster | Grundidee |
 |---|---|
 | Supervisor | eine zentrale Rolle verteilt Aufgaben an Worker |
 | Handoff | ein Agent erkennt während der Bearbeitung den Zuständigkeitswechsel |
+| Pipeline | Ergebnisse fließen sequenziell von Agent zu Agent |
+| Debate / Critique | zwei Agenten erarbeiten getrennte Lösungen, ein dritter entscheidet |
 | Skill-orientiert | Fähigkeiten werden gezielt nach Bedarf zugeladen |
 | Hierarchisch | mehrere Ebenen aus Leitrollen und Workern |
 | Kollaborativ | Agenten arbeiten direkt mit Feedbackschleifen zusammen |
@@ -51,7 +63,7 @@ Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als du
 
 ## Supervisor: der naheliegende Einstieg
 
-Das Supervisor-Pattern ist für viele erste Multi-Agent-Projekte der verständlichste Einstieg. Ein zentraler Supervisor erhält die Aufgabe, bewertet sie und delegiert an einen passenden Spezialisten.
+Das Supervisor-Pattern ist der naheliegende Einstieg, wenn eine zentrale Stelle Aufgaben an spezialisierte Worker verteilen soll. Ein zentraler Supervisor erhält die Aufgabe, bewertet sie und delegiert an einen passenden Spezialisten.
 
 ```mermaid
 flowchart TD
@@ -84,6 +96,24 @@ def supervisor_node(state: TeamState) -> Command:
 
 In der Praxis relevant, wenn: Aufgaben vorab sauber klassifizierbar sind und Rollen klar voneinander getrennt bleiben.
 
+## Pipeline: wenn Ergebnisse sequenziell weitergereicht werden
+
+Das Pipeline-Muster eignet sich, wenn Aufgaben in fester Reihenfolge voneinander abhängen und das Ergebnis eines Agents direkt die Eingabe des nächsten bildet.
+
+```mermaid
+flowchart LR
+    A[Aufgabe] --> B[Recherche-Agent]
+    B -->|Ergebnis| C[Struktur-Agent]
+    C -->|Ergebnis| D[Writer-Agent]
+    D --> E[Finale Ausgabe]
+```
+
+Der Unterschied zum Supervisor: Es gibt keine zentrale Routing-Logik. Jeder Agent gibt sein Ergebnis direkt weiter, ohne dass eine übergeordnete Stelle steuert.
+
+Ein zentrales Designproblem dabei ist Context Compression. Spätere Agenten erhalten nicht die vollständige Bearbeitungsgeschichte, sondern eine komprimierte Übergabe. Das spart Kontext, bringt aber einen Fidelity-Tradeoff mit sich: Details, die im Ursprungsmaterial stecken, können auf dem Weg verloren gehen. Diese Entscheidung sollte bewusst getroffen werden.
+
+In der Praxis relevant, wenn: die Verarbeitungsschritte klar definiert sind und keine dynamische Umverteilung nötig ist.
+
 ## Handoff: wenn sich die Zuständigkeit erst unterwegs zeigt
 
 Nicht immer ist die richtige Rolle schon am Anfang klar. Manchmal beginnt ein allgemeiner Agent mit einer Anfrage und erkennt erst während der Bearbeitung, dass eine andere Spezialisierung nötig ist. Genau dann passt das Handoff-Pattern.
@@ -100,6 +130,8 @@ flowchart LR
 Hier entscheidet also nicht ein externer Router vorab, sondern der bearbeitende Agent selbst. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
 
 Typischer Fehler: Beim Handoff den bisherigen Kontext nicht vollständig zu übergeben. Dann beginnt der übernehmende Agent praktisch blind.
+
+Eine strukturierte Übergabe trennt das Arbeitsergebnis vom Denkweg: Das Ergebnis (`result_summary`, `artifacts`) geht immer weiter, der vollständige Reasoning Trace (`reasoning_trace`) nur dann, wenn der übernehmende Agent ihn tatsächlich braucht. Diese Trennung hält den Kontext des nächsten Agents schlank.
 
 ## Skill- oder Capability-Loading statt dauerhaftem Spezialistentrupp
 
@@ -136,7 +168,7 @@ flowchart TD
     TL2 --> M
 ```
 
-Dieses Muster lohnt sich erst, wenn Anzahl der Rollen, Aufgabenkomplexität und Abhängigkeiten hoch genug sind. Für kleine Kursbeispiele ist es meist schon die zweite oder dritte Ausbaustufe, nicht der Startpunkt.
+Dieses Muster lohnt sich erst, wenn Anzahl der Rollen, Aufgabenkomplexität und Abhängigkeiten hoch genug sind. Für kleine Demo- oder Proof-of-Concept-Setups ist es meist schon die zweite oder dritte Ausbaustufe, nicht der Startpunkt.
 
 ## Kollaboration und Review-Schleifen
 
@@ -149,6 +181,14 @@ flowchart LR
 ```
 
 Diese Form kann Qualität deutlich erhöhen, birgt aber das Risiko von Endlosschleifen oder instabilen Iterationen. Deshalb braucht sie klare Abbruchbedingungen und Iterationsgrenzen.
+
+## Debate und Critique: wenn Widerspruch die Qualität sichert
+
+Das Debate-Muster geht weiter als einfache Feedback-Schleifen. Zwei unabhängige Agenten erarbeiten getrennte Lösungen, ein dritter bewertet und entscheidet.
+
+Die Rollen: Ein Proposer liefert die erste Lösung. Ein Challenger erarbeitet eine alternative Sichtweise oder sucht systematisch nach Schwachstellen. Ein Adjudicator vergleicht beide und trifft die finale Entscheidung. Das Ergebnis enthält einen Agreement-Level (HIGH, MEDIUM, LOW, CONTRADICTION). Bei CONTRADICTION ist menschliche Überprüfung angebracht.
+
+Geeignet für komplexe Entscheidungen, bei denen ein einzelner Entwurf systematisch blind für eigene Fehler ist. Nicht geeignet für einfache, klar definierte Aufgaben — dort erzeugt Debate nur unnötigen Overhead.
 
 ## Parallelität lohnt sich nur bei unabhängigen Teilaufgaben
 
@@ -182,7 +222,7 @@ class MultiAgentState(TypedDict):
     final_output: Optional[str]
 ```
 
-Genau hier zeigt sich, wie eng Multi-Agent-Design und State Management zusammenhängen. Ohne sauberen gemeinsamen Zustand zerfällt die Koordination schnell.
+Ohne sauberen gemeinsamen Zustand zerfällt die Koordination schnell.
 
 ## Was in der Praxis schnell schiefgeht
 
@@ -196,6 +236,8 @@ def should_continue(state: TeamState) -> str:
 ```
 
 Typischer Fehler: Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
+
+Eine weitere Entscheidung, die oft zu spät gestellt wird: Was passiert, wenn einzelne Worker scheitern? Partial Results (das System liefert, was fertig ist) und Fail Fast (sofortiger Abbruch bei erstem Fehler) sind zwei legitime Strategien mit unterschiedlichen Konsequenzen für Nutzende und nachgelagerte Systeme. Diese Wahl sollte bewusst getroffen werden — nicht durch fehlende Fehlerbehandlung von selbst entstehen.
 
 ## Welche Wahl für Entwickler meist sinnvoll ist
 
@@ -214,8 +256,8 @@ Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, so
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 
 

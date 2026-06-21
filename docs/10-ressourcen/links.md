@@ -110,6 +110,7 @@ Vergleichsplattformen und Datenbanken für KI-Modelle.
 | [LMArena Leaderboard](https://lmarena.ai/de/leaderboard) | Vergleich aktueller Frontier-Modelle |
 | [Models.dev](https://models.dev/) | Offene Datenbank von KI-Modellen |
 | [Anthropic Economic Index](https://www.anthropic.com/economic-index#job-explorer) | Wirtschaftliche Auswirkungen und Nutzungsmuster von KI |
+| [Artificial Analysis](https://artificialanalysis.ai/) | Unabhängiger Vergleich von KI-Modellen nach Leistung, Preis und Geschwindigkeit |
 
 ---
 
@@ -166,6 +167,7 @@ Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluati
 | [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ M15/M24) |
 | [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ M11) |
 | [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ M11–M14) |
+| [Agent-as-a-Judge: Evaluate Agents with Agents](https://arxiv.org/abs/2410.10934) | Grundlagenpaper zur State-Verification statt Text-Trust bei Agenten-Evaluation – Erweiterung von LLM-as-a-Judge auf Tool-Trajektorien (→ M23/M24) |
 
 ---
 
@@ -208,7 +210,7 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 ---
 
-**Version:** 1.5<br>
+**Version:** 1.7<br>
 **Stand:** Juni 2026<br>
 **Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
 

@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Modellauswahl
 parent: "Modelle & Provider"
@@ -45,6 +45,23 @@ Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nic
 
 > [!IMPORTANT] GPT-5.x-Konfiguration<br>
 > Modelle der GPT-5.x-Serie werden in den Kursmaterialien nicht pauschal mit `temperature` konfiguriert. Qualitätssteuerung erfolgt über präzise Prompts sowie bei Bedarf über `reasoning.effort` und `text.verbosity`.
+
+
+## Modelsteckbrief - Beispiel
+
+<br>
+
+
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/modellsteckbrief_gpt_5.4_mini.png" class="logo" width="750"/>
+<p><font color='black' size="2">
+KI-generiertes Bild
+</font></p>
+
+**Modellübersichten:**      
++ [Models.dev]([Models.dev — An open-source database of AI models](https://models.dev/))
++ [LiteLLM Modelle]([LiteLLM-Anbieter & Modelle](https://models.litellm.ai/))      
+
+
 
 ## OpenAI-Default und Designregeln
 

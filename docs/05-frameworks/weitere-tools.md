@@ -15,3 +15,7 @@ Diese Orientierungsseite sammelt ergänzende Frameworks und Hilfsbibliotheken, d
 |---|---|---|
 | **Wie** wird ChromaDB eingesetzt? | [Einsteiger ChromaDB]({{ '/05-frameworks/einsteiger-chromadb.html' | relative_url }}) | Vektordatenbank, Collections und Similarity Search. |
 | **Welche** Hilfsbibliotheken werden genutzt? | [Einsteiger GenAI_Lib]({{ '/05-frameworks/einsteiger-genai-lib.html' | relative_url }}) | Kursbibliothek, Convenience-Funktionen und typische Workflows. |
+
+---
+
+**Stand:** Juli 2026<br>

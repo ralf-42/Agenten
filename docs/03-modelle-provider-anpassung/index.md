@@ -16,3 +16,7 @@ Diese Orientierungsseite bündelt die Entscheidungen rund um Modellrollen, Anbie
 | **Wie** werden Modellrollen auf Provider übertragen? | [Provider- & Modell-Mapping]({{ '/03-modelle-provider-anpassung/provider-modell-mapping.html' | relative_url }}) | Zuordnung auf OpenAI, Mistral, Azure, lokale Modelle und Alternativen. |
 | **Wann** lohnt sich Training? | [Fine-Tuning]({{ '/03-modelle-provider-anpassung/fine-tuning.html' | relative_url }}) | Modellanpassung als spätere Option nach Prompting, RAG, Tools und Evaluation. |
 | **Wie** wird Modellzugriff technisch bereitgestellt? | [API-Keys & Provider]({{ '/03-modelle-provider-anpassung/api-keys-und-provider.html' | relative_url }}) | API-Keys, Provider-Setup und Colab-Integration. |
+
+---
+
+**Stand:** Juli 2026<br>

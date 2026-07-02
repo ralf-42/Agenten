@@ -216,6 +216,12 @@ Hinweis: Dieses Feature setzt voraus, dass der verwendete Modell‑Provider nati
 
 Tools erweitern die Fähigkeiten eines Agenten erheblich, da sie Funktionen abdecken, die ein Modell selbst nicht ausführen kann – etwa Berechnungen, Datenabrufe, lokale Analysen oder Abfragen externer Systeme. Der `@tool`‑Decorator ermöglicht eine klare, typensichere und gut dokumentierte Definition solcher Werkzeuge.
 
+### Tool-Namen und Beschreibungen präzise wählen
+
+Der Funktionsname wird standardmäßig zum Tool-Namen. Er sollte deshalb nicht nur technisch korrekt sein, sondern dem Modell zeigen, **wann** das Tool eingesetzt werden soll.
+
+Gute Tool-Docstrings beschreiben Einsatzgrenzen: „nur bei Bestellnummer“, „nicht für Produktsuche“, „nur für interne Kundendaten“. Solche Formulierungen reduzieren Fehlaufrufe stärker als generische Beschreibungen wie „ruft Daten ab“.
+
 ### Beispiel: Ein einfaches Rechentool
 
 ```python
@@ -803,6 +809,6 @@ LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, struktur
 ---
 
 **Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

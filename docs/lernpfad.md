@@ -26,6 +26,18 @@ Diese Seite bündelt deshalb drei Dinge:
 - empfohlene Lernpfade je nach Ziel
 - eine kleine Auswahl von Dokumenten, mit denen fast immer begonnen werden kann
 
+## Kurspriorisierung
+
+Für den 5-Tage-Kurs ist die Dokumentation bewusst breiter als der Pflichtstoff. Die folgende Einteilung hilft, den Umfang zu steuern:
+
+| Priorität | Bedeutung | Typische Dokumente |
+|---|---|---|
+| **Pflicht** | Wird im Kurs aktiv benötigt oder erklärt den Kern des Leitprojekts. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, HITL, Evaluation |
+| **Empfohlen** | Vertieft das Kursprojekt und hilft bei Aufgaben auf Aufbau-Niveau. | Memory, Checkpointing, ChromaDB, LangSmith, Security, Deployment, Datenschutz |
+| **Optional** | Nachschlagewerk, Transfer oder Fortgeschrittenenpfad. | DeepAgents, Kommunikationsprotokolle, regulierte Branchen, Fine-Tuning, weitere Tools |
+
+Die Pflichttexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt. Empfohlene und optionale Texte erweitern diesen Faden, ohne dass jede Seite im Kurs vollständig behandelt werden muss.
+
 ## Typische Einstiege
 
 Nicht jede Person startet mit derselben Frage. In der Praxis tauchen meist fünf Ausgangslagen auf.
@@ -98,7 +110,7 @@ Sobald Agentensysteme in Bildung, Verwaltung oder Unternehmen eingesetzt werden,
 Empfohlener Einstieg:
 
 1. [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
-2. [Ethik und GenAI]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }})
+2. [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }})
 3. [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
 4. [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
 
@@ -116,18 +128,18 @@ Diese Kombination klärt erst die Einsatzfrage, dann die Struktur und erst danac
 
 Die Dokumentation ist in Bereiche gegliedert, die unterschiedliche Funktionen haben.
 
-| Bereich | Rolle in der Navigation | Typische Frage |
-|---|---|---|
-| Orientierung und Agentenverständnis | Begriffe, Einsatzentscheidung, Modellwahl | Ist ein Agent hier sinnvoll? |
-| Tool Use, Prompting und erste Agenten | Architektur, Tools, Prompts, LangChain | Wie entsteht ein erster Agent? |
-| Orchestrierung, State und LangGraph | Zustandsführung und mehrstufige Abläufe | Wie wird ein Agent steuerbar? |
-| Kontext, Grounding und RAG | Kontextstrategie, Retrieval, Embeddings | Wie wird Wissen zuverlässig eingebunden? |
-| Sessions, Memory und HITL | Persistenz, Erinnerung, menschliche Freigaben | Wie bleibt ein Ablauf kontrollierbar? |
-| Multi-Agent, Skills und Protokolle | Arbeitsteilung, Skills, Schnittstellen | Wie arbeiten Agenten zusammen? |
-| Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit | Wie wird ein Agent belastbar? |
-| Deployment und Betrieb | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? |
-| Regulatorik, Datenschutz und Verantwortung | EU AI Act, DSGVO, Ethik, Souveränität | Welche Rahmenbedingungen prägen den Einsatz? |
-| Ressourcen | Setup, Standards, Troubleshooting, Links | Was hilft bei der praktischen Arbeit? |
+| Bereich | Rolle in der Navigation | Typische Frage | Beitrag |
+|---|---|---|---|
+| Orientierung und Agentenverständnis | Begriffe, Einsatzentscheidung, Modellwahl | Ist ein Agent hier sinnvoll? | Planen |
+| Tool Use, Prompting und erste Agenten | Architektur, Tools, Prompts, LangChain | Wie entsteht ein erster Agent? | Planen, Handeln |
+| Orchestrierung, State und LangGraph | Zustandsführung und mehrstufige Abläufe | Wie wird ein Agent steuerbar? | Planen, Prüfen |
+| Kontext, Grounding und RAG | Kontextstrategie, Retrieval, Embeddings | Wie wird Wissen zuverlässig eingebunden? | Handeln, Prüfen |
+| Sessions, Memory und HITL | Persistenz, Erinnerung, menschliche Freigaben | Wie bleibt ein Ablauf kontrollierbar? | Planen, Prüfen |
+| Multi-Agent, Skills und Protokolle | Arbeitsteilung, Skills, Schnittstellen | Wie arbeiten Agenten zusammen? | Planen, Handeln |
+| Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit | Wie wird ein Agent belastbar? | Prüfen |
+| Deployment und Betrieb | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? | Handeln, Prüfen |
+| Regulatorik, Datenschutz und Verantwortung | EU AI Act, DSGVO, Ethik, Souveränität | Welche Rahmenbedingungen prägen den Einsatz? | Prüfen |
+| Ressourcen | Setup, Standards, Troubleshooting, Links | Was hilft bei der praktischen Arbeit? | Unterstützung |
 
 ## Leselogik statt Vollständigkeit
 
@@ -151,8 +163,8 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.1<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

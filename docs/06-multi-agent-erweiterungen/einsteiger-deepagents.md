@@ -43,6 +43,16 @@ Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehe
 - **Tool-Integration** für Recherche, APIs oder Code
 - **Persistentes Gedächtnis** über LangGraph Memory Store
 
+Für den Einstieg reicht zuerst ein kleiner Kern: ein Modell, ein oder zwei klare Tools und ein präziser `system_prompt`. Planning, Dateien, Sub-Agenten, Skills und Permissions kommen danach. Sonst wirkt DeepAgents schnell größer, als es für die erste Übung sein muss.
+
+Im Kurs passt DeepAgents gut zum Motto:
+
+| Kursmotto | DeepAgents-Bezug |
+|---|---|
+| **Planen** | `write_todos`, Aufgabenliste, Zwischenschritte sichtbar machen |
+| **Handeln** | Tools, Dateien, Sub-Agenten und Backends nutzen |
+| **Prüfen** | Permissions, Interrupts, Sandboxes, Tracing und Tests einsetzen |
+
 Kurz gesagt:
 
 - **LangGraph** = maximale Kontrolle
@@ -138,7 +148,7 @@ from deepagents import create_deep_agent
 from langchain.chat_models import init_chat_model
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-4o-mini", temperature=0.0),
+    model=init_chat_model("openai:gpt-5.4-nano"),
     tools=[begriff_erklaeren],
     system_prompt=(
         "Ein kompakter Kurs-Assistent für agentische Systeme. "
@@ -169,6 +179,8 @@ print(result["messages"][-1].content)
 
 ### Alle create_deep_agent()-Parameter
 
+Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum ist `model`, `tools` und `system_prompt`. Danach folgen `subagents`, `interrupt_on`, `memory` und `skills`. Backend, Store, eigene Schemas oder Middleware sind Vertiefung, sobald ein Agent länger läuft oder produktnäher wird.
+
 | Parameter | Beschreibung |
 |-----------|-------------|
 | `model` | LangChain-Chatmodell (`init_chat_model(...)`) |
@@ -188,7 +200,7 @@ print(result["messages"][-1].content)
 | `state_schema` | Eigenes State-Schema übergeben (**neu seit 0.6.6**) |
 | `debug` | Debug-Ausgaben aktivieren |
 
-> 🆕 **Neu seit 0.6.7:** `DeepAgentState` ist jetzt direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
+> **Neu seit 0.6.7:** `DeepAgentState` ist jetzt direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
 
 ---
 
@@ -278,7 +290,7 @@ Anschließend wird das Tool einfach beim Agenten registriert:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-4o-mini", temperature=0.0),
+    model=init_chat_model("openai:gpt-5.4-nano"),
     tools=[begriff_erklaeren, kurs_thema_info],
     system_prompt="Ein deutschsprachiger Kurs-Assistent.",
 )
@@ -314,9 +326,9 @@ research_subagent = {
 
 | Feld | Pflicht | Beschreibung |
 |------|---------|-------------|
-| `name` | ✅ | Interner Name des Sub-Agenten |
-| `description` | ✅ | Erklärt dem Hauptagenten wann er zu rufen ist |
-| `system_prompt` | ✅ | Rolle und Verhalten des Sub-Agenten |
+| `name` | ja | Interner Name des Sub-Agenten |
+| `description` | ja | Erklärt dem Hauptagenten wann er zu rufen ist |
+| `system_prompt` | ja | Rolle und Verhalten des Sub-Agenten |
 | `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
 | `model` | — | Eigenes Modell pro Sub-Agent (seit 0.4.11) |
 | `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
@@ -329,7 +341,7 @@ Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-4o-mini", temperature=0.0),
+    model=init_chat_model("openai:gpt-5.4-nano"),
     tools=[],
     subagents=[research_subagent],
     system_prompt=(
@@ -347,7 +359,7 @@ Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede 
 ## Profiles API (neu seit 0.5.4)
 
 Die **Profiles API** erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
-Eingebaute Profile existieren für OpenAI und Anthropic und liefern laut Benchmark +10–20 Punkte Verbesserung ohne Code-Änderungen.
+Eingebaute Profile existieren für OpenAI und Anthropic. Sie bündeln anbieterabhängige Einstellungen, ohne dass der eigentliche Agentencode geändert werden muss.
 
 ```python
 from deepagents.profiles import HarnessProfile, ProviderProfile, register_harness_profile
@@ -361,7 +373,7 @@ register_harness_profile(my_profile)
 
 # Agent nutzt automatisch das registrierte Profil
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-4o-mini"),
+    model=init_chat_model("openai:gpt-5.4-nano"),
     tools=[mein_tool],
 )
 ```
@@ -388,7 +400,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-4o-mini"),
+    model=init_chat_model("openai:gpt-5.4-nano"),
     tools=[mein_tool],
     middleware=[LoggingMiddleware(), RetryMiddleware(max_retries=3)],
 )
@@ -400,7 +412,7 @@ agent = create_deep_agent(
 pip install deepagents[quickjs]
 ```
 
-> ⚠️ `CodeInterpreterMiddleware` ist als experimentell markiert — API kann sich noch ändern.
+> `CodeInterpreterMiddleware` ist als experimentell markiert — API kann sich noch ändern.
 
 ---
 
@@ -419,14 +431,14 @@ curl -LsSf https://raw.githubusercontent.com/langchain-ai/deepagents/main/libs/c
 
 | Feature | SDK | CLI |
 |---------|-----|-----|
-| Tools registrieren | ✅ | ✅ |
-| Sub-Agenten | ✅ | ✅ |
-| Filesystem Backends | ✅ | ✅ |
-| Web-Suche | — | ✅ |
-| Remote-Sandboxes | — | ✅ |
-| Persistentes Gedächtnis | — | ✅ |
-| Human-in-the-Loop Approval | — | ✅ |
-| Custom Skills | — | ✅ |
+| Tools registrieren | ja | ja |
+| Sub-Agenten | ja | ja |
+| Filesystem Backends | ja | ja |
+| Web-Suche | nein | ja |
+| Remote-Sandboxes | nein | ja |
+| Persistentes Gedächtnis | nein | ja |
+| Human-in-the-Loop Approval | nein | ja |
+| Custom Skills | nein | ja |
 
 ### MCP-Support
 
@@ -439,7 +451,7 @@ Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können
 
 ---
 
-## Provider-Agnostik: Das zentrale Versprechen
+## Provider-Agnostik: was austauschbar ist
 
 Der wichtigste Unterschied zu Claude Code oder Codex: **DeepAgents ist modellunabhängig.**
 
@@ -447,13 +459,13 @@ Dieselbe Harness-Architektur läuft mit jedem der 100+ LangChain-kompatiblen Mod
 
 ```python
 # OpenAI
-agent = create_deep_agent(model=init_chat_model("openai:gpt-4o-mini", temperature=0.0), ...)
+agent = create_deep_agent(model=init_chat_model("openai:gpt-5.4-nano"), ...)
 
 # Anthropic
-agent = create_deep_agent(model=init_chat_model("anthropic:claude-3-5-sonnet"), ...)
+agent = create_deep_agent(model=init_chat_model("anthropic:claude-sonnet-4-6"), ...)
 
 # Google
-agent = create_deep_agent(model=init_chat_model("google_vertexai:gemini-2.0-flash"), ...)
+agent = create_deep_agent(model=init_chat_model("google:gemini-3-flash-preview"), ...)
 ```
 
 Der Wechsel erfordert nur eine Zeile — Planning, Tools, Sub-Agenten und Filesystem bleiben unverändert.
@@ -464,7 +476,9 @@ Das ist besonders relevant, wenn:
 - Organisationsrichtlinien Multi-Provider-Unterstützung erfordern
 - Kosten zwischen Anbietern optimiert werden sollen
 
-### Vergleich: DeepAgents vs. Claude Agent SDK vs. Codex SDK
+### Einordnung: DeepAgents, Claude Agent SDK und Codex SDK
+
+Die folgende Tabelle ist keine Rangliste. Sie zeigt, welche Steuerungsschicht in welchem Kontext naheliegt.
 
 | Kriterium | DeepAgents | Claude Agent SDK | Codex SDK |
 |---|---|---|---|
@@ -530,12 +544,12 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 
 | Dimension | Bewertung | Begründung |
 |-----------|-----------|------------|
-| API-Stabilität | ⚠️ Mittel | `subagents=`-Interface hatte Breaking Change ohne Migration-Guide |
-| Versionsstabilität | ✅ Besser | 0.5.x → 0.6.x ohne Breaking Changes |
-| Features | ✅ Solide | Planning, Filesystem, Sub-Agenten, Profiles, Middleware vollständig |
-| Dokumentation | ⚠️ Lückenhaft | Parameter wie `backend`, `context_schema` kaum dokumentiert |
-| Produktionsreife | ❌ Nicht empfohlen | < 1 Jahr Praxiserfahrung, kein 1.0, kein SLA |
-| Ökosystem | ✅ Gut | LangGraph-nativ — Checkpointer, Streaming, LangSmith out-of-the-box |
+| API-Stabilität | mittel | `subagents=`-Interface hatte Breaking Change ohne Migration-Guide |
+| Versionsstabilität | besser | 0.5.x → 0.6.x ohne Breaking Changes |
+| Features | solide | Planning, Filesystem, Sub-Agenten, Profiles, Middleware vollständig |
+| Dokumentation | lückenhaft | Parameter wie `backend`, `context_schema` kaum dokumentiert |
+| Produktionsreife | nicht empfohlen | < 1 Jahr Praxiserfahrung, kein 1.0, kein SLA |
+| Ökosystem | gut | LangGraph-nativ — Checkpointer, Streaming, LangSmith out-of-the-box |
 
 **Gesamturteil:** Für Experimente, Prototypen und Kurse gut geeignet. Für Production-Einsatz LangGraph direkt bevorzugen — bis v1.0 sich das ändert.
 
@@ -582,6 +596,7 @@ Dann wird klar, was das Harness tatsächlich leistet:
 
 - Es ersetzt nicht das Verständnis der Mechanik.
 - Es verpackt bekannte Mechaniken in ein schneller nutzbares Gerüst.
+- Es zeigt, wie Planen, Handeln und Prüfen als fertige Harness-Struktur zusammenkommen.
 
 Kurzform:
 
@@ -626,8 +641,8 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.5<br>
-**Stand:** Juni 2026 (DeepAgents 0.6.8)<br>
+**Version:** 1.6<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

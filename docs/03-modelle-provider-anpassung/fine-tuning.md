@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Fine-Tuning
 parent: "Modelle & Provider"
@@ -10,8 +10,7 @@ has_toc: true
 # Fine-Tuning
 {: .no_toc }
 
-> [!NOTE] Kernfrage<br>
-> Wann lohnt sich Training gegenüber besserem Prompting, Retrieval oder Tool-Design?
+> [!NOTE] Kernfrage<br>`r`n> Wann lohnt sich Training gegenüber besserem Prompting, Retrieval oder Tool-Design?
 
 ---
 
@@ -23,257 +22,166 @@ has_toc: true
 
 ---
 
-## Intro
-Fine-Tuning ist eine Technik, um ein vortrainiertes Modell auf eine engere Aufgabe oder einen klar umrissenen Datensatz anzupassen. Dabei werden bestehende Modellstrukturen weiterverwendet und gezielt verändert. Das spart im Vergleich zum Training von Grund auf Zeit und Rechenaufwand, ist aber kein Automatismus für bessere Ergebnisse.
+# Einordnung
 
-In der Praxis lohnt sich Fine-Tuning nur in einem Teil der Fälle. Häufig reicht eine Kombination aus besserem Prompting, sauberem Retrieval und klarer Evaluation aus. Erst wenn sich ein wiederkehrendes Fehlermuster trotz guter Daten, guter Prompts und stabiler Systemarchitektur hält, wird Fine-Tuning zur realistischen Option.
+Fine-Tuning passt ein vortrainiertes Modell an eine engere Aufgabe, eine bestimmte Domäne oder ein wiederkehrendes Antwortmuster an. Das Modell startet nicht bei null, sondern nutzt vorhandene Sprach- und Weltrepräsentationen weiter. Das senkt den Trainingsaufwand, ersetzt aber weder saubere Daten noch eine belastbare Evaluation.
 
-Fine-Tuning ist deshalb am sinnvollsten als Teil eines größeren Optimierungsprozesses zu verstehen. **Evals**, **Prompt Engineering** und **Fine-Tuning** greifen ineinander. Ohne belastbare Evaluation ist kaum erkennbar, ob ein Training wirklich geholfen hat oder nur die Fehler an andere Stellen verschoben wurden.
+Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres Retrieval oder eine klarere Systemarchitektur bringen oft schneller messbare Verbesserungen. Fine-Tuning wird interessant, wenn ein wiederkehrendes Fehlermuster trotz guter Prompts, passender Kontextdaten und nachvollziehbarer Tests bestehen bleibt.
 
-Typischer Fehler: Fine-Tuning wird als erster Optimierungsschritt gewählt. In vielen Fällen ist zuerst zu prüfen, ob das Problem durch bessere Daten, klarere Prompts, RAG, Tool-Schemas oder ein anderes Basismodell gelöst werden kann.
+In der Praxis relevant, wenn: Das Modell soll kein neues Faktenwissen aufnehmen, sondern ein Verhalten zuverlässig wiederholen. Typische Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikationsentscheidungen oder wiederkehrende Extraktionsaufgaben. Für wechselndes Faktenwissen ist Retrieval robuster, weil Trainingsdaten nach dem Fine-Tuning nicht automatisch aktuell bleiben.
 
-## Fine-Tuning-Ansätze
-### Transfer Learning
+# Einsatzkriterien
 
-Transfer Learning verwendet ein vortrainiertes Modell als Ausgangspunkt. Die allgemeinen Merkmale der frühen Schichten bleiben erhalten; angepasst werden vor allem die Teile, die für die Zielaufgabe relevant sind. Dadurch braucht das Training deutlich weniger Daten und Rechenkapazität als ein Pre-Training von Grund auf.
+Fine-Tuning lohnt sich, wenn das gewünschte Verhalten aus vielen ähnlichen Beispielen gelernt werden kann. Ein Kundensupport-Modell kann etwa lernen, Rückfragen in einem bestimmten Ton zu stellen, Eskalationen konsistent zu erkennen oder interne Kategorien stabil zuzuordnen. Bei solchen Aufgaben zählt weniger einzelnes Faktenwissen als reproduzierbares Verhalten.
 
-In der Praxis ist Transfer Learning vor allem dann interessant, wenn eine Aufgabe stabil wiederkehrt und genügend Beispiele vorliegen. Typische Felder sind Bildklassifikation, Verarbeitung natürlicher Sprache und Computer Vision. Grenze: Transfer Learning löst kein Wissensproblem. Fehlende oder wechselnde Fakten gehören eher in Retrieval, Datenbankzugriffe oder Tool-Aufrufe.
+Nicht geeignet, wenn: Die Aufgabe vor allem aktuelles, seltenes oder umfangreiches Fachwissen benötigt. Dann verschiebt Fine-Tuning das Problem nur in den Trainingsdatensatz. RAG, Tool-Nutzung oder eine bessere Datenbasis sind in solchen Fällen meist die bessere Architekturentscheidung.
 
-### Parameter-effizientes Fine-Tuning (PEFT)
+Eine belastbare Entscheidung braucht eine Baseline. Vor dem Training sollte klar sein, welche Fälle heute scheitern, wie Erfolg gemessen wird und welche Veränderung als Verbesserung gilt. Ohne Evals ist kaum erkennbar, ob das neue Modell wirklich besser arbeitet oder nur andere Fehler macht.
 
-Parameter-effizientes Fine-Tuning verändert nicht das komplette Modell, sondern nur zusätzliche oder ausgewählte Parameter. Das Basismodell bleibt weitgehend unverändert. Dadurch sinken Speicherbedarf, Trainingskosten und Risiko, ein allgemein brauchbares Modell durch eine zu enge Anpassung zu verschlechtern.
+# Fine-Tuning-Ansätze
 
-Zu den wichtigsten Verfahren gehören LoRA, QLoRA, DoRA, Adapter und Prompt Tuning. LoRA arbeitet mit kompakten Low-Rank-Matrizen, QLoRA kombiniert diesen Ansatz mit quantisierten Gewichten, DoRA zerlegt Gewichte in Größen- und Richtungskomponenten. Adapter fügen zusätzliche Module zwischen bestehende Schichten ein. Prompt Tuning verändert trainierbare Prompt-Repräsentationen statt Modellgewichte im engeren Sinn.
+## Transfer Learning
 
-In der Praxis relevant, wenn: mehrere Spezialisierungen mit demselben Basismodell benötigt werden oder nur begrenzte Rechenressourcen verfügbar sind.
+Transfer Learning nutzt ein vortrainiertes Modell als Ausgangspunkt und passt es an eine neue Aufgabe an. Die unteren Schichten enthalten bereits allgemeine Muster, während spätere Schichten stärker auf die Zielaufgabe ausgerichtet werden können. Im ML-Workflow reduziert das Daten- und Rechenbedarf gegenüber einem vollständigen Pre-Training.
 
-### Instruction Fine-Tuning
+Grenze: Transfer Learning hilft nur, wenn Ausgangsmodell und Zielaufgabe nah genug beieinanderliegen. Weichen Domäne, Datenformat oder Zielverhalten stark ab, reicht eine kleine Anpassung nicht aus. Typischer Fehler: Das Verfahren wird als Abkürzung verstanden, obwohl die Zielaufgabe noch nicht stabil beschrieben ist.
 
-Instruction Fine-Tuning trainiert ein Modell darauf, natürlichsprachliche Anweisungen verlässlich zu befolgen. Die Trainingsdaten bestehen aus Input-Output-Paaren mit expliziter Instruktion. Das ist besonders relevant für Sprachassistenten, automatisierte Kommunikation und LLM-basierte Werkzeuge, bei denen ein bestimmtes Antwortformat oder Verhalten immer wieder erwartet wird.
+## Parameter-Effizientes Fine-Tuning
 
-Ein einfaches Format kann so aussehen:
-  
-  ```
-  "###Human: $<Input Query>$ ###Assistant: $<Generated Output>$"
-  ```
+Parameter-effizientes Fine-Tuning verändert nicht alle Gewichte des Basismodells. Verfahren wie LoRA, QLoRA, DoRA, Adapter oder Prompt Tuning ergänzen oder verändern nur kleine Teile der Modellparameter. Trainingsläufe werden dadurch günstiger, Varianten lassen sich getrennt verwalten und ein Basismodell kann mehrere Spezialisierungen tragen.
 
-### Supervised Fine-Tuning (SFT)
+LoRA fügt kompakte Low-Rank-Matrizen ein, die Gewichtsänderungen approximieren. QLoRA kombiniert diesen Ansatz mit Quantisierung, um Speicherbedarf weiter zu senken. Adapter platzieren zusätzliche Module zwischen vorhandenen Schichten; Prompt Tuning arbeitet mit trainierbaren Prompt-Repräsentationen statt mit vollständig angepassten Modellgewichten.
 
-Supervised Fine-Tuning arbeitet mit handverlesenen Beispielen, die gewünschtes Verhalten direkt demonstrieren. Schon wenige Beispiele können für einen Test reichen; belastbarer wird der Ansatz meist erst mit mehreren Dutzend hochwertigen Demonstrationen. Die Qualität der Beispiele ist wichtiger als ihre Menge.
+Für lokale Experimente ist der übliche Startpfad: kleines Instruct-Modell, Supervised Fine-Tuning und LoRA oder QLoRA. LoRA erzeugt zunächst einen kleinen Adapter, der das Basismodell nicht ersetzt. Für manche Deployment-Ziele, etwa GGUF oder Ollama, wird dieser Adapter später mit dem Basismodell zusammengeführt und anschließend quantisiert.
 
-Der Prozess besteht aus Datenvorbereitung, Upload der Trainingsdaten, Erstellung eines Fine-Tuning-Jobs und anschließender Evaluierung. SFT kann mit Verfahren wie Reinforcement Learning from Human Feedback kombiniert werden, sollte im Kurskontext aber zuerst als kontrollierte Anpassung über kuratierte Beispiele verstanden werden.
+Grenze: PEFT reduziert Kosten, aber nicht automatisch Qualitätsrisiken. Schlechte Trainingsdaten, unklare Labels oder ein schwacher Eval-Satz bleiben dieselben Probleme. Außerdem kann eine zu enge Spezialisierung das Modell außerhalb der Trainingsverteilung spröder machen.
 
-## Weitere Ansätze OpenAI
-### Direct Preference Optimization (DPO)
+## Instruction Fine-Tuning
 
-DPO trainiert mit bevorzugten und abgelehnten Antwortpaaren. Jedes Beispiel enthält einen Prompt, eine gewünschte Ausgabe und eine weniger gewünschte Ausgabe. Dadurch lassen sich Nuancen wie Stil, Tonalität, Ausdruck und Priorisierung verbessern, ohne den vollständigen RLHF-Prozess aufzubauen.
+Instruction Fine-Tuning trainiert ein Modell darauf, natürlichsprachliche Anweisungen zuverlässig in passende Antworten umzusetzen. Die Trainingsdaten bestehen aus Paaren von Anweisung und gewünschter Ausgabe, häufig ergänzt durch Kontext oder Rolleninformationen. Der Ansatz passt, wenn ein Modell nicht nur Inhalte erzeugen, sondern Anweisungen konsistent befolgen soll.
 
-Der Beta-Parameter steuert, wie stark das neue Modell am vorherigen Verhalten festhält oder sich an den neuen Präferenzen orientiert. Für Kursunterlagen ist vor allem die Idee wichtig: DPO eignet sich nicht für neues Wissen, sondern für wiederkehrende Präferenzentscheidungen.
+Ein vereinfachtes Trainingsbeispiel kann so aussehen:
 
-### Reinforcement Fine-Tuning (RFT)
+```text
+### Human:
+Fasse die folgende Kundenanfrage in einer internen Support-Kategorie zusammen.
 
-RFT trainiert nicht gegen feste Zielantworten, sondern anhand von Bewertungssignalen. Grader bewerten Modellantworten und liefern ein numerisches Signal, zum Beispiel über String-Checks, Textähnlichkeit oder ein separates Bewertungsmodell.
-
-Der Ansatz ist vor allem für Aufgaben geeignet, bei denen Experten in der Domäne sich über gute Antworten einig sind und die Qualität eindeutig bewertbar ist. Die konkrete Modellunterstützung ist provider- und zeitabhängig; im Kurs wird RFT deshalb als optionales Vertiefungsthema behandelt und nicht über `genai_lib.model_config.py` als Standardrolle abgebildet.
-
-### Vision Fine-Tuning
-
-Vision Fine-Tuning passt Modelle an Aufgaben mit visuellen Eingaben an, etwa Bildklassifikation, visuelle Beschreibungen oder Objektlokalisierung. Technisch werden Bilder typischerweise als URLs oder Base64-Daten eingebunden. Einschränkungen zu Format, Größe, Datenschutz und Bildinhalten hängen vom Anbieter und vom konkreten Trainingsverfahren ab.
-
-Nicht geeignet, wenn: das Problem nur in einer besseren Bildbeschreibung oder einem klareren Prompt liegt. Dann ist zuerst zu prüfen, ob ein stärkeres Basismodell, bessere Beispiele oder ein anderes Ausgabeschema genügen.
-
-### Modell-Distillation
-
-Modell-Distillation nutzt Ausgaben eines größeren Modells, um ein kleineres Modell für einen begrenzten Aufgabenbereich zu trainieren. Der Nutzen liegt in geringeren Kosten und niedrigerer Latenz, nicht in maximaler allgemeiner Leistungsfähigkeit.
-
-Typischer Ablauf: hochwertige Ausgaben eines starken Modells speichern, mit Evaluierungen prüfen, geeignete Beispiele auswählen, ein kleineres Modell darauf trainieren und anschließend gegen die Baseline vergleichen. Distillation lohnt sich erst, wenn die Aufgabe häufig genug vorkommt, um den Trainings- und Wartungsaufwand zu rechtfertigen.
-
-## Fine-Tuning-Pipeline für LLMs
-```mermaid
-flowchart TB
-    subgraph Pipeline["Fine-Tuning Pipeline"]
-        direction TB
-        A[1. Datenvorbereitung] --> B[2. Modellinitialisierung]
-        B --> C[3. Trainingsumgebung]
-        C --> D[4. Fine-Tuning-Prozess]
-        D --> E[5. Evaluierung]
-        E --> F[6. Deployment]
-        F --> G[7. Monitoring]
-    end
-
-    A1[Datensammlung<br>JSONL-Format] -.-> A
-    B1[Vortrainiertes<br>Modell laden] -.-> B
-    C1[GPU/TPU<br>Hyperparameter] -.-> C
-    D1[Training<br>Validierung] -.-> D
-    E1[Metriken<br>Analyse] -.-> E
-    F1[API<br>Infrastruktur] -.-> F
-    G1[Performance<br>Updates] -.-> G
-
-    G -->|Feedback| A
-
-    style A fill:#e3f2fd,stroke:#1976d2
-    style B fill:#e8f5e9,stroke:#4caf50
-    style C fill:#fff3e0,stroke:#ff9800
-    style D fill:#f3e5f5,stroke:#9c27b0
-    style E fill:#e0f7fa,stroke:#00bcd4
-    style F fill:#fce4ec,stroke:#e91e63
-    style G fill:#f5f5f5,stroke:#9e9e9e
+### Assistant:
+Kategorie: Rechnungskorrektur
 ```
 
-### Datenvorbereitung
-- Datensammlung aus verschiedenen Quellen
-- Vorverarbeitung und Formatierung (z.B. JSONL-Format)
-- Umgang mit unausgeglichenen Daten (Oversampling, Undersampling)
-- Datensatzaufteilung (Training/Validierung/Test)
+Typischer Fehler: Die Beispiele beschreiben nur ideale Standardfälle. Dann lernt das Modell zwar ein Format, scheitert aber bei unvollständigen Eingaben, widersprüchlichem Kontext oder Randfällen. Gute Instruction-Daten enthalten deshalb auch schwierige Beispiele mit erwarteter Behandlung.
 
-### Modellinitialisierung
-- Auswahl eines geeigneten vortrainierten Modells
-- Einrichtung der Umgebung und Installation der Abhängigkeiten
-- Laden des Modells in den Speicher
+## Supervised Fine-Tuning
 
-### Trainingsumgebung
-- Konfiguration von Hardwareressourcen (GPU/TPU)
-- Definition von Hyperparametern (Lernrate, Batch-Größe, Epochen)
-- Initialisierung von Optimierern und Verlustfunktionen
+Supervised Fine-Tuning arbeitet mit kuratierten Eingabe-Ausgabe-Beispielen. Es eignet sich für Aufgaben, bei denen Fachleute eine richtige oder zumindest bevorzugte Antwort festlegen können. Datenqualität zählt dabei stärker als Menge: Wenige konsistente Beispiele sind hilfreicher als viele widersprüchliche Demonstrationen.
 
-### Fine-Tuning-Prozess
-- Auswahl der Fine-Tuning-Technik (Voll, PEFT, etc.)
-- Durchführung des Trainings mit regelmäßigen Validierungen
-- Überwachung von Metriken und Verlustfunktionen
+Für erste Experimente reichen oft kleine Datensätze, solange sie echte Zielaufgaben abbilden. Entscheidend ist, dass Trainings-, Validierungs- und Testfälle getrennt bleiben. Wenn Beispiele aus der Evaluation im Training landen, wirkt das Modell besser, ohne robuster geworden zu sein.
 
-### Evaluierung und Validierung
-- Aufsetzen von Evaluierungsmetriken
-- Analyse der Trainingsverlaufskurve
-- Überwachung und Interpretation der Ergebnisse
+## Preference- und Reinforcement-Verfahren
 
-### Deployment
-- Export des fine-getuned Modells
-- Einrichtung der Infrastruktur
-- API-Entwicklung für die Modellinteraktion
+Direct Preference Optimization (DPO) trainiert mit Antwortpaaren: Eine Antwort wird bevorzugt, eine andere abgelehnt. Das hilft, wenn Stil, Tonalität oder Bewertungsnuancen gelernt werden sollen, ohne jede Zielantwort als perfekte Musterlösung zu formulieren. Die Qualität der Paarvergleiche entscheidet, ob das Modell tatsächlich bessere Präferenzen lernt.
 
-### Monitoring und Wartung
-- Kontinuierliche Überwachung der Modellleistung
-- Aktualisierung des LLM-Wissens bei Bedarf
-- Wiederholte Feinabstimmung bei veränderter Datenlage
+Reinforcement Fine-Tuning bewertet Modellantworten über Grader oder andere Bewertungssignale. Das kann bei komplexen Aufgaben helfen, wenn sich Ergebnisse zuverlässig bewerten lassen. Nicht geeignet ist dieser Ansatz, wenn Fachleute sich nicht über die Bewertungskriterien einig sind oder wenn der Grader selbst leicht auszutricksen ist.
 
-## Schlüsselkomponenten der Modelloptimierung
-### Evaluierungen (Evals)
+## Vision Fine-Tuning und Multimodale Aufgaben
 
-- **Nutzen**: Systematische Tests zur Bewertung von Modellantworten.
-    
-- **Formate**: Multiple Choice, Klassifikation, Stringvergleich etc.
+Vision Fine-Tuning erweitert die Anpassung auf Modelle, die Bilder oder andere visuelle Eingaben verarbeiten. Typische Aufgaben sind Bildklassifikation, visuelle Beschreibungen oder die Erkennung bestimmter Objektklassen. Die Trainingsdaten müssen dabei nicht nur sprachlich, sondern auch visuell konsistent sein.
 
-- **Grader-Typen**:
-  - **String-Check-Grader**: Einfache String-Operationen (gleich, ungleich, enthält)
-  - **Text-Similarity-Grader**: Bewertung der Ähnlichkeit zwischen Modellantwort und Referenz
-  - **Model-Grader**: Nutzung eines separaten Modells zur Bewertung der Ausgaben
-  - **Python-Grader**: Ausführung von Python-Code zur Bewertung
-  - **Multi-Grader**: Kombination mehrerer Grader für komplexe Bewertungskriterien
+Bei multimodalen Daten entstehen zusätzliche Fehlerquellen. Bildqualität, Auflösung, Datenschutzanforderungen und die Beziehung zwischen Bild und Text beeinflussen das Ergebnis. Eine Textbeschreibung, die nicht eindeutig zum Bild passt, erzeugt schlechtere Trainingssignale als gar kein Beispiel.
 
-- **Integrierter Prozess**: Evals sollten vor dem Fine-Tuning erstellt werden, um eine Baseline zu etablieren und den Fortschritt zu messen.
+## Modell-Distillation
 
-### Prompt Engineering
+Modell-Distillation nutzt Ausgaben eines größeren Modells, um ein kleineres Modell für einen begrenzten Aufgabenbereich zu trainieren. Wenn die Aufgabe eng genug geschnitten ist, sinken Kosten und Latenz. Ein kleines Modell kann dann für wiederkehrende Standardfälle ausreichen.
 
-- **Ziele**: Maximale Modellleistung ohne Training.
-    
-- **Methoden**: Klare Instruktionen, Kontextbereitstellung, Few-Shot-Beispiele.
+Grenze: Distillation übernimmt nicht nur Stärken, sondern auch Fehler und Verzerrungen des größeren Modells. Die erzeugten Trainingsdaten müssen deshalb wie echte Trainingsdaten geprüft werden. Ohne Kontrolle entsteht ein kleineres Modell, das Fehler schneller und günstiger reproduziert.
 
-- **Zusammenspiel mit Fine-Tuning**: Prompt Engineering kann Fine-Tuning ergänzen oder in manchen Fällen sogar ersetzen.
+# Fine-Tuning-Pipeline
 
-- **Beispiel**: Die Prompt-Konstruktion mit relevanten Beispielen (Few-Shot-Learning) kann die Leistung signifikant verbessern, ohne das Modell neu zu trainieren.
+```mermaid
+flowchart TB
+    A[1. Baseline und Evals] --> B[2. Trainingsdaten kuratieren]
+    B --> C[3. Methode und Modell wählen]
+    C --> D[4. Training durchführen]
+    D --> E[5. Gegen Baseline testen]
+    E --> F{Verbesserung belastbar?}
+    F -->|Ja| G[6. Deployment mit Monitoring]
+    F -->|Nein| H[Fehleranalyse]
+    H --> B
+    G --> I[7. Drift und Regressionen prüfen]
+    I --> A
+```
 
-Embeddings spielen beim **Fine-Tuning eines Large Language Models (LLMs)** eine zentrale Rolle, da sie den **Ausgangspunkt der Verarbeitung von Eingabedaten** im Modell darstellen. Hier ist eine strukturierte Erklärung ihrer Rolle:
+Die Pipeline beginnt nicht mit dem Trainingsjob, sondern mit einer Baseline. Zuerst wird festgelegt, welche Fälle das aktuelle System nicht gut löst und welche Metriken diese Schwäche sichtbar machen. Erst danach lohnt sich Arbeit an Trainingsdaten, Hyperparametern und Modellvarianten.
 
-## Embeddings und Fine-Tuning
-### Recap: Was sind Embeddings?
+Zur Datenvorbereitung gehören Auswahl, Bereinigung, Formatierung und Split in Training, Validierung und Test. Für API-basiertes Fine-Tuning ist häufig ein JSONL-Format erforderlich; bei lokalen Trainingsläufen hängen Format und Struktur vom Framework ab. Entscheidend ist nicht das Dateiformat an sich, sondern die Konsistenz zwischen Zielaufgabe, Beispielqualität und Evaluation.
 
-**Embeddings** sind **dichte, numerische Vektoren**, die Wörter, Tokens oder ganze Sätze in einem kontinuierlichen Vektorraum repräsentieren. Das Training ordnet **semantisch ähnliche Begriffe nahe beieinander** im Vektorraum an.
+Als grobe Faustregel sollten etwa 10 bis 15 Prozent der Beispiele als Holdout-Set zurückgehalten werden. Diese Beispiele dürfen nicht in die Trainingsdaten zurückwandern, sonst misst die Evaluation eher Wiedererkennen als robuste Generalisierung.
 
-### Rolle beim Fine-Tuning eines LLMs
+Nach dem Training reicht ein einzelner Durchschnittswert nicht aus. Relevanter sind Fehlerklassen: Welche Fälle wurden besser, welche schlechter, und welche Regressionen sind neu entstanden? Erst wenn die Verbesserung gegenüber der Baseline stabil bleibt, folgt Deployment mit Monitoring.
 
-1. **Initiale Repräsentation der Eingabedaten:**
-    
-    - Bevor Text durch die Transformer-Schichten geht, wird er in Embeddings umgewandelt.
-        
-    - Diese Embeddings enthalten bereits **viele Informationen über die Bedeutung** der Tokens.
-        
-2. **Anpassung an die Zielaufgabe:**
-    
-    - Beim Fine-Tuning werden **nicht nur die oberen Schichten** (z. B. der Decoder oder der Klassifikator), sondern häufig auch die **Embedding-Schicht selbst angepasst**.
-        
-    - So kann sich das Modell an spezielle Fachterminologie oder Ausdrucksweisen der Zielanwendung gewöhnen.
-        
-3. **Transferlernen durch vortrainierte Embeddings:**
-    
-    - Das Modell startet mit **generischen Embeddings** aus dem Pretraining.
-        
-    - Beim Fine-Tuning lernen die Embeddings, sich besser an die neue Domäne anzupassen (z. B. Jura, Medizin, Technik).
-        
-4. **Spezialfall: Adapter-Fine-Tuning oder LoRA:**
-    
-    - In Methoden wie **LoRA** oder **Adapter Layers** werden die Embeddings oft **nicht direkt verändert**, sondern nur zusätzliche Parameter eingeführt.
-        
-    - Vorteil: Die ursprünglichen Embeddings bleiben erhalten → weniger Overfitting, kleinere Modelle.
-        
+# Evaluation und Prompting
 
-### Warum sind sie so wichtig?
+Evals messen, ob Modellantworten die fachlichen Anforderungen erfüllen. Geeignet sind einfache String-Prüfungen, Klassifikationsmetriken, Ähnlichkeitsvergleiche, Python-Grader oder modellgestützte Bewertungen. Für Fine-Tuning sind Evals besonders wichtig: Ohne Messkonzept wirkt ein Training schnell wie Fortschritt, obwohl sich nur die Antwortoberfläche verändert.
 
-- Embeddings beeinflussen maßgeblich, **wie der Text semantisch verstanden wird**.
-    
-- Eine gute Embedding-Anpassung beim Fine-Tuning verbessert die Fähigkeit des Modells, **Aufgabenkontext korrekt zu erfassen** (z. B. bei Named Entity Recognition, Sentiment Analysis, RAG-Systemen usw.).
-    
+Ein belastbarer Vergleich nutzt dieselben Holdout-Beispiele für mehrere Varianten: das bisherige Referenzsystem, das ungetunte Basismodell und das feinabgestimmte Modell. Alle Varianten werden mit derselben Metrik bewertet und in einer Tabelle verglichen. Erst diese Gegenüberstellung zeigt, ob das Fine-Tuning wirklich einen relevanten Vorteil bringt oder nur andere Formulierungen erzeugt.
 
-### Einordnung
+| Aufgabentyp | Geeignete Metriken |
+|---|---|
+| Klassifikation, Intent-Erkennung, Routing | Accuracy, Precision, Recall, Macro-F1 bei unausgewogenen Klassen |
+| Extraktion strukturierter Felder | Exact Match pro Feld, Vollständigkeit, parsebares JSON oder Schema-Gültigkeit |
+| Freitext, Zusammenfassung, Antwortstil | Rubrikbewertung, Human Spot Check, LLM-as-Judge mit festen Kriterien |
 
-Die Embeddings sind die **Brücke zwischen rohem Text und neuronaler Verarbeitung**. Beim Fine-Tuning werden sie oft (aber nicht immer) mitangepasst, um eine **bessere Domänenanpassung und höhere Genauigkeit** zu erzielen.
+Prompt Engineering bleibt auch nach einem Fine-Tuning relevant. Ein feinabgestimmtes Modell braucht weiterhin klare Instruktionen, passenden Kontext und sinnvolle Ausgabeformate. Häufig zeigt ein guter Few-Shot-Prompt bereits, ob sich ein Verhalten zuverlässig aus Beispielen ableiten lässt.
 
-## Best Practices
-### Datenstrategie
+Typischer Fehler: Fine-Tuning wird gestartet, bevor Prompting und Retrieval sauber getestet wurden. Das erzeugt zusätzliche Komplexität, aber keine bessere Architektur. Ein guter Test ist: Wenn ein Verhalten mit drei bis fünf sorgfältigen Few-Shot-Beispielen im Prompt nicht stabiler wird, lösen zusätzliche Trainingsbeispiele das Problem oft ebenfalls nicht.
 
-Datenqualität schlägt Datenmenge. Für einen ersten Test können wenige hochwertige Beispiele reichen; für belastbare Entscheidungen braucht es realistische Beispiele aus der Zielanwendung. Die Daten müssen repräsentativ sein, Randfälle enthalten und erkennbare Verzerrungen vermeiden. Ein Modell lernt sonst nicht die Aufgabe, sondern die Schieflage des Datensatzes.
+Zwei Fehlerbilder treten bei lokalen Fine-Tuning-Workflows besonders häufig auf. Erstens muss das Chat-Template beim Training und beim späteren Serving identisch sein; sonst können trotz erfolgreichem Training wirre, abgeschnittene oder endlos wiederholte Ausgaben entstehen. Zweitens müssen LoRA-Adapter für GGUF- oder Ollama-Exporte zuerst mit dem Basismodell zusammengeführt werden, bevor quantisiert wird.
 
-Das Datenformat ist Teil der Qualität. JSONL-Dateien müssen vor dem Training validiert werden, jede Zeile braucht ein vollständiges Objekt und das Format muss zur gewählten Fine-Tuning-Methode passen. Fehler in der Datenstruktur sind besonders teuer, weil sie oft erst nach Upload oder Trainingsstart sichtbar werden.
+# Embeddings und Fine-Tuning
 
-### Trainingsstrategie
+Embeddings übersetzen Tokens, Wörter oder Textstücke in numerische Vektoren. Diese Vektoren bilden den Eingang in die neuronale Verarbeitung und tragen bereits semantische Informationen aus dem Pre-Training. Beim Fine-Tuning können diese Repräsentationen direkt oder indirekt an die Zielaufgabe angepasst werden.
 
-Training sollte konservativ starten. Kleine Lernraten, klare Validierungsdaten und ein schrittweises Vorgehen reduzieren das Risiko von Overfitting. Bei Verfahren, die Schichten direkt verändern, kann ein schrittweises Auftauen helfen: zuerst die oberen Schichten, später bei Bedarf tiefere Teile des Modells.
+Bei einem vollständigen Fine-Tuning können auch Embedding-Schichten verändert werden. Das hilft, wenn eine Domäne eigene Terminologie, Abkürzungen oder Bedeutungsverschiebungen nutzt. Bei LoRA, Adapter-Verfahren oder anderen PEFT-Methoden bleiben die ursprünglichen Embeddings dagegen häufig unverändert; zusätzliche Parameter übernehmen die Anpassung.
 
-Evaluierungen werden vor dem Fine-Tuning definiert, nicht danach. Sonst fehlt die Baseline, gegen die das neue Modell verglichen wird. Trainings- und Validierungsmetriken sollten laufend beobachtet werden; Early Stopping ist sinnvoll, wenn sich die Validierungsqualität verschlechtert, während der Trainingsverlust weiter sinkt.
+Grenze: Embedding-Anpassung macht ein Modell nicht automatisch faktenreicher. Die Anpassung verändert eher die Verarbeitung bestimmter Muster, Schreibweisen oder Fachsprache. Für neues oder häufig wechselndes Wissen bleibt externer Kontext über Retrieval meist die robustere Lösung.
 
-### Technische Exzellenz
+# Daten- und Trainingsstrategie
 
-Checkpoints und Modellversionierung machen Fine-Tuning nachvollziehbar. Zwischenstände sollten so dokumentiert werden, dass Regressionen erkennbar bleiben und ein älteres Modell wiederhergestellt werden kann. Hyperparameter werden nicht nebenbei verändert, sondern systematisch verglichen, besonders Lernrate, Batch-Größe und Epochenanzahl.
+Datenqualität schlägt Datenmenge. Ein guter Trainingsdatensatz enthält realistische Eingaben, konsistente Zielantworten und genug Variation, damit das Modell nicht nur die einfachsten Fälle imitiert. Randfälle gehören bewusst in den Datensatz, wenn sie später im Betrieb relevant sind.
 
-Für größere Experimente sind Tracking-Werkzeuge wie TensorBoard, W&B oder MLflow hilfreich. Diese Werkzeuge ersetzen aber nicht die fachliche Bewertung: Ein glatter Trainingsverlauf beweist noch nicht, dass das Modell im Anwendungskontext besser geworden ist.
+Die Trainingsstrategie sollte klein beginnen. Ein begrenzter, gut kontrollierter Datensatz zeigt, ob das Verfahren überhaupt Wirkung hat. Danach können mehr Beispiele, andere Lernraten, zusätzliche Epochen oder PEFT-Varianten getestet werden. Checkpoints und Modellversionierung sind dabei keine Formalität, sondern Voraussetzung für nachvollziehbare Regressionstests.
 
-### Sicherheit und Effizienz
+In der Praxis entsteht ein guter Fine-Tuning-Datensatz häufig iterativ. Nach einem Trainingslauf werden Fehlermuster analysiert, unklare oder widersprüchliche Beispiele korrigiert und gezielt neue Beispiele ergänzt. Erst das trainierte Modell zeigt, welche Formulierungen es zu allgemein interpretiert, welche Pflichtdetails es auslässt und welche Randfälle fehlen.
 
-Sensible Daten werden vor dem Training anonymisiert oder ausgeschlossen. Rechtliche Anforderungen gelten nicht erst beim Deployment, sondern bereits bei Datensammlung, Upload, Training und Evaluation. Zusätzlich braucht das feinabgestimmte Modell dieselben Sicherheitsprüfungen wie jedes andere produktive LLM-System.
+Diese Iteration braucht eine Kontrollinstanz. Wer nur die zuletzt auffälligen Beispiele ergänzt, kann das Modell auf einzelne Testfragen optimieren, ohne die allgemeine Qualität zu verbessern. Deshalb sollten neben zufällig gezogenen Plausibilitätschecks auch feste Testfragen oder ein getrenntes Holdout-Set verwendet werden. So bleibt sichtbar, ob neue Trainingsdaten ein Fehlermuster wirklich reduzieren oder nur die nächste Antwort verbessern.
 
-Kosten entstehen nicht nur im Training, sondern auch in Evaluation, Wiederholungsläufen und späterer Nutzung. Token-Verbrauch, Ausgabelänge und Modellgröße sollten deshalb früh gemessen werden. Für sehr häufige, eng begrenzte Aufgaben kann Distillation günstiger sein als dauerhaft ein großes Modell zu verwenden.
+Bei Hyperparametern sind Lernrate, Batch-Größe und Epochenzahl besonders einflussreich. Zu aggressives Training kann Overfitting erzeugen; zu vorsichtiges Training bleibt wirkungslos. Wichtiger als die perfekte Einzelkonfiguration ist ein sauber dokumentierter Vergleich mehrerer Läufe.
 
-### Spezifische Techniken für erweiterte Anwendungen
+Ein weiteres Risiko ist Catastrophic Forgetting: Das Modell wird auf der Zielaufgabe besser, verliert aber außerhalb dieser engen Verteilung allgemeine Fähigkeiten. Deshalb sollten vor und nach dem Fine-Tuning einige einfache, domänenfremde Kontrollfragen geprüft werden. Bei engen Spezialdatensätzen kann ein kleiner Replay-Anteil mit allgemeinen Beispielen helfen, typischerweise ungefähr zehn Prozent der Trainingsdaten.
 
-Erweiterte Verfahren lohnen sich erst, wenn der Basisprozess stabil ist. Multi-Task Learning kann verwandte Aufgaben bündeln, erhöht aber die Anforderungen an Datenbalance und Evaluation. Quantisierung reduziert Speicherbedarf und kann mit Verfahren wie QLoRA kombiniert werden, muss aber gegen Qualitätsverluste getestet werden. Multimodale Verfahren brauchen zusätzlich kontrollierte Bildqualität, klare Datenschutzgrenzen und eigene Evaluationsfälle.
+# Sicherheit, Datenschutz und Kosten
 
-## Herausforderungen & Perspektiven
-### Skalierbarkeit
+Fine-Tuning kann sensible Daten dauerhaft in Trainingsartefakten verankern. Personenbezogene oder vertrauliche Inhalte müssen vor dem Training geprüft, minimiert oder anonymisiert werden. Das gilt auch dann, wenn ein Anbieter technische Schutzmechanismen bereitstellt.
 
-Fine-Tuning großer Modelle erfordert erhebliche Rechen- und Speicherkapazitäten. Parameter-effiziente Verfahren wie LoRA und QLoRA reduzieren diese Hürde, beseitigen sie aber nicht vollständig. Auch kleinere Trainingsläufe brauchen reproduzierbare Umgebungen, saubere Versionierung und ausreichend Zeit für Evaluation.
+Kosten entstehen nicht nur beim Trainingslauf. Datenaufbereitung, Evaluation, Fehlersuche, Deployment, Monitoring und spätere Aktualisierungen gehören zur Gesamtbetrachtung. Ein Modell, das pro Anfrage günstiger ist, kann trotzdem teurer werden, wenn seine Pflege aufwendig bleibt.
 
-### Ethische Überlegungen
+In vielen produktiven Systemen ist Modell-Distillation oder ein kleineres spezialisiertes Modell sinnvoll, sobald ein Aufgabenbereich stabil ist. Vorher sollte aber klar sein, welche Anforderungen unverändert bleiben und welche Fälle an ein stärkeres Modell, ein Tool oder einen Menschen eskaliert werden.
 
-Trainingsdaten können Verzerrungen enthalten, die sich auf das Modell übertragen oder verstärken. Datenschutz ist besonders kritisch, weil Trainingsdaten nicht wie Prompt-Kontext einfach aus einer einzelnen Anfrage entfernt werden können. Deshalb müssen Datenherkunft, Auswahlkriterien und bekannte Einschränkungen dokumentiert werden.
+# Herausforderungen und Perspektiven
 
-### Integration mit neuen Technologien
+Fine-Tuning großer Modelle bleibt ressourcenintensiv. PEFT, Quantisierung und kleinere Spezialmodelle senken die Einstiegshürde, lösen aber nicht die methodischen Probleme. Datenqualität, Evaluation und Drift bleiben die entscheidenden Faktoren.
 
-Edge Computing, verteiltes Training und IoT-Szenarien können Fine-Tuning attraktiver machen, wenn Latenz, Datenschutz oder Offline-Fähigkeit wichtiger sind als maximale Modellgröße. Für den Kurs bleibt das eine Vertiefung: Zuerst muss klar sein, ob Fine-Tuning überhaupt das richtige Werkzeug ist.
+Ethische Risiken entstehen vor allem über Trainingsdaten. Verzerrte Beispiele, unausgewogene betroffene Gruppen oder unklare Bewertungsregeln werden vom Modell nicht neutralisiert, sondern oft stabilisiert. Deshalb gehört die Dokumentation des Trainingsprozesses zur Qualitätssicherung.
 
-## Was für Entwickler zuerst wichtig ist
+Neue Einsatzfelder wie Edge Computing, IoT-Analysen oder verteiltes Training erweitern die technischen Möglichkeiten. Für die Methodenentscheidung ist aber wichtiger, ob die Zielaufgabe eng, messbar und stabil genug ist. Ohne diese drei Eigenschaften wird Fine-Tuning schnell zu einer teuren Form von Hoffnung.
 
-Fine-Tuning lohnt sich erst, wenn ein wiederkehrendes Verhalten stabil verändert werden soll und genügend saubere Trainings- und Evaluationsdaten vorliegen. Einzelne Fakten, wechselndes Wissen oder schlecht beschriebene Tools sind dagegen keine guten Trainingsgründe.
+# Fazit
 
-Grenze: Fine-Tuning ersetzt keine Wissensanbindung. Wenn Antworten deshalb falsch sind, weil aktuelle oder proprietäre Informationen fehlen, ist RAG meist der passendere erste Schritt.
+> [!NOTE] Fazit<br>
+> Fine-Tuning ist sinnvoll, wenn ein Modell ein klar messbares Verhalten wiederholt besser ausführen soll. Es ist schwach, wenn aktuelles Wissen, unklare Bewertungskriterien oder schlechte Daten das eigentliche Problem sind. Die Entscheidung beginnt deshalb mit Baseline und Evals, nicht mit dem Trainingsjob.
+
+---
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -285,11 +193,6 @@ Grenze: Fine-Tuning ersetzt keine Wissensanbindung. Wenn Antworten deshalb falsc
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.4<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-
-
-
-
-

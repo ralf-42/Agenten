@@ -51,8 +51,5 @@ Soweit für einzelne Inhalte, Quellcode, Notebooks, Materialien oder Dateien ein
 
 Soweit Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet und Inhalte Dritter nach Möglichkeit als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden betroffene Inhalte entfernt.
 
-nav_order: 1
----
-**Letzte Aktualisierung:** Mai 2026
-
+**Stand:** Juli 2026<br>
 

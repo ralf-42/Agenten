@@ -103,12 +103,12 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 ### ALT (nicht Kursstandard)
 ```python
 from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(model="gpt-5.4-nano")
 
 # Nicht bevorzugt im Kurs: Langnotation mit separaten Variablen
 model_provider = "openai"
 model_name = "gpt-5.4-nano"
-llm = init_chat_model(model_name, model_provider=model_provider, temperature=0)
+llm = init_chat_model(model_name, model_provider=model_provider)
 ```
 
 ### NEU (PFLICHT) - Kurznotation "provider:model"
@@ -1004,11 +1004,7 @@ result = safe_structured.invoke("Anna Müller ist 32 Jahre alt.")
 # 1. Model Initialization
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model(
-    "gpt-5.4-nano",
-    model_provider="openai",
-    temperature=0.0
-)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # 2. Structured Output
 from pydantic import BaseModel, Field
@@ -1246,6 +1242,6 @@ Beim Refactoring von altem Code:
 ---
 
 **Version:** 1.7<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

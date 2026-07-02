@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Memory-Systeme
 parent: Ablauf & Zustand
@@ -573,5 +573,5 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 ---
 
 **Version:** 1.4<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

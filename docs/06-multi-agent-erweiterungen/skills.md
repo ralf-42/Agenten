@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Skills
 parent: "Multi-Agent & Erweiterungen"
@@ -182,7 +182,7 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 ---
 
 **Version:** 1.7<br>
-**Stand:** Juni 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

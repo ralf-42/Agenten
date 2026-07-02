@@ -10,9 +10,11 @@ has_toc: true
 # Meeting- & Research-Briefing-Agent
 {: .no_toc }
 
-Ein Meeting- & Research-Briefing-Agent beantwortet Fragen zu einem Projektkorpus aus Protokollen, Entscheidungen, Risiken und Fachartikeln, findet relevante Passagen und belegt Aussagen mit Quellen. Er ist kein autonomes Entscheidungssystem, sondern ein **kontrolliertes Agentensystem**: Retrieval liefert Evidenz über ein Evidence Tool, Structured Output macht Antworten prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. Genau deshalb eignet sich diese Leitaufgabe gut, um Agenten nicht als Chatbot mit Werkzeugen zu verstehen, sondern als Zusammenspiel aus Aufgabe, Daten, Kontrolle und Evaluation.
+Ein Meeting- & Research-Briefing-Agent hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, offene Fragen und passende Fachartikel. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
-Drei Fähigkeiten ziehen sich als roter Faden durch den gesamten Bauplan: Der Agent muss **planen** (welches Tool, welche Route, welcher Worker, welcher Zustand gilt gerade), **handeln** (Tools ausführen, Evidenz abrufen, einen Workflow durchlaufen) und **prüfen** (Freigabe, Security, Evaluation vor jeder folgenreichen Ausgabe). RAG ist in diesem Bauplan kein Selbstzweck, sondern ein **Evidence Tool**: eine von mehreren kontrollierten Fähigkeiten, die der Agent gezielt einsetzt, nicht die alleinige Funktionsweise des Systems.
+Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt. Er bereitet ein Briefing vor. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
+
+Drei Fähigkeiten ziehen sich durch den Bauplan: Der Agent muss **planen** (welches Tool, welche Route, welcher Zustand gilt gerade), **handeln** (Tools ausführen, Evidenz abrufen, einen Workflow durchlaufen) und **prüfen** (Freigabe, Security, Evaluation vor jeder folgenreichen Ausgabe). RAG ist dabei kein Selbstzweck. Es ist ein **Evidence Tool**: eine kontrollierte Fähigkeit, die der Agent gezielt nutzt.
 
 Die Leitfrage lautet:
 
@@ -30,9 +32,11 @@ Die Leitfrage lautet:
 
 ## Ausgangssituation
 
-Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass" bei der fiktiven Nordlicht Software GmbH, sichtet regelmäßig Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten und Fachartikel. Dabei geht es um relevante Passagen in vielen Dokumenten, die mit einfacher Volltextsuche oft nicht schnell genug auffindbar sind und sich zwischen Protokollen sogar widersprechen können. Eine Suche nach Schlagwörtern liefert entweder zu viele Treffer oder übersieht semantisch passende Stellen sowie Konflikte zwischen Dokumenten.
+Mara Vogt leitet das interne Vorhaben "Projekt Kompass" bei der fiktiven Nordlicht Software GmbH. Vor Jour-fixe-Terminen liest sie Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten und Fachartikel. Oft sucht sie nicht ein einzelnes Stichwort, sondern den aktuellen Stand: Was wurde entschieden? Welche Risiken sind offen? Wo widersprechen sich ältere und neuere Unterlagen?
 
-Das Ziel ist kein Agent, der beliebige Antworten erzeugt. Der Mehrwert entsteht erst, wenn das System einen begrenzten Korpus nutzt, Quellen sichtbar macht und fehlende Evidenz nicht durch Modellwissen ersetzt. Ein Meeting- & Research-Briefing-Agent muss daher mehrere Dinge gleichzeitig können: relevante Passagen finden, Widersprüche und veraltete Stände erkennen, Antworten strukturieren und Grenzen offenlegen.
+Eine einfache Volltextsuche hilft nur begrenzt. Sie liefert zu viele Treffer, übersieht semantisch passende Stellen oder zeigt nicht, dass zwei Dokumente unterschiedliche Stände beschreiben.
+
+Das Ziel ist kein Agent, der beliebige Antworten erzeugt. Der Nutzen entsteht erst, wenn das System einen begrenzten Korpus nutzt, Quellen sichtbar macht und fehlende Evidenz nicht durch Modellwissen ersetzt. Der Agent muss relevante Passagen finden, Widersprüche erkennen, Antworten strukturieren und Grenzen offenlegen.
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/mara.png" class="logo" width="950"/>
 <p><font color='black' size="2">
@@ -41,7 +45,7 @@ KI-generiertes Bild
 
 ## Zielbild
 
-Ein brauchbarer Meeting- & Research-Briefing-Agent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Anfragen in natürlicher Sprache. Die Antwort enthält nicht nur eine Zusammenfassung, sondern auch Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
+Ein brauchbarer Meeting- & Research-Briefing-Agent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort enthält eine Zusammenfassung, Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
 In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
@@ -78,7 +82,7 @@ Für jede Passage sollten mindestens diese Metadaten verfügbar sein:
 
 ## Antwortschema
 
-Freitext reicht für einen Meeting- & Research-Briefing-Agenten nicht aus. Ohne Schema bleibt unklar, ob eine Antwort belegt ist, wie sicher sie ist und ob sie eine Korpusgrenze überschreitet. Ein minimales Antwortformat trennt deshalb Antwort, Quellen, Sicherheit und Hinweis.
+Freitext reicht für diesen Agenten nicht aus. Ohne Schema bleibt unklar, ob eine Antwort belegt ist, wie sicher sie ist und ob sie eine Korpusgrenze überschreitet. Ein minimales Antwortformat trennt deshalb Antwort, Quellen, Sicherheit und Hinweis.
 
 ```python
 from pydantic import BaseModel, Field
@@ -100,7 +104,9 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ## Leitplanken
 
-Der Meeting- & Research-Briefing-Agent bleibt ein Assistenzsystem für Briefing und Recherche. Diese Grenze ist fachlich wichtiger als die konkrete Modellwahl: Ein System, das fehlende Evidenz frei ergänzt oder Entscheidungen erfindet, kann trotz guter Architektur unbrauchbar sein. Die Leitplanken sind die konkrete Ausprägung von **Prüfen**: Sie legen fest, wann der Agent stoppen, eskalieren oder eine Ausgabe verweigern muss, statt eine plausible Antwort zu erzwingen.
+Der Meeting- & Research-Briefing-Agent bleibt ein Assistenzsystem für Briefing und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder Entscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
+
+Die Leitplanken setzen **Prüfen** praktisch um. Sie legen fest, wann der Agent stoppt, eskaliert oder eine Ausgabe verweigert, statt eine plausible Antwort zu erzwingen.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -144,9 +150,11 @@ Der Supervisor entscheidet nach Fragetyp, welche Rolle gebraucht wird. Bei Unsic
 
 ## Capstone und Transfer
 
-Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird, semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche und Antworten ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis nutzen. Mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt müssen erkennbar sein. Die Evaluation prüft nicht nur Positivfälle, sondern auch mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
+Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird und die semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche. Antworten nutzen ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis.
 
-Der Bauplan ist domänenübertragbar. Eine Legal-Research-Variante ergänzt etwa Aktenzeichen, Fundstellen und strengere Freigaberegeln; eine Compliance-Variante braucht Audit-Trail und Rollenklärung; ein reiner Research Assistant für Fachartikel verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
+Außerdem müssen mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt erkennbar sein. Die Evaluation prüft Positivfälle und mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
+
+Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein reiner Research Assistant für Fachartikel verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
 
 | Transferfall | Rolle |
 |---|---|
@@ -167,6 +175,6 @@ Der Bauplan ist domänenübertragbar. Eine Legal-Research-Variante ergänzt etwa
 
 ---
 
-**Version:** 2.0<br>
+**Version:** 2.1<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

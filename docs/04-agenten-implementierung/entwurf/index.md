@@ -18,3 +18,7 @@ Dieser Bereich behandelt die konzeptionellen und technischen Grundlagen, die vor
 | [Einsteiger Prompt-Templates](./einsteiger-prompts.html) | Fertige Prompt-Vorlagen für häufige Agenten-Aufgaben |
 | [Prompt Engineering](./prompt-engineering.html) | Systematische Prompt-Gestaltung für zuverlässige Agenten-Outputs |
 | [Tool Use & Function Calling](./tool-use-function-calling.html) | Tools definieren, sicher einbinden und Fehler abfangen |
+
+---
+
+**Stand:** Juli 2026<br>

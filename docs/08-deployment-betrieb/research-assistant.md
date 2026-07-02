@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Meeting- & Research-Briefing-Agent
 parent: "Deployment & Betrieb"
@@ -26,6 +26,9 @@ has_toc: true
 ## Projektübersicht
 
 In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Research-Briefing-Agent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Fachartikel sichten, sucht relevante Passagen und will geprüfte Briefings erhalten, statt einem vollautomatischen System blind zu vertrauen.
+
+> [!NOTE] Dateiname und URL<br>
+> Diese Seite liegt weiterhin unter `research-assistant.md`, damit bestehende Links stabil bleiben. Fachlich ist sie das Praxisprojekt **Meeting- & Research-Briefing-Agent**.
 
 Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Risikolisten und Fachartikeln, sucht semantisch nach relevanten Passagen, formuliert eine strukturierte Antwort mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung.
 
@@ -550,4 +553,4 @@ Der Agent darf fachliche Aussagen nur mit Quellenbezug ausgeben und muss fehlend
 ---
 
 **Version:** 2.0<br>
-**Stand:** Juli 2026
+**Stand:** Juli 2026<br>

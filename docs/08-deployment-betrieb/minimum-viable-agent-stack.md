@@ -91,7 +91,7 @@ Wie der Agent externe Tools und APIs aufruft — über MCP-Server, Browser-Autom
 | **Browser Use** | Web-Automatisierungs-Agenten | 78K GitHub-Sterne. Breakout-Kategorie 2025–2026. |
 | **ACP / A2A** | Agent-zu-Agent-Kommunikation | IBM (ACP) und Google (A2A). Entstehend, noch kein Standard. |
 
-Die Debatte über das Protokoll ist vorbei: MCP hat gewonnen. Die einzige offene Frage ist, wie MCP-Server abgesichert werden, bevor sie ausgenutzt werden. Zustandsverwaltung entfällt auf dieser Schicht vollständig — der Agent ruft ein Tool an, bekommt eine Antwort, fertig. Das Lock-in-Risiko ist gering, weil MCP ein offener Standard ist. Die Demo-Produktions-Lücke ist mittel: ein Demo-MCP-Server funktioniert problemlos, bis jemand eine bösartige Werkzeugbeschreibung schickt.
+MCP hat sich als wichtigster offener Standard für Agent-Tool-Kommunikation etabliert. Für den Kurs ist deshalb weniger die Protokollauswahl interessant, sondern die Absicherung der angebundenen Server. Zustandsverwaltung ist auf dieser Schicht begrenzt: Der Agent ruft ein Tool auf und erhält eine Antwort. Das Lock-in-Risiko ist geringer als bei proprietären Integrationen. Die Demo-Produktions-Lücke bleibt trotzdem spürbar, weil ein Demo-MCP-Server problemlos funktioniert, bis jemand eine bösartige Werkzeugbeschreibung oder unerwartete Parameter liefert.
 
 > [!TIP] Protokollschicht<br>
 > MCP hat standardisiert, wie Agenten Werkzeuge nutzen. Für Agent-zu-Agent-Kommunikation (ACP, A2A) hat noch keiner die kritische Masse erreicht. Wer heute Multi-Agenten-Koordination braucht, baut sie auf der Framework-Ebene selbst.
@@ -141,7 +141,7 @@ Die meisten Teams wählen zu viel Framework. Wenn der Agent ein Modell und einig
 
 Wie gemessen wird, ob der Agent seine Arbeit erfüllt — Läufe nachverfolgen, Ergebnisse bewerten und Regressionen erkennen, bevor Nutzer es tun.
 
-Die meisten Teams überspringen die Bewertung, bis in der Produktion etwas kaputtgeht. Bis dahin wird blind debuggt. Die LangChain State of Agent Engineering-Umfrage ergab, dass 89 % der Teams mit Produktionsagenten Observability implementiert haben, aber nur 52 % Evaluierungen vorweisen — diese 37-Punkte-Lücke ist der Punkt, an dem Produktionsqualität stirbt. Das Zustandsproblem auf dieser Schicht: ein Agent führt 12 Schritte durch, wählt in Schritt 3 das falsche Werkzeug, und die Schritte 4–12 waren von da an zum Scheitern verurteilt. Wer nur das Endergebnis prüft, findet die Ursache nie. Das Lock-in-Risiko ist moderat, weil die meisten Tools OpenTelemetrie-Traces exportieren. Die Demo-Produktions-Lücke ist die größte aller Schichten.
+Viele Teams überspringen Evaluation, bis in der Produktion etwas sichtbar schiefgeht. Bis dahin wird oft anhand einzelner Traces debuggt. Das Problem bei Agenten: Ein Lauf kann zwölf Schritte haben, in Schritt 3 das falsche Werkzeug wählen und danach trotzdem sauber weiterlaufen. Wer nur das Endergebnis prüft, findet die Ursache kaum. Das Lock-in-Risiko ist moderat, weil viele Tools OpenTelemetry-Traces exportieren. Die Demo-Produktions-Lücke ist auf dieser Schicht besonders groß.
 
 > [!TIP] Evaluierungsschicht<br>
 > Aktuelle Evaluierungswerkzeuge sind am stärksten für Einzelrunden- und Werkzeugaufruf-Bewertungen. Multi-Agenten-Bewertung und Long-Horizon-Task-Assessment sind ungelöste Probleme — wer diese Anforderungen hat, braucht eine maßgeschneiderte Evaluierungsinfrastruktur.
@@ -152,7 +152,7 @@ Die meisten Teams überspringen die Bewertung, bis in der Produktion etwas kaput
 
 Wie der Agent davon abgehalten wird, Dinge zu tun, die er nicht sollte — Eingaben filtern, Toolaufrufe autorisieren und Ausgaben validieren.
 
-Dies ist die am wenigsten ausgereifte Schicht im Stack. Es gibt kein dominantes Rahmenwerk, keine etablierten Muster. Im Jahr 2024 bedeuteten Leitplanken Ein-/Ausgabefilter bei einem Modell. Im Jahr 2026 ruft der Agent Werkzeuge auf, gibt Geld aus und ergreift Maßnahmen — Leitplanken bedeuten jetzt, Werkzeugaufrufe zu autorisieren, Ratenbegrenzungen durchzusetzen und zu validieren, was der Agent tatsächlich getan hat. OWASP veröffentlichte die MCP Top 10 (Beta) als erste echte Sicherheitscheckliste für tool-verbundene Agenten. Das Zustandsproblem: Leitplanken müssen wissen, was der Agent gerade tut, um zu entscheiden, was er als Nächstes nicht tun sollte — das erfordert Echtzeit-Statusverfolgung. Das Lock-in-Risiko ist gering (individuelle Richtlinien, selbst geschrieben). Die Demo-Produktions-Lücke ist unendlich: die Demo hat keine Schutzmechanismen, weil niemand versucht, sie zu zerstören.
+Dies ist die am wenigsten ausgereifte Schicht im Stack. Es gibt noch kein dominantes Rahmenwerk und nur wenige breit etablierte Muster. 2024 bedeuteten Leitplanken oft Ein- und Ausgabefilter bei einem Modell. 2026 ruft ein Agent Werkzeuge auf, verändert Daten und startet Prozesse. Leitplanken müssen deshalb Tool-Aufrufe autorisieren, Raten begrenzen und prüfen, was der Agent tatsächlich getan hat. Die OWASP MCP Top 10 (Beta) liefern dafür eine erste Sicherheitscheckliste für tool-verbundene Agenten. Das Zustandsproblem: Leitplanken müssen wissen, was der Agent gerade tut, um den nächsten Schritt begrenzen zu können. Das erfordert Statusverfolgung zur Laufzeit.
 
 > [!TIP] Sicherheitsschicht<br>
 > Bei Multi-Agenten-Workflows, bei denen Agenten sich gegenseitig delegieren, ist die Leitplanken-Propagation über Agentengrenzen hinweg ein ungelöstes Problem. Es braucht benutzerdefinierte Autorisierungslogik.
@@ -211,15 +211,15 @@ flowchart TD
 | **Memory & Knowledge** | Höchste. Das IST die State Layer. | Mittel. pgvector ist portabel. | Groß. Kontextfenster maskieren es. |
 | **Frameworks & SDKs** | Kommt auf das Lager an. SDKs abstrahieren es. | Höchste. Code portiert nicht. | Groß. Fehler nur in Prod. |
 | **Eval & Observability** | Jeden Schritt tracen oder blind debuggen. | Moderat. OTel hilft. | Größte. Die meisten haben null Evals. |
-| **Guardrails & Safety** | Muss selbst gebaut werden. | Niedrig. Eigener Policy-Code. | Unendlich. Demos haben keine. |
+| **Guardrails & Safety** | Muss oft selbst gebaut werden. | Niedrig. Eigener Policy-Code. | Sehr groß. Demos haben meist kaum Schutzmechanismen. |
 
 ---
 
 ## Das große Ganze
 
-Teams, die produktionsreife Agenten erfolgreich ausliefern, haben drei Dinge gemeinsam: Bewertung läuft bei jedem Einsatz, nicht einmal pro Quartal. Leitplanken sitzen auf der Werkzeugaufruf-Ebene, nicht auf der Ausgangsebene. Die Speicherarchitektur wurde bewusst entworfen und nicht aus dem Framework-Default übernommen.
+Teams, die produktionsreife Agenten erfolgreich ausliefern, haben drei Dinge gemeinsam: Evaluation läuft regelmäßig und nicht nur vor einer Demo. Leitplanken sitzen auf der Werkzeugaufruf-Ebene, nicht erst auf der finalen Ausgabe. Die Speicherarchitektur wurde bewusst entworfen und nicht ungeprüft aus dem Framework-Default übernommen.
 
-Der Stack wird sich konsolidieren. Provider-SDKs integrieren bereits Speicher, Tool-Calling und grundlegende Evaluierung in eine einzige API. Anfang 2027 werden die meisten Teams jede Schicht nicht mehr separat bauen. Aber auch dann muss bekannt sein, welche Schicht ausgefallen ist, wenn etwas in der Produktion ausfällt — dafür ist dieses Dokument da.
+Der Stack wird sich weiter konsolidieren. Provider-SDKs integrieren bereits Speicher, Tool-Calling und grundlegende Evaluation in eine API. Trotzdem bleibt wichtig zu wissen, welche Schicht betroffen ist, wenn ein Agent im Betrieb falsche Entscheidungen trifft, zu teuer wird oder seine Grenzen überschreitet.
 
 ---
 
@@ -233,8 +233,8 @@ Der Stack wird sich konsolidieren. Provider-SDKs integrieren bereits Speicher, T
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Eval & Observ Best Practices
+title: "Evaluation & Observability: Best Practices"
 parent: "Qualität & Sicherheit"
 nav_order: 4
 description: Wie Agenten mit Baselines, Traces, Regressionen und einfachem Harness belastbar werden
 has_toc: true
 ---
 
-# Agent Evaluation & Observability Best Practices
+# Evaluation & Observability: Best Practices
 {: .no_toc }
 
 > **Gute Agenten brauchen nicht nur gute Antworten, sondern auch sichtbare Fehler, vergleichbare Tests und kontrollierte Weiterentwicklung.**
@@ -22,9 +22,9 @@ has_toc: true
 
 ---
 
-## Intro
+## Worum es hier geht
 
-Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) (Evaluation & Observability). Dort geht es vor allem um die Grundidee. Hier geht es um die praktische Umsetzung im Kursalltag: Was sollte bei Agenten immer gemessen werden, was sollte immer sichtbar sein und wie lässt sich verhindern, dass scheinbare Verbesserungen das System an anderer Stelle verschlechtern.  
+Diese Seite ergänzt die Konzeptseite [Woher zeigt sich, ob ein Agent gut arbeitet?]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}). Dort geht es um die Grundidee. Hier geht es um die Umsetzung im Kurs: Was wird immer gemessen? Was muss im Trace sichtbar sein? Und wie verhindert man, dass eine scheinbare Verbesserung an anderer Stelle neue Fehler erzeugt?
 
 Die Seite richtet sich an Teilnehmende, die bereits einfache Agenten mit Tools, LangGraph oder LangSmith bauen. Es geht nicht um vollständige Produktionsarchitektur, sondern um einen belastbaren Mindeststandard.
 
@@ -32,7 +32,7 @@ Typischer Fehler: Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen 
 
 ## Evaluation und Observability: die Arbeitsaufteilung
 
-Evaluation und Observability gehören zusammen, erfüllen aber unterschiedliche Aufgaben. Evaluation prüft, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. Observability macht sichtbar, warum ein Durchlauf gut, schlecht, teuer oder instabil war.
+Evaluation und Observability gehören zusammen, haben aber unterschiedliche Aufgaben. Evaluation prüft, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. Observability zeigt, warum ein Durchlauf gut, schlecht, teuer oder instabil war.
 
 Für Einsteiger hilft eine einfache Unterscheidung. Evaluation ist der geplante Qualitätscheck gegen bekannte Fälle. Observability ist der Blick in den echten Ablauf mit Traces, Tool-Aufrufen, Latenzen und Fehlern. Erst beides zusammen ergibt ein belastbares Bild.
 
@@ -68,7 +68,7 @@ In der Praxis relevant, wenn: Zwei Varianten ähnlich gut wirken, aber eine davo
 
 ## Ein kleines Evaluationsset reicht am Anfang
 
-Ein belastbarer Einstieg braucht kein riesiges Dataset. Für viele Kursbeispiele genügt ein kleines, gepflegtes Set aus Standardfällen, Randfällen und Negativfällen. Wichtig ist nicht Vollständigkeit, sondern bewusste Auswahl.
+Ein belastbarer Einstieg braucht kein riesiges Dataset. Für viele Kursbeispiele genügt ein kleines, gepflegtes Set aus Standardfällen, Randfällen und Negativfällen. Entscheidend ist nicht Vollständigkeit, sondern eine bewusste Auswahl.
 
 ```python
 examples = [
@@ -207,7 +207,7 @@ config = {
     "metadata": {
         "dataset_version": "eval-v1",
         "thread_id": "thread-4711",
-        "model_version": "gpt-4.1",
+        "model_version": "gpt-5.4-nano",
     },
 }
 ```
@@ -259,8 +259,8 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.1<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

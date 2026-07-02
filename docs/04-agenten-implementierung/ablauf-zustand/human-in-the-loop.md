@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Human-in-the-Loop
 parent: Ablauf & Zustand
@@ -154,7 +154,7 @@ Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. E
 ---
 
 **Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -27,7 +27,7 @@ has_toc: true
 
 Die DSGVO gilt seit 2018 in der gesamten EU. Die Verordnung schreibt vor, wie personenbezogene Daten — also Daten, die sich einer natürlichen Person zuordnen lassen — erhoben, verarbeitet und gespeichert werden dürfen. Wer einen Agenten baut, der Kundenfragen beantwortet, E-Mails analysiert oder Bewerbungsunterlagen auswertet, verarbeitet fast zwangsläufig personenbezogene Daten.
 
-Das Besondere bei LLM-basierten Systemen: Datenschutzverstöße entstehen oft nicht absichtlich. Ein Entwickler schickt einen Kundennamen im Prompt mit, weil es das Testen vereinfacht. Ein Agent liest eine E-Mail aus und übergibt den vollständigen Text an die API. Der LangSmith-Trace enthält eine Kundennummer. Keines dieser Szenarien erfordert böse Absicht — es reicht, nicht aktiv darüber nachgedacht zu haben.
+Das Besondere bei LLM-basierten Systemen: Datenschutzverstöße entstehen oft nebenbei. Ein Entwickler schickt einen Kundennamen im Prompt mit, weil es das Testen vereinfacht. Ein Agent liest eine E-Mail aus und übergibt den vollständigen Text an die API. Der LangSmith-Trace enthält eine Kundennummer. Dafür braucht es keine böse Absicht. Es reicht, Datenflüsse nicht bewusst zu planen.
 
 **In der Praxis relevant wenn:** Ein Agent auf echte Nutzerdaten zugreift, E-Mails oder Dokumente verarbeitet, Antworten auf der Basis von Profildaten personalisiert oder Ergebnisse in einer Datenbank speichert.
 
@@ -47,7 +47,7 @@ Bevor Daten in einen Prompt gelangen, sollten drei Fragen beantwortet sein:
 
 **Anonymisieren statt weglassen:** In vielen Fällen genügt es, den echten Namen durch einen Platzhalter zu ersetzen. Statt `Max Müller hat folgendes Problem: ...` lässt sich `Ein Nutzer hat folgendes Problem: ...` oder `[NAME] hat folgendes Problem: ...` verwenden. Die Qualität der Antwort leidet meist nicht.
 
-Für die automatische Erkennung und Maskierung von personenbezogenen Daten gibt es das Open-Source-Werkzeug `presidio` von Microsoft, das Namen, E-Mails, Telefonnummern und andere PII-Typen zuverlässig erkennt.
+Für die automatische Erkennung und Maskierung von personenbezogenen Daten gibt es Werkzeuge wie `presidio` von Microsoft. Solche Werkzeuge helfen bei Namen, E-Mails, Telefonnummern und anderen PII-Typen. Sie ersetzen aber keine fachliche Prüfung der Datenflüsse.
 
 ```python
 from presidio_analyzer import AnalyzerEngine
@@ -79,7 +79,7 @@ Nicht jeder KI-Dienst eignet sich für jeden Anwendungsfall. Die Entscheidung h�
 | Personenbezogene Daten (Standard) | Kundenfragen, interne E-Mails | Dienst mit AVV/DPA, klarer Datenhaltung und dokumentiertem Zweck |
 | Besondere Kategorien (Art. 9 DSGVO) | Gesundheitsdaten, Bewerbungsunterlagen | Lokales Modell oder streng kontrollierte Unternehmensumgebung |
 
-Bei Cloud-LLM-APIs müssen Datenkontrollen konkret geprüft werden: Werden Eingaben zum Training verwendet? Welche Logs entstehen? Wie lange werden Inhalte gespeichert? Gibt es einen Auftragsverarbeitungsvertrag, Datenresidenzoptionen oder regionale Verarbeitung? Für OpenAI API-Daten gilt beispielsweise: API-Daten werden standardmäßig nicht zum Training genutzt, sofern nicht aktiv zugestimmt wird; Abuse-Monitoring-Logs und Application State können aber je nach Endpoint und Konfiguration entstehen. Solche Details gehören in die technische und organisatorische Bewertung.
+Bei Cloud-LLM-APIs müssen Datenkontrollen konkret geprüft werden: Werden Eingaben zum Training verwendet? Welche Logs entstehen? Wie lange werden Inhalte gespeichert? Gibt es einen Auftragsverarbeitungsvertrag, Datenresidenzoptionen oder regionale Verarbeitung? Solche Details gehören in die technische und organisatorische Bewertung, nicht nur in eine Produktauswahl nach Anbietername.
 
 Azure OpenAI, OpenAI-Datenresidenzoptionen, Enterprise-Verträge oder andere Anbieterangebote können für personenbezogene Daten geeignet sein, müssen aber konkret geprüft werden: Region, Subprozessoren, Vertragsgrundlage, Logging, Löschfristen und tatsächliche Datenflüsse zählen mehr als der Produktname.
 
@@ -134,7 +134,7 @@ Entwickler müssen das nicht selbst aushandeln — aber sie sollten wissen, dass
 
 ## Datenschutz by Design
 
-Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret, dass personenbezogene Daten möglichst früh im Datenfluss gefiltert oder anonymisiert werden — bevor sie in Prompt, RAG-Index, Tool-Aufruf, Notebook-Ausgabe oder Trace landen.
+Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret: personenbezogene Daten möglichst früh im Datenfluss filtern oder anonymisieren, bevor sie in Prompt, RAG-Index, Tool-Aufruf, Notebook-Ausgabe oder Trace landen.
 
 Datenschutz by Default ergänzt dieses Prinzip: Die voreingestellte Konfiguration sollte möglichst datensparsam sein. Tracing sollte keine Klardaten in Metadaten schreiben, RAG-Indizes sollten keine unnötigen personenbezogenen Daten enthalten, Memory sollte nicht automatisch alles dauerhaft speichern, Tool-Zugriffe sollten minimal berechtigt sein und Logs sollten kurze, begründete Aufbewahrungsfristen haben.
 
@@ -185,8 +185,8 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.1<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

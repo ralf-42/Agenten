@@ -182,17 +182,17 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 {: .important }
 > **Migrationspflicht bei LangChain 0.x-Code.** Alte Chain-/Agent-Patterns (`initialize_agent()`, `AgentExecutor`, `LLMChain`, `PydanticOutputParser`) erzeugen in neuen Projekten Deprecation-Warnings oder passen nicht mehr zum 1.x-Stil. Direkte Provider-Klassen wie `ChatOpenAI()` sind nicht der Kursstandard; im Kurs wird `init_chat_model()` verwendet. Bestehenden Code vor der Nutzung im Kurs auf 1.0+ migrieren.
 
-## ⚠️ Breaking Changes: 0.x → 1.0+
+## Breaking Changes: 0.x → 1.0+
 
 ### Migration-Tabelle
 
 | Alt (0.x) | Neu (1.0+) | Status |
 |-----------|------------|--------|
 | `ChatOpenAI()` direkt | `init_chat_model()` | Nicht Zielstil |
-| `PydanticOutputParser` | `with_structured_output()` | ⛔ Deprecated |
-| `Tool()` wrapper | `@tool` decorator | ⛔ Deprecated |
-| `initialize_agent()` | `create_agent()` | ⛔ Deprecated |
-| `AgentExecutor` | `create_agent()` (gibt Graph zurück) | ⛔ Deprecated |
+| `PydanticOutputParser` | `with_structured_output()` | Deprecated |
+| `Tool()` wrapper | `@tool` decorator | Deprecated |
+| `initialize_agent()` | `create_agent()` | Deprecated |
+| `AgentExecutor` | `create_agent()` (gibt Graph zurück) | Deprecated |
 
 ### Beispiel-Migration
 
@@ -201,7 +201,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(model="gpt-5.4-nano")
 agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
 ```
 
@@ -210,25 +210,25 @@ agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 agent = create_agent(model=llm, tools=tools, debug=True)
 ```
 
 ---
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. API-Keys sicher verwalten
 
 ```python
-# ✅ GUT: Umgebungsvariablen
+# Gut: Umgebungsvariablen
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
-# ❌ SCHLECHT: Hardcoded API-Keys
+# Schlecht: Hardcoded API-Keys
 api_key = "sk-..."  # NIEMALS!
 ```
 
@@ -263,7 +263,7 @@ middleware = [
 
 ---
 
-## 🧪 Testing Best Practices
+## Testing Best Practices
 
 ### Unit Tests
 
@@ -285,7 +285,7 @@ def test_calculator_tool():
 
 ```python
 def test_agent_with_tools():
-    llm = init_chat_model("openai:gpt-4o-mini")
+    llm = init_chat_model("openai:gpt-5.4-nano")
 
     @tool
     def get_weather(location: str) -> str:
@@ -302,7 +302,7 @@ def test_agent_with_tools():
 
 ---
 
-## 📚 Weitere Ressourcen
+## Weitere Ressourcen
 
 - **LangChain Tutorial:** [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
 - **LangGraph Tutorial:** [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})
@@ -323,7 +323,7 @@ def test_agent_with_tools():
 ---
 
 **Version:** 2.0 (konsolidiert)<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

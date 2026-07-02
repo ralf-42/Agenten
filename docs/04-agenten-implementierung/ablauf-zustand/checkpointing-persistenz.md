@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Checkpointing & Persistenz
 parent: Ablauf & Zustand
@@ -158,7 +158,7 @@ from langchain.chat_models import init_chat_model
 class ConversationState(TypedDict):
     messages: Annotated[list, add_messages]
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 def chat_node(state: ConversationState) -> ConversationState:
     response = llm.invoke(state["messages"])
@@ -320,7 +320,7 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 ---
 
 **Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

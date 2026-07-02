@@ -1,17 +1,17 @@
 ---
 layout: default
-title: Produktionsreife Anwendung
+title: Produktionsreife Agentenanwendung
 parent: "Deployment & Betrieb"
 nav_order: 2
-description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen GenAI-Anwendung
+description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen Agentenanwendung
 has_toc: true
 ---
 
-# Produktionsreife Anwendung
+# Produktionsreife Agentenanwendung
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Wie wird aus einem Notebook eine wartbare, testbare und deploybare GenAI-Anwendung?
+> Wie wird aus einem Notebook eine wartbare, testbare und deploybare Agentenanwendung?
 
 ---
 
@@ -25,7 +25,7 @@ has_toc: true
 
 ## Überblick
 
-Die GenAI-Anwendung wurde in einem Jupyter Notebook entwickelt und getestet. Jetzt soll sie in den Produktivbetrieb. Diese Anleitung zeigt Schritt für Schritt, wie dieser Übergang gelingt.
+Die Agentenanwendung wurde in einem Jupyter Notebook entwickelt und getestet. Jetzt soll sie in den Produktivbetrieb. Diese Anleitung zeigt Schritt für Schritt, wie dieser Übergang gelingt.
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
@@ -169,7 +169,7 @@ from llm_client import LLMClient
 
 def main():
     client = LLMClient()
-    antwort = client.frage("Was ist GenAI?")
+    antwort = client.frage("Was ist ein KI-Agent?")
     print(antwort)
 
 if __name__ == "__main__":
@@ -249,7 +249,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from llm_client import LLMClient
 
-app = FastAPI(title="Meine GenAI App")
+app = FastAPI(title="Meine Agenten-App")
 client = LLMClient()
 
 class Anfrage(BaseModel):
@@ -302,13 +302,13 @@ CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```bash
 # Image bauen
-docker build -t meine-genai-app .
+docker build -t meine-agenten-app .
 
 # Container starten (mit Umgebungsvariablen)
 docker run -p 8000:8000 \
   -e OPENAI_API_KEY="sk-projekt-key" \
   -e MODEL_NAME="gpt-5.4-nano" \
-  meine-genai-app
+  meine-agenten-app
 ```
 
 ---
@@ -353,19 +353,19 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 > [!WARNING] Hardcoding-Patterns vermeiden<br>
 > API-Keys und Secrets direkt im Code oder in Notebooks sind der häufigste Sicherheitsfehler beim Deployment. Solche Werte landen unweigerlich in der Git-Historie und sind danach praktisch nicht mehr rückholbar.
 
-**❌ API-Keys im Code**
+**API-Keys im Code**
 → Immer Umgebungsvariablen verwenden
 
-**❌ Alle Notebook-Zellen 1:1 übernommen**
+**Alle Notebook-Zellen 1:1 übernommen**
 → Zu sauberen Funktionen und Klassen refaktorieren
 
-**❌ `pip freeze` ohne Aufräumen**
+**`pip freeze` ohne Aufräumen**
 → Nur benötigte Pakete behalten
 
-**❌ Keine Fehlerbehandlung**
+**Keine Fehlerbehandlung**
 → API-Fehler abfangen und sinnvolle Meldungen ausgeben
 
-**❌ Kein Health-Check**
+**Kein Health-Check**
 → Deployment-Plattformen brauchen diesen Endpunkt
 
 ---
@@ -386,8 +386,8 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

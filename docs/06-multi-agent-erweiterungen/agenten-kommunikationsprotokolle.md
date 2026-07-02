@@ -116,11 +116,29 @@ Dadurch entsteht ein wichtiger Vorteil: Neue Fähigkeiten eines Servers können 
 
 In der Praxis relevant, wenn: Viele Tools angebunden werden sollen oder sich Fähigkeiten auf Serverseite ändern, ohne dass der Agent jedes Mal neu entwickelt werden soll.
 
+## MCP und Function Calling sind nicht dasselbe
+
+Function Calling beschreibt, wie ein Modell einen strukturierten Werkzeugaufruf erzeugt. MCP beschreibt, wie Anwendungen solche Fähigkeiten entdecken, beschreiben und über eine einheitliche Protokollschicht nutzen können. In vielen Systemen bleibt Function Calling die Modellseite, während MCP die Integrationsseite bereitstellt.
+
+| Frage | Function Calling | MCP |
+|---|---|---|
+| Wer erzeugt den Aufruf? | das Modell | Host und Client nutzen Server-Fähigkeiten |
+| Wer definiert das Tool? | meist die Anwendung | ein MCP-Server |
+| Was wird standardisiert? | Aufrufformat für das Modell | Entdeckung, Beschreibung und Nutzung externer Fähigkeiten |
+| Wann lohnt es sich? | wenige lokale Tools | wiederverwendbare Tools, Datenquellen oder Prompts über mehrere Clients |
+
+Nicht geeignet, wenn eine Anwendung nur ein oder zwei stabile lokale Funktionen braucht. Dann erhöht MCP die Komplexität, ohne ein echtes Integrationsproblem zu lösen.
+
 ## Was bei MCP schnell zum Problem wird
 
 Sobald ein Agent Dateisysteme, APIs oder Codeausführung erreichen kann, wird Sicherheit zu einer Architekturfrage. Freigaben, Berechtigungen und Eingabekontrolle sind dann kein Zusatz, sondern Teil des Designs. Besonders heikel wird es, wenn ein Modell über natürliche Sprache dazu gebracht werden soll, auf sensitive Werkzeuge zuzugreifen.
 
 Grenze: Ein einheitliches Protokoll macht Integrationen leichter, aber es macht gefährliche Aktionen nicht automatisch sicher. Explizite Freigaben und klare Tool-Grenzen bleiben notwendig.
+
+> [!WARNING] Tool-Beschreibungen sind keine Vertrauensgrenze<br>
+> Ein Modell sieht Tool-Namen und Beschreibungen als Steuerungsinformation. Diese Beschreibungen können falsch, zu weit gefasst oder absichtlich irreführend sein. Host-Anwendungen müssen Server, Tool-Rechte und Freigaben getrennt prüfen.
+
+Für Kurs- und Projektkontexte reichen drei Regeln als Mindeststandard: Nur nachvollziehbare MCP-Server verbinden, Server nur auf notwendige Datenräume begrenzen und riskante Aktionen vor Dateiänderungen, externen Aufrufen oder Weitergabe sensibler Daten freigeben lassen.
 
 ## A2A: wenn Agenten mit anderen Agenten sprechen
 
@@ -320,7 +338,7 @@ Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, w
 ---
 
 **Version:** 1.2<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

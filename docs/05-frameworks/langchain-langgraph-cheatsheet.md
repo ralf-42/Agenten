@@ -563,5 +563,5 @@ def contains_expected(outputs: dict, reference_outputs: dict) -> bool:
 ---
 
 **Version:** 1.0<br>
-**Stand:** Juni 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

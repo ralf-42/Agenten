@@ -24,7 +24,9 @@ has_toc: true
 ---
 
 ## Modellrollen im Kurs
-Die Kursunterlagen verwenden keine freie Modellrangliste, sondern eine rollenbasierte Konfiguration in `genai_lib.model_config.py`. Dort ist festgelegt, welches Modell für einfache Demos, Worker, Planung, Bewertung, Übersetzung und Embeddings verwendet wird.
+Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Latenz, Kosten, Kontextfenster, Tool-Unterstützung und Modalität zur Aufgabe passen. Im Kurs wird deshalb nicht überall ein einzelnes Modell fest eingetragen, sondern eine Rolle verwendet: Baseline, Router, Worker, Planner, Judge, Coding, Übersetzung oder Embedding.
+
+Diese Rollen stehen in `genai_lib.model_config.py`. Die Datei ist der technische Kursstandard. Wer ein Notebook liest, soll nicht zuerst konkrete Produktnamen interpretieren müssen, sondern erkennen, welche Aufgabe ein Modell im Agentensystem übernimmt.
 
 Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. Für viele Agentenschritte sind Kosten, Latenz, Tool-Zuverlässigkeit oder strukturierte Ausgabe wichtiger als maximale Benchmark-Leistung.
 
@@ -41,7 +43,10 @@ Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. F
 | Übersetzung | `TRANSLATOR_FAST`, `TRANSLATOR`, `TRANSLATOR_PREMIUM` | `openai:gpt-5.4-nano`, `openai:gpt-5.4-mini`, `openai:gpt-5.5` | Rohübersetzung, Kursmaterial, finale Veröffentlichung |
 | Embeddings | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
-Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Worker, Planner oder Judge ist.
+Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Router, Worker, Planner oder Judge ist. Die konkreten Modell-IDs sind Kurskonfiguration, nicht allgemeine Marktberatung. Vor produktiven Projekten muss die aktuelle Provider-Dokumentation geprüft werden, weil Modellverfügbarkeit, Preise und API-Parameter regelmäßig wechseln.
+
+> [!IMPORTANT] Standard vor Produktname<br>
+> In Notebooks werden nach Möglichkeit Rollen aus `model_config.py` verwendet. Harte Modellnamen stehen nur dort direkt im Notebook, wo ein bestimmter Endpunkt oder ein bewusstes Vergleichsexperiment gezeigt wird.
 
 > [!IMPORTANT] GPT-5.x-Konfiguration<br>
 > Modelle der GPT-5.x-Serie werden in den Kursmaterialien nicht pauschal mit `temperature` konfiguriert. Qualitätssteuerung erfolgt über präzise Prompts sowie bei Bedarf über `reasoning.effort` und `text.verbosity`.
@@ -109,7 +114,7 @@ Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten.
 |---|---|---|---|---|
 | Baseline / Demo | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
 | Router / leichter Reasoner | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
-| Judge / starker Reasoner | `gpt-5.4` | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-6` |
+| Judge / starker Reasoner | `gpt-5.4` | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-7` |
 | Worker / Synthese | `gpt-5.4-mini` | `mistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
 | Coding-Worker | `gpt-5.4-mini` | `devstral-latest` oder `codestral-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
 | Embeddings | `text-embedding-3-small` | `mistral-embed` | `gemini-embedding-2-preview` | externer Provider nötig |
@@ -242,8 +247,8 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.4<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

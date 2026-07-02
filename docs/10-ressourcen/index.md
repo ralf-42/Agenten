@@ -17,3 +17,7 @@ Diese Orientierungsseite ist der inhaltliche Werkzeugkasten für die Arbeit mit 
 | **Welche** Demos helfen beim Verstehen? | [Interaktive Visualisierungen]({{ '/10-ressourcen/interaktive-visualisierungen.html' | relative_url }}) | Interaktive Erklärungen und Anschauungsmaterial. |
 | **Wo** finde ich Vertiefung? | [Linksammlung]({{ '/10-ressourcen/links.html' | relative_url }}) | Kuratierte Quellen und weiterführende Materialien. |
 | **Wie** wechsle ich von Colab nach lokal? | [Von Colab zu Local]({{ '/10-ressourcen/colab-zu-lokal.html' | relative_url }}) | Lokale Arbeitsumgebung und Transfer aus Notebook-Setups. |
+
+---
+
+**Stand:** Juli 2026<br>

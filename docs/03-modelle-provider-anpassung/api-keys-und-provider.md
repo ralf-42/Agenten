@@ -10,8 +10,8 @@ has_toc: true
 # API-Keys & Provider
 {: .no_toc }
 
-> **LLM-Provider im Überblick**
-> API-Keys, Free Tiers, Guthabenmodelle und Google-Colab-Integration
+> [!NOTE] Kernfrage<br>
+> Wie bekommen Kursteilnehmende sicher und nachvollziehbar Zugriff auf Modelle?
 
 ---
 
@@ -23,9 +23,11 @@ has_toc: true
 
 ---
 
-## Übersicht der LLM-Provider
+## Provider im Kurskontext
 
-Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, LangChain-Integrationen, Kostenmodelle und kostenlose Einstiegsoptionen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig und werden deshalb nicht als verlässliches Kurskriterium geführt. Maßgeblich ist, ob ein API-Key ohne Abrechnung nutzbar ist oder ob vor der ersten produktiven Nutzung Billing aktiviert werden muss.
+Für den Kurs zählt zuerst, ob ein Provider zuverlässig im Notebook funktioniert, wie API-Keys verwaltet werden und ob vor der Nutzung Kosten entstehen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig. Sie sind deshalb kein stabiles Kurskriterium.
+
+Die Tabelle zeigt den Stand vom 1. Mai 2026. Vor produktiven Projekten müssen Verfügbarkeit, Preise und Datenschutzbedingungen beim Anbieter geprüft werden.
 
 | Model Provider | Integration Package | Kostenmodell | Kostenlos nutzbar? | Hinweise / Besonderheiten |
 |---|---|---|---|---|
@@ -57,7 +59,7 @@ Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, La
 
 ### Sichere API-Key Verwaltung in Colab
 
-**Best Practice: Colab Secrets verwenden**
+Verwende in Colab Secrets statt API-Keys direkt in Codezellen. So bleiben Notebooks teilbar, ohne dass Zugangsdaten versehentlich mitwandern.
 
 {: .warning }
 > **LangSmith (EU/US-Endpunkte):** Wenn Sie LangSmith nutzen, legen Sie Account und API-Key im **EU-Workspace** an (`https://eu.smith.langchain.com/`) und verwenden Sie als `LANGSMITH_ENDPOINT` den EU-API-Endpoint `https://eu.api.smith.langchain.com`.
@@ -67,9 +69,11 @@ Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, La
 !pip install langchain-{provider}
 ```
 
-**So speichern Sie Keys in Colab Secrets:**
-1. Klicken Sie auf das Schlüssel-Symbol 🔑 in der linken Sidebar
-2. Fügen Sie Ihren API-Key hinzu (z.B. `OPENAI_API_KEY`)
+So speicherst du Keys in Colab Secrets:
+
+1. Öffne in Colab die Secrets-Seitenleiste.
+2. Lege den Key mit dem passenden Namen an, zum Beispiel `OPENAI_API_KEY`.
+3. Gib den Key nur für das Notebook frei, das ihn wirklich braucht.
 
 ### Provider-spezifische Installation
 
@@ -77,55 +81,59 @@ Diese Tabelle bietet eine Übersicht (Stand: 1. Mai 2026) über LLM-Provider, La
 ```python
 !pip install langchain-openai
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 ```
 
 **Google Gemini:**
 ```python
 !pip install langchain-google-genai
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("google:gemini-pro", temperature=0.0)
+llm = init_chat_model("google:gemini-3-flash-preview")
 ```
 
 **Groq:**
 ```python
 !pip install langchain-groq
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("groq:mixtral-8x7b-32768", temperature=0.0)
+llm = init_chat_model("groq:llama-3.3-70b-versatile")
 ```
 
 ---
 
-## Kostenlose Provider-Empfehlungen
+## Provider für erste Übungen
 
-### Für Anfänger & Studenten
+Für erste Kursübungen sind Anbieter hilfreich, die ohne große Einrichtung starten und klare Limits haben. Die folgenden Optionen sind keine allgemeine Marktberatung, sondern typische Einstiegspfade für Übungen.
 
 **1. Google AI Studio (Gemini)**
-- ✅ **Free Tier** für die Gemini API, modell- und regionabhängig
-- ✅ **Google AI Studio** bleibt als Oberfläche kostenlos nutzbar
-- ✅ **Native Colab-Integration**
-- ✅ **Multimodal** (Text, Bild, Audio)
+- Free Tier für die Gemini API, modell- und regionabhängig
+- Oberfläche über Google AI Studio
+- einfache Colab-Nutzung
+- multimodale Eingaben je nach Modell
 
 **2. Groq**
-- ✅ **Sehr schnell** (Hardware-beschleunigt)
-- ✅ **Großzügige kostenlose Limits**
-- ✅ **Open-Source-Modelle** (Llama, Mixtral)
+- sehr schnelle Inferenz für unterstützte Modelle
+- Free Tier mit Rate Limits
+- geeignet für Llama- und andere Open-Weight-Modelle
 
 **3. Cloudflare Workers AI**
-- ✅ **Kostenloser Einstieg** mit Limits
-- ✅ **Keine Kreditkarte nötig**
-- ✅ **Mehrere Modelle verfügbar**
+- Einstieg mit Limits
+- häufig ohne Kreditkarte nutzbar
+- mehrere Modelle in einer Plattform
 
-### Für Produktivnutzung
+### Für produktionsnahe Tests
 
 **OpenAI API**
-- 💰 **Prepaid API-Credits** mit Mindestaufladung typischerweise 5 USD
-- ✅ **Beste Qualität** für komplexe Aufgaben
-- ✅ **Breite LangChain-Unterstützung**
+- Prepaid API-Credits mit Mindestaufladung typischerweise 5 USD
+- im Kurs als Standardpfad für viele Beispiele verwendet
+- breite LangChain-Unterstützung
 
 **Together AI**
-- 💰 **Freemium** mit kostenlosen Credits
-- ✅ **Open-Source-Modelle** zu günstigen Preisen
+- Credits oder Pay-as-you-go je nach aktuellem Angebot
+- interessant für Open-Weight-Modelle
+
+---
+
+## Lokale Modelle ohne API-Keys
 
 ---
 
@@ -133,7 +141,7 @@ llm = init_chat_model("groq:mixtral-8x7b-32768", temperature=0.0)
 
 ### Ollama in Google Colab
 
-Für vollständige Kontrolle und keine API-Kosten:
+Lokale Modelle sind sinnvoll, wenn keine Cloud-API genutzt werden soll oder Daten die Umgebung nicht verlassen dürfen. In Colab hängt die Nutzbarkeit stark von GPU, RAM und Modellgröße ab.
 
 ```python
 # Ollama in Colab installieren (mit GPU-Unterstützung)
@@ -142,19 +150,19 @@ Für vollständige Kontrolle und keine API-Kosten:
 !ollama pull llama3
 
 # Mit LangChain verwenden
-from langchain_community.llms import Ollama
-llm = Ollama(model="llama3")
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("ollama:llama3")
 ```
 
 **Vorteile:**
-- ✅ Keine API-Kosten
-- ✅ Vollständige Datenkontrolle
-- ✅ Offline-fähig
-- ✅ GPU-beschleunigt in Colab
+- keine API-Kosten
+- mehr Kontrolle über Daten
+- auch offline nutzbar
+- GPU-beschleunigt in Colab, wenn passende Ressourcen verfügbar sind
 
 **Nachteile:**
-- ⚠️ Langsamere Performance als Cloud-APIs
-- ⚠️ Begrenzte Modellgröße (RAM-Limits)
+- meist langsamer als Cloud-APIs
+- begrenzte Modellgröße durch RAM- und GPU-Limits
 
 ---
 
@@ -191,8 +199,8 @@ llm = Ollama(model="llama3")
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

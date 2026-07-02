@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Tokenizing & Chunking
 parent: Kontext & Wissen
@@ -313,5 +313,5 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 ---
 
 **Version:**    1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

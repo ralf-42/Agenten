@@ -21,7 +21,7 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Recherche-Hintergrund, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
 
 > [!NOTE]
-> Der Ordner heißt weiterhin `korpus_meeting_briefing`, damit bestehende Notebook- und Dokumentationspfade stabil bleiben. Fachlich ist dies der **Meeting- & Research-Briefing-Korpus**. Für neue Dokumentation kann `korpus_meeting_briefing` als Alias verwendet werden, solange der tatsächliche Pfad nicht geändert wird.
+> Der Ordner heißt jetzt `korpus_meeting_briefing`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
 
 ## Maschinenlesbare Metadaten
 
@@ -77,10 +77,10 @@ Die passenden Eval-Dateien liegen unter `02_daten/05_sonstiges/`:
 
 | Datei | Rolle | Hinweis |
 |---|---|---|
-| `eval_meeting_briefing.json` | reguläre Fragen | Enthält Fragen zum Meeting- & Research-Briefing-Korpus; Name bleibt aus Kompatibilitätsgründen erhalten. |
+| `eval_meeting_briefing.json` | reguläre Fragen | Enthält Fragen zum Meeting- & Research-Briefing-Korpus. |
 | `eval_meeting_briefing_edge.json` | Edge Cases | Enthält Negativ-, Konflikt-, Mehrdeutigkeits-, Prompt-Injection- und Versionierungsfälle. |
 
-Für neue Texte kann von `eval_meeting_briefing.json` gesprochen werden. Der technische Dateiname sollte erst geändert werden, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden.
+Die früheren `eval_research*`-Dateinamen wurden abgelöst; Notebooks und Dokumentation verweisen auf die neuen Dateien.
 
 ## Gute Eval-Fragetypen
 

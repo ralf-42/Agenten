@@ -1,0 +1,205 @@
+=== M16_Checkpointing_Sessions.ipynb [PRETTY(1922 lines)] cells=53 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Checkpointing macht **Planen** ueber mehrere Aufrufe hinweg moeglich — der Research Assistant haelt den Arbeitszustand einer laufenden Recherche fest, statt bei jeder Anfrage bei null anzufangen. Das ist der Unterschied zu einfachem Chat-Memory: Nicht nur der Gesprächsve
+  cell 6 id=a1f654e5 type=markdown [RESEARCH-ASSISTANT/PIA]
+  ***Conditional Routing & Tool-Loop*** aus M10 hat entschieden, welcher Pfad in einem einzelnen Lauf aktiv wird. Für den Research Assistant entsteht jetzt ein anderes Problem: Pia stellt Folgefragen zu einem Fachartikel und erwartet, dass der vorherige Kontext erhalten bleibt. |  | Ohne Checkpointing sta
+  cell 7 id=eda759c9 type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown ❌ Anti-Pattern: Folgefrage ohne Checkpoint { display-mode: "form" } | from typing import Annotated | from typing_extensions import TypedDict |  | from langchain_core.messages import HumanMessage, AIMessage | from langgraph.graph import StateGraph, START, END | from langgraph.graph.message import add_
+  cell 14 id=dfae0465 type=code [RESEARCH-ASSISTANT/PIA]
+  thread_pia = {"configurable": {"thread_id": "research-pia-rag"}} | thread_max = {"configurable": {"thread_id": "research-max-security"}} | run_cfg = {"run_name": "M16 InMemorySaver Research Session", "tags": ["M16", "InMemorySaver"], "metadata": {"persona": "Pia"}} |  | fragen_pia = [ |     "Merke dir: Thema 
+  cell 16 id=3be819b5 type=markdown [RESEARCH-ASSISTANT/PIA]
+  Der **`thread_id`** ist der Schlüssel zur Session-Isolation. Jeder Wert erzeugt eine unabhängige Konversation. Unterschiedliche Research-Sessions greifen dadurch nicht gegenseitig auf ihren State zu. |  | **Thread-ID-Strategien:** |  | | Strategie | Beispiel | Einsatz | | |-----------|---------|--------| | | **
+  cell 17 id=61b504c2 type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown   <p><font size="4" color='green'>  Thread-ID Isolation</font> </br></p> |  | diagram = """ | %%{init: {'theme':'forest'}}%% | flowchart TD |     CP[("InMemorySaver\ngeteilter Speicher")] |  |     PIA["Pia\nthread_id = research-pia-rag"] <-->|lesen / schreiben| CP |     MAX["Max\nthread_id = research-max
+  cell 18 id=62661006 type=code [RESEARCH-ASSISTANT/PIA]
+  # Zwei getrennte Threads speichern zwei getrennte Kontexte. | run_cfg = {"run_name": "M16 Thread Isolation", "tags": ["M16", "InMemorySaver", "Isolation"], "metadata": {"persona": "Max"}} | frage_an_assistant("Merke dir: Thema ist Prompt-Injection und Tool-Grenzen.", thread_max) |  | pia_res = frage_an_assi
+  cell 22 id=4dfec55a type=code [RESEARCH-ASSISTANT/PIA]
+  # State der Pia-Session inspizieren | session_cfg_inspect = thread_pia | snapshot = graph.get_state(session_cfg_inspect) | messages = snapshot.values.get("messages", []) |  | print(f"Gespeicherte Nachrichten: {len(messages)}") | print(f"Nächster Node: {snapshot.next or '(fertig)'}") | print() |  | print("=== Letzte N
+  cell 25 id=dd5139e2 type=code [RESEARCH-ASSISTANT/PIA]
+  from pathlib import Path | from langgraph.checkpoint.sqlite import SqliteSaver |  | DB_PATH = "./m16_checkpoints.sqlite" | session_cfg = {"configurable": {"thread_id": "sqlite-demo-pia"}} | run_cfg = {"run_name": "M16 SQLite Checkpointing", "tags": ["M16", "SQLite"], "metadata": {"persona": "Pia"}} |  | # Saubere
+  cell 28 id=8oivXvymjRbN type=markdown [OLD-TERM]
+   |  | LangGraph-Checkpointing deckt **Kurzzeit-Gedächtnis** ab: die aktive Konversationshistorie einer Session. Produktive Systeme benötigen oft mehrere Speicher-Ebenen: |  | | Ebene | Technologie | Inhalt | Lebensdauer | | |-------|------------|--------|-------------| | | **Session-State** | `InMemorySaver` | 
+  cell 32 id=2Vg1XimPicUp type=markdown [OLD-TERM]
+  **Was passiert hier?** |  | 1. `erstelle_session_id(...)` bildet Session-IDs aus kontrollierten Auth-Daten. | 2. `MAX_NACHRICHTEN` begrenzt die an das Modell übergebene History. | 3. Der Checkpoint kann mehr Nachrichten enthalten als der LLM-Aufruf nutzt. | 4. Das schützt nicht vor allen Risiken, verhindert a
+  cell 35 id=UnucxagficUp type=code [RESEARCH-ASSISTANT/PIA]
+  # Akzeptanzkriterien: Persistenz und Session-Isolation prüfen | session_cfg_pia = thread_pia | session_cfg_max = thread_max |  | pia_state = graph.get_state(session_cfg_pia).values | max_state = graph.get_state(session_cfg_max).values |  | pia_messages = pia_state.get("messages", []) | max_messages = max_state.get(
+  cell 36 id=gmjmhIWricUp type=markdown [OLD-TERM]
+  # 10 | Wo einsetzen? | --- |  | Dasselbe Checkpointing-Pattern eignet sich außerhalb des Research-Assistant-Fadens für: |  | 1. **Support-Triage:** Eine Eskalation wird unterbrochen, später mit derselben Ticket-Session fortgesetzt und behält Diagnosefragen im State. | 2. **Code-Review-Agent:** Kommentare, offen
+  cell 40 id=m16-aufgabe-grundlagen type=markdown [RESEARCH-ASSISTANT/PIA]
+  **Grundlagen** | - Einen `ResearchState` mit `messages`, `thema`, `offene_frage` und `fortschritt` definieren. | - `SqliteSaver` als Checkpointer nutzen (`./research_session.db`). | - Pro Research-Session eine eigene `thread_id` verwenden, zum Beispiel `research-pia-rag`. | - Den kompilierten Graph in `mein
+  cell 41 id=1fef75c6 type=code [RESEARCH-ASSISTANT/PIA]
+  # Grundlagen: ResearchState + SqliteSaver | import sqlite3 | from pathlib import Path | from typing import Annotated | from typing_extensions import TypedDict | from langchain_core.messages import AIMessage | from langgraph.graph import StateGraph, START, END | from langgraph.graph.message import add_messages |  | tr
+  cell 52 id=UZ5im50dlJoM type=code [OLD-TERM]
+  # Selbstcheck: Routing-Entscheidung bei hohem Fortschritt prüfen | assert route_by_fortschritt({"fortschritt": 8}) == "review_node",     "❌ Bei fortschritt >= 8 sollte der Review-Pfad gewählt werden." |  | assert route_by_fortschritt({"fortschritt": 3}) == "research_node",     "❌ Bei niedrigem Fortschritt
+
+=== M17_Human_in_the_Loop.ipynb [PRETTY(1923 lines)] cells=45 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Human-in-the-Loop ist die konkrete Umsetzung von **Pruefen** im Research Assistant — eine unsichere oder folgenreiche Antwort geht nicht automatisch raus, sondern wird vor der Ausgabe gestoppt und freigegeben. Freigabe ist damit kein Zusatzfeature, sondern ein Produktmer
+  cell 5 id=f367ef4e type=markdown [OLD-TERM]
+  ***Checkpointing & Sessions*** führte Checkpointing ein – der State bleibt über Aufrufe hinweg erhalten.   | **Dieses Modul** ergänzt das entscheidende Kontrollmuster: **der Mensch wird in den Ablauf eingebunden.** |  | Ohne HITL läuft ein Agent vollautomatisch – inklusive kritischer Aktionen.   | Mit HITL 
+  cell 6 id=3e797c86 type=code [OLD-TERM]
+  #@markdown   <p><font size="4" color='green'>  HITL Workflow</font> </br></p> |  | diagram = ''' | %%{init: {'theme':'forest'}}%% | flowchart TD |     START([START]) --> A["🤖 Agent Node"] |     A --> INT["⏸️ interrupt()\nGraph pausiert"] |     INT -->|"Checkpoint gespeichert"| H["👤 Mensch\nprüft & entscheidet"] |  
+  cell 8 id=847c572a type=markdown [OLD-TERM]
+  **Wie funktioniert `interrupt()`?** |  | ```python | from langgraph.types import interrupt, Command |  | def genehmigung_node(state): |     # Pausiert den Graphen und gibt den Wert an den Aufrufer |     antwort = interrupt({"frage": "Genehmigen?", "daten": state["entwurf"]}) |     return {"genehmigt": antwort == "j
+  cell 11 id=e77f7902 type=markdown [OLD-TERM]
+  Das **Approval-Pattern** ist das häufigste HITL-Muster:   | Ein Agent erstellt einen Vorschlag – der Mensch genehmigt oder lehnt ab. |  | > **In diesem Notebook wird eine echte Review-Entscheidung simuliert.**   | > `input()` pausiert die Zelle bis zur Eingabe und Bestätigung mit Enter.   | > genau so wartet 
+  cell 12 id=949cd5e1 type=code [OLD-TERM]
+  from typing import Annotated | from typing_extensions import TypedDict | from langchain.chat_models import init_chat_model | from langchain_core.messages import HumanMessage, SystemMessage, AIMessage | from langgraph.graph import StateGraph, START, END | from langgraph.graph.message import add_messages | from l
+  cell 15 id=af9565fd type=code [OLD-TERM]
+  import uuid |  | run_cfg = {"run_name": "M17-Kap3-Approval-HITL", "tags": ["m17", "approval"]} | # Eindeutige thread_id verhindert Konflikte beim Mehrfach-Ausführen | cfg1 = {"configurable": {"thread_id": f"redaktion-{uuid.uuid4().hex[:6]}"}, **run_cfg} |  | # ── Schritt 1: LLM erstellt Entwurf ────────────────
+  cell 28 id=0de9a9dd type=code [OLD-TERM]
+  run_cfg_f = {"run_name": "M17-Kap5-Genehmigung-HITL", "tags": ["m17", "tool-approval"]} | cfg_f = {"configurable": {"thread_id": f"freigabe-{uuid.uuid4().hex[:6]}"}, **run_cfg_f} |  | # ── Schritt 1: Anfrage stellen – LLM plant Tool-Aufruf ─────────────────────── | result = freigabe_graph.invoke( |     {"mess
+  cell 31 id=9d223134 type=code [OLD-TERM]
+  # LangSmith-optimiertes HITL-Beispiel | # ────────────────────────────────────────────────────────────────────────────── | # In LangSmith beobachten: | #   Run 1 → Status "interrupted" (bis zur Eingabe) | #   Run 2 → Status "success"    (nach Command(resume=...)) | # ──────────────────────────────────────────
+  cell 35 id=m17-aufgabe-kontext type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  <p><font color='black' size="5"> | user-in-the-Loop für den Research Assistant | </font></p> |  | Der Research Assistant soll Vorschläge nicht blind übernehmen. Kritische Änderungen, etwa eine neue Antwortfassung oder eine Quellenentscheidung, werden vor der Anwendung durch einen menschlichen Review-Schritt
+  cell 37 id=m17-code-grundlagen type=code [OLD-TERM]
+  # Grundlagen: Review-Graph mit interrupt() | from typing import TypedDict |  | from langgraph.checkpoint.memory import InMemorySaver | from langgraph.graph import END, START, StateGraph | from langgraph.types import Command, interrupt |  |  | class ResearchReviewState(TypedDict): |     frage: str |     entwurf: str |    
+
+=== M18_Memory_Systeme.ipynb [PRETTY(2527 lines)] cells=60 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Memory ist kontrolliertes Kontextmanagement über eine einzelne Sitzung hinaus — der Research Assistant kann frühere Fragen, bereits geprüfte Quellen oder wiederkehrende Themen einer Nutzerin für späteres **Planen** nutzen. Wichtig ist die Abgrenzung: Memory ist kontrolli
+  cell 6 id=uDb0gUT82914 type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+   | M16 hat gezeigt, wie Checkpointing eine laufende Research-Session wiederaufnehmbar macht. M18 zieht die Grenze zur dauerhaften Memory-Schicht: Pia möchte wiederkehrende Research-Präferenzen wie Ausgabeformat, Interessengebiet und Ausschlussregeln behalten, aber keine flüchtigen Session-Details unge
+  cell 7 id=m18-antipattern-memory type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown ❌ Anti-Pattern: alles dauerhaft speichern { display-mode: "form" } | # Deterministische Demo: flüchtige und sensible Session-Details landen ungeprüft im persistenten Memory. |  | session_notizen = [ |     "Dauerhaft erlaubt: Pia bevorzugt Antworten mit Kurzfazit und Quellenhinweisen.", |     "Nur S
+  cell 8 id=m18-pattern-intro type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  # 2 | Memory als kontrollierte Schicht | --- |  | Genau dieses Problem löst eine getrennte Memory-Architektur. Checkpointing beantwortet, was in einer laufenden Session passiert ist. Memory-Systeme beantworten, welche Informationen nach bewusster Prüfung in späteren Sessions wieder auftauchen dürfen. |  | Für
+  cell 14 id=cell-0007 type=code [RESEARCH-ASSISTANT/PIA]
+  class BufferState(TypedDict): |     messages: Annotated[list, add_messages] |  |  | def _research_memory_antwort(messages: list) -> str: |     history_text = "\n".join(getattr(msg, "content", str(msg)) for msg in messages) |     aktuelle_nachricht = getattr(messages[-1], "content", str(messages[-1])) if message
+  cell 16 id=cell-0008 type=code [RESEARCH-ASSISTANT/PIA]
+  session_cfg = {"configurable": {"thread_id": "buffer-demo"}} | run_cfg = {"run_name": "M18_BufferMemory", "tags": ["m18", "buffer"]} |  | for nachricht in ["Pia arbeitet am Thema RAG-Evaluation.", "Gewünschtes Format ist Kurzfazit plus Quellenhinweise.", "Welche Research-Vorgaben sind bekannt?"]: |     resu
+  cell 27 id=cell-0013 type=code [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  session_cfg = {"configurable": {"thread_id": "summary-demo"}} | run_cfg = {"run_name": "M18_SummarizationMemory", "tags": ["m18", "summarization"]} |  | themen = [ |     "Pia untersucht RAG-Evaluation für Fachartikel.", |     "Die Antwort soll knapp sein und Quellenhinweise enthalten.", |     "Out-of-Corpus-Fra
+  cell 32 id=cell-0017 type=code [RESEARCH-ASSISTANT/PIA]
+  run_cfg = {"run_name": "M18_SemanticMemory", "tags": ["m18", "semantic-memory"]} |  | speicher_result = memory_speichern.invoke({ |     "information": "Präferenz: Pia bevorzugt Kurzfazit, Quellenhinweis und Unsicherheitsmarkierung." | }, config=run_cfg) | mprint(f"**Speichern:** {speicher_result}") |  | abruf_res
+  cell 35 id=cell-0019 type=code [RESEARCH-ASSISTANT/PIA]
+  from pydantic import BaseModel, Field |  | class Entitaet(BaseModel): |     name: str = Field(description="Name der Entität, zum Beispiel Dokument, Projekt oder Methode") |     beschreibung: str = Field(description="Kurze Beschreibung in einem Satz") |     kategorie: str = Field(description="Dokument, Projekt
+  cell 38 id=cell-0020 type=code [RESEARCH-ASSISTANT/PIA]
+  session_cfg = {"configurable": {"thread_id": "entity-demo"}} | run_cfg = {"run_name": "M18_EntityMemory", "tags": ["m18", "entity-memory"]} |  | nachrichten = [ |     "Pia analysiert Dokument Korpusstudie-01 im Projekt Research Assistant.", |     "Korpusstudie-01 behandelt Retrieval-Qualität und das Projekt R
+  cell 42 id=2306c634 type=code [RESEARCH-ASSISTANT/PIA]
+  session_cfg = {"configurable": {"thread_id": "research-pia-sqlite"}} | run_cfg = {"run_name": "M18_SqliteSaver", "tags": ["m18", "sqlite"]} |  | result = persistent_app.invoke( |     {"messages": [HumanMessage(content="Dauerhaft erlaubt: Pia arbeitet am Thema RAG-Evaluation.")]}, |     config={**session_cfg, 
+  cell 46 id=cell-0022 type=code [RESEARCH-ASSISTANT/PIA]
+  def get_config(user_id: str) -> dict: |     return {"configurable": {"thread_id": f"research-user-{user_id}"}} |  | run_cfg = {"run_name": "M18_PerUser", "tags": ["m18", "per-user"]} | session_cfg_pia = get_config("pia") | session_cfg_max = get_config("max") |  | buffer_app.invoke( |     {"messages": [HumanMessage(
+  cell 51 id=m18-task-basic-code type=code [RESEARCH-ASSISTANT/PIA]
+  # Grundlagen: Write-Regel für persistentes Memory | def darf_dauerhaft_speichern(text: str) -> bool: |     text_l = text.lower() |     erlaubte_marker = ["präferenz", "ausgabeformat", "quellen", "out-of-corpus", "themeninteresse"] |     verbotene_marker = ["api-key", "secret", "rohnotiz", "nicht speichern",
+  cell 56 id=m18-task-deep type=markdown [RESEARCH-ASSISTANT/PIA]
+  **Vertiefung** | - Per-User-Isolation ergänzen: `research_memory_by_user[user_id][key]`. | - Zwei Nutzer mit unterschiedlichen Präferenzen speichern. | - Prüfen, dass Abrufe nicht zwischen Nutzern vermischt werden. |  | **✅ Erledigt wenn:** Pia und Max erhalten getrennte Memory-Einträge. | 
+  cell 57 id=m18-task-deep-code type=code [RESEARCH-ASSISTANT/PIA]
+  # Vertiefung: Per-User-Memory | research_memory_by_user = {} |  | def user_memory_speichern(user_id: str, key: str, text: str) -> str: |     if not darf_dauerhaft_speichern(text): |         return "Nicht gespeichert" |     research_memory_by_user.setdefault(user_id, {})[key] = text |     return "Gespeichert" |  | def
+  cell 58 id=m18-task-deep-selfcheck type=code [RESEARCH-ASSISTANT/PIA]
+  # Selbstcheck: Vertiefung | assert "Quellen" in user_memory_abrufen("pia", "format"), "❌ Pia-Memory enthält nicht die erwartete Quellen-Präferenz." | assert "Security" in user_memory_abrufen("max", "format"), "❌ Max-Memory enthält nicht die erwartete Security-Präferenz." | assert user_memory_abrufen("pia"
+
+=== M19_Multi_Agent_Patterns.ipynb [PRETTY(1681 lines)] cells=39 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Der Research Assistant beginnt als Einzelagent — Rollenaufteilung lohnt sich erst, wenn unterschiedliche Fragetypen oder Dokumentarten unterschiedliche Fähigkeiten brauchen. Die Leitaufgabe skizziert dafür einen Supervisor mit spezialisierten Workern (z. B. für Tabellen 
+  cell 4 id=578fdf74 type=markdown [RESEARCH-ASSISTANT/PIA]
+  # 1 | Übersicht | --- |  | M16 und M18 machten den Research Assistant zustandsfähig: Session-Kontext und dauerhaft kuratierte Memory-Informationen können erhalten bleiben. M19 ergänzt die Team-Struktur: Tabellen-, Fließtext- und Synthese-Arbeit werden getrennt, damit Pia nachvollziehbare Antworten mit Que
+  cell 5 id=6591f193 type=markdown [RESEARCH-ASSISTANT/PIA]
+  | Einzel-Agent im Research Assistant | Multi-Agent-Team im Research Assistant | | |---|---| | | Ein Prompt muss Tabellen, Prosa, Qualität und Antwortstil zugleich abdecken | Jeder Worker hat eine klar begrenzte Aufgabe | | | Fehler sind schwer einer Teilaufgabe zuzuordnen | Worker-Ausgaben sind einzeln pr
+  cell 6 id=ff8eb334 type=markdown [RESEARCH-ASSISTANT/PIA]
+  <p><font color='darkblue' size="4"> | ℹ️ <b>Information:</b> | </font></p> |  | Multi-Agent lohnt sich nur bei echten Zuständigkeitsgrenzen. Für Pia sind das vor allem Tabellenbefunde, Fließtextargumente, Quellenprüfung und finale Synthese. Ohne solche Grenzen wäre ein einzelner Graph einfacher und robuster
+  cell 7 id=4005af56 type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown <p><font size="4" color='green'>Drei Multi-Agent-Pattern im Research Assistant</font></p> |  | diagram = '\n%%{init: {\'theme\':\'forest\'}}%%\nflowchart LR\n    subgraph SUP["Supervisor"]\n        direction TB\n        SV["Supervisor\nRouting nach Fragetyp"]\n        SV --> TB["Tabellen-Work
+  cell 15 id=3bc1d03c type=markdown [RESEARCH-ASSISTANT/PIA]
+  <p><font color='darkblue' size="4"> |   <b>Wichtig:</b> | </font></p> |  | Ein Supervisor ist nicht automatisch besser. Er kostet zusätzliche Routing-Schritte und kann Fehler verschleppen, wenn die Zuständigkeiten unscharf sind. Im Research Assistant ist er sinnvoll, wenn Fragetypen unterschiedliche Spezial
+  cell 16 id=e682801c type=markdown [RESEARCH-ASSISTANT/PIA]
+  # 4 | Pattern 2: Subgraphen und Hierarchie | --- |  | Ein hierarchisches Pattern kapselt Teilteams als wiederverwendbare Subgraphen. Für Pia kann ein Quellen-Team intern Tabellen- und Fließtextarbeit koordinieren; der Hauptgraph sieht nur das fertige Quellenpaket. | 
+  cell 21 id=fb511b6a type=markdown [RESEARCH-ASSISTANT/PIA]
+  # 5 | Pattern 3: Pipeline | --- |  | Die Pipeline ist die stabilste Variante, wenn die Reihenfolge feststeht. Für den Research Assistant ist das häufig der günstigste Startpunkt: Quellen sammeln, Evidenz prüfen, Antwort formulieren. | 
+  cell 28 id=f40188c7 type=markdown [RESEARCH-ASSISTANT/PIA]
+  # A | Aufgabe | --- |  | <p><font color='darkblue' size="4"> | ✏️  <b>Notiz:</b> | </font></p> |  | Die Aufgabe erweitert den Research Assistant um ein kleines Spezialisten-Team. Die Selfchecks stehen direkt unter der jeweiligen Umsetzung und prüfen nur sichtbare, stabile Artefakte. | 
+  cell 29 id=dfe978d5 type=markdown [RESEARCH-ASSISTANT/PIA]
+  **Grundlagen** |  | Zwei spezialisierte Funktionen für Pia modellieren: ein Tabellen-Worker extrahiert Kennzahlen, ein Fließtext-Worker extrahiert Argumente. Beide Ergebnisse müssen getrennt im State sichtbar sein. |  | **Erledigt wenn:** `grundlagen_result` enthält `tabellenbefund` und `fliess_text_befund`
+  cell 38 id=7ac0521b type=markdown [RESEARCH-ASSISTANT/PIA]
+  <p><font color='darkblue' size="4"> | ✨ <b>Empfehlung:</b> | </font></p> |  | Transfer auf andere Fälle: Multi-Agent-Pattern eignen sich für Compliance-Prüfung, Meeting-Briefing oder Code-Review, wenn echte Spezialistenrollen existieren. Der Research Assistant bleibt der Referenzfall: Tabellen-Worker, Fließ
+
+=== M20_Supervisor_Pattern.ipynb [PRETTY(1609 lines)] cells=39 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Der Supervisor übernimmt für den Research Assistant genau die Routing-Entscheidung aus der Leitaufgabe — je nach Fragetyp an einen spezialisierten Worker delegieren, statt einen Generalisten alles machen zu lassen. Die Supervisor-Logik ist **Planen** in Reinform, wird ab
+  cell 4 id=ce280ddf type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  # 1 | Übersicht | --- |  | M19 führte Multi-Agent-Pattern im Überblick ein. M20 vertieft das Supervisor-Pattern für den Research Assistant: Der Supervisor entscheidet nach Fragetyp, ruft spezialisierte Worker auf, begrenzt Schleifen und gibt erst nach Quellen- und Qualitätsprüfung frei. | 
+  cell 5 id=c106590b type=markdown [RESEARCH-ASSISTANT/PIA]
+  | Problem im Research Assistant | Supervisor-Lösung | | |---|---| | | Tabellenfrage, Fließtextfrage und Vergleichsfrage brauchen unterschiedliche Bearbeitung | Routing nach Fragetyp | | | Worker können unvollständige oder unbelegte Ergebnisse liefern | Kritik- und Quellen-Gate | | | Supervisor-Schleifen kön
+  cell 7 id=0b28f31c type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown <p><font size="4" color='green'>Supervisor im Research Assistant</font></p> |  | diagram = '\n%%{init: {\'theme\':\'forest\'}}%%\nflowchart TD\n    START([START]) --> SUP["Supervisor\nFragetyp + State prüfen"]\n    SUP -->|tabellarisch| TAB["Tabellen-Worker"]\n    SUP -->|argumentativ| TXT["F
+  cell 8 id=a615b34b type=markdown [OLD-TERM]
+  # 2 | Anti-Pattern: Supervisor ohne Abbruchbedingung | --- |  | Ein Supervisor, der nur entscheidet, aber keinen Fortschritt prüft, kann denselben Worker wiederholt starten. Das folgende Beispiel scheitert kontrolliert: Nach fünf Runden gibt es noch keine finale Antwort. | 
+  cell 21 id=fe068f9c type=code [OLD-TERM]
+  def kontrollierter_lauf(frage: str, max_iter: int = 3) -> dict: |     state = { |         "frage": frage, |         "fragentyp": "", |         "route": "", |         "tabellenbefund": "", |         "textbefund": "", |         "vergleichsbefund": "", |         "quellenstatus": "", |         "synthese": "", |         "kr
+  cell 26 id=1f24945d type=markdown [OLD-TERM]
+  # 7 | Debugging mit Trace und Log | --- |  | Für den Kurs reicht nicht, dass eine finale Antwort erscheint. Der Pfad zur Antwort muss sichtbar sein: Supervisor-Entscheidungen, Worker-Ausgaben, Quellenstatus und Kritik-Gate. | 
+  cell 28 id=14665000 type=markdown [RESEARCH-ASSISTANT/PIA]
+  # A | Aufgabe | --- |  | <p><font color='darkblue' size="4"> | ✏️  <b>Notiz:</b> | </font></p> |  | Die Aufgaben erweitern den Supervisor des Research Assistants. Jeder Selfcheck steht direkt unter der zugehörigen Umsetzung und prüft konkrete State-Felder. | 
+  cell 30 id=cb6c8b34 type=code [RESEARCH-ASSISTANT/PIA]
+  # Grundlagen: vorhandenen Supervisor als Arbeitsgraph verwenden | mein_supervisor = supervisor_graph | run_cfg = {"run_name": "M20-Aufgabe-Grundlagen", "tags": ["m20", "aufgabe", "grundlagen"]} | mein_result = mein_supervisor.invoke( |     { |         "frage": "Warum sind Quellenhinweise im Research Assistant
+
+=== M21_Hierarchical_Pattern.ipynb [MINIFIED] cells=37 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Eine Hierarchie lohnt sich für den Research Assistant nur, wenn ein einzelner Supervisor die Fachbreite nicht mehr abdeckt — etwa wenn Recherche, Qualitätsprüfung und Freigabe getrennte Verantwortungsebenen brauchen. Ohne echten Bedarf bleibt Hierarchie ein Architektur-S
+  cell 6 id=9581a906 type=markdown [RESEARCH-ASSISTANT/PIA]
+  <p><font color='darkblue' size="4"> | ℹ️ <b>Information:</b> | </font></p> |  | Für Pia wird Hierarchie erst relevant, wenn der Research Assistant mehrere interne Teams braucht: Quellenarbeit, Antwortsynthese und Qualitätsprüfung. Eine einzelne Tabellenfrage braucht keine Hierarchie. | 
+  cell 7 id=1a6a411b type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown <p><font size="4" color='green'>Flat vs. Hierarchisch im Research Assistant</font></p> |  | diagram = """ | %%{init: {'theme':'forest'}}%% | flowchart LR |     subgraph FLAT["Flat: Supervisor Pattern"] |         FS["Supervisor"] --> FT["Tabellen-Worker"] |         FS --> FX["Text-Worker"] |         FS --
+
+=== M22_Agentic_RAG.ipynb [MINIFIED] cells=35 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Agentic RAG macht das Evidence Tool des Research Assistant selbst kontrolliert entscheidungsfähig — mehrstufige Suche, Nachfassen bei unklaren Treffern, Budget für Retrieval-Aufrufe. Abgrenzung zu Basic RAG (M11-M14): Dort ruft die Chain den Retriever fest verdrahtet ein
+  cell 4 id=c101c237 type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  # 1 | Übersicht | --- |  | M13 und M14 zeigten RAG als Chain und als Agent-Tool. M22 vertieft Agentic RAG: Ein Agent darf Retrieval-Schritte planen, aber nur innerhalb klarer Grenzen. Für Pia ist entscheidend, dass zusätzliche Flexibilität nicht zu unkontrollierten Tool-Schleifen oder unbelegten Antworten
+  cell 6 id=59fde0e2 type=markdown [OLD-TERM]
+  <p><font color='darkblue' size="4"> | ℹ️ <b>Information:</b> | </font></p> |  | Dieses Notebook nutzt einen kleinen deterministischen Research-Korpusauszug. Die RAG-Logik bleibt sichtbar, aber der Lauf hängt nicht von PDF-Parsing, Embeddings oder Modellentscheidungen ab. Die PDF-Korpus-Pipeline wurde bereit
+  cell 8 id=e3642274 type=markdown [OLD-TERM]
+  # 2 | Anti-Pattern: autonomes Retrieval ohne Kontrolle | --- |  | Agentic RAG wird riskant, wenn ein Agent beliebig oft retrieven darf und am Ende trotzdem ohne Quellen-Gate antwortet. Das Anti-Pattern zeigt kontrolliert: unnötige Hops, Out-of-Corpus-Suche und eine Antwort ohne belastbaren Beleg. | 
+  cell 10 id=b5a65212 type=markdown [OLD-TERM]
+  # 3 | Kontrollierter Research-Korpus | --- |  | Die folgenden Dokumentauszüge simulieren den gemeinsamen Fachartikel-Korpus. Jeder Chunk besitzt eine Quelle, einen Typ und Schlüsselbegriffe. Dadurch lassen sich Retrieval-Entscheidungen deterministisch prüfen. | 
+  cell 13 id=e7bbf68f type=markdown [OLD-TERM]
+  # 4 | Agentic RAG mit Budget und Grounding | --- |  | Der kontrollierte Graph erlaubt mehrere Hops, aber nur bis zum Budget. Jede Antwort muss durch Quellen gestützt sein oder `Nicht im Korpus.` ausgeben. | 
+  cell 14 id=7ed041eb type=code [OLD-TERM]
+  #@markdown <p><font size="4" color='green'>Kontrolliertes Agentic RAG</font></p> |  | diagram = """ | %%{init: {'theme':'forest'}}%% | flowchart TD |     START([START]) --> PLAN["Plan: Fragetyp + Strategie"] |     PLAN --> RET["Retrieve mit Budget"] |     RET --> GRADE{"Relevanz<br/>ausreichend?"} |  |     GRADE -->|
+  cell 24 id=2b0f6b09 type=markdown [OLD-TERM]
+  # A | Aufgabe | --- |  | <p><font color='darkblue' size="4"> | ✏️  <b>Notiz:</b> | </font></p> |  | Die Aufgaben prüfen Agentic RAG als kontrolliertes System: Hop-Protokoll, Grounding und Supervisor-Kombination. Jeder Selfcheck steht direkt unter der zugehörigen Umsetzung. | 
+
+=== M23_Agent_Security_Best_Practices.ipynb [PRETTY(1301 lines)] cells=34 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Security ist fuer den Research Assistant kein Zusatzkapitel, sondern Teil von **Pruefen** — Prompt Injection aus einem manipulierten PDF, versehentliches Preisgeben von Korpus-internen Daten über Traces, oder ein Tool, das mehr darf als es soll. Die Leitplanken aus der L
+  cell 4 id=52951976 type=markdown [RESEARCH-ASSISTANT/PIA]
+  # 1 | Übersicht | --- |  | M23 behandelt Security für den Research Assistant. Das Risiko entsteht nicht nur durch direkte Eingaben, sondern auch durch indirekte Prompt-Injection in gefundenen Dokumenten, zu breite Tool-Rechte und unbedachtes Logging. | 
+  cell 5 id=97dfe45b type=markdown [OLD-TERM]
+  | Bedrohung | Research-Assistant-Risiko | Schutzschicht | | |---|---|---| | | Prompt-Injection im Dokument | Korpuspassage versucht Systemregeln zu überschreiben | Dokument-Scanner vor Synthese | | | Tool-Missbrauch | Agent ruft nicht erlaubte Tools oder Side-Effect-Tools auf | Whitelist und Audit-Log | | |
+  cell 7 id=32afebaa type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown <p><font size="4" color='green'>Security-Schichten im Research Assistant</font></p> |  | diagram = """ | %%{init: {'theme':'forest'}}%% | flowchart TD |     START([Input oder Korpuspassage]) --> RISK["Injection-Scanner"] |  |     RISK -->|hoch| BLOCK["Blockieren"] |     RISK -->|ok| PII["PII-Redaktion<br
+  cell 8 id=ce5137fb type=markdown [RESEARCH-ASSISTANT/PIA]
+  # 2 | Prompt-Injection im Korpus | --- |  | Indirect Prompt Injection ist für RAG besonders wichtig: Eine scheinbar relevante Passage kann eine Anweisung enthalten, die nicht zur Quelle gehört. Der Research Assistant muss solche Passagen erkennen und isolieren. | 
+  cell 17 id=ea39448f type=code [RESEARCH-ASSISTANT/PIA]
+  #@markdown <p><font size="4" color='green'>Sicherer Research Assistant</font></p> |  | diagram = """ | %%{init: {'theme':'forest'}}%% | flowchart TD |     START([START]) --> RISK["risk_check<br/>(Prompt Injection Scan)"] |  |     RISK -->|blockiert| BLOCK["blockiert_node<br/>(Sicherheitsstopp)"] |     RISK -->|ok| 
+  cell 21 id=9d38c7ca type=markdown [OLD-TERM,RESEARCH-ASSISTANT/PIA]
+  # 6 | Grenzen und Frameworks | --- |  | Frameworks wie NeMo Guardrails können Regeln zentralisieren, ersetzen aber kein Bedrohungsmodell. Für den Research Assistant bleiben diese Entscheidungen fachlich: Welche Tools sind erlaubt, welche Daten dürfen in Traces, wann ist HITL nötig? | 
+  cell 23 id=fd071124 type=markdown [RESEARCH-ASSISTANT/PIA]
+  # A | Aufgabe | --- |  | <p><font color='darkblue' size="4"> | ✏️  <b>Notiz:</b> | </font></p> |  | Die Aufgaben erweitern die Schutzschichten des Research Assistants. Jeder Selfcheck steht direkt unter der zugehörigen Umsetzung. | 
+  cell 33 id=65384b08 type=markdown [RESEARCH-ASSISTANT/PIA]
+  <p><font color='darkblue' size="4"> | ✨ <b>Empfehlung:</b> | </font></p> |  | Security für Agenten ist kein einzelner Filter. Für den Research Assistant gehören Injection-Scan, PII-Redaktion, Tool-Whitelist, Audit-Log, Quellenpflicht und HITL-Grenzen zusammen. | 
+
+=== M26_Integration_Pipeline.ipynb [PRETTY(2815 lines)] cells=57 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Hier laufen alle Bausteine des Research Assistant zusammen — Tools, RAG als Evidence Tool, State/Checkpointing, Structured Output und Freigabe bilden ein End-to-End-System statt isolierter Modul-Demos. Dieses Notebook ist der Beleg, dass **Planen**, **Handeln** und **Pru
+  cell 11 id=c024 type=code [OLD-TERM]
+  #@markdown   <p><font size="4" color='green'>  🔐 Komponente 1: Security Gate (M23-Pattern)</font> </br></p> |  | # Pydantic Schema (M05-Pattern) | class SecurityCheck(BaseModel): |     is_safe: bool = Field(description="True wenn die Anfrage sicher und legitim ist") |     reason:  str  = Field(description="Ku
+  cell 16 id=m031 type=markdown [OLD-TERM]
+  <p><font color='black' size="5"> | Komponenten zum StateGraph verbinden | </font></p> |  | Die vier Komponenten werden durch einen **StateGraph** (*StateGraph Basics*-Pattern) verbunden. | Jede Komponente wird ein **Node**. Das **Conditional Routing** (*Conditional Routing & Tool-Loop*-Pattern) | entscheidet na
+  cell 23 id=c043 type=code [OLD-TERM]
+  #@markdown   <p><font size="4" color='green'>  📊 Monitoring-Run mit Qualitäts-Tracking</font> </br></p> |  |  | anfragen_monitoring = [ |     "Was ist RAG und wofür wird es verwendet?", |     "Erkläre LangSmith und seine wichtigsten Features.", | ] |  | protokoll = [] |  | for i, anfrage in enumerate(anfragen_monitorin
+  cell 40 id=927562cdb7b0 type=markdown [OLD-TERM]
+  <p><font color='black' size="5"> | Template wählen | </font></p> |  | Die Wahl des richtigen Templates hängt vom **Output-Typ** ab: |  | - **Text/Inhalt erzeugen** → Template A (Content) | - **Daten/Code auswerten** → Template B (Analyse) | - **Anfragen bearbeiten** → Template C (Support) |  | Nutze den Entscheidungsba
+  cell 41 id=5d2c55f795fe type=code [OLD-TERM]
+  #@markdown   <p><font size="4" color='green'>  Template-Entscheidungsbaum</font> </br></p> |  | diag_e = ''' | %%{init: {'theme':'light'}}%% | flowchart TD |     START(["❓ Mein Anwendungsfall"]) --> Q1{"Geht es um\nText-Erstellung?"} |  |     Q1 -->|"JA"| Q2{"Brauche ich\nFakten-Recherche?"} |     Q1 -->|"NEIN"| Q3
+
+=== M27_Advanced_RAG_Pipeline_Patterns.ipynb [MINIFIED] cells=70 ===
+  cell 2 id=beitrag-leitprojekt type=markdown [RESEARCH-ASSISTANT/PIA,BEITRAG-CELL]
+  **Beitrag zum Leitprojekt:** Advanced RAG verbessert das Evidence Tool des Research Assistant dort, wo Basic RAG (M11-M14) an Grenzen stößt — Reranking, Self-RAG und Multi-Vector-Suche erhöhen die Trefferqualität, ändern aber nichts an der Grundregel: Ohne belegbaren Treffer keine Behauptung.
+  cell 48 id=9fee7f45 type=code [OLD-TERM]
+  def crag_retrieve_node(state: CRAGState) -> CRAGState: |     """Retrieval für CRAG""" |     query = state["query"] |     documents = retriever.invoke(query, config=run_cfg) |     print(f"🔍 Retrieved {len(documents)} Dokumente für Query: '{query}'") |     return {"documents": documents} |  | def crag_grade_node(st
+  cell 50 id=3b5e7991 type=code [OLD-TERM]
+  # Routing Funktion | def route_after_grading(state: CRAGState) -> str: |     """Entscheidet: Generate oder Rewrite?""" |     retry_count = state.get("retry_count", 0) |     has_relevant = state["has_relevant_docs"] |  |     # Maximal 2 Rewrite-Versuche |     if has_relevant or retry_count >= 2: |         return "ge
+  cell 68 id=73ec9408 type=markdown [OLD-TERM]
+  <p><font color='black' size='5'> | Aufgabe 3: Adaptive RAG | </font></p> |  | Implementiere **Adaptive RAG**, das basierend auf Query-Typ entscheidet: |  | 1. **Classifier Node:** Query als `simple`, `complex` oder `ambiguous` kategorisieren. | 2. **Routing:** |    - `simple` → Basic RAG |    - `complex` → Self-RAG |  

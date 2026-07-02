@@ -9,6 +9,7 @@ Der Meeting- & Research-Briefing-Korpus (Projekt Kompass) ist für die überarbe
 | Kriterium | Ergebnis |
 |---|---|
 | Umfang | 18 PDF-Dateien (13 neue Meeting-/Projektartefakte, 5 weiterverwendete Fachartikel) |
+| Tiefe der Projektartefakte | Die 13 neuen Projekt-PDFs wurden auf ca. 300-500 Wörter erweitert; aktuelle Spanne: 321-396 Wörter |
 | Dateiformat | Alle Dateien haben gültigen `%PDF`-Header, mit `PyPDFLoader` geprüft |
 | Umlaute | Alle neuen PDFs enthalten echte deutsche Umlaute, kein Mojibake (mit `PyPDFLoader`-Extraktion verifiziert) |
 | Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage, RAG-/Agenten-Recherche-Hintergrund |
@@ -28,23 +29,23 @@ Der Meeting- & Research-Briefing-Korpus (Projekt Kompass) ist für die überarbe
 
 ## Ground-Truth-Abdeckung
 
-Das Eval-Set `eval_research.json` deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Das Edge-Case-Set `eval_research_edge.json` deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
+Das Eval-Set `eval_research.json` enthält 33 reguläre Fragen und deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_research_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
 
 | Datei | Abdeckung |
 |---|---|
-| `projektauftrag_kompass.pdf` | q01, q02, e01 |
-| `stakeholder_rollenliste.pdf` | q03 |
-| `risikoliste_v1.pdf` | q04 |
-| `protokoll_kickoff_2026-03-03.pdf` | q05 |
-| `protokoll_steuerkreis_2026-03-17.pdf` | q06, e05 |
-| `protokoll_steuerkreis_2026-03-31.pdf` | e06 |
-| `protokoll_steuerkreis_2026-04-14.pdf` | q07, e05, e09 |
-| `protokoll_steuerkreis_2026-04-28.pdf` | q08, e08 |
-| `protokoll_fachbereich_workshop_2026-05-05.pdf` | q09, e04 |
-| `protokoll_steuerkreis_2026-05-19.pdf` | q10, e07 |
-| `entscheidungsprotokoll_gesamt.pdf` | q11, q19 |
-| `follow_up_tracker.pdf` | q12 |
-| `agenda_vorlage_steuerkreis.pdf` | q13, e09 |
+| `projektauftrag_kompass.pdf` | q01, q02, q31 |
+| `stakeholder_rollenliste.pdf` | q03, q20 |
+| `risikoliste_v1.pdf` | q04, q21 |
+| `protokoll_kickoff_2026-03-03.pdf` | q05, q22 |
+| `protokoll_steuerkreis_2026-03-17.pdf` | q06, q23 |
+| `protokoll_steuerkreis_2026-03-31.pdf` | q24, q33, e06 |
+| `protokoll_steuerkreis_2026-04-14.pdf` | q07, q25, e05 |
+| `protokoll_steuerkreis_2026-04-28.pdf` | q08, q26, e08 |
+| `protokoll_fachbereich_workshop_2026-05-05.pdf` | q09, q27, e04 |
+| `protokoll_steuerkreis_2026-05-19.pdf` | q10, q28, e07 |
+| `entscheidungsprotokoll_gesamt.pdf` | q11, q19, q32 |
+| `follow_up_tracker.pdf` | q12, q29 |
+| `agenda_vorlage_steuerkreis.pdf` | q13, q30, e09 |
 | `rag_survey_2312_10997.pdf` | q14 |
 | `ragas_evaluation_2309_15217.pdf` | q15 |
 | `llm_autonomous_agents_survey_2308_11432.pdf` | q16 |

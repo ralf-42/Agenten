@@ -1,4 +1,4 @@
-# Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
+# Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
 ![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen) ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen) ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen) ![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen) ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07--02-blue) ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
@@ -91,13 +91,7 @@ Agenten/
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | M21 | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Sub-Supervisor, Tool-Delegation |
 
-### Empfohlene Lernpfade
-
-**RAG-Vertiefung:** M11 → M12 → M13 → M14 → M22 → M27
-**Security:** M10 → M23 (direkt empfohlen nach Block 2)
-**Evaluation:** M15 → M24 (natürliche Fortsetzung)
-
-### Erweiterte Module (M22–M36, optional)
+### Erweiterte Module (M22–M36)
 
 | Modul | Thema                                 | Priorität    | Status |
 | ----- | ------------------------------------- | ------------ | ------ |

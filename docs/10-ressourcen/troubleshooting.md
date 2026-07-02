@@ -60,7 +60,7 @@ has_toc: true
 ---
 
 **Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

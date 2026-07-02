@@ -170,9 +170,9 @@ flowchart TB
 
 Diese Einteilung hilft nicht nur technisch. Zusätzlich wird klar, wo Prüfungen, Maskierungen oder Freigaben nötig sind.
 
-## Security by Design statt späterer Reparatur
+## Sicherheit von Anfang an einbauen
 
-Sichere Agenten entstehen nicht durch einen nachträglich ergänzten Warnhinweis, sondern durch ein Architekturprinzip. Dazu gehören Least Privilege, Tool-Whitelisting, PII-Redaktion, klare Vertrauensgrenzen, Monitoring und sinnvolle Fallbacks.
+Sichere Agenten entstehen nicht durch einen nachträglich ergänzten Warnhinweis. Die Grenzen müssen in der Architektur liegen: Least Privilege, Tool-Whitelisting, PII-Redaktion, klare Vertrauensgrenzen, Monitoring und sinnvolle Fallbacks.
 
 Red Teaming gehört dazu. Ein Agent sollte aktiv mit Prompt Injection, manipulierten Tool-Antworten und ungewöhnlichen Eingaben getestet werden. Ebenso wichtig ist Beobachtung im Betrieb: ungewöhnlich viele Tool-Aufrufe, ungewöhnliche Parameter, verdächtige Outputs oder seltsame Uhrzeiten sind oft frühe Warnsignale.
 
@@ -189,7 +189,7 @@ Typischer Fehler: Sicherheitsprobleme als Modellproblem zu behandeln, obwohl sie
 
 ## Was für Entwickler zuerst wichtig ist
 
-Für einen ersten sicheren Agenten reichen einige wenige Grundregeln bereits weit: nur nötige Tools freigeben, externe Inhalte nie als Instruktionen behandeln, sensible Daten vor Persistierung bereinigen und bei riskanten Aktionen eine menschliche Freigabe vorsehen.
+Für einen ersten sicheren Agenten reichen wenige Grundregeln: nur nötige Tools freigeben, externe Inhalte nie als Instruktionen behandeln, sensible Daten vor Persistierung bereinigen und bei riskanten Aktionen eine menschliche Freigabe vorsehen.
 
 Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Systemen anfängt. Schon ein kleiner Agent mit Dateizugriff oder Mail-Versand braucht klare Grenzen, sonst wird aus einer guten Demo schnell ein riskanter Prozess.
 
@@ -204,8 +204,8 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.4<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

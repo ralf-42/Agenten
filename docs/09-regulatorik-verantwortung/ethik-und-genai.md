@@ -1,13 +1,13 @@
 ﻿---
 layout: default
-title: Ethik und GenAI
+title: Ethik und KI-Agenten
 parent: "Regulatorik & Verantwortung"
 nav_order: 3
-description: "Ethische Aspekte von GenAI und KI-Agenten: Verantwortung, Bias, Autonomie, Transparenz und Kontrolle"
+description: "Ethische Aspekte von KI-Agenten: Verantwortung, Bias, Autonomie, Transparenz und Kontrolle"
 has_toc: true
 ---
 
-# Ethik und GenAI
+# Ethik und KI-Agenten
 {: .no_toc }
 
 > [!IMPORTANT] Ethik bei Agenten-Systemen<br>
@@ -25,7 +25,7 @@ has_toc: true
 
 ## Ethische Dimensionen
 
-Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernter Muster. Das System besitzt keine Verantwortungsfähigkeit, kann aber Entscheidungen, Meinungen und Handlungen beeinflussen. Bei KI-Agenten kommt eine zweite Ebene hinzu: Das System kann Werkzeuge nutzen, Zwischenschritte planen, Informationen speichern, Entscheidungen vorbereiten oder Aufgaben an andere Komponenten delegieren. Dadurch reicht die Frage "Ist die Antwort richtig?" nicht mehr aus. Ethisch relevant wird auch: Welche Handlung löst das System aus, welche Daten nutzt es, wer prüft das Ergebnis und wer trägt Verantwortung?
+Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernter Muster. Das System besitzt keine Verantwortungsfähigkeit, kann aber Entscheidungen, Meinungen und Handlungen beeinflussen. Bei KI-Agenten kommt eine zweite Ebene hinzu: Ein Agent kann Werkzeuge nutzen, Zwischenschritte planen, Informationen speichern, Entscheidungen vorbereiten oder Aufgaben an andere Komponenten delegieren. Deshalb reicht die Frage "Ist die Antwort richtig?" nicht mehr aus. Ethisch relevant ist auch: Welche Handlung löst das System aus, welche Daten nutzt es, wer prüft das Ergebnis und wer trägt Verantwortung?
 
 ### Zentrale Prinzipien
 
@@ -88,7 +88,7 @@ Weitere Rahmenwerke wie OECD-Prinzipien, UNESCO-Empfehlungen, NIST AI RMF oder I
 
 ## Ethics by Design im Agentenbau
 
-Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Disclaimer anzuhängen, sondern in Architektur und Workflow einzubauen.
+Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Hinweistext anzuhängen, sondern in Architektur und Workflow einzubauen.
 
 ### Technische Muster
 
@@ -111,7 +111,7 @@ Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Discla
 
 ## Chancen und Potenziale
 
-Ethische Bewertung bedeutet nicht, GenAI zu blockieren. Gut gestaltete Systeme können echten gesellschaftlichen und organisatorischen Nutzen schaffen:
+Ethische Bewertung bedeutet nicht, KI-Agenten zu blockieren. Gut gestaltete Systeme können echten gesellschaftlichen und organisatorischen Nutzen schaffen:
 
 - **Bildung:** individuelle Lernpfade, Feedback, barrierearme Erklärungen
 - **Barrierefreiheit:** einfache Sprache, Text-zu-Sprache, Bildbeschreibung
@@ -146,8 +146,8 @@ Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokume
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

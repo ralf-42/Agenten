@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Agenten-Architekturen
 parent: Entwurf
@@ -37,11 +37,64 @@ Ein Support-System soll drei Arten von Anfragen bearbeiten: Lieferstatus nennen,
 
 Aus genau solchen Anforderungen ergibt sich die Architektur. Nicht jede Aufgabe braucht einen denkenden, frei planenden Agenten. Häufig genügt ein klarer Workflow oder ein Tool-Calling-Muster mit wenigen kontrollierten Entscheidungen.
 
-## Zwei Blickrichtungen auf Agenten
+## Mini-Glossar für dieses Kapitel
 
-Agenten lassen sich aus zwei Blickrichtungen beschreiben. Die erste fragt, wie ein Agent grundsätzlich zu einer Entscheidung kommt. Die zweite fragt, wie diese Logik technisch organisiert wird. Für Entwickler ist diese Trennung hilfreich, weil sie erklärt, warum ein System nach außen klug wirken kann, intern aber sehr unterschiedlich gebaut sein kann.
+Einige Begriffe tauchen in Agenten-Architekturen immer wieder auf. Für dieses Dokument reichen diese Arbeitsdefinitionen:
 
-Die Intelligenzperspektive beschreibt das Entscheidungsprinzip. Handelt ein System streng regelbasiert, zustandsbasiert, zielorientiert oder nutzenmaximierend? Die Architekturperspektive beschreibt dagegen das praktische Baumuster, etwa ReAct, Tool-Calling, Workflow oder Multi-Agent. Beide Ebenen hängen zusammen, sind aber nicht identisch.
+| Begriff | Einfache Bedeutung |
+|---|---|
+| **Agent** | Ein System, das mit einem Modell Entscheidungen trifft und bei Bedarf Werkzeuge nutzt. |
+| **Tool** | Eine klar beschriebene Funktion, die der Agent aufrufen darf, zum Beispiel Datenbankabfrage oder E-Mail-Versand. |
+| **State** | Der aktuelle Arbeitsstand: Nachrichten, Zwischenergebnisse, Entscheidungen oder offene Schritte. |
+| **Workflow** | Ein vorgegebener Ablauf aus Schritten, Verzweigungen und Prüfungen. |
+| **Tracing** | Protokollierung, was das Modell entschieden und welche Tools es aufgerufen hat. |
+| **Harness** | Die Steuerungsschicht um das Modell: Tools, Regeln, Speicher, Fehlerbehandlung und Freigaben. |
+
+## Überblick
+
+Die Architekturen in diesem Dokument bauen aufeinander auf. Jede Stufe erhöht die Flexibilität, aber auch den Koordinationsaufwand:
+
+```mermaid
+flowchart LR
+    A["1 · Tool-Calling<br/>ein Werkzeug,<br/>eine Entscheidung"] --> B["2 · Single-Agent<br/>mehrere Schritte,<br/>ein Agent"]
+    B --> C["3 · Workflow<br/>fester Ablauf,<br/>klare Prüfungen"]
+    C --> D["4 · Multi-Agent<br/>Spezialisierung,<br/>Koordination"]
+```
+
+| Stufe | Muster | Wann sinnvoll |
+|---:|---|---|
+| 1 | Tool-Calling | Ein klares Ziel, ein kontrollierter Werkzeugaufruf |
+| 2 | Single-Agent | Offene Aufgabe, Zwischenschritte noch nicht bekannt |
+| 3 | Workflow | Fachlicher Ablauf ist vorgegeben oder auditierbar |
+| 4 | Multi-Agent | Spezialisierung ist wirklich nötig und Teilaufgaben sind trennbar |
+
+## Schneller Entscheidungsleitfaden
+
+Diese Fragen helfen bei der Auswahl:
+
+1. **Gibt es nur eine klar begrenzte Aktion?**  
+   Dann reicht meist **Tool-Calling**.
+
+2. **Ist der Lösungsweg offen und muss der Agent selbst Zwischenschritte wählen?**  
+   Dann passt ein **Single-Agent**, häufig mit ReAct-artigem Ablauf.
+
+3. **Ist der Ablauf fachlich klar vorgegeben oder muss er auditierbar sein?**  
+   Dann ist ein deterministischer **Workflow** die bessere Wahl.
+
+4. **Sind die Teilaufgaben wirklich unterschiedlich genug, dass Spezialisierung hilft?**  
+   Erst dann lohnt sich **Multi-Agent**.
+
+5. **Gibt es schreibende oder riskante Aktionen?**  
+   Dann braucht jede Architektur zusätzliche Kontrolle: Validierung, Human-in-the-Loop oder feste Berechtigungen.
+
+Merksatz: **Erst Tool-Calling prüfen, dann Single-Agent oder Workflow, erst zuletzt Multi-Agent.**
+
+| Situation | Naheliegende Wahl |
+|---|---|
+| FAQ plus Datenbankzugriff | Tool-Calling |
+| Offene Rechercheaufgabe | Single-Agent mit ReAct |
+| Mehrstufiger Genehmigungsprozess | Workflow |
+| Arbeitsteilige Content-Erstellung | Multi-Agent |
 
 ## Harness Engineering: die Steuerungsschicht um das Modell
 
@@ -93,6 +146,26 @@ Ein zustandsbasierter Agent berücksichtigt zusätzlich, was bereits bekannt ist
 Zielorientierte Agenten bewerten, welche Aktion dem gewünschten Ergebnis näherkommt. ReAct-Systeme verhalten sich oft so: Sie planen nicht vollständig im Voraus, sondern nähern sich dem Ziel iterativ. Utility-basierte Agenten gehen noch einen Schritt weiter und vergleichen Optionen nach einem Präferenzwert, etwa Kosten, Risiko oder Erfolgswahrscheinlichkeit. Adaptive Agenten wiederum verändern ihr Verhalten auf Basis früherer Rückmeldungen, spielen im Entwicklerkontext aber meist noch keine Hauptrolle.
 
 Grenze: Diese Einteilung hilft beim Denken, ersetzt aber keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
+
+## Single-Agent-Architektur: mehrere Schritte, eine Rolle
+
+Ein einzelner Agent übernimmt die vollständige Bearbeitung einer Aufgabe. Er kann ein Ziel in Zwischenschritte zerlegen, Tools nutzen, Ergebnisse auswerten und den nächsten Schritt wählen. Das ist mehr als ein einzelner Tool-Aufruf, aber noch kein Agententeam.
+
+Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein Meeting-Briefing-Agent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
+
+**Vorteile:**
+
+- keine Koordination zwischen mehreren Agenten
+- geringerer Token-Verbrauch als bei Multi-Agent-Systemen
+- leichter zu erklären, zu testen und zu debuggen
+
+**Nachteile:**
+
+- ein einzelner Agent wird schnell überladen, wenn zu viele Rollen zusammenfallen
+- lange Aufgaben brauchen klare Grenzen für Kontext, Tools und Iterationen
+- falsche Tool-Auswahl oder fehlerhafte Zwischenergebnisse verschieben den gesamten Pfad
+
+Sobald getrennte Fachrollen, eigene Kontexte oder unabhängige Prüfungen nötig werden, sollte die Architektur anders geschnitten werden.
 
 ## ReAct: wenn der Lösungsweg noch nicht feststeht
 
@@ -188,6 +261,18 @@ Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und der Lösungsweg erst 
 
 In Multi-Agent-Architekturen arbeiten mehrere spezialisierte Agenten zusammen. Ein Supervisor kann Aufgaben verteilen, oder die Agenten tauschen Ergebnisse direkt untereinander aus. Dieses Muster klingt oft attraktiv, ist aber nur dann sinnvoll, wenn echte Spezialisierung einen erkennbaren Gewinn bringt.
 
+Die Detailentscheidung zwischen Supervisor, Pipeline, Handoff, Skill-Loading oder kollaborativen Mustern gehört in das Vertiefungskapitel zu Multi-Agent-Systemen. An dieser Stelle reicht die Architekturentscheidung: Braucht das Problem wirklich mehrere spezialisierte Rollen, oder genügen Tool-Calling, Workflow oder ein einzelner Agent?
+
+Die wichtigsten Koordinationsmuster werden dort ausführlich behandelt:
+
+| Muster | Kurzentscheidung |
+|---|---|
+| Supervisor | Eine zentrale Rolle muss Aufgaben verteilen und Ergebnisse zusammenführen. |
+| Pipeline | Die Reihenfolge ist fachlich stabil und gut testbar. |
+| Handoff | Die Zuständigkeit wird erst während der Bearbeitung klar. |
+| Skill-Loading | Ein einzelner Agent bleibt verantwortlich, lädt aber zeitweise Spezialwissen. |
+| Review-Schleife | Qualität entsteht durch Gegenlesen, Kritik oder Freigabe. |
+
 ```mermaid
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
@@ -225,6 +310,8 @@ flowchart TD
 | Mehrstufiger Genehmigungsprozess | Workflow |
 | Offene Rechercheaufgabe | ReAct |
 | Arbeitsteilige Content-Erstellung | Multi-Agent |
+
+Merksatz: Erst Tool-Calling prüfen, dann Workflow oder Single-Agent, erst zuletzt Multi-Agent. Multi-Agent-Systeme lohnen sich, wenn Teilaufgaben fachlich oder technisch wirklich getrennte Rollen brauchen. Sonst entstehen vor allem mehr Koordination, höhere Kosten und schwerere Fehlersuche.
 
 ## Welche Design-Prinzipien immer gelten
 
@@ -333,9 +420,6 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 ---
 
-**Version:** 1.6<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.7<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-
-
-

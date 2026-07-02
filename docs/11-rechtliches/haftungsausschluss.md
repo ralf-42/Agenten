@@ -91,8 +91,5 @@ Bitte verwenden Sie in Kursbeispielen keine echten Kunden-, Beschäftigten-, Pat
 
 Sollten einzelne Formulierungen dieses Hinweises unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Regelungen unberührt.
 
-nav_order: 3
----
-**Letzte Aktualisierung:** Mai 2026
-
+**Stand:** Juli 2026<br>
 

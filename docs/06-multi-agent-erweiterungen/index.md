@@ -16,3 +16,7 @@ Diese Orientierungsseite behandelt die Skalierung von einzelnen Agenten zu koope
 | **Wie** kommunizieren Agenten und Tools? | [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | MCP, Schnittstellen und agentenübergreifende Kommunikation. |
 | **Wie** werden Fähigkeiten wiederverwendbar? | [Skills]({{ '/06-multi-agent-erweiterungen/skills.html' | relative_url }}) | Wiederverwendbare Arbeitsrezepte und lokale Erweiterungen. |
 | **Welche** Vertiefungen gibt es? | [Einsteiger DeepAgents]({{ '/06-multi-agent-erweiterungen/einsteiger-deepagents.html' | relative_url }}) | Optionale Framework-Vertiefung. |
+
+---
+
+**Stand:** Juli 2026<br>

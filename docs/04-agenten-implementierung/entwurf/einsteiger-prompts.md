@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Prompt-Templates
 parent: Entwurf
@@ -405,5 +405,5 @@ flowchart TD
 ---
 
 **Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

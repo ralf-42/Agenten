@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Prompt Engineering
 parent: Entwurf
@@ -46,6 +46,30 @@ Für KI-Agenten ist Prompt Engineering besonders relevant:
 ## Grundlegende Prompt-Strukturen
 
 Effektive Prompts folgen einer klaren Struktur. Drei Grundmuster haben sich etabliert.
+
+Ein robuster Prompt trennt Anweisung, Kontext, Beispiele, Eingabe und Ausgabeformat. Diese Trennung ist wichtiger als eine bestimmte Schablone, weil Agenten bei längeren Aufgaben sonst Regeln, Daten und Nutzereingaben vermischen können.
+
+```text
+AUFGABE:
+- Was soll gelöst werden?
+
+KONTEXT:
+- Welche Informationen sind relevant?
+
+REGELN:
+- Was darf nicht passieren?
+
+BEISPIELE:
+- Wie sieht eine gute Ausgabe aus?
+
+EINGABE:
+- Welche konkrete Anfrage oder welches Dokument soll verarbeitet werden?
+
+AUSGABEFORMAT:
+- In welchem Format soll die Antwort erscheinen?
+```
+
+Bei komplexen Prompts helfen klare Abschnittsnamen oder XML-ähnliche Tags wie `<instructions>`, `<context>`, `<examples>` und `<input>`. Entscheidend ist nicht das Tag selbst, sondern die eindeutige Trennung der Funktionen.
 
 ### Zero-Shot Prompting
 
@@ -324,6 +348,27 @@ ANTWORT:"""
 )
 ```
 
+### Long-Context Prompting
+
+Bei langen Dokumenten oder vielen Tool-Ergebnissen reicht eine gute Aufgabenformulierung nicht aus. Der Prompt muss Daten so anordnen, dass das Modell sie zuverlässig zuordnen kann. Lange Dokumente gehören in einen klar markierten Kontextbereich; die eigentliche Frage und die Ausgabeanforderung stehen danach.
+
+```text
+<context>
+Dokumente, Auszüge oder Tool-Ergebnisse
+</context>
+
+<instructions>
+Beantworte die Frage nur auf Basis des Kontextes.
+Wenn der Kontext keine Antwort enthält, gib "Nicht im Kontext" aus.
+</instructions>
+
+<question>
+Konkrete Frage
+</question>
+```
+
+In der Praxis relevant, wenn Dokumente, Tabellen, Tool-Ergebnisse und Beispiele im selben Prompt stehen. Ohne saubere Trennung steigt die Wahrscheinlichkeit, dass das Modell ein Beispiel als echten Inhalt behandelt oder eine Regel nur auf den ersten Abschnitt anwendet.
+
 ---
 
 ## Best Practices
@@ -478,7 +523,7 @@ Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agenten
 ---
 
 **Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

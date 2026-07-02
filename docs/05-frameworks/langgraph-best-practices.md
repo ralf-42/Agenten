@@ -391,6 +391,6 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 ---
 
 **Version:** 1.7<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

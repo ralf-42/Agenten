@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Multi-Agent-Systeme
 parent: "Multi-Agent & Erweiterungen"
@@ -50,16 +50,22 @@ Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer se
 
 Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Die folgenden Muster decken die wesentlichen Fälle ab:
 
-| Muster | Grundidee |
-|---|---|
-| Supervisor | eine zentrale Rolle verteilt Aufgaben an Worker |
-| Handoff | ein Agent erkennt während der Bearbeitung den Zuständigkeitswechsel |
-| Pipeline | Ergebnisse fließen sequenziell von Agent zu Agent |
-| Debate / Critique | zwei Agenten erarbeiten getrennte Lösungen, ein dritter entscheidet |
-| Skill-orientiert | Fähigkeiten werden gezielt nach Bedarf zugeladen |
-| Hierarchisch | mehrere Ebenen aus Leitrollen und Workern |
-| Kollaborativ | Agenten arbeiten direkt mit Feedbackschleifen zusammen |
-| Parallel | unabhängige Teilaufgaben laufen gleichzeitig |
+| Muster | Steuerungslogik | Stärke | Hauptrisiko |
+|---|---|---|---|
+| Supervisor | zentrale Rolle verteilt Aufgaben an Worker | gute Kontrolle und Zusammenführung | Supervisor wird Engpass |
+| Router | Klassifikation am Eingang | schnell und kostengünstig | falsches Routing |
+| Pipeline | Ergebnisse fließen sequenziell von Agent zu Agent | robust und gut testbar | wenig flexibel |
+| Handoff | Zuständigkeit wechselt während der Bearbeitung | flexibel bei wechselnden Zuständigkeiten | unklare Verantwortung |
+| Skill-orientiert | ein Agent lädt Fähigkeiten nach Bedarf | modular ohne volles Agententeam | Agent wird zu breit |
+| Planner-Executor | Planen und Ausführen getrennt | prüfbare Schritte | starrer Plan |
+| Blackboard | gemeinsamer Arbeitsbereich | gute Zusammenarbeit an Artefakten | ungeordneter State |
+| Swarm / Peer-to-Peer | gleichberechtigte Agenten koordinieren sich | viele Perspektiven | schwer zu kontrollieren |
+| Hierarchisch | mehrere Ebenen aus Leitrollen und Workern | skalierbar für große Teams | hoher Koordinationsaufwand |
+| Kollaborativ | Agenten arbeiten direkt mit Feedbackschleifen zusammen | gute Qualität durch Gegenlesen | Endlosschleifen |
+| Debate / Critique | getrennte Lösungen werden gegeneinander geprüft | starke Qualitätsprüfung | hoher Overhead |
+| Parallel | unabhängige Teilaufgaben laufen gleichzeitig | schneller bei unabhängigen Paketen | Scheinparallelität |
+
+Die Leitfrage ist nicht, welches Muster moderner klingt. Entscheidend ist, wo Verantwortung, Übergabe und Prüfung am klarsten bleiben.
 
 ## Supervisor: der naheliegende Einstieg
 
@@ -96,6 +102,27 @@ def supervisor_node(state: TeamState) -> Command:
 
 In der Praxis relevant, wenn: Aufgaben vorab sauber klassifizierbar sind und Rollen klar voneinander getrennt bleiben.
 
+**Entscheide so:** Nimm Supervisor, wenn eine zentrale Rolle den Überblick halten und mehrere Teilergebnisse zu einer Antwort zusammenführen muss.
+
+## Router: wenn die Kategorie am Anfang entscheidet
+
+Router sind sinnvoll, wenn Anfragen früh klassifiziert und dann an den passenden Spezialisten weitergeleitet werden können. Der Router bearbeitet die Aufgabe nicht selbst, sondern entscheidet nur, welcher Agent zuständig ist.
+
+```mermaid
+flowchart TD
+    A[Benutzereingabe] --> R[Router]
+    R -->|Kategorie A| S1[Spezialagent A]
+    R -->|Kategorie B| S2[Spezialagent B]
+    R -->|Kategorie C| S3[Spezialagent C]
+    S1 --> E[Antwort]
+    S2 --> E
+    S3 --> E
+```
+
+Der Vorteil liegt in geringer Latenz und klarer Zuständigkeit: Nur der passende Spezialagent wird aktiv. Das Muster ist aber empfindlich gegen falsche Klassifikation. Wenn der Router am Anfang falsch entscheidet, läuft die gesamte Bearbeitung in die falsche Richtung.
+
+**Entscheide so:** Nimm Router, wenn die Eingaben zuverlässig in wenige Kategorien fallen und jede Kategorie eine klar andere Bearbeitung braucht.
+
 ## Pipeline: wenn Ergebnisse sequenziell weitergereicht werden
 
 Das Pipeline-Muster eignet sich, wenn Aufgaben in fester Reihenfolge voneinander abhängen und das Ergebnis eines Agents direkt die Eingabe des nächsten bildet.
@@ -113,6 +140,8 @@ Der Unterschied zum Supervisor: Es gibt keine zentrale Routing-Logik. Jeder Agen
 Ein zentrales Designproblem dabei ist Context Compression. Spätere Agenten erhalten nicht die vollständige Bearbeitungsgeschichte, sondern eine komprimierte Übergabe. Das spart Kontext, bringt aber einen Fidelity-Tradeoff mit sich: Details, die im Ursprungsmaterial stecken, können auf dem Weg verloren gehen. Diese Entscheidung sollte bewusst getroffen werden.
 
 In der Praxis relevant, wenn: die Verarbeitungsschritte klar definiert sind und keine dynamische Umverteilung nötig ist.
+
+**Entscheide so:** Nimm Pipeline, wenn die fachliche Reihenfolge stabil ist und jede Stufe ein prüfbares Zwischenergebnis liefert.
 
 ## Handoff: wenn sich die Zuständigkeit erst unterwegs zeigt
 
@@ -133,6 +162,8 @@ Typischer Fehler: Beim Handoff den bisherigen Kontext nicht vollständig zu übe
 
 Eine strukturierte Übergabe trennt das Arbeitsergebnis vom Denkweg: Das Ergebnis (`result_summary`, `artifacts`) geht immer weiter, der vollständige Reasoning Trace (`reasoning_trace`) nur dann, wenn der übernehmende Agent ihn tatsächlich braucht. Diese Trennung hält den Kontext des nächsten Agents schlank.
 
+**Entscheide so:** Nimm Handoff, wenn die richtige Zuständigkeit erst während der Bearbeitung sichtbar wird und der Kontext sauber übergeben werden kann.
+
 ## Skill- oder Capability-Loading statt dauerhaftem Spezialistentrupp
 
 Manche Systeme brauchen kein volles Multi-Agent-Team, sondern nur einen Hauptagenten, der gezielt zusätzliche Fähigkeiten lädt. Dieses Muster ist besonders dann interessant, wenn Fachwissen umfangreich, aber nur sporadisch benötigt wird. Es verhindert Prompt Bloat und hält den aktiven Kontext schlanker.
@@ -146,6 +177,47 @@ SKILL_REGISTRY = {
 ```
 
 Grenze: Dieses Muster ist keine echte arbeitsteilige Mehragenten-Koordination, sondern eher ein fokussierter Hauptagent mit temporären Capability-Sets.
+
+**Entscheide so:** Nimm Skills, wenn ein einzelner Agent verantwortlich bleiben soll, aber zeitweise anderes Fachwissen oder andere Werkzeuge braucht.
+
+## Planner-Executor: wenn der Plan sichtbar sein soll
+
+Beim Planner-Executor-Muster erzeugt ein Planungsagent zuerst eine Aufgabenliste. Ein oder mehrere Executor-Agenten oder Tools arbeiten diese Schritte danach ab. Der Planner entscheidet also nicht jedes Detail der Ausführung, sondern macht den Lösungsweg sichtbar.
+
+```mermaid
+flowchart TD
+    A[Aufgabe] --> P[Planner]
+    P --> L[Schrittplan]
+    L --> E1[Executor: Recherche]
+    L --> E2[Executor: Tool-Aufruf]
+    L --> E3[Executor: Schreiben]
+    E1 --> P
+    E2 --> P
+    E3 --> P
+    P --> F[Finale Antwort]
+```
+
+Der Nutzen liegt in der Prüfbarkeit. Ein Plan kann angezeigt, bewertet oder freigegeben werden, bevor riskante Aktionen laufen. Problematisch wird das Muster, wenn der Plan zu früh festgeschrieben wird und neue Beobachtungen nicht mehr zurückfließen.
+
+**Entscheide so:** Nimm Planner-Executor, wenn mehrstufige Arbeit sichtbar, prüfbar oder freigabepflichtig sein soll.
+
+## Blackboard: wenn alle an einem Artefakt arbeiten
+
+Beim Blackboard-Muster kommunizieren Agenten nicht primär direkt miteinander. Sie lesen und schreiben in einen gemeinsamen Arbeitsbereich: Quellen, Notizen, Entwürfe, offene Fragen oder Statusinformationen.
+
+```mermaid
+flowchart TB
+    B[(Shared Workspace / Blackboard)]
+    R[Recherche-Agent] <--> B
+    A[Analyse-Agent] <--> B
+    W[Writer-Agent] <--> B
+    Q[Review-Agent] <--> B
+    B --> E[Finales Ergebnis]
+```
+
+Dieses Muster passt gut, wenn mehrere Agenten an demselben Artefakt arbeiten: einem Briefing, einem Bericht, einer Tabelle oder einem Plan. Der gemeinsame State braucht aber Pflege. Ohne Statusfelder, Quellenangaben und klare Schreibregeln wächst das Blackboard schnell unkontrolliert.
+
+**Entscheide so:** Nimm Blackboard, wenn Zwischenergebnisse sichtbar geteilt werden sollen und der gemeinsame Arbeitsstand wichtiger ist als direkte Übergaben.
 
 ## Hierarchische Systeme für größere Teams
 
@@ -170,6 +242,29 @@ flowchart TD
 
 Dieses Muster lohnt sich erst, wenn Anzahl der Rollen, Aufgabenkomplexität und Abhängigkeiten hoch genug sind. Für kleine Demo- oder Proof-of-Concept-Setups ist es meist schon die zweite oder dritte Ausbaustufe, nicht der Startpunkt.
 
+**Entscheide so:** Nimm Hierarchie erst, wenn ein einzelner Supervisor zu breit wird und mehrere Unterteams wirklich eigene Verantwortung brauchen.
+
+## Swarm / Peer-to-Peer: wenn keine zentrale Rolle führen soll
+
+Bei Swarm- oder Peer-to-Peer-Architekturen arbeiten mehrere Agenten ohne festen Supervisor zusammen. Jeder Agent kann Beiträge liefern, andere Agenten anstoßen oder auf neue Informationen reagieren. Die Koordination entsteht durch Regeln, gemeinsamen State oder ein Kommunikationsprotokoll.
+
+```mermaid
+flowchart TD
+    A[Aufgabe] --> R[Recherche-Agent]
+    A --> W[Writer-Agent]
+    A --> C[Critic-Agent]
+    R <--> W
+    W <--> C
+    C <--> R
+    R --> E[Gemeinsames Ergebnis]
+    W --> E
+    C --> E
+```
+
+Das Muster ist flexibel, aber schwerer zu kontrollieren als Supervisor, Pipeline oder Blackboard. Ohne klare Regeln entstehen leicht doppelte Arbeit, widersprüchliche Entscheidungen und hohe Kosten.
+
+**Entscheide so:** Nimm Swarm nur, wenn gleichberechtigte Perspektiven wirklich gebraucht werden und Kontrollregeln für Kosten, Abbruch und Ergebniszusammenführung existieren.
+
 ## Kollaboration und Review-Schleifen
 
 Ein anderes Muster entsteht, wenn Agenten sich nicht nur Aufträge zuschieben, sondern einander aktiv bewerten oder überarbeiten. Ein typischer Fall ist ein Autor-Kritiker-Zyklus.
@@ -182,6 +277,8 @@ flowchart LR
 
 Diese Form kann Qualität deutlich erhöhen, birgt aber das Risiko von Endlosschleifen oder instabilen Iterationen. Deshalb braucht sie klare Abbruchbedingungen und Iterationsgrenzen.
 
+**Entscheide so:** Nimm Review-Schleifen, wenn Qualität durch Gegenlesen, Kritik oder Faktenprüfung besser wird und die Zahl der Iterationen begrenzt ist.
+
 ## Debate und Critique: wenn Widerspruch die Qualität sichert
 
 Das Debate-Muster geht weiter als einfache Feedback-Schleifen. Zwei unabhängige Agenten erarbeiten getrennte Lösungen, ein dritter bewertet und entscheidet.
@@ -189,6 +286,8 @@ Das Debate-Muster geht weiter als einfache Feedback-Schleifen. Zwei unabhängige
 Die Rollen: Ein Proposer liefert die erste Lösung. Ein Challenger erarbeitet eine alternative Sichtweise oder sucht systematisch nach Schwachstellen. Ein Adjudicator vergleicht beide und trifft die finale Entscheidung. Das Ergebnis enthält einen Agreement-Level (HIGH, MEDIUM, LOW, CONTRADICTION). Bei CONTRADICTION ist menschliche Überprüfung angebracht.
 
 Geeignet für komplexe Entscheidungen, bei denen ein einzelner Entwurf systematisch blind für eigene Fehler ist. Nicht geeignet für einfache, klar definierte Aufgaben — dort erzeugt Debate nur unnötigen Overhead.
+
+**Entscheide so:** Nimm Debate nur, wenn echte Gegensicht nötig ist und der zusätzliche Aufwand durch bessere Entscheidungen gerechtfertigt wird.
 
 ## Parallelität lohnt sich nur bei unabhängigen Teilaufgaben
 
@@ -207,6 +306,8 @@ flowchart TD
 ```
 
 Nicht geeignet, wenn: Schritt B inhaltlich vom Ergebnis aus Schritt A abhängt. Dann ist eine scheinbar parallele Architektur nur komplizierter, aber nicht schneller.
+
+**Entscheide so:** Nimm Parallelität nur bei unabhängigen Teilaufgaben. Sobald Ergebnisse voneinander abhängen, ist Pipeline oder Workflow meist ehrlicher.
 
 ## Kommunikation und gemeinsamer State
 
@@ -256,11 +357,9 @@ Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, so
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** Juni 2026<br>
+**Version:** 1.4<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-
-
 
 
 

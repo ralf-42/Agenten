@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Tool Use & Function Calling
 parent: Entwurf
@@ -294,7 +294,7 @@ Sobald Werkzeuge definiert sind, können sie an ein Modell gebunden werden. Das 
 ```python
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 llm_with_tools = llm.bind_tools([multiply, safe_divide])
 
 response = llm_with_tools.invoke("Was ist 15 mal 23?")
@@ -366,6 +366,20 @@ def web_search(query: str, num_results: int = 3) -> str:
     return f"Suchergebnisse für '{query}': [Platzhalter für echte Ergebnisse]"
 ```
 
+## Praktische Tool-Kategorien
+
+Tools lassen sich nach ihrer Wirkung einordnen. Diese Einordnung hilft bei Sicherheitsgrenzen, Freigaben und Tests.
+
+| Kategorie | Beispiele | Risiko |
+|---|---|---|
+| Lesen | Datei lesen, Datenbank abfragen, Websuche | Datenabfluss, Prompt Injection |
+| Berechnen | Mathematik, Validierung, Transformation | falsche Parameter, stille Fehler |
+| Schreiben | Datei erzeugen, Ticket erstellen, Datensatz ändern | unbeabsichtigte Änderung |
+| Kommunizieren | E-Mail, Kalender, Chat-Nachricht | Außenwirkung, Datenschutz |
+| Ausführen | Skript, Deployment, Zahlung, Löschung | hoher Schaden bei Fehlentscheidung |
+
+Ein Tool ist also nicht nur nach seinem Namen zu bewerten, sondern danach, welche reale Wirkung es auslösen kann. Lesen, Schreiben und Ausführen brauchen unterschiedliche Schranken.
+
 ## Hochriskante Aktionen brauchen zusätzliche Schranken
 
 Bei Operationen mit realen Folgen, etwa Rückerstattung, Löschung oder Zahlung, reicht ein einzelnes Tool oft nicht aus. Ein sinnvolles Muster ist Two-Step Veto: Zuerst wird geprüft, danach erst ausgeführt.
@@ -395,12 +409,19 @@ Wenn nach einer Policy-Prüfung deterministisch feststeht, welches Tool als Näc
 ```python
 if tool_result.get("action_required") == "escalate_to_human":
     client.messages.create(
-        model="claude-opus-4-6",
+        model="claude-opus-4-7",
         messages=messages,
         tools=tools,
         tool_choice={"type": "tool", "name": "escalate_to_human"}
     )
 ```
+
+| Risikostufe | Beispiel | Zusätzliche Schranke |
+|---|---|---|
+| niedrig | Wetter abrufen | keine besondere Freigabe |
+| mittel | Datei zusammenfassen | Pfadbegrenzung und Leserechte |
+| hoch | E-Mail senden | Vorschau und Nutzerfreigabe |
+| kritisch | Daten löschen, Zahlung auslösen | Policy-Prüfung, Freigabe, Audit-Log |
 
 Nicht geeignet, wenn: Tool-Auswahl generell durch Zwang gesteuert wird. Forced `tool_choice` ist für klare Sonderfälle gedacht, nicht als Dauerersatz für gutes Routing.
 
@@ -423,7 +444,7 @@ In der Praxis relevant, wenn: Ein Agent auf viele Werkzeuge zugreifen soll, dies
 ---
 
 **Version:** 1.4<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

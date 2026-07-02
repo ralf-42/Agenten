@@ -15,3 +15,7 @@ Diese Orientierungsseite enthält die formalen rechtlichen Hinweise zur Website 
 | [Impressum]({{ '/11-rechtliches/impressum.html' | relative_url }}) | Anbieterkennzeichnung. |
 | [Datenschutzerklaerung]({{ '/11-rechtliches/datenschutz.html' | relative_url }}) | Datenschutzhinweise zur Website und zu den Materialien. |
 | [Haftungsausschluss]({{ '/11-rechtliches/haftungsausschluss.html' | relative_url }}) | Hinweise zu Inhalten, Links und Nutzung der Materialien. |
+
+---
+
+**Stand:** Juli 2026<br>

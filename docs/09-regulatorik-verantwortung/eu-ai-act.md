@@ -44,7 +44,7 @@ Der AI Act trat am **1. August 2024** in Kraft. Die Pflichten gelten nicht alle 
 | **2. August 2027** | Hochrisiko-KI als Sicherheitskomponente in regulierten Produkten wird anwendbar |
 | **31. Dezember 2030** | Sonderfristen für bestimmte bereits bestehende große IT-Systeme und einzelne Bestandssysteme |
 
-Im November 2025 hat die Europäische Kommission im Rahmen des **Digital Omnibus** vorgeschlagen, die Anwendung bestimmter Hochrisiko-Pflichten stärker an verfügbare Unterstützungsinstrumente wie harmonisierte Standards, gemeinsame Spezifikationen oder Leitlinien zu koppeln. Am **13. März 2026** hat der Rat seine Position zu Vereinfachungen bestimmter AI-Act-Regeln festgelegt. Das ist für Planungen relevant, aber kein Ersatz für den geltenden Rechtsstand. Bis eine Änderung beschlossen und wirksam ist, bleibt der ursprüngliche Zeitplan der Verordnung maßgeblich.
+Seit Ende 2025 werden im Rahmen des **Digital Omnibus** Vereinfachungen und mögliche Anpassungen am AI Act diskutiert. Außerdem werden Leitlinien, Standards und Praxisinstrumente weiter konkretisiert. Für Kurs- und Projektplanung ist das relevant, aber kein Ersatz für den geltenden Rechtsstand. Bis eine Änderung beschlossen und anwendbar ist, bleibt der Zeitplan der Verordnung maßgeblich.
 
 **Typischer Fehler:** Der Zeitplan wird nur mit "2026" beschrieben. Das verwischt, dass Verbote und AI-Literacy bereits seit Februar 2025 gelten und GPAI-Pflichten seit August 2025 relevant sind.
 
@@ -71,7 +71,7 @@ Für den Kurs sind Annex-III-Fälle besonders anschaulich: Bewerberauswahl, Leis
 
 ## General Purpose AI
 
-General Purpose AI (GPAI) betrifft Modelle, die für viele unterschiedliche Zwecke eingesetzt werden können. Anbieter solcher Modelle unterliegen seit **2. August 2025** eigenen Pflichten. Bei Modellen mit systemischem Risiko kommen weitergehende Anforderungen hinzu, etwa Risikobewertung, Sicherheitsmaßnahmen und Dokumentation.
+General Purpose AI (GPAI) betrifft Modelle, die für viele unterschiedliche Zwecke eingesetzt werden können. Anbieter solcher Modelle unterliegen seit **2. August 2025** eigenen Pflichten. Bei Modellen mit systemischem Risiko kommen weitergehende Anforderungen hinzu, etwa Risikobewertung, Sicherheitsmaßnahmen und Dokumentation. Der freiwillige GPAI Code of Practice der Europäischen Kommission unterstützt Anbieter bei der Umsetzung; er ersetzt die gesetzlichen Pflichten nicht.
 
 Für Entwickler im Kurs ist der Unterschied wichtig: Wer ein externes Modell über eine API nutzt, ist nicht automatisch Anbieter dieses GPAI-Modells. Trotzdem entstehen eigene Pflichten, sobald daraus ein konkretes KI-System gebaut und in einem sensiblen Kontext eingesetzt wird. Der Betreiber eines Research- oder Entscheidungsassistenten kann also Pflichten haben, auch wenn das zugrunde liegende Basismodell von einem anderen Anbieter stammt.
 
@@ -117,7 +117,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 
 | Dokument | Frage |
 |---|---|
-| [Ethik und GenAI]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }}) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
+| [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }}) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
 | [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Wie abhängig ist ein KI-System von Cloud, Plattformen und außereuropäischer Infrastruktur? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche technischen Risiken entstehen durch Tools, Prompts, Daten und Agenten-Verhalten? |
 | [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |
@@ -125,8 +125,8 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.2<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

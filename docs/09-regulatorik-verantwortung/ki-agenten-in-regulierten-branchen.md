@@ -45,11 +45,11 @@ Was das für einen Agenten konkret bedeutet: Jede Ausgabe, die als medizinische 
 
 ### Legal und Rechtsdienstleistungen
 
-In rechtlichen Kontexten schützen Verschwiegenheitspflichten, Standesrecht und Haftungsregeln die Qualität der Beratung. Als vereinfachte Kursregel gilt: Ein Agent darf Rechtsinformationen bereitstellen — also erklären, was ein Paragraf sagt — aber keine Rechtsberatung erteilen, also keine Empfehlung für eine konkrete Situation im Einzelfall. Ob eine konkrete Anwendung zulässig ist, muss anhand des Rechtsdienstleistungsgesetzes, des Nutzungskontexts und der organisatorischen Einbettung geprüft werden.
+In rechtlichen Kontexten schützen Verschwiegenheitspflichten, Berufsrecht und Haftungsregeln die Qualität der Beratung. Als vereinfachte Kursheuristik gilt: Ein Agent kann Rechtsinformationen bereitstellen, also erklären, was eine Norm oder ein Dokument sagt. Er sollte aber keine Empfehlung für eine konkrete Einzelfallentscheidung ausgeben, wenn diese wie Rechtsberatung wirkt. Ob eine konkrete Anwendung zulässig ist, muss anhand des Rechtsdienstleistungsgesetzes, des Nutzungskontexts und der organisatorischen Einbettung geprüft werden.
 
 Für Agenten in Kanzleien oder Rechtsabteilungen gelten zusätzlich das Mandantengeheimnis und strenge Dokumentationspflichten. Mandantendaten dürfen nicht unkontrolliert in externe APIs, Logs, Traces oder Evaluation-Datasets fließen. Vor produktiver Nutzung müssen Auftragsverarbeitung, Rechtsgrundlage, Datenflüsse und Informationspflichten geklärt sein. Jede KI-gestützte Analyse muss nachvollziehbar und revidierbar sein.
 
-**Typischer Fehler:** Ein Agent beantwortet eine konkrete Rechtsfrage mit einer Handlungsempfehlung — ohne den Hinweis, dass dies keine Rechtsberatung ist und ein Anwalt konsultiert werden sollte.
+**Typischer Fehler:** Ein Agent beantwortet eine konkrete Rechtsfrage mit einer Handlungsempfehlung, obwohl keine qualifizierte rechtliche Prüfung im Prozess vorgesehen ist.
 
 ### Finanzwesen und Versicherung
 
@@ -63,7 +63,7 @@ Das zentrale Problem bei KI in diesem Bereich ist Diskriminierung: Wenn ein Mode
 
 ## Was regulierte Branchen für die Agenten-Architektur bedeuten
 
-Die folgende Tabelle zeigt, welche Agenten-Komponenten in regulierten Kontexten besondere Anforderungen erhalten. Das sind keine abstrakten Compliance-Anforderungen, sondern direkte Konsequenzen für Architekturentscheidungen.
+Die folgende Tabelle zeigt, welche Agenten-Komponenten in regulierten Kontexten besondere Anforderungen erhalten. Das sind keine Rechtsgutachten, sondern praktische Konsequenzen für Architekturentscheidungen.
 
 | Komponente | Standardfall | Regulierter Kontext |
 |---|---|---|
@@ -73,13 +73,13 @@ Die folgende Tabelle zeigt, welche Agenten-Komponenten in regulierten Kontexten 
 | **RAG-Quellen** | Beliebige Dokumente | Nur zugelassene, versionierte Quellen; Quellenangabe in jeder Ausgabe Pflicht |
 | **Evaluation** | Manuell oder sporadisch | Reproduzierbare Testprotokolle; Regression-Check vor jedem Release |
 | **Versionierung** | Code-Versionierung | Code + Modell + Prompt + Daten — alle Komponenten versioniert und dokumentiert |
-| **Ausgabe-Formulierung** | Flexibel | Einschränkungshinweis Pflicht: „Diese Ausgabe ersetzt keine [ärztliche/rechtliche/fachliche] Beratung." |
+| **Ausgabe-Formulierung** | Flexibel | klare Rollenbegrenzung: Information, Assistenz oder Vorbereitung, aber keine ungeprüfte Einzelfallentscheidung |
 
 ### Human-in-the-Loop als Pflichtbaustein
 
 In regulierten Kontexten ist Human-in-the-Loop keine Komfortfunktion, sondern eine Kontrollinstanz. Der Mensch muss die Möglichkeit haben, eine Agenten-Ausgabe zu prüfen und zu verwerfen, bevor sie Wirkung entfaltet.
 
-Technisch bedeutet das: `interrupt()` in LangGraph oder ein Middleware-Pattern, das die Ausgabe pausiert und auf Freigabe wartet. Nicht optional, nicht überspringbar — auch nicht bei Zeitdruck.
+Technisch bedeutet das: `interrupt()` in LangGraph oder ein Middleware-Pattern, das die Ausgabe pausiert und auf Freigabe wartet. Der Freigabeschritt muss verbindlich sein, sonst ist er nur eine Demo-Funktion.
 
 ```python
 from langgraph.types import interrupt
@@ -97,7 +97,7 @@ def freigabe_node(state):
 
 ### Audit-Trail als Architekturanforderung
 
-Ein Audit-Trail dokumentiert, was der Agent wann mit welchen Eingaben und welcher Modellversion produziert hat. Im Streit- oder Haftungsfall ist er der Nachweis, dass das System korrekt funktioniert hat.
+Ein Audit-Trail dokumentiert, was der Agent wann mit welchen Eingaben, Quellen und Modellversionen produziert hat. Im Streit- oder Haftungsfall hilft er, die Systemnutzung nachzuvollziehen. Er beweist nicht automatisch, dass das Ergebnis richtig war.
 
 Wichtig: LangSmith allein reicht für regulierte Umgebungen nicht aus — LangSmith ist ein Entwicklungswerkzeug, kein revisionssicheres Protokollierungssystem. Für produktive regulierte Systeme braucht es eine unveränderliche Protokollierung (z. B. append-only Datenbank, signierte Logeinträge).
 
@@ -109,7 +109,7 @@ Drei Prinzipien gelten branchenübergreifend in regulierten Kontexten:
 
 **Nachvollziehbarkeit:** Jede Agenten-Ausgabe muss auf ihre Grundlagen zurückführbar sein — welche Quellen wurden genutzt, welches Modell wurde verwendet, welche Eingaben lagen vor. Schwarze-Box-Ausgaben ohne Quellennachweis sind in regulierten Umgebungen nicht akzeptabel.
 
-**Grenzen automatisierter Entscheidungen:** Kein Agent trifft in regulierten Kontexten eine finale Entscheidung allein. Er bereitet vor, schlägt vor, strukturiert — aber die letzte Entscheidung liegt beim Menschen. Art. 22 DSGVO verankert das als Recht der betroffenen Personen.
+**Grenzen automatisierter Entscheidungen:** In regulierten Kontexten sollte kein Agent eine finale Entscheidung allein treffen. Er bereitet vor, schlägt vor, strukturiert — aber wirkungsrelevante Entscheidungen brauchen eine klar verantwortliche menschliche Stelle. Art. 22 DSGVO ist dabei besonders zu prüfen, wenn automatisierte Entscheidungen erhebliche Wirkung auf Personen haben können.
 
 **Dokumentierter Wandel:** Wenn sich das System ändert — neues Modell, neuer Prompt, neue Datenquellen — muss das dokumentiert und erneut validiert werden. Kein stiller Update im Hintergrund. Das gilt auch für Prompts: Ein geänderter System-Prompt in einer klinischen Anwendung ist eine Änderung am System, nicht nur an einem Textfeld.
 
@@ -126,7 +126,7 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 | Wie wird die Ausgabe genutzt? | Als Ausgangspunkt für weitere Prüfung | Als direkte Handlungsgrundlage |
 | Gibt es einen menschlichen Entscheid danach? | Ja, immer | Nein oder unklar |
 
-**Grenze:** Diese Tabelle ersetzt keine Rechts- oder Compliance-Beratung. In Zweifelsfällen — insbesondere wenn das System in einem Unternehmen produktiv eingesetzt werden soll — sollte immer ein Datenschutzbeauftragter oder Compliance-Verantwortlicher einbezogen werden.
+**Grenze:** Diese Tabelle ersetzt keine Rechts- oder Compliance-Beratung. In Zweifelsfällen, besonders vor produktiver Nutzung, sollten Datenschutz, Compliance und fachliche Verantwortung einbezogen werden.
 
 ---
 
@@ -142,8 +142,8 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.1<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

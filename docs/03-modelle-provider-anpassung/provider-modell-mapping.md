@@ -64,9 +64,9 @@ Der wichtigste Grundsatz lautet:
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
 | **Baseline / Demo**                | `gpt-5.4-nano`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`     | schnell, günstig, gut für Grundlagen                                |
 | **Router / leichter Reasoner**     | `gpt-5.4-nano`                | `mistral-small-latest`                                | `gemini-3-flash-preview`    | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
-| **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-6`               | für Supervisor, Security, Bewertung                                 |
+| **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-7`               | für Supervisor, Security, Bewertung                                 |
 | **Worker / Synthese**              | `gpt-5.4-mini`           | `mistral-medium-latest` oder `mistral-large-latest`  | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
-| **Worker / Synthese (hochwertig)** | `gpt-5.4`                | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-6`               | maximale Qualität: komplexe RAG, finale Reports                     |
+| **Worker / Synthese (hochwertig)** | `gpt-5.4`                | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | maximale Qualität: komplexe RAG, finale Reports                     |
 | **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
 | **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
 
@@ -131,7 +131,7 @@ Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
 - Haiku als schnelle Baseline (`claude-haiku-4-5`)
 - Sonnet als starker Standard-Worker (`claude-sonnet-4-6`)
-- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-4-6`)
+- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-4-7`)
 
 **Geeignet, wenn**
 - die Modellrollen aus dem OpenAI-Setup möglichst klar nachgebildet werden sollen
@@ -146,7 +146,7 @@ Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
 ### Baseline / Demo
 
-Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung ist bei allen Providern dieselbe. Geeignet für Grundlagenmodule, erste Tests und kostensensitive Standardläufe mit einfacher Klassifikation, Formatierung oder Tool-Demos. OpenAI `gpt-4o-mini`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
+Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung ist bei allen Providern dieselbe. Geeignet für Grundlagenmodule, erste Tests und kostensensitive Standardläufe mit einfacher Klassifikation, Formatierung oder Tool-Demos. OpenAI `gpt-5.4-nano`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
 
 ### Router / leichter Reasoner
 
@@ -154,11 +154,11 @@ Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder R
 
 ### Judge / starker Reasoner
 
-Überall dort, wo Fehlentscheidungen teuer sind: LLM-as-Judge, Security- oder Compliance-Gates, Supervisor-Routing, Fact-Check oder Konfliktbewertung. Die stärksten verfügbaren Reasoning-Modelle — OpenAI `gpt-5.4`, Mistral `magistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-opus-4-6`.
+Überall dort, wo Fehlentscheidungen teuer sind: LLM-as-Judge, Security- oder Compliance-Gates, Supervisor-Routing, Fact-Check oder Konfliktbewertung. Die stärksten verfügbaren Reasoning-Modelle — OpenAI `gpt-5.4`, Mistral `magistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-opus-4-7`.
 
 ### Worker / Synthese
 
-Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. **Standard:** OpenAI `gpt-5.4-mini`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-sonnet-4-6`. **Hochwertig (wenn maximale Qualität gefordert):** OpenAI `gpt-5.4`, Mistral `mistral-large-latest`, Anthropic `claude-opus-4-6`.
+Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. **Standard:** OpenAI `gpt-5.4-mini`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-sonnet-4-6`. **Hochwertig (wenn maximale Qualität gefordert):** OpenAI `gpt-5.4`, Mistral `mistral-large-latest`, Anthropic `claude-opus-4-7`.
 
 ### Coding-Worker
 
@@ -191,7 +191,7 @@ Es bewertet Antworten, prüft Regelkonformität oder entscheidet zwischen Altern
 - OpenAI: `gpt-5.4`
 - Mistral: `magistral-medium-latest`
 - Gemini: `gemini-3.1-pro-preview`
-- Anthropic: `claude-opus-4-6`
+- Anthropic: `claude-opus-4-7`
 
 **Kurs-Default:**
 Im Kurs wird hierfür aktuell `gpt-5.4` verwendet.
@@ -223,7 +223,7 @@ Beide Dokumente zusammen ergeben:
 ---
 
 **Version:** 2.0<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

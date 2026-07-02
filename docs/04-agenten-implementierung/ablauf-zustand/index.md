@@ -18,3 +18,7 @@ Dieser Bereich behandelt, wie Agenten Zustände verwalten, Sitzungen persistent 
 | [Checkpointing & Persistenz](./checkpointing-persistenz.html) | Sitzungen speichern, fortsetzen und Fehler überstehen |
 | [Memory-Systeme](./memory-systeme.html) | Kurzzeit-, Langzeit- und semantisches Memory in Agenten |
 | [Human-in-the-Loop](./human-in-the-loop.html) | Menschliche Freigaben, Unterbrechungen und Eskalationsmuster |
+
+---
+
+**Stand:** Juli 2026<br>

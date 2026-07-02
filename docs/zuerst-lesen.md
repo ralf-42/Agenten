@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Zuerst lesen
 nav_order: 2
@@ -58,6 +58,6 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 ---
 
 **Version:** 1.0<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

@@ -19,3 +19,7 @@ Dieser Bereich behandelt, wie Agenten externen Kontext aufnehmen, Wissensquellen
 | [RAG-Konzepte](./rag-konzepte.html) | Retrieval-Augmented Generation: Architektur und Qualitätsfaktoren |
 | [Context Engineering](./context-engineering.html) | Kontextfenster gezielt steuern und Informationsdichte optimieren |
 | [Long Context, RAG und CAG](./long-context-cag.html) | Strategien für externes Wissen: alles laden, gezielt suchen oder stabilen Kontext cachen |
+
+---
+
+**Stand:** Juli 2026<br>

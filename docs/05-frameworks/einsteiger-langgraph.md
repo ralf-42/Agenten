@@ -32,6 +32,23 @@ LangChain bietet Modelle, Tools und einfache Agenten. LangGraph baut darauf auf 
 - **Sitzungen, die wieder aufgenommen werden können**
 - **Human-in-the-Loop**
 
+## Lernpfad: Von einfach zu agentisch
+
+LangGraph lernt sich am besten in kleinen Schritten. Nicht jedes Thema wird sofort gebraucht; zuerst sollten State, Nodes und Edges stabil sitzen.
+
+| Stufe | Thema | Ziel |
+|---|---|---|
+| 1 | Minimaler Graph | State, Node, Edge, `START` und `END` verstehen |
+| 2 | Sequenzieller Graph | lineare Workflows als Pipeline bauen |
+| 3 | Conditional Routing | Entscheidungen in Code statt im Prompt modellieren |
+| 4 | Loop / Retry | Wiederholungen mit klarer Exit-Bedingung bauen |
+| 5 | Tool-Loop | LLM-Entscheidung, Tool-Ausführung und Antwort verbinden |
+| 6 | Streaming | Zwischenschritte sichtbar machen |
+| 7 | Checkpointing | Sessions wiederaufnehmen und lange Abläufe absichern |
+| 8 | Human-in-the-Loop | Freigaben und Korrekturen technisch erzwingen |
+| 9 | Subgraphs / Multi-Agent | größere Workflows modularisieren |
+| 10 | Agentic RAG | Retrieval, Tools und Routing in einem Graph kombinieren |
+
 
 
 ---
@@ -321,6 +338,22 @@ flowchart TB
 - Routing nach Tool-Feedback
 - Wiederholschleifen (Retry)
 
+### State ändern und gleichzeitig routen: `Command`
+
+Wenn ein Schritt den State aktualisieren soll und gleichzeitig bestimmt, wohin als Nächstes gegangen wird, ist `Command(update=..., goto=...)` das passende Muster.
+
+```python
+from typing import Literal
+from langgraph.types import Command
+
+def classify_node(state: ChatState) -> Command[Literal["tools", "answer"]]:
+    if "suche" in state["messages"][-1].content.lower():
+        return Command(update={"step": state["step"] + 1}, goto="tools")
+    return Command(update={"step": state["step"] + 1}, goto="answer")
+```
+
+Für Einsteiger gilt: Nutze erst einfache Verzweigungen mit `add_conditional_edges()`. `Command` lohnt sich besonders dann, wenn Update und Routing fachlich zusammengehören.
+
 ---
 
 ## Streaming: Schritte sichtbar machen
@@ -578,6 +611,6 @@ LangGraph wird dann sinnvoll, wenn ein LLM-Workflow echten Zustand, Routing oder
 ---
 
 **Version:** 2.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

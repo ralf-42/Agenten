@@ -137,7 +137,7 @@ def cost_per_successful_completion(sessions: list[dict]) -> float:
 
 ## Wie ein kleines Evaluationsset aufgebaut wird
 
-Gute Evaluation beginnt nicht mit Hunderten Beispielen, sondern mit einer kleinen, sauberen Auswahl typischer Fälle. Für einen Kurs genügen oft 20 bis 30 Testfälle, wenn sie nicht nur den Happy Path abdecken. Wichtig ist eine Mischung aus Standardfällen, Randfällen und bewusst schwierigen Eingaben.
+Gute Evaluation beginnt nicht mit Hunderten Beispielen, sondern mit einer kleinen, sauberen Auswahl typischer Fälle. Für einen Kurs genügen oft 20 bis 30 Testfälle, wenn sie nicht nur den Happy Path abdecken. Die Mischung zählt: Standardfälle, Randfälle und bewusst schwierige Eingaben.
 
 Ein häufiger erster Fehler ist ein Testset, das nur aus offensichtlichen Anfragen besteht. Dann wirkt der Agent robuster, als er später im Einsatz ist. Schon wenige Variationen machen einen großen Unterschied: Tippfehler, unvollständige Angaben, mehrdeutige Fragen oder Eingaben außerhalb des vorgesehenen Aufgabenbereichs.
 
@@ -314,7 +314,7 @@ Grenze: Entkopplung allein löst keine Qualitätsprobleme. Wenn Planer und Evalu
 
 ## Was in Entwicklerprojekten zuerst wichtig ist
 
-Für einen ersten Agenten ist keine vollständige Observability-Plattform nötig. Entscheidend ist ein sauberes Minimum: ein kleines Testset, klare Erfolgskriterien, gespeicherte Prompts und Antworten, sichtbare Tool-Aufrufe und ein Vergleich zwischen alter und neuer Version. Damit lässt sich bereits ein Großteil typischer Fehler finden.
+Für einen ersten Agenten ist keine vollständige Observability-Plattform nötig. Ein sauberes Minimum reicht: ein kleines Testset, klare Erfolgskriterien, gespeicherte Prompts und Antworten, sichtbare Tool-Aufrufe und ein Vergleich zwischen alter und neuer Version. Damit lassen sich viele typische Fehler bereits finden.
 
 Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen Formulierungsänderungen kippt. Genau deshalb sollte der Kurs nicht nur erfolgreiche Demos zeigen, sondern auch bewusst misslingende Fälle. Erst dort wird sichtbar, warum Evaluation und Observability keine Zusatzaufgabe, sondern Teil der Agentenentwicklung sind.
 
@@ -328,8 +328,8 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.5<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

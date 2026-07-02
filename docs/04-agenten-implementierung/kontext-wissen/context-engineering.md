@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Context Engineering
 parent: Kontext & Wissen
@@ -154,6 +154,8 @@ Gesamtschaden: 2.500€, keine Muster erkennbar"
 Wichtige Informationen für später aufbewahren.
 
 Memory ist nützlich, wenn Informationen nicht bei jeder Anfrage neu abgefragt werden sollen. Gleichzeitig entsteht hier schnell technischer und fachlicher Ballast: Was einmal gespeichert wurde, bleibt oft länger im System als sinnvoll. Zu Memory gehört deshalb immer auch eine Regel, wann Kontext verfällt oder überschrieben wird.
+
+Kontext-Caching ist davon zu trennen. Das Modell lernt dabei nicht dauerhaft; wiederkehrender Kontext, vorbereitete Dokumentauszüge oder technische Zwischenergebnisse werden nur genutzt, um Kosten, Latenz und Tokenverbrauch zu senken. Sobald Kontext nutzerabhängig, vertraulich oder möglicherweise veraltet sein kann, braucht der Cache klare Regeln für Gültigkeit und Zugriff.
 
 **Beispiel:**
 ```
@@ -396,5 +398,5 @@ In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool
 ---
 
 **Version:** 1.3<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

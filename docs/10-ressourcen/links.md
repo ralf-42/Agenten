@@ -211,7 +211,7 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 ---
 
 **Version:** 1.7<br>
-**Stand:** Juni 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

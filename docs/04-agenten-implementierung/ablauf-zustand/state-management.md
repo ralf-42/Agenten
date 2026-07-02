@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: State Management
 parent: Ablauf & Zustand
@@ -193,7 +193,7 @@ class AnalysisState(TypedDict):
     keywords: list[str]
     analysis_complete: bool
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 def summarize_node(state: AnalysisState) -> AnalysisState:
     response = llm.invoke(f"Fasse zusammen: {state['document']}")
@@ -294,6 +294,6 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 ---
 
 **Version:** 1.1<br>
-**Stand:** Mai 2026<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

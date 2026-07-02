@@ -11,7 +11,7 @@ description: >-
 
 # Research Skill
 
-Dieser Skill definiert den Hauptworkflow des Kurses: einen quellengebundenen Research Assistant für Fachartikel. Standard-Suchraum ist der lokale Research-Korpus aus `02_daten/01_text/korpus_research/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
+Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Research-Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_research/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
 
 ## Aktivierungsbedingung
 
@@ -19,7 +19,7 @@ Dieser Skill wird aktiv, wenn der Nutzer eine Recherche-Aufgabe formuliert. Typi
 
 ## Hard Rules
 
-1. **Immer Korpusgrenze prüfen** — Standard ist `search_docs` im lokalen Fachartikel-Korpus.
+1. **Immer Korpusgrenze prüfen** — Standard ist `search_docs` in der Fachartikel-Teilmenge des Projektkorpus.
 2. **Out-of-Corpus stoppen** — wenn keine passende Quelle gefunden wird, `"Nicht im Korpus"` ausgeben.
 3. **Quellenbewertung ist bindend** — Relevanz-Score < 0.4 → Quelle verwerfen.
 4. **Nie halluzinieren** — fehlende Fakten explizit als "nicht belegt" markieren.
@@ -34,7 +34,7 @@ Nutzeranfrage
     ▼
 [Research-Skill]
     ├─ Thema analysieren & Suchstrategie definieren
-    ├─ Tool: search_docs (lokaler Fachartikel-Korpus)
+    ├─ Tool: search_docs (Fachartikel-Teilmenge im Projektkorpus)
     ├─ Tool: score_relevance (Quellen bewerten)
     ├─ Gate: Out-of-Corpus, wenn keine Quelle Score ≥ 0.4 erreicht
     └─ Research-Report im definierten Ausgabeformat generieren
@@ -43,7 +43,7 @@ Nutzeranfrage
 ## Aufgaben
 
 - Thema in 2–3 Suchqueries zerlegen
-- Quellen aus dem lokalen Fachartikel-Korpus abrufen
+- Quellen aus der Fachartikel-Teilmenge des Projektkorpus abrufen
 - Jede Quelle mit `score_relevance` bewerten
 - Quellen mit Score < 0.4 ausschließen
 - Bei fehlender Korpusabdeckung stoppen statt zu raten

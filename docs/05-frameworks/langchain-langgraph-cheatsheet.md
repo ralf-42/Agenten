@@ -110,7 +110,7 @@ def quellen_check(thema: str) -> str:
 agent = create_agent(
     model=init_chat_model("openai:gpt-5.4-mini"),
     tools=[quellen_check],
-    system_prompt="Du bist ein Research Assistant. Nutze Tools für Korpusfragen.",
+    system_prompt="Du bist ein Meeting- & Research-Briefing-Agent. Nutze Tools für Korpusfragen.",
 )
 
 result = agent.invoke({
@@ -491,7 +491,7 @@ from langsmith import Client
 
 client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 
-dataset_name = "A00 Research Assistant Smoke Test"
+dataset_name = "A00 Briefing Agent Smoke Test"
 dataset = client.create_dataset(
     dataset_name=dataset_name,
     description="Kleine Regressionstests für Research-Antworten.",

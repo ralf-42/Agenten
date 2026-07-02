@@ -12,7 +12,7 @@ description: >-
 
 # Compliance Skill
 
-Dieser Skill definiert einen wiederverwendbaren Compliance-Workflow für Agentenprozesse mit Freigabe- und Dokumentationsanforderungen.
+Dieser Skill definiert einen wiederverwendbaren Compliance-Workflow für Agentenprozesse mit Freigabe- und Dokumentationsanforderungen. Das Freigabe-Gate in Schritt 5 ist eine konkrete Ausprägung des kursweiten **Gate**-Begriffs (siehe `docs/02-orientierung-entscheidung/terminologie.md`): ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe, hier automatisiert über den Risiko-Score aus `compliance_check`.
 
 ## Schnellstart
 

@@ -54,13 +54,13 @@ State Machines mit LangGraph, explizites Routing über `add_conditional_edges()`
 
 ## Wann reicht GenAI, wann braucht es Agenten
 
-GenAI reicht, wenn eine einzelne, klar umrissene Aufgabe mit einem LLM-Aufruf oder einer festen RAG-Chain gelöst werden kann — etwa ein Text zusammenfassen oder eine Frage gegen einen Wissensspeicher beantworten. Der Agenten-Kurs wird relevant, sobald ein System selbst entscheiden muss, welchen Weg es einschlägt, sich über mehrere Schritte hinweg an Zwischenergebnisse erinnern muss oder eine Ausgabe erst nach einer Kontrollinstanz das System verlassen darf. Der [Research Assistant]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) zeigt genau diesen Übergang: von der einfachen RAG-Chain zum kontrollierten Agentensystem.
+GenAI reicht, wenn eine einzelne, klar umrissene Aufgabe mit einem LLM-Aufruf oder einer festen RAG-Chain gelöst werden kann — etwa ein Text zusammenfassen oder eine Frage gegen einen Wissensspeicher beantworten. Der Agenten-Kurs wird relevant, sobald ein System selbst entscheiden muss, welchen Weg es einschlägt, sich über mehrere Schritte hinweg an Zwischenergebnisse erinnern muss oder eine Ausgabe erst nach einer Kontrollinstanz das System verlassen darf. Der [Meeting- & Research-Briefing-Agent]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) zeigt genau diesen Übergang: von der einfachen RAG-Chain zum kontrollierten Agentensystem.
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [Research Assistant]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) | Wie sieht das kontrollierte Agentensystem konkret aus, das dieser Kurs baut? |
+| [Meeting- & Research-Briefing-Agent]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) | Wie sieht das kontrollierte Agentensystem konkret aus, das dieser Kurs baut? |
 | [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Welche Begriffe — inklusive Evidence Tool, Gate, Agenten-Vertrag — werden im Kurs einheitlich verwendet? |
 | [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann reicht Prompting, wann braucht es RAG, Workflow oder Agent? |
 | [Welches Werkzeug?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI- oder Agentenvorhaben überhaupt sinnvoll? |

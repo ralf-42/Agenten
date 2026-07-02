@@ -22,7 +22,7 @@ KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeuge
 
 Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reasoning-nahe Kernkomponente sowie Frameworks wie **LangChain** und **LangGraph** für robuste Orchestrierung. Damit werden Agenten nicht als einzelne Prompts gebaut, sondern als zustandsbasierte Systeme mit klaren Schritten, Werkzeugen und Kontrollpunkten.
 
-Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Research Assistant für Fachartikel** als kontrolliertes Agentensystem. Die fiktive Nutzerin Pia arbeitet mit einem kuratierten PDF-Korpus, stellt fachliche Fragen und erwartet belegbare Antworten. Der Assistant sucht semantisch, nutzt RAG als Evidence Tool, strukturiert Ergebnisse, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen Entscheidungen für menschliche Freigabe.
+Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Meeting- & Research-Briefing-Agent** als kontrolliertes Agentensystem. Die fiktive Projektleiterin Mara Vogt arbeitet mit einem kuratierten Projektkorpus aus Protokollen, Entscheidungen, Risiken und Fachartikeln, stellt Fragen und erwartet belegbare Antworten. Der Agent sucht semantisch, nutzt RAG als Evidence Tool, strukturiert Ergebnisse, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen Entscheidungen für menschliche Freigabe.
 
 **Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Anders als im GenAI-Kurs, wo einzelne KI-Features im Vordergrund stehen, geht es hier um ein durchgängiges System, das drei Dinge leisten muss: **Planen** (Routing, State, Tool-Auswahl, Supervisor), **Handeln** (Tools, RAG als Evidence Tool, Workflows) und **Prüfen** (Human-in-the-Loop, Security, Evaluation).
 
@@ -50,6 +50,6 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** Mai 2026<br>
+**Version:** 1.3<br>
+**Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

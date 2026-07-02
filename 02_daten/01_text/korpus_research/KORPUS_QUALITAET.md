@@ -1,56 +1,60 @@
-# Korpus-Qualitaetspruefung
+# Korpus-Qualitätsprüfung
 
-**Stand:** 2026-05-02
+**Stand:** 2026-07-02
 
 ## Ergebnis
 
-Der Research-Korpus ist fuer die erste anwendungsorientierte Kursversion geeignet.
+Der Meeting- & Research-Briefing-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeignet.
 
 | Kriterium | Ergebnis |
 |---|---|
-| Umfang | 15 PDF-Dateien |
-| Dateiformat | Alle Dateien haben gueltigen `%PDF`-Header |
-| Thematische Perspektiven | RAG-Grundlagen, RAG-Evaluation, Robustheit, Query-Rewriting, Agenten, Prompt Engineering |
-| Duplikate | Keine offensichtlichen Dateiduplikate nach Dateiname und Groesse |
-| Datenschutz | Oeffentliche arXiv-Papiere, keine personenbezogenen Kursdaten |
-| Einsteigerpassung | Geeignet, wenn im Unterricht mit Teilkorpus und gefuehrten Fragen gestartet wird |
+| Umfang | 18 PDF-Dateien (13 neue Meeting-/Projektartefakte, 5 weiterverwendete Fachartikel) |
+| Dateiformat | Alle Dateien haben gültigen `%PDF`-Header, mit `PyPDFLoader` geprüft |
+| Umlaute | Alle neuen PDFs enthalten echte deutsche Umlaute, kein Mojibake (mit `PyPDFLoader`-Extraktion verifiziert) |
+| Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage, RAG-/Agenten-Recherche-Hintergrund |
+| Eingebaute Edge Cases | Konflikt (D1 vs. D2), Mehrdeutigkeit, Versionierung (Risiko R2), Unsicherheit, Prompt Injection (zitiert, nicht auszuführen) |
+| Datenschutz | Vollständig fiktive Firma, Personen und Inhalte (Nordlicht Software GmbH, Projekt Kompass) |
+| Einsteigerpassung | Geeignet, wenn im Unterricht mit Teilkorpus und geführten Fragen gestartet wird |
 
 ## Dokumentgruppen
 
 | Gruppe | Dateien |
 |---|---|
-| RAG-Grundlagen | `rag_survey_2312_10997.pdf`, `retrieval_augmented_text_generation_2202_01110.pdf`, `rag_text_generation_llms_2404_10981.pdf` |
-| Praxis und Grenzen von LLMs | `llms_in_practice_2304_13712.pdf` |
-| Evaluation | `ragas_evaluation_2309_15217.pdf`, `ares_rag_evaluation_2311_09476.pdf`, `ragchecker_2408_08067.pdf` |
-| Robustheit und Unsicherheit | `robust_rag_irrelevant_context_2310_01558.pdf`, `chain_of_note_2311_09210.pdf` |
-| Retrieval-Verbesserung | `raft_domain_specific_rag_2403_10131.pdf`, `raptor_tree_retrieval_2401_18059.pdf`, `query_rewriting_rag_2305_14283.pdf`, `active_retrieval_augmented_generation_2305_06983.pdf` |
-| Agenten und Prompting | `llm_autonomous_agents_survey_2308_11432.pdf`, `prompt_engineering_survey_2402_07927.pdf` |
+| Projektunterlagen | `projektauftrag_kompass.pdf`, `stakeholder_rollenliste.pdf`, `risikoliste_v1.pdf` |
+| Meeting-Protokolle | `protokoll_kickoff_2026-03-03.pdf`, `protokoll_steuerkreis_2026-03-17.pdf`, `protokoll_steuerkreis_2026-03-31.pdf`, `protokoll_steuerkreis_2026-04-14.pdf`, `protokoll_steuerkreis_2026-04-28.pdf`, `protokoll_fachbereich_workshop_2026-05-05.pdf`, `protokoll_steuerkreis_2026-05-19.pdf` |
+| Entscheidungs- und Nachverfolgungs-Dokumente | `entscheidungsprotokoll_gesamt.pdf`, `follow_up_tracker.pdf` |
+| Vorlagen | `agenda_vorlage_steuerkreis.pdf` |
+| Recherche-Hintergrund (RAG/Agenten) | `rag_survey_2312_10997.pdf`, `llm_autonomous_agents_survey_2308_11432.pdf`, `prompt_engineering_survey_2402_07927.pdf`, `ragas_evaluation_2309_15217.pdf`, `robust_rag_irrelevant_context_2310_01558.pdf` |
 
 ## Ground-Truth-Abdeckung
 
-Das initiale Eval-Set deckt mindestens 10 Dokumente ab. Die Fragen sind bewusst als robuste Start-Ground-Truth formuliert: erwartete Quelle, erwartete Kurzantwort und erwartete Schluesselbegriffe sind angegeben.
+Das Eval-Set `eval_research.json` deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Das Edge-Case-Set `eval_research_edge.json` deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
 
 | Datei | Abdeckung |
 |---|---|
-| `rag_survey_2312_10997.pdf` | q01, q02, q04, q20, e04, e09 |
-| `retrieval_augmented_text_generation_2202_01110.pdf` | q05 |
-| `rag_text_generation_llms_2404_10981.pdf` | q03 |
-| `llms_in_practice_2304_13712.pdf` | q18 |
-| `ragas_evaluation_2309_15217.pdf` | q06 |
-| `ares_rag_evaluation_2311_09476.pdf` | q07 |
-| `ragchecker_2408_08067.pdf` | q08 |
-| `robust_rag_irrelevant_context_2310_01558.pdf` | q09, e05 |
-| `chain_of_note_2311_09210.pdf` | q10, e06 |
-| `raft_domain_specific_rag_2403_10131.pdf` | q11 |
-| `raptor_tree_retrieval_2401_18059.pdf` | q12 |
-| `query_rewriting_rag_2305_14283.pdf` | q13 |
-| `active_retrieval_augmented_generation_2305_06983.pdf` | q14 |
-| `llm_autonomous_agents_survey_2308_11432.pdf` | q15, q16, e07 |
-| `prompt_engineering_survey_2402_07927.pdf` | q17, q19 |
+| `projektauftrag_kompass.pdf` | q01, q02, e01 |
+| `stakeholder_rollenliste.pdf` | q03 |
+| `risikoliste_v1.pdf` | q04 |
+| `protokoll_kickoff_2026-03-03.pdf` | q05 |
+| `protokoll_steuerkreis_2026-03-17.pdf` | q06, e05 |
+| `protokoll_steuerkreis_2026-03-31.pdf` | e06 |
+| `protokoll_steuerkreis_2026-04-14.pdf` | q07, e05, e09 |
+| `protokoll_steuerkreis_2026-04-28.pdf` | q08, e08 |
+| `protokoll_fachbereich_workshop_2026-05-05.pdf` | q09, e04 |
+| `protokoll_steuerkreis_2026-05-19.pdf` | q10, e07 |
+| `entscheidungsprotokoll_gesamt.pdf` | q11, q19 |
+| `follow_up_tracker.pdf` | q12 |
+| `agenda_vorlage_steuerkreis.pdf` | q13, e09 |
+| `rag_survey_2312_10997.pdf` | q14 |
+| `ragas_evaluation_2309_15217.pdf` | q15 |
+| `llm_autonomous_agents_survey_2308_11432.pdf` | q16 |
+| `prompt_engineering_survey_2402_07927.pdf` | q17 |
+| `robust_rag_irrelevant_context_2310_01558.pdf` | q18 |
 
-## Hinweise fuer den Unterricht
+## Hinweise für den Unterricht
 
-- In M11/M12 zuerst mit 3-5 Dokumenten arbeiten, damit Chunking und Retrieval sichtbar bleiben.
-- In M13/M14 den gesamten Korpus verwenden.
-- In M15/M24 mit `eval_research.json` starten und Edge-Cases erst danach hinzunehmen.
-- Lange Survey-Papiere koennen Retrieval dominieren; bei Bedarf pro Modul mit Teilkorpus arbeiten.
+- In M11/M12 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
+- In M13/M14 den gesamten Korpus verwenden, inklusive der Recherche-Hintergrund-Dokumente.
+- In M15/M24 mit `eval_research.json` starten und Edge-Cases aus `eval_research_edge.json` erst danach hinzunehmen.
+- Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
+- Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M17/M23, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.

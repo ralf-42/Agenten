@@ -8,7 +8,7 @@ permalink: /
 
 # KI-Agenten
 
-> **Agenten. Planen. Handeln. Prüfen.**<br>
+> **KI-Agenten. Planen. Handeln. Prüfen.**<br>
 > Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith
 
 ---
@@ -26,19 +26,19 @@ Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Rese
 
 **Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Anders als im GenAI-Kurs, wo einzelne KI-Features im Vordergrund stehen, geht es hier um ein durchgängiges System, das drei Dinge leisten muss: **Planen** (Routing, State, Tool-Auswahl, Supervisor), **Handeln** (Tools, RAG als Evidence Tool, Workflows) und **Prüfen** (Human-in-the-Loop, Security, Evaluation).
 
-Der Kurs Agenten lässt sich aus drei **Perspektiven** betrachten:
+Der Kurs Agenten folgt drei Arbeitsbewegungen, die sich durch alle Module ziehen:
 
-## Verstehen
+## Planen
 
-Grundlegend ist das Verständnis dafür, wie agentische Systeme funktionieren. Dazu gehören ReAct/TAO-Denkmuster, Tool Use & Function Calling, State Management, Routing-Logik sowie Grenzen und Risiken von LLM-basierten Entscheidungen. Auch Robustheit, Transparenz und verantwortungsvoller Einsatz gehören zu diesem Verständnis.
+Agentische Systeme brauchen explizite Planung: Welche Aufgabe liegt vor, welche Informationen fehlen, welches Tool passt, welcher Zustand muss erhalten bleiben und wann muss ein Mensch einbezogen werden? Dazu gehören ReAct/TAO-Denkmuster, Tool Use & Function Calling, State Management, Routing-Logik, Supervisor-Patterns und klare Grenzen für LLM-basierte Entscheidungen.
 
-## Anwenden
+## Handeln
 
-Die praktische Umsetzung von Agenten erfordert die Fähigkeit, Modelle gezielt zu steuern und Workflows modular aufzubauen - etwa durch **Prompt Engineering**, **RAG**, **Structured Output** und **Tool-Integration**. Mit **LangChain**, **LangGraph**, **LangSmith** und **ChromaDB** entstehen produktionsnahe Agenten für Recherche, Support, Automatisierung und Wissensarbeit.
+Ein Agent wird erst greifbar, wenn Planung in kontrollierte Handlung übersetzt wird: Prompts steuern Rollen und Grenzen, Tools führen konkrete Arbeitsschritte aus, RAG liefert Evidenz, Structured Output macht Ergebnisse maschinenlesbar und LangGraph verbindet alles zu nachvollziehbaren Workflows. Mit **LangChain**, **LangGraph**, **LangSmith** und **ChromaDB** entstehen produktionsnahe Agenten für Recherche, Support, Automatisierung und Wissensarbeit.
 
-## Gestalten
+## Prüfen
 
-Mit zunehmender Verfügbarkeit von APIs, Open-Source-Modellen und Orchestrierungs-Frameworks entsteht ein neues Feld der Gestaltung: Single-Agent-Lösungen, Supervisor-Patterns und komplette Multi-Agent-Systeme. Gleichzeitig wachsen Anforderungen an Evaluation, Monitoring, Security und Governance, damit aus Prototypen verlässliche Produkte werden.
+Agenten müssen prüfbar bleiben. Quellen, Tool-Aufrufe, Zustandswechsel, Freigaben und Qualitätsmetriken gehören deshalb zum Systementwurf. Evaluation, Monitoring, Security, Human-in-the-Loop und Governance sorgen dafür, dass aus Prototypen verlässliche Produkte werden und kritische Entscheidungen nicht unsichtbar im Modell verschwinden.
 
 Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos: saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Der Weg vom Experiment zum stabilen Agentensystem ist kürzer, wenn Struktur von Anfang an mitgedacht wird — Checkpointing, Evaluation und Monitoring sind keine Nacharbeiten, sondern Bestandteile des Entwurfs.
 

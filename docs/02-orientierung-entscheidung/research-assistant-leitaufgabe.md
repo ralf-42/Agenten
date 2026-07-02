@@ -10,7 +10,9 @@ has_toc: true
 # Research Assistant
 {: .no_toc }
 
-Ein Research Assistant beantwortet Fachfragen zu einem Dokumentenkorpus, findet relevante Passagen und belegt Aussagen mit Quellen. Er ist kein autonomes Entscheidungssystem, sondern eine kontrollierte Recherchehilfe: Retrieval liefert Evidenz, Structured Output macht Antworten prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. Genau deshalb eignet sich diese Leitaufgabe gut, um Agenten nicht als Chatbot mit Werkzeugen zu verstehen, sondern als Zusammenspiel aus Aufgabe, Daten, Kontrolle und Evaluation.
+Ein Research Assistant beantwortet Fachfragen zu einem Dokumentenkorpus, findet relevante Passagen und belegt Aussagen mit Quellen. Er ist kein autonomes Entscheidungssystem, sondern ein **kontrolliertes Agentensystem**: Retrieval liefert Evidenz über ein Evidence Tool, Structured Output macht Antworten prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. Genau deshalb eignet sich diese Leitaufgabe gut, um Agenten nicht als Chatbot mit Werkzeugen zu verstehen, sondern als Zusammenspiel aus Aufgabe, Daten, Kontrolle und Evaluation.
+
+Drei Fähigkeiten ziehen sich als roter Faden durch den gesamten Bauplan: Der Assistant muss **planen** (welches Tool, welche Route, welcher Worker, welcher Zustand gilt gerade), **handeln** (Tools ausführen, Evidenz abrufen, einen Workflow durchlaufen) und **prüfen** (Freigabe, Security, Evaluation vor jeder folgenreichen Ausgabe). RAG ist in diesem Bauplan kein Selbstzweck, sondern ein **Evidence Tool**: eine von mehreren kontrollierten Fähigkeiten, die der Agent gezielt einsetzt, nicht die alleinige Funktionsweise des Systems.
 
 Die Leitfrage lautet:
 
@@ -28,7 +30,7 @@ Die Leitfrage lautet:
 
 ## Ausgangssituation
 
-Pia sichtet regelmäßig neue Fachartikel, Berichte und Guidances. Dabei geht es um relevante Passagen in langen Dokumenten, die mit einfacher Volltextsuche oft nicht schnell genug auffindbar sind. Eine Suche nach Schlagwörtern liefert entweder zu viele Treffer oder übersieht semantisch passende Stellen.
+Pia sichtet regelmäßig neue Fachartikel, Berichte und Guidance's. Dabei geht es um relevante Passagen in langen Dokumenten, die mit einfacher Volltextsuche oft nicht schnell genug auffindbar sind. Eine Suche nach Schlagwörtern liefert entweder zu viele Treffer oder übersieht semantisch passende Stellen.
 
 Das Ziel ist kein Agent, der beliebige Antworten erzeugt. Der Mehrwert entsteht erst, wenn das System einen begrenzten Korpus nutzt, Quellen sichtbar macht und fehlende Evidenz nicht durch Modellwissen ersetzt. Ein Research Assistant muss daher drei Dinge gleichzeitig können: relevante Passagen finden, Antworten strukturieren und Grenzen offenlegen.
 
@@ -45,13 +47,13 @@ In der Praxis relevant, wenn: Fachtexte häufig durchsucht werden, Quellenpflich
 
 Das Zielbild lässt sich in fünf Ausbaustufen lesen:
 
-| Stufe | Was der Assistant bekommt |
-|---|---|
-| Einfacher Agent | Such-Tool, erster Korpuszugriff und nachvollziehbare Tool-Entscheidungen |
-| Robuster Agent | Antwortschema, Quellenpflicht, Fehlerbehandlung und Multi-Tool-Logik |
-| Kontrollierter Agent | StateGraph, Routing nach Fragetyp, Tool-Gating und Security-Leitplanken |
-| Wissensfähiger Agent | RAG mit Vektordatenbank, semantische Suche, Eval-Set und Regression-Check |
-| Kooperierendes System | HITL, Memory, Supervisor und spezialisierte Worker |
+| Stufe | Was der Assistant bekommt | Profilbezug |
+|---|---|---|
+| Einfacher Agent | Such-Tool, erster Korpuszugriff und nachvollziehbare Tool-Entscheidungen | Planen, Handeln |
+| Robuster Agent | Antwortschema, Quellenpflicht, Fehlerbehandlung und Multi-Tool-Logik | Planen, Handeln, Prüfen |
+| Kontrollierter Agent | StateGraph, Routing nach Fragetyp, Tool-Gating und Security-Leitplanken | Planen, Prüfen |
+| Wissensfähiger Agent | RAG als Evidence Tool mit Vektordatenbank, semantische Suche, Eval-Set und Regression-Check | Handeln, Prüfen |
+| Kooperierendes System | HITL, Memory, Supervisor und spezialisierte Worker | Planen, Handeln, Prüfen |
 
 ## Korpus und Metadaten
 
@@ -98,7 +100,7 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ## Leitplanken
 
-Der Research Assistant bleibt ein Assistenzsystem für Recherche. Diese Grenze ist fachlich wichtiger als die konkrete Modellwahl: Ein System, das fehlende Evidenz frei ergänzt, kann trotz guter Architektur unbrauchbar sein.
+Der Research Assistant bleibt ein Assistenzsystem für Recherche. Diese Grenze ist fachlich wichtiger als die konkrete Modellwahl: Ein System, das fehlende Evidenz frei ergänzt, kann trotz guter Architektur unbrauchbar sein. Die Leitplanken sind die konkrete Ausprägung von **Prüfen**: Sie legen fest, wann der Agent stoppen, eskalieren oder eine Ausgabe verweigern muss, statt eine plausible Antwort zu erzwingen.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -142,7 +144,7 @@ Der Supervisor entscheidet nach Fragetyp, welche Rolle gebraucht wird. Bei Unsic
 
 ## Capstone und Transfer
 
-Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird, semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche und Antworten ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis nutzen. HITL oder eine vergleichbare Freigabelogik muss erkennbar sein. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte?
+Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird, semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche und Antworten ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis nutzen. Mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt müssen erkennbar sein. Die Evaluation prüft nicht nur Positivfälle, sondern auch mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
 
 Der Bauplan ist domänenübertragbar. Eine Legal-Research-Variante ergänzt etwa Aktenzeichen, Fundstellen und strengere Freigaberegeln; eine Compliance-Variante braucht Audit-Trail und Rollenklärung; ein Meeting-Briefing verschiebt den Schwerpunkt auf Zusammenfassung und Skills. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
 
@@ -167,4 +169,4 @@ Der Bauplan ist domänenübertragbar. Eine Legal-Research-Variante ergänzt etwa
 
 **Version:** 1.0<br>
 **Stand:** Juni 2026<br>
-**Kurs:** KI-Agenten mit Python bauen
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

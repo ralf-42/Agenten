@@ -8,7 +8,7 @@ permalink: /
 
 # KI-Agenten
 
-> **Agenten. Verstehen. Anwenden. Gestalten.**<br>
+> **Agenten. Planen. Handeln. Prüfen.**<br>
 > Praxisorientierte Entwicklung von KI-Agenten und Multi-Agent-Systemen mit LangChain, LangGraph und LangSmith
 
 ---
@@ -22,7 +22,9 @@ KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeuge
 
 Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reasoning-nahe Kernkomponente sowie Frameworks wie **LangChain** und **LangGraph** für robuste Orchestrierung. Damit werden Agenten nicht als einzelne Prompts gebaut, sondern als zustandsbasierte Systeme mit klaren Schritten, Werkzeugen und Kontrollpunkten.
 
-Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Research Assistant für Fachartikel**. Die fiktive Nutzerin Pia arbeitet mit einem kuratierten PDF-Korpus, stellt fachliche Fragen und erwartet belegbare Antworten. Der Assistant sucht semantisch, nutzt RAG, strukturiert Ergebnisse, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen Entscheidungen für menschliche Freigabe.
+Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **Research Assistant für Fachartikel** als kontrolliertes Agentensystem. Die fiktive Nutzerin Pia arbeitet mit einem kuratierten PDF-Korpus, stellt fachliche Fragen und erwartet belegbare Antworten. Der Assistant sucht semantisch, nutzt RAG als Evidence Tool, strukturiert Ergebnisse, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen Entscheidungen für menschliche Freigabe.
+
+**Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Anders als im GenAI-Kurs, wo einzelne KI-Features im Vordergrund stehen, geht es hier um ein durchgängiges System, das drei Dinge leisten muss: **Planen** (Routing, State, Tool-Auswahl, Supervisor), **Handeln** (Tools, RAG als Evidence Tool, Workflows) und **Prüfen** (Human-in-the-Loop, Security, Evaluation).
 
 Der Kurs Agenten lässt sich aus drei **Perspektiven** betrachten:
 
@@ -50,4 +52,4 @@ Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder 
 
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

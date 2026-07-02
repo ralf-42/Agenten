@@ -330,7 +330,7 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 
 **Version:** 1.4<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

@@ -92,6 +92,18 @@ Bestimmte Begriffspaare werden besonders oft durcheinandergebracht.
 
 **Evaluation und Observability** werden oft gegeneinander gehalten, obwohl sie unterschiedliche Ziele haben. Evaluation misst die Qualität eines Agenten anhand von Testfällen. Observability zeigt, was ein laufendes System im Produktionsbetrieb tatsächlich macht. Beides ist wichtig — aber zu unterschiedlichen Zeitpunkten im Entwicklungszyklus.
 
+## Kursinterne Begriffe
+
+Drei Begriffe sind keine Übersetzungen etablierter Fachbegriffe, sondern kursintern geprägt und werden durchgängig verwendet.
+
+**Evidence Tool** bezeichnet ein Tool, dessen Aufgabe es ist, eine Behauptung mit einem abrufbaren Beleg zu unterlegen — im Kurs vor allem RAG. Der Begriff grenzt RAG bewusst von einer reinen Antwortmaschine ab: Ein Evidence Tool liefert Belege, es ersetzt nicht das Urteil des Agenten.
+
+**Gate** ist ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe. Human-in-the-Loop ist eine mögliche Umsetzung eines Gates, aber nicht die einzige — ein Gate kann auch automatisiert prüfen (etwa ein Score-Schwellenwert) und nur bei Unterschreitung eskalieren.
+
+**Agenten-Vertrag** meint das feste Input/Output-Schema zwischen Agent und Tool oder zwischen Agent und Ausgabe — etwa ein Tool-Schema (`@tool`) oder ein Pydantic-Schema bei Structured Output. Der Begriff macht sichtbar, dass sich Agent und Schnittstelle aufeinander verlassen, ähnlich einem Vertrag zwischen zwei Parteien.
+
+Diese drei Begriffe stehen in engem Bezug zum Kursmotto **Planen, Handeln, Prüfen**: Ein Evidence Tool liefert die Grundlage für Planung und Tool-Wahl, ein Agenten-Vertrag macht Ausgaben und Zustände verlässlich greifbar, und ein Gate ist die konkrete Umsetzung von Prüfung vor der nächsten Aktion oder finalen Ausgabe.
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
@@ -104,4 +116,4 @@ Bestimmte Begriffspaare werden besonders oft durcheinandergebracht.
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

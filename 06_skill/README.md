@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Verstehen. Anwenden. Gestalten.** Der Hauptskill ist `research/`; `compliance/` und `meeting-briefing/` dienen als Transferbeispiele.
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `research/`; `compliance/` und `meeting-briefing/` dienen als Transferbeispiele.
 
 ---
 

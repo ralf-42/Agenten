@@ -119,4 +119,4 @@ Außerdem unterschätzen viele, wie viel Wert ein klares No-Go haben kann. Ein n
 
 **Version:** 1.1<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

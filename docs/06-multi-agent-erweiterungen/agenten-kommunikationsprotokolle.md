@@ -321,7 +321,7 @@ Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, w
 
 **Version:** 1.2<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

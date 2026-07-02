@@ -180,4 +180,4 @@ Nicht das richtige Schlagwort entscheidet. Die Architektur muss zur Änderungsra
 
 **Version:** 2.0<br>
 **Stand:** Juni 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

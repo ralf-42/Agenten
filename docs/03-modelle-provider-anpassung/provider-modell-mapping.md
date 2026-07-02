@@ -224,7 +224,7 @@ Beide Dokumente zusammen ergeben:
 
 **Version:** 2.0<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

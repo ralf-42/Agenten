@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "corpus_id": "meeting_research_briefing_kompass",
   "display_name": "Meeting- & Research-Briefing-Korpus: Projekt Kompass",
-  "legacy_path": "02_daten/01_text/korpus_meeting_briefing",
-  "recommended_alias": "korpus_meeting_briefing",
+  "path": "02_daten/01_text/korpus_meeting_briefing",
+  "previous_path": "02_daten/01_text/korpus_research",
   "language": "de",
   "created_for_course": "KI-Agenten. Planen. Handeln. Prüfen.",
   "stand": "Juli 2026",
@@ -14,7 +14,7 @@
       "corpus_part": "project"
     },
     "notes": [
-      "Der bestehende Ordnername korpus_meeting_briefing bleibt aus Kompatibilitaetsgruenden erhalten.",
+      "Der Korpus wurde von korpus_research nach korpus_meeting_briefing umbenannt.",
       "Fuer erste RAG-Uebungen sollte mit corpus_part=project gestartet werden.",
       "Die Fachartikel sollten erst spaeter oder gezielt ueber corpus_part=background hinzugenommen werden."
     ]
@@ -335,14 +335,12 @@
   "eval_sets": [
     {
       "file": "../../05_sonstiges/eval_meeting_briefing.json",
-      "recommended_alias": "eval_meeting_briefing.json",
       "type": "regular",
       "question_count": 33,
       "note": "Dateiname wurde auf den Meeting- & Research-Briefing-Use-Case umgestellt."
     },
     {
       "file": "../../05_sonstiges/eval_meeting_briefing_edge.json",
-      "recommended_alias": "eval_meeting_briefing_edge.json",
       "type": "edge_cases",
       "question_count": 10,
       "note": "Dateiname wurde auf den Meeting- & Research-Briefing-Use-Case umgestellt."

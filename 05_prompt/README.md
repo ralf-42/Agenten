@@ -12,6 +12,12 @@ m##_beschreibung.md
 - Kleinbuchstaben, Unterstriche statt Leerzeichen
 - Kein `M##` (Großbuchstaben) — das ist die Notebook-Konvention
 
+### Hinweis zu `research_*` nach dem Move-B-Pivot
+
+Einige Prompt-Dateien behalten aus Kompatibilitätsgründen `research` im Dateinamen (`m04_research_*`, `m10_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das ist bewusst keine Rückkehr zum alten Research-Assistant-Leitprojekt. In diesen Prompts bezeichnet `research` den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Research-Briefing-Agenten**.
+
+Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
+
 ## Dateiformat
 
 Jede Prompt-Datei besteht aus YAML-Frontmatter und optionalen Sections:

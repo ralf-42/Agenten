@@ -101,7 +101,7 @@ print(antwort.content)
 ```python
 @tool
 def quellen_check(thema: str) -> str:
-    """Prüft grob, ob ein Thema zum Research-Korpus passt."""
+    """Prüft grob, ob ein Thema zum Projektkorpus passt."""
     if thema.lower() in {"rag", "retrieval", "evaluation"}:
         return "Korpusnah: Antwort mit Quelle belegen."
     return "Korpusabdeckung unklar."

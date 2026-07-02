@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: EU AI Act
 parent: "Regulatorik & Verantwortung"
@@ -117,7 +117,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 
 | Dokument | Frage |
 |---|---|
-| [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }}) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
+| [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-ki-agenten.html' | relative_url }}) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
 | [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Wie abhängig ist ein KI-System von Cloud, Plattformen und außereuropäischer Infrastruktur? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche technischen Risiken entstehen durch Tools, Prompts, Daten und Agenten-Verhalten? |
 | [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |

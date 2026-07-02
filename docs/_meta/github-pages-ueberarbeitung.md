@@ -168,10 +168,10 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 - `fine-tuning.md` wurde nach `03-modelle-provider-anpassung/` verschoben, weil es eine Modellanpassung und keine Wissensanbindung beschreibt,
 - der Navigationspunkt wurde auf `Modelle & Provider` gekürzt,
 - LangSmith-Seiten wurden aus `07-qualitaet-sicherheit/` nach `05-frameworks/` verschoben, weil sie konkrete Tool-Anleitungen sind,
-- `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/research-assistant.md` zusammengeführt,
-- `02-orientierung-entscheidung/research-assistant-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
+- `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/meeting-research-briefing-agent.md` zusammengeführt,
+- `02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
 - `08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` wurde aus den Frameworks in Deployment & Betrieb verlagert, weil der Text den Weg vom Modell zur produktionsnahen Anwendung beschreibt.
-- Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Research Assistant`.
+- Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Meeting- & Research-Briefing-Agent`.
 
 ## Feinschliff und Konsistenz
 

@@ -19,3 +19,7 @@ M27 Gradio UI, multimodale RAG-Demos
 ---
 
 *Dateien werden bei Bedarf pro Kursdurchlauf ergänzt.*
+
+---
+
+**Stand:** Juli 2026

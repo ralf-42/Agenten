@@ -1,6 +1,6 @@
 # Agenten – Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen) ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen) ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen) ![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen) ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--06--05-blue) ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen) ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen) ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen) ![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen) ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07--02-blue) ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain, LangGraph, LangSmith und agentenbasierte KI-Architekturen.
 
@@ -42,7 +42,7 @@ Agenten/
 - **LangChain** (1.3.0) - Orchestrierung, Chains, Agents, RAG
 - **LangGraph** (1.2.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
 - **LangSmith** (0.8.x) - Tracing, Debugging, Evaluations
-- **OpenAI API** (>=1.0.0) - gpt-4o-mini, o3, o3-mini, gpt-5.4-mini, gpt-5.4, Embeddings
+- **OpenAI API** (>=1.0.0) - gpt-5.4-nano, gpt-5.4-mini, gpt-5.4, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
@@ -168,5 +168,5 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 ---
 
-**Letzte Aktualisierung:** Juni 2026     
+**Letzte Aktualisierung:** Juli 2026     
 **Version:** 5.1     

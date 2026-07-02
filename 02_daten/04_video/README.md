@@ -19,3 +19,7 @@ Zukünftige multimodale Module
 ---
 
 *Dateien werden bei Bedarf pro Kursdurchlauf ergänzt.*
+
+---
+
+**Stand:** Juli 2026

@@ -15,7 +15,7 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 - Thema in **2–3 unabhängige Suchqueries** zerlegen
 - Queries so formulieren, dass unterschiedliche Aspekte abgedeckt werden
-- Begriffe aus `eval_research.json` und `eval_research_edge.json` als Prüfanker nutzen
+- Begriffe aus `eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json` als Prüfanker nutzen
 - Englisch nur bevorzugen, wenn die Quelle oder der Fachbegriff englisch ist
 
 ## Relevanz-Schwellwert

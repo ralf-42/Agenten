@@ -154,12 +154,12 @@ Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter
 
 Außerdem müssen mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt erkennbar sein. Die Evaluation prüft Positivfälle und mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
 
-Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein reiner Research Assistant für Fachartikel verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
+Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein reiner Fachartikel-Assistent verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
 
 | Transferfall | Rolle |
 |---|---|
-| Research Assistant für Fachartikel | reine RAG-Recherche ohne Projektkontext, frühere Kursversion als Transferbeispiel |
-| Legal Research Assistant | regulierte Recherche, Fundstellenpflicht, HITL und Quellenqualität |
+| Fachartikel-Assistent | reine RAG-Recherche ohne Projektkontext, frühere Kursversion als Transferbeispiel |
+| Legal-Recherche-Assistent | regulierte Recherche, Fundstellenpflicht, HITL und Quellenqualität |
 | Compliance-Prüfung | regulierte Branchen, Audit-Trail und Out-of-Corpus-Regel |
 | Support-Triage | Klassifikation, Tool-Use, HITL und Routing |
 | Code-Review-Agent | strukturierte Analyse, Quellen-/Diff-Bezug und Security |
@@ -171,7 +171,7 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI- oder Agentenvorhaben überhaupt sinnvoll? |
 | [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann reicht Prompting, wann braucht es RAG, Workflow oder Agent? |
 | [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Welche Begriffe werden für Tools, State, Memory und Guardrails verwendet? |
-| [Meeting- & Research-Briefing-Agent Workshop]({{ '/08-deployment-betrieb/research-assistant.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
+| [Meeting- & Research-Briefing-Agent Workshop]({{ '/08-deployment-betrieb/meeting-research-briefing-agent.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
 
 ---
 

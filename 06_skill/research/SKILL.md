@@ -11,7 +11,7 @@ description: >-
 
 # Research Skill
 
-Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Research-Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_research/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
+Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Research-Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_meeting_briefing/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
 
 ## Aktivierungsbedingung
 
@@ -24,7 +24,7 @@ Dieser Skill wird aktiv, wenn der Nutzer eine Recherche-Aufgabe formuliert. Typi
 3. **Quellenbewertung ist bindend** — Relevanz-Score < 0.4 → Quelle verwerfen.
 4. **Nie halluzinieren** — fehlende Fakten explizit als "nicht belegt" markieren.
 5. **Format strikt einhalten** — keine eigenen Strukturen erfinden.
-6. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_research.json` und `eval_research_edge.json`.
+6. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json`.
 
 ## Workflow
 

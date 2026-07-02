@@ -437,7 +437,7 @@ run_cfg = {
     "metadata": {
         "kurs": "Agenten",
         "version": "1.0",
-        "workflow": "research-assistant",
+        "workflow": "meeting-research-briefing",
     },
 }
 

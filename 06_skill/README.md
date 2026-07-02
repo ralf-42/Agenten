@@ -128,3 +128,7 @@ Aufgaben:
 
 - Konzeptdokumentation: [docs/concepts/Skills.md](../docs/concepts/Skills.md)     
 - Referenzbeispiel: `SKILL.md` in `compliance/` als vollständiges Beispiel     
+
+---
+
+**Stand:** Juli 2026

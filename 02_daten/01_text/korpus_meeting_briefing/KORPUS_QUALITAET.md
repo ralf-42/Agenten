@@ -29,7 +29,7 @@ Der Meeting- & Research-Briefing-Korpus (Projekt Kompass) ist für die überarbe
 
 ## Ground-Truth-Abdeckung
 
-Das Eval-Set `eval_research.json` enthält 33 reguläre Fragen und deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_research_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
+Das Eval-Set `eval_meeting_briefing.json` enthält 33 reguläre Fragen und deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_meeting_briefing_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
 
 | Datei | Abdeckung |
 |---|---|
@@ -56,6 +56,6 @@ Das Eval-Set `eval_research.json` enthält 33 reguläre Fragen und deckt alle 13
 
 - In M11/M12 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
 - In M13/M14 den gesamten Korpus verwenden, inklusive der Recherche-Hintergrund-Dokumente.
-- In M15/M24 mit `eval_research.json` starten und Edge-Cases aus `eval_research_edge.json` erst danach hinzunehmen.
+- In M15/M24 mit `eval_meeting_briefing.json` starten und Edge-Cases aus `eval_meeting_briefing_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
 - Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M17/M23, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.

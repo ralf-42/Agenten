@@ -177,7 +177,7 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 **Version:** 1.3<br>
 **Stand:** Juni 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

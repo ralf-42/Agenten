@@ -335,7 +335,7 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 **Version:** 1.6<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

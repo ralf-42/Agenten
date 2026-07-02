@@ -258,7 +258,7 @@ Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, so
 
 **Version:** 1.2<br>
 **Stand:** Juni 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

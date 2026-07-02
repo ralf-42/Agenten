@@ -287,7 +287,7 @@ Grenze: Fine-Tuning ersetzt keine Wissensanbindung. Wenn Antworten deshalb falsc
 
 **Version:** 1.3<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

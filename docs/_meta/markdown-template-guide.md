@@ -90,7 +90,7 @@ Hier folgt der eigentliche Inhalt.
 
 **Version:**    1.0<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 ````
 
 Die Vorlage ist ein Ausgangspunkt, kein Zwang zur Textaufblähung. Wenn ein Sachverhalt mit zwei starken Absätzen erklärt ist, bleibt es bei zwei starken Absätzen.
@@ -153,7 +153,7 @@ Jede Seite endet mit genau diesem Block. Der `Stand` wird über alle sichtbaren 
 ```markdown
 **Version:**    1.0<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 ```
 
 ---
@@ -336,7 +336,7 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 
 **Version:**    1.0<br>
 **Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Verstehen. Anwenden. Gestalten.
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
 

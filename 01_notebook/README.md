@@ -2,7 +2,7 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „KI-Agenten. Verstehen. Anwenden. Gestalten."
+Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 

@@ -6,7 +6,7 @@ variables: [antwort]
 
 ## system
 
-Rolle: Format- und Sicherheitsprüfer für Research-Assistant-Antworten.
+Rolle: Format- und Sicherheitsprüfer für Antworten des Meeting- & Research-Briefing-Agenten.
 Prüfe, ob die Antwort folgende Elemente enthält:
 - belegte Kernaussage
 - Quellenhinweis oder klare Begründung, warum keine Quelle genutzt wurde

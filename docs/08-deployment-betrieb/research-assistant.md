@@ -1,17 +1,17 @@
 ﻿---
 layout: default
-title: Research Assistant
+title: Meeting- & Research-Briefing-Agent
 parent: "Deployment & Betrieb"
 nav_order: 5
-description: "Praxisprojekt: quellengebundener Research Assistant für Fachartikel"
+description: "Praxisprojekt: quellengebundener Meeting- & Research-Briefing-Agent"
 has_toc: true
 ---
 
-# Research Assistant Workshop
+# Meeting- & Research-Briefing-Agent Workshop
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Wie entsteht ein quellengebundener Research Assistant, der Fachartikel durchsucht, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
+> Wie entsteht ein quellengebundener Meeting- & Research-Briefing-Agent, der Protokolle, Entscheidungen, Risiken und Fachartikel durchsucht, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
 
 ---
 
@@ -25,15 +25,15 @@ has_toc: true
 
 ## Projektübersicht
 
-In diesem Praxisprojekt entsteht schrittweise ein **Research Assistant für Fachartikel**. Ausgangspunkt ist Pia: Sie muss regelmäßig neue Fachartikel sichten, sucht relevante Passagen und will Vorschläge prüfen, statt einem vollautomatischen System blind zu vertrauen.
+In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Research-Briefing-Agent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Fachartikel sichten, sucht relevante Passagen und will geprüfte Briefings erhalten, statt einem vollautomatischen System blind zu vertrauen.
 
-Der Assistant lädt einen PDF-Korpus, sucht semantisch nach relevanten Passagen, formuliert eine strukturierte Antwort mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung.
+Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Risikolisten und Fachartikeln, sucht semantisch nach relevanten Passagen, formuliert eine strukturierte Antwort mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung.
 
-Das Zielbild der Leitaufgabe ist in [Research Assistant]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) beschrieben.
+Das Zielbild der Leitaufgabe ist in [Meeting- & Research-Briefing-Agent]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
-- einen Fachartikel-Korpus laden, strukturieren und durchsuchen
+- einen Projektkorpus (Protokolle, Entscheidungen, Risiken, Fachartikel) laden, strukturieren und durchsuchen
 - Retrieval-Ergebnisse in belegte Antworten überführen
 - Out-of-Corpus-Fragen sicher stoppen
 - Sessions mit Checkpointing speichern
@@ -48,7 +48,7 @@ Das Zielbild der Leitaufgabe ist in [Research Assistant]({{ '/02-orientierung-en
 
 ## Zielprodukt
 
-Am Ende steht ein Assistant, der:
+Am Ende steht ein Agent, der:
 
 1. einen PDF-Korpus reproduzierbar lädt,
 2. Dokumente in Chunks zerlegt und optional in ChromaDB einbettet,
@@ -64,7 +64,7 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der Research Assistant ist ein Assistenzsystem, kein autonomes Entscheidungssystem.
+Der Meeting- & Research-Briefing-Agent ist ein Assistenzsystem, kein autonomes Entscheidungssystem.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -82,10 +82,10 @@ Der Research Assistant ist ein Assistenzsystem, kein autonomes Entscheidungssyst
 Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ```text
-Research_Assistant_Workshop.ipynb
+Meeting_Briefing_Workshop.ipynb
    ├── Kapitel 1: StateGraph Basics
    ├── Kapitel 2: Intent Routing
-   ├── Kapitel 3: Fachartikel-Korpus & Retrieval
+   ├── Kapitel 3: Projektkorpus & Retrieval
    ├── Kapitel 4: Checkpointing & Sessions
    ├── Kapitel 5: Research-Synthese, Quellen und Freigabe
    └── Kapitel 6: UI, Evaluation und Ausbau
@@ -95,7 +95,7 @@ Research_Assistant_Workshop.ipynb
 |---|---|---|
 | 1 | StateGraph Basics | Ein minimaler Graph mit State und Fallback |
 | 2 | Intent Routing | Fragen werden nach Typ geroutet |
-| 3 | Korpus & Retrieval | Relevante Passagen werden aus Fachartikeln geholt |
+| 3 | Korpus & Retrieval | Relevante Passagen werden aus Protokollen, Entscheidungen und Fachartikeln geholt |
 | 4 | Sessions | Verlauf bleibt über Checkpointing erhalten |
 | 5 | Synthese & HITL | Antworten sind strukturiert, belegt und kontrollierbar |
 | 6 | Ausbau | UI, Evaluation oder Multi-Agent-Variante |
@@ -132,9 +132,9 @@ check_environment()
 
 Beispielfragen:
 
-- "Welche Methode schlägt Artikel A zur Chunking-Optimierung vor?"
-- "Vergleiche die Aussagen aus zwei Quellen."
-- "Findet der Korpus etwas zu regulatorischen Risiken?"
+- "Welche Entscheidung wurde am 17.03. zur Vektordatenbank getroffen?"
+- "Vergleiche die Aussagen aus zwei Steuerkreis-Protokollen."
+- "Welchen Status hat Risiko R2 aktuell?"
 
 ### Aufgabe 1.1: State definieren
 
@@ -142,7 +142,7 @@ Beispielfragen:
 from typing import Literal, TypedDict
 from langgraph.graph import END, START, StateGraph
 
-class ResearchState(TypedDict):
+class BriefingState(TypedDict):
     user_query: str
     intent: Literal["factual", "comparison", "summary", "out_of_scope", "fallback"] | None
     retrieved_context: str
@@ -155,13 +155,13 @@ class ResearchState(TypedDict):
 ### Aufgabe 1.2: Minimal-Nodes erstellen
 
 ```python
-def classify_intent(state: ResearchState) -> ResearchState:
+def classify_intent(state: BriefingState) -> BriefingState:
     """Erkennt den Fragetyp."""
     query = state["user_query"].lower()
     # einfache Heuristik oder LLM-Klassifikation ergänzen
     return state
 
-def fallback_answer(state: ResearchState) -> ResearchState:
+def fallback_answer(state: BriefingState) -> BriefingState:
     """Gibt eine sichere Fallback-Antwort zurück."""
     state["answer"] = "Ich kann diese Frage noch nicht zuverlässig aus dem Korpus beantworten."
     return state
@@ -170,7 +170,7 @@ def fallback_answer(state: ResearchState) -> ResearchState:
 ### Aufgabe 1.3: Minimalen Graphen bauen
 
 ```python
-workflow = StateGraph(ResearchState)
+workflow = StateGraph(BriefingState)
 workflow.add_node("classify_intent", classify_intent)
 workflow.add_node("fallback", fallback_answer)
 
@@ -198,7 +198,7 @@ graph = workflow.compile()
 from typing import Literal
 
 def route_by_intent(
-    state: ResearchState,
+    state: BriefingState,
 ) -> Literal["factual", "comparison", "summary", "out_of_scope", "fallback"]:
     return state["intent"] or "fallback"
 ```
@@ -206,19 +206,19 @@ def route_by_intent(
 ### Aufgabe 2.2: Antwort-Nodes anlegen
 
 ```python
-def answer_factual_question(state: ResearchState) -> ResearchState:
+def answer_factual_question(state: BriefingState) -> BriefingState:
     """Beantwortet faktische Fragen mit Quellenbezug."""
     ...
 
-def compare_sources(state: ResearchState) -> ResearchState:
+def compare_sources(state: BriefingState) -> BriefingState:
     """Vergleicht Aussagen aus mehreren Quellen."""
     ...
 
-def summarize_findings(state: ResearchState) -> ResearchState:
+def summarize_findings(state: BriefingState) -> BriefingState:
     """Fasst relevante Passagen aus dem Korpus zusammen."""
     ...
 
-def handle_out_of_scope(state: ResearchState) -> ResearchState:
+def handle_out_of_scope(state: BriefingState) -> BriefingState:
     """Stoppt Antworten, die nicht aus dem Korpus belegbar sind."""
     state["answer"] = "Nicht im Korpus."
     state["confidence"] = "niedrig"
@@ -247,9 +247,9 @@ workflow.add_conditional_edges(
 
 ---
 
-## Kapitel 3: Fachartikel-Korpus & Retrieval
+## Kapitel 3: Projektkorpus & Retrieval
 
-**Lernziel:** Fachartikel laden, in Passagen strukturieren und als belegbaren Kontext in den Graphen einbinden.
+**Lernziel:** Protokolle, Entscheidungen, Risikolisten und Fachartikel laden, in Passagen strukturieren und als belegbaren Kontext in den Graphen einbinden.
 
 ### Aufgabe 3.1: Korpus laden
 
@@ -258,8 +258,8 @@ Der Beispielkorpus liegt im Repository unter `02_daten/01_text/korpus_research/`
 ```python
 from genai_lib.github import copy_from_github
 
-KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text"
-KORPUS_MASKE = "fachartikel_*"
+KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text/korpus_research"
+KORPUS_MASKE = "*.pdf"
 KORPUS_TARGET = "/content/files"
 
 copy_from_github(KORPUS_QUELLE, KORPUS_TARGET, pattern=KORPUS_MASKE)
@@ -277,8 +277,8 @@ Jedes Dokument braucht mindestens:
 Für eine Basisversion reicht Retrieval-Light mit einfacher Chunk-Suche. Die bessere Variante nutzt Embeddings, ChromaDB und Score-Thresholds.
 
 ```python
-def retrieve_context(state: ResearchState) -> ResearchState:
-    """Sucht passende Passagen im Fachartikel-Korpus."""
+def retrieve_context(state: BriefingState) -> BriefingState:
+    """Sucht passende Passagen im Projektkorpus."""
     query = state["user_query"]
     # Chunks suchen, Scores prüfen, Quellen speichern
     ...
@@ -311,18 +311,18 @@ workflow.add_conditional_edges("retrieve_context", route_by_intent, ...)
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
 
-checkpointer = SqliteSaver.from_conn_string("research_assistant_sessions.db")
+checkpointer = SqliteSaver.from_conn_string("briefing_agent_sessions.db")
 graph = workflow.compile(checkpointer=checkpointer)
 ```
 
 ### Aufgabe 4.2: Session-basierte Interaktion
 
 ```python
-config = {"configurable": {"thread_id": "pia_001"}}
+config = {"configurable": {"thread_id": "mara_001"}}
 
 result1 = graph.invoke(
     {
-        "user_query": "Welche Studien vergleichen semantische Suche mit Stichwortsuche?",
+        "user_query": "Welche Entscheidungen wurden zur Vektordatenbank getroffen?",
         "intent": None,
         "retrieved_context": "",
         "sources": [],
@@ -377,7 +377,7 @@ class ResearchAntwort(BaseModel):
 ### Aufgabe 5.2: Qualitäts-Gate ergänzen
 
 ```python
-def quality_gate(state: ResearchState) -> ResearchState:
+def quality_gate(state: BriefingState) -> BriefingState:
     """Markiert unsichere oder unbelegte Antworten für menschliche Prüfung."""
     if state["confidence"] == "niedrig" or not state["sources"]:
         state["needs_approval"] = True
@@ -415,7 +415,7 @@ Mindestens diese fünf Fälle testen:
 ```python
 import gradio as gr
 
-def chat_with_research_assistant(message, history, thread_id):
+def chat_with_briefing_agent(message, history, thread_id):
     config = {"configurable": {"thread_id": thread_id}}
     result = graph.invoke(
         {
@@ -432,11 +432,11 @@ def chat_with_research_assistant(message, history, thread_id):
     return "", history + [(message, result["answer"])]
 
 with gr.Blocks() as demo:
-    gr.Markdown("# Research Assistant")
-    thread_id = gr.Textbox(label="Session ID", value="pia_001")
+    gr.Markdown("# Meeting- & Research-Briefing-Agent")
+    thread_id = gr.Textbox(label="Session ID", value="mara_001")
     chatbot = gr.Chatbot(height=450)
-    msg = gr.Textbox(placeholder="Frage zum Fachartikel-Korpus stellen ...")
-    msg.submit(chat_with_research_assistant, [msg, chatbot, thread_id], [msg, chatbot])
+    msg = gr.Textbox(placeholder="Frage zum Projektkorpus stellen ...")
+    msg.submit(chat_with_briefing_agent, [msg, chatbot, thread_id], [msg, chatbot])
 ```
 
 ### Option B: Eval-Set
@@ -491,13 +491,13 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 ## Abgabe
 
 **Pflicht:**
-- `Research_Assistant_Workshop.ipynb`
+- `Meeting_Briefing_Workshop.ipynb`
 - mindestens fünf dokumentierte Testfragen mit Ergebnissen
 - kurze Architekturübersicht, gern als Mermaid-Diagramm
 - kurze Reflexion zu Quellenbindung, Unsicherheit und Grenzen
 
 **Optional:**
-- `research_assistant_sessions.db`
+- `briefing_agent_sessions.db`
 - `app.py` für Gradio
 - kleines Eval-Set als JSON
 - Hugging Face Space oder anderes Demo-Deployment
@@ -523,7 +523,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 - [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
 
 **Projektinterne Dokumente:**
-- [Research Assistant Leitaufgabe]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }})
+- [Meeting- & Research-Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/research-assistant-leitaufgabe.html' | relative_url }})
 - [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }})
 - [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 - [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})
@@ -536,7 +536,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 Nein. Eine Basisversion darf mit Retrieval-Light starten. Für eine stärkere Lösung sind Embeddings, ChromaDB und Score-Thresholds sinnvoll.
 
 **Muss ich eine UI bauen?**  
-Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Research-Assistant-Graph.
+Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Briefing-Agent-Graph.
 
 **Muss ich Multi-Agent implementieren?**  
 Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervisor plus zwei Worker die empfohlene Ausbauvariante.
@@ -545,9 +545,9 @@ Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervis
 Ja. Der Korpus muss reproduzierbar geladen werden und genügend belegbare Fragen ermöglichen.
 
 **Was ist der wichtigste Qualitätsmaßstab?**  
-Der Assistant darf fachliche Aussagen nur mit Quellenbezug ausgeben und muss fehlendes Wissen sichtbar begrenzen.
+Der Agent darf fachliche Aussagen nur mit Quellenbezug ausgeben und muss fehlendes Wissen sichtbar begrenzen.
 
 ---
 
 **Version:** 2.0<br>
-**Stand:** Mai 2026
+**Stand:** Juli 2026

@@ -26,7 +26,7 @@ vergleich
 
 ## human
 
-Frage: Warum verbessert RAG die Zuverlässigkeit eines Research Assistants?
+Frage: Warum verbessert RAG die Zuverlässigkeit eines Meeting- & Research-Briefing-Agenten?
 
 ## ai
 

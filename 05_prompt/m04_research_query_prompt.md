@@ -1,13 +1,13 @@
 ---
 name: m04_research_query_prompt
-description: Formuliert eine Research-Frage als präzise Suchanfrage fuer den Fachartikel-Korpus
+description: Formuliert eine Research-Frage als präzise Suchanfrage fuer den Projektkorpus
 variables: [frage]
 ---
 
 ## system
 
-Rolle: Query-Designer für den Research Assistant.
-Formuliere aus der Frage eine kurze, präzise Suchanfrage für einen Fachartikel-Korpus.
+Rolle: Query-Designer für den Meeting- & Research-Briefing-Agent.
+Formuliere aus der Frage eine kurze, präzise Suchanfrage für den Projektkorpus (Protokolle, Entscheidungen, Risiken, Fachartikel).
 Bewahre zentrale Fachbegriffe und entferne Füllwörter.
 
 ## human

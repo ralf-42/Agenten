@@ -97,7 +97,7 @@ Für technische Kursbeispiele ergeben sich daraus fünf Mindestmuster:
 
 Für den Agenten-Kurs ist der AI Act kein isoliertes Rechtskapitel. Er berührt mehrere technische Module: Tool Use, RAG, Human-in-the-Loop, Evaluation, Security, Observability und Deployment. Die regulatorische Perspektive erklärt, warum diese Module nicht nur Architekturthemen sind, sondern Kontrollmechanismen.
 
-Ein Research Assistant für Fachartikel ist in vielen Kurskontexten zunächst ein niedriges oder begrenztes Risiko: Er durchsucht bereitgestellte Dokumente, fasst Quellen zusammen und verweist auf Citations. Das ändert sich, wenn er in regulierten Branchen eingesetzt wird, etwa zur medizinischen Einschätzung, rechtlichen Bewertung, Kreditentscheidung oder Bewerberauswahl. Dann reicht der gleiche technische Bauplan nicht mehr aus. Es braucht zusätzliche Validierung, Rollenklärung, Freigaben und Dokumentation.
+Ein Meeting- & Research-Briefing-Agent ist in vielen Kurskontexten zunächst ein niedriges oder begrenztes Risiko: Er durchsucht bereitgestellte Dokumente, fasst Quellen zusammen und verweist auf Citations. Das ändert sich, wenn er in regulierten Branchen eingesetzt wird, etwa zur medizinischen Einschätzung, rechtlichen Bewertung, Kreditentscheidung oder Bewerberauswahl. Dann reicht der gleiche technische Bauplan nicht mehr aus. Es braucht zusätzliche Validierung, Rollenklärung, Freigaben und Dokumentation.
 
 **Typischer Fehler:** Ein Kursbeispiel wird später in einen produktiven Kontext übertragen, ohne die Risikoklasse neu zu prüfen. Die gleiche Architektur kann harmlos, transparenzpflichtig oder hochriskant sein, abhängig vom Einsatzkontext.
 

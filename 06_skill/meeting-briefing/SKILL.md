@@ -12,8 +12,8 @@ description: >-
 
 # Meeting-Briefing Skill
 
-Dieser Skill erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
-Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen.
+Dieser Skill ist der Kern-Baustein des Leitprojekts **Meeting- & Research-Briefing-Agent**: er erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
+Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen. Im Leitprojekt-Szenario nutzt Mara Vogt (Projektleiterin, Projekt "Kompass") diesen Skill, um Protokolle, Risikolisten und offene Punkte in ein geprüftes Briefing zu verwandeln.
 
 ## Aktivierungsbedingung
 
@@ -140,3 +140,4 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - M17 – Human-in-the-Loop (Briefing mit `interrupt()` vor Versand)
 - M20 – Supervisor Pattern (Briefing als Teilaufgabe im Supervisor-Workflow)
 - M26 – Integration Pipeline (Meeting-Briefing als Schritt in einer Prozesskette)
+- M33 – DeepAgents Skill Meeting Briefing (direkte Anwendung dieses Skills als Leitprojekt-Baustein)

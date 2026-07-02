@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `research/`; `compliance/` und `meeting-briefing/` dienen als Transferbeispiele.
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts Meeting- & Research-Briefing-Agent); `research/` liefert die Recherche-Fähigkeit (Evidence Tool) als Teilbaustein, `compliance/` dient als domänenneutrales Transferbeispiel.
 
 ---
 
@@ -8,9 +8,9 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** 
 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
-| `research/`         | Hauptskill: strukturierte Recherche im Fachartikel-Korpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M22_Agentic_RAG.ipynb`, `M24_Agent_Evaluation_Testing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `compliance/`       | Transfer: Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `meeting-briefing/` | Transfer: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M22_Agentic_RAG.ipynb`, `M24_Agent_Evaluation_Testing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
 
 ### Skill-Details
 

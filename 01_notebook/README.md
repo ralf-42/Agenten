@@ -18,7 +18,7 @@ Dieses Verzeichnis enthält **36 Kurs-Notebooks (M01–M36)** für den Kurs „K
 
 ---
 
-Der rote Faden der Pflichtmodule ist ein **Research Assistant für Fachartikel**. Die Module M01-M24 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security und Evaluation auf dasselbe Zielsystem hin.
+Der rote Faden der Pflichtmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M24 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security und Evaluation auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M03)
 
@@ -26,7 +26,7 @@ Der rote Faden der Pflichtmodule ist ein **Research Assistant für Fachartikel**
 |-------|-------|--------|------|
 | M01 | `M01_Was_sind_KI_Agenten.ipynb` | Agentenbegriff, Research-Assistant-Zielbild, ReAct/TAO-Prinzip | 🟢 Pflicht |
 | M02 | `M02_Tool_Use_Function_Calling.ipynb` | Research-Tools mit `@tool`, Type Hints, Docstrings und Grenzen | 🟢 Pflicht |
-| M03 | `M03_Erste_Agenten_LangChain.ipynb` | Erster Research Assistant mit `create_agent()` | 🟢 Pflicht |
+| M03 | `M03_Erste_Agenten_LangChain.ipynb` | Erster Meeting- & Research-Briefing-Agent mit `create_agent()` | 🟢 Pflicht |
 
 ---
 
@@ -45,7 +45,7 @@ Der rote Faden der Pflichtmodule ist ein **Research Assistant für Fachartikel**
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M08 | `M08_Warum_LangGraph.ipynb` | Warum der Research Assistant kontrollierten State braucht | 🟢 Pflicht |
+| M08 | `M08_Warum_LangGraph.ipynb` | Warum der Meeting- & Research-Briefing-Agent kontrollierten State braucht | 🟢 Pflicht |
 | M09 | `M09_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Research-State | 🟢 Pflicht |
 | M10 | `M10_Conditional_Routing_Tool_Loop.ipynb` | Research-Routing, Tool-Loop, Security-Gate | 🟢 Pflicht |
 

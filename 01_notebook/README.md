@@ -24,7 +24,7 @@ Der rote Faden der Pflichtmodule ist ein **Meeting- & Research-Briefing-Agent**.
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M01 | `M01_Was_sind_KI_Agenten.ipynb` | Agentenbegriff, Research-Assistant-Zielbild, ReAct/TAO-Prinzip | 🟢 Pflicht |
+| M01 | `M01_Was_sind_KI_Agenten.ipynb` | Agentenbegriff, Meeting- & Research-Briefing-Zielbild, ReAct/TAO-Prinzip | 🟢 Pflicht |
 | M02 | `M02_Tool_Use_Function_Calling.ipynb` | Research-Tools mit `@tool`, Type Hints, Docstrings und Grenzen | 🟢 Pflicht |
 | M03 | `M03_Erste_Agenten_LangChain.ipynb` | Erster Meeting- & Research-Briefing-Agent mit `create_agent()` | 🟢 Pflicht |
 
@@ -100,5 +100,5 @@ Der rote Faden der Pflichtmodule ist ein **Meeting- & Research-Briefing-Agent**.
 
 
 **Version:** 2.0    
-**Stand:** Mai 2026    
+**Stand:** Juli 2026    
 **Kursplan-Referenz:** v5.0    

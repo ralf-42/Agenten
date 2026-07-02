@@ -14,7 +14,7 @@ m##_beschreibung.md
 
 ### Hinweis zu `research_*` nach dem Move-B-Pivot
 
-Einige Prompt-Dateien behalten aus Kompatibilitätsgründen `research` im Dateinamen (`m04_research_*`, `m10_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das ist bewusst keine Rückkehr zum alten Research-Assistant-Leitprojekt. In diesen Prompts bezeichnet `research` den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Research-Briefing-Agenten**.
+Einige Prompt-Dateien behalten `research` im Dateinamen (`m04_research_*`, `m10_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Research-Briefing-Agenten**, nicht ein eigenes Leitprojekt.
 
 Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
 
@@ -91,10 +91,10 @@ result = chain.invoke({"variable1": "Wert"})
 
 ## Weiterführend
 
-- Vollständige Format-Referenz: `docs/frameworks/Einsteiger_Prompts.md`
+- Vollständige Format-Referenz: `../docs/04-agenten-implementierung/entwurf/prompt-engineering.md`
 - Prompt Standard: `../_docs/Prompt_Standard.md`
 
 ---
 
-**Letzte Aktualisierung:** Mai 2026
+**Letzte Aktualisierung:** Juli 2026
 **Maintainer:** Ralf

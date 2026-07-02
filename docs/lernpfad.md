@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Lernpfad
 nav_order: 3

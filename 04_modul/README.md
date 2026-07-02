@@ -1,6 +1,6 @@
 # Kursbibliothek Agenten
 
-Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie unterstützt den durchgehenden Research-Assistant-Anwendungsfall: Umgebung einrichten, Modelle rollenbasiert auswählen, Prompts laden, Mermaid-Diagramme anzeigen, LangSmith-Traces prüfen und nur bei Bedarf zusätzliche Pakete installieren.
+Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie unterstützt den durchgehenden Meeting- & Research-Briefing-Anwendungsfall: Umgebung einrichten, Modelle rollenbasiert auswählen, Prompts laden, Mermaid-Diagramme anzeigen, LangSmith-Traces prüfen und nur bei Bedarf zusätzliche Pakete installieren.
 
 ## 1. Installation
 
@@ -87,7 +87,7 @@ show_trace("M24-Agent-Evaluation", limit=5, show_steps=True)
 ```python
 from genai_lib.utilities import get_model_profile
 
-profile = get_model_profile("openai:gpt-4o-mini")
+profile = get_model_profile("openai:gpt-5.4-nano")
 ```
 
 - `get_model_profile(model, print_profile=True, **kwargs)` - Ruft Model-Capabilities von models.dev ab (Structured Output, Vision, Token-Limits, etc.)
@@ -146,7 +146,7 @@ check_environment()
 
 # 2. LLM initialisieren (LangChain 1.0+)
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.0)
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # 3. Agent mit LangGraph erstellen
 from langgraph.graph import StateGraph, START, END, MessagesState
@@ -189,3 +189,7 @@ python -m genai_lib.utilities
 ## 8. Lizenz
 
 MIT License - Copyright (c) 2025 Ralf
+
+---
+
+**Stand:** Juli 2026

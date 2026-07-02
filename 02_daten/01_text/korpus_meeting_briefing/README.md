@@ -20,6 +20,21 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 
 Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Recherche-Hintergrund, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
 
+> [!NOTE]
+> Der Ordner heißt weiterhin `korpus_meeting_briefing`, damit bestehende Notebook- und Dokumentationspfade stabil bleiben. Fachlich ist dies der **Meeting- & Research-Briefing-Korpus**. Für neue Dokumentation kann `korpus_meeting_briefing` als Alias verwendet werden, solange der tatsächliche Pfad nicht geändert wird.
+
+## Maschinenlesbare Metadaten
+
+Die Datei `metadata.json` beschreibt jedes Dokument mit stabilen Feldern für Retrieval, Filterung und Evaluation:
+
+- `corpus_part`: `project` für Projekt-/Meeting-Artefakte, `background` für Fachartikel
+- `document_type`: z. B. `meeting_protokoll`, `decision_log`, `risikoliste`, `fachartikel`
+- `date`, `stakeholders`, `priority`
+- `has_decision`, `has_open_question`, `decision_ids`, `risk_ids`
+- `topics` und `recommended_modules`
+
+Empfehlung für den Unterricht: In M11/M12 zuerst mit `corpus_part = "project"` arbeiten. Die Fachartikel aus `corpus_part = "background"` sollten erst später oder gezielt zugeschaltet werden, damit sie die kurzen Projektartefakte im Retrieval nicht überlagern.
+
 ## Enthaltene Dokumente — Meeting- & Projektartefakte
 
 | Datei | meeting_context | entscheidung | offene_frage | stakeholder | priorität |
@@ -56,6 +71,17 @@ Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakt
 4. M17/M23: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
 5. M36: Teilnehmer bauen eine Variante mit eigenem Meeting-Korpus oder Zusatzdokumenten.
 
+## Eval-Sets
+
+Die passenden Eval-Dateien liegen unter `02_daten/05_sonstiges/`:
+
+| Datei | Rolle | Hinweis |
+|---|---|---|
+| `eval_meeting_briefing.json` | reguläre Fragen | Enthält Fragen zum Meeting- & Research-Briefing-Korpus; Name bleibt aus Kompatibilitätsgründen erhalten. |
+| `eval_meeting_briefing_edge.json` | Edge Cases | Enthält Negativ-, Konflikt-, Mehrdeutigkeits-, Prompt-Injection- und Versionierungsfälle. |
+
+Für neue Texte kann von `eval_meeting_briefing.json` gesprochen werden. Der technische Dateiname sollte erst geändert werden, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden.
+
 ## Gute Eval-Fragetypen
 
 | Typ | Beispiel |
@@ -66,3 +92,7 @@ Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakt
 | Konflikt | Welche Entscheidung zur Vektordatenbank gilt aktuell — D1 oder D2? |
 | Versionierung | Wie hat sich der Status von Risiko R2 zwischen dem 17.03. und dem 28.04. verändert? |
 | Negativ | Wie hoch ist das exakte Projektbudget in Euro? |
+
+---
+
+**Stand:** Juli 2026

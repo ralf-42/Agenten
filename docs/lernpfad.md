@@ -110,7 +110,7 @@ Sobald Agentensysteme in Bildung, Verwaltung oder Unternehmen eingesetzt werden,
 Empfohlener Einstieg:
 
 1. [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
-2. [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-genai.html' | relative_url }})
+2. [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-ki-agenten.html' | relative_url }})
 3. [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
 4. [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
 

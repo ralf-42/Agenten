@@ -1,57 +1,68 @@
-# Research-Korpus: RAG fuer Einsteiger
+# Meeting- & Research-Briefing-Korpus: Projekt Kompass
 
 ## Thema
 
-**Retrieval-Augmented Generation einfach erklaert: Wie LLMs mit externem Wissen verlaesslicher antworten.**
+**Ein KI-gestützter Meeting- & Research-Briefing-Agent für ein internes Projekt: Entscheidungen, offene Punkte und Risiken aus Meetings verlässlich zusammenfassen und mit Quellen belegen.**
+
+## Fiktives Szenario
+
+Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einführung eines internen KI-gestützten Recherche- und Wissensassistenten für ihre Fachabteilungen. Projektleiterin Mara Vogt steuert das Vorhaben zusammen mit Jonas Reiter (IT-Architektur), Elif Kaya (Fachbereich Vertrieb), Dr. Thomas Brandt (Datenschutz/Compliance) und Sponsorin Sabine Holler (Geschäftsführung). Der Korpus enthält die Projekt- und Meeting-Unterlagen dieses fiktiven Projekts von März bis Mai 2026.
 
 ## Warum dieses Thema passt
 
-- Einsteigergeeignet: Der Use Case ist direkt verstaendlich: Fragen an Dokumente stellen und Antworten mit Quellen erhalten.
-- Passt zum Kurs: RAG, Embeddings, ChromaDB, Citations, Evaluation, HITL und Agenten lassen sich daran natuerlich aufbauen.
-- Gute Dokumentlage: Es gibt frei zugaengliche arXiv-Surveys und Grundlagenpapiere.
-- Didaktisch sauber: Der Unterschied zwischen Keyword-Suche, semantischer Suche und quellengebundener Antwort ist gut demonstrierbar.
-- Datenschutzarm: Es wird mit oeffentlichen wissenschaftlichen Texten gearbeitet.
+- Einsteigergeeignet: Der Use Case ist direkt verständlich: Fragen zu Entscheidungen, Risiken und offenen Punkten stellen und Antworten mit Quellen erhalten.
+- Passt zum Kurs: RAG, Embeddings, ChromaDB, Citations, Evaluation, HITL und Agenten lassen sich am Meeting-Briefing-Fall natürlich aufbauen.
+- Realistische Mehrdeutigkeit: Entscheidungen werden revidiert, Risiken ändern ihren Status, offene Punkte bleiben ungeklärt — genau die Fälle, die ein kontrollierter Agent robust behandeln muss.
+- Didaktisch sauber: Konflikt, Versionierung, Unsicherheit und Prompt-Injection lassen sich an konkreten Dokumentenpaaren zeigen statt nur abstrakt zu erklären.
+- Datenschutzarm: Alle Personen, Firmen und Inhalte sind fiktiv.
 
 ## Korpusumfang
 
-Der Korpus enthaelt fuer die erste Kursversion **15 kuratierte PDFs**. Das ist gross genug fuer Retrieval-, Chunking- und Eval-Uebungen, aber noch klein genug fuer Einsteiger und Colab-Laufzeiten.
+Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Recherche-Hintergrund, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
 
-Eine spaetere Erweiterung auf 30-50 Dokumente bleibt moeglich, ist fuer die erste anwendungsorientierte Kursversion aber nicht erforderlich.
+## Enthaltene Dokumente — Meeting- & Projektartefakte
 
-## Enthaltene Dokumente
+| Datei | meeting_context | entscheidung | offene_frage | stakeholder | priorität |
+|---|---|---|---|---|---|
+| `projektauftrag_kompass.pdf` | Projektunterlage | nein | nein | Sabine Holler, Mara Vogt | hoch |
+| `stakeholder_rollenliste.pdf` | Projektunterlage | nein | nein | alle | mittel |
+| `risikoliste_v1.pdf` | Projektunterlage | nein | ja (R1-R4) | alle | hoch |
+| `protokoll_kickoff_2026-03-03.pdf` | Kickoff | nein | ja (Tool-Auswahl) | alle | mittel |
+| `protokoll_steuerkreis_2026-03-17.pdf` | Steuerkreis | ja (D1) | nein | Jonas Reiter | hoch |
+| `protokoll_steuerkreis_2026-03-31.pdf` | Steuerkreis | ja (D1, uneindeutig bestätigt) | nein | Jonas Reiter | mittel |
+| `protokoll_steuerkreis_2026-04-14.pdf` | Steuerkreis | ja (D2, widerspricht D1) | nein | Jonas Reiter | hoch |
+| `protokoll_steuerkreis_2026-04-28.pdf` | Steuerkreis | ja (D3, Risikostatus) | nein | Dr. Thomas Brandt | mittel |
+| `protokoll_fachbereich_workshop_2026-05-05.pdf` | Workshop | nein | nein | Elif Kaya | hoch |
+| `protokoll_steuerkreis_2026-05-19.pdf` | Steuerkreis | nein | ja (Rechte-/Rollensteuerung) | Mara Vogt | hoch |
+| `entscheidungsprotokoll_gesamt.pdf` | Decision Log | ja (D1-D3, kumulativ) | nein | alle | hoch |
+| `follow_up_tracker.pdf` | Tracker | nein | ja (1 offenes Item) | alle | mittel |
+| `agenda_vorlage_steuerkreis.pdf` | Vorlage | nein | nein | Mara Vogt | niedrig |
+
+## Enthaltene Dokumente — Recherche-Hintergrund
 
 | Datei | arXiv | Rolle im Korpus |
 |---|---|---|
-| `rag_survey_2312_10997.pdf` | https://arxiv.org/abs/2312.10997 | Zentrale RAG-Uebersicht: naive, advanced und modular RAG |
-| `retrieval_augmented_text_generation_2202_01110.pdf` | https://arxiv.org/abs/2202.01110 | Aeltere Grundlagenuebersicht zu retrieval-augmented text generation |
-| `rag_text_generation_llms_2404_10981.pdf` | https://arxiv.org/abs/2404.10981 | Neuere RAG-Sicht mit Pre-Retrieval, Retrieval, Post-Retrieval und Generation |
-| `llms_in_practice_2304_13712.pdf` | https://arxiv.org/abs/2304.13712 | Praktische LLM-Nutzung, Grenzen, Use Cases und Non-Use-Cases |
-| `ragas_evaluation_2309_15217.pdf` | https://arxiv.org/abs/2309.15217 | RAG-Evaluation ohne vollstaendige Ground-Truth |
-| `ares_rag_evaluation_2311_09476.pdf` | https://arxiv.org/abs/2311.09476 | Automatisierte RAG-Evaluation und synthetische Trainingsdaten fuer Evaluatoren |
-| `ragchecker_2408_08067.pdf` | https://arxiv.org/abs/2408.08067 | Feingranulare Diagnose von Retrieval- und Generierungsfehlern |
-| `robust_rag_irrelevant_context_2310_01558.pdf` | https://arxiv.org/abs/2310.01558 | Robustheit gegen irrelevante oder stoerende Kontexte |
-| `chain_of_note_2311_09210.pdf` | https://arxiv.org/abs/2311.09210 | Robustere RAG-Antworten durch Notizen und Unsicherheitsbehandlung |
-| `raft_domain_specific_rag_2403_10131.pdf` | https://arxiv.org/abs/2403.10131 | Anpassung von Modellen an domaenenspezifische RAG-Aufgaben |
-| `raptor_tree_retrieval_2401_18059.pdf` | https://arxiv.org/abs/2401.18059 | Baum-/Hierarchie-basierte Retrieval-Strategie |
-| `query_rewriting_rag_2305_14283.pdf` | https://arxiv.org/abs/2305.14283 | Query-Rewriting fuer bessere Retrieval-Ergebnisse |
-| `active_retrieval_augmented_generation_2305_06983.pdf` | https://arxiv.org/abs/2305.06983 | Aktives Retrieval waehrend der Generierung |
-| `llm_autonomous_agents_survey_2308_11432.pdf` | https://arxiv.org/abs/2308.11432 | Ueberblick zu LLM-basierten autonomen Agenten |
-| `prompt_engineering_survey_2402_07927.pdf` | https://arxiv.org/abs/2402.07927 | Prompting-Techniken und Grenzen |
+| `rag_survey_2312_10997.pdf` | https://arxiv.org/abs/2312.10997 | Recherche-Hintergrund des Projektteams zur RAG-Technologiebewertung |
+| `llm_autonomous_agents_survey_2308_11432.pdf` | https://arxiv.org/abs/2308.11432 | Recherche-Hintergrund zu LLM-basierten Agenten |
+| `prompt_engineering_survey_2402_07927.pdf` | https://arxiv.org/abs/2402.07927 | Recherche-Hintergrund zu Prompting-Techniken |
+| `ragas_evaluation_2309_15217.pdf` | https://arxiv.org/abs/2309.15217 | Recherche-Hintergrund zur RAG-Evaluation |
+| `robust_rag_irrelevant_context_2310_01558.pdf` | https://arxiv.org/abs/2310.01558 | Recherche-Hintergrund zu Robustheit gegen irrelevanten Kontext |
 
 ## Empfohlene Nutzung im Kurs
 
-1. M11/M12: Keyword-Suche vs. semantische Suche auf 3-5 ausgewaehlten PDFs.
-2. M13/M14: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus.
-3. M15/M24: Eval-Fragen gegen Retrieval- und Antwortqualitaet pruefen.
-4. M17/M23: Unsicherheit, Out-of-Corpus-Fragen, Prompt Injection und HITL diskutieren.
-5. M36: Teilnehmer bauen eine Variante mit Teilkorpus oder eigenem Zusatzkorpus.
+1. M11/M12: Keyword-Suche vs. semantische Suche auf den Meeting-Protokollen.
+2. M13/M14: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
+3. M15/M24: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
+4. M17/M23: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
+5. M36: Teilnehmer bauen eine Variante mit eigenem Meeting-Korpus oder Zusatzdokumenten.
 
 ## Gute Eval-Fragetypen
 
 | Typ | Beispiel |
 |---|---|
-| Faktisch | Welche drei Hauptkomponenten nennt ein RAG-System? |
-| Vergleich | Wie unterscheidet sich naive RAG von advanced RAG? |
-| Anwendung | Warum kann RAG Halluzinationen reduzieren? |
-| Grenze | Welche Risiken bleiben trotz Retrieval bestehen? |
-| Negativ | Welche Aussagen macht der Korpus zur Bildgenerierung mit Diffusionsmodellen? |
+| Faktisch | Wer ist Projektleiterin von Projekt Kompass? |
+| Vergleich | Wie unterscheidet sich die Formulierung zu ChromaDB am 17.03. von der am 31.03.? |
+| Anwendung | Welche offenen Punkte bestehen laut Follow-up-Tracker? |
+| Konflikt | Welche Entscheidung zur Vektordatenbank gilt aktuell — D1 oder D2? |
+| Versionierung | Wie hat sich der Status von Risiko R2 zwischen dem 17.03. und dem 28.04. verändert? |
+| Negativ | Wie hoch ist das exakte Projektbudget in Euro? |

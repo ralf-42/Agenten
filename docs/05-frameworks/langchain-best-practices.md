@@ -319,6 +319,39 @@ def multiply(a: int, b: int) -> int:
 - ✅ Weniger Boilerplate-Code
 - ✅ Bessere IDE-Unterstützung
 
+### Parameter des `@tool`-Decorators
+
+Die aktuelle Kurs-Signatur orientiert sich an `langchain_core.tools.tool`. Für Kursbeispiele gilt: erst Type Hints und Docstring sauber setzen, dann nur die Parameter ergänzen, die wirklich gebraucht werden.
+
+| Parameter | Zweck | Kurs-Hinweis |
+|---|---|---|
+| `name_or_callable` | Tool-Name oder Callable; als Decorator meist `@tool("name")`. | Für sprechende, stabile Tool-Namen verwenden. |
+| `runnable` | Wandelt ein Runnable in ein Tool um. | Fortgeschritten; in Einsteigerbeispielen vermeiden. |
+| `description` | Explizite Tool-Beschreibung. | Überschreibt Docstring-Beschreibung; präzise Einsatzgrenzen formulieren. |
+| `return_direct` | Tool-Ergebnis direkt zurückgeben statt Agent-Loop fortsetzen. | Nur nutzen, wenn das Tool bereits die finale Antwort liefert. |
+| `args_schema` | Explizites Pydantic- oder JSON-Schema für Eingaben. | Für robuste Tool-Verträge und komplexere Eingaben. |
+| `infer_schema` | Schema automatisch aus Funktionssignatur ableiten. | Standard ist `True`; nur bewusst deaktivieren. |
+| `response_format` | `"content"` oder `"content_and_artifact"`. | `content_and_artifact` nur nutzen, wenn zusätzlich ein Artefakt zurückgegeben wird. |
+| `parse_docstring` | Docstring für Parameterbeschreibung parsen. | Nur bei konsequent gepflegten Google-Style-Docstrings. |
+| `error_on_invalid_docstring` | Ungültige Docstrings beim Parsen als Fehler behandeln. | Hilfreich für strikte Qualitätssicherung. |
+| `extras` | Provider-spezifische Zusatzkonfiguration. | Siehe Tool Extras unten. |
+
+```python
+from langchain_core.tools import tool
+
+@tool(
+    "weather_lookup",
+    description="Gibt eine kurze Wetterauskunft für eine Stadt zurück.",
+    return_direct=False,
+    infer_schema=True,
+)
+def weather_lookup(city: str) -> str:
+    return f"Wetter für {city}: Beispielausgabe"
+```
+
+> [!WARNING] Versionsabhängige Parameter<br>
+> `handle_tool_error` taucht in älteren oder abweichenden Quellen auf, ist aber nicht Teil der aktuellen `@tool`-Decorator-Signatur im Kursstandard. Für Fehlerbehandlung im Kurs: Eingaben im Tool validieren und verständliche Fehlerstrings zurückgeben.
+
 ### NEU in v1.2.0: Tool Extras für Provider-spezifische Features
 
 Tools unterstützen jetzt `extras` für provider-native Konfigurationen:
@@ -1180,4 +1213,3 @@ Beim Refactoring von altem Code:
 **Version:** 1.7<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-

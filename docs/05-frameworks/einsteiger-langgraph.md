@@ -587,6 +587,17 @@ Setze eine stabile `thread_id` und verwende `Command(resume=...)`, um nach einem
 
 ## Erweiterungen / Fortgeschrittene Themen
 
+### Ausblick auf Best Practices
+
+Diese Konzepte gehören nicht in den ersten Minimalgraph, erklären aber die produktionsnähere LangGraph-Dokumentation:
+
+| Konzept | Kurz erklärt |
+|---|---|
+| Persistenter Store und Löschkonzept | Checkpointing speichert Zustand. Sobald Daten dauerhaft gespeichert werden, muss klar sein, was nur zur Session gehört, was langfristig bleibt und wie sensible Daten gelöscht werden. |
+| `ToolRuntime` | Tools können bei Bedarf Laufzeitkontext erhalten, etwa `thread_id`, Store, Stream Writer oder Konfiguration. Für einfache Tools bleibt ein normaler Funktionsparameter aber verständlicher. |
+
+---
+
 - Checkpointing über persistente Stores
 - Human-in-the-Loop mit Formularen
 - Multi-Agent-Workflows

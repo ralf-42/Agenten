@@ -274,7 +274,7 @@ Multi-Agent-Systeme brauchen mehr als mehrere Modellaufrufe. Entscheidend ist di
 
 Grenze: Multi-Agent ist selten der beste Einstieg. Erst wenn Rollen wirklich unterschiedliche Werkzeuge, Daten oder Bewertungskriterien haben, lohnt sich die zusätzliche Koordination.
 
-## ToolRuntime Und ToolNode-Handoff
+## ToolRuntime
 
 `ToolRuntime` ist relevant, wenn Tools Zugriff auf Laufzeitkontext brauchen, etwa `thread_id`, Store, Stream Writer oder Konfiguration. Einfache Tools sollten weiter einfach bleiben; Runtime-Kontext ist kein Standardargument für jede Funktion.
 
@@ -287,11 +287,6 @@ def lookup_customer(customer_id: str) -> str:
     """Fetch customer data by ID."""
     return customer_store.get(customer_id)
 ```
-
-Bei komplexeren Tool-Flows kann ein Tool nicht nur Daten zurückgeben, sondern einen nächsten Graph-Schritt auslösen. Das ist nützlich für Handoffs, sollte aber sparsam eingesetzt werden, weil Routing dann teilweise aus dem Graph in Tool-Code wandert.
-
-> [!WARNING] Routing Im Tool<br>
-> Tool-Handoffs sind mächtig, aber sie verstecken Kontrollfluss leichter als `add_conditional_edges`. Für Kurs- und Review-Zwecke bleibt explizites Routing im Graph meist besser nachvollziehbar.
 
 ## Streaming Und Observability
 

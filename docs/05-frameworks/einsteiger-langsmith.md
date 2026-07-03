@@ -701,6 +701,32 @@ chain = (
 result = chain.invoke({"topic": "Vektordatenbanken"})
 ```
 
+**`invoke(..., config=...)` vs. `.with_config(...)`**
+
+Beide Varianten setzen Tracing- und Laufzeitkonfiguration, wirken aber unterschiedlich breit:
+
+| Variante | Wirkung | Wann nutzen? |
+|---|---|---|
+| `chain.invoke(..., config=run_cfg)` | Gilt nur für diesen einen Aufruf. Die Chain bleibt unverändert. | Einzelne Experimente, Testfälle oder Notebook-Runs unterschiedlich markieren. |
+| `chain.with_config(**run_cfg)` | Erzeugt eine neue konfigurierte Chain-Instanz. Spätere Aufrufe nutzen diese Basis-Konfiguration automatisch. | Wiederverwendbare Pipeline mit festem Trace-Namen, Tags oder Metadaten. |
+
+```python
+# Nur dieser eine Run bekommt Name und Tags.
+antwort = chain.invoke(
+    {"topic": "Vektordatenbanken"},
+    config={"run_name": "M07_Kap3_Einzelrun", "tags": ["M07", "test"]},
+)
+
+# Diese Chain-Variante trägt Name und Tags bei jedem späteren Aufruf.
+traced_chain = chain.with_config(
+    run_name="M07_Kap3_Grundchain",
+    tags=["M07", "lcel", "chain"],
+)
+antwort = traced_chain.invoke({"topic": "Embeddings"})
+```
+
+Für Lehr-Notebooks ist `invoke(..., config=...)` oft flexibler, wenn einzelne Versuche verglichen werden. `.with_config(...)` ist übersichtlicher, wenn dieselbe Pipeline mehrfach mit derselben Trace-Struktur verwendet wird.
+
 **Auf LLM-Aufrufe anwenden**
 
 ```python
@@ -860,6 +886,18 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 ## Erweiterungen / Fortgeschrittene Themen
 
+### Ausblick auf Best Practices
+
+Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig genutzt werden:
+
+| Konzept | Kurz erklärt |
+|---|---|
+| Baseline-Experiment | Ein Experiment wird als Vergleichsstand festgelegt. Neue Evaluationen lassen sich dann systematisch gegen diesen Stand prüfen. |
+| Prompt Hub | Prompts werden versioniert und wiederverwendbar abgelegt, statt sie in mehreren Notebooks oder Dateien zu kopieren. |
+| `LANGSMITH_SAMPLING_RATE` | Sampling reduziert die Menge der getrackten Runs, etwa wenn in produktionsnahen Tests nicht jede Anfrage gespeichert werden soll. |
+
+---
+
 ### Vergleich: LangSmith vs. Alternatives
 
 | Aspekt | LangSmith | Print/Logs | LangGraph Debug |
@@ -968,4 +1006,3 @@ LangSmith macht Agenten nachvollziehbar: Traces zeigen einzelne Schritte, Datase
 **Version:** 1.0<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-

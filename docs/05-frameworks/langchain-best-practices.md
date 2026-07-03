@@ -79,8 +79,6 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 - ✨ **Model Profiles** (`.profile` Attribut): Chat-Modelle exposieren ihre Capabilities
 - ✨ **Smart Structured Output**: `ProviderStrategy` wird automatisch aus Profiles abgeleitet
 - ✨ **SystemMessage in create_agent**: Cache-Control für Anthropic Claude
-- ✨ **ModelRetryMiddleware**: Automatische Retries mit exponential backoff
-- ✨ **ContentModerationMiddleware**: OpenAI Moderation für User/Model/Tool-Outputs
 - ✨ **Verbesserter SummarizationMiddleware**: Nutzt Model Profiles für intelligente Zusammenfassungen
 
 **Wichtigste Neuerungen v1.2.1-v1.2.10** (Januar/Februar 2026):
@@ -627,38 +625,8 @@ agent = create_agent(
 | `HumanInTheLoopMiddleware` | Manuelle Genehmigung vor Tool-Ausführung | Dateioperationen, API-Calls, kritische Aktionen |
 | `SummarizationMiddleware` | Automatische Zusammenfassung langer Konversationen | Chat-Apps, lange Sessions |
 | `PIIMiddleware` | Datenschutz durch Mustererkennung | DSGVO-Compliance, sensible Daten |
-| `ModelRetryMiddleware` 🆕 | Automatische Retries mit exponential backoff | Flaky APIs, Rate Limits |
-| `ContentModerationMiddleware` 🆕 | OpenAI Moderation für User/Model/Tool-Outputs | Safety-Layer, Content-Filter |
 
 ### NEU in v1.1.0: Erweiterte Middleware
-
-#### ModelRetryMiddleware (NEU!)
-
-Automatische Retries bei API-Fehlern mit konfigurierbarem exponential backoff:
-
-```python
-from langchain.agents import create_agent
-from langchain.agents.middleware import ModelRetryMiddleware
-
-agent = create_agent(
-    model=llm,
-    tools=tools,
-    middleware=[
-        ModelRetryMiddleware(
-            max_retries=3,
-            backoff_factor=2.0,  # Exponential Backoff (2s, 4s, 8s)
-            retry_on=["rate_limit_error", "timeout", "server_error"],
-            jitter=True  # Randomized delay
-        )
-    ]
-)
-```
-
-**Use Cases:**
-- ✅ Rate-Limiting von API-Providern
-- ✅ Transiente Netzwerkfehler
-- ✅ Server-Timeouts
-- ✅ Production-Resilience
 
 #### HumanInTheLoopMiddleware respond()-Decision (NEU in v1.2.17)
 
@@ -667,35 +635,6 @@ agent = create_agent(
 **In der Praxis relevant wenn:** Guardrails sollen dem Nutzer eine klare Fehlermeldung liefern, die das LLM nicht nochmals umformulieren muss.
 
 ---
-
-#### ContentModerationMiddleware (NEU!)
-
-OpenAI Moderation API für konsistente Safety-Layer:
-
-```python
-from langchain.agents.middleware import ContentModerationMiddleware
-
-agent = create_agent(
-    model=llm,
-    tools=tools,
-    middleware=[
-        ContentModerationMiddleware(
-            provider="openai",  # Nutzt OpenAI Moderation API
-            check_user_input=True,      # Filter User-Inputs
-            check_model_output=True,    # Filter Model-Responses
-            check_tool_output=True,     # Filter Tool-Results
-            block_on_violation=True,    # Workflow stoppen bei Violation
-            categories=["hate", "violence", "sexual"]  # Spezifische Kategorien
-        )
-    ]
-)
-```
-
-**Use Cases:**
-- ✅ User-Generated Content-Filter
-- ✅ DSGVO-Compliance & Safety
-- ✅ Brand-Safety für Production-Apps
-- ✅ Multi-Layer-Content-Moderation
 
 #### Verbesserter SummarizationMiddleware
 
@@ -1091,9 +1030,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import (
     HumanInTheLoopMiddleware,
     SummarizationMiddleware,
-    PIIMiddleware,
-    ModelRetryMiddleware,  # 🆕 v1.1.0
-    ContentModerationMiddleware  # 🆕 v1.1.0
+    PIIMiddleware
 )
 
 # Chains (LCEL)
@@ -1217,7 +1154,6 @@ Beim Refactoring von altem Code:
 - 🆕 Model Profile System dokumentiert (Must-Have #1)
 - 🆕 Auto-Inference für Structured Output (Must-Have #2)
 - 🆕 SystemMessage Support in create_agent (Must-Have #4)
-- 🆕 ModelRetryMiddleware & ContentModerationMiddleware (Must-Have #6)
 - 🆕 Verbesserter SummarizationMiddleware
 - ✅ Import-Cheatsheet erweitert
 - ✅ "What's New in v1.1.0" Sektion hinzugefügt

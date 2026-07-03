@@ -91,12 +91,6 @@ os.environ["LANGSMITH_TRACING"] = "true"
 - Suche nach Fehlern
 - Zeitbasierte Filterung
 
-**Trace Previews anpassen** *(neu: Feb 2026, v0.13.10)*
-
-Konfigurierbar, welche Inputs und Outputs in der Tracing-Tabelle angezeigt werden – besonders nützlich bei Custom Data Structures:
-- Im LangSmith Dashboard: Settings → Trace Preview → Felder auswählen
-- Nützlich für Projekte mit verschachtelten Datenstrukturen oder langen Texten
-
 **`.with_config()` – Traces benennen und taggen:**
 
 Mit `.with_config()` lassen sich einzelne Chains und Aufrufe in LangSmith klar identifizieren.
@@ -114,6 +108,35 @@ run_cfg = {
 chain = (prompt | llm | parser).with_config(**run_cfg)
 result = chain.invoke({"input": "..."})
 ```
+
+**`invoke(..., config=...)` vs. `.with_config(...)`:**
+
+| Variante | Scope | Best Practice |
+|---|---|---|
+| `chain.invoke(input, config=run_cfg)` | Nur dieser eine Run. Das Runnable bleibt unverändert. | Für Experimente, Einzeltests, Ad-hoc-Metadaten und Vergleichsläufe. |
+| `chain.with_config(**run_cfg)` | Neue konfigurierte Runnable-Instanz. Spätere Aufrufe übernehmen diese Basis-Konfiguration. | Für wiederverwendbare Chains, feste Pipeline-Namen und stabile Tags. |
+
+```python
+# Runtime-Konfiguration: nur dieser Invoke-Aufruf.
+result = chain.invoke(
+    {"input": "..."},
+    config={
+        "run_name": "M05_Kap6_Einzelrun",
+        "tags": ["M05", "experiment"],
+        "metadata": {"variante": "A"},
+    },
+)
+
+# Runnable-Konfiguration: diese Chain-Variante bleibt benannt.
+traced_chain = chain.with_config(
+    run_name="M05_Kap6_BasicChain",
+    tags=["M05", "lcel", "chain"],
+    metadata={"komponente": "prompt-llm-parser"},
+)
+result = traced_chain.invoke({"input": "..."})
+```
+
+Beide Wege sind komplementär: `.with_config(...)` setzt die Basis-Konfiguration einer Chain-Variante, `invoke(..., config=...)` eignet sich für laufzeitspezifische Angaben pro Aufruf.
 
 **Wann `.with_config()` einsetzen:**
 - ✅ Mehrere Chains im selben Projekt – damit Traces unterscheidbar sind
@@ -176,7 +199,82 @@ ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
 
 ---
 
-### 2. Datasets & Evaluation
+
+### 2. Monitoring & Observability
+
+**Was es macht:**
+- Production-Monitoring in Echtzeit
+- Dashboards für Metriken (Latenz, Fehlerrate, Token-Nutzung)
+- Alerts bei Anomalien
+
+**Wann nutzen:**
+- ✅ **Obligatorisch** für alle Production-Deployments
+- ✅ Monitoring von SLAs (Response-Zeit, Fehlerrate)
+- ✅ Frühwarnung bei Problemen
+
+**Best Practice:**
+```python
+# LangSmith in Production aktivieren
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "production"  # Projekt-Name
+
+# Automatisches Monitoring aller Requests
+```
+
+**Key Metrics:**
+- **Latency** - P50, P95, P99 Response-Zeiten
+- **Error Rate** - Fehlerrate pro Endpoint
+- **Token Usage** - Kosten pro Request
+- **Throughput** - Requests/Minute
+
+---
+
+### 3. Cost Tracking & Budget Management
+
+**Was es macht:**
+- Token-Nutzung pro Request tracken
+- Budget-Limits setzen
+- Kosten-Alerts konfigurieren
+
+**Wann nutzen:**
+- ✅ Budget-Kontrolle für Production-Apps
+- ✅ Kosten-Optimierung identifizieren
+- ✅ Abrechnungs-Transparenz
+
+**Best Practice:**
+```python
+# Automatisches Token-Tracking (keine Konfiguration nötig)
+# LangSmith erfasst Token-Nutzung aller unterstützten Provider
+
+# Im Dashboard:
+# - Token-Nutzung pro Tag/Woche/Monat
+# - Kosten-Breakdown nach Modell
+# - Budget-Alerts konfigurieren
+```
+
+**Unterstützte Provider:**
+- OpenAI, Anthropic, Google, Cohere, etc.
+- Automatische Kosten-Berechnung basierend auf Pricing
+
+**Kosten über gesamten Agent-Stack tracken** *(neu: Feb 2026)*
+
+Seit Februar 2026 bietet LangSmith eine **unified Cost View** über den gesamten Agent-Workflow – nicht nur LLM-Calls, sondern alle Komponenten (Tools, externe APIs etc.):
+
+```python
+# Custom Cost Metadata für nicht-LLM-Komponenten
+from langsmith import Client
+client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
+
+# Kosten für externe API-Calls, Tools etc. manuell loggen
+client.update_run(
+    run_id=run_id,
+    extra={"cost": {"total_cost": 0.005, "currency": "USD"}}
+)
+```
+
+
+
+### 4. Datasets & Evaluation
 
 **Was es macht:**
 - Test-Datasets für LLM-Anwendungen erstellen
@@ -233,87 +331,6 @@ results_v2 = evaluate(
 )
 ```
 
-**Pairwise Annotation Queues** *(neu: Dez 2025, v0.12.61)*
-
-Side-by-Side Vergleich zweier Agent-Outputs für subjektive Evaluation:
-- Im LangSmith Dashboard: Annotation Queues → Pairwise Queue erstellen
-- Zeigt zwei Antworten nebeneinander zur manuellen Bewertung
-- Ideal für: Ton, Kreativität, Stil – schwer automatisch bewertbar
-
----
-
-### 3. Monitoring & Observability
-
-**Was es macht:**
-- Production-Monitoring in Echtzeit
-- Dashboards für Metriken (Latenz, Fehlerrate, Token-Nutzung)
-- Alerts bei Anomalien
-
-**Wann nutzen:**
-- ✅ **Obligatorisch** für alle Production-Deployments
-- ✅ Monitoring von SLAs (Response-Zeit, Fehlerrate)
-- ✅ Frühwarnung bei Problemen
-
-**Best Practice:**
-```python
-# LangSmith in Production aktivieren
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "production"  # Projekt-Name
-
-# Automatisches Monitoring aller Requests
-```
-
-**Key Metrics:**
-- **Latency** - P50, P95, P99 Response-Zeiten
-- **Error Rate** - Fehlerrate pro Endpoint
-- **Token Usage** - Kosten pro Request
-- **Throughput** - Requests/Minute
-
----
-
-### 4. Cost Tracking & Budget Management
-
-**Was es macht:**
-- Token-Nutzung pro Request tracken
-- Budget-Limits setzen
-- Kosten-Alerts konfigurieren
-
-**Wann nutzen:**
-- ✅ Budget-Kontrolle für Production-Apps
-- ✅ Kosten-Optimierung identifizieren
-- ✅ Abrechnungs-Transparenz
-
-**Best Practice:**
-```python
-# Automatisches Token-Tracking (keine Konfiguration nötig)
-# LangSmith erfasst Token-Nutzung aller unterstützten Provider
-
-# Im Dashboard:
-# - Token-Nutzung pro Tag/Woche/Monat
-# - Kosten-Breakdown nach Modell
-# - Budget-Alerts konfigurieren
-```
-
-**Unterstützte Provider:**
-- OpenAI, Anthropic, Google, Cohere, etc.
-- Automatische Kosten-Berechnung basierend auf Pricing
-
-**Kosten über gesamten Agent-Stack tracken** *(neu: Feb 2026)*
-
-Seit Februar 2026 bietet LangSmith eine **unified Cost View** über den gesamten Agent-Workflow – nicht nur LLM-Calls, sondern alle Komponenten (Tools, externe APIs etc.):
-
-```python
-# Custom Cost Metadata für nicht-LLM-Komponenten
-from langsmith import Client
-client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
-
-# Kosten für externe API-Calls, Tools etc. manuell loggen
-client.update_run(
-    run_id=run_id,
-    extra={"cost": {"total_cost": 0.005, "currency": "USD"}}
-)
-```
-
 ---
 
 ### 5. Prompt Hub
@@ -344,24 +361,6 @@ agent = create_agent(
 
 # Prompt im Hub updaten → automatisch neue Version
 ```
-
----
-
-## Aktuelle Änderungen
-
-### Agent Builder → LangSmith Fleet
-
-Die „Agent Builder“-Sektion in der LangSmith-UI wurde umbenannt in „LangSmith Fleet“.
-
-> LangSmith Dashboard → **Fleet** (linke Navigation)
-
-Alle bisherigen Funktionen sind erhalten — nur der Name hat sich geändert.
-
-**Notebooks:** Verweise auf „LangSmith Agent Builder“ auf „LangSmith Fleet“ aktualisieren.
-
-### Terminal-basiertes Trace-Debugging
-
-**In der Praxis relevant wenn:** Debugging in Google Colab oder SSH-Umgebungen ohne Browser.
 
 ---
 
@@ -722,9 +721,7 @@ callback = LangSmithCallback(
 ### Version 1.9 (2026-03-04)
 - ✅ BREAKING: Alle `LANGCHAIN_*` Env-Vars → `LANGSMITH_*` (LANGSMITH_TRACING, LANGSMITH_API_KEY, LANGSMITH_PROJECT, LANGSMITH_ENDPOINT, LANGSMITH_SAMPLING_RATE)
 - ✅ NEU: Baseline-Experiment fixieren (Feb 2026) in Datasets & Evaluation
-- ✅ NEU: Pairwise Annotation Queues (Dez 2025) in Datasets & Evaluation
 - ✅ NEU: Track Costs Across Agent Stack (Feb 2026) in Cost Tracking
-- ✅ NEU: Trace Previews konfigurieren (Feb 2026, v0.13.10) in Tracing
 
 ### Version 1.8 (2026-03-03)
 - ✅ VEREINFACHT: Modulnamen direkt in Setup-Cell setzen – kein `tracing_context` nötig
@@ -737,8 +734,7 @@ callback = LangSmithCallback(
 - ✅ Troubleshooting: Neuer Eintrag "Projektnamen-Wechsel wird ignoriert" mit Workaround via `cache_clear()`
 
 ### Version 2.0 (2026-05-01)
-- 🆕 **Fleet-Rename**: „Agent Builder“ → „LangSmith Fleet“ in der UI
-- 🆕 ** CLI** — Terminal-Trace-Debugging
+- ✅ Aktualisierung der produktionsnahen LangSmith-Hinweise
 
 ### Version 1.6 (2026-03-03)
 - ✅ Tracing & Debugging: `.with_config()` – Zwei-Schritt-Pattern dokumentiert (`run_cfg = {...}` → `.with_config(**run_cfg)`)
@@ -782,4 +778,3 @@ callback = LangSmithCallback(
 **Version:** 2.1<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-

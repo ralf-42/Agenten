@@ -99,7 +99,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
-llm = init_chat_model("openai:gpt-5-nano")
+llm = init_chat_model("openai:gpt-5.4-nano")
 prompt = ChatPromptTemplate.from_template("Erkläre {thema} in drei Sätzen.")
 chain = prompt | llm | StrOutputParser()
 
@@ -168,7 +168,7 @@ Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sp
 from langchain.chat_models import init_chat_model
 
 # Kurznotation "provider:model"
-llm = init_chat_model("openai:gpt-5-nano")
+llm = init_chat_model("openai:gpt-5.4-nano")
 
 # Weitere Beispiele:
 # llm = init_chat_model("anthropic:claude-sonnet-4-5", temperature=0.3)
@@ -548,7 +548,7 @@ agent_summarize = create_agent(
 
 # Ansatz 2: OpenAI Server-Side Compaction (nur OpenAI, wenn vom Modell unterstützt)
 llm_compact = init_chat_model(
-    "openai:gpt-5-nano",
+    "openai:gpt-5.4-nano",
     context_management=[{"type": "compaction", "compact_threshold": 10_000}]
 )
 agent_compact = create_agent(model=llm_compact, tools=tools)
@@ -785,6 +785,19 @@ Prüfe zuerst Chunk-Größe, Overlap, Embedding-Modell und Retriever-Parameter. 
 ---
 
 ## Erweiterungen / Fortgeschrittene Themen
+
+### Ausblick auf Best Practices
+
+Diese Begriffe musst du für die ersten Beispiele nicht aktiv verwenden, sie erklären aber einige Muster aus den Best-Practice-Seiten:
+
+| Konzept | Kurz erklärt |
+|---|---|
+| `llm.profile` / Model Profiles | Modelle stellen Fähigkeiten wie strukturierte Ausgabe, Tool Calling, Bild-Eingaben und Kontextgröße maschinenlesbar bereit. So muss Code weniger provider-spezifisch entscheiden. |
+| `ProviderStrategy` | Bei `with_structured_output()` wählt LangChain möglichst automatisch die passende Strategie: native strukturierte Ausgabe, wenn der Provider sie unterstützt, sonst ein Fallback. |
+| `.with_retry()` / `.with_fallbacks()` | Runnables können bei transienten Fehlern erneut ausgeführt oder auf ein alternatives Modell umgeleitet werden. Das ist vor allem für produktionsnähere Chains relevant. |
+| `ContextOverflowError` | Wenn ein Modellaufruf das Kontextfenster überschreitet, kann dieser Fehler entstehen. Context-Management oder `SummarizationMiddleware` verhindert, dass lange Sessions daran scheitern. |
+
+---
 
 - Middleware zur Agentensteuerung
 - Multimodale Content-Blöcke

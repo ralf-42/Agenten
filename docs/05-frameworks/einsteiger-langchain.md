@@ -222,6 +222,30 @@ Der Funktionsname wird standardmäßig zum Tool-Namen. Er sollte deshalb nicht n
 
 Gute Tool-Docstrings beschreiben Einsatzgrenzen: „nur bei Bestellnummer“, „nicht für Produktsuche“, „nur für interne Kundendaten“. Solche Formulierungen reduzieren Fehlaufrufe stärker als generische Beschreibungen wie „ruft Daten ab“.
 
+### Wichtige `@tool`-Parameter
+
+Für die meisten Einsteigerbeispiele reichen `@tool`, Type Hints und ein klarer Docstring. Zusätzliche Parameter setzt du nur, wenn du bewusst vom Standard abweichen willst:
+
+| Parameter | Wann sinnvoll? |
+|---|---|
+| `@tool("name")` | Wenn der Tool-Name explizit anders heißen soll als die Python-Funktion. |
+| `description=` | Wenn die Beschreibung nicht aus dem Docstring kommen soll oder präziser für den Agenten formuliert werden muss. |
+| `args_schema=` | Wenn Eingaben explizit über ein Pydantic-Schema validiert werden sollen. |
+| `return_direct=True` | Wenn das Tool-Ergebnis direkt an den Nutzer zurückgehen soll, ohne dass der Agent danach weiterformuliert. |
+| `infer_schema=False` | Wenn LangChain das Eingabeschema nicht automatisch aus Type Hints ableiten soll. |
+
+```python
+from langchain_core.tools import tool
+
+@tool(
+    "weather_lookup",
+    description="Gibt eine kurze Wetterauskunft für eine Stadt zurück.",
+    return_direct=False,
+)
+def weather_lookup(city: str) -> str:
+    return f"Wetter für {city}: Beispielausgabe"
+```
+
 ### Beispiel: Ein einfaches Rechentool
 
 ```python

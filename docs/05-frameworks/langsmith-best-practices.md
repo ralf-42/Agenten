@@ -680,10 +680,10 @@ if os.getenv("ENVIRONMENT") == "development":
 ### Problem: Sensible Daten in Traces
 **Lösung:**
 ```python
-# Anonymisierung aktivieren
-from langchain.callbacks import LangSmithCallback
+# Anonymisierung aktivieren – direkt am LangSmith-Client
+from langsmith import Client
 
-callback = LangSmithCallback(
+client = Client(
     hide_inputs=True,  # Input verstecken
     hide_outputs=True  # Output verstecken
 )

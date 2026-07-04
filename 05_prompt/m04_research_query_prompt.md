@@ -1,6 +1,6 @@
 ---
 name: m04_research_query_prompt
-description: Formuliert eine Research-Frage als präzise Suchanfrage fuer den Projektkorpus
+description: Formuliert eine Research-Frage als präzise Suchanfrage für den Projektkorpus
 variables: [frage]
 ---
 

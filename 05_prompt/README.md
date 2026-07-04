@@ -44,21 +44,44 @@ Beispielantwort (nur bei Few-Shot nötig).
 
 ### Drei Typen
 
-| Typ | Sections | Wann |
-|-----|----------|------|
-| **System-only** | `## system` | Einfache Agenten-Systemanweisungen |
-| **Template** | `## system` + `## human` mit `{variablen}` | Strukturierte Prompts mit Eingaben |
-| **Few-Shot** | `## system` + mehrere `## human` / `## ai` | Klassifikation, Extraktion mit Beispielen |
+| Typ | Struktur | Loader | Wann |
+|-----|----------|--------|------|
+| **System-only** | direkt nach Frontmatter oder `## system` | `mode="S"` | Einfache Agenten-Systemanweisungen |
+| **Template** | `## system` + `## human` mit `{variablen}` | `mode="T"` | Strukturierte Prompts mit Eingaben |
+| **Few-Shot** | `## system` + mehrere `## human` / `## ai` | `mode="T"` | Klassifikation, Extraktion mit Beispielen |
+
+### Struktur-Tags für komplexe System-Prompts
+
+Komplexe System-Prompts für Agentensteuerung, Supervisor-Pattern, Tool-Budgets oder Sicherheitsgrenzen dürfen XML-artige Abschnittstags verwenden. Sie werden als reiner System-Prompt mit `mode="S"` geladen.
+
+Empfohlene Tags:
+
+| Tag | Zweck |
+|-----|-------|
+| `<Role>` | Rolle und Hauptauftrag des Agenten |
+| `<Team>` | verfügbare Agenten, Teams oder Tools |
+| `<Task>` | konkrete Kernaufgabe |
+| `<Workflow>` | erwarteter Ablauf oder Routing-Logik |
+| `<Instructions>` | operative Arbeitsregeln |
+| `<HardLimits>` | harte Grenzen, Budgets und Abbruchregeln |
+| `<OutputRules>` | Ausgabeformat und Antwortgrenzen |
+
+Regeln:
+
+- Tags werden nur in System-only Prompts verwendet.
+- Tag-Namen enthalten keine Leerzeichen.
+- Budget-Regeln nennen immer, was gezählt wird und pro welchem Scope sie gelten, zum Beispiel: `Tool-Budget: maximal 2 Tool-Aufrufe pro Nutzeranfrage.`
+- Harte Grenzen gehören in `<HardLimits>`, nicht verstreut in Fließtext.
 
 ## Laden mit `load_prompt()`
 
 ```python
 from genai_lib.utilities import load_prompt
 
-# System-only oder Template → mode="S" (Standard)
-prompt = load_prompt("05_prompt/m04_mein_prompt.md")
+# System-only → mode="S"
+system_prompt = load_prompt("05_prompt/m03_agent_system_prompt.md", mode="S")
 
-# Few-Shot mit ## system / ## human Sections → mode="T"
+# Template oder Few-Shot mit ## system / ## human Sections → mode="T"
 prompt = load_prompt("05_prompt/m04_research_few_shot_prompt.md", mode="T")
 
 # Mit Variablen befüllen

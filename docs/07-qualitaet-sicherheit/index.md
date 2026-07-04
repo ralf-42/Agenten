@@ -15,6 +15,7 @@ Diese Orientierungsseite macht Agenten messbar, beobachtbar und kontrollierbar. 
 | **Woran** erkennt man gute Ergebnisse? | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Metriken, Testsets, Fehlersuche und Produktionssicht. |
 | **Wie** werden Agenten abgesichert? | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Prompt Injection, Tool-Rechte, Least Privilege und Vertrauensgrenzen. |
 | **Wie** werden Evaluationen belastbar? | [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }}) | Baselines, Regressionen, Judges und systematische Auswertung. |
+| **Was** muss vor Review oder Freigabe geprüft werden? | [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }}) | Querschnittscheck für Architektur, Tools, Kontext, Evaluation, Observability, Sicherheit und Betrieb. |
 
 ---
 

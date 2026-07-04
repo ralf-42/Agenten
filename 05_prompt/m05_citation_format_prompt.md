@@ -1,6 +1,6 @@
 ---
 name: m05_citation_format_prompt
-description: Strukturierte Quellenkarte mit Citation-Hinweis fuer Research-Antworten
+description: Strukturierte Quellenkarte mit Citation-Hinweis für Research-Antworten
 variables: [text]
 ---
 

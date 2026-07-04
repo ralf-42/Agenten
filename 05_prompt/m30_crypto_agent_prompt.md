@@ -1,6 +1,6 @@
 ---
 name: m30_crypto_agent_prompt
-description: System-Prompt fuer den Crypto-Agenten in M30 (MCP HuggingFace, Caesar/Vigenere/Scytale)
+description: System-Prompt für den Crypto-Agenten in M30 (MCP HuggingFace, Caesar/Vigenere/Scytale)
 variables: []
 ---
 

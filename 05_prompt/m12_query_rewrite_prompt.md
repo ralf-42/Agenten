@@ -1,13 +1,13 @@
 ---
 name: m12_query_rewrite_prompt
-description: Prompt zur Umformulierung einer Suchanfrage fuer Retrieval
+description: Prompt zur Umformulierung einer Suchanfrage für Retrieval
 variables: [user_question]
 ---
 
 ## system
 
-Du optimierst Suchanfragen fuer Vektorsuche.
-Antworte nur mit einer kurzen, praezisen Suchanfrage ohne Zusatztext.
+Du optimierst Suchanfragen für Vektorsuche.
+Antworte nur mit einer kurzen, präzisen Suchanfrage ohne Zusatztext.
 
 ## human
 

@@ -125,6 +125,10 @@ Mit Tags (klar gegliedert — Modell "sieht" die Struktur):
 ```xml
 Du bist Recherche-Spezialist.
 
+<Role>
+Recherche-Spezialist für belegbare Kurzantworten.
+</Role>
+
 <Task>
 Recherchiere Fakten zum angefragten Thema.
 </Task>
@@ -135,13 +139,14 @@ Recherchiere Fakten zum angefragten Thema.
 3. Antworte auf Deutsch
 </Instructions>
 
-<Hard Limits>
-Maximal 3 Suchen. Stoppe sobald die Anfrage beantwortbar ist.
-</Hard Limits>
+<HardLimits>
+Tool-Budget: maximal 3 Suchaufrufe pro Nutzeranfrage.
+Stoppe, sobald die Anfrage beantwortbar ist.
+</HardLimits>
 
-<Output>
+<OutputRules>
 Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
-</Output>
+</OutputRules>
 ```
 
 **Vorteile strukturierter Prompts:**
@@ -157,18 +162,21 @@ Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
 | Wenige Zeilen, eine klare Aufgabe | Kein XML nötig |
 | Mehrere unterschiedliche Anweisungsblöcke | XML-Tags empfohlen |
 | Agenten-Prompts mit Hard Limits | XML-Tags Pflicht |
-| Few-Shot-Prompts mit Beispielen | `<Example>` Tags empfohlen |
+| Few-Shot-Prompts mit Beispielen | Meist `## human` / `## ai`, nur bei sehr komplexen Beispielen zusätzliche Tags |
 
 ### Häufig verwendete Tags im Kurs
 
 | Tag | Typischer Inhalt |
 |---|---|
+| `<Role>` | Rolle und Hauptauftrag des Agenten |
+| `<Team>` | verfügbare Agenten, Teams oder Tools |
 | `<Task>` | Was das Modell / der Agent tun soll |
+| `<Workflow>` | erwarteter Ablauf oder Routing-Logik |
 | `<Instructions>` | Schritt-für-Schritt-Anweisungen |
-| `<Hard Limits>` | Absolute Grenzen (Tool-Budget, Abbruchbedingungen) |
-| `<Output>` | Gewünschtes Format und Struktur der Antwort |
-| `<Context>` | Hintergrundinformationen |
-| `<Example>` | Few-Shot-Beispiele |
+| `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen |
+| `<OutputRules>` | Gewünschtes Format und Struktur der Antwort |
+
+Tag-Namen enthalten keine Leerzeichen. Deshalb wird im Kurs `<HardLimits>` verwendet, nicht `<Hard Limits>`.
 
 ---
 
@@ -186,8 +194,6 @@ description: Einfacher Assistenten-Prompt ohne Variablen
 variables: []
 ---
 
-## system
-
 Du bist ein hilfreicher Assistent.
 Antworte immer präzise und auf Deutsch.
 ```
@@ -198,6 +204,8 @@ from genai_lib.utilities import load_prompt
 system_text = load_prompt("05_prompt/assistent_prompt.md", mode="S")
 # Rückgabe: String → direkt an create_agent() übergeben
 ```
+
+Bei `mode="S"` wird der Inhalt nach dem YAML-Frontmatter als reiner String geladen. Eine `## system`-Überschrift ist erlaubt, aber nicht nötig. Bei `mode="T"` sind `## system`, `## human` und optional `## ai` dagegen die Struktur, aus der `ChatPromptTemplate`-Nachrichten entstehen.
 
 ---
 
@@ -318,7 +326,9 @@ prompt_template = load_prompt("05_prompt/mein_prompt.md", mode="T")
 | `mode` | Rückgabetyp          | Wann verwenden                                 |
 | ------ | -------------------- | ---------------------------------------------- |
 | `"S"`  | `str`                | `create_agent(..., system_prompt=system_text)` |
-| `"T"`  | `ChatPromptTemplate` | `chain = prompt                                |
+| `"T"`  | `ChatPromptTemplate` | `chain = prompt | llm`                         |
+
+`mode="S"` entfernt nur das YAML-Frontmatter und gibt den restlichen Text zurück. `mode="T"` parst die Markdown-Sektionen `## system`, `## human` und `## ai`; ohne mindestens eine gültige Sektion schlägt das Laden fehl.
 
 ---
 
@@ -335,11 +345,11 @@ variables: []
 ---
 ```
 
-**3.** `## system`-Block schreiben — Rolle, Aufgabe, Verhalten
+**3.** System-Prompt schreiben — bei `mode="S"` direkt nach dem Frontmatter, bei `mode="T"` als `## system`-Block
 
 **4.** Bei Variablen: `variables: [var1]` im Header + `{var1}` im `## human`-Block
 
-**5.** Bei Komplexität (mehrere Blöcke): XML-Tags verwenden
+**5.** Bei komplexen System-Prompts mit Rollen, Tools, Workflows oder Budgets: XML-artige Tags wie `<Task>`, `<Instructions>` und `<HardLimits>` verwenden
 
 **6.** Testen im Notebook:
 ```python
@@ -371,15 +381,15 @@ flowchart TD
 ## Häufige Fehler
 
 > [!WARNING] XML-Tags gehören in `## system`, nicht in `## human`<br>
-> XML-Tags in der `## human`-Sektion werden als Nutzer-Text interpretiert und erscheinen wörtlich in der Ausgabe. Strukturierungs-Tags (`<Task>`, `<Instructions>` etc.) immer in `## system` platzieren.
+> XML-Tags in der `## human`-Sektion werden als Nutzer-Text interpretiert und können wörtlich in der Ausgabe erscheinen. Strukturierungs-Tags (`<Task>`, `<Instructions>` etc.) gehören in System-Prompts.
 
 | Fehler                                    | Ursache                                      | Lösung                                    |
 | ----------------------------------------- | -------------------------------------------- | ----------------------------------------- |
 | `KeyError: 'variables'`                   | `variables:` im Header fehlt                 | Immer angeben, auch leer: `variables: []` |
 | Platzhalter wird nicht ersetzt            | `{variable}` im `## system` statt `## human` | Template-Variablen in `## human`          |
-| `## system` fehlt                         | Sektion vergessen                            | `## system` ist Pflicht                   |
-| XML-Tags erscheinen in der Ausgabe        | Tags im falschen Block                       | XML-Tags gehören in `## system`           |
-| `load_prompt()` gibt leeren String zurück | Sektion-Bezeichner falsch geschrieben        | Genau `## system` (zwei `#`, Leerzeichen) |
+| `## system` fehlt bei `mode="T"`           | Sektion vergessen                            | Für Templates mindestens `## system` oder `## human` verwenden |
+| XML-Tags erscheinen in der Ausgabe        | Tags im falschen Block                       | XML-Tags in System-Prompts platzieren     |
+| `KeyError` beim Laden mit `mode="T"`       | Keine gültige Message-Section vorhanden      | Genau `## system`, `## human` oder `## ai` verwenden |
 
 ---
 
@@ -392,8 +402,11 @@ flowchart TD
 | Template mit Variablen | `m10_research_routing_prompt.md` | M10 Routing |
 | Few-Shot | `m04_research_few_shot_prompt.md` | M04 Few-Shot |
 | Komplex mit XML-Tags | `m21_research_lead_prompt.md` | M21 Multi-Agent |
+| Komplex mit XML-Tags | `m22_multi_hop_agent_prompt.md` | M22 Agentic RAG |
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
+
+Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen liegt zusätzlich in [`Agenten/05_prompt/README.md`](../../../../05_prompt/README.md).
 
 ## Abgrenzung zu verwandten Dokumenten
 

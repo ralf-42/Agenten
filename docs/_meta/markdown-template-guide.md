@@ -295,6 +295,18 @@ Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung 
 
 ---
 
+## Querschnittsseiten und Checklisten
+
+Querschnittsseiten wie Checklisten, Review-Hilfen oder Freigabeübersichten verbinden mehrere Themenbereiche. Sie brauchen deshalb eine stärkere Navigationsfunktion als normale Konzeptseiten.
+
+- `has_toc: true` wird gesetzt, wenn mehr als drei Hauptabschnitte vorhanden sind.
+- Die Seite wird im zuständigen Bereichs-`index.md` verlinkt.
+- Berührt die Seite Qualität, Evaluation, Observability, Sicherheit oder Betrieb, wird sie zusätzlich aus dem passenden Qualitäts- oder Betriebsbereich querverlinkt.
+- Am Ende steht eine kurze Tabelle mit weiterführenden Seiten.
+- Der Footer folgt dem Standardformat mit Version, Stand und Kurs.
+
+---
+
 ## Häufige Fehler
 
 ### Widerspruch zwischen Standard und Vorlage
@@ -329,6 +341,7 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 - Aufzählungen nur dort, wo echte Parallelstruktur vorliegt
 - Interne Links zeigen auf `.html`
 - Konzeptdokument enthält Abgrenzungstabelle
+- Querschnittsseite enthält weiterführende Links und ist aus den passenden Index-Seiten erreichbar
 - Callouts haben einen Titel
 - Versionsblock steht am Ende im vorgeschriebenen Format
 

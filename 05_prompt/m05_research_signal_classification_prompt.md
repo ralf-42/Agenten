@@ -1,6 +1,6 @@
 ---
 name: m05_research_signal_classification_prompt
-description: Klassifikation von Research-Signalen fuer Structured Output
+description: Klassifikation von Research-Signalen für Structured Output
 variables: [text]
 ---
 

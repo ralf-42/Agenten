@@ -1,6 +1,6 @@
 ---
 name: m05_research_review_prompt
-description: Strukturierte Bewertung eines Paper-Auszuges fuer Evaluation und Trace-Demo
+description: Strukturierte Bewertung eines Paper-Auszuges für Evaluation und Trace-Demo
 variables: [text]
 ---
 

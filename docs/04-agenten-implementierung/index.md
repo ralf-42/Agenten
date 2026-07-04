@@ -15,6 +15,7 @@ Diese Orientierungsseite beschreibt die fachlichen und technischen Bausteine ein
 | **Wie** wird ein Agent grundlegend entworfen? | [Entwurf]({{ '/04-agenten-implementierung/entwurf/' | relative_url }}) | Architekturen, Prompting, Prompt-Templates und Tool Use. |
 | **Wie** arbeitet ein Agent mit Kontext und Wissen? | [Kontext & Wissen]({{ '/04-agenten-implementierung/kontext-wissen/' | relative_url }}) | Context Engineering, Tokenizing, Chunking, Embeddings und RAG. |
 | **Wie** bleiben Abläufe kontrollierbar? | [Ablauf & Zustand]({{ '/04-agenten-implementierung/ablauf-zustand/' | relative_url }}) | State Management, Checkpointing, Memory und Human-in-the-Loop. |
+| **Was** muss vor der Umsetzung und Freigabe geprüft werden? | [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }}) | Kompakte Prüfliste inklusive Evaluation, Observability, Sicherheit und Betrieb. |
 
 ---
 

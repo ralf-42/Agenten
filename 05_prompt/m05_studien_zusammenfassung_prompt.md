@@ -1,6 +1,6 @@
 ---
 name: m05_studien_zusammenfassung_prompt
-description: Extraktion einer strukturierten Paper- oder Studiennotiz fuer den Meeting- & Research-Briefing-Agent
+description: Extraktion einer strukturierten Paper- oder Studiennotiz für den Meeting- & Research-Briefing-Agent
 variables: [text]
 ---
 

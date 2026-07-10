@@ -113,9 +113,7 @@ agent = create_agent(
     system_prompt="Du bist ein Meeting- & Research-Briefing-Agent. Nutze Tools für Korpusfragen.",
 )
 
-result = agent.invoke({
-    "messages": [{"role": "user", "content": "Prüfe RAG-Evaluation."}]
-})
+result = agent.invoke({"messages": [HumanMessage(content="Prüfe RAG-Evaluation.")]})
 print(result["messages"][-1].content)
 ```
 
@@ -290,12 +288,12 @@ graph = builder.compile(checkpointer=checkpointer)
 config = {"configurable": {"thread_id": "research-pia-rag-01"}}
 
 graph.invoke(
-    {"messages": [("human", "Merke: Thema ist RAG-Evaluation.")]},
+    {"messages": [HumanMessage(content="Merke: Thema ist RAG-Evaluation.")]},
     config=config,
 )
 
 result = graph.invoke(
-    {"messages": [("human", "Was war das Thema?")]},
+    {"messages": [HumanMessage(content="Was war das Thema?")]},
     config=config,
 )
 ```
@@ -565,3 +563,4 @@ def contains_expected(outputs: dict, reference_outputs: dict) -> bool:
 **Version:** 1.0<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
+

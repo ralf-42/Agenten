@@ -1,6 +1,6 @@
 # Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-![LangChain 1.3.0](https://img.shields.io/badge/LangChain-1.3.0-brightgreen) ![LangGraph 1.2.0](https://img.shields.io/badge/LangGraph-1.2.0-brightgreen) ![LangSmith 0.8.3](https://img.shields.io/badge/LangSmith-0.8.3-brightgreen) ![DeepAgents 0.6.8](https://img.shields.io/badge/DeepAgents-0.6.8-brightgreen) ![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07--02-blue) ![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![LangChain >=1.3.13](https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen)](./.claude/config/langchain-patterns.yaml) [![LangGraph >=1.2.4](https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen)](./04_modul/requirements.txt) [![LangSmith >=0.8](https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue)](https://smith.langchain.com) [![DeepAgents optional >=0.6.12](https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen)](./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md) [![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07-blue)](./.claude/config/langchain-patterns.yaml) [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain, LangGraph, LangSmith und agentenbasierte KI-Architekturen.
 
@@ -39,13 +39,14 @@ Agenten/
 ## 🛠️ Technologie-Stack
 
 ### Kernframeworks
-- **LangChain** (1.3.0) - Orchestrierung, Chains, Agents, RAG
-- **LangGraph** (1.2.x) - Zustandsbasierte Multi-Agent-Workflows, State Machines
-- **LangSmith** (0.8.x) - Tracing, Debugging, Evaluations
+- **LangChain** (>=1.3.13) - Orchestrierung, Chains, Agents, RAG
+- **LangGraph** (>=1.2.4) - Zustandsbasierte Multi-Agent-Workflows, State Machines
+- **LangSmith** (>=0.8.0) - Tracing, Debugging, Evaluations
 - **OpenAI API** (>=1.0.0) - gpt-5.4-nano, gpt-5.4-mini, gpt-5.4, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
+- **DeepAgents** (optional, >=0.6.12) - Harness für Planning, Filesystem und Sub-Agenten in M32-M34
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
   - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `WORKER`, ...)
@@ -163,4 +164,4 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 ---
 
 **Letzte Aktualisierung:** Juli 2026     
-**Version:** 5.1     
+**Version:** 5.2     

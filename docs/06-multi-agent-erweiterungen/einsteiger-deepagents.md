@@ -395,6 +395,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 | `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
 | `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
 | `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**) |
+| `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle (**neu in 0.6.12**) |
 
 ```python
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
@@ -413,6 +414,12 @@ pip install deepagents[quickjs]
 ```
 
 > `CodeInterpreterMiddleware` ist als experimentell markiert — API kann sich noch ändern.
+
+`BedrockPromptCachingMiddleware` erfordert das Zusatz-Paket:
+
+```bash
+pip install deepagents[aws]
+```
 
 ---
 
@@ -641,7 +648,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.6<br>
+**Version:** 1.7<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

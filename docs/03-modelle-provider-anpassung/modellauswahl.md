@@ -24,7 +24,7 @@ has_toc: true
 ---
 
 ## Modellrollen im Kurs
-Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Latenz, Kosten, Kontextfenster, Tool-Unterstützung und Modalität zur Aufgabe passen. Im Kurs wird deshalb nicht überall ein einzelnes Modell fest eingetragen, sondern eine Rolle verwendet: Baseline, Router, Worker, Planner, Judge, Coding, Übersetzung oder Embedding.
+Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Latenz, Kosten, Kontextfenster, Tool-Unterstützung und Modalität zur Aufgabe passen. Im Kurs wird deshalb nicht überall ein einzelnes Modell fest eingetragen, sondern eine Rolle verwendet: Baseline, Router, Worker, Planner, Judge, Coding oder Embedding.
 
 Diese Rollen stehen in `genai_lib.model_config.py`. Die Datei ist der technische Kursstandard. Wer ein Notebook liest, soll nicht zuerst konkrete Produktnamen interpretieren müssen, sondern erkennen, welche Aufgabe ein Modell im Agentensystem übernimmt.
 
@@ -39,8 +39,8 @@ Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. F
 | Judge / starker Reasoner | `JUDGE` | `openai:gpt-5.4` | Bewertung, Evaluation, Supervisor, Compliance |
 | Planner | `PLANNER` | `openai:gpt-5.4` | Aufgabenzerlegung, Schrittplanung, Agentic RAG |
 | Hochwertiger Worker | `WORKER_PREMIUM` | `openai:gpt-5.4` | komplexe Synthese, finale Reports |
-| Premium Judge / Planner | `JUDGE_PREMIUM`, `PLANNER_PREMIUM` | `openai:gpt-5.5` | kritische Entscheidungen, maximale Qualität |
-| Übersetzung | `TRANSLATOR_FAST`, `TRANSLATOR`, `TRANSLATOR_PREMIUM` | `openai:gpt-5.4-nano`, `openai:gpt-5.4-mini`, `openai:gpt-5.5` | Rohübersetzung, Kursmaterial, finale Veröffentlichung |
+| Bildgenerierung | `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung über die OpenAI Images API |
+| Audio-Transkription | `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS` | `gpt-4o-mini-transcribe`, `whisper-1` | Transkription, mit Segmenten bei Bedarf Zeitstempel |
 | Embeddings | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
 
 Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Router, Worker, Planner oder Judge ist. Die konkreten Modell-IDs sind Kurskonfiguration, nicht allgemeine Marktberatung. Vor produktiven Projekten muss die aktuelle Provider-Dokumentation geprüft werden, weil Modellverfügbarkeit, Preise und API-Parameter regelmäßig wechseln.
@@ -213,7 +213,7 @@ Die Bewertung von KI-Modellen umfasst verschiedene Aspekte:
 - Elo-System für den direkten Vergleich verschiedener Modelle (ähnlich wie bei Schach-Ratings)
 
 #### KI-basierte Bewertung
-- Einsatz von `JUDGE` oder `JUDGE_PREMIUM` zur Bewertung anderer Modellrollen
+- Einsatz von `JUDGE` zur Bewertung anderer Modellrollen
 - Automatische Erkennung von Fehlinformationen in KI-Antworten
 
 ## Praktische Anwendungsbereiche
@@ -247,7 +247,7 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

@@ -399,6 +399,8 @@ Streaming-Varianten:
 
 Empfehlung: **updates**.
 
+**Tipp für später:** Ab LangGraph v1.2.0 gibt es zusätzlich `stream_events(version="v3")` mit getrennten Kanälen (`run.values`, `run.messages`, `run.lifecycle`, `run.subgraphs`). Für den Einstieg reicht `stream(..., stream_mode=...)` völlig aus.
+
 ---
 
 ## Checkpointing & Sessions
@@ -595,6 +597,7 @@ Diese Konzepte gehören nicht in den ersten Minimalgraph, erklären aber die pro
 |---|---|
 | Persistenter Store und Löschkonzept | Checkpointing speichert Zustand. Sobald Daten dauerhaft gespeichert werden, muss klar sein, was nur zur Session gehört, was langfristig bleibt und wie sensible Daten gelöscht werden. |
 | `ToolRuntime` | Tools können bei Bedarf Laufzeitkontext erhalten, etwa `thread_id`, Store, Stream Writer oder Konfiguration. Für einfache Tools bleibt ein normaler Funktionsparameter aber verständlicher. |
+| Robustheit für Production (v1.2.0) | Node-Timeouts (`timeout=` in `add_node()`), Node-Level Error-Handler (`error_handler=`) und Graceful Shutdown (`RunControl.request_drain()`) sorgen dafür, dass einzelne Nodes nicht den ganzen Graph blockieren oder abstürzen lassen. |
 
 ---
 

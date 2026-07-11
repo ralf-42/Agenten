@@ -1,6 +1,6 @@
-# LangChain Stack (Version 1.3.4+)
-# Updated: Juni 2026 - LangChain v1.3.4, langchain-openai v1.2.2, LangGraph v1.2.4
-langchain>=1.3.4
+# LangChain Stack (Version 1.3.13+)
+# Updated: Juli 2026 - LangChain v1.3.13, langchain-openai v1.2.2, LangGraph v1.2.4
+langchain>=1.3.13
 langchain-core>=1.4.0
 langchain-openai>=1.2.2
 langchain-community>=0.4.2
@@ -17,6 +17,9 @@ langgraph-sdk>=0.4.2
 
 # LangSmith
 langsmith>=0.8.0
+
+# Agent Harness
+deepagents>=0.6.12
 
 # OpenAI
 openai>=2.0.0

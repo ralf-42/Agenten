@@ -9,13 +9,11 @@ Installation (einmalig):
 
 Import im Notebook:
     from genai_lib.model_config import (
-        BASELINE, ROUTER, TRANSLATOR_FAST, TRANSLATOR,
-        WORKER, CODING, TRANSLATOR_PREMIUM,
+        BASELINE, ROUTER,
+        WORKER, CODING,
         JUDGE, PLANNER, WORKER_PREMIUM,
-        JUDGE_PREMIUM, PLANNER_PREMIUM,
-        VISION_FAST, VISION_PREMIUM,
-        IMAGE_GENERATION, IMAGE_GENERATION_PREMIUM, IMAGE_GENERATION_LEGACY,
-        VIDEO_GENERATION, TRANSCRIPTION, TRANSCRIPTION_SEGMENTS,
+        IMAGE_GENERATION,
+        TRANSCRIPTION, TRANSCRIPTION_SEGMENTS,
         EMBEDDINGS,
     )
 
@@ -28,25 +26,15 @@ Verwendung:
     # Qualitätssteuerung über reasoning.effort (nicht temperature):
     llm = init_chat_model(JUDGE, model_kwargs={"reasoning": {"effort": "high"}})
 
-Rollen (Nano → Mini → Standard → Premium):
+Rollen (Nano → Mini → Standard):
     BASELINE           — Baseline / Demo              (gpt-5.4-nano)
     ROUTER             — Router / leichter Reasoner   (gpt-5.4-nano)
-    TRANSLATOR_FAST    — Übersetzer / Rohübersetzung   (gpt-5.4-nano)
-    TRANSLATOR         — Übersetzer / Kursmaterial     (gpt-5.4-mini)
     WORKER             — Worker / Synthese             (gpt-5.4-mini)
     CODING             — Coding-Worker                 (gpt-5.4-mini)
-    TRANSLATOR_PREMIUM — Übersetzer / hochwertig       (gpt-5.5)
     JUDGE              — Judge / starker Reasoner      (gpt-5.4)
     PLANNER            — Planner / Aufgabenzerlegung   (gpt-5.4)
     WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.4)
-    JUDGE_PREMIUM      — Judge / maximale Qualität     (gpt-5.5)
-    PLANNER_PREMIUM    — Planner / maximale Qualität   (gpt-5.5)
-    VISION_FAST        — Bildanalyse                   (gpt-5.4-mini)
-    VISION_PREMIUM     — Multimodale Analyse           (gpt-5.4-mini)
     IMAGE_GENERATION   — Bildgenerierung               (gpt-image-2)
-    IMAGE_GENERATION_PREMIUM — Bildgenerierung high     (gpt-image-2)
-    IMAGE_GENERATION_LEGACY — Bildgenerierung alt       (gpt-image-1)
-    VIDEO_GENERATION   — Videoerzeugung                (sora-2)
     TRANSCRIPTION      — Audio-Transkription           (gpt-4o-mini-transcribe)
     TRANSCRIPTION_SEGMENTS — Zeitstempel/Segmente      (whisper-1)
     EMBEDDINGS         — Embeddings                    (text-embedding-3-small)
@@ -55,9 +43,10 @@ Hinweis: GPT-5.x-Reasoning-Modelle nicht pauschal mit temperature konfigurieren.
 Stattdessen reasoning.effort und text.verbosity verwenden.
 temperature ist nur in bestimmten Konfigurationen mit reasoning.effort="none" erlaubt.
 
-Multimodale Modelle sind eine bewusste Ausnahme von der Textrollen-Logik:
-Bild-, Video- und Audio-Endpunkte werden teils direkt über die OpenAI-API
-verwendet, weil LangChain nicht alle Medien-Endpunkte abbildet.
+Die Medien-Rollen (IMAGE_GENERATION, TRANSCRIPTION, TRANSCRIPTION_SEGMENTS) sind
+Teil der gemeinsamen Rollen-Struktur mit dem GenAI-Kurs, werden in den aktuellen
+Agenten-Notebooks aber nicht verwendet. Diese Modelle würden teils direkt über
+die OpenAI-API angesprochen, weil LangChain nicht alle Medien-Endpunkte abbildet.
 """
 
 # --- Nano-Tier: günstig, schnell, einfache Aufgaben ---
@@ -70,10 +59,6 @@ BASELINE = "openai:gpt-5.4-nano"
 # reasoning.effort="low" reicht für klare Routing-Entscheidungen.
 ROUTER = "openai:gpt-5.4-nano"
 
-# Übersetzer (schnell) — Rohübersetzung, kurze nicht-kritische Texte.
-# reasoning.effort="none" oder "low", text.verbosity="low".
-TRANSLATOR_FAST = "openai:gpt-5.4-nano"
-
 # --- Mini-Tier: ausgewogen, Standard-Workhorse ---
 
 # Worker / Synthese — RAG-Synthese, strukturierte Ausgaben, Code.
@@ -84,18 +69,10 @@ WORKER = "openai:gpt-5.4-mini"
 # reasoning.effort="medium" bis "high" je nach Aufgabe.
 CODING = "openai:gpt-5.4-mini"
 
-# Übersetzer — Kursmaterial, Markdown, Dokumentation.
-# Kein reasoning.effort setzen, wenn das Modell/API-Backend ihn nicht unterstützt.
-TRANSLATOR = "openai:gpt-5.4-mini"
-
-# Übersetzer (hochwertig) — stilistisch anspruchsvoll, finale Veröffentlichung.
-# reasoning.effort="medium", text.verbosity="medium".
-TRANSLATOR_PREMIUM = "openai:gpt-5.5"
-
 # --- Standard-Tier: starke Reasoning-Qualität ---
 
 # Judge / starker Reasoner — Supervisor, Security, Evaluation, Compliance.
-# reasoning.effort="high". Für maximale Qualität: JUDGE_PREMIUM.
+# reasoning.effort="high".
 JUDGE = "openai:gpt-5.4"
 
 # Planner — Aufgabenzerlegung, Schritt-Planung, Agentic RAG.
@@ -106,37 +83,10 @@ PLANNER = "openai:gpt-5.4"
 # reasoning.effort="medium" bis "high".
 WORKER_PREMIUM = "openai:gpt-5.4"
 
-# --- Premium-Tier: maximale Qualität (nur wenn Standard nicht reicht) ---
-
-# Judge (Premium) — kritische Sicherheitsentscheidungen, finale Evaluation.
-# reasoning.effort="high" oder "xhigh".
-JUDGE_PREMIUM = "openai:gpt-5.5"
-
-# Planner (Premium) — hochkomplexe Aufgabenzerlegung, multi-step Planung.
-# reasoning.effort="high".
-PLANNER_PREMIUM = "openai:gpt-5.5"
-
 # --- Multimodal / Medien-Endpunkte ---
-
-# Vision — Bildanalyse über Chat/Vision.
-# Nicht pauschal durch BASELINE ersetzen: Bildinput muss unterstützt werden.
-VISION_FAST = "openai:gpt-5.4-mini"
-
-# Vision (hochwertig) — anspruchsvollere Bild-/Frame-Analyse.
-VISION_PREMIUM = "openai:gpt-5.4-mini"
 
 # Bildgenerierung — direkte OpenAI Images API, daher ohne Provider-Präfix.
 IMAGE_GENERATION = "gpt-image-2"
-
-# Bildgenerierung hochwertig — direkte OpenAI Images API.
-IMAGE_GENERATION_PREMIUM = "gpt-image-2"
-
-# Bildgenerierung Legacy — nur für alte Beispiele oder Vergleichszwecke.
-IMAGE_GENERATION_LEGACY = "gpt-image-1"
-
-# Videoerzeugung — direkte OpenAI Videos API.
-# Vor produktiver Nutzung aktuelle Verfügbarkeit/Deprecation prüfen.
-VIDEO_GENERATION = "sora-2"
 
 # Audio-Transkription — direkte OpenAI Audio API.
 # Für normale Transkription aktueller und genauer als whisper-1.

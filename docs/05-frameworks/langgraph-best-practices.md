@@ -162,6 +162,8 @@ except Exception as exc:
 
 Typischer Fehler: In einer Node wird zu viel Logik gesammelt. Wenn eine Funktion Modellaufruf, Tool-Auswahl, Validierung und Fehlerbehandlung gleichzeitig übernimmt, ist der Graph nur noch optisch modular.
 
+**Robustheit (ab v1.2.0):** `add_node()` akzeptiert `timeout=` (mit `NodeTimeoutError` bei Überschreitung) und `error_handler=` (erhält ein typisiertes `NodeError`, kann per `Command` zu einem Kompensations-Node routen). Damit lassen sich hängende Tool-Calls absichern und Saga-Muster ohne globales Exception-Handling umsetzen.
+
 ## Conditional Routing
 
 Conditional Routing macht Entscheidungen explizit. Statt in einer großen Node mehrere Fälle zu verschachteln, entscheidet eine Routing-Funktion, welcher Pfad als Nächstes ausgeführt wird.
@@ -217,6 +219,8 @@ Für lokale Demos reicht ein In-Memory-Checkpointer. Für produktive Systeme bra
 | Sensible Daten | Persistenz nur mit Lösch- und Zugriffskonzept |
 
 Nicht geeignet, wenn: Checkpointing als Ersatz für gutes State-Design verstanden wird. Persistenz macht unklare Zustände nicht besser, sondern nur langlebiger.
+
+**Graceful Shutdown (ab v1.2.0):** `RunControl.request_drain()` beendet einen Run kontrolliert (z. B. bei Rolling-Deployments); der Graph wirft `GraphDrained` und lässt sich über den letzten Checkpoint nahtlos fortsetzen.
 
 ## Human-in-the-Loop
 
@@ -308,6 +312,8 @@ for event in graph.stream(initial_state, config=config, stream_mode="updates"):
 
 In produktiven Systemen gehört Tracing dazu. LangSmith oder ein vergleichbares Observability-Setup hilft, Graphläufe später zu untersuchen, Regressionen zu finden und Evals aus echten Fehlerfällen abzuleiten.
 
+**`stream_events(version="v3")` (ab v1.2.0):** trennt Events in eigene Kanäle — `run.values`, `run.messages`, `run.lifecycle`, `run.subgraphs` — statt eines gemischten Streams. Besonders bei Multi-Agent-Traces und Chat-UIs entfällt das manuelle Filtern nach Event-Typ.
+
 ## Migration Von LangChain Zu LangGraph
 
 Eine Migration ist sinnvoll, wenn ein bestehender Agent immer mehr Kontrolllogik bekommt: verschachtelte Bedingungen, manuelle Wiederaufnahme, separate Freigabeschritte, komplexe Fehlerbehandlung oder mehrere spezialisierte Rollen.
@@ -370,6 +376,11 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ## Changelog
 
+### Version 1.8 (Juli 2026)
+- `stream_events(version="v3")` mit `run.values`/`run.messages`/`run.lifecycle`/`run.subgraphs` ergänzt.
+- Per-Node-Timeouts und Node-Level Error-Handler (`timeout=`, `error_handler=` in `add_node()`) ergänzt.
+- Graceful Shutdown (`RunControl.request_drain()`, `GraphDrained`) ergänzt.
+
 ### Version 1.7 (Mai 2026)
 - Zielstruktur an die Framework-Best-Practice-Dokumente angeglichen.
 - Quick Start, Production-Checkliste und Troubleshooting ergänzt.
@@ -385,7 +396,7 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ---
 
-**Version:** 1.7<br>
+**Version:** 1.8<br>
 **Stand:** Juli 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

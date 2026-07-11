@@ -63,7 +63,7 @@ Die Bibliothek besteht aus drei Hauptmodulen:
 |-------|-------------|----------------|
 | **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, GitHub-Datei-Download |
 | **multimodal_rag.py** | Multimodales RAG-System (v3.1) | Text- und Bildsuche, Bild-zu-Bild-Suche, Cross-Modal-Retrieval, System-Status |
-| **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, TRANSLATOR, VISION, Medien- und Premium-Rollen, EMBEDDINGS |
+| **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, WORKER_PREMIUM, Medien-Rollen, EMBEDDINGS |
 
 ---
 
@@ -818,7 +818,7 @@ langsmith>=0.1.0
 > Das `model_config`-Modul definiert Modell-IDs als benannte Konstanten nach Rolle. Die Instanziierung erfolgt im Notebook mit `init_chat_model()`, sodass API-Keys bereits gesetzt sind.
 
 ```python
-from genai_lib.model_config import BASELINE, WORKER, JUDGE, TRANSLATOR
+from genai_lib.model_config import BASELINE, WORKER, JUDGE
 ```
 
 ### Konstanten
@@ -829,20 +829,10 @@ from genai_lib.model_config import BASELINE, WORKER, JUDGE, TRANSLATOR
 | `ROUTER` | `gpt-5.4-nano` | Einfache Routing- und Auswahlentscheidungen |
 | `WORKER` | `gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Tool-Agenten |
 | `CODING` | `gpt-5.4-mini` | Code-Generierung, Refactoring, technische Agenten |
-| `TRANSLATOR` | `gpt-5.4-mini` | Kursmaterial, Markdown, Dokumentation |
-| `TRANSLATOR_FAST` | `gpt-5.4-nano` | Rohübersetzung und kurze nicht-kritische Texte |
 | `JUDGE` | `gpt-5.4` | Evaluation, Bewertung, LLM-as-Judge |
 | `PLANNER` | `gpt-5.4` | Aufgabenzerlegung, Supervisor-Logik, Agentic RAG |
 | `WORKER_PREMIUM` | `gpt-5.4` | Komplexe RAG, finale Reports |
-| `JUDGE_PREMIUM` | `gpt-5.5` | Kritische Evaluation und maximale Qualität |
-| `PLANNER_PREMIUM` | `gpt-5.5` | Hochkomplexe Planung |
-| `TRANSLATOR_PREMIUM` | `gpt-5.5` | Stilistisch hochwertige Übersetzungen |
-| `VISION_FAST` | `gpt-5.4-mini` | Bildanalyse in Kursbeispielen |
-| `VISION_PREMIUM` | `gpt-5.4-mini` | Multimodale Analyse |
 | `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung |
-| `IMAGE_GENERATION_PREMIUM` | `gpt-image-2` | Hochwertige Bildgenerierung |
-| `IMAGE_GENERATION_LEGACY` | `gpt-image-1` | Ältere Bildgenerierung, nur für Vergleich oder Altbeispiele |
-| `VIDEO_GENERATION` | `sora-2` | Videoerzeugung |
 | `TRANSCRIPTION` | `gpt-4o-mini-transcribe` | Audio-Transkription |
 | `TRANSCRIPTION_SEGMENTS` | `whisper-1` | Audio-Transkription mit `verbose_json` und Segment-Zeitstempeln |
 | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
@@ -865,7 +855,7 @@ judge_llm = init_chat_model(JUDGE)
 ```
 
 > [!DANGER] Kein temperature bei GPT-5.x<br>
-> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM`, `TRANSLATOR` und die Premium-Rollen basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt. Das gilt nicht automatisch für Medienmodelle wie `IMAGE_GENERATION`, `VIDEO_GENERATION` oder `TRANSCRIPTION`.
+> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING` und `WORKER_PREMIUM` basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt. Das gilt nicht automatisch für Medienmodelle wie `IMAGE_GENERATION` oder `TRANSCRIPTION`.
 
 ---
 

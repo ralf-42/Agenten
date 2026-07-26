@@ -48,7 +48,6 @@ Diese Vorlage gilt für inhaltliche Dokumente in den thematischen Bereichen der 
 layout: default
 title: Titel des Dokuments
 parent: Ressourcen
-nav_order: 7
 description: Prägnanter Beschreibungstext für Navigation und SEO
 has_toc: true
 ---
@@ -108,7 +107,6 @@ Jede Inhaltsseite in `docs/` beginnt mit Frontmatter. Pflichtfelder:
 layout: default
 title: Titel des Dokuments
 parent: Ressourcen
-nav_order: 7
 description: Prägnanter Beschreibungstext für Navigation und SEO
 has_toc: true
 ---
@@ -276,7 +274,6 @@ Kategorie-Seiten wie `concepts.md` oder `frameworks.md` dienen der Orientierung.
 ---
 layout: default
 title: Konzepte
-nav_order: 7
 has_children: true
 description: Theoretische Grundlagen und technische Konzepte für KI-Agenten
 ---

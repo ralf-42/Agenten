@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Qualität & Sicherheit"
-nav_order: 9
+nav_order: 8
 has_children: true
 description: "Evaluation, Observability und Sicherheit für KI-Agenten"
 ---

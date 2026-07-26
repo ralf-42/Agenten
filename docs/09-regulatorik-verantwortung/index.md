@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Regulatorik & Verantwortung"
-nav_order: 11
+nav_order: 10
 has_children: true
 description: "Rahmenbedingungen: EU AI Act, Datenschutz, Ethik und digitale Souveränität"
 ---

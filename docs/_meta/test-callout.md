@@ -17,7 +17,6 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 - Content: "Details siehe Skript: M08 - Embeddings" (in neuer Zeile unter dem Titel)
 
 parent: Ressourcen
-nav_order: 8
 ---
 ## Test 2: Callout mit Custom Title
 
@@ -29,7 +28,6 @@ nav_order: 8
 - Content: "Verwenden Sie immer Embeddings für semantische Suche." (in neuer Zeile)
 
 parent: Ressourcen
-nav_order: 8
 ---
 ## Test 3: Warning Callout
 
@@ -41,7 +39,6 @@ nav_order: 8
 - Content: "Achtung: Diese Funktion ist experimentell und kann sich ändern." (in neuer Zeile)
 
 parent: Ressourcen
-nav_order: 8
 ---
 ## Test 4: Mehrere Callout-Typen
 
@@ -59,7 +56,6 @@ nav_order: 8
 - Content immer in neuer Zeile unter Titel
 
 parent: Ressourcen
-nav_order: 8
 ---
 ## Test 5: Kurzer Text (< 50 Zeichen)
 

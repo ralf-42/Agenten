@@ -42,6 +42,9 @@ Quellenbasis:
 ## Architektur und Orchestrierung
 
 - [ ] Die Architekturklasse ist gewählt: Tool-Calling, Single-Agent, Workflow-Agent, Multi-Agent oder hybrider Ansatz.
+- [ ] **Agent Harness vs. Agent Loop:** Die äußere Kontrollumgebung (Harness: Leitplanken, Veto-Rechte, Timeouts, State-Sicherung) ist klar von der inneren Reasoning-Schleife (Loop) entkoppelt.
+- [ ] **Modell-Routing & Resilienz:** Aufgaben werden nach Komplexität an passende Modelle geroutet (Model Routing); bei Provider-Ausfällen oder Rate Limits greifen Ausweichketten und Circuit Breaker.
+- [ ] **Task Decomposition & Planning:** Komplexe Aufgaben werden vor der Ausführung in klare Teilziele (Sub-Goals / Plan-and-Solve) zerlegt und Fortschritte schrittweise abgearbeitet.
 - [ ] Deterministische Schritte sind als Code, Graph-Knoten oder Workflow modelliert und nicht nur in Prompts beschrieben.
 - [ ] Agentische Freiheit ist nur dort vorgesehen, wo Planung, Auswahl oder flexible Problemlösung wirklich nötig ist.
 - [ ] Rollen, Komponenten und Verantwortlichkeiten sind klar getrennt.
@@ -54,6 +57,7 @@ Quellenbasis:
 - [ ] Der System-Prompt definiert Rolle, Ziel, Grenzen, Arbeitsweise und Eskalationsregeln.
 - [ ] Kritische Regeln stehen priorisiert und eindeutig im Prompt oder besser als Code-Guardrail im System.
 - [ ] Aufgabe, Kontext, Regeln, Beispiele und Ausgabeformat sind klar getrennt.
+- [ ] **Structured Output & Schema-Validierung:** Modellantworten und Ausgaben sind typisiert und werden gegen strikte Schemas (z. B. Pydantic) validiert; bei Parsing-Fehlern greift ein automatischer Korrektur-Retry.
 - [ ] Das Ausgabeformat ist für Weiterverarbeitung strukturiert, zum Beispiel über ein Schema.
 - [ ] Few-Shot-Beispiele werden nur verwendet, wenn sie Verhalten messbar stabilisieren.
 - [ ] Prompts enthalten keine geheimen Informationen, API-Keys oder irrelevanten Kontext.
@@ -64,6 +68,7 @@ Quellenbasis:
 - [ ] Jedes Tool hat einen klaren Namen, eine präzise Beschreibung und ein typisiertes Parameterschema.
 - [ ] Tool-Beschreibungen erklären, wann das Tool verwendet werden soll und wann ausdrücklich nicht.
 - [ ] Tool-Ausgaben sind begrenzt, gefiltert und für den Agenten verständlich.
+- [ ] **Idempotenz & Veto-Sicherheit:** Werkzeuge mit Nebenwirkungen (Schreiben, Senden, Buchen) sind idempotend gestaltet (z. B. Transaktions-IDs, Deduplizierung), damit Fehler-Retries keine ungewollten Mehrfachaktionen auslösen.
 - [ ] Fehlerfälle liefern weiterverarbeitbare Rückmeldungen statt roher Exceptions.
 - [ ] Riskante Tools haben zusätzliche Kontrolle: Validierung, Two-Step-Veto, Freigabe oder Audit.
 - [ ] Der Agent erhält nur die Tools, die er für die aktuelle Aufgabe wirklich braucht.
@@ -73,6 +78,7 @@ Quellenbasis:
 ## Kontext, Wissen und RAG
 
 - [ ] Die Kontextstrategie ist gewählt: Long Context, RAG, CAG, Prompt Caching oder Kombination.
+- [ ] **Context Compaction & Token Budgeting:** Dynamisches Kontext-Management (Message Summarization, Message Pruning, Prompt Caching) hält das Tokenverbrauch-Budget ein und verhindert Token-Overflows sowie hohe Latenzen.
 - [ ] Relevanzklassen sind definiert: kritisch, wichtig, ergänzend, weglassen.
 - [ ] Kontext wird nicht nur gekürzt, sondern nach Nutzen, Aktualität und Risiko priorisiert.
 - [ ] Für RAG ist die Pipeline definiert: Quellen, Chunking, Embeddings, Index, Retrieval, Kontext-Assembly, Generation.
@@ -123,6 +129,7 @@ Quellenbasis:
 ## Evaluation
 
 - [ ] Es gibt ein kleines, repräsentatives Testset mit typischen, schwierigen und negativen Fällen.
+- [ ] **Out-of-Corpus & Refusal-Testing:** Das Testset enthält gezielt unlösbare, unvollständige oder irreführende Anfragen, um zu prüfen, ob der Agent Grenzen einhält, Wissenslücken zugibt oder korrekt ablehnt (Grounding-Check).
 - [ ] Für jeden Testfall sind erwartetes Verhalten, erlaubte Abweichungen und Fehlerkriterien definiert.
 - [ ] Tool-Auswahl wird geprüft: richtiges Tool, richtige Parameter, kein Tool bei unnötiger Nutzung.
 - [ ] RAG wird separat evaluiert: Retrieval-Qualität, Quellenabdeckung, Grounding und Antwortrelevanz.
@@ -141,7 +148,10 @@ Quellenbasis:
 - [ ] State-Änderungen und Checkpoints können inspiziert werden.
 - [ ] Retrieval-Ergebnisse sind sichtbar: Query, Treffer, Scores, Quellen, verwendeter Kontext.
 - [ ] Prompts, Modellversionen und Konfigurationen sind pro Lauf nachvollziehbar.
+- [ ] **Replay- & Trace-Reproduzierbarkeit:** Agentenläufe (Modellversion, Parametersatz, State-History, Tool-Payloads) sind so protokolliert, dass fehlerhafte Schritte für Debugging und Regressionstests lokal exakt nachgestellt (replayed) werden können.
 - [ ] Kosten, Tokenverbrauch und Latenz werden gemessen.
+- [ ] **Token- & Kostenanalyse:** Detaillierte Erfassung von `usage_metadata` pro Aufruf (Input-, Output- und Prompt-Caching-Tokens).
+- [ ] **Budget Gates:** Automatische Kostenkontrollen oder Schwellenwerte schützen vor unkontrolliertem Kostenanstieg und blockieren oder skalieren teure Anfragen herunter.
 - [ ] Fehler werden nicht nur geloggt, sondern nach Ursache und Auswirkung klassifiziert.
 - [ ] Für produktive Systeme gibt es Alerts oder Review-Prozesse für Fehlerraten, Kostenanstieg und Sicherheitsereignisse.
 - [ ] Bei UI-Integration werden relevante Laufereignisse sichtbar gemacht: Text-Streaming, Tool-Start, Tool-Ende, State-Delta, Fehler.
@@ -152,12 +162,15 @@ Quellenbasis:
 - [ ] Berechtigungen sind minimal vergeben und nicht vom Modell frei entscheidbar.
 - [ ] Eingaben, Tool-Parameter und Tool-Ausgaben werden validiert.
 - [ ] Prompt Injection und Datenexfiltration sind als Risiko explizit behandelt.
+- [ ] **Indirect Prompt Injection Protection:** Ausgaben aus externen Tools, Web-Quellen, PDFs oder E-Mails werden vor der Modellübergabe strukturiert isoliert oder gefiltert, um versteckte Steuerbefehle Dritter zu neutralisieren.
 - [ ] Externe Quellen sind nach Vertrauensstufen (hoch/mittel/niedrig) klassifiziert.
 - [ ] Externe Inhalte gelten als nicht vertrauenswürdige Daten, nicht als Anweisungen an den Agenten.
 - [ ] Externe Kommunikation oder Schreibaktionen haben Freigabe, Audit oder Rollback.
 - [ ] Logs und Traces enthalten keine unnötigen personenbezogenen oder vertraulichen Daten.
-- [ ] Rate Limits, Kostenlimits und Timeouts sind definiert.
+- [ ] Rate Limits, Kostenlimits, Budget-Regeln und Timeouts sind definiert.
+- [ ] **Graceful Degradation:** Bei Teilausfällen (z. B. Tool-Fehler, leeres Retrieval, Budget-Limit) bricht das System nicht unkontrolliert ab, sondern liefert eine verständliche Fallback-Antwort oder eine strukturierte Degratisierung.
 - [ ] Der Betrieb hat eine Strategie für Modellwechsel, Tool-Änderungen und Datenaktualisierung.
+- [ ] **Incident Retrospectives & Lernschleife:** Nach Fehlverhalten, Sicherheitsereignissen oder Produktionsausfällen werden Ursachen analysiert und systematisch als neue Guardrails, Testfälle oder Checklistenregeln nachgeführt.
 - [ ] Bekannte Fehler führen zu Regel-, Test- oder Dokumentationsupdates.
 
 ## Abschlussprüfung vor Freigabe

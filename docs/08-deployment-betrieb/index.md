@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Deployment & Betrieb"
-nav_order: 10
+nav_order: 9
 has_children: true
 description: "Vom Prototyp zum betreibbaren Agentensystem"
 ---

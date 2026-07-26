@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Multi-Agent & Erweiterungen"
-nav_order: 8
+nav_order: 7
 has_children: true
 description: "Skalierung: Multi-Agent-Systeme, Protokolle, Skills und spezialisierte Frameworks"
 ---

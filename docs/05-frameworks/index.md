@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frameworks
-nav_order: 7
+nav_order: 11
 has_children: true
 description: "LangChain, LangGraph und LangSmith als Kernframeworks; ChromaDB und Kursbibliothek als Ergänzung"
 ---

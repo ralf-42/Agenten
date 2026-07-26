@@ -1,9 +1,10 @@
 ---
 layout: default
 title: Rechtliches
-nav_order: 13
+nav_order: 11
 has_children: true
-description: "Formale Hinweise: Impressum, Datenschutz der Website und Haftungsausschluss"
+has_toc: false
+description: "Impressum, Datenschutzerklärung und Haftungsausschluss"
 ---
 
 # Rechtliches
@@ -12,10 +13,10 @@ Diese Orientierungsseite enthält die formalen rechtlichen Hinweise zur Website 
 
 | Dokument | Inhalt |
 |---|---|
-| [Impressum]({{ '/11-rechtliches/impressum.html' | relative_url }}) | Anbieterkennzeichnung. |
-| [Datenschutzerklaerung]({{ '/11-rechtliches/datenschutz.html' | relative_url }}) | Datenschutzhinweise zur Website und zu den Materialien. |
-| [Haftungsausschluss]({{ '/11-rechtliches/haftungsausschluss.html' | relative_url }}) | Hinweise zu Inhalten, Links und Nutzung der Materialien. |
+| [Impressum](./impressum.html) | Anbieterkennzeichnung gemäß § 5 DDG |
+| [Datenschutzerklärung](./datenschutz.html) | Datenschutzhinweise gemäß DSGVO |
+| [Haftungsausschluss](./haftungsausschluss.html) | Hinweise zu KI-Inhalten, Links und Nutzung |
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Juli 2026

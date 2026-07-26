@@ -3,7 +3,7 @@ layout: default
 title: Haftungsausschluss
 parent: Rechtliches
 description: Haftungsausschluss und Hinweise zur Nutzung der Kursmaterialien
-nav_order: 3
+nav_exclude: true
 ---
 
 # Haftungsausschluss
@@ -91,5 +91,7 @@ Bitte verwenden Sie in Kursbeispielen keine echten Kunden-, Beschäftigten-, Pat
 
 Sollten einzelne Formulierungen dieses Hinweises unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Regelungen unberührt.
 
-**Stand:** Juli 2026<br>
+---
+
+**Stand:** Juli 2026
 

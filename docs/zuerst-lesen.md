@@ -18,14 +18,15 @@ Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht d
 
 ## Der schnelle Einstieg
 
-Wer neu in das Kursmaterial einsteigt, beginnt mit diesen vier Dokumenten:
+Wer neu in das Kursmaterial einsteigt, beginnt mit diesen fünf Dokumenten:
 
-1. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-2. [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
-3. [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }})
-4. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
+1. [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }})
+2. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
+3. [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
+4. [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }})
+5. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
 
-Diese Reihenfolge klärt zuerst, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
+Diese Reihenfolge zeigt zuerst den Kursverlauf, klärt dann, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
 
 ## Wenn ein konkretes Ziel im Vordergrund steht
 
@@ -51,6 +52,7 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 
 | Dokument | Frage |
 |---|---|
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wie bauen die Module M01-M36 aufeinander auf? |
 | [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Welche Reihenfolge passt zu einem bestimmten Lernziel? |
 | [Orientierung & Entscheidung]({{ '/02-orientierung-entscheidung/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
 | [Agenten-Implementierung]({{ '/04-agenten-implementierung/' | relative_url }}) | Welche Grundlagen brauche ich für Architektur, Prompting, Tool Use und Kontext? |

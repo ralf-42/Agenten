@@ -14,7 +14,7 @@ permalink: /
 ---
 
 > [!TIP] Einstieg in die Dokumentation<br>
-> Für den kürzesten Start zuerst [Zuerst lesen](./zuerst-lesen.html) öffnen. Der ausführliche [Lernpfad]({{ '/lernpfad.html' | relative_url }}) hilft danach bei der gezielten Vertiefung.
+> Für den kürzesten Start zuerst [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) und [Zuerst lesen](./zuerst-lesen.html) öffnen. Der ausführliche [Lernpfad]({{ '/lernpfad.html' | relative_url }}) hilft danach bei der gezielten Vertiefung.
 
 ---
 

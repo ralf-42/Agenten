@@ -3,7 +3,7 @@ layout: default
 title: Datenschutzerklärung
 parent: Rechtliches
 description: Datenschutzerklärung gemäß DSGVO
-nav_order: 2
+nav_exclude: true
 ---
 
 # Datenschutzerklärung
@@ -59,15 +59,15 @@ Das berechtigte Interesse liegt insbesondere darin, Kursmaterialien technisch zu
 
 ## 5. Hosting und externe Dienste
 
-Diese Website wird über GitHub Pages bereitgestellt. Kursmaterialien können außerdem auf Dienste wie GitHub, Google Colab und externe KI-APIs verweisen. Bei der Nutzung dieser Dienste gelten zusätzlich die Datenschutz- und Nutzungsbedingungen der jeweiligen Anbieter.
+Diese Website wird über GitHub Pages bereitgestellt. Zusätzlich können Kursmaterialien auf Dienste wie GitHub, Google Colab und externe KI-APIs verweisen. Bei der Nutzung dieser Dienste gelten jeweils ergänzend die Datenschutz- und Nutzungsbedingungen der jeweiligen Anbieter.
 
 ### GitHub Pages und GitHub Repository
 
 Anbieter ist die GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.
 
-GitHub Pages dient zur technischen Bereitstellung statischer Webseiten und Dateien. Beim Besuch einer GitHub-Pages-Seite kann GitHub insbesondere technische Zugriffsdaten verarbeiten, darunter die IP-Adresse, Datum und Uhrzeit des Zugriffs, abgerufene Seiten oder Dateien sowie weitere technische Informationen. GitHub weist darauf hin, dass beim Besuch von GitHub Pages die IP-Adresse zu Sicherheitszwecken protokolliert wird, unabhängig davon, ob die besuchende Person bei GitHub angemeldet ist.
+GitHub Pages dient zur technischen Bereitstellung statischer Webseiten und Dateien. Beim Besuch einer GitHub-Pages-Seite kann GitHub insbesondere technische Zugriffsdaten verarbeiten, darunter die IP-Adresse, Datum und Uhrzeit des Zugriffs, abgerufene Seiten oder Dateien sowie weitere technische Informationen. GitHub weist außerdem darauf hin, dass beim Besuch von GitHub Pages die IP-Adresse zu Sicherheitszwecken protokolliert wird – unabhängig davon, ob die besuchende Person bei GitHub angemeldet ist.
 
-Wenn Sie GitHub-Funktionen wie Issues, Pull Requests, Diskussionen, Stars, Forks oder Kommentare nutzen, können Ihre Beiträge, Ihr GitHub-Benutzername, Profilinformationen und Zeitstempel öffentlich sichtbar sein. Bei Code-Beiträgen können außerdem Name und E-Mail-Adresse aus Ihrer Git-Konfiguration dauerhaft im Git-Verlauf gespeichert werden.
+Wenn Sie GitHub-Funktionen wie Issues, Pull Requests, Diskussionen, Stars, Forks oder Kommentare nutzen, können Ihre Beiträge, Ihr GitHub-Benutzername, Profilinformationen und Zeitstempel öffentlich sichtbar sein. Bei Code-Beiträgen können zudem Name und E-Mail-Adresse aus Ihrer Git-Konfiguration dauerhaft im Git-Verlauf gespeichert werden.
 
 Weitere Informationen:
 
@@ -78,9 +78,9 @@ Weitere Informationen:
 
 Einige Kursnotebooks können in Google Colab ausgeführt werden. Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
 
-Bei der Nutzung von Google Colab können personenbezogene Daten und technische Nutzungsdaten durch Google verarbeitet werden, zum Beispiel IP-Adresse, Geräte- und Browserinformationen, Nutzungsverhalten, Notebook-Inhalte, Ausführungsdaten und Kontoangaben. Wenn Sie Colab nutzen, erfolgt dies über Ihr eigenes Google-Konto und nach den für dieses Konto geltenden Bedingungen.
+Bei der Nutzung von Google Colab können personenbezogene Daten und technische Nutzungsdaten durch Google verarbeitet werden. Dazu gehören zum Beispiel IP-Adresse, Geräte- und Browserinformationen, Nutzungsverhalten, Notebook-Inhalte, Ausführungsdaten und Kontoangaben. Wenn Sie Colab nutzen, erfolgt dies über Ihr eigenes Google-Konto und nach den für dieses Konto geltenden Bedingungen.
 
-Bitte speichern Sie API-Keys, Passwörter und andere Zugangsdaten nur in dafür vorgesehenen Secret- oder Umgebungsvariablen-Funktionen und nicht im Notebook-Code. Committen oder veröffentlichen Sie keine Zugangsdaten.
+Bitte speichern Sie API-Keys, Passwörter und andere Zugangsdaten nur in dafür vorgesehenen Secret- oder Umgebungsvariablen-Funktionen und nicht im Notebook-Code. Bitte committen oder veröffentlichen Sie keine Zugangsdaten.
 
 Weitere Informationen:
 
@@ -89,9 +89,9 @@ Weitere Informationen:
 
 ### Externe KI-APIs und Plattformen
 
-Kursmaterialien können Beispiele für externe KI-Dienste und APIs enthalten, zum Beispiel OpenAI, Anthropic, Google, Mistral, LangSmith oder andere Anbieter. Wenn Sie solche Dienste mit eigenen Konten oder API-Keys nutzen, werden Ihre Eingaben, Prompts, Dateien, Metadaten, API-Anfragen und erzeugten Ausgaben nach den Bedingungen des jeweiligen Anbieters verarbeitet.
+Kursmaterialien können Beispiele für externe KI-Dienste und APIs enthalten, zum Beispiel OpenAI, Anthropic, Google, Mistral, LangSmith oder andere Anbieter. Wenn Sie solche Dienste mit eigenen Konten oder API-Keys nutzen, werden Ihre Eingaben, Prompts, Dateien, Metadaten, API-Anfragen sowie erzeugte Ausgaben nach den Bedingungen des jeweiligen Anbieters verarbeitet.
 
-Der Website-Betreiber hat keinen Zugriff auf Ihre API-Keys oder auf die Daten, die Sie direkt an externe Anbieter übermitteln, sofern Sie diese nicht ausdrücklich mit ihm teilen. Die Nutzung externer KI-Dienste ist, soweit nicht ausdrücklich anders vereinbart, freiwillig.
+Der Website-Betreiber hat dabei keinen Zugriff auf Ihre API-Keys oder auf die Daten, die Sie direkt an externe Anbieter übermitteln – sofern Sie diese nicht ausdrücklich mit ihm teilen. Die Nutzung externer KI-Dienste ist, soweit nicht ausdrücklich anders vereinbart, freiwillig.
 
 Wichtig:
 
@@ -109,13 +109,13 @@ Beispiele für Anbieterinformationen:
 
 ### Google Analytics, Cookies und Tracking
 
-Auf dieser GitHub-Pages-Website ist nach aktuellem Stand kein Google Analytics aktiviert und es werden durch den Seitenbetreiber keine eigenen Tracking-Cookies gesetzt. Falls künftig Analyse-, Tracking- oder Einbettungsdienste aktiviert werden, wird diese Datenschutzerklärung entsprechend aktualisiert.
+Auf dieser GitHub-Pages-Website ist nach aktuellem Stand kein Google Analytics aktiviert. Außerdem werden durch den Seitenbetreiber keine eigenen Tracking-Cookies gesetzt. Falls künftig Analyse-, Tracking- oder Einbettungsdienste aktiviert werden, wird diese Datenschutzerklärung entsprechend aktualisiert.
 
 ## 6. Drittlandübermittlung
 
-Bei der Nutzung von GitHub, Google, OpenAI, Anthropic, Mistral oder anderen externen Diensten kann eine Verarbeitung personenbezogener Daten außerhalb der Europäischen Union bzw. des Europäischen Wirtschaftsraums, insbesondere in den USA oder anderen Drittländern, nicht ausgeschlossen werden.
+Bei der Nutzung von GitHub, Google, OpenAI, Anthropic, Mistral oder anderen externen Diensten kann eine Verarbeitung personenbezogener Daten außerhalb der Europäischen Union beziehungsweise des Europäischen Wirtschaftsraums, insbesondere in den USA oder anderen Drittländern, nicht ausgeschlossen werden.
 
-Die Anbieter stützen solche Übermittlungen nach eigenen Angaben auf geeignete Garantien, zum Beispiel Angemessenheitsbeschlüsse, Standardvertragsklauseln oder weitere rechtliche Mechanismen. Bitte beachten Sie, dass bei der Nutzung externer Dienste stets die Datenschutzbedingungen des jeweiligen Anbieters gelten.
+Die Anbieter stützen solche Übermittlungen nach eigenen Angaben auf geeignete Garantien, zum Beispiel Angemessenheitsbeschlüsse, Standardvertragsklauseln oder weitere rechtliche Mechanismen. Bitte beachten Sie: Bei der Nutzung externer Dienste gelten stets die Datenschutzbedingungen des jeweiligen Anbieters.
 
 ## 7. Speicherdauer
 
@@ -164,8 +164,8 @@ Bitte schützen Sie eigene Zugangsdaten, API-Keys und Kursdateien sorgfältig. V
 
 Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Juli 2026.
 
-Durch die Weiterentwicklung der Website, der Kursmaterialien oder aufgrund geänderter gesetzlicher oder behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf dieser Website unter `{{ '/11-rechtliches/datenschutz.html' | relative_url }}` abgerufen werden.
+Durch die Weiterentwicklung der Website, der Kursmaterialien oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf dieser Website unter `./datenschutz.html` abgerufen werden.
 
-**Stand:** Juli 2026<br>
+---
 
-
+**Stand:** Juli 2026

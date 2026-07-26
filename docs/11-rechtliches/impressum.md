@@ -3,7 +3,7 @@ layout: default
 title: Impressum
 parent: Rechtliches
 description: Impressum und rechtliche Angaben gemäß § 5 DDG
-nav_order: 1
+nav_exclude: true
 ---
 
 # Impressum
@@ -51,5 +51,8 @@ Soweit für einzelne Inhalte, Quellcode, Notebooks, Materialien oder Dateien ein
 
 Soweit Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet und Inhalte Dritter nach Möglichkeit als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden betroffene Inhalte entfernt.
 
-**Stand:** Juli 2026<br>
+---
+
+**Stand:** Juli 2026
+
 

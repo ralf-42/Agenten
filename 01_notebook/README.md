@@ -2,9 +2,9 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **35 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
+Dieses Verzeichnis enthält aktuell **36 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
 
-Die Nummerierung reicht von M01 bis M36, ist aber nicht lückenlos: **M25** ist als Reserveplatz dokumentiert, **M29** ist derzeit nicht belegt, und **M30** liegt in zwei Varianten vor (`M30_MCP_Local.ipynb` und `M30_MCP_HuggingFace.ipynb`). Diese Lücken sind bewusst und dienen als Platzhalter für spätere Erweiterungen.
+Die Nummerierung reicht von M01 bis M36, ist aber nicht lückenlos: **M29** ist derzeit nicht belegt, und **M30** liegt in zwei Varianten vor (`M30_MCP_Local.ipynb` und `M30_MCP_HuggingFace.ipynb`). Die M29-Lücke ist bewusst und dient als Platzhalter für spätere Erweiterungen.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
@@ -20,7 +20,7 @@ Die Nummerierung reicht von M01 bis M36, ist aber nicht lückenlos: **M25** ist 
 
 ---
 
-Der rote Faden der Pflichtmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M24 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security und Evaluation auf dasselbe Zielsystem hin.
+Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M25 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing und Kostenkontrolle auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M03)
 
@@ -87,7 +87,7 @@ Der rote Faden der Pflichtmodule ist ein **Meeting- & Research-Briefing-Agent**.
 | M22 | `M22_Agentic_RAG.ipynb` | Agentic RAG mit Retrieval-Budget, Grounding und OOC-Stopp | 🟡 Empfohlen |
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🟡 Empfohlen |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, RAGAS-Live-Lauf | 🟡 Empfohlen |
-| M25 | — | Reserveplatz | ⬜ |
+| M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🟡 Empfohlen |
 | M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Research-Briefing-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |

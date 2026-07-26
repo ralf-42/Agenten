@@ -99,6 +99,7 @@ Agenten/
 | M22   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
 | M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
 | M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
+| M25   | Model Routing & Cost Control          | 🟡 Empfohlen | ✅      |
 | M26   | Integration Pipeline                  | 🔵 Optional  | ✅      |
 | M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |

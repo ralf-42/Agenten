@@ -101,31 +101,31 @@ Agenten/
 
 ### Block 6: Qualität und Betriebsvorbereitung (M23–M26)
 
-| Modul | Thema                                 | Priorität    | Status |
-| ----- | ------------------------------------- | ------------ | ------ |
-| M23   | Agentic RAG                           | 🟡 Empfohlen | ✅      |
-| M24   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
-| M25   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
-| M26   | Model Routing & Cost Control          | 🟡 Empfohlen | ✅      |
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M23 | Agentic RAG | Retrieval-Budget, Grounding und Out-of-Corpus-Stopp |
+| M24 | Agent Security & Best Practices | Prompt Injection, Tool-Gating, Audit-Log und PII-Redaktion |
+| M25 | Agent Evaluation & Testing | Reproduzierbare Evaluation, Regression und RAGAS-Live-Lauf |
+| M26 | Model Routing & Cost Control | Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate |
 
 ### Block 7: Integration und Produktion (M27–M40)
 
-| Modul | Thema                                 | Priorität    | Status |
-| ----- | ------------------------------------- | ------------ | ------ |
-| M27   | Integration Pipeline                  | 🔵 Optional  | ✅      |
-| M28   | Projekt-Templates & MVP               | 🔵 Optional  | ✅      |
-| M29   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
-| M30   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
-| M31   | MCP Local                             | 🔵 Optional  | ✅      |
-| M32   | MCP HuggingFace                       | 🔵 Optional  | ✅      |
-| M33   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
-| M34   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
-| M35   | DeepAgents: Parameter, Sandbox & Einordnung | 🔵 Optional  | ✅      |
-| M36   | DeepAgents Skill: Meeting-Briefing    | 🔵 Optional  | ✅      |
-| M37   | DeepAgent Multi-Skill                 | 🔵 Optional  | ✅      |
-| M38   | Production Deployment                 | 🔵 Optional  | ✅      |
-| M39   | Production: API & Monitoring          | 🔵 Optional  | ✅      |
-| M40   | Capstone                              | 🔵 Optional  | ✅      |
+| Modul | Thema | Beschreibung |
+|-------|-------|-------------|
+| M27 | Integration Pipeline | Meeting- & Research-Briefing-System als End-to-End-Pipeline |
+| M28 | Projekt-Templates & MVP | Eigene Templates A/B/C und MVP-Definition |
+| M29 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
+| M30 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
+| M31 | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
+| M32 | MCP HuggingFace | Hugging-Face-Integration über MCP |
+| M33 | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
+| M34 | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
+| M35 | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+| M36 | DeepAgents Skill: Meeting-Briefing | Meeting-Briefing als Skill mit DeepAgents |
+| M37 | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| M38 | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
+| M39 | Production: API & Monitoring | FastAPI-Endpoints, Production Monitoring und Kursrückblick |
+| M40 | Capstone | Eigenes Agentensystem als Abschlussprojekt |
 
 ## 🔑 Voraussetzungen
 
@@ -181,4 +181,4 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 ---
 
 **Letzte Aktualisierung:** Juli 2026     
-**Version:** 5.4     
+**Version:** 5.5     

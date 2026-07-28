@@ -109,7 +109,7 @@ timeline
 
 ## Modulübersicht
 
-Die Nummerierung reicht lückenlos von M01 bis M40. Frühere a/b-Teilmodule wurden in die laufende Modulnummerierung überführt.
+
 
 | Modul | Block | Inhalt | Schwerpunkt |
 |:---:|---|---|---|
@@ -187,6 +187,11 @@ Die Grenze bleibt wichtig: Die KI ersetzt nicht das eigene Verständnis. Der Sch
 ## Kompetenzillusion vermeiden
 
 Agenten-Demos können schnell überzeugend wirken, obwohl wichtige Kontrollpunkte fehlen. Gerade bei mehrstufigen Systemen entsteht leicht der Eindruck, der Agent habe verstanden, geplant und geprüft, obwohl er nur plausibel formuliert.
+
+
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/kompetenzillusion.png" alt="Kompetenzillusion beim Lernen mit KI" width="700">
+<p><small>KI-generiertes Bild</small></p>
+
 
 Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 

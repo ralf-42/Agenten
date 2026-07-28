@@ -8,6 +8,19 @@ has_toc: true
 ---
 
 # Hugging Face MCP-Server einrichten und aus Python aufrufen
+{: .no_toc }
+
+> **Anleitung: MCP-fähigen Hugging-Face-Space erstellen und aus Python aufrufen**
+
+---
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 Ein MCP-Server ist wie eine genormte Steckdose für Agenten-Tools: Der Agent muss nicht wissen, ob dahinter Python, eine API oder ein Space läuft. Er fragt den Server, welche Tools verfügbar sind, und ruft sie mit strukturierten Parametern auf.
 
@@ -39,10 +52,10 @@ Der Server stellt drei historische Crypto-Tools bereit:
 | Tool | Parameter | Aufgabe |
 |---|---|---|
 | `caesar` | `text`, `shift`, `decrypt` | Caesar-Substitution mit festem Buchstaben-Shift |
-| `vigenere` | `text`, `key`, `decrypt` | Vigenere-Chiffre mit Schluesselwort |
+| `vigenere` | `text`, `key`, `decrypt` | Vigenere-Chiffre mit Schlüsselwort |
 | `scytale` | `text`, `rails`, `decrypt` | Transpositions-Chiffre nach dem Scytale-Prinzip |
 
-Alle drei Tools sind didaktische Beispiele. Sie sind nicht fuer echte Verschluesselung geeignet.
+Alle drei Tools sind didaktische Beispiele. Sie sind nicht für echte Verschlüsselung geeignet.
 
 ## Voraussetzungen
 
@@ -124,7 +137,7 @@ demo = gr.Interface(
 demo.launch(mcp_server=True)
 ```
 
-Nach dem Start stellt Gradio das Tool zusaetzlich ueber MCP bereit. Der typische Endpunkt lautet:
+Nach dem Start stellt Gradio das Tool zusätzlich über MCP bereit. Der typische Endpunkt lautet:
 
 ```text
 https://<user>-<space-name>.hf.space/mcp
@@ -283,9 +296,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-## 8. HF-Space aufwecken und Status pruefen
+## 8. HF-Space aufwecken und Status prüfen
 
-Hugging-Face-Spaces koennen nach Inaktivitaet schlafen. Der erste Request dauert dann laenger. Fuer das M32-Beispiel kann der Status so geprueft werden:
+Hugging-Face-Spaces können nach Inaktivität schlafen. Der erste Request dauert dann länger. Für das M32-Beispiel kann der Status so geprüft werden:
 
 ```python
 import os
@@ -328,13 +341,13 @@ print("MCP-Endpunkt:", MCP_URL)
 
 ## 9. MCP Inspector nutzen
 
-Der MCP Inspector ist hilfreich, wenn man pruefen will, welche Tools ein Server wirklich anbietet.
+Der MCP Inspector ist hilfreich, wenn man prüfen will, welche Tools ein Server wirklich anbietet.
 
 ```bash
 npx @modelcontextprotocol/inspector https://ralf42-simple-mcp.hf.space/mcp --transport http
 ```
 
-Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der Server grundsaetzlich erreichbar. Danach liegen Fehler meist im Python-Client, in der Authentifizierung oder im Agentenprompt.
+Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der Server grundsätzlich erreichbar. Danach liegen Fehler meist im Python-Client, in der Authentifizierung oder im Agentenprompt.
 
 ## Typische Stolperfallen
 
@@ -360,3 +373,17 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 - [Hugging Face Docs: Spaces as MCP servers](https://huggingface.co/docs/hub/spaces-mcp-servers)
 - [LangChain Docs: Model Context Protocol](https://docs.langchain.com/oss/python/langchain/mcp)
 - [LangChain Reference: MultiServerMCPClient](https://reference.langchain.com/python/langchain-mcp-adapters/client/MultiServerMCPClient)
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegen `M31_MCP_Local.ipynb` und `M32_MCP_HuggingFace.ipynb` in der Modulprogression? |
+| [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | Wie ordnet sich MCP gegenüber A2A, ACP und AG-UI ein? |
+| [Code Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Welche LangChain- und Python-Konventionen gelten im Kurs? |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** Juli 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

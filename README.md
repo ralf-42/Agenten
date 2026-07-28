@@ -1,4 +1,4 @@
-# Multi-Agent-Systeme mit LangChain, LangGraph & LangSmith
+# Agent-Systeme mit LangChain, LangGraph & LangSmith
 
 [![LangChain >=1.3.13](https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen)](./.claude/config/langchain-patterns.yaml) [![LangGraph >=1.2.4](https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen)](./04_modul/requirements.txt) [![LangSmith >=0.8](https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue)](https://smith.langchain.com) [![DeepAgents optional >=0.6.12](https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen)](./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md) [![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07-blue)](./.claude/config/langchain-patterns.yaml) [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 

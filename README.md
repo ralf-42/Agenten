@@ -1,6 +1,15 @@
 # Agent-Systeme mit LangChain, LangGraph & LangSmith
 
-[![LangChain >=1.3.13](https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen)](./.claude/config/langchain-patterns.yaml)  [![LangGraph >=1.2.4](https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen)](./04_modul/requirements.txt)  [![LangSmith >=0.8](https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue)](https://smith.langchain.com)  [![DeepAgents optional >=0.6.12](https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen)](./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md)  [![Last Audit](https://img.shields.io/badge/Last%20Audit-2026--07-blue)](./.claude/config/langchain-patterns.yaml)   [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+<table>
+  <tr>
+    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen" alt="LangChain &gt;=1.3.13"></a></td>
+    <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen" alt="LangGraph &gt;=1.2.4"></a></td>
+    <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue" alt="LangSmith &gt;=0.8"></a></td>
+    <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen" alt="DeepAgents optional &gt;=0.6.12"></a></td>
+    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/Last%20Audit-2026--07-blue" alt="Last Audit 2026-07"></a></td>
+    <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
+  </tr>
+</table>
 
 Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus auf LangChain, LangGraph, LangSmith und agentenbasierte KI-Architekturen.
 

@@ -109,7 +109,7 @@ timeline
 
 ## Modulübersicht
 
-Die Nummerierung reicht von M01 bis M36. M29 ist derzeit nicht belegt; M30 liegt in zwei Varianten vor: lokal und HuggingFace-basiert.
+Die Nummerierung reicht von M01 bis M36. M29 ist derzeit nicht belegt; M30 liegt in zwei Varianten vor: lokal und HuggingFace-basiert. M10, M26, M32 und M35 liegen je in zwei aufeinander aufbauenden Teil-Notebooks (a/b) vor.
 
 | Modul | Block | Inhalt | Schwerpunkt |
 |:---:|---|---|---|
@@ -122,7 +122,8 @@ Die Nummerierung reicht von M01 bis M36. M29 ist derzeit nicht belegt; M30 liegt
 | M07 | Strukturierte Agenten | LCEL Chains | Kontrollierte Teilketten und Übergang zu LangGraph |
 | M08 | Kontrollierte Workflows | Warum LangGraph? | Grenzen einfacher Agents, expliziter State |
 | M09 | Kontrollierte Workflows | StateGraph Basics | Nodes, Edges, State und Verbesserungsschleifen |
-| M10 | Kontrollierte Workflows | Conditional Routing & Tool Loop | Routing, Tool Loop, Security Gate |
+| M10a | Kontrollierte Workflows | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics |
+| M10b | Kontrollierte Workflows | Tool-Loop | Tool-Loop, Tool-Steuerung im Graph |
 | M11 | Wissensbasierte Agenten | RAG-Konzepte & Embeddings | Korpus, Embeddings, Chunking |
 | M12 | Wissensbasierte Agenten | ChromaDB Indexing | Vektordatenbank, Indexierung, Abfrage |
 | M13 | Wissensbasierte Agenten | RAG Chain mit LangChain | Retriever, Quellenbindung, Antwortkette |
@@ -138,15 +139,18 @@ Die Nummerierung reicht von M01 bis M36. M29 ist derzeit nicht belegt; M30 liegt
 | M23 | Qualität und Betriebsvorbereitung | Agent Security Best Practices | Prompt Injection, Tool-Gating, Audit |
 | M24 | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing | Tests, Regression, RAGAS-Live-Lauf |
 | M25 | Qualität und Betriebsvorbereitung | Model Routing & Cost Control | Fallback, Circuit Breaker, Budget Gate |
-| M26 | Integration und Produktion | Integration Pipeline | Meeting- & Research-Briefing-System |
+| M26a | Integration und Produktion | Integration Pipeline | Meeting- & Research-Briefing-System als E2E-Pipeline |
+| M26b | Integration und Produktion | Projekt-Templates & MVP | Eigene Templates A/B/C, MVP-Definition |
 | M27 | Integration und Produktion | Advanced RAG Pipeline Patterns | Self-RAG, Reranking, CRAG |
 | M28 | Integration und Produktion | Gradio UI für Agenten | Chat UI, Streaming, HITL-UI |
 | M30 | Integration und Produktion | MCP Local / HuggingFace | Standardisierte Tool-Integration |
 | M31 | Integration und Produktion | Agent Skill Compliance | Skill-Struktur, Guardrails, Mixed Models |
-| M32 | Integration und Produktion | DeepAgents Harness | Planning, Sub-Agenten, Filesystem-Harness |
+| M32a | Integration und Produktion | DeepAgents Harness | Planning, Tools, Sub-Agenten (Kern) |
+| M32b | Integration und Produktion | DeepAgents: Parameter & Einordnung | Weitere Parameter, Sandbox, Vergleich zu LangGraph |
 | M33 | Integration und Produktion | DeepAgents Skill Meeting Briefing | Meeting-Briefing als Skill |
 | M34 | Integration und Produktion | DeepAgent Multi-Skill | Multi-Skill-Routing und Progressive Disclosure |
-| M35 | Integration und Produktion | Production Deployment | FastAPI, Docker, Monitoring |
+| M35a | Integration und Produktion | Production Deployment | Notebook → Production, Modell-Konfig, Docker |
+| M35b | Integration und Produktion | Production: API & Monitoring | FastAPI, Monitoring, Kursrückblick |
 | M36 | Integration und Produktion | Capstone | Eigenes Agentensystem als Abschlussprojekt |
 
 ## Vorbereitung

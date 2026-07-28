@@ -3,11 +3,13 @@ briefing_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Resea
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (PDF-Laden, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
-damit M22/M26/M27/M35 dieselbe Kette wiederverwenden statt sie zu duplizieren.
+damit M26/M35 dieselbe Kette wiederverwenden statt sie zu duplizieren.
 
-M12/M13/M14 bleiben davon unberührt und bauen die Kette weiterhin Schritt für
-Schritt selbst als Inline-Code — dieses Modul bündelt nur den bereits in M14
-final genutzten Stand für die nachfolgenden Module.
+M12/M13/M14 bleiben didaktisch davon unberührt und bauen die Kette weiterhin
+Schritt für Schritt selbst als Inline-Code — dieses Modul bündelt nur den
+bereits in M14 final genutzten Stand für die nachfolgenden Module. M22 nutzt
+bewusst einen synthetischen In-Memory-Datensatz, M27 eine isolierte
+Experiment-Collection mit anderer Chunk-Granularität.
 
 Nur für Google Colab: Die produktive Collection liegt auf Google Drive
 (Agenten/02_daten/05_sonstiges/chroma_briefing). Vor dem ersten Zugriff muss

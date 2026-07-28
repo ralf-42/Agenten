@@ -70,7 +70,8 @@ Agenten/
 |-------|-------|-------------|
 | M08 | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
 | M09 | StateGraph Basics | State, Nodes, Edges, compile() |
-| M10 | Conditional Routing & Tool-Loop (+ Security) | Routing-Funktionen, Security-Basics integriert |
+| M10a | Conditional Routing & Qualitäts-Gate | Routing-Funktionen, Security-Basics integriert |
+| M10b | Tool-Loop | Tool-Loop, Tool-Steuerung im Graph |
 
 ### Block 3: Agenten mit Wissen / RAG (M11–M15)
 | Modul | Thema | Beschreibung |
@@ -100,16 +101,19 @@ Agenten/
 | M23   | Agent Security & Best Practices       | 🟡 Empfohlen | ✅      |
 | M24   | Agent Evaluation & Testing            | 🟡 Empfohlen | ✅      |
 | M25   | Model Routing & Cost Control          | 🟡 Empfohlen | ✅      |
-| M26   | Integration Pipeline                  | 🔵 Optional  | ✅      |
+| M26a  | Integration Pipeline                  | 🔵 Optional  | ✅      |
+| M26b  | Projekt-Templates & MVP               | 🔵 Optional  | ✅      |
 | M27   | Advanced RAG – Pipeline-Patterns      | 🔵 Optional  | ✅      |
 | M28   | Gradio UI für Agenten                 | 🔵 Optional  | ✅      |
 | M30a  | MCP Local                             | 🔵 Optional  | ✅      |
 | M30b  | MCP HuggingFace                       | 🔵 Optional  | ✅      |
 | M31   | Agent Skill – Compliance              | 🔵 Optional  | ✅      |
-| M32   | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
+| M32a  | DeepAgents: Autonomes Harness-Pattern | 🔵 Optional  | ✅      |
+| M32b  | DeepAgents: Parameter, Sandbox & Einordnung | 🔵 Optional  | ✅      |
 | M33   | DeepAgents Skill: Meeting-Briefing    | 🔵 Optional  | ✅      |
 | M34   | DeepAgent Multi-Skill                 | 🔵 Optional  | ✅      |
-| M35   | Production Deployment                 | 🔵 Optional  | ✅      |
+| M35a  | Production Deployment                 | 🔵 Optional  | ✅      |
+| M35b  | Production: API & Monitoring          | 🔵 Optional  | ✅      |
 | M36   | Capstone                              | 🔵 Optional  | ✅      |
 
 ## 🔑 Voraussetzungen

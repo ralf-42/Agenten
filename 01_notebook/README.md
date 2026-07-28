@@ -2,9 +2,9 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **36 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
+Dieses Verzeichnis enthält aktuell **40 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
 
-Die Nummerierung reicht von M01 bis M36, ist aber nicht lückenlos: **M29** ist derzeit nicht belegt, und **M30** liegt in zwei Varianten vor (`M30_MCP_Local.ipynb` und `M30_MCP_HuggingFace.ipynb`). Die M29-Lücke ist bewusst und dient als Platzhalter für spätere Erweiterungen.
+Die Nummerierung reicht von M01 bis M36, ist aber nicht lückenlos: **M29** ist derzeit nicht belegt. Fünf Module liegen in zwei Teil-Notebooks vor: **M10** (`M10a`/`M10b`), **M26** (`M26a`/`M26b`), **M30** (`M30a`/`M30b`, inhaltlich unabhängige Varianten), **M32** (`M32a`/`M32b`) und **M35** (`M35a`/`M35b`) — bei M10/M26/M32/M35 baut Teil b jeweils auf Teil a auf. Die M29-Lücke ist bewusst und dient als Platzhalter für spätere Erweiterungen.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
@@ -49,7 +49,8 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 |-------|-------|--------|------|
 | M08 | `M08_Warum_LangGraph.ipynb` | Warum der Meeting- & Research-Briefing-Agent kontrollierten State braucht | 🟢 Pflicht |
 | M09 | `M09_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Pflicht |
-| M10 | `M10_Conditional_Routing_Tool_Loop.ipynb` | Briefing-Routing, Tool-Loop, Security-Gate | 🟢 Pflicht |
+| M10a | `M10a_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics | 🟢 Pflicht |
+| M10b | `M10b_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Pflicht |
 
 ---
 
@@ -88,19 +89,22 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🟡 Empfohlen |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, RAGAS-Live-Lauf | 🟡 Empfohlen |
 | M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🟡 Empfohlen |
-| M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Research-Briefing-System, Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
+| M26a | `M26a_Integration_Pipeline.ipynb` | Integration: Meeting- & Research-Briefing-System als End-to-End-Pipeline | 🔵 Optional |
+| M26b | `M26b_Projekt_Templates.ipynb` | Eigene Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
 | M27 | `M27_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M28 | `M28_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M30a | `M30_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🔵 Optional |
 | M30b | `M30_MCP_HuggingFace.ipynb` | MCP mit HuggingFace-Integration | 🔵 Optional |
 | M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
-| M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Sub-Agent Spawning, Filesystem-Harness | 🔵 Optional |
+| M32a | `M32a_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🔵 Optional |
+| M32b | `M32b_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🔵 Optional |
 | M33 | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
 | M34 | `M34_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
-| M35 | `M35_Production_Deployment.ipynb` | Docker, FastAPI, Monitoring | 🔵 Optional |
+| M35a | `M35a_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🔵 Optional |
+| M35b | `M35b_API_Monitoring.ipynb` | FastAPI-Endpoints, Production Monitoring, Kursrückblick | 🔵 Optional |
 | M36 | `M36_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
 
 
-**Version:** 2.0    
+**Version:** 2.1    
 **Stand:** Juli 2026    
 **Kursplan-Referenz:** v5.0    

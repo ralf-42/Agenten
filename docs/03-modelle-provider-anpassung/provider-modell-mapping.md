@@ -49,6 +49,7 @@ Für den Kurs sind vor allem diese Modellrollen relevant:
 | **Judge / starker Reasoner**        | Bewertung, Policy-Checks, Supervisor-Entscheidungen     |
 | **Worker / Synthese**               | hochwertige Text-, Code- oder RAG-Ausgabe               |
 | **Worker / Synthese (hochwertig)**  | maximale Ausgabequalität, komplexe RAG, finale Reports  |
+| **Frontier / maximale Qualität**    | schwierige Coding-, Judge- und Agenten-Aufgaben         |
 | **Coding-Worker**                   | Code-nahe Agenten- und Entwicklungsaufgaben             |
 | **Embeddings**                      | Vektorrepräsentationen für Retrieval und RAG            |
 
@@ -62,11 +63,12 @@ Der wichtigste Grundsatz lautet:
 
 | Rolle                              | OpenAI                   | Mistral                                              | Gemini                        | Anthropic                       | Kommentar                                                           |
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
-| **Baseline / Demo**                | `gpt-5.4-nano`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`     | schnell, günstig, gut für Grundlagen                                |
-| **Router / leichter Reasoner**     | `gpt-5.4-nano`                | `mistral-small-latest`                                | `gemini-3-flash-preview`    | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Baseline / Demo**                | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | schnell, günstig, gut für Grundlagen                                |
+| **Router / leichter Reasoner**     | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
 | **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-7`               | für Supervisor, Security, Bewertung                                 |
 | **Worker / Synthese**              | `gpt-5.4-mini`           | `mistral-medium-latest` oder `mistral-large-latest`  | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
-| **Worker / Synthese (hochwertig)** | `gpt-5.4`                | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | maximale Qualität: komplexe RAG, finale Reports                     |
+| **Worker / Synthese (hochwertig)** | `gpt-5.6-terra`          | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | hohe Qualität: komplexe RAG, finale Reports                         |
+| **Frontier / maximale Qualität**   | `gpt-5.6-sol`            | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
 | **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
 | **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
 
@@ -146,11 +148,11 @@ Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
 ### Baseline / Demo
 
-Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung ist bei allen Providern dieselbe. Geeignet für Grundlagenmodule, erste Tests und kostensensitive Standardläufe mit einfacher Klassifikation, Formatierung oder Tool-Demos. OpenAI `gpt-5.4-nano`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
+Schnell, stabil, kostengünstig, didaktisch gut steuerbar — die Anforderung ist bei allen Providern dieselbe. Geeignet für Grundlagenmodule, erste Tests und kostensensitive Standardläufe mit einfacher Klassifikation, Formatierung oder Tool-Demos. OpenAI `gpt-5.6-luna`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
 
 ### Router / leichter Reasoner
 
-Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder Routing-Experimente in Demo-Szenarien. Gefragt sind robuste Entscheidungen zwischen wenigen Optionen ohne übertriebene Kostenlast. OpenAI `gpt-5.4-nano`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
+Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder Routing-Experimente in Demo-Szenarien. Gefragt sind robuste Entscheidungen zwischen wenigen Optionen ohne übertriebene Kostenlast. OpenAI `gpt-5.6-luna`, Mistral `mistral-small-latest`, Gemini `gemini-3-flash-preview`, Anthropic `claude-haiku-4-5`.
 
 ### Judge / starker Reasoner
 
@@ -158,7 +160,11 @@ Für einfache Conditional Edges, Tool-Auswahl mit begrenzter Komplexität oder R
 
 ### Worker / Synthese
 
-Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. **Standard:** OpenAI `gpt-5.4-mini`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-sonnet-4-6`. **Hochwertig (wenn maximale Qualität gefordert):** OpenAI `gpt-5.4`, Mistral `mistral-large-latest`, Anthropic `claude-opus-4-7`.
+Für RAG-Antwortsynthese, hochwertige strukturierte Ausgaben und finale Berichte. Gefragt ist starke Ausgabequalität bei Text, Struktur und Zusammenfassung — nicht maximale Reasoning-Tiefe. **Standard:** OpenAI `gpt-5.4-mini`, Mistral `mistral-medium-latest` oder `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-sonnet-4-6`. **Hochwertig:** OpenAI `gpt-5.6-terra`, Mistral `mistral-large-latest`, Anthropic `claude-opus-4-7`.
+
+### Frontier / maximale Qualität
+
+Für schwierige Coding-, Judge- und Agenten-Aufgaben mit hohem Qualitätsanspruch. Diese Rolle ist kein Standard für kurze Demos, sondern eine bewusste Eskalation, wenn Fehlerkosten, Komplexität oder Autonomie den Mehrpreis rechtfertigen. OpenAI `gpt-5.6-sol`, Mistral `mistral-large-latest`, Gemini `gemini-3.1-pro-preview`, Anthropic `claude-opus-4-7`.
 
 ### Coding-Worker
 

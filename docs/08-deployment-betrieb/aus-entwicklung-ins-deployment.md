@@ -113,7 +113,7 @@ client = openai.OpenAI(api_key="sk-abc123...")
 # Zelle 5
 def frage_llm(prompt):
     response = client.chat.completions.create(
-        model="gpt-5.4-nano",
+        model="gpt-5.6-luna",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
@@ -154,7 +154,7 @@ Eine `.env.example` als Vorlage:
 ```bash
 # .env.example - Zu .env kopieren und Werte eintragen
 OPENAI_API_KEY=sk-projekt-key
-MODEL_NAME=gpt-5.4-nano
+MODEL_NAME=gpt-5.6-luna
 LOG_LEVEL=INFO
 ```
 
@@ -307,7 +307,7 @@ docker build -t meine-agenten-app .
 # Container starten (mit Umgebungsvariablen)
 docker run -p 8000:8000 \
   -e OPENAI_API_KEY="sk-projekt-key" \
-  -e MODEL_NAME="gpt-5.4-nano" \
+  -e MODEL_NAME="gpt-5.6-luna" \
   meine-agenten-app
 ```
 

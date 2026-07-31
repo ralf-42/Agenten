@@ -294,7 +294,7 @@ Sobald Werkzeuge definiert sind, können sie an ein Modell gebunden werden. Das 
 ```python
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model("openai:gpt-5.4-nano")
+llm = init_chat_model("openai:gpt-5.6-luna")
 llm_with_tools = llm.bind_tools([multiply, safe_divide])
 
 response = llm_with_tools.invoke("Was ist 15 mal 23?")

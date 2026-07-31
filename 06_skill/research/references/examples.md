@@ -49,14 +49,14 @@ Erwartetes Ergebnis: Kurzformat mit Hinweis, keine vollständigen Kernaussagen
 ## Beispiel 3: Konflikt zwischen Quellen
 
 Eingabe:
-- query: "Kostenvergleich GPT-5.1 vs. o3"
+- query: "Kostenvergleich GPT-5.6 Luna vs. GPT-5.6 Sol"
 
 Strukturierter Skill-Output (Auszug):
 ```json
 {
   "findings": [
-    {"fact": "GPT-5.1 günstiger pro Token als o3", "source": "OpenAI Pricing Page", "score": 0.88},
-    {"fact": "o3 effizienter bei komplexen Tasks trotz höherem Preis", "source": "AI Benchmark Blog", "score": 0.75}
+    {"fact": "GPT-5.6 Luna günstiger pro Token als GPT-5.6 Sol", "source": "OpenAI Pricing Page", "score": 0.88},
+    {"fact": "GPT-5.6 Sol leistungsfähiger bei komplexen Tasks trotz höherem Preis", "source": "AI Benchmark Blog", "score": 0.75}
   ],
   "conflict": true
 }

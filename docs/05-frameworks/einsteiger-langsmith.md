@@ -144,7 +144,7 @@ Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tr
 from langchain.chat_models import init_chat_model
 
 # Normaler LLM-Setup (wie gewohnt)
-llm = init_chat_model("openai:gpt-5.4-nano")
+llm = init_chat_model("openai:gpt-5.6-luna")
 
 # Einfacher Call - wird automatisch getrackt!
 response = llm.invoke("Erkläre LangSmith in einem Satz.")
@@ -244,7 +244,7 @@ result = chain.invoke({"topic": "Vektordatenbanken"})
 graph TB
     CHAIN[Chain Run - Gesamt<br/>Latenz: 1.5s]
     PROMPT[Prompt Run<br/>Template-Formatierung<br/>0.1s]
-    LLM[LLM Run - GPT-4o-mini<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
+    LLM[LLM Run - gpt-5.4-mini<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
     PARSER[Parser Run<br/>String-Extraktion<br/>0.2s]
 
     CHAIN --> PROMPT
@@ -261,7 +261,7 @@ graph TB
 ```
 Chain Run (Gesamt)
 ├─ Prompt Run (Template-Formatierung)
-├─ LLM Run (GPT-4o-mini Call)
+├─ LLM Run (gpt-5.4-mini Call)
 │  ├─ Input: "Erkläre Vektordatenbanken für Einsteiger."
 │  ├─ Output: "Vektordatenbanken speichern..."
 │  ├─ Tokens: 245 (Input: 12, Output: 233)

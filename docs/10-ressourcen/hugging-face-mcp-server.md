@@ -229,7 +229,7 @@ async def main() -> None:
     tools = await client.get_tools()
     print("Geladene Tools:", [tool.name for tool in tools])
 
-    model = init_chat_model("openai:gpt-5.4-nano")
+    model = init_chat_model("openai:gpt-5.6-luna")
     agent = create_agent(model, tools)
 
     result = await agent.ainvoke(

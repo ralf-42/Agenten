@@ -25,7 +25,7 @@ from genai_lib.utilities import mprint, mermaid, setup_api_keys, check_environme
 Die Bibliothek besteht aus modularen Hilfsdateien im `genai_lib/` Verzeichnis:
 
 - **`utilities.py`** - Kernfunktionen: Markdown-Ausgabe, Mermaid-Diagramme, API-Key-Verwaltung, LangSmith Trace-Analyse, Model-Profile, Thinking-Parser, Prompt-Loader
-- **`model_config.py`** - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `PLANNER`, `WORKER`, `WORKER_PREMIUM`, `CODING`, `EMBEDDINGS`)
+- **`model_config.py`** - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`)
 
 ## 3. Abhängigkeiten
 
@@ -87,7 +87,7 @@ show_trace("M24-Agent-Evaluation", limit=5, show_steps=True)
 ```python
 from genai_lib.utilities import get_model_profile
 
-profile = get_model_profile("openai:gpt-5.4-nano")
+profile = get_model_profile("openai:gpt-5.6-luna")
 ```
 
 - `get_model_profile(model, print_profile=True, **kwargs)` - Ruft Model-Capabilities von models.dev ab (Structured Output, Vision, Token-Limits, etc.)
@@ -146,7 +146,7 @@ check_environment()
 
 # 2. LLM initialisieren (LangChain 1.0+)
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-5.4-nano")
+llm = init_chat_model("openai:gpt-5.6-luna")
 
 # 3. Agent mit LangGraph erstellen
 from langgraph.graph import StateGraph, START, END, MessagesState
@@ -180,7 +180,7 @@ python -m genai_lib.utilities
 ├── genai_lib/
 │   ├── __init__.py          # Package-Exports
 │   ├── utilities.py         # Kernfunktionen (mprint, mermaid, setup_api_keys, show_trace, ...)
-│   └── model_config.py      # Rollenbasierte Modell-Konstanten (BASELINE, ROUTER, JUDGE, ...)
+│   └── model_config.py      # Rollenbasierte Modell-Konstanten (BASELINE, ROUTER, WORKER, FRONTIER, ...)
 ├── README.md
 ├── requirements.txt
 └── setup.py

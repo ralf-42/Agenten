@@ -52,7 +52,7 @@ Agenten/
 - **LangChain** (>=1.3.13) - Orchestrierung, Chains, Agents, RAG
 - **LangGraph** (>=1.2.4) - Zustandsbasierte Multi-Agent-Workflows, State Machines
 - **LangSmith** (>=0.8.0) - Tracing, Debugging, Evaluations
-- **OpenAI API** (>=1.0.0) - gpt-5.4-nano, gpt-5.4-mini, gpt-5.4, Embeddings
+- **OpenAI API** (>=1.0.0) - gpt-5.6-luna, gpt-5.4-mini, gpt-5.4, gpt-5.6-terra, gpt-5.6-sol, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
@@ -60,7 +60,7 @@ Agenten/
 - **MCP / langchain-mcp-adapters** - lokale und Hugging-Face-basierte Tool-Server in M31-M32
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
-  - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `JUDGE`, `WORKER`, ...)
+  - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`, ...)
 
 
 ## 📚 Kursmodule

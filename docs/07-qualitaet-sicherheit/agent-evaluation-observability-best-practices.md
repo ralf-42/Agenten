@@ -207,7 +207,7 @@ config = {
     "metadata": {
         "dataset_version": "eval-v1",
         "thread_id": "thread-4711",
-        "model_version": "gpt-5.4-nano",
+        "model_version": "gpt-5.6-luna",
     },
 }
 ```

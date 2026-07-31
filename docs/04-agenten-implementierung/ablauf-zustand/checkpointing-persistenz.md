@@ -158,7 +158,7 @@ from langchain.chat_models import init_chat_model
 class ConversationState(TypedDict):
     messages: Annotated[list, add_messages]
 
-llm = init_chat_model("openai:gpt-5.4-nano")
+llm = init_chat_model("openai:gpt-5.6-luna")
 
 def chat_node(state: ConversationState) -> ConversationState:
     response = llm.invoke(state["messages"])

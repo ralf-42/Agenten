@@ -81,7 +81,7 @@ So speicherst du Keys in Colab Secrets:
 ```python
 !pip install langchain-openai
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-5.4-nano")
+llm = init_chat_model("openai:gpt-5.6-luna")
 ```
 
 **Google Gemini:**

@@ -24,7 +24,7 @@ has_toc: true
 ---
 
 ## Modellrollen im Kurs
-Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Latenz, Kosten, Kontextfenster, Tool-Unterstützung und Modalität zur Aufgabe passen. Im Kurs wird deshalb nicht überall ein einzelnes Modell fest eingetragen, sondern eine Rolle verwendet: Baseline, Router, Worker, Planner, Judge, Coding oder Embedding.
+Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Latenz, Kosten, Kontextfenster, Tool-Unterstützung und Modalität zur Aufgabe passen. Im Kurs wird deshalb nicht überall ein einzelnes Modell fest eingetragen, sondern eine Rolle verwendet: Baseline, Router, Worker, Planner, Judge, Coding, Frontier oder Embedding.
 
 Diese Rollen stehen in `genai_lib.model_config.py`. Die Datei ist der technische Kursstandard. Wer ein Notebook liest, soll nicht zuerst konkrete Produktnamen interpretieren müssen, sondern erkennen, welche Aufgabe ein Modell im Agentensystem übernimmt.
 
@@ -32,13 +32,14 @@ Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. F
 
 | Kursrolle | Konstante | Modell | Einsatz |
 |---|---|---|---|
-| Baseline / Demo | `BASELINE` | `openai:gpt-5.4-nano` | einfache Beispiele, erste Läufe, Kostenkontrolle |
-| Router / leichter Reasoner | `ROUTER` | `openai:gpt-5.4-nano` | klare Auswahlentscheidungen mit wenigen Wegen |
+| Baseline / Demo | `BASELINE` | `openai:gpt-5.6-luna` | einfache Beispiele, erste Läufe, Kostenkontrolle |
+| Router / leichter Reasoner | `ROUTER` | `openai:gpt-5.6-luna` | klare Auswahlentscheidungen mit wenigen Wegen |
 | Worker / Synthese | `WORKER` | `openai:gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
 | Coding-Worker | `CODING` | `openai:gpt-5.4-mini` | Codegenerierung, Refactoring, technische Agenten |
 | Judge / starker Reasoner | `JUDGE` | `openai:gpt-5.4` | Bewertung, Evaluation, Supervisor, Compliance |
 | Planner | `PLANNER` | `openai:gpt-5.4` | Aufgabenzerlegung, Schrittplanung, Agentic RAG |
-| Hochwertiger Worker | `WORKER_PREMIUM` | `openai:gpt-5.4` | komplexe Synthese, finale Reports |
+| Hochwertiger Worker | `WORKER_PREMIUM` | `openai:gpt-5.6-terra` | komplexe Synthese, finale Reports |
+| Frontier / maximale Qualität | `FRONTIER` | `openai:gpt-5.6-sol` | schwierige Coding-, Judge- und Agenten-Aufgaben |
 | Bildgenerierung | `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung über die OpenAI Images API |
 | Audio-Transkription | `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS` | `gpt-4o-mini-transcribe`, `whisper-1` | Transkription, mit Segmenten bei Bedarf Zeitstempel |
 | Embeddings | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
@@ -74,12 +75,13 @@ Der Kurs nutzt konkrete OpenAI-Modelle, aber die Entscheidung dahinter bleibt ro
 
 | Situation | Kurs-Default | Begründung |
 |---|---|---|
-| Grundlagen, Demos, einfache Klassifikation | `gpt-5.4-nano` | schnell, günstig, ausreichend für klare Aufgaben |
-| einfaches Routing | `gpt-5.4-nano` | gute Kosten-/Latenz-Balance bei wenigen Routen |
+| Grundlagen, Demos, einfache Klassifikation | `gpt-5.6-luna` | schnell, günstig, ausreichend für klare Aufgaben |
+| einfaches Routing | `gpt-5.6-luna` | gute Kosten-/Latenz-Balance bei wenigen Routen |
 | Worker, Synthese, strukturierte Ausgabe | `gpt-5.4-mini` | Standardmodell für produktivere Arbeitsschritte |
 | Coding-Worker | `gpt-5.4-mini` | geeignet für Code, Refactoring und technische Aufgaben |
 | Supervisor, Judge, Planner | `gpt-5.4` | stärkeres Reasoning für Entscheidungen mit Folgewirkung |
-| kritische Entscheidung oder finale Bewertung | `gpt-5.5` | Premium-Option bei hohen Qualitäts- oder Sicherheitsanforderungen |
+| hochwertige Synthese oder finale Reports | `gpt-5.6-terra` | Premium-Worker bei hohem Qualitätsanspruch |
+| schwierige Agenten-, Coding- oder Judge-Aufgaben | `gpt-5.6-sol` | Frontier-Option bei hohen Qualitäts- oder Sicherheitsanforderungen |
 
 ### Entscheidungsregeln
 
@@ -99,11 +101,11 @@ flowchart TD
     START --> W{"Worker, Code oder Synthese?"}
     START --> D{"Demo oder Grundlagen?"}
 
-    R -->|einfach| ROUTER["gpt-5.4-nano"]
+    R -->|einfach| ROUTER["gpt-5.6-luna"]
     R -->|kritisch| SUP["gpt-5.4"]
-    J --> JUDGE["gpt-5.4 oder gpt-5.5"]
+    J --> JUDGE["gpt-5.4 oder gpt-5.6-sol"]
     W --> WORKER["gpt-5.4-mini"]
-    D --> BASE["gpt-5.4-nano"]
+    D --> BASE["gpt-5.6-luna"]
 ```
 
 ## Provider-Mapping
@@ -112,11 +114,12 @@ Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten.
 
 | Rolle | OpenAI | Mistral | Gemini | Anthropic |
 |---|---|---|---|---|
-| Baseline / Demo | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
-| Router / leichter Reasoner | `gpt-5.4-nano` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
+| Baseline / Demo | `gpt-5.6-luna` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
+| Router / leichter Reasoner | `gpt-5.6-luna` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
 | Judge / starker Reasoner | `gpt-5.4` | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-7` |
 | Worker / Synthese | `gpt-5.4-mini` | `mistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
 | Coding-Worker | `gpt-5.4-mini` | `devstral-latest` oder `codestral-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
+| Frontier / maximale Qualität | `gpt-5.6-sol` | `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-7` |
 | Embeddings | `text-embedding-3-small` | `mistral-embed` | `gemini-embedding-2-preview` | externer Provider nötig |
 
 > [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>

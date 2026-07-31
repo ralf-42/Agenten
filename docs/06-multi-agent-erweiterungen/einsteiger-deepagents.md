@@ -148,7 +148,7 @@ from deepagents import create_deep_agent
 from langchain.chat_models import init_chat_model
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.4-nano"),
+    model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[begriff_erklaeren],
     system_prompt=(
         "Ein kompakter Kurs-Assistent für agentische Systeme. "
@@ -290,7 +290,7 @@ Anschließend wird das Tool einfach beim Agenten registriert:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.4-nano"),
+    model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[begriff_erklaeren, kurs_thema_info],
     system_prompt="Ein deutschsprachiger Kurs-Assistent.",
 )
@@ -318,7 +318,7 @@ research_subagent = {
         "Knappe, saubere Fachzusammenfassungen auf Deutsch liefern."
     ),
     "tools": [begriff_erklaeren, kurs_thema_info],
-    # "model": "openai:gpt-4o",  # Optional: eigenes Modell seit 0.4.11
+    # "model": "openai:gpt-5.6-luna",  # Optional: eigenes Modell seit 0.4.11
 }
 ```
 
@@ -341,7 +341,7 @@ Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.4-nano"),
+    model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[],
     subagents=[research_subagent],
     system_prompt=(
@@ -373,7 +373,7 @@ register_harness_profile(my_profile)
 
 # Agent nutzt automatisch das registrierte Profil
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.4-nano"),
+    model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[mein_tool],
 )
 ```
@@ -401,7 +401,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.4-nano"),
+    model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[mein_tool],
     middleware=[LoggingMiddleware(), RetryMiddleware(max_retries=3)],
 )
@@ -466,7 +466,7 @@ Dieselbe Harness-Architektur läuft mit jedem der 100+ LangChain-kompatiblen Mod
 
 ```python
 # OpenAI
-agent = create_deep_agent(model=init_chat_model("openai:gpt-5.4-nano"), ...)
+agent = create_deep_agent(model=init_chat_model("openai:gpt-5.6-luna"), ...)
 
 # Anthropic
 agent = create_deep_agent(model=init_chat_model("anthropic:claude-sonnet-4-6"), ...)

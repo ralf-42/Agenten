@@ -156,7 +156,7 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 | [OpenAI Skills Repository (GitHub)](https://github.com/openai/skills) | Offizielle Skill-Sammlung von OpenAI, kompatibel mit dem SKILL.md-Standard |
 | [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus (→ M08) |
 | [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
-| [Awesome Agent Harness (GitHub)](https://github.com/RUCAIBox/awesome-agent-harness) | Kuratierte Liste zu Agent-Harness-Systemen (DeepAgents, Claude Code, Manus u. a.) – Ergänzung zu M32–M34 |
+| [Awesome Agent Harness (GitHub)](https://github.com/RUCAIBox/awesome-agent-harness) | Kuratierte Liste zu Agent-Harness-Systemen (DeepAgents, Claude Code, Manus u. a.) – Ergänzung zu M33–M34 |
 
 ---
 

@@ -36,9 +36,9 @@ Python-Programm
   -> Python-Funktion als Tool
 ```
 
-## Kursbeispiel aus M32
+## Archiviertes Kursbeispiel
 
-Das Notebook `M32_MCP_HuggingFace.ipynb` nutzt einen bereits veröffentlichten Hugging-Face-Space:
+Das frühere Notebook `01_notebook/_backup/M32_MCP_HuggingFace.ipynb` nutzte einen bereits veröffentlichten Hugging-Face-Space. Es ist nicht mehr Teil der aktiven Modulnummerierung, bleibt aber als archiviertes Beispiel nachvollziehbar:
 
 | Feld | Wert |
 |---|---|
@@ -143,7 +143,7 @@ Nach dem Start stellt Gradio das Tool zusätzlich über MCP bereit. Der typische
 https://<user>-<space-name>.hf.space/mcp
 ```
 
-Beispiel aus M32:
+Beispiel aus dem archivierten Notebook:
 
 ```text
 https://ralf42-simple-mcp.hf.space/mcp
@@ -192,7 +192,7 @@ PowerShell:
 $env:OPENAI_API_KEY="sk-..."
 ```
 
-## 6. M32-Crypto-Tools aus Python laden
+## 6. Crypto-Tools aus Python laden
 
 Speichere die folgende Datei als `call_hf_mcp.py`.
 
@@ -298,7 +298,7 @@ if __name__ == "__main__":
 
 ## 8. HF-Space aufwecken und Status prüfen
 
-Hugging-Face-Spaces können nach Inaktivität schlafen. Der erste Request dauert dann länger. Für das M32-Beispiel kann der Status so geprüft werden:
+Hugging-Face-Spaces können nach Inaktivität schlafen. Der erste Request dauert dann länger. Für das archivierte Beispiel kann der Status so geprüft werden:
 
 ```python
 import os
@@ -378,7 +378,7 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 
 | Dokument | Frage |
 |---|---|
-| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegen `M31_MCP_Local.ipynb` und `M32_MCP_HuggingFace.ipynb` in der Modulprogression? |
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegt `M31_MCP_Local.ipynb` in der Modulprogression? |
 | [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | Wie ordnet sich MCP gegenüber A2A, ACP und AG-UI ein? |
 | [Code Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Welche LangChain- und Python-Konventionen gelten im Kurs? |
 

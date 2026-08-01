@@ -37,7 +37,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (M01-M40)
+├── 01_notebook/    # Jupyter Notebooks (M01-M39)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursfolien & Intro-Präsentation
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -56,8 +56,8 @@ Agenten/
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
-- **DeepAgents** (optional, >=0.6.12) - Harness für Planning, Filesystem und Sub-Agenten in M34-M37
-- **MCP / langchain-mcp-adapters** - lokale und Hugging-Face-basierte Tool-Server in M31-M32
+- **DeepAgents** (optional, >=0.6.12) - Harness für Planning, Filesystem und Sub-Agenten in M33-M36
+- **MCP / langchain-mcp-adapters** - lokale Tool-Server in M31
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
   - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`, ...)
@@ -117,7 +117,7 @@ Agenten/
 | M25 | Agent Evaluation & Testing | Reproduzierbare Evaluation, Regression und RAGAS-Live-Lauf |
 | M26 | Model Routing & Cost Control | Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate |
 
-### Block 7: Integration und Produktion (M27–M40)
+### Block 7: Integration und Produktion (M27–M39)
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
@@ -126,15 +126,14 @@ Agenten/
 | M29 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
 | M30 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
 | M31 | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
-| M32 | MCP HuggingFace | Hugging-Face-Integration über MCP |
-| M33 | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
-| M34 | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
-| M35 | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| M36 | DeepAgents Skill: Meeting-Briefing | Meeting-Briefing als Skill mit DeepAgents |
-| M37 | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
-| M38 | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
-| M39 | Production: API & Monitoring | FastAPI-Endpoints, Production Monitoring und Kursrückblick |
-| M40 | Capstone | Eigenes Agentensystem als Abschlussprojekt |
+| M32 | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
+| M33 | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
+| M34 | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+| M35 | DeepAgents Skill: Meeting-Briefing | Meeting-Briefing als Skill mit DeepAgents |
+| M36 | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| M37 | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
+| M38 | Production: API & Monitoring | FastAPI-Endpoints, Production Monitoring und Kursrückblick |
+| M39 | Capstone | Eigenes Agentensystem als Abschlussprojekt |
 
 ## 🔑 Voraussetzungen
 

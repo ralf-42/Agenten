@@ -2,9 +2,9 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **40 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
+Dieses Verzeichnis enthält aktuell **39 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
 
-Die Nummerierung reicht lückenlos von **M01 bis M40**. Frühere a/b-Teilmodule wurden in die laufende Modulnummerierung überführt.
+Die Nummerierung reicht lückenlos von **M01 bis M39**. Frühere a/b-Teilmodule wurden in die laufende Modulnummerierung überführt.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Phase e_v4.7.md`
 
@@ -79,7 +79,7 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 
 ---
 
-## Erweiterte Module – Spezialisierung & Produktion (M23–M40)
+## Erweiterte Module – Spezialisierung & Produktion (M23–M39)
 
 > Diese Module sind **nicht Teil des 5-Phasen-Kurses**. Sie eignen sich als Follow-up-Material nach dem Kurs.
 
@@ -94,15 +94,14 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 | M29 | `M29_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Optional |
 | M30 | `M30_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🔵 Optional |
 | M31 | `M31_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🔵 Optional |
-| M32 | `M32_MCP_HuggingFace.ipynb` | MCP mit HuggingFace-Integration | 🔵 Optional |
-| M33 | `M33_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
-| M34 | `M34_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🔵 Optional |
-| M35 | `M35_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🔵 Optional |
-| M36 | `M36_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
-| M37 | `M37_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
-| M38 | `M38_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🔵 Optional |
-| M39 | `M39_API_Monitoring.ipynb` | FastAPI-Endpoints, Production Monitoring, Kursrückblick | 🔵 Optional |
-| M40 | `M40_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
+| M32 | `M32_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🔵 Optional |
+| M33 | `M33_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🔵 Optional |
+| M34 | `M34_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🔵 Optional |
+| M35 | `M35_DeepAgents_Skill_Meeting_Briefing.ipynb` | Meeting-Briefing Skill, DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🔵 Optional |
+| M36 | `M36_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
+| M37 | `M37_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🔵 Optional |
+| M38 | `M38_API_Monitoring.ipynb` | FastAPI-Endpoints, Production Monitoring, Kursrückblick | 🔵 Optional |
+| M39 | `M39_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
 
 
 **Version:** 3.0    

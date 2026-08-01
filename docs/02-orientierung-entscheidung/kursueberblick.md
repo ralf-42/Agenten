@@ -104,55 +104,54 @@ timeline
                                      : M23-M26
     section Integration und Produktion
         Vom Kursprojekt zum System    : Pipeline, UI, MCP, Skills, Deployment, Capstone
-                                     : M27-M40
+                                     : M27-M39
 ```
 
 ## Modulübersicht
 
 
 
-| Modul | Block | Inhalt | Schwerpunkt |
-|:---:|---|---|---|
-| M01 | Agenten-Grundlagen | Was sind KI-Agenten? | Agentenbegriff, ReAct/TAO, Kurszielbild |
-| M02 | Agenten-Grundlagen | Tool Use & Function Calling | Werkzeuge als kontrollierte Handlungsebene |
-| M03 | Agenten-Grundlagen | Erste Agenten mit LangChain | `create_agent()`, Tool-Auswahl, erster Briefing-Agent |
-| M04 | Strukturierte Agenten | Prompt Engineering | Rollen, Grenzen, Tool-Regeln |
-| M05 | Strukturierte Agenten | Structured Output | Antwortschema, Quellenpflicht, Prüfbarkeit |
-| M06 | Strukturierte Agenten | Multi-Tool Agents | Mehrere Tools, Fehlerbehandlung, Auswahl |
-| M07 | Strukturierte Agenten | LCEL Chains | Kontrollierte Teilketten und Übergang zu LangGraph |
-| M08 | Kontrollierte Workflows | Warum LangGraph? | Grenzen einfacher Agents, expliziter State |
-| M09 | Kontrollierte Workflows | StateGraph Basics | Nodes, Edges, State und Verbesserungsschleifen |
-| M10 | Kontrollierte Workflows | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics |
-| M11 | Kontrollierte Workflows | Tool-Loop | Tool-Loop, Tool-Steuerung im Graph |
-| M12 | Wissensbasierte Agenten | RAG-Konzepte & Embeddings | Korpus, Embeddings, Chunking |
-| M13 | Wissensbasierte Agenten | ChromaDB Indexing | Vektordatenbank, Indexierung, Abfrage |
-| M14 | Wissensbasierte Agenten | RAG Chain mit LangChain | Retriever, Quellenbindung, Antwortkette |
-| M15 | Wissensbasierte Agenten | RAG-Agent | Retrieval als Agenten-Tool |
-| M16 | Wissensbasierte Agenten | LangSmith Evaluations Basics | Eval-Set, Retrieval-Score, Regression |
-| M17 | Kontrollierte Zusammenarbeit | Checkpointing & Sessions | Sitzung, Thread-ID, Fortsetzen |
-| M18 | Kontrollierte Zusammenarbeit | Human-in-the-Loop | Review, Freigabe, Unterbrechung |
-| M19 | Kontrollierte Zusammenarbeit | Memory-Systeme | Kurzzeit- und Langzeitgedächtnis |
-| M20 | Kontrollierte Zusammenarbeit | Multi-Agent Patterns | Supervisor, Hierarchie, Pipeline |
-| M21 | Kontrollierte Zusammenarbeit | Supervisor Pattern | Worker, Supervisor, Guardrails |
-| M22 | Kontrollierte Zusammenarbeit | Hierarchical Pattern | Teams, Rollen, Delegation |
-| M23 | Qualität und Betriebsvorbereitung | Agentic RAG | Retrieval-Budget, Grounding, OOC-Stopp |
-| M24 | Qualität und Betriebsvorbereitung | Agent Security Best Practices | Prompt Injection, Tool-Gating, Audit |
-| M25 | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing | Tests, Regression, RAGAS-Live-Lauf |
-| M26 | Qualität und Betriebsvorbereitung | Model Routing & Cost Control | Fallback, Circuit Breaker, Budget Gate |
-| M27 | Integration und Produktion | Integration Pipeline | Meeting- & Research-Briefing-System als E2E-Pipeline |
-| M28 | Integration und Produktion | Projekt-Templates & MVP | Eigene Templates A/B/C, MVP-Definition |
-| M29 | Integration und Produktion | Advanced RAG Pipeline Patterns | Self-RAG, Reranking, CRAG |
-| M30 | Integration und Produktion | Gradio UI für Agenten | Chat UI, Streaming, HITL-UI |
-| M31 | Integration und Produktion | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
-| M32 | Integration und Produktion | MCP HuggingFace | HuggingFace-Integration über MCP |
-| M33 | Integration und Produktion | Agent Skill Compliance | Skill-Struktur, Guardrails, Mixed Models |
-| M34 | Integration und Produktion | DeepAgents Harness | Planning, Tools, Sub-Agenten (Kern) |
-| M35 | Integration und Produktion | DeepAgents: Parameter & Einordnung | Weitere Parameter, Sandbox, Vergleich zu LangGraph |
-| M36 | Integration und Produktion | DeepAgents Skill Meeting Briefing | Meeting-Briefing als Skill |
-| M37 | Integration und Produktion | DeepAgent Multi-Skill | Multi-Skill-Routing und Progressive Disclosure |
-| M38 | Integration und Produktion | Production Deployment | Notebook → Production, Modell-Konfig, Docker |
-| M39 | Integration und Produktion | Production: API & Monitoring | FastAPI, Monitoring, Kursrückblick |
-| M40 | Integration und Produktion | Capstone | Eigenes Agentensystem als Abschlussprojekt |
+| Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
+| :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
+|  M01  | Agenten-Grundlagen                | Was sind KI-Agenten?                 | Agentenbegriff, ReAct/TAO, Kurszielbild                |
+|  M02  | Agenten-Grundlagen                | Tool Use & Function Calling          | Werkzeuge als kontrollierte Handlungsebene             |
+|  M03  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Briefing-Agent  |
+|  M04  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln                           |
+|  M05  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
+|  M06  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
+|  M07  | Strukturierte Agenten             | LCEL Chains                          | Kontrollierte Teilketten und Übergang zu LangGraph     |
+|  M08  | Kontrollierte Workflows           | Warum LangGraph?                     | Grenzen einfacher Agents, expliziter State             |
+|  M09  | Kontrollierte Workflows           | StateGraph Basics                    | Nodes, Edges, State und Verbesserungsschleifen         |
+|  M10  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics               |
+|  M11  | Kontrollierte Workflows           | Tool-Loop                            | Tool-Loop, Tool-Steuerung im Graph                     |
+|  M12  | Wissensbasierte Agenten           | RAG-Konzepte & Embeddings            | Korpus, Embeddings, Chunking                           |
+|  M13  | Wissensbasierte Agenten           | ChromaDB Indexing                    | Vektordatenbank, Indexierung, Abfrage                  |
+|  M14  | Wissensbasierte Agenten           | RAG Chain mit LangChain              | Retriever, Quellenbindung, Antwortkette                |
+|  M15  | Wissensbasierte Agenten           | RAG-Agent                            | Retrieval als Agenten-Tool                             |
+|  M16  | Wissensbasierte Agenten           | LangSmith Evaluations Basics         | Eval-Set, Retrieval-Score, Regression                  |
+|  M17  | Kontrollierte Zusammenarbeit      | Checkpointing & Sessions             | Sitzung, Thread-ID, Fortsetzen                         |
+|  M18  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
+|  M19  | Kontrollierte Zusammenarbeit      | Memory-Systeme                       | Kurzzeit- und Langzeitgedächtnis                       |
+|  M20  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
+|  M21  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
+|  M22  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
+|  M23  | Qualität und Betriebsvorbereitung | Agentic RAG                          | Retrieval-Budget, Grounding, OOC-Stopp                 |
+|  M24  | Qualität und Betriebsvorbereitung | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
+|  M25  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, RAGAS-Live-Lauf                     |
+|  M26  | Qualität und Betriebsvorbereitung | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
+|  M27  | Integration und Produktion        | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
+|  M28  | Integration und Produktion        | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
+|  M29  | Integration und Produktion        | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
+|  M30  | Integration und Produktion        | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
+|  M31  | Integration und Produktion        | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
+|  M32  | Integration und Produktion        | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
+|  M33  | Integration und Produktion        | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
+|  M34  | Integration und Produktion        | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
+|  M35  | Integration und Produktion        | DeepAgents Skill Meeting Briefing    | Meeting-Briefing als Skill                             |
+|  M36  | Integration und Produktion        | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
+|  M37  | Integration und Produktion        | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
+|  M38  | Integration und Produktion        | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
+|  M39  | Integration und Produktion        | Capstone                             | Eigenes Agentensystem als Abschlussprojekt             |
 
 ## Vorbereitung
 

@@ -20,6 +20,7 @@ Für den Kurs gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **La
 
 | Frage | Dokument | Bezug |
 |---|---|---|
+| **Was** gehört zum LangChain-Ökosystem? | [LangChain-Ökosystem]({{ '/05-frameworks/langchain-oekosystem.html' | relative_url }}) | Überblick über LangChain, LangGraph, LangSmith und ihre Kursrollen. |
 | **Wie** arbeite ich mit LangChain? | [LangChain]({{ '/05-frameworks/langchain.html' | relative_url }}) | Einstieg und Best Practices für LangChain. |
 | **Wie** arbeite ich mit LangGraph? | [LangGraph]({{ '/05-frameworks/langgraph.html' | relative_url }}) | StateGraph, Routing und robuste Graph-Patterns. |
 | **Wie** nutze ich LangSmith? | [LangSmith]({{ '/05-frameworks/langsmith.html' | relative_url }}) | Tracing, Evaluation, Datasets und Monitoring. |

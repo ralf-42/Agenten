@@ -157,7 +157,7 @@ agent = create_deep_agent(
     # Weitere praxisrelevante Parameter:
     # interrupt_on={"tool_names": ["write_file"]},  # HITL vor bestimmten Tools
     # memory=["AGENTS.md"],                          # Kontext-Dateien beim Start laden
-    # skills=["path/to/SKILL.md"],                   # SKILL.md-Dateien laden (→ M33/M34)
+    # skills=["path/to/SKILL.md"],                   # SKILL.md-Dateien laden (→ M32/M33)
 )
 ```
 

@@ -96,7 +96,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | **KI-Agent** | Visualisierung eines LLM-basierten KI-Agenten | [KI_Agenten](https://editor.p5js.org/ralf.bendig.rb/full/u3Ee0jtFo) |
 | **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer](https://editor.p5js.org/ralf.bendig.rb/full/EUzaFq4C4) |
 | **Trimming und Summary** | Context-Management-Strategien (Trimming, Summary) für LangGraph Memory | [Trimming und Summary](https://editor.p5js.org/ralf.bendig.rb/full/Xn-7mkuSM) |
-| **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (M18) | [DSPy](https://editor.p5js.org/ralf.bendig.rb/full/Q_dUC2-lV) |
+| **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (M17) | [DSPy](https://editor.p5js.org/ralf.bendig.rb/full/Q_dUC2-lV) |
 
 ---
 

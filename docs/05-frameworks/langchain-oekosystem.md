@@ -58,7 +58,7 @@ graph TD
     end
 
     subgraph Deployment ["<b>Bereitstellung</b>"]
-        LGP["<b>LangSmith Deployment</b><br/>HF-Spaces (kostenlos)"]
+        LGP["<b>LangSmith Deployment</b>"]
     end
 
     %% Styling der Subgraphs (Hintergrund-Boxen)

@@ -8,9 +8,9 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** 
 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
-| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M33_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M22_Agentic_RAG.ipynb`, `M24_Agent_Evaluation_Testing.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
-| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M34_DeepAgent_Multi_Skill.ipynb` |
+| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M32_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
+| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M21_Agentic_RAG.ipynb`, `M23_Agent_Evaluation_Testing.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
+| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M30_Agent_Skill_Compliance.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
 
 ### Skill-Details
 
@@ -25,7 +25,7 @@ Risikoprüfung für Lieferanten- und Transaktions-Compliance.
 | `references/examples.md` | Musterentscheidungen mit Begründung |
 | `scripts/assess_risk.py` | Deterministisches Scoring-Tool |
 
-Verwendet in: **M31** (Single-Skill), **M34** (Multi-Skill-Routing)
+Verwendet in: **M30** (Single-Skill), **M33** (Multi-Skill-Routing)
 
 ---
 
@@ -41,7 +41,7 @@ Meeting-Vorbereitung und Nachbereitung mit festen Abschnitten, Quellenpflicht un
 | `references/examples.md` | Beispiel-Briefings (Sprint-Review, Kundengespräch) |
 | `scripts/extract_actions.py` | Tool: Action Items aus Kontext-Dokumenten extrahieren |
 
-Verwendet in: **M33** (vollständiger Skill-Workflow mit Sub-Agent), **M34** (Multi-Skill-Routing)
+Verwendet in: **M32** (vollständiger Skill-Workflow mit Sub-Agent), **M33** (Multi-Skill-Routing)
 
 ---
 
@@ -54,7 +54,7 @@ Strukturierte Recherche mit Relevanz-Bewertung, Quellen-Synthese und zitierfähi
 | `references/` | Bewertungskriterien und Beispiel-Reports |
 | `scripts/` | Scoring-Tool für Quellen-Relevanz |
 
-Verwendet in: **M34** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
+Verwendet in: **M33** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
 
 ---
 

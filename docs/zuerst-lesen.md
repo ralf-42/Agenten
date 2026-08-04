@@ -52,7 +52,7 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 
 | Dokument | Frage |
 |---|---|
-| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wie bauen die Module M01-M39 aufeinander auf? |
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wie bauen die Module M01-M38 aufeinander auf? |
 | [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Welche Reihenfolge passt zu einem bestimmten Lernziel? |
 | [Orientierung & Entscheidung]({{ '/02-orientierung-entscheidung/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
 | [Agenten-Implementierung]({{ '/04-agenten-implementierung/' | relative_url }}) | Welche Grundlagen brauche ich für Architektur, Prompting, Tool Use und Kontext? |

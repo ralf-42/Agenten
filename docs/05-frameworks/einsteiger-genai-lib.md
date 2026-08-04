@@ -453,14 +453,14 @@ Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle
 from genai_lib.utilities import show_trace
 
 # Letzte 5 Runs als Tabelle
-show_trace("M08-RAG-Projekt")
+show_trace("M07-RAG-Projekt")
 
 # Mit Step-Analyse des letzten Runs
-show_trace("M08-RAG-Projekt", limit=3, show_steps=True)
+show_trace("M07-RAG-Projekt", limit=3, show_steps=True)
 ```
 
 **Parameter:**
-- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M08-RAG-Projekt"`)
+- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M07-RAG-Projekt"`)
 - `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
 - `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
@@ -730,10 +730,10 @@ setup_api_keys(["OPENAI_API_KEY"])
 from genai_lib.utilities import show_trace
 
 # Letzte Runs prüfen
-show_trace("M08-RAG-Projekt")
+show_trace("M07-RAG-Projekt")
 
 # Step-Analyse für Debugging
-show_trace("M08-RAG-Projekt", show_steps=True)
+show_trace("M07-RAG-Projekt", show_steps=True)
 ```
 
 ### . Multimodales RAG-System

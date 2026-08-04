@@ -8,7 +8,7 @@ Bilddateien für multimodale Agenten-Übungen (PNG, JPG, WEBP).
 
 ## Geplante Verwendung
 
-M27 Gradio UI, multimodale RAG-Demos
+M26 Gradio UI, multimodale RAG-Demos
 
 ## Beispiele für Inhalte
 

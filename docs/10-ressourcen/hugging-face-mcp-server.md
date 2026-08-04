@@ -38,7 +38,7 @@ Python-Programm
 
 ## Archiviertes Kursbeispiel
 
-Das frühere Notebook `01_notebook/_backup/M32_MCP_HuggingFace.ipynb` nutzte einen bereits veröffentlichten Hugging-Face-Space. Es ist nicht mehr Teil der aktiven Modulnummerierung, bleibt aber als archiviertes Beispiel nachvollziehbar:
+Das frühere Notebook `01_notebook/_backup/M31_MCP_HuggingFace.ipynb` nutzte einen bereits veröffentlichten Hugging-Face-Space. Es ist nicht mehr Teil der aktiven Modulnummerierung, bleibt aber als archiviertes Beispiel nachvollziehbar:
 
 | Feld | Wert |
 |---|---|
@@ -244,7 +244,7 @@ async def main() -> None:
                 )
             ]
         },
-        config={"run_name": "HF-MCP-Caesar-Demo", "tags": ["m32", "crypto", "caesar"]},
+        config={"run_name": "HF-MCP-Caesar-Demo", "tags": ["m31", "crypto", "caesar"]},
     )
 
     print(result["messages"][-1].content)
@@ -378,7 +378,7 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 
 | Dokument | Frage |
 |---|---|
-| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegt `M31_MCP_Local.ipynb` in der Modulprogression? |
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegt `M30_MCP_Local.ipynb` in der Modulprogression? |
 | [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | Wie ordnet sich MCP gegenüber A2A, ACP und AG-UI ein? |
 | [Code Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Welche LangChain- und Python-Konventionen gelten im Kurs? |
 

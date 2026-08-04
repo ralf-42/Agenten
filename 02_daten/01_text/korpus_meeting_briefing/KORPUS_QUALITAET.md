@@ -54,8 +54,8 @@ Das Eval-Set `eval_meeting_briefing.json` enthält 33 reguläre Fragen und deckt
 
 ## Hinweise für den Unterricht
 
-- In M11/M12 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
-- In M13/M14 den gesamten Korpus verwenden, inklusive der Recherche-Hintergrund-Dokumente.
-- In M15/M24 mit `eval_meeting_briefing.json` starten und Edge-Cases aus `eval_meeting_briefing_edge.json` erst danach hinzunehmen.
+- In M10/M11 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
+- In M12/M13 den gesamten Korpus verwenden, inklusive der Recherche-Hintergrund-Dokumente.
+- In M14/M23 mit `eval_meeting_briefing.json` starten und Edge-Cases aus `eval_meeting_briefing_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
-- Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M17/M23, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.
+- Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M16/M22, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.

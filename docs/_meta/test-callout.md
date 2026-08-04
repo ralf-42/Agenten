@@ -10,11 +10,11 @@ Diese Seite testet die korrekte Darstellung von Callouts im Agenten-Projekt.
 ## Test 1: Einfacher Callout ohne Custom Title
 
 > [!NOTE]
-> Details siehe Skript: M08 - Embeddings<br>
+> Details siehe Skript: M07 - Embeddings<br>
 
 **Erwartetes Ergebnis:**
 - Titel: "Hinweis" (Standard-Titel)
-- Content: "Details siehe Skript: M08 - Embeddings" (in neuer Zeile unter dem Titel)
+- Content: "Details siehe Skript: M07 - Embeddings" (in neuer Zeile unter dem Titel)
 
 parent: Ressourcen
 ---

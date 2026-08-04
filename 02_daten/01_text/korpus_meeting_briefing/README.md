@@ -33,7 +33,7 @@ Die Datei `metadata.json` beschreibt jedes Dokument mit stabilen Feldern für Re
 - `has_decision`, `has_open_question`, `decision_ids`, `risk_ids`
 - `topics` und `recommended_modules`
 
-Empfehlung für den Unterricht: In M11/M12 zuerst mit `corpus_part = "project"` arbeiten. Die Fachartikel aus `corpus_part = "background"` sollten erst später oder gezielt zugeschaltet werden, damit sie die kurzen Projektartefakte im Retrieval nicht überlagern.
+Empfehlung für den Unterricht: In M10/M11 zuerst mit `corpus_part = "project"` arbeiten. Die Fachartikel aus `corpus_part = "background"` sollten erst später oder gezielt zugeschaltet werden, damit sie die kurzen Projektartefakte im Retrieval nicht überlagern.
 
 ## Enthaltene Dokumente — Meeting- & Projektartefakte
 
@@ -65,11 +65,11 @@ Empfehlung für den Unterricht: In M11/M12 zuerst mit `corpus_part = "project"` 
 
 ## Empfohlene Nutzung im Kurs
 
-1. M11/M12: Keyword-Suche vs. semantische Suche auf den Meeting-Protokollen.
-2. M13/M14: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
-3. M15/M24: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
-4. M17/M23: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
-5. M36: Teilnehmer bauen eine Variante mit eigenem Meeting-Korpus oder Zusatzdokumenten.
+1. M10/M11: Keyword-Suche vs. semantische Suche auf den Meeting-Protokollen.
+2. M12/M13: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
+3. M14/M23: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
+4. M16/M22: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
+5. M35: Teilnehmer bauen eine Variante mit eigenem Meeting-Korpus oder Zusatzdokumenten.
 
 ## Eval-Sets
 

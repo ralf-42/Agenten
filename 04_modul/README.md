@@ -77,7 +77,7 @@ setup_api_keys(["OPENAI_API_KEY"])               # API-Keys aus Colab userdata l
 ```python
 from genai_lib.utilities import show_trace
 
-show_trace("M24-Agent-Evaluation", limit=5, show_steps=True)
+show_trace("M23-Agent-Evaluation", limit=5, show_steps=True)
 ```
 
 - `show_trace(project_name, limit=5, show_steps=False)` - Analysiert LangSmith-Traces des angegebenen Projekts und zeigt Laufzeiten, Token-Nutzung und optional Einzelschritte
@@ -160,7 +160,7 @@ def my_tool(query: str) -> str:
 # 4. Ergebnis anzeigen und Trace analysieren
 from genai_lib.utilities import mprint, show_trace
 mprint(result)
-show_trace("M24-Agent-Evaluation", show_steps=True)
+show_trace("M23-Agent-Evaluation", show_steps=True)
 ```
 
 ## 6. Entwicklung

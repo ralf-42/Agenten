@@ -3,7 +3,7 @@
 ## Beispiel 1: Vorbereitung — Projektmeeting (vollständige Unterlagen)
 
 Eingabe:
-- Thema: „Sprint-Review KI-Agenten Modul M24"
+- Thema: „Sprint-Review KI-Agenten Modul M23"
 - Teilnehmer: Anna (PO), Björn (Entwicklung), Caro (QA)
 - Kontext: Sprint-Bericht vom 18.03., offene Tickets aus Jira
 - Typ: Vorbereitung
@@ -13,10 +13,10 @@ Strukturierter Skill-Output (vereinfacht):
 {
   "type": "vorbereitung",
   "meeting_type": "Projektmeeting",
-  "topic": "Sprint-Review KI-Agenten Modul M24",
+  "topic": "Sprint-Review KI-Agenten Modul M23",
   "participants": ["Anna (PO)", "Björn (Entwicklung)", "Caro (QA)"],
   "agenda": [
-    {"priority": "hoch", "point": "Blockierung: Tool-Calling-Fehler in M24", "goal": "entscheiden", "duration": 15, "owner": "Björn"},
+    {"priority": "hoch", "point": "Blockierung: Tool-Calling-Fehler in M23", "goal": "entscheiden", "duration": 15, "owner": "Björn"},
     {"priority": "hoch", "point": "Deadline Abnahme bis 25.03.", "goal": "klären", "duration": 10, "owner": "Anna"},
     {"priority": "mittel", "point": "Status Sprint-Fortschritt", "goal": "informieren", "duration": 10, "owner": "Caro"},
     {"priority": "gering", "point": "Sonstiges", "goal": "informieren", "duration": 5, "owner": "alle"}

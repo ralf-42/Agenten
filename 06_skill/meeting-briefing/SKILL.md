@@ -137,7 +137,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 ## Verwandte Module
 
-- M17 – Human-in-the-Loop (Briefing mit `interrupt()` vor Versand)
-- M20 – Supervisor Pattern (Briefing als Teilaufgabe im Supervisor-Workflow)
-- M26 – Integration Pipeline (Meeting-Briefing als Schritt in einer Prozesskette)
-- M33 – DeepAgents Skill Meeting Briefing (direkte Anwendung dieses Skills als Leitprojekt-Baustein)
+- M16 – Human-in-the-Loop (Briefing mit `interrupt()` vor Versand)
+- M19 – Supervisor Pattern (Briefing als Teilaufgabe im Supervisor-Workflow)
+- M25 – Integration Pipeline (Meeting-Briefing als Schritt in einer Prozesskette)
+- M32 – DeepAgents Skill Meeting Briefing (direkte Anwendung dieses Skills als Leitprojekt-Baustein)

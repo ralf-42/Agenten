@@ -107,6 +107,20 @@ timeline
                                      : M26-M38
 ```
 
+## Maturity Model als Overlay
+
+Die Kursprogression lässt sich zusätzlich als Reifegradmodell lesen. Dieses Modell ist keine zweite Kursstruktur und kein Ziel, bei dem höhere Level automatisch besser wären. Es dient als Landkarte: Welche Fähigkeit kommt zu einem Agentensystem hinzu, und welche Kontrollpunkte werden dadurch nötig?
+
+| Reifegrad | Kurzbeschreibung | Kursbezug | Einordnung |
+|---|---|---|---|
+| **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | M01-M05, M30 | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
+| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | M03-M10, M16-M18 | Prompts, Schemas, Routing, Checkpointing und Human-in-the-Loop machen Verhalten kontrollierbarer. |
+| **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | M15, M19-M24 | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
+| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M25, M26-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
+| **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24, M37-M38 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
+
+Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Einige Bausteine wie Memory oder Evaluation erscheinen früher, weil sie didaktisch gebraucht werden, bevor ein System produktionsnah wird. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können aus Feedback lernen und besser geprüft werden, sie verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
+
 ## Modulübersicht
 
 

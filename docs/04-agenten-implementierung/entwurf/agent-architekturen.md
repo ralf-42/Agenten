@@ -13,6 +13,8 @@ has_toc: true
 
 > **Die Architektur entscheidet, wie ein Agent denkt, handelt, Grenzen einhält und mit Fehlern umgeht.**
 
+Dieses Dokument erklärt die wichtigsten Architekturmuster für KI-Agenten und hilft bei der Entscheidung, welches Muster zu welchem Problem passt.
+
 ---
 
 # Inhaltsverzeichnis
@@ -68,6 +70,10 @@ flowchart LR
 | 3 | Workflow | Fachlicher Ablauf ist vorgegeben oder auditierbar |
 | 4 | Multi-Agent | Spezialisierung ist wirklich nötig und Teilaufgaben sind trennbar |
 
+Die folgenden Abschnitte behandeln die vier Stufen in genau dieser Reihenfolge.
+
+Für Einsteiger ist vor allem diese erste Achse wichtig. Die späteren Abschnitte zu Harness Engineering, Entscheidungslogik, Reasoning-Sichtbarkeit und Produktionsreife sind als Vertiefung gedacht. Sie helfen beim Architekturreview, müssen aber nicht vor der ersten Architekturentscheidung vollständig beherrscht werden.
+
 ## Schneller Entscheidungsleitfaden
 
 Diese Fragen helfen bei der Auswahl:
@@ -89,122 +95,18 @@ Diese Fragen helfen bei der Auswahl:
 
 Merksatz: **Erst Tool-Calling prüfen, dann Single-Agent oder Workflow, erst zuletzt Multi-Agent.**
 
+Typische Situationen lassen sich damit schnell einordnen:
+
 | Situation | Naheliegende Wahl |
 |---|---|
 | FAQ plus Datenbankzugriff | Tool-Calling |
-| Offene Rechercheaufgabe | Single-Agent mit ReAct |
 | Mehrstufiger Genehmigungsprozess | Workflow |
+| Offene Rechercheaufgabe | ReAct |
 | Arbeitsteilige Content-Erstellung | Multi-Agent |
+| Wissen aus Dokumenten mit Quellenpflicht | Tool-Calling oder Workflow mit RAG-Tool |
+| Riskante oder schreibende Aktion | Workflow mit Kontrolle |
 
-## Harness Engineering: die Steuerungsschicht um das Modell
-
-Viele Agentenprobleme entstehen nicht, weil das Modell zu schwach ist, sondern weil die Steuerungsschicht um das Modell herum fehlt oder schlecht gestaltet ist. Dieses Konzept trägt den Namen **Harness Engineering**.
-
-Harness Engineering bezeichnet die Praxis, die Kontroll- und Steuerungsschicht rund um ein LLM zu gestalten — also alles, was zwischen der Rohmodellausgabe und einer realen Aktion liegt. Eine Dreiteilung hilft beim Einordnen:
-
-```mermaid
-flowchart TB
-    subgraph Harness ["<b>Harness Engineering</b>"]
-        direction TB
-        H_Info["Gesamte Steuerungsinfrastruktur"]
-        
-        subgraph Context ["<b>Context Engineering</b>"]
-            direction TB
-            C_Info["Kontextzusammenstellung & Retrieval"]
-            
-            subgraph Prompt ["<b>Prompt Engineering</b>"]
-                P_Info["Instruktionen an das Modell"]
-            end
-            
-            C_Info --> P_Info
-        end
-        
-        H_Info --> C_Info
-    end
-
-    style Harness fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style Context fill:#e1f5fe,stroke:#01579b
-    style Prompt fill:#fff9c4,stroke:#fbc02d
-```
-
-**Prompt Engineering** ist die innerste Schicht: Instruktionen, Rollenbeschreibungen, Beispiele — was dem Modell gesagt wird.
-
-**Context Engineering** bestimmt, was überhaupt in den Kontext fließt und wann: Retrieval, Kompression, Zusammensetzung.
-
-**Harness Engineering** umfasst alles darüber hinaus: Werkzeugorchestrierung, Speichersysteme, Berechtigungsgrenzen, Fehlerbehandlung und Wiederherstellungslogik.
-
-Die wichtigste Erkenntnis: Selbst das beste Modell scheitert ohne eine durchdachte Steuerungsschicht. Der häufige Fehler besteht darin, immer bessere Prompts zu schreiben, statt das System um das Modell herum zu verbessern. Instabilität, Halluzinationen oder Endlosschleifen werden dann dem Modell zugeschrieben — meistens liegt das Problem aber in einem unstrukturierten Kontext, inkonsistentem Speicher oder fehlender Fehlerbehandlung.
-
-Typischer Fehler: Eine besondere Gefahr in länger laufenden Agenten ist der sogenannte **Execution Drift** — ein stilles Versagen, das keinen Fehler wirft und deshalb schwer zu erkennen ist. Das Modell interpretiert ein Tool-Ergebnis geringfügig falsch, setzt aber selbstsicher auf dieser falschen Grundlage fort. Nach mehreren solchen Schritten ist der Agent weit vom ursprünglichen Ziel entfernt, ohne dass eine Ausnahme oder Fehlermeldung aufgetreten ist. Harness Engineering begegnet diesem Problem durch strukturierte Ausgaben, die maschinell überprüfbar sind, durch Validierungsschritte zwischen Werkzeugaufrufen und durch explizite Kontrollpunkte, an denen der Planstand gegen die ursprüngliche Aufgabe geprüft wird.
-
-## Welche Entscheidungslogik hinter einem Agenten steckt
-
-Eine einfache Regelarchitektur reagiert auf klar definierte Muster. Das entspricht einem Simple-Reflex-Agenten: Wenn Bedingung A erfüllt ist, folgt Aktion B. Solche Systeme sind schnell und gut kontrollierbar, brechen aber bei unerwarteten Situationen schnell an ihre Grenzen.
-
-Ein zustandsbasierter Agent berücksichtigt zusätzlich, was bereits bekannt ist, auch wenn diese Information nicht direkt in der aktuellen Eingabe steht. Diese Form ist nützlich, wenn ein Verlauf oder ein interner Status mitgeführt werden muss. Ein Beispiel wäre ein Agent, der weiß, dass eine Identitätsprüfung bereits erfolgt ist und deshalb im nächsten Schritt andere Optionen freischaltet.
-
-Zielorientierte Agenten bewerten, welche Aktion dem gewünschten Ergebnis näherkommt. ReAct-Systeme verhalten sich oft so: Sie planen nicht vollständig im Voraus, sondern nähern sich dem Ziel iterativ. Utility-basierte Agenten gehen noch einen Schritt weiter und vergleichen Optionen nach einem Präferenzwert, etwa Kosten, Risiko oder Erfolgswahrscheinlichkeit. Adaptive Agenten wiederum verändern ihr Verhalten auf Basis früherer Rückmeldungen, spielen im Entwicklerkontext aber meist noch keine Hauptrolle.
-
-Grenze: Diese Einteilung hilft beim Denken, ersetzt aber keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
-
-## Single-Agent-Architektur: mehrere Schritte, eine Rolle
-
-Ein einzelner Agent übernimmt die vollständige Bearbeitung einer Aufgabe. Er kann ein Ziel in Zwischenschritte zerlegen, Tools nutzen, Ergebnisse auswerten und den nächsten Schritt wählen. Das ist mehr als ein einzelner Tool-Aufruf, aber noch kein Agententeam.
-
-Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein Meeting-Briefing-Agent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
-
-**Vorteile:**
-
-- keine Koordination zwischen mehreren Agenten
-- geringerer Token-Verbrauch als bei Multi-Agent-Systemen
-- leichter zu erklären, zu testen und zu debuggen
-
-**Nachteile:**
-
-- ein einzelner Agent wird schnell überladen, wenn zu viele Rollen zusammenfallen
-- lange Aufgaben brauchen klare Grenzen für Kontext, Tools und Iterationen
-- falsche Tool-Auswahl oder fehlerhafte Zwischenergebnisse verschieben den gesamten Pfad
-
-Sobald getrennte Fachrollen, eigene Kontexte oder unabhängige Prüfungen nötig werden, sollte die Architektur anders geschnitten werden.
-
-## ReAct: wenn der Lösungsweg noch nicht feststeht
-
-ReAct kombiniert Nachdenken, Handeln und Beobachten in einem wiederholten Zyklus. Der Agent prüft den aktuellen Stand, führt eine Aktion aus, liest das Ergebnis und entscheidet anschließend über den nächsten Schritt. Dieses Muster eignet sich vor allem dann, wenn der Lösungsweg vorab nicht vollständig bekannt ist.
-
-```mermaid
-flowchart LR
-    A[Aufgabe] --> B[Denken]
-    B --> C[Handeln]
-    C --> D[Beobachten]
-    D --> E{Ziel erreicht?}
-    E -->|Nein| B
-    E -->|Ja| F[Antwort]
-```
-
-Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
-
-In der Praxis relevant, wenn: Die Aufgabe offen ist, mehrere Zwischenschritte nötig sind und vorab nicht feststeht, welche Aktion als Nächstes sinnvoll ist.
-
-## Explore → Plan → Act: ReAct für den Produktionseinsatz
-
-ReAct ist flexibel, aber für den Produktionseinsatz oft zu unstrukturiert. Produktive Agenten unterteilen ihre Arbeit deshalb in **drei klar getrennte Phasen** mit unterschiedlichen Berechtigungen:
-
-```mermaid
-flowchart LR
-    E["<b>Explore</b><br/>nur lesen"] --> P["<b>Plan</b><br/>nur lesen"] --> A["<b>Act</b><br/>voller Zugriff"]
-```
-
-**Explore** — der Agent liest, sucht und sammelt Informationen, ohne etwas zu verändern. Erlaubt: Dateien lesen, Suchen, Strukturen analysieren.
-
-**Plan** — der Agent entscheidet, welche Schritte notwendig sind, und skizziert die Änderungen. Noch kein Schreiben, kein Ausführen.
-
-**Act** — erst jetzt darf der Agent verändernd eingreifen: Dateien schreiben, APIs aufrufen, Daten speichern. Voller Werkzeugzugriff.
-
-Beispiel beim Bearbeiten von Code: Explore liest relevante Dateien und versteht die Struktur. Plan skizziert die Änderungen und prüft Auswirkungen. Act schreibt den Code und führt Tests aus.
-
-Diese Phasentrennung reduziert destruktive Fehler erheblich, weil ein Agent nicht im selben Schritt erkunden und gleichzeitig schreiben kann.
-
-In der Praxis relevant, wenn: Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betroffen sind oder der Lösungsweg vor der Ausführung abgesichert sein muss.
+Im Capstone dient diese Auswahl als Architektur-Check: Die gewählte Lösung sollte begründen, warum sie Tool-Calling, Single-Agent, Workflow, Multi-Agent oder eine Kombination daraus nutzt und welche Kontrollpunkte sie ergänzt.
 
 ## Tool-Calling: wenn das Modell Werkzeuge steuern soll
 
@@ -235,6 +137,65 @@ response = agent.invoke({
 ```
 
 Typischer Fehler: Ein einziges Tool für zu viele unterschiedliche Aufgaben zu bauen. Dann verliert das Modell die Klarheit, welches Werkzeug in welcher Situation gemeint ist.
+
+## Single-Agent-Architektur: mehrere Schritte, eine Rolle
+
+Ein einzelner Agent übernimmt die vollständige Bearbeitung einer Aufgabe. Er kann ein Ziel in Zwischenschritte zerlegen, Tools nutzen, Ergebnisse auswerten und den nächsten Schritt wählen. Das ist mehr als ein einzelner Tool-Aufruf, aber noch kein Agententeam.
+
+Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein Meeting-Briefing-Agent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
+
+**Vorteile:**
+
+- keine Koordination zwischen mehreren Agenten
+- geringerer Token-Verbrauch als bei Multi-Agent-Systemen
+- leichter zu erklären, zu testen und zu debuggen
+
+**Nachteile:**
+
+- ein einzelner Agent wird schnell überladen, wenn zu viele Rollen zusammenfallen
+- lange Aufgaben brauchen klare Grenzen für Kontext, Tools und Iterationen
+- falsche Tool-Auswahl oder fehlerhafte Zwischenergebnisse verschieben den gesamten Pfad
+
+Sobald getrennte Fachrollen, eigene Kontexte oder unabhängige Prüfungen nötig werden, sollte die Architektur anders geschnitten werden.
+
+## ReAct: wenn der Lösungsweg noch nicht feststeht
+
+ReAct kombiniert Nachdenken, Handeln und Beobachten in einem wiederholten Zyklus. Der Agent prüft den aktuellen Stand, führt eine Aktion aus, liest das Ergebnis und entscheidet anschließend über den nächsten Schritt. Dieses Muster eignet sich vor allem dann, wenn der Lösungsweg vorab nicht vollständig bekannt ist — es verfeinert damit den Single-Agent aus dem vorigen Abschnitt um einen konkreten Ablaufzyklus.
+
+```mermaid
+flowchart LR
+    A[Aufgabe] --> B[Denken]
+    B --> C[Handeln]
+    C --> D[Beobachten]
+    D --> E{Ziel erreicht?}
+    E -->|Nein| B
+    E -->|Ja| F[Antwort]
+```
+
+Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
+
+In der Praxis relevant, wenn: Die Aufgabe offen ist, mehrere Zwischenschritte nötig sind und vorab nicht feststeht, welche Aktion als Nächstes sinnvoll ist.
+
+### Produktionsvariante: Explore → Plan → Act
+
+ReAct ist flexibel, aber für den Produktionseinsatz oft zu unstrukturiert. Produktive Agenten unterteilen ihre Arbeit deshalb in **drei klar getrennte Phasen** mit unterschiedlichen Berechtigungen:
+
+```mermaid
+flowchart LR
+    E["<b>Explore</b><br/>nur lesen"] --> P["<b>Plan</b><br/>nur lesen"] --> A["<b>Act</b><br/>voller Zugriff"]
+```
+
+**Explore** — der Agent liest, sucht und sammelt Informationen, ohne etwas zu verändern. Erlaubt: Dateien lesen, Suchen, Strukturen analysieren.
+
+**Plan** — der Agent entscheidet, welche Schritte notwendig sind, und skizziert die Änderungen. Noch kein Schreiben, kein Ausführen.
+
+**Act** — erst jetzt darf der Agent verändernd eingreifen: Dateien schreiben, APIs aufrufen, Daten speichern. Voller Werkzeugzugriff.
+
+Beispiel beim Bearbeiten von Code: Explore liest relevante Dateien und versteht die Struktur. Plan skizziert die Änderungen und prüft Auswirkungen. Act schreibt den Code und führt Tests aus.
+
+Diese Phasentrennung reduziert destruktive Fehler erheblich, weil ein Agent nicht im selben Schritt erkunden und gleichzeitig schreiben kann.
+
+In der Praxis relevant, wenn: Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betroffen sind oder der Lösungsweg vor der Ausführung abgesichert sein muss.
 
 ## Workflow-basierte Architektur: wenn der Ablauf kontrolliert sein muss
 
@@ -289,29 +250,87 @@ Ein Beispiel ist eine Content-Pipeline: Ein Recherche-Agent sammelt Quellen, ein
 
 Entwickler unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
 
-## Welche Architektur meist zuerst gewählt werden sollte
+## Vertiefung: drei zusätzliche Perspektiven
 
-Für viele Entwicklerprojekte genügt bereits eine einfache Entscheidungslogik. Wenn eine Anfrage auf klar definierte Werkzeuge abgebildet werden kann, ist Tool-Calling meist der beste Startpunkt. Wenn ein Prozess feste Schritte und Freigaben hat, ist ein Workflow meist sinnvoller. ReAct eignet sich eher für offene Aufgaben. Multi-Agent lohnt sich erst, wenn Arbeitsteilung messbar bessere Ergebnisse liefert.
+Die vier Architekturstufen aus dem Überblick bleiben die wichtigste Entscheidungshilfe. Die folgenden drei Perspektiven sind Ergänzungen für das Architekturreview. Sie beantworten nicht „Welche Stufe wähle ich?“, sondern helfen, eine gewählte Architektur besser zu prüfen:
+
+| Perspektive | Prüffrage |
+|---|---|
+| Harness Engineering | Ist die Steuerungsschicht um das Modell robust genug? |
+| Entscheidungslogik | Trifft das System regelbasiert, zustandsbasiert oder zielorientiert Entscheidungen? |
+| Sichtbare Reasoning-Artefakte | Welche Plan-, Tool- und Prüfschritte sind für Debugging und Evaluation sichtbar? |
+
+### Harness Engineering: die Steuerungsschicht um das Modell
+
+Viele Agentenprobleme entstehen nicht, weil das Modell zu schwach ist, sondern weil die Steuerungsschicht um das Modell herum fehlt oder schlecht gestaltet ist. Dieses Konzept trägt den Namen **Harness Engineering**.
+
+Harness Engineering bezeichnet die Praxis, die Kontroll- und Steuerungsschicht rund um ein LLM zu gestalten — also alles, was zwischen der Rohmodellausgabe und einer realen Aktion liegt. Eine Dreiteilung hilft beim Einordnen:
 
 ```mermaid
-flowchart TD
-    A[Anforderung prüfen] --> B{Mehrere Spezialrollen nötig?}
-    B -->|Ja| C[Multi-Agent]
-    B -->|Nein| D{Fester Ablauf?}
-    D -->|Ja| E[Workflow]
-    D -->|Nein| F{Klare Tools vorhanden?}
-    F -->|Ja| G[Tool-Calling]
-    F -->|Nein| H[ReAct]
+flowchart TB
+    subgraph Harness ["<b>Harness Engineering</b>"]
+        direction TB
+        H_Info["Gesamte Steuerungsinfrastruktur"]
+        
+        subgraph Context ["<b>Context Engineering</b>"]
+            direction TB
+            C_Info["Kontextzusammenstellung & Retrieval"]
+            
+            subgraph Prompt ["<b>Prompt Engineering</b>"]
+                P_Info["Instruktionen an das Modell"]
+            end
+            
+            C_Info --> P_Info
+        end
+        
+        H_Info --> C_Info
+    end
+
+    style Harness fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style Context fill:#e1f5fe,stroke:#01579b
+    style Prompt fill:#fff9c4,stroke:#fbc02d
 ```
 
-| Situation | Naheliegende Wahl |
-|---|---|
-| FAQ plus Datenbankzugriff | Tool-Calling |
-| Mehrstufiger Genehmigungsprozess | Workflow |
-| Offene Rechercheaufgabe | ReAct |
-| Arbeitsteilige Content-Erstellung | Multi-Agent |
+**Prompt Engineering** ist die innerste Schicht: Instruktionen, Rollenbeschreibungen, Beispiele — was dem Modell gesagt wird.
 
-Merksatz: Erst Tool-Calling prüfen, dann Workflow oder Single-Agent, erst zuletzt Multi-Agent. Multi-Agent-Systeme lohnen sich, wenn Teilaufgaben fachlich oder technisch wirklich getrennte Rollen brauchen. Sonst entstehen vor allem mehr Koordination, höhere Kosten und schwerere Fehlersuche.
+**Context Engineering** bestimmt, was überhaupt in den Kontext fließt und wann: Retrieval, Kompression, Zusammensetzung.
+
+**Harness Engineering** umfasst alles darüber hinaus: Werkzeugorchestrierung, Speichersysteme, Berechtigungsgrenzen, Fehlerbehandlung und Wiederherstellungslogik.
+
+Die wichtigste Erkenntnis: Selbst das beste Modell scheitert ohne eine durchdachte Steuerungsschicht. Der häufige Fehler besteht darin, immer bessere Prompts zu schreiben, statt das System um das Modell herum zu verbessern. Instabilität, Halluzinationen oder Endlosschleifen werden dann dem Modell zugeschrieben — meistens liegt das Problem aber in einem unstrukturierten Kontext, inkonsistentem Speicher oder fehlender Fehlerbehandlung.
+
+Typischer Fehler: Eine besondere Gefahr in länger laufenden Agenten ist der sogenannte **Execution Drift** — ein stilles Versagen, das keinen Fehler wirft und deshalb schwer zu erkennen ist. Das Modell interpretiert ein Tool-Ergebnis geringfügig falsch, setzt aber selbstsicher auf dieser falschen Grundlage fort. Nach mehreren solchen Schritten ist der Agent weit vom ursprünglichen Ziel entfernt, ohne dass eine Ausnahme oder Fehlermeldung aufgetreten ist. Harness Engineering begegnet diesem Problem durch strukturierte Ausgaben, die maschinell überprüfbar sind, durch Validierungsschritte zwischen Werkzeugaufrufen und durch explizite Kontrollpunkte, an denen der Planstand gegen die ursprüngliche Aufgabe geprüft wird.
+
+### Entscheidungslogik: drei einfache Grundformen
+
+Für den Einstieg reichen drei Grundformen:
+
+| Form | Einfache Idee | Beispiel |
+|---|---|---|
+| **Regelbasiert** | Wenn Bedingung A erfüllt ist, folgt Aktion B. | Betrag über Limit → Human Review |
+| **Zustandsbasiert** | Der bisherige Verlauf verändert die nächste Entscheidung. | Identität wurde geprüft → nächste Option freischalten |
+| **Zielorientiert** | Das System wählt den nächsten Schritt, der dem Ziel näherkommt. | ReAct-Recherche verfeinert die Suche nach jeder Observation |
+
+Utility-basierte oder adaptive Agenten sind mögliche Vertiefungen, aber für die erste Architekturwahl meist nicht nötig. Wichtiger ist die Frage, welche Entscheidungen fest in Code gehören und welche Entscheidungen das Modell flexibel treffen darf.
+
+Grenze: Diese Einteilung ersetzt keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
+
+### Verbreitete Ansätze im Vergleich: sichtbare Reasoning-Artefakte
+
+Eine dritte Perspektive fragt, welche Artefakte ein Agent nach außen sichtbar macht: Plan, Tool-Wahl, Observation, Quellenstatus, Prüfergebnis oder Gate-Entscheidung. Gemeint ist nicht die versteckte interne Gedankenkette des Modells. Diese Dimension entscheidet mit, wie gut sich ein System debuggen, prüfen und in regulierten Kontexten begründen lässt.
+
+| Ansatz | Kernidee | Sichtbares Artefakt |
+|---|---|---|
+| **Tool-Calling ohne Zwischenschritt** | Werkzeugaufruf wird direkt aus der Anfrage abgeleitet | kaum sichtbar |
+| **ReAct** | Aktion und Beobachtung wechseln sich ab | sichtbar über Tool-Aufrufe und Observations |
+| **Plan-and-Execute** | Erst Plan, dann Ausführung | Plan sichtbar, Einzelschritte je nach Umsetzung |
+| **Reflexion / Self-Critique** | Ergebnis wird geprüft und ggf. korrigiert | Prüfschritt sichtbar |
+
+Diese Tabelle ist unabhängig von den vier Architekturstufen. Ein Single-Agent kann etwa als ReAct-System gebaut sein, ein Workflow kann Reflexions- oder Prüfknoten enthalten, und ein Multi-Agent-System kann intern wiederum Tool-Calling nutzen.
+
+Plan-and-Execute und Reflexion sind deshalb keine eigenen Stufen. Sie schneiden quer durch die Architektur und beschreiben, wie Arbeit sichtbar gemacht oder geprüft wird.
+
+Grenze: Sichtbare Artefakte sind kein Garant für Korrektheit. Ein Agent kann einen plausiblen Plan ausgeben und trotzdem ein falsches Tool wählen. Sichtbare Artefakte helfen beim Debuggen, ersetzen aber keine Validierung.
 
 ## Welche Design-Prinzipien immer gelten
 
@@ -319,7 +338,22 @@ Unabhängig vom Muster bleibt gute Agentenarchitektur an einige wenige Grundprin
 
 Diese Prinzipien klingen allgemein, werden aber in Agentensystemen schnell konkret. Ein Tool, das gleichzeitig sucht, entscheidet und schreibt, ist schwer zu testen. Ein Agent, der ohne Freigabe E-Mails versendet oder Zahlungen auslöst, wird im Betrieb riskant. Ein System ohne Traces ist im Fehlerfall kaum noch zu verstehen.
 
-## Deterministische Eskalation statt Modellgefühl
+## Von der Architektur zur Produktionsreife
+
+Die bisherigen Abschnitte klären, welches Muster zu einer Aufgabe passt. Dieser Abschnitt ist der spätere Betriebscheck: Er wird wichtig, sobald ein Agent nicht mehr nur demonstriert, sondern mit echten Daten, echten Nutzern oder verändernden Aktionen eingesetzt wird.
+
+Vier Fragen reichen als Einstieg:
+
+| Betriebsfrage | Worauf achten? |
+|---|---|
+| Wann muss ein Mensch übernehmen? | deterministische Eskalation |
+| Welche Regeln dürfen nie verletzt werden? | Geschäftsregeln in Code |
+| Wie groß darf der Kontext werden? | Memory, Zusammenfassung, Token-Budget |
+| Wie wird Verhalten geprüft? | Tests, Tracing, persistenter Zustand |
+
+Die folgenden Beispiele sind bewusst Architekturprinzipien, keine vollständigen Produktionsvorlagen.
+
+### Deterministische Eskalation statt Modellgefühl
 
 Bei kritischen Entscheidungen sollte die Eskalation nicht von einem gefühlten Konfidenzwert des Modells abhängen. Modelle schätzen Unsicherheit inkonsistent ein. Verlässlicher sind explizite Flags, die aus Regeln, Tools oder Vorverarbeitung stammen.
 
@@ -339,7 +373,7 @@ def route_response(state: AgentState) -> str:
 
 Dieses Muster ist für Entwickler besonders wichtig, weil es eine grundlegende Grenze moderner Modelle zeigt: Sprachliche Plausibilität ist kein Ersatz für verbindliche Geschäftsregeln.
 
-## Geschäftsregeln gehören in Code
+### Geschäftsregeln gehören in Code
 
 Wenn Freigabegrenzen, Erstattungsbeträge oder Compliance-Vorgaben gelten, gehören diese Regeln in deterministischen Code und nicht in den System-Prompt. Ein Prompt kann beschrieben werden. Eine Regel im Code kann geprüft, getestet und garantiert eingehalten werden.
 
@@ -361,7 +395,7 @@ class PolicyEngine:
 
 Typischer Fehler: Geschäftslogik als schöne Formulierung im Prompt zu verstecken. Im Betrieb führt das zu Abweichungen, die schwer nachvollziehbar sind.
 
-## Kontext darf nicht unbegrenzt wachsen
+### Kontext darf nicht unbegrenzt wachsen
 
 Je länger eine Session dauert, desto größer wird der aktive Kontext. Ohne Begrenzung steigen Token-Verbrauch, Latenz und Fehlerrisiko. Deshalb braucht ein Agent ab einer gewissen Laufzeit eine Strategie, um ältere Inhalte zu verdichten und nur das Wesentliche aktiv mitzuschleppen.
 
@@ -378,7 +412,7 @@ def compact_context(state: AgentState) -> AgentState:
 
 In der Praxis relevant, wenn: ReAct-Loops viele Iterationen durchlaufen, Sitzungen lange offen bleiben oder große RAG-Kontexte wiederholt eingebunden werden.
 
-## Caching und Tests sind Architekturthemen
+### Caching und Tests sind Architekturthemen
 
 Bestimmte Optimierungen wirken auf den ersten Blick wie Betriebsdetails, gehören aber in Wahrheit zur Architektur. Wenn in jeder Session dasselbe Regelwerk mitgeschickt wird, kann Prompt Caching die Kosten stark senken. Wenn ein Agent angeblich eine Aktion ausgeführt hat, sollte nicht nur die Modellantwort geprüft werden, sondern der persistente Zustand des Systems.
 
@@ -418,8 +452,25 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html'                  | relative_url }}) | Wie arbeiten mehrere Agenten koordiniert zusammen?                             |
 | [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html'                     | relative_url }}) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet?            |
 
+## Kurs-Navigation
+
+Die Architekturfragen aus diesem Kapitel tauchen im Kurs immer wieder auf. Diese Tabelle ist als Orientierung gedacht, nicht als Ersatz für den Kursüberblick.
+
+| Modulphase | Architekturfrage |
+|---|---|
+| M01-M02 | Wie werden Tools so beschrieben, getestet und genutzt, dass ein einzelner Agent kontrolliert handeln kann? |
+| M03-M04 | Wie werden Eingaben und Ausgaben so strukturiert, dass ein Agent verlässlich damit arbeiten kann? |
+| M06 | Wann reicht eine lineare Chain nicht mehr, und wann wird ein Graph sinnvoll? |
+| M07-M10 | Wie werden State, Routing, Schleifen und Abbruchbedingungen kontrollierbar modelliert? |
+| M11-M14, M22, M28 | Wird Wissen als einfaches RAG-Tool, als Workflow-Schritt oder als agentische Recherchefähigkeit eingebunden? |
+| M15, M23-M25 | Wie werden Qualität, Sicherheit, Kosten und Risiko messbar statt nur gehofft? |
+| M16-M18 | Welche Informationen gehören in den kurzfristigen Zustand, welche in Memory und welche gar nicht in den Kontext? |
+| M19-M21 | Braucht das Problem wirklich mehrere spezialisierte Agenten, oder genügt ein einzelner Agent mit guten Tools? |
+| M31-M35 | Was ist fachliche Fähigkeit, was ist Skill-Paket, und was gehört in den Harness um das Modell? |
+| M36-M38 | Kann die gewählte Architektur betrieben, beobachtet und im Capstone begründet werden? |
+
 ---
 
-**Version:** 1.7<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.16<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

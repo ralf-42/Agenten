@@ -32,7 +32,7 @@ Typischer Fehler: Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen 
 
 ## Evaluation und Observability: die Arbeitsaufteilung
 
-Evaluation und Observability gehören zusammen, haben aber unterschiedliche Aufgaben. Evaluation prüft, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. Observability zeigt, warum ein Durchlauf gut, schlecht, teuer oder instabil war.
+Evaluation und Observability gehören zusammen, haben aber unterschiedliche Aufgaben. Evaluation prüft, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. In produktionsnahen Agenten ist Evaluation zusätzlich ein Gate: Der nächste Schritt, eine Freigabe oder ein Release erfolgt nur, wenn Qualität, Tool-Wahl, Kosten, Latenz und Sicherheitsgrenzen passen. Observability zeigt, warum ein Durchlauf gut, schlecht, teuer oder instabil war.
 
 Für Einsteiger hilft eine einfache Unterscheidung. Evaluation ist der geplante Qualitätscheck gegen bekannte Fälle. Observability ist der Blick in den echten Ablauf mit Traces, Tool-Aufrufen, Latenzen und Fehlern. Erst beides zusammen ergibt ein belastbares Bild.
 
@@ -61,10 +61,11 @@ Für den Kurs reichen meist fünf Kernmetriken:
 | Task Success | Aufgabe wurde wirklich gelöst | Gute Formulierung allein reicht nicht |
 | Tool Success | passendes Tool korrekt genutzt | Agenten scheitern oft hier statt in der Antwort |
 | Safety / Escalation | riskante Fälle richtig behandelt | schützt vor stillen Fehlentscheidungen |
+| Security Events | Angriffs- oder Policy-Signale erkannt | macht Prompt Injection, Tool-Missbrauch und Exfiltration messbar |
 | Latenz | Antwort kommt rechtzeitig | wichtig für Nutzererlebnis und Schleifen |
 | Kosten pro erfolgreicher Lösung | Aufwand pro gelöstem Fall | zeigt Effizienz realistischer als reine Session-Kosten |
 
-In der Praxis relevant, wenn: Zwei Varianten ähnlich gut wirken, aber eine davon deutlich teurer oder instabiler ist.
+In der Praxis relevant, wenn: Zwei Varianten ähnlich gut wirken, aber eine davon deutlich teurer, langsamer, unsicherer oder instabiler ist. Ein Gate sollte dann deterministisch stoppen, nachtesten oder eskalieren, statt den Lauf trotz verletzter Grenze fortzusetzen.
 
 ## Ein kleines Evaluationsset reicht am Anfang
 
@@ -89,6 +90,8 @@ examples = [
 
 Typischer Fehler: Nur Happy Paths zu testen. Dann wirkt ein Agent stabil, bis im echten Einsatz die erste unklare oder unerlaubte Anfrage kommt.
 
+Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Schon ein kleines Set sollte Prompt Injection, falsche Tool-Wahl, manipulierte Quellen und Out-of-Scope-Anfragen enthalten.
+
 ## Was immer beobachtet wird
 
 Observability beginnt bei Agenten nicht mit Server-Uptime, sondern mit dem inhaltlichen Ablauf. Sichtbar sein sollten mindestens die Eingabe, der relevante Kontext, die Schrittfolge, die Tool-Auswahl, Fehler oder Retries sowie Kosten und Latenzen.
@@ -101,6 +104,8 @@ trace_record = {
     "latency_ms": 1580,
     "input_tokens": 740,
     "output_tokens": 129,
+    "cost_usd": 0.0014,
+    "security_events": [],
     "task_completed": True,
     "escalated": False,
 }
@@ -259,8 +264,8 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

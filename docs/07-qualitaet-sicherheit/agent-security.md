@@ -43,6 +43,8 @@ Prompt Injection ist der bekannteste Angriffsvektor. Dabei werden Anweisungen in
 
 Tool-Missbrauch ist die nächste Eskalationsstufe. Sobald ein Agent mächtige Werkzeuge besitzt, kann eine falsche Tool-Wahl oder ein manipuliertes Argument reale Folgen haben. Dazu kommen Daten-Exfiltration, bei der interne Informationen nach außen gelangen, und Jailbreaking, bei dem Sicherheitsgrenzen durch geschickte Umformulierungen umgangen werden sollen.
 
+Diese Ereignisse sollten nicht nur als Textproblem behandelt werden, sondern als **Security Events** im Trace erscheinen. Typische Kategorien sind `prompt_injection_detected`, `unsafe_tool_blocked`, `exfiltration_attempt`, `untrusted_source_rejected` oder `policy_escalation`. Erst dann kann Evaluation prüfen, ob der Agent Angriffe nicht nur sprachlich abwehrt, sondern messbar korrekt reagiert.
+
 ## Prompt Injection verstehen
 
 Prompt Injection bedeutet, dass das Modell fremde Instruktionen als relevant behandelt, obwohl sie nur Daten sein sollten.
@@ -61,6 +63,8 @@ Der zweite Fall ist besonders heikel, weil der Agent externe Inhalte oft gerade 
 
 > [!DANGER] Externe Inhalte sind keine Anweisungen<br>
 > Webseiten, Uploads, API-Antworten und E-Mails müssen im Prompt und in der Verarbeitung ausdrücklich als untrusted data behandelt werden.
+
+Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Security gehören dazu direkte und indirekte Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen. M24 nutzt solche Fälle als Regressionstest.
 
 ## Principle of Least Privilege
 
@@ -204,8 +208,8 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.5<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -48,6 +48,7 @@ Nach dem Kurs sollten Sie in der Lage sein:
 
 - Agenten von Chatbots, Chains und klassischen Workflows abzugrenzen,
 - Tools, Prompts, State und Routing gezielt zu kombinieren,
+- sichtbare Planungs-, Tool- und Prüf-Artefakte statt versteckter Gedankengänge zu nutzen,
 - RAG als Evidence Tool in Agenten einzubinden,
 - LangGraph für kontrollierte mehrstufige Abläufe zu nutzen,
 - Human-in-the-Loop, Evaluation, Security und Budgetkontrolle einzuplanen,
@@ -59,9 +60,9 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 
 | Bereich | Inhalte |
 |---|---|
-| **Agenten-Grundlagen** | Agentenbegriff, ReAct/TAO, Tool Use, erster LangChain-Agent |
+| **Agenten-Grundlagen** | Agentenbegriff, ReAct/TAO als sichtbarer Tool-Zyklus, Tool Use, erster LangChain-Agent |
 | **Struktur und Steuerung** | Prompt Engineering, Structured Output, Multi-Tool-Agenten, LCEL |
-| **Kontrollierte Workflows** | LangGraph, StateGraph, Conditional Routing, Tool Loop |
+| **Kontrollierte Workflows** | LangGraph, StateGraph, Conditional Routing, Planning-Patterns, Tool Loop |
 | **Wissen und Kontext** | RAG, ChromaDB, Retrieval als Tool, LangSmith-Evaluation |
 | **Kontrolle und Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
 | **Qualität und Betrieb** | Security, Evaluation, Routing, Kostenkontrolle, Integration, Deployment |
@@ -130,13 +131,13 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Einige Ba
 |  M01  | Agenten-Grundlagen                | Was sind KI-Agenten?                 | Agentenbegriff, ReAct/TAO, Kurszielbild                |
 |  M01  | Agenten-Grundlagen                | Tool Use & Function Calling          | Werkzeuge als kontrollierte Handlungsebene             |
 |  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Briefing-Agent  |
-|  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln                           |
+|  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
 |  M04  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
 |  M05  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
 |  M06  | Strukturierte Agenten             | LCEL Chains                          | Kontrollierte Teilketten und Übergang zu LangGraph     |
 |  M07  | Kontrollierte Workflows           | Warum LangGraph?                     | Grenzen einfacher Agents, expliziter State             |
 |  M08  | Kontrollierte Workflows           | StateGraph Basics                    | Nodes, Edges, State und Verbesserungsschleifen         |
-|  M09  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics               |
+|  M09  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics, Planning-Patterns |
 |  M10  | Kontrollierte Workflows           | Tool-Loop                            | Tool-Loop, Tool-Steuerung im Graph                     |
 |  M11  | Wissensbasierte Agenten           | RAG-Konzepte & Embeddings            | Korpus, Embeddings, Chunking                           |
 |  M12  | Wissensbasierte Agenten           | ChromaDB Indexing                    | Vektordatenbank, Indexierung, Abfrage                  |
@@ -151,7 +152,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Einige Ba
 |  M21  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
 |  M22  | Qualität und Betriebsvorbereitung | Agentic RAG                          | Retrieval-Budget, Grounding, OOC-Stopp                 |
 |  M23  | Qualität und Betriebsvorbereitung | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
-|  M24  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, RAGAS-Live-Lauf                     |
+|  M24  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark |
 |  M25  | Qualität und Betriebsvorbereitung | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
 |  M26  | Integration und Produktion        | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
 |  M27  | Integration und Produktion        | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
@@ -165,7 +166,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Einige Ba
 |  M35  | Integration und Produktion        | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
 |  M36  | Integration und Produktion        | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
 |  M37  | Integration und Produktion        | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
-|  M38  | Integration und Produktion        | Capstone                             | Eigenes Agentensystem als Abschlussprojekt             |
+|  M38  | Integration und Produktion        | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
 
 ## Vorbereitung
 
@@ -212,6 +213,20 @@ Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 - Quellen, State und Entscheidungen nachvollziehen,
 - Ergebnisse mit Tests, Human-in-the-Loop oder Evaluation prüfen.
 
+## Aufgaben nach Vorkenntnissen und Lerntempo bearbeiten
+
+Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Bearbeiten Sie die Aufgaben entsprechend Ihren **Vorkenntnissen** und Ihrem **Lerntempo**: Grundlagen sichern das zentrale Kursverständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben sind für zusätzliche Übung, eigene Varianten oder fortgeschrittene Transferfragen gedacht.
+
+Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
+
+## Zeitfenster für Aufgaben
+
+Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Minuten Bearbeitungszeit**, dann ein kurzer **Zwischenstopp**, anschließend bei Bedarf nochmals etwa **10+x Minuten**. Die erste Phase ist lang genug, um in die Aufgabe hineinzukommen, aber kurz genug, damit Blockaden nicht erst am Ende sichtbar werden.
+
+Der Zwischenstopp sollte niedrigschwellig sein. Statt nur zu fragen „Gibt es Fragen?“, hilft ein aktiver Check: zum Beispiel Daumen 👍hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
+
+Wichtig ist, der Check ist nicht als harte Pflicht-Unterbrechung für alle gedacht. Wer gut im Flow ist, kann weiterarbeiten; wer festhängt, bekommt früh eine Gelegenheit für Klärung. Bei sehr unterschiedlichem Tempo bleibt der Takt flexibel: schnellere Teilnehmende können Aufbau- oder Vertiefungsaufgaben weiterbearbeiten, langsamere sichern zunächst die Grundlagen.
+
 ## Nächste Schritte
 
 | Dokument | Frage |
@@ -223,6 +238,6 @@ Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.1<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

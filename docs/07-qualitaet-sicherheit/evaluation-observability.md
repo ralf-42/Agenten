@@ -25,7 +25,7 @@ has_toc: true
 
 ## Evaluation und Observability: der Unterschied
 
-Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. Observability beantwortet die Anschlussfrage, warum ein Ergebnis gut, schlecht, teuer oder instabil war. Beides gehört zusammen: Ohne Evaluation fehlt ein belastbarer Maßstab, ohne Observability bleibt unklar, an welcher Stelle der Fehler entstanden ist.
+Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. In produktionsnahen Workflows ist Evaluation außerdem ein **Gate**: Ein Lauf darf nur weitergehen, wenn Antwortqualität, Tool-Wahl, Kosten, Latenz und Sicherheitsgrenzen passen. Observability beantwortet die Anschlussfrage, warum ein Ergebnis gut, schlecht, teuer oder instabil war. Beides gehört zusammen: Ohne Evaluation fehlt ein belastbarer Maßstab, ohne Observability bleibt unklar, an welcher Stelle der Fehler entstanden ist.
 
 Für Entwickler wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, Antworten und Metriken betrachtet werden. Der Unterschied liegt im Zweck. Evaluation vergleicht erwartetes Verhalten mit tatsächlichem Verhalten. Observability sammelt die Spuren, die diesen Vergleich erklärbar machen.
 
@@ -84,7 +84,7 @@ Für einen Agenten reichen einige wenige Datentypen, um die meisten Fehler sicht
 ```mermaid
 flowchart TB
     L1["1. Prompt und Antwort\nFrage, Kontext, Systeminstruktion, Ausgabe"]
-    L2["2. Schrittfolge\nReasoning, Retrieval, Tool Calls, Zwischenergebnisse"]
+    L2["2. Schrittfolge\nPlan, Retrieval, Tool Calls, Zwischenergebnisse"]
     L3["3. Kosten und Token\npro Session und pro Schritt"]
     L4["4. Tool-Verhalten\nToolwahl, Parameter, Wiederholungen, Fehler"]
 
@@ -106,7 +106,7 @@ Grenze: Nicht jede gute Agentenantwort lässt sich mit einer einzigen Kennzahl b
 
 ## Welche Metriken für Entwickler zuerst genügen
 
-Für den Einstieg ist keine Metrik-Bibliothek nötig. Meist reichen vier Fragen: War die Antwort fachlich korrekt, wurde das richtige Tool verwendet, wie lange dauerte der Durchlauf und wie hoch waren die Kosten. Damit entsteht bereits ein belastbares Grundbild.
+Für den Einstieg ist keine Metrik-Bibliothek nötig. Meist reichen vier Fragen: War die Antwort fachlich korrekt, wurde das richtige Tool verwendet, wie lange dauerte der Durchlauf und wie hoch waren die Kosten. Für sicherheitsrelevante Agenten kommt eine fünfte Frage hinzu: Sind Security Events aufgetreten, etwa Prompt-Injection-Erkennung, Tool-Missbrauch, Datenabflussversuch oder Policy-Eskalation? Damit entsteht bereits ein belastbares Grundbild.
 
 Eine einfache Tool-Accuracy lässt sich fast ohne Infrastruktur berechnen:
 
@@ -125,6 +125,7 @@ Für textuelle Antworten helfen häufig drei Bewertungsachsen: Relevanz, Vollst�
 | Latenz | Antwort kommt schnell genug | Wartezeit Nutzerfluss stört |
 | Kosten pro erfolgreicher Lösung | Effizienz pro gelöstem Fall | Varianten verglichen werden |
 | Erfolgsquote pro Aufgabe | Ziel wurde wirklich erreicht | Agent mehrere Schritte ausführt |
+| Security Events | Angriffs- oder Policy-Signale wurden erkannt | riskante Tools, RAG oder sensible Daten im Spiel sind |
 
 Ein besonders nützlicher Wert ist nicht die Kostenhöhe pro Session, sondern die Kosten pro erfolgreicher Lösung. Zwei Varianten können ähnlich teuer erscheinen, obwohl eine davon deutlich öfter scheitert.
 
@@ -147,6 +148,8 @@ Dataset-Struktur:
 - Edge Cases: unklare Formulierungen, Grenzwerte, fehlende Angaben
 - Negative Tests: Out-of-Scope, ungültige Eingaben, adversariale Inputs
 ```
+
+Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Agenten gehören dazu zum Beispiel Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen.
 
 Wenn im Betrieb ein neuer Fehler auftaucht, gehört genau dieser Fall in das Evaluationsset. So wird Qualität mit jeder Iteration weniger zufällig und stärker reproduzierbar.
 
@@ -328,8 +331,8 @@ Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen
 
 ---
 
-**Version:** 1.5<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.6<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

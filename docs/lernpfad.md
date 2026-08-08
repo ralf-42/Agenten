@@ -38,6 +38,8 @@ Für den 5-Tage-Kurs ist die Dokumentation bewusst breiter als der Pflichtstoff.
 
 Die Pflichttexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt. Empfohlene und optionale Texte erweitern diesen Faden, ohne dass jede Seite im Kurs vollständig behandelt werden muss.
 
+Wichtig für die Lesart: Wenn der Kurs von Reasoning oder Planning spricht, sind damit **sichtbare Artefakte** gemeint, zum Beispiel Plan, Tool-Wahl, Quellenstatus, Gate-Entscheidung oder Prüfergebnis. Eine versteckte interne Gedankenkette des Modells ist kein Lernziel und wird nicht als Nachweis verlangt.
+
 ## Typische Einstiege
 
 Nicht jede Person startet mit derselben Frage. In der Praxis tauchen meist fünf Ausgangslagen auf.
@@ -134,12 +136,12 @@ Die Dokumentation ist in Bereiche gegliedert, die unterschiedliche Funktionen ha
 | Bereich | Rolle in der Navigation | Typische Frage | Beitrag |
 |---|---|---|---|
 | Orientierung und Agentenverständnis | Begriffe, Einsatzentscheidung, Modellwahl | Ist ein Agent hier sinnvoll? | Planen |
-| Tool Use, Prompting und erste Agenten | Architektur, Tools, Prompts, LangChain | Wie entsteht ein erster Agent? | Planen, Handeln |
+| Tool Use, Prompting und erste Agenten | Architektur, Tools, Prompts, sichtbare Planungsartefakte, LangChain | Wie entsteht ein erster Agent? | Planen, Handeln |
 | Orchestrierung, State und LangGraph | Zustandsführung und mehrstufige Abläufe | Wie wird ein Agent steuerbar? | Planen, Prüfen |
 | Kontext, Grounding und RAG | Kontextstrategie, Retrieval, Embeddings | Wie wird Wissen zuverlässig eingebunden? | Handeln, Prüfen |
 | Sessions, Memory und HITL | Persistenz, Erinnerung, menschliche Freigaben | Wie bleibt ein Ablauf kontrollierbar? | Planen, Prüfen |
 | Multi-Agent, Skills und Protokolle | Arbeitsteilung, Skills, Schnittstellen | Wie arbeiten Agenten zusammen? | Planen, Handeln |
-| Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit | Wie wird ein Agent belastbar? | Prüfen |
+| Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit, Kosten- und Risikokontrolle | Wie wird ein Agent belastbar? | Prüfen |
 | Deployment und Betrieb | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? | Handeln, Prüfen |
 | Regulatorik, Datenschutz und Verantwortung | EU AI Act, DSGVO, Ethik, Souveränität | Welche Rahmenbedingungen prägen den Einsatz? | Prüfen |
 | Ressourcen | Setup, Standards, Troubleshooting, Links | Was hilft bei der praktischen Arbeit? | Unterstützung |
@@ -167,7 +169,6 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** August 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-

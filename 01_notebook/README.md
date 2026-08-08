@@ -20,7 +20,7 @@ Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule 
 
 ---
 
-Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M25 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing und Kostenkontrolle auf dasselbe Zielsystem hin.
+Der rote Faden der Pflicht-, Empfehlungs- und Erweiterungsmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M02)
 
@@ -35,7 +35,7 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln und Few-Shot-Klassifikation für den Briefing-Agent | 🟢 Pflicht |
+| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den Briefing-Agent | 🟢 Pflicht |
 | M04   | `M04_Structured_Output.ipynb`               | Antwortschema, Quellenpflicht und strukturierte Prüfbarkeit mit Pydantic und `with_structured_output()` | 🟢 Pflicht |
 | M05   | `M05_Multi_Tool_Agents.ipynb`               | Mehrere Projekt- und Recherche-Tools, Tool-Auswahl, robuste Fehlerbehandlung | 🟢 Pflicht |
 | M06   | `M06_LCEL_Chains.ipynb`                     | Kontrollierte Teilketten für Antwort, Prüfung und Übergang zu LangGraph | 🟢 Pflicht |
@@ -48,7 +48,7 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 |-------|-------|--------|------|
 | M07 | `M07_Warum_LangGraph.ipynb` | Warum der Meeting- & Research-Briefing-Agent kontrollierten State braucht | 🟢 Pflicht |
 | M08 | `M08_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Pflicht |
-| M09 | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics | 🟢 Pflicht |
+| M09 | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics und Planning-Patterns | 🟢 Pflicht |
 | M10 | `M10_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Pflicht |
 
 ---
@@ -86,7 +86,7 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 |-------|-------|--------|-----------|
 | M22 | `M22_Agentic_RAG.ipynb` | Agentic RAG mit Retrieval-Budget, Grounding und OOC-Stopp | 🟡 Empfohlen |
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🟡 Empfohlen |
-| M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, RAGAS-Live-Lauf | 🟡 Empfohlen |
+| M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark, RAGAS-Live-Lauf | 🟡 Empfohlen |
 | M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🟡 Empfohlen |
 | M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Research-Briefing-System als End-to-End-Pipeline | 🔵 Optional |
 | M27 | `M27_Projekt_Templates.ipynb` | Eigene Projekt-Templates A/B/C, MVP-Definition | 🔵 Optional |
@@ -100,9 +100,9 @@ Der rote Faden der Pflicht- und Empfehlungsmodule ist ein **Meeting- & Research-
 | M35 | `M35_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🔵 Optional |
 | M36 | `M36_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🔵 Optional |
 | M37 | `M37_API_Monitoring.ipynb` | FastAPI-Endpoints, Production Monitoring, Kursrückblick | 🔵 Optional |
-| M38 | `M38_Capstone.ipynb` | Capstone-Projekt | 🔵 Optional |
+| M38 | `M38_Capstone.ipynb` | Capstone-Projekt mit Architekturcheck und minimalem End-to-End-Smoke-Test | 🔵 Optional |
 
 
-**Version:** 3.0    
-**Stand:** Juli 2026    
+**Version:** 3.1    
+**Stand:** August 2026    
 **Kursplan-Referenz:** v5.0    

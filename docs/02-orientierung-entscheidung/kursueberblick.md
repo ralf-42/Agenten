@@ -24,11 +24,11 @@ has_toc: true
 
 ## Worum es in diesem Kurs geht
 
-Der Kurs zeigt, wie aus einzelnen KI-Funktionen kontrollierte Agentensysteme werden. Im Mittelpunkt stehen Anwendungen, die Aufgaben nicht nur beantworten, sondern planen, Werkzeuge nutzen, Zwischenergebnisse prüfen und bei Bedarf Menschen einbeziehen.
+Der Kurs zeigt, wie aus einzelnen KI-Funktionen kontrollierte Agentensysteme werden: Anwendungen, die planen, Werkzeuge nutzen, Zwischenergebnisse prüfen und bei Bedarf Menschen einbeziehen.
 
 Der rote Faden ist ein **Meeting- & Research-Briefing-Agent**. Er arbeitet mit einem kuratierten Projektkorpus, sucht relevante Quellen, erstellt belegbare Antworten, erkennt Grenzen des Wissens und macht kritische Entscheidungen prüfbar.
 
-Der Fokus liegt auf praktischer Umsetzung mit Python, LangChain, LangGraph, LangSmith und ChromaDB. Theoretische Konzepte werden so weit erklärt, wie sie für Entwurf, Implementierung und Bewertung eines Agentensystems nötig sind.
+Der Fokus liegt auf praktischer Umsetzung mit Python, LangChain, LangGraph, LangSmith und ChromaDB. Theorie wird so weit erklärt, wie sie für Entwurf, Implementierung und Bewertung nötig ist.
 
 ## Zielgruppe
 
@@ -40,7 +40,7 @@ Der Kurs passt besonders für:
 
 Hilfreich sind sichere Grundlagen in Python, Jupyter/Colab und API-Nutzung.
 
-Der Kurs baut sinnvoll auf dem GenAI-Kurs auf. Wer Prompting, Modellaufrufe, Chains, RAG und strukturierte Ausgaben bereits kennt, kann sich hier auf die nächste Stufe konzentrieren: kontrollierte Handlung, Zustand, Tool-Auswahl, Freigabe und Evaluation.
+Der Kurs baut auf dem GenAI-Kurs auf. Wer Prompting, Modellaufrufe, Chains, RAG und strukturierte Ausgaben kennt, kann sich hier auf kontrollierte Handlung, Zustand, Tool-Auswahl, Freigabe und Evaluation konzentrieren.
 
 ## Was Sie mitnehmen
 
@@ -67,7 +67,7 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 | **Kontrolle und Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
 | **Qualität und Betrieb** | Security, Evaluation, Routing, Kostenkontrolle, Integration, Deployment |
 
-Weitere Themen sind Agentic RAG, Model Context Protocol, DeepAgents, Skill-Design, Production Deployment und Governance-Fragen für reale Agentensysteme.
+Ergänzend geht es um Agentic RAG, Model Context Protocol, DeepAgents, Skill-Design, Deployment und Governance.
 
 ## Kursprogression
 
@@ -110,7 +110,7 @@ timeline
 
 ## Maturity Model als Overlay
 
-Die Kursprogression lässt sich zusätzlich als Reifegradmodell lesen. Dieses Modell ist keine zweite Kursstruktur und kein Ziel, bei dem höhere Level automatisch besser wären. Es dient als Landkarte: Welche Fähigkeit kommt zu einem Agentensystem hinzu, und welche Kontrollpunkte werden dadurch nötig?
+Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zweite Kursstruktur und keine Rangliste. Es zeigt, welche Fähigkeiten hinzukommen und welche Kontrollpunkte dadurch nötig werden.
 
 | Reifegrad | Kurzbeschreibung | Kursbezug | Einordnung |
 |---|---|---|---|
@@ -120,11 +120,9 @@ Die Kursprogression lässt sich zusätzlich als Reifegradmodell lesen. Dieses Mo
 | **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M25, M26-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
 | **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24, M37-M38 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
 
-Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Einige Bausteine wie Memory oder Evaluation erscheinen früher, weil sie didaktisch gebraucht werden, bevor ein System produktionsnah wird. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können aus Feedback lernen und besser geprüft werden, sie verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
+Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
 
 ## Modulübersicht
-
-
 
 | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
 | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
@@ -194,13 +192,13 @@ Sinnvoll ist es, eigene Fragen oder kleine Prozessideen mitzubringen. Dadurch wi
 
 ## Lernen mit KI
 
-Generative KI darf im Kurs als Lern- und Entwicklungshilfe genutzt werden. Bei Fehlermeldungen, Verständnisfragen oder Varianten kann ein Modell helfen, Teilschritte zu erklären oder alternative Implementierungen vorzuschlagen.
+Generative KI darf im Kurs als Lern- und Entwicklungshilfe genutzt werden. Bei Fehlermeldungen, Verständnisfragen oder Varianten kann ein Modell Teilschritte erklären oder alternative Implementierungen vorschlagen.
 
-Die Grenze bleibt wichtig: Die KI ersetzt nicht das eigene Verständnis. Der Schwerpunkt liegt darauf, Agentensysteme selbst zu entwerfen, auszuführen, zu beobachten und zu bewerten.
+Die Grenze bleibt wichtig: KI ersetzt nicht das eigene Verständnis. Der Schwerpunkt liegt darauf, Agentensysteme selbst zu entwerfen, auszuführen, zu beobachten und zu bewerten.
 
 ## Kompetenzillusion vermeiden
 
-Agenten-Demos können schnell überzeugend wirken, obwohl wichtige Kontrollpunkte fehlen. Gerade bei mehrstufigen Systemen entsteht leicht der Eindruck, der Agent habe verstanden, geplant und geprüft, obwohl er nur plausibel formuliert.
+Agenten-Demos können überzeugend wirken, obwohl wichtige Kontrollpunkte fehlen. Gerade bei mehrstufigen Systemen entsteht leicht der Eindruck, der Agent habe verstanden, geplant und geprüft, obwohl er nur plausibel formuliert.
 
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/kompetenzillusion.png" alt="Kompetenzillusion beim Lernen mit KI" width="700">
@@ -215,17 +213,17 @@ Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 
 ## Aufgaben nach Vorkenntnissen und Lerntempo bearbeiten
 
-Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Bearbeiten Sie die Aufgaben entsprechend Ihren **Vorkenntnissen** und Ihrem **Lerntempo**: Grundlagen sichern das zentrale Kursverständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben sind für zusätzliche Übung, eigene Varianten oder fortgeschrittene Transferfragen gedacht.
+Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Bearbeiten Sie sie entsprechend Ihren **Vorkenntnissen** und Ihrem **Lerntempo**: Grundlagen sichern das zentrale Verständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben bieten zusätzliche Übung, Varianten oder Transferfragen.
 
-Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
+Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer: Meeting- & Research-Briefing-Agent**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
 
 ## Zeitfenster für Aufgaben
 
-Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Minuten Bearbeitungszeit**, dann ein kurzer **Zwischenstopp**, anschließend bei Bedarf nochmals etwa **10+x Minuten**. Die erste Phase ist lang genug, um in die Aufgabe hineinzukommen, aber kurz genug, damit Blockaden nicht erst am Ende sichtbar werden.
+Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Minuten Bearbeitungszeit**, ein kurzer **Zwischenstopp** und anschließend weitere **10 Minuten oder mehr**. Die erste Phase ist lang genug für den Einstieg und kurz genug, damit Blockaden früh sichtbar werden.
 
-Der Zwischenstopp sollte niedrigschwellig sein. Statt nur zu fragen „Gibt es Fragen?“, hilft ein aktiver Check: zum Beispiel Daumen 👍hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
+Der Zwischenstopp sollte niedrigschwellig sein. Statt nur zu fragen „Gibt es Fragen?“, hilft ein aktiver Check: zum Beispiel Daumen hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
 
-Wichtig ist, der Check ist nicht als harte Pflicht-Unterbrechung für alle gedacht. Wer gut im Flow ist, kann weiterarbeiten; wer festhängt, bekommt früh eine Gelegenheit für Klärung. Bei sehr unterschiedlichem Tempo bleibt der Takt flexibel: schnellere Teilnehmende können Aufbau- oder Vertiefungsaufgaben weiterbearbeiten, langsamere sichern zunächst die Grundlagen.
+Der Check ist keine harte Pflicht-Unterbrechung für alle. Wer gut im Flow ist, kann weiterarbeiten; wer festhängt, bekommt früh Gelegenheit zur Klärung. Bei unterschiedlichem Tempo bleibt der Takt flexibel: Schnellere bearbeiten Aufbau- oder Vertiefungsaufgaben, langsamere sichern zunächst die Grundlagen.
 
 ## Nächste Schritte
 

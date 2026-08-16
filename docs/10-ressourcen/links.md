@@ -98,6 +98,7 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 | [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ M11) |
 | [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ M04, täglich) |
 | [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ M29) |
+| [Google Colab CLI](https://github.com/googlecolab/google-colab-cli) | Kommandozeilen-Tool für den Zugriff auf Google Colab-Notebooks vom Terminal aus |
 
 ---
 

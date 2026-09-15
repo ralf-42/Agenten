@@ -42,9 +42,9 @@ Hilfreich sind sichere Grundlagen in Python, Jupyter/Colab und API-Nutzung.
 
 Der Kurs baut auf dem GenAI-Kurs auf. Wer Prompting, Modellaufrufe, Chains, RAG und strukturierte Ausgaben kennt, kann sich hier auf kontrollierte Handlung, Zustand, Tool-Auswahl, Freigabe und Evaluation konzentrieren.
 
-## Was Sie mitnehmen
+## Was der Kurs vermittelt
 
-Nach dem Kurs sollten Sie in der Lage sein:
+Nach dem Kurs ist es möglich:
 
 - Agenten von Chatbots, Chains und klassischen Workflows abzugrenzen,
 - Tools, Prompts, State und Routing gezielt zu kombinieren,
@@ -54,6 +54,8 @@ Nach dem Kurs sollten Sie in der Lage sein:
 - Human-in-the-Loop, Evaluation, Security und Budgetkontrolle einzuplanen,
 - einen Meeting- & Research-Briefing-Agenten als eigenes Capstone-Projekt weiterzuentwickeln.
 
+Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, relevante Evidenz sammelt, Entscheidungen sichtbar macht, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
+
 ## Kursstruktur
 
 Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG und Multi-Agent-Patterns bis zu Evaluation, Betrieb und Capstone.
@@ -61,13 +63,14 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 | Bereich | Inhalte |
 |---|---|
 | **Agenten-Grundlagen** | Agentenbegriff, ReAct/TAO als sichtbarer Tool-Zyklus, Tool Use, erster LangChain-Agent |
-| **Struktur und Steuerung** | Prompt Engineering, Structured Output, Multi-Tool-Agenten, LCEL |
+| **Strukturierte Agenten** | Prompt Engineering, Structured Output, Multi-Tool-Agenten, LCEL |
 | **Kontrollierte Workflows** | LangGraph, StateGraph, Conditional Routing, Planning-Patterns, Tool Loop |
-| **Wissen und Kontext** | RAG, ChromaDB, Retrieval als Tool, LangSmith-Evaluation |
-| **Kontrolle und Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
-| **Qualität und Betrieb** | Security, Evaluation, Routing, Kostenkontrolle, Integration, Deployment |
+| **Wissensbasierte Agenten** | RAG, ChromaDB, Retrieval als Tool, LangSmith-Evaluation |
+| **Kontrollierte Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
+| **Qualität und Betriebsvorbereitung** | Security, Evaluation, Routing, Kostenkontrolle |
+| **Integration und Produktion** | Pipeline, UI, MCP, Skill-Design, Deployment, Capstone |
 
-Ergänzend geht es um Agentic RAG, Model Context Protocol, DeepAgents, Skill-Design, Deployment und Governance.
+Ergänzend geht es um Agentic RAG und Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
 
 ## Kursprogression
 
@@ -120,14 +123,13 @@ Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zwe
 | **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M25, M26-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
 | **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24, M37-M38 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
 
-Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
+Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Modell hilft beim Einordnen: Welche zusätzliche Freiheit bekommt der Agent, und welche Kontrolle muss dadurch sichtbar werden? Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
 
 ## Modulübersicht
 
 | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
 | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
-|  M01  | Agenten-Grundlagen                | Was sind KI-Agenten?                 | Agentenbegriff, ReAct/TAO, Kurszielbild                |
-|  M01  | Agenten-Grundlagen                | Tool Use & Function Calling          | Werkzeuge als kontrollierte Handlungsebene             |
+|  M01  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
 |  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Briefing-Agent  |
 |  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
 |  M04  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
@@ -148,9 +150,9 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Bausteine
 |  M19  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
 |  M20  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
 |  M21  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
-|  M22  | Qualität und Betriebsvorbereitung | Agentic RAG                          | Retrieval-Budget, Grounding, OOC-Stopp                 |
+|  M22  | Qualität und Betriebsvorbereitung | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
 |  M23  | Qualität und Betriebsvorbereitung | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
-|  M24  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark |
+|  M24  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
 |  M25  | Qualität und Betriebsvorbereitung | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
 |  M26  | Integration und Produktion        | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
 |  M27  | Integration und Produktion        | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
@@ -166,6 +168,20 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Bausteine
 |  M37  | Integration und Produktion        | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
 |  M38  | Integration und Produktion        | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
 
+In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Research-Briefing-Agenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
+
+| Kursblock | Ausbau am Meeting- & Research-Briefing-Agenten |
+|---|---|
+| **M01-M02: Agenten-Grundlagen** | Der Agent bekommt ein Zielbild, erste Tools und einen einfachen LangChain-Harness. |
+| **M03-M06: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
+| **M07-M10: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
+| **M11-M15: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
+| **M16-M21: Kontrollierte Zusammenarbeit** | Sessions, Human-in-the-Loop, Memory und Multi-Agent-Muster machen längere Abläufe steuerbar. |
+| **M22-M25: Qualität und Betriebsvorbereitung** | Security, Grounding, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab. |
+| **M26-M38: Integration und Produktion** | Die Einzelbausteine werden zu Pipeline, UI, MCP-Integration, Skills, Deployment und Capstone zusammengeführt. |
+
+Einige Begriffe sind bewusst knapp gehalten. **Evidence Tool** meint ein Retrieval-Werkzeug, das Antworten mit Quellenmaterial verbindet. **Out-of-Context-Stopp** bedeutet, dass der Agent anhält, wenn die vorhandenen Quellen keine belastbare Antwort tragen. **Circuit Breaker** bezeichnet eine Schutzschaltung, die Abläufe bei Fehlern, Kosten- oder Qualitätsgrenzen stoppt.
+
 ## Vorbereitung
 
 Für die praktischen Übungen werden typischerweise benötigt:
@@ -175,6 +191,8 @@ Für die praktischen Übungen werden typischerweise benötigt:
 - ein LangSmith-Account für Tracing, Debugging und Evaluation,
 - ein Gerät, auf dem Browser, Notebook-Umgebung und Kursmaterial zuverlässig funktionieren,
 - Grundverständnis von Python-Funktionen, Decorators, Type Hints, Dictionaries und Fehlerbehandlung.
+
+Google Colab und Google Drive sind vor allem für den gemeinsamen Kursbetrieb praktisch. Wer lokal arbeitet, braucht stattdessen eine funktionierende Python-Umgebung mit Zugriff auf die Kursnotebooks. LangSmith wird für Beobachtung und Evaluation empfohlen; einzelne Grundlagen lassen sich auch ohne LangSmith nachvollziehen, verlieren dann aber den Trace- und Bewertungsblick.
 
 Bei Business-Laptops sollte vorab geprüft werden, ob Cloud-Dienste, API-Zugriffe, GitHub, Google Colab und LangSmith durch die IT-Richtlinien erlaubt sind.
 
@@ -213,7 +231,7 @@ Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 
 ## Aufgaben nach Vorkenntnissen und Lerntempo bearbeiten
 
-Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Bearbeiten Sie sie entsprechend Ihren **Vorkenntnissen** und Ihrem **Lerntempo**: Grundlagen sichern das zentrale Verständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben bieten zusätzliche Übung, Varianten oder Transferfragen.
+Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Die Auswahl richtet sich nach **Vorkenntnissen** und **Lerntempo**: Grundlagen sichern das zentrale Verständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben bieten zusätzliche Übung, Varianten oder Transferfragen.
 
 Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer: Meeting- & Research-Briefing-Agent**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
 
@@ -224,6 +242,12 @@ Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Min
 Der Zwischenstopp sollte niedrigschwellig sein. Statt nur zu fragen „Gibt es Fragen?“, hilft ein aktiver Check: zum Beispiel Daumen hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
 
 Der Check ist keine harte Pflicht-Unterbrechung für alle. Wer gut im Flow ist, kann weiterarbeiten; wer festhängt, bekommt früh Gelegenheit zur Klärung. Bei unterschiedlichem Tempo bleibt der Takt flexibel: Schnellere bearbeiten Aufbau- oder Vertiefungsaufgaben, langsamere sichern zunächst die Grundlagen.
+
+Auch während der Übungszeit stehen Fragen jederzeit offen. Wer lieber ungestört im eigenen Flow bleiben möchte, schaltet dafür einfach den eigenen Lautsprecher **stumm**.
+
+Statt der gestellten Aufgaben lässt sich bei Bedarf auch eine **eigene** Problemstellung bearbeiten. Unterstützung dafür gibt es, soweit es der Rahmen zulässt.
+
+Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldung zeigt oft genauer, wie ein System tatsächlich funktioniert, als ein Durchlauf ohne Probleme, und trägt damit direkt zum Lernerfolg bei.
 
 ## Nächste Schritte
 

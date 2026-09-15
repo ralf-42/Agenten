@@ -143,6 +143,7 @@ Tools für KI-gestützte Prozessoptimierung und Entscheidungshilfen
 | Thema                          | Beschreibung                                          | Link                                                                                |
 | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | **Checkliste Automatisierung** | Checkliste als  Entscheidungshilfe                    | [Checkliste_Automatisierung](https://editor.p5js.org/ralf.bendig.rb/full/ckiLlKrql) |
+| **KI-Delegation-Poker**        | Entscheidungshilfe: Welche Aufgaben eignen sich für KI-Delegation? | [KI-Delegation-Poker](https://ki-delegation-poker.ralf42-2025.chatgpt.site/teilnehmen) |
 | **KI-Prozessoptimierung**      | KI-Prozessoptimierung - Schritt für Schritt Anleitung | [KI-Prozessoptimierung](https://editor.p5js.org/ralf.bendig.rb/full/xGKXCTR7T)      |
 
 ---

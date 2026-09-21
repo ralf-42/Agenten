@@ -158,6 +158,8 @@ In der Praxis relevant, wenn: Prompt, Modell, Tool-Beschreibung, Policy oder Ret
 
 Das Wort `Harness` klingt technisch, meint aber zunächst eine nützliche Infrastruktur-Hülle um den Agenten. Diese sorgt dafür, dass Durchläufe reproduzierbar, Tool-Aufrufe kontrollierbar und Vergleiche zwischen Varianten (Baselines) möglich werden.
 
+Die übergreifende Einordnung der Kontrollschicht steht in [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}). Diese Seite konzentriert sich auf die Mess- und Evaluationssicht.
+
 Es reicht ein einfaches Verständnis: Ein Harness kümmert sich um den **Run-Kontext**, die **Tool-Wrapper**, **Mocks** für Tests sowie **Policies** für riskante Aktionen. Gleichzeitig fungiert er als Messstation, die **Beobachtungsdaten (Traces)** sammelt, um Ergebnisse automatisiert mit einem **Eval-Set** vergleichen zu können.
 
 ```mermaid
@@ -257,6 +259,7 @@ Das ist einer der wichtigsten Unterschiede zwischen Demo-System und belastbarem 
 
 | Dokument | Frage |
 |---|---|
+| [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}) | Wie werden State, Tools, Kontext, Sicherheit und Evaluation als Kontrollschicht verbunden? |
 | [Woher zeigt sich, ob ein Agent gut arbeitet?]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) | Wie unterscheiden sich Evaluation und Observability auf konzeptioneller Ebene? |
 | [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) | Wie werden Tracing, Datasets und Experimente konkret in LangSmith umgesetzt? |
 | [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | Wie werden State, Routing und Multi-Step-Flüsse robust aufgebaut? |

@@ -42,6 +42,7 @@ Diese Reihenfolge zeigt zuerst den Kursverlauf, klärt dann, ob ein Agent überh
 | Stabilität und Kontrolle verbessern | [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }}) |
 | Agentensystem vor Umsetzung oder Freigabe prüfen | [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }}) |
 | Qualität sichtbar machen | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) |
+| Agentenläufe kontrollierbar entwerfen | [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}) |
 | Produktion vorbereiten | [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }}) |
 
 ## Danach gezielt vertiefen

@@ -91,8 +91,9 @@ Empfohlener Einstieg:
 1. [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 2. [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }})
 3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }})
-4. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
-5. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
+4. [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }})
+5. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
+6. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
 
 ### Produktion und Betrieb
 
@@ -106,7 +107,8 @@ Empfohlener Einstieg:
 4. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
 5. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
 6. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
-7. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
+7. [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }})
+8. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
 
 ### Governance und Rahmenbedingungen
 

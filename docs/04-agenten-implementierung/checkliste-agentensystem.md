@@ -196,6 +196,7 @@ Quellenbasis:
 | Multi-Agent-Systeme | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) |
 | Evaluation und Observability | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) |
 | Sicherheit | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) |
+| Kontrollschicht | [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}) |
 | Betrieb | [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }}) |
 
 ---

@@ -376,6 +376,9 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ## Changelog
 
+### Version 1.9 (2026-09-29)
+- ✅ Gegen `_docs/LangGraph_Best_Practices.md` v1.9 geprüft (LangGraph v1.2.9 → v1.2.12) — keine kaputten Code-Beispiele gefunden, `response_schema`/Subgraph-Bytecode-Fix als Advanced-Themen bewusst nicht in die kompakte Einsteiger-Fassung übernommen
+
 ### Version 1.8 (Juli 2026)
 - `stream_events(version="v3")` mit `run.values`/`run.messages`/`run.lifecycle`/`run.subgraphs` ergänzt.
 - Per-Node-Timeouts und Node-Level Error-Handler (`timeout=`, `error_handler=` in `add_node()`) ergänzt.
@@ -396,7 +399,7 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ---
 
-**Version:** 1.8<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.9<br>
+**Stand:** 2026-09-29<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

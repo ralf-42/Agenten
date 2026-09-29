@@ -508,8 +508,8 @@ agent = create_agent(
     tools=[search_tool, calculator_tool],
     system_prompt="You are a helpful research assistant",
     response_format=AgentResponse,  # Strikte Validierung!
-    provider_strategy="strict"  # Nutzt OpenAI Structured Output (wenn verfügbar)
 )
+# Hinweis: provider_strategy ist kein create_agent()-Parameter — er gehört zu with_structured_output().
 
 # Agent-Response ist garantiert schema-konform
 response = agent.invoke({
@@ -543,7 +543,6 @@ agent = create_agent(
     model=structured_llm,
     tools=tools,
     response_format=AgentResponse,  # Doppelte Validierung (LLM + Agent-Level)
-    provider_strategy="strict"
 )
 ```
 
@@ -627,10 +626,10 @@ from langchain.agents.middleware import (
 
 middleware = [
     HumanInTheLoopMiddleware(
-        tool_names=["delete_file", "execute_command"]  # Genehmigung erforderlich
+        interrupt_on={"delete_file": True, "execute_command": True}  # Genehmigung erforderlich
     ),
     SummarizationMiddleware(
-        max_tokens=1000  # Automatische Kontext-Zusammenfassung
+        model=llm, trigger=("messages", 20)  # Automatische Kontext-Zusammenfassung
     ),
     PIIMiddleware(
         patterns=["email", "phone"]  # PII-Redaktion
@@ -661,11 +660,9 @@ agent = create_agent(
 
 ### NEU in v1.1.0: Erweiterte Middleware
 
-#### HumanInTheLoopMiddleware respond()-Decision (NEU in v1.2.17)
+#### HumanInTheLoopMiddleware "respond()" — widerlegt, nicht verwenden
 
-**Was neu ist:**  beendet den Agent-Loop sofort mit einer direkten Antwort.
-
-**In der Praxis relevant wenn:** Guardrails sollen dem Nutzer eine klare Fehlermeldung liefern, die das LLM nicht nochmals umformulieren muss.
+> ⚠️ **Korrektur (2026-09-29):** War als "NEU in v1.2.17" dokumentiert. Verifiziert gegen die neueste verfügbare Version (`langchain==1.4.3`): Die Methode existiert nicht (`hasattr(..., "respond")` → `False`). Vermutlich fabriziert — bitte nicht verwenden, führt zu `AttributeError`.
 
 ---
 
@@ -676,12 +673,12 @@ Nutzt jetzt Model Profiles für intelligente Zusammenfassungen:
 ```python
 from langchain.agents.middleware import SummarizationMiddleware
 
-# ✅ v1.1.0: Context-aware Summarization
+# ✅ Reale Signatur: model ist Pflichtparameter
 middleware = SummarizationMiddleware(
-    max_tokens=1000,
+    model=llm,
     # NEU: Automatische Detection von Summarization-Capabilities via llm.profile
     # Provider-spezifische Optimierungen (GPT-5.x vs Claude vs Gemini)
-    trigger_strategy="flexible"  # Intelligente Trigger-Points basierend auf Model
+    trigger=("messages", 20),  # Trigger-Point: ab 20 Nachrichten
 )
 ```
 
@@ -702,7 +699,7 @@ from langchain.agents.middleware import SummarizationMiddleware
 # SummarizationMiddleware fängt ContextOverflowError automatisch ab
 # und fasst die bisherige Konversation zusammen, bevor der Aufruf wiederholt wird
 middleware = SummarizationMiddleware(
-    max_tokens=1000,
+    model=llm,
     # NEU: Automatischer Trigger bei ContextOverflowError
     # Kein manuelles Token-Zählen mehr nötig!
 )
@@ -1005,7 +1002,7 @@ agent = create_agent(
     tools=[search_movies],
     system_prompt="Du bist ein hilfreicher Film-Assistent",
     middleware=[
-        HumanInTheLoopMiddleware(tool_names=["search_movies"])
+        HumanInTheLoopMiddleware(interrupt_on={"search_movies": True})
     ],
     debug=True
 )
@@ -1149,10 +1146,17 @@ Beim Refactoring von altem Code:
 
 ## Changelog
 
+### Version 1.9 (2026-09-29)
+- 🐛 **KORREKTUR:** `HumanInTheLoopMiddleware`- und `SummarizationMiddleware`-Beispiele auf reale Signaturen umgestellt (`interrupt_on={tool: bool}`, `model=`+`trigger=`) — alte Parameter (`tool_names`, `max_tokens`, `trigger_strategy`) existieren nicht und führen zu `TypeError`
+- 🐛 **KORREKTUR:** `create_agent(..., provider_strategy=...)` entfernt — Parameter existiert bei `create_agent()` nicht (gehört zu `with_structured_output()`)
+- 🐛 **KORREKTUR:** `HumanInTheLoopMiddleware.respond()` als widerlegt markiert — existiert in keiner Version bis 1.4.3 (verifiziert per Introspection), vermutlich fabriziert
+- ✅ Sync mit `_docs/LangChain_Best_Practices.md` v1.9
+
 ### Version 1.7 (Mai 2026)
 - 🆕 **`astream_events()` v3 Protokoll** — `version="v3"` in LangChain v1.3.0 verfügbar (bisher max. v2)
 - 🆕 **langchain-core v1.4.0** — Content-Block-Streaming v2 jetzt stabil (war Beta in 1.3.2)
 - 🆕 **`HumanInTheLoopMiddleware.respond()`** — direkte Antwort aus Middleware ohne weiteren LLM-Call (v1.2.17)
+  - ⚠️ **ZURÜCKGEZOGEN in v1.9:** existiert in keiner Version bis 1.4.3 — vermutlich fabriziert.
 
 ### Version 1.6 (März 2026)
 - 🆕 Automatic Server-Side Compaction dokumentiert (langchain-openai 1.1.10) — Must-Have #6 Ergänzung
@@ -1210,6 +1214,6 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.7<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.9<br>
+**Stand:** 2026-09-29<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

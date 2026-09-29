@@ -6,7 +6,7 @@
     <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen" alt="LangGraph &gt;=1.2.4"></a></td>
     <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue" alt="LangSmith &gt;=0.8"></a></td>
     <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen" alt="DeepAgents optional &gt;=0.6.12"></a></td>
-    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/Last%20Audit-2026--07-blue" alt="Last Audit 2026-07"></a></td>
+    <td><a href="../_docs/LangChain_Audit_Report_2026-09-29.md"><img src="https://img.shields.io/badge/Last%20Audit-2026--09-blue" alt="Last Audit 2026-09"></a></td>
     <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
   </tr>
 </table>

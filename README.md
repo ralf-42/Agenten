@@ -187,5 +187,5 @@ Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.
 
 ---
 
-**Letzte Aktualisierung:** Juli 2026     
-**Version:** 5.5     
+**Letzte Aktualisierung:** September 2026     
+**Version:** 5.6     

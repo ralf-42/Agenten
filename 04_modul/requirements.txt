@@ -19,7 +19,7 @@ langgraph-sdk>=0.4.2
 langsmith>=0.8.0
 
 # Agent Harness
-deepagents>=0.6.12
+deepagents>=0.7.0
 
 # OpenAI
 openai>=2.0.0

@@ -5,7 +5,7 @@
     <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen" alt="LangChain &gt;=1.3.13"></a></td>
     <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen" alt="LangGraph &gt;=1.2.4"></a></td>
     <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue" alt="LangSmith &gt;=0.8"></a></td>
-    <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.6.12-brightgreen" alt="DeepAgents optional &gt;=0.6.12"></a></td>
+    <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.0-brightgreen" alt="DeepAgents optional &gt;=0.7.0"></a></td>
     <td><a href="../_docs/LangChain_Audit_Report_2026-09-29.md"><img src="https://img.shields.io/badge/Last%20Audit-2026--09-blue" alt="Last Audit 2026-09"></a></td>
     <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
   </tr>
@@ -56,7 +56,7 @@ Agenten/
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
-- **DeepAgents** (optional, >=0.6.12) - Harness für Planning, Filesystem und Sub-Agenten in M32-M35
+- **DeepAgents** (optional, >=0.7.0) - Harness für Planning, Filesystem und Sub-Agenten in M32-M35
 - **MCP / langchain-mcp-adapters** - lokale Tool-Server in M30
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`

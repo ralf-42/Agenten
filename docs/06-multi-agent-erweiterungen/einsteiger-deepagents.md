@@ -37,7 +37,7 @@ Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehe
 
 ### Kernbausteine
 
-- **Planning** über eingebaute Todo-Mechanismen
+- **Planning** über `TodoListMiddleware` (`write_todos`) — seit 0.7.0 Opt-in
 - **Filesystem-Zugriff** über Lese-/Schreibwerkzeuge mit austauschbaren Backends
 - **Sub-Agenten** für delegierte Teilaufgaben
 - **Tool-Integration** für Recherche, APIs oder Code
@@ -45,11 +45,11 @@ Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehe
 
 Für den Einstieg reicht zuerst ein kleiner Kern: ein Modell, ein oder zwei klare Tools und ein präziser `system_prompt`. Planning, Dateien, Sub-Agenten, Skills und Permissions kommen danach. Sonst wirkt DeepAgents schnell größer, als es für die erste Übung sein muss.
 
-Im Kurs passt DeepAgents gut zum Motto:
+DeepAgents passt zum Motto „Planen. Handeln. Prüfen.“:
 
-| Kursmotto | DeepAgents-Bezug |
+| Motto | DeepAgents-Bezug |
 |---|---|
-| **Planen** | `write_todos`, Aufgabenliste, Zwischenschritte sichtbar machen |
+| **Planen** | `write_todos` (per `TodoListMiddleware` aktiviert), Aufgabenliste, Zwischenschritte sichtbar machen |
 | **Handeln** | Tools, Dateien, Sub-Agenten und Backends nutzen |
 | **Prüfen** | Permissions, Interrupts, Sandboxes, Tracing und Tests einsetzen |
 
@@ -198,6 +198,7 @@ Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum i
 | `store` | LangGraph Memory Store für thread-übergreifende Persistenz |
 | `context_schema` | Pydantic-Schema für den geteilten Agenten-Kontext |
 | `state_schema` | Eigenes State-Schema übergeben (**neu seit 0.6.6**) |
+| `middleware` | Eigene Middleware; bei gleichem `.name` ersetzt sie eine Default-Middleware (**seit 0.7.x**) |
 | `debug` | Debug-Ausgaben aktivieren |
 
 > **Neu seit 0.6.7:** `DeepAgentState` ist jetzt direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
@@ -209,6 +210,18 @@ Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum i
 DeepAgents wird leichter verständlich, wenn die drei Kernideen getrennt betrachtet werden.
 
 ### Planning — und die No-Op-Einsicht
+
+> [!WARNING] Planning ist seit 0.7.0 Opt-in<br>
+> `TodoListMiddleware` ist nicht mehr Default. Ohne Aktivierung fehlen `write_todos`, der `todos`-State und der Planning-Prompt. Bei Sub-Agenten wird die Middleware pro `SubAgent` gesetzt.
+
+```python
+from langchain.agents.middleware import TodoListMiddleware
+
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-5.6-luna"),
+    middleware=[TodoListMiddleware()],   # Planning aktivieren
+)
+```
 
 Das Harness kann Aufgaben in Teilschritte zerlegen und diese intern als Arbeitsplan verwalten.
 
@@ -250,6 +263,8 @@ Das ist besonders nützlich für:
 | Custom Backend | Eigenentwicklung für spezielle Anforderungen |
 
 Das Backend lässt sich austauschen, ohne die Agent-Logik zu ändern.
+
+Seit 0.7.0 nutzen `FilesystemBackend` und `LocalShellBackend` standardmäßig `virtual_mode=True`: Pfade mit `..` sind blockiert, Pfade außerhalb von `root_dir` lösen einen `ValueError` aus. Das neue rekursive `delete`-Tool zählt bei den Permissions als Schreiboperation, und `write_file` überschreibt vorhandene Dateien, statt einen Fehler zu liefern.
 
 Merksatz: **Wissen wird ausgelagert, statt nur im Nachrichtenverlauf mitgeschleppt zu werden.**
 
@@ -328,7 +343,7 @@ research_subagent = {
 |------|---------|-------------|
 | `name` | ja | Interner Name des Sub-Agenten |
 | `description` | ja | Erklärt dem Hauptagenten wann er zu rufen ist |
-| `system_prompt` | ja | Rolle und Verhalten des Sub-Agenten |
+| `system_prompt` | — | Rolle und Verhalten des Sub-Agenten (ohne Angabe: leerer Prompt) |
 | `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
 | `model` | — | Eigenes Modell pro Sub-Agent (seit 0.4.11) |
 | `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
@@ -336,6 +351,7 @@ research_subagent = {
 | `skills` | — | SKILL.md-Dateien für den Sub-Agenten |
 | `permissions` | — | Filesystem-Zugriffsrechte einschränken (**neu seit 0.5.2**) |
 | `response_format` | — | Strukturierte Ausgabe des Sub-Agenten (**neu seit 0.5.1**) |
+| `mode` | — | `isolated` (Standard: nur die Aufgabenbeschreibung sichtbar) oder `fork` (setzt die Konversation des Hauptagenten fort; **experimentell**, `skills` dort nicht erlaubt) |
 
 Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
@@ -394,7 +410,9 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 | `RetryMiddleware` | `deepagents` | Automatische Wiederholungen bei transienten Fehlern |
 | `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
 | `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
-| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**) |
+| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**; seit 0.7.x ohne festes Iterationslimit, Status `max_iterations_reached`) |
+| `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**seit 0.7.0 Opt-in**) |
+| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` (**seit 0.7.x**) |
 | `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle (**neu in 0.6.12**) |
 
 ```python
@@ -510,7 +528,7 @@ Modellfreiheit, pluggable Backends, Unabhängigkeit von einem einzelnen Anbieter
 Auch wenn das Harness viel Arbeit abnimmt, läuft darunter weiterhin ein agentischer Workflow ab:
 
 1. Eine Anfrage trifft ein.
-2. Das Harness plant oder verfeinert Teilschritte (`write_todos` — No-Op).
+2. Das Harness plant oder verfeinert Teilschritte (`write_todos` — No-Op, per `TodoListMiddleware` aktiviert).
 3. Tools oder Sub-Agenten werden aufgerufen.
 4. Ergebnisse werden im Kontext oder in Dateien abgelegt.
 5. Der Plan wird angepasst, bis ein Endergebnis vorliegt.
@@ -535,6 +553,26 @@ flowchart TD
 
 ---
 
+## Migration 0.6 → 0.7
+
+Version 0.7.0 (Juli 2026) bringt mehrere Breaking Changes. Ab 0.7.1 kamen keine weiteren hinzu.
+
+| Änderung | Auswirkung und Anpassung |
+|---|---|
+| `TodoListMiddleware` nicht mehr Default | `write_todos` und `todos`-State fehlen; Wiederherstellung über `middleware=[TodoListMiddleware()]`, bei Sub-Agenten pro `SubAgent` |
+| Schlanker Default-Prompt | `BASE_AGENT_PROMPT` ist deprecated (Entfernung in 0.9.0); die Konstanten `TASK_`, `FILESYSTEM_`, `EXECUTION_` und `SUMMARIZATION_SYSTEM_PROMPT` sind entfernt |
+| `virtual_mode=True` als Default | `..` ist blockiert, Pfade außerhalb von `root_dir` lösen `ValueError` aus |
+| Neues `delete`-Tool | Rekursiv; Permissions behandeln es als Schreiboperation |
+| `write_file` überschreibt | Vorhandene Dateien werden ersetzt, es gibt keinen Fehler mehr |
+| Backend-Shims entfernt | Backend-Factories, `StoreBackend` ohne `namespace`, `ls_info`, `glob_info`, `grep_raw`, `files_update` und `SummarizationMiddleware(history_path_prefix=)` |
+| Geänderte Tool-Ausgaben | `ls` und `glob` liefern bei leeren Ergebnissen `No files found`; `read_file` nutzt ein neues Zeilennummern-Format |
+
+**Typischer Fehler:** Ein Agent, der nach dem Update nicht mehr plant, hat schlicht keine `TodoListMiddleware` mehr. Eigene Parser für `ls`-, `glob`- oder `read_file`-Ausgaben brechen wegen der neuen Formate.
+
+Weitere Neuerungen in 0.7.x: `read_file` mit Paginierungs-Infos und optionaler Video-Frame-Extraktion (`deepagents[video]`), Sandbox-Offload großer `execute`-Ausgaben und eine `LangSmithSandbox` mit Async-Client. Das Paket `libs/cli` heißt jetzt `deepagents-code`.
+
+---
+
 ## Grenzen und Debugging
 
 DeepAgents spart Code, versteckt aber auch mehr Logik.
@@ -547,18 +585,18 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
 - Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
-### Reifegrad (Stand 0.6.8)
+### Reifegrad (Stand 0.7.19)
 
 | Dimension | Bewertung | Begründung |
 |-----------|-----------|------------|
 | API-Stabilität | mittel | `subagents=`-Interface hatte Breaking Change ohne Migration-Guide |
-| Versionsstabilität | besser | 0.5.x → 0.6.x ohne Breaking Changes |
+| Versionsstabilität | mittel | 0.5.x → 0.6.x ohne Breaking Changes, 0.7.0 mit mehreren (siehe Migration 0.6 → 0.7) |
 | Features | solide | Planning, Filesystem, Sub-Agenten, Profiles, Middleware vollständig |
 | Dokumentation | lückenhaft | Parameter wie `backend`, `context_schema` kaum dokumentiert |
 | Produktionsreife | nicht empfohlen | < 1 Jahr Praxiserfahrung, kein 1.0, kein SLA |
 | Ökosystem | gut | LangGraph-nativ — Checkpointer, Streaming, LangSmith out-of-the-box |
 
-**Gesamturteil:** Für Experimente, Prototypen und Kurse gut geeignet. Für Production-Einsatz LangGraph direkt bevorzugen — bis v1.0 sich das ändert.
+**Gesamturteil:** Für Experimente und Prototypen gut geeignet. Für Production-Einsatz LangGraph direkt bevorzugen — bis v1.0 sich das ändert.
 
 ### Das "Trust the LLM"-Modell und Security
 
@@ -589,7 +627,7 @@ Deshalb gilt:
 
 ---
 
-## Einordnung im Kurskontext
+## Einordnung in der Praxis
 
 DeepAgents ist am nützlichsten, wenn bereits ein Fundament vorhanden ist:
 
@@ -628,7 +666,7 @@ DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 Die Stärke liegt in schneller Umsetzung komplexerer, langlaufender Aufgaben — ohne Provider-Bindung.
 Die Kehrseite ist geringere Transparenz gegenüber einem manuell modellierten LangGraph sowie noch fehlende Produktionsreife (kein v1.0, kein SLA).
 
-**Reifegrad auf einen Blick:** Gut für Experimente und Kurse — für Production-Einsatz bis v1.0 warten.
+**Reifegrad auf einen Blick:** Gut für Experimente und Prototypen — für Production-Einsatz bis v1.0 warten.
 
 Für den Einstieg empfiehlt sich daher folgende Reihenfolge:
 
@@ -643,13 +681,13 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Einsteiger mit DeepAgents? |
+| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starten Entwickler ohne DeepAgents-Erfahrung? |
 | [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für DeepAgents? |
 
 ---
 
-**Version:** 1.7<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.8<br>
+**Stand:** September 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

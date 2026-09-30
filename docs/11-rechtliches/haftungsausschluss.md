@@ -75,7 +75,7 @@ Zum Zeitpunkt der Verlinkung wurden externe Inhalte nach Möglichkeit auf erkenn
 
 ## 7. Urheberrecht und Rechte Dritter
 
-Die Kursunterlagen dürfen im Rahmen des Kurses für persönliche Lernzwecke genutzt werden. Eine darüber hinausgehende Nutzung, Weitergabe, Veröffentlichung oder kommerzielle Verwendung ist nur zulässig, soweit dies ausdrücklich erlaubt ist oder gesetzliche Schranken greifen.
+Die Nutzungsrechte der Kursunterlagen richten sich nach der [Lizenzübersicht](lizenzen.html). Die dort genannten CC-BY-4.0-Materialien dürfen unter den Bedingungen dieser Lizenz weitergegeben, bearbeitet und auch kommerziell genutzt werden. Für Quellcode gilt die MIT License; für Drittinhalte gelten die jeweiligen eigenen Bedingungen.
 
 Teilnehmende sind selbst dafür verantwortlich, bei eigenen Uploads, Prompts, Quellen, Code-Beiträgen oder Weiterverwendungen von Inhalten Urheberrechte, Persönlichkeitsrechte, Datenschutzvorgaben, Lizenzbedingungen und sonstige Rechte Dritter zu beachten.
 
@@ -94,4 +94,3 @@ Sollten einzelne Formulierungen dieses Hinweises unwirksam sein oder werden, ble
 ---
 
 **Stand:** Juli 2026
-

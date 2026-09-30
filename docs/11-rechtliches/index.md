@@ -13,6 +13,7 @@ Diese Orientierungsseite enthält die formalen rechtlichen Hinweise zur Website 
 
 | Dokument | Inhalt |
 |---|---|
+| [Lizenzen](./lizenzen.html) | Lizenzzuordnung für Quellcode, Kursmaterialien und Drittinhalte |
 | [Impressum](./impressum.html) | Anbieterkennzeichnung gemäß § 5 DDG |
 | [Datenschutzerklärung](./datenschutz.html) | Datenschutzhinweise gemäß DSGVO |
 | [Haftungsausschluss](./haftungsausschluss.html) | Hinweise zu KI-Inhalten, Links und Nutzung |

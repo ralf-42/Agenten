@@ -180,6 +180,8 @@ Am Ende steht ein eigener **Meeting- & Research-Briefing-Agent** als Capstone-Va
 Der **Quellcode** steht unter der [MIT License](./LICENSE).       
 Die **Kursmaterialien** (z. B. Folien, Texte, Grafiken) sind unter der [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) veröffentlicht.     
 
+Die ausführliche Lizenzzuordnung für die Kurs-Website steht unter [Rechtliches → Lizenzen](./docs/11-rechtliches/lizenzen.md).
+
 © 2025–2026 Ralf-42     
 
 > [!NOTE]

@@ -72,6 +72,7 @@ Drittens: Die deutsche Übersetzung ist tatsächlich die bessere Wahl. „Guardr
 | state             | Zustand                                   | Pflicht: im deutschen Fließtext immer „Zustand" — „state" ist Code             |
 | streaming         | Streaming                                 | Kein deutsches Äquivalent — bleibt englisch                                    |
 | supervisor        | Supervisor / Koordinator                  | Rollenbezeichnung bleibt englisch; in Einführungen „Koordinator"               |
+| system 1 / system 2 | System 1 / System 2                     | Denkmodell nach Kahneman für menschliche Kognition; bei LLMs nur als Analogie verwenden: „System-1-artig“ für schnelle, musterbasierte Antworten und „System-2-artig“ für zusätzliche, abwägende Verarbeitung |
 | temperature       | Temperatur                                | Standardübersetzung — Metapher für Kreativität vs. Determinismus               |
 | tool use          | Tool-Nutzung / Werkzeugnutzung            | „Tool" bleibt auch im Deutschen üblich                                         |
 | tracing           | Tracing / Nachverfolgung                  | In LangSmith-Kontexten bleibt „Tracing" Standard                               |
@@ -114,6 +115,6 @@ Diese drei Begriffe stehen in engem Bezug zum Kursmotto **Planen, Handeln, Prüf
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** September 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

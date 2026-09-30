@@ -66,6 +66,26 @@ Wenn eine Aufgabe immer denselben festen Ablauf hat, ist Workflow-Automation mei
 
 Viele unterschätzen, was ein Agent zusätzlich kostet: Testaufwand, Fehlerdiagnose und laufende Komplexität. Ein Agent ist kein Qualitätsversprechen, sondern ein Werkzeug für einen bestimmten Aufgabentyp.
 
+## Denkmodell: System 1 und System 2
+
+Daniel Kahneman unterscheidet in „Schnelles Denken, langsames Denken“ zwei Arten des menschlichen Denkens: System 1 arbeitet schnell, automatisch und intuitiv, System 2 langsam, bewusst und anstrengend. Die Übertragung auf LLMs ist nur eine Analogie: LLMs besitzen keine zwei menschlichen Denksysteme und kein Bewusstsein im psychologischen Sinn.
+
+Ein Standard-LLM arbeitet eher System-1-artig, denn es erzeugt die Antwort autoregressiv, also Schritt für Schritt Token für Token auf Grundlage des bisher erzeugten Textes, meist ohne eine ausdrücklich getrennte Planungs- oder Prüfphase. Nachrechnen, Abwägen und Gegenprüfen entstehen erst durch Zusatzmaßnahmen. Je nach Aufgabe kommen dafür ein Reasoning-Modell, ein Tool, ein Workflow oder – bei offenem Lösungsweg und mehreren Entscheidungspunkten – ein Agentensystem infrage.
+
+Das klassische Beispiel zeigt den Unterschied: Ein Buch und ein Stift kosten zusammen 11 Euro, das Buch kostet 10 Euro mehr als der Stift. Die spontane Antwort lautet 1 Euro für den Stift. Erst die Rechnung ergibt 0,50 Euro für den Stift und 10,50 Euro für das Buch. Genau diese Aufgabe kennen aktuelle Modelle meist aus dem Training. Der Effekt zeigt sich deutlicher bei unbekannten Varianten mit ähnlicher Struktur, in denen die naheliegende Antwort falsch ist.
+
+| Maßnahme | System-1-/System-2-artige Wirkung |
+|---|---|
+| Einzelner Aufruf ohne Zwischenschritte | Eher System-1-artig: schnelle, musterbasierte Antwort |
+| Reasoning-Modell (`reasoning: {effort: ...}`) oder zusätzliche interne Verarbeitung | Eher System-2-artig: mehr Verarbeitung vor der Antwort |
+| Tool-Nutzung (Rechner, Suche, Code) | Prüfung durch externe Berechnung, Suche oder Code |
+| Reflection mit Kritiker-Schritt | Zusätzliche Prüfung, aber nicht automatisch unabhängig |
+| Agentenschleife oder Workflow mit Gate | Mehrere Schritte mit Kontrollpunkten und gegebenenfalls Werkzeugen |
+
+Für die Entscheidung heißt das: Reicht eine schnelle Antwort, genügt ein einzelner Aufruf. Braucht die Aufgabe Herleitung oder Überprüfung, kommt zuerst ein Reasoning-Modell oder Tool-Calling infrage. Ein Workflow passt, wenn die Schritte bekannt und kontrollierbar sind. Ein Agentensystem wird erst interessant, wenn der Lösungsweg offen ist, mehrere Entscheidungspunkte bestehen oder Werkzeuge situationsabhängig eingesetzt werden müssen. Zusätzliche Verarbeitung kostet Tokens und Latenz; jede Stufe muss sich also an der Aufgabe messen lassen.
+
+Grenze: Kahneman beschreibt selbst, dass System 2 die Vorschläge von System 1 oft nur durchwinkt. Das gilt auch für Reflection-Schritte. Die Aufforderung „prüfe deine Antwort“ ändert wenig, solange die Prüfung nur auf demselben Modellwissen beruht. Wirksam wird sie mit externen Anhaltspunkten wie einem Testlauf, einem Tool-Ergebnis oder einem Beleg aus RAG.
+
 ## Die zweite Frage: Welche Agentenarchitektur passt dann?
 
 Wenn du in Stufe 1 sicher bist, dass ein Agent wirklich nötig ist, kommt die Architekturentscheidung. Auch hier gilt: Am Ende gewinnt meist die einfachste Struktur, die die Aufgabe zuverlässig löst.
@@ -189,6 +209,6 @@ Kurzcheck:
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** September 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

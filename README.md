@@ -185,7 +185,7 @@ Die ausführliche Lizenzzuordnung für die Kurs-Website steht unter [Rechtliches
 © 2025–2026 Ralf-42     
 
 > [!NOTE]
-> Bei der Erstellung dieser Unterlagen kamen KI-Werkzeuge zum Einsatz. Die Inhalte wurden anschließend fachlich geprüft und überarbeitet.
+> **Hinweis zur Entstehung:** Bei der Erstellung dieser Unterlagen wurden KI-Werkzeuge unterstützend eingesetzt, unter anderem für Recherche, Strukturierung, Formulierung und einzelne Medien. Die Inhalte wurden anschließend fachlich geprüft, eingeordnet und redaktionell überarbeitet.
 
 ---
 

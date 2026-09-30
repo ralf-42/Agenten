@@ -14,6 +14,7 @@ Diese Orientierungsseite enthält die formalen rechtlichen Hinweise zur Website 
 | Dokument | Inhalt |
 |---|---|
 | [Lizenzen](./lizenzen.html) | Lizenzzuordnung für Quellcode, Kursmaterialien und Drittinhalte |
+| [Hinweis zur Entstehung](./hinweis-zur-entstehung.html) | Transparenzhinweis zum unterstützenden Einsatz von KI-Werkzeugen |
 | [Impressum](./impressum.html) | Anbieterkennzeichnung gemäß § 5 DDG |
 | [Datenschutzerklärung](./datenschutz.html) | Datenschutzhinweise gemäß DSGVO |
 | [Haftungsausschluss](./haftungsausschluss.html) | Hinweise zu KI-Inhalten, Links und Nutzung |

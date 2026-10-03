@@ -62,7 +62,7 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.1<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

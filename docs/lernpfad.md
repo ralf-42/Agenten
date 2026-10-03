@@ -28,15 +28,15 @@ Diese Seite bündelt deshalb drei Dinge:
 
 ## Kurspriorisierung
 
-Für den 5-Tage-Kurs ist die Dokumentation bewusst breiter als der Pflichtstoff. Die folgende Einteilung hilft, den Umfang zu steuern:
+Für den 5-Tage-Kurs ist die Dokumentation bewusst breiter als der Grundlagenpfad. Die folgende Einteilung hilft, den Umfang zu steuern:
 
-| Priorität | Bedeutung | Typische Dokumente |
+| Einordnung | Bedeutung | Typische Dokumente |
 |---|---|---|
-| **Pflicht** | Wird im Kurs aktiv benötigt oder erklärt den Kern des Leitprojekts. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, HITL, Evaluation |
-| **Empfohlen** | Vertieft das Kursprojekt und hilft bei Aufgaben auf Aufbau-Niveau. | Memory, Checkpointing, ChromaDB, LangSmith, Security, Deployment, Datenschutz |
-| **Optional** | Nachschlagewerk, Transfer oder Fortgeschrittenenpfad. | DeepAgents, Kommunikationsprotokolle, regulierte Branchen, Fine-Tuning, weitere Tools |
+| **Grundlagen** | Wird im Grundlagenpfad aktiv benötigt oder erklärt den Kern des Leitprojekts. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, Sessions, Memory, HITL, Evaluation |
+| **Aufbau** | Erweitert das Kursprojekt um Qualitätssicherung, Integration und belastbare Betriebsgrenzen. | Agentic RAG, Security, Evaluation & Testing, Routing, Kostenkontrolle, Integration, Projekt-Templates, Advanced RAG |
+| **Vertiefung** | Dient als Transfer, Spezialisierung oder produktionsnaher Fortgeschrittenenpfad. | UI, MCP, Skills, DeepAgents, Deployment, Monitoring, Capstone, weitere Tools |
 
-Die Pflichttexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt. Empfohlene und optionale Texte erweitern diesen Faden, ohne dass jede Seite im Kurs vollständig behandelt werden muss.
+Die Grundlagentexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt. Aufbau- und Vertiefungstexte erweitern diesen Faden, ohne dass jede Seite im Kurs vollständig behandelt werden muss.
 
 Wichtig für die Lesart: Wenn der Kurs von Reasoning oder Planning spricht, sind damit **sichtbare Artefakte** gemeint, zum Beispiel Plan, Tool-Wahl, Quellenstatus, Gate-Entscheidung oder Prüfergebnis. Eine versteckte interne Gedankenkette des Modells ist kein Lernziel und wird nicht als Nachweis verlangt.
 
@@ -171,6 +171,6 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** August 2026<br>
+**Version:** 1.3<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

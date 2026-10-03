@@ -51,7 +51,7 @@ Nach dem Kurs ist es möglich:
 - sichtbare Planungs-, Tool- und Prüf-Artefakte statt versteckter Gedankengänge zu nutzen,
 - RAG als Evidence Tool in Agenten einzubinden,
 - LangGraph für kontrollierte mehrstufige Abläufe zu nutzen,
-- Human-in-the-Loop, Evaluation, Security und Budgetkontrolle einzuplanen,
+- Human-in-the-Loop im Grundlagenpfad umzusetzen und Evaluation, Security und Budgetkontrolle über die Aufbaumodule einzuplanen,
 - einen Meeting- & Research-Briefing-Agenten als eigenes Capstone-Projekt weiterzuentwickeln.
 
 Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, relevante Evidenz sammelt, Entscheidungen sichtbar macht, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
@@ -67,10 +67,12 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 | **Kontrollierte Workflows** | LangGraph, StateGraph, Conditional Routing, Planning-Patterns, Tool Loop |
 | **Wissensbasierte Agenten** | RAG, ChromaDB, Retrieval als Tool, LangSmith-Evaluation |
 | **Kontrollierte Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
-| **Qualität und Betriebsvorbereitung** | Security, Evaluation, Routing, Kostenkontrolle |
-| **Integration und Produktion** | Pipeline, UI, MCP, Skill-Design, Deployment, Capstone |
+| **Aufbau: Qualität und Integration** | Agentic RAG, Security, Evaluation, Routing, Kostenkontrolle, Pipeline, Projekt-Templates, Advanced RAG |
+| **Vertiefung: Skills und Produktion** | UI, MCP, Skill-Design, DeepAgents, Deployment, Capstone |
 
-Ergänzend geht es um Agentic RAG und Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
+Der Grundlagenpfad M01–M21 ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. Die Aufbaumodule M22–M28 und die Vertiefungsmodule M29–M38 erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
+
+Ergänzend geht es um Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
 
 ## Kursprogression
 
@@ -103,12 +105,12 @@ timeline
     section Kontrollierte Zusammenarbeit
         Sessions, Freigabe und Teams  : Checkpointing, HITL, Memory, Multi-Agent-Patterns
                                      : M16-M21
-    section Qualität und Betriebsvorbereitung
-        Belastbare Agentensysteme     : Agentic RAG, Security, Evaluation, Routing und Kosten
-                                     : M22-M25
-    section Integration und Produktion
-        Vom Kursprojekt zum System    : Pipeline, UI, MCP, Skills, Deployment, Capstone
-                                     : M26-M38
+    section Aufbau
+        Belastbare Agentensysteme     : Agentic RAG, Security, Evaluation, Routing, Kosten, Pipeline, Advanced RAG
+                                     : M22-M28
+    section Vertiefung
+        Vom Kursprojekt zum System    : UI, MCP, Skills, DeepAgents, Deployment, Capstone
+                                     : M29-M38
 ```
 
 ## Maturity Model als Overlay
@@ -120,7 +122,7 @@ Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zwe
 | **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | M01-M05, M30 | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
 | **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | M03-M10, M16-M18 | Prompts, Schemas, Routing, Checkpointing und Human-in-the-Loop machen Verhalten kontrollierbarer. |
 | **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | M15, M19-M24 | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
-| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M25, M26-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
+| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
 | **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24, M37-M38 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
 
 Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Modell hilft beim Einordnen: Welche zusätzliche Freiheit bekommt der Agent, und welche Kontrolle muss dadurch sichtbar werden? Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
@@ -150,23 +152,23 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M19  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
 |  M20  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
 |  M21  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
-|  M22  | Qualität und Betriebsvorbereitung | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
-|  M23  | Qualität und Betriebsvorbereitung | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
-|  M24  | Qualität und Betriebsvorbereitung | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
-|  M25  | Qualität und Betriebsvorbereitung | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-|  M26  | Integration und Produktion        | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
-|  M27  | Integration und Produktion        | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
-|  M28  | Integration und Produktion        | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
-|  M29  | Integration und Produktion        | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
-|  M30  | Integration und Produktion        | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
-|  M31  | Integration und Produktion        | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
-|  M32  | Integration und Produktion        | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
-|  M33  | Integration und Produktion        | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
-|  M34  | Integration und Produktion        | DeepAgents Skill Meeting Briefing    | Meeting-Briefing als Skill                             |
-|  M35  | Integration und Produktion        | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
-|  M36  | Integration und Produktion        | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
-|  M37  | Integration und Produktion        | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
-|  M38  | Integration und Produktion        | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
+|  M22  | Aufbau: Qualität und Integration  | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
+|  M23  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
+|  M24  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
+|  M25  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
+|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
+|  M27  | Aufbau: Qualität und Integration  | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
+|  M28  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
+|  M29  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
+|  M30  | Vertiefung: Skills und Produktion | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
+|  M31  | Vertiefung: Skills und Produktion | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
+|  M32  | Vertiefung: Skills und Produktion | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
+|  M33  | Vertiefung: Skills und Produktion | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
+|  M34  | Vertiefung: Skills und Produktion | DeepAgents Skill Meeting Briefing    | Meeting-Briefing als Skill                             |
+|  M35  | Vertiefung: Skills und Produktion | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
+|  M36  | Vertiefung: Skills und Produktion | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
+|  M37  | Vertiefung: Skills und Produktion | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
+|  M38  | Vertiefung: Skills und Produktion | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
 
 In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Research-Briefing-Agenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
 
@@ -177,8 +179,8 @@ In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitr
 | **M07-M10: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
 | **M11-M15: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
 | **M16-M21: Kontrollierte Zusammenarbeit** | Sessions, Human-in-the-Loop, Memory und Multi-Agent-Muster machen längere Abläufe steuerbar. |
-| **M22-M25: Qualität und Betriebsvorbereitung** | Security, Grounding, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab. |
-| **M26-M38: Integration und Produktion** | Die Einzelbausteine werden zu Pipeline, UI, MCP-Integration, Skills, Deployment und Capstone zusammengeführt. |
+| **M22-M28: Aufbau: Qualität und Integration** | Agentic RAG, Security, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab; Pipeline, Projekt-Templates und Advanced RAG führen die Bausteine zusammen. |
+| **M29-M38: Vertiefung: Skills und Produktion** | UI, MCP-Integration, Skills, DeepAgents, Deployment und Capstone bringen den Agenten in einen betriebsnahen Zustand. |
 
 Einige Begriffe sind bewusst knapp gehalten. **Evidence Tool** meint ein Retrieval-Werkzeug, das Antworten mit Quellenmaterial verbindet. **Out-of-Context-Stopp** bedeutet, dass der Agent anhält, wenn die vorhandenen Quellen keine belastbare Antwort tragen. **Circuit Breaker** bezeichnet eine Schutzschaltung, die Abläufe bei Fehlern, Kosten- oder Qualitätsgrenzen stoppt.
 
@@ -260,6 +262,7 @@ Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldu
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** August 2026<br>
+**Version:** 1.2<br>
+**Stand:** Oktober 2026<br>
+**Fachstand:** Oktober 2026; Versionsnummern sind dokumentbezogen.<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -612,7 +612,17 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | Produktion | `"chatbot-production"`                       |
 | Experiment | `"rag-experiment-2026-03"`                   |
 
-> 💡 **Edge Case:** Falls ein Projekt-Wechsel nach Notebook-Start nötig ist (z.B. kein Kernel-Neustart möglich), kann `ls.tracing_context(project_name=...)` als Workaround verwendet werden.
+> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_v2_enabled(...)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing-in-kurs-notebooks). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
+
+```python
+from langchain_core.tracers.context import tracing_v2_enabled
+
+with tracing_v2_enabled(project_name="M02-Erste-Agenten", tags=["M02", "langsmith"]):
+    result = agent.with_config(
+        run_name="M02_Kap5_AgentTrace",
+        tags=["M02", "agent", "langsmith"],
+    ).invoke({"messages": [...]})
+```
 
 ### Tags für bessere Organisation
 
@@ -927,7 +937,8 @@ Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig gen
 
 **Kontrolle:**
 - Sensitive Daten vorher filtern/anonymisieren
-- Selective Tracing mit `@traceable(enabled=False)`
+- Für einzelne Referenzläufe: `tracing_v2_enabled(...)` verwenden
+- `@traceable(enabled=False)` nur für einzelne, funktionsbezogene Ausnahmen
 - Self-Hosted LangSmith für vollständige Kontrolle
 
 ### "Kostet LangSmith extra?"
@@ -950,7 +961,8 @@ client.create_example_from_run(run_id=run_id, dataset_name="wichtige-runs")
 ### "Wie deaktiviere ich Tracing?"
 
 ```python
-# Temporär deaktivieren
+# Global für das Notebook deaktivieren; für einzelne Referenzläufe
+# anschließend tracing_v2_enabled(...) verwenden.
 os.environ["LANGSMITH_TRACING"] = "false"
 
 # Für einzelne Funktionen
@@ -1003,6 +1015,6 @@ LangSmith macht Agenten nachvollziehbar: Traces zeigen einzelne Schritte, Datase
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

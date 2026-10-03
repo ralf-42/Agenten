@@ -4,7 +4,7 @@ title: LangSmith Best Practices
 parent: LangSmith
 grand_parent: Frameworks
 nav_order: 2
-description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, with_config, Troubleshooting"
+description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, selektives Tracing, with_config und Troubleshooting"
 has_toc: true
 ---
 
@@ -406,7 +406,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 > ⚠️ **LangSmith-SDK Verhalten:** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
 >
-> **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Projekt-Wechsel nach Notebook-Start sind nicht vorgesehen.
+> **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Für einzelne Referenzläufe bei deaktiviertem globalem Tracing den weiter unten beschriebenen expliziten Tracing-Kontext verwenden.
 
 **Empfohlenes Notebook-Pattern (Kurs):**
 ```python
@@ -435,6 +435,33 @@ result = chain.invoke("...")
 | Experiment | Thema + Datum | `"rag-experiment-2026-03"` |
 
 ❌ **Nicht empfohlen:** Ein gemeinsames Projekt für mehrere Module (z. B. `"KI_Agenten_Kurs"`) – Traces aus verschiedenen Modulen vermischen sich, die Filterung wird aufwändiger.
+
+### Selektives Tracing in Kurs-Notebooks
+
+In frühen Kurs-Notebooks erzeugen mehrere `invoke()`-Aufrufe schnell unübersichtliche Traces. Für solche Fälle bleibt das globale Tracing zunächst deaktiviert; nur der ausgewählte Referenzlauf wird explizit erfasst. Dafür den LangChain-Tracing-Kontext verwenden – nicht `LANGSMITH_TRACING` nach der Agent-Erstellung umschalten.
+
+```python
+import os
+from langchain_core.tracers.context import tracing_v2_enabled
+
+# In der Setup-Cell, vor den LangChain-Imports:
+os.environ["LANGSMITH_TRACING"] = "false"
+os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
+
+run_cfg = {
+    "run_name": "M02_Kap5_AgentTrace",
+    "tags": ["M02", "agent", "langsmith"],
+}
+
+# Nur dieser Lauf erscheint im LangSmith-Projekt:
+with tracing_v2_enabled(
+    project_name="M02-Erste-Agenten",
+    tags=run_cfg["tags"],
+):
+    result = agent.with_config(**run_cfg).invoke({"messages": [...]})
+```
+
+Das Muster eignet sich für Lehr- und Debugging-Notebooks: Setup, Credentials und Endpoint stehen weiterhin am Anfang; der Kontext wird erst unmittelbar um den gewünschten Lauf geöffnet. Für Produktionsbetrieb bleibt das automatische globale Tracing mit `LANGSMITH_TRACING="true"` die passende Voreinstellung.
 
 ### 3. Code ausführen (keine Änderungen nötig!)
 ```python
@@ -610,7 +637,7 @@ os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"
 os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"  # zu spät
 ```
 
-**Alternativer Workaround** (wenn kein Kernel-Neustart möglich): `ls.tracing_context()`:
+**Kompatibilitäts-Workaround** (wenn ein bestehendes Notebook noch den älteren LangSmith-SDK-Kontext verwendet): `ls.tracing_context()`:
 ```python
 import langsmith as ls
 with ls.tracing_context(project_name="M04-Structured-Output"):
@@ -717,6 +744,11 @@ client = Client(
 
 ## Changelog
 
+### Version 2.4 (2026-10-03)
+- ✅ Selektives Tracing für Kurs-Notebooks mit `tracing_v2_enabled(...)` als kanonisches Muster ergänzt
+- ✅ Älteren `ls.tracing_context()`-Workaround als Kompatibilitätslösung gekennzeichnet
+- ✅ Empfehlung in Richtung Einsteiger-Dokumentation verlinkt
+
 ### Version 2.3 (2026-09-29)
 - 🐛 **KORREKTUR:** Prompt-Hub-Beispiel (`from langchain import hub`) korrigiert auf `Client().pull_prompt()`/`push_prompt()` — alter Import schlägt unter LangChain 1.0+ mit `ImportError` fehl
 - ✅ Sync mit `_docs/LangSmith_Best_Practices.md` v2.3
@@ -735,11 +767,11 @@ client = Client(
 ### Version 1.8 (2026-03-03)
 - ✅ VEREINFACHT: Modulnamen direkt in Setup-Cell setzen – kein `tracing_context` nötig
 - ✅ Tabelle korrigiert: `LANGSMITH_PROJECT` nur zuverlässig wenn vor erstem Trace gesetzt
-- ✅ Troubleshooting: `tracing_context` als Workaround für Edge Cases dokumentiert (kein Kern-Neustart)
+- ✅ Troubleshooting: älteren `tracing_context`-Workaround für Edge Cases dokumentiert (kein Kernel-Neustart)
 
 ### Version 1.7 (2026-03-03)
 - ✅ KORREKTUR: `LANGSMITH_PROJECT` ist **nicht** dynamisch – `get_tracer_project()` wird via `lru_cache` gecacht
-- ✅ Empfohlenes Notebook-Pattern: `ls.tracing_context(project_name=...)` statt `os.environ`-Setzung
+- ✅ Historisches Notebook-Pattern: `ls.tracing_context(project_name=...)` als Workaround dokumentiert
 - ✅ Troubleshooting: Neuer Eintrag "Projektnamen-Wechsel wird ignoriert" mit Workaround via `cache_clear()`
 
 ### Version 2.0 (2026-05-01)

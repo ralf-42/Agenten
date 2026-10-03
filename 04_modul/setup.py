@@ -13,7 +13,7 @@ setup(
     description='Leichtgewichtige Bibliothek für den Kurs GenAI mit LangChain 1.0+ Support.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/ralf-42/GenAI',
+    url='https://github.com/ralf-42/Agenten',
     packages=find_packages(where="."),
     install_requires=read_requirements(),
     classifiers=[

@@ -87,6 +87,6 @@ Nutzeranfrage
 
 ## Verwandte Module
 
-- M21 – Agentic RAG (Retrieval-gesteuerte Recherche)
-- M25 – Integration Pipeline (Research als Teilschritt)
-- M26 – Advanced RAG Pipeline Patterns (Self-RAG, Reranking)
+- M22 – Agentic RAG (Retrieval-gesteuerte Recherche)
+- M26 – Integration Pipeline (Research als Teilschritt)
+- M28 – Advanced RAG Pipeline Patterns (Self-RAG, Reranking)

@@ -85,7 +85,6 @@ Der Meeting- & Research-Briefing-Agent ist ein Assistenzsystem, kein autonomes E
 Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 
 ```text
-Meeting_Briefing_Workshop.ipynb
    ├── Kapitel 1: StateGraph Basics
    ├── Kapitel 2: Intent Routing
    ├── Kapitel 3: Projektkorpus & Retrieval
@@ -494,7 +493,6 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 ## Abgabe
 
 **Pflicht:**
-- `Meeting_Briefing_Workshop.ipynb`
 - mindestens fünf dokumentierte Testfragen mit Ergebnissen
 - kurze Architekturübersicht, gern als Mermaid-Diagramm
 - kurze Reflexion zu Quellenbindung, Unsicherheit und Grenzen

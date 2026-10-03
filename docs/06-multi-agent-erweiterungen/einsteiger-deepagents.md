@@ -448,9 +448,14 @@ Neben dem Python-SDK gibt es eine eigenständige **DeepAgents CLI** — die inte
 ### Installation der CLI
 
 ```bash
-# Linux / Mac
-curl -LsSf https://raw.githubusercontent.com/langchain-ai/deepagents/main/libs/cli/scripts/install.sh | bash
+# CLI global installieren
+uv tool install deepagents-cli
+
+# Oder ohne dauerhafte Installation ausführen
+uvx deepagents-cli --help
 ```
+
+Weitere Informationen stehen in der [offiziellen DeepAgents-Dokumentation](https://docs.langchain.com/oss/python/deepagents/overview).
 
 ### Was die CLI hinzufügt
 

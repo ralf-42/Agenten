@@ -38,7 +38,7 @@ Python-Programm
 
 ## Archiviertes Kursbeispiel
 
-Das frühere Notebook `01_notebook/_backup/M31_MCP_HuggingFace.ipynb` nutzte einen bereits veröffentlichten Hugging-Face-Space. Es ist nicht mehr Teil der aktiven Modulnummerierung, bleibt aber als archiviertes Beispiel nachvollziehbar:
+Ein früheres Notebook nutzte einen bereits veröffentlichten Hugging-Face-Space. Das Notebook ist nicht mehr Teil der Modulnummerierung, der Space bleibt als archiviertes Beispiel nachvollziehbar:
 
 | Feld | Wert |
 |---|---|
@@ -384,6 +384,6 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.1<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

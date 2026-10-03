@@ -365,7 +365,7 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 - **LangGraph Docs**: <https://langchain-ai.github.io/langgraph/>
 - **LangGraph Changelog**: <https://changelog.langchain.com/>
-- **Multi-Agent Tutorial**: <https://langchain-ai.github.io/langgraph/tutorials/multi_agent/>
+- **Multi-Agent Guide**: <https://docs.langchain.com/oss/python/langchain/multi-agent>
 - **Checkpointing Guide**: <https://langchain-ai.github.io/langgraph/concepts/persistence/>
 - **Human-in-the-Loop**: <https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/>
 
@@ -399,7 +399,7 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ---
 
-**Version:** 1.9<br>
-**Stand:** 2026-09-29<br>
+**Version:** 1.10<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

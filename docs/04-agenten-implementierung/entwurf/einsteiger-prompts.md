@@ -401,12 +401,12 @@ flowchart TD
 | System-only, einfach | `m05_multi_tool_system_prompt.md` | M05 Multi-Tool |
 | Template mit Variablen | `m09_research_routing_prompt.md` | M09 Routing |
 | Few-Shot | `m03_research_few_shot_prompt.md` | M03 Few-Shot |
-| Komplex mit XML-Tags | `m20_research_lead_prompt.md` | M20 Multi-Agent |
-| Komplex mit XML-Tags | `m21_multi_hop_agent_prompt.md` | M21 Agentic RAG |
+| Komplex mit XML-Tags | `m21_research_lead_prompt.md` | M21 Hierarchical Agent Teams |
+| Komplex mit XML-Tags | `m22_multi_hop_agent_prompt.md` | M22 Agentic RAG |
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
 
-Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen liegt zusätzlich in [`Agenten/05_prompt/README.md`](../../../../05_prompt/README.md).
+Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen liegt zusätzlich in [`Agenten/05_prompt/README.md`](../../../05_prompt/README.md).
 
 ## Abgrenzung zu verwandten Dokumenten
 

@@ -99,10 +99,10 @@ Darüber hinaus lohnt es sich, vor dem Logging sensible Felder zu maskieren oder
 
 ```python
 run_cfg = {
-    "run_name": "M12_RAG_Query",
-    "tags": ["rag", "m12"],
+    "run_name": "M13_RAG_Query",
+    "tags": ["rag", "m13"],
     "metadata": {
-        "modul": "M12",
+        "modul": "M13",
         "anfrage_typ": "fachfrage",
         # Kein echter Nutzername, keine E-Mail in Metadaten
     }
@@ -185,8 +185,8 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

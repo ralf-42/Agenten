@@ -8,9 +8,9 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** 
 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
-| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M32_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
-| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M21_Agentic_RAG.ipynb`, `M23_Agent_Evaluation_Testing.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
-| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M30_Agent_Skill_Compliance.ipynb`, `M33_DeepAgent_Multi_Skill.ipynb` |
+| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M34_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
+| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M35_DeepAgent_Multi_Skill.ipynb` |
+| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
 
 ### Skill-Details
 
@@ -23,9 +23,10 @@ Risikoprüfung für Lieferanten- und Transaktions-Compliance.
 | `references/checklist.md` | Prüfkriterien nach Risikoklassen |
 | `references/risk_rules.md` | Schwellenwerte und Eskalationsstufen |
 | `references/examples.md` | Musterentscheidungen mit Begründung |
+| `references/writer-format.md` | Formatvorgaben für die Entscheidungsnotiz |
 | `scripts/assess_risk.py` | Deterministisches Scoring-Tool |
 
-Verwendet in: **M30** (Single-Skill), **M33** (Multi-Skill-Routing)
+Verwendet in: **M31** (Single-Skill), **M35** (Multi-Skill-Routing)
 
 ---
 
@@ -41,7 +42,7 @@ Meeting-Vorbereitung und Nachbereitung mit festen Abschnitten, Quellenpflicht un
 | `references/examples.md` | Beispiel-Briefings (Sprint-Review, Kundengespräch) |
 | `scripts/extract_actions.py` | Tool: Action Items aus Kontext-Dokumenten extrahieren |
 
-Verwendet in: **M32** (vollständiger Skill-Workflow mit Sub-Agent), **M33** (Multi-Skill-Routing)
+Verwendet in: **M34** (vollständiger Skill-Workflow mit Sub-Agent), **M35** (Multi-Skill-Routing)
 
 ---
 
@@ -51,10 +52,13 @@ Strukturierte Recherche mit Relevanz-Bewertung, Quellen-Synthese und zitierfähi
 | Datei | Inhalt |
 |-------|--------|
 | `SKILL.md` | Recherche-Workflow, Quellen-Regeln, Ausgabeformat |
-| `references/` | Bewertungskriterien und Beispiel-Reports |
-| `scripts/` | Scoring-Tool für Quellen-Relevanz |
+| `references/examples.md` | Beispiel-Reports und Musterantworten |
+| `references/format_rules.md` | Regeln für Report-Struktur und Ausgabeformat |
+| `references/search_rules.md` | Regeln für Recherche und Quellenbindung |
+| `references/writer-format.md` | Formatvorgaben für den Research-Report |
+| `scripts/score_relevance.py` | Deterministisches Scoring-Tool für Quellen-Relevanz |
 
-Verwendet in: **M33** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
+Verwendet in: **M35** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
 
 ---
 
@@ -126,9 +130,9 @@ Aufgaben:
 
 ## Weiterführend
 
-- Konzeptdokumentation: [docs/concepts/Skills.md](../docs/concepts/Skills.md)     
+- Konzeptdokumentation: [Skills](../docs/06-multi-agent-erweiterungen/skills.md)     
 - Referenzbeispiel: `SKILL.md` in `compliance/` als vollständiges Beispiel     
 
 ---
 
-**Stand:** Juli 2026
+**Stand:** Oktober 2026

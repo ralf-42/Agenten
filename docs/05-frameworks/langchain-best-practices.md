@@ -1215,5 +1215,5 @@ Beim Refactoring von altem Code:
 ---
 
 **Version:** 1.9<br>
-**Stand:** 2026-09-29<br>
+**Stand:** September 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -1,5 +1,5 @@
 ---
-name: m11_query_rewrite_prompt
+name: m12_query_rewrite_prompt
 description: Prompt zur Umformulierung einer Suchanfrage für Retrieval
 variables: [user_question]
 ---

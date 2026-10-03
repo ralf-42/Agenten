@@ -226,7 +226,7 @@ text = load_prompt('05_prompt/sql_prompt.md', mode="S")
 
 # Von GitHub (tree oder blob URLs werden automatisch konvertiert)
 prompt = load_prompt(
-    'https://github.com/ralf-42/GenAI/blob/main/05_prompt/text_zusammenfassung.md'
+    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/m03_research_system_prompt.md'
 )
 ```
 
@@ -411,13 +411,13 @@ Kopiert Dateien aus einem GitHub-Repository (oder Unterverzeichnis) in ein lokal
 from genai_lib.utilities import copy_from_github
 
 # Alle Notebooks aus dem Root eines Repos
-copy_from_github("ralf-42/GenAI", "./lokal", mask="*.ipynb")
+copy_from_github("ralf-42/Agenten", "./lokal", mask="*.ipynb")
 
 # Nur ein Unterverzeichnis, alle Python-Dateien
-copy_from_github("ralf-42/GenAI/04_modul", "./module", mask="*.py")
+copy_from_github("ralf-42/Agenten/04_modul", "./module", mask="*.py")
 
 # Vorschau: anzeigen, was kopiert würde (keine Dateien schreiben)
-copy_from_github("ralf-42/GenAI", "./ziel", dry_run=True)
+copy_from_github("ralf-42/Agenten", "./ziel", dry_run=True)
 
 # Private Repos: Token übergeben oder GITHUB_TOKEN setzen
 copy_from_github("myorg/private-repo", "./ziel", token="ghp_...")
@@ -453,14 +453,14 @@ Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle
 from genai_lib.utilities import show_trace
 
 # Letzte 5 Runs als Tabelle
-show_trace("M07-RAG-Projekt")
+show_trace("M13-RAG-Chain")
 
 # Mit Step-Analyse des letzten Runs
-show_trace("M07-RAG-Projekt", limit=3, show_steps=True)
+show_trace("M13-RAG-Chain", limit=3, show_steps=True)
 ```
 
 **Parameter:**
-- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M07-RAG-Projekt"`)
+- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M13-RAG-Chain"`)
 - `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
 - `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
@@ -730,10 +730,10 @@ setup_api_keys(["OPENAI_API_KEY"])
 from genai_lib.utilities import show_trace
 
 # Letzte Runs prüfen
-show_trace("M07-RAG-Projekt")
+show_trace("M13-RAG-Chain")
 
 # Step-Analyse für Debugging
-show_trace("M07-RAG-Projekt", show_steps=True)
+show_trace("M13-RAG-Chain", show_steps=True)
 ```
 
 ### . Multimodales RAG-System
@@ -881,13 +881,13 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 | Dokument | Frage |
 |---|---|
-| [Standards](../13-ressourcen/standards.html) | Welche projektweiten Code- und Notebook-Regeln gelten? |
-| [Modell-Auswahl Guide](../04-modelle-provider/modellauswahl.html) | Welche Modellrolle passt zu welchem Kursbeispiel? |
+| [Standards](../10-ressourcen/standards.html) | Welche projektweiten Code- und Notebook-Regeln gelten? |
+| [Modell-Auswahl Guide](../03-modelle-provider-anpassung/modellauswahl.html) | Welche Modellrolle passt zu welchem Kursbeispiel? |
 
 ---
 
-**Version:** 3.3<br>
-**Stand:** Juli 2026<br>
+**Version:** 3.4<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

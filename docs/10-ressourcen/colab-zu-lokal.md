@@ -91,10 +91,10 @@ check_environment()
 
 | Modul | Besonderheit | Lokale Anpassung |
 |---|---|---|
-| **M07, M08** (RAG) | `install_packages([...])` für markitdown, unstructured | `pip install markitdown[all] unstructured[all-docs]` |
-| **M27** (Gradio) | `demo.launch(quiet=True)` | Bleibt unverändert — öffnet automatisch im Browser |
-| **M29** (MCP) | `!uv pip install fastmcp langchain-mcp-adapters` | `pip install fastmcp langchain-mcp-adapters` |
-| **M08, M14** (Datenbanken) | Lokale DB-Dateien (`chroma_m09/`, `m14_checkpoints.db`) | Werden im Arbeitsverzeichnis angelegt — funktioniert identisch |
+| **M11, M12** (RAG) | `install_packages([...])` für markitdown, unstructured | `pip install markitdown[all] unstructured[all-docs]` |
+| **M29** (Gradio) | `demo.launch(quiet=True)` | Bleibt unverändert — öffnet automatisch im Browser |
+| **M30** (MCP) | `!uv pip install fastmcp langchain-mcp-adapters` | `pip install fastmcp langchain-mcp-adapters` |
+| **M12, M13, M15, M16** (Datenbanken) | Lokale DB-Dateien (`chroma_m12/`, `chroma_m13/`, `chroma_m15/`, `m15_checkpoints.sqlite`) | Werden im Arbeitsverzeichnis angelegt — funktioniert identisch |
 
 ---
 
@@ -117,7 +117,7 @@ check_environment()
 - [ ] `genai_lib` installiert? (`pip show genai-lib`)
 - [ ] API-Keys gesetzt? (`echo %OPENAI_API_KEY%`)
 - [ ] `#@title`- und `get_ipinfo()`-Zeilen entfernt?
-- [ ] Notebook-spezifische Zusatzpakete installiert (M07, M08, M27, M29)?
+- [ ] Notebook-spezifische Zusatzpakete installiert (M11, M12, M29, M30)?
 
 ## Abgrenzung zu verwandten Dokumenten
 
@@ -128,8 +128,8 @@ check_environment()
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.1<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -1,6 +1,6 @@
 # Korpus-Qualitätsprüfung
 
-**Stand:** 2026-07-02
+**Stand:** Juli 2026
 
 ## Ergebnis
 

@@ -169,7 +169,7 @@ LangSmith organisiert alle Daten in einer klaren Hierarchie:
 
 ```mermaid
 flowchart TB
-    PROJECT["Project<br>Container für alle Traces<br>z.B. 'M07-RAG-Chain'"]
+    PROJECT["Project<br>Container für alle Traces<br>z.B. 'M13-RAG-Chain'"]
     THREAD["Thread<br>Gesprächs-Sequenz<br>session_id / conversation_id"]
     TRACE["Trace<br>Eine vollständige Anfrage<br>z.B. RAG-Ausführung"]
     RUN["Run<br>Einzelne Operation<br>llm · chain · tool · ..."]
@@ -828,10 +828,10 @@ Ohne LangSmith-Trace wäre der Grund für die erhöhte Latenz nicht erkennbar ge
 from genai_lib.utilities import show_trace
 
 # Letzte 3 Runs anzeigen
-show_trace("M07-RAG-Chain", limit=3)
+show_trace("M13-RAG-Chain", limit=3)
 
 # Mit Step-Analyse des letzten Runs (zeigt alle Retrieval-Schritte)
-show_trace("M07-RAG-Chain", show_steps=True)
+show_trace("M13-RAG-Chain", show_steps=True)
 ```
 
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
@@ -1003,6 +1003,6 @@ LangSmith macht Agenten nachvollziehbar: Traces zeigen einzelne Schritte, Datase
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.1<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -189,5 +189,5 @@ Die ausführliche Lizenzzuordnung für die Kurs-Website steht unter [Rechtliches
 
 ---
 
-**Letzte Aktualisierung:** September 2026     
+**Stand:** September 2026     
 **Version:** 5.6     

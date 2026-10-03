@@ -64,8 +64,8 @@ KI-generiertes Bild
 </font></p>
 
 **Modellübersichten:**      
-+ [Models.dev]([Models.dev — An open-source database of AI models](https://models.dev/))
-+ [LiteLLM Modelle]([LiteLLM-Anbieter & Modelle](https://models.litellm.ai/))      
++ [Models.dev — Open-Source-Datenbank für AI-Modelle](https://models.dev/)
++ [LiteLLM-Anbieter & Modelle](https://models.litellm.ai/)
 
 
 

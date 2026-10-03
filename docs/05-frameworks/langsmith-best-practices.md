@@ -101,7 +101,7 @@ Mit `.with_config()` lassen sich einzelne Chains und Aufrufe in LangSmith klar i
 # 1. Tracing-Konfiguration vorab festlegen
 run_cfg = {
     "run_name": "M04_Kap6_BasicChain",  # Anzeigename im Trace-Tree
-    "tags":     ["M04", "lcel", "chain"] # Filterbar im Dashboard
+    "tags":     ["M06", "lcel", "chain"] # Filterbar im Dashboard
 }
 
 # 2. with_config() anwenden
@@ -130,7 +130,7 @@ result = chain.invoke(
 # Runnable-Konfiguration: diese Chain-Variante bleibt benannt.
 traced_chain = chain.with_config(
     run_name="M04_Kap6_BasicChain",
-    tags=["M04", "lcel", "chain"],
+    tags=["M06", "lcel", "chain"],
     metadata={"komponente": "prompt-llm-parser"},
 )
 result = traced_chain.invoke({"input": "..."})
@@ -160,7 +160,7 @@ run_name="Classifier_Intent"
 **Tags-Konvention (Empfehlung):**
 ```python
 # Kurs-Notebooks
-tags=["M04", "lcel", "parallel"]
+tags=["M06", "lcel", "parallel"]
 
 # Produktion
 tags=["production", "rag", "v2"]
@@ -413,14 +413,14 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 # ── Setup-Cell: Modulname direkt setzen (vor allen Imports!) ─────────────
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
-os.environ["LANGSMITH_PROJECT"]    = "M05-Structured-Output"  # Modulname
+os.environ["LANGSMITH_PROJECT"]    = "M04-Structured-Output"  # Modulname
 
 # ── LangSmith-Abschnitt: nur noch anzeigen ───────────────────────────────
 import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # ── invoke() direkt – Projekt bereits korrekt gesetzt ────────────────────
-run_cfg = {"run_name": "M05_Kap6_StructuredTrace", "tags": ["M05", "structured-output"]}
+run_cfg = {"run_name": "M04_Kap6_StructuredTrace", "tags": ["M04", "structured-output"]}
 chain = llm.with_structured_output(MyModel).with_config(**run_cfg)
 result = chain.invoke("...")
 ```
@@ -430,7 +430,7 @@ result = chain.invoke("...")
 | Kontext | Empfehlung | Beispiel |
 |---------|-----------|---------|
 | Kurs-Notebook (Setup) | Platzhalter | `"default"` |
-| Kurs-Notebook (LangSmith-Abschnitt) | Modulname | `"M05-Structured-Output"` |
+| Kurs-Notebook (LangSmith-Abschnitt) | Modulname | `"M04-Structured-Output"` |
 | Produktion | Anwendungsname | `"chatbot-production"` |
 | Experiment | Thema + Datum | `"rag-experiment-2026-03"` |
 
@@ -599,21 +599,21 @@ def chatbot_with_feedback(message: str, session_id: str):
 
 **Ursache:** `LANGSMITH_PROJECT` wurde in der Setup-Cell auf `"default"` gesetzt (oder gar nicht), und später im Notebook per `os.environ` überschrieben. Das funktioniert nicht – der Projektnamen wird beim ersten Trace via `lru_cache` eingefroren.
 
-**Symptom:** `os.environ["LANGSMITH_PROJECT"] = "M05-Structured-Output"` gibt den richtigen Wert aus, aber Traces landen trotzdem in `default`.
+**Symptom:** `os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"` gibt den richtigen Wert aus, aber Traces landen trotzdem in `default`.
 
 **Lösung:** Modulnamen direkt in der Setup-Cell setzen – **vor** allen LangChain-Imports:
 ```python
 # ✅ Einmal korrekt in der Setup-Cell – funktioniert zuverlässig
-os.environ["LANGSMITH_PROJECT"] = "M05-Structured-Output"
+os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"
 
 # ❌ Nach dem ersten Trace überschreiben – wird ignoriert
-os.environ["LANGSMITH_PROJECT"] = "M05-Structured-Output"  # zu spät
+os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"  # zu spät
 ```
 
 **Alternativer Workaround** (wenn kein Kernel-Neustart möglich): `ls.tracing_context()`:
 ```python
 import langsmith as ls
-with ls.tracing_context(project_name="M05-Structured-Output"):
+with ls.tracing_context(project_name="M04-Structured-Output"):
     result = chain.invoke("...")
 ```
 
@@ -784,6 +784,6 @@ client = Client(
 
 ---
 
-**Version:** 2.3<br>
-**Stand:** 2026-09-29<br>
+**Version:** 2.4<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

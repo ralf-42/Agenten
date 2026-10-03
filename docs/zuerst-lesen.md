@@ -10,6 +10,8 @@ has_toc: true
 
 Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht den ausführlichen [Lernpfad]({{ '/lernpfad.html' | relative_url }}), sondern beantwortet die Frage, welche Dokumente vor den ersten eigenen Schritten am sinnvollsten sind.
 
+Der Kurs entwickelt durchgehend einen **Meeting- & Research-Briefing-Agenten**. Der [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) erklärt dazu die Modulprogression und den fünftägigen Kursrahmen.
+
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
@@ -62,7 +64,7 @@ Nach dem Einstieg führt die Seite [Lernpfad]({{ '/lernpfad.html' | relative_url
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

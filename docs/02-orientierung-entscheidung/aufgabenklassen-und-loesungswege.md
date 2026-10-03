@@ -48,8 +48,6 @@ Ein einmaliger persönlicher Textentwurf ist in der Regel eine Chat-Aufgabe. Ein
 | Wiederkehrende persönliche Unterstützung | Custom GPT oder Skill |
 | Vorgehen unklar, mehrstufig, toolgestützt | Agentensystem |
 
-Wer tiefer in die allgemeine GenAI-Perspektive einsteigen will, findet die ausführlichere Schwesterseite hier: [Aufgabenklassen & Lösungswege](https://ralf-42.github.io/GenAI/concepts/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html).
-
 ## Woran sich ein echter Agentenfall erkennen lässt
 
 Ein Agentensystem macht vor allem dann Sinn, wenn mehrere Punkte zusammenkommen. Dazu gehört, dass der Ablauf nicht vollständig vordefiniert werden kann. Außerdem müssen Werkzeuge oder externe Systeme eingebunden werden. Und spätere Schritte hängen tatsächlich von früheren Ergebnissen ab.
@@ -209,6 +207,6 @@ Kurzcheck:
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** September 2026<br>
+**Version:** 1.3<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

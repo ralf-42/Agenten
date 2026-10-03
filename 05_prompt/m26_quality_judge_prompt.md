@@ -1,6 +1,6 @@
 ---
-name: m25_quality_judge_prompt
-description: System-Prompt für den Quality Judge in M25 (Integration Pipeline) — bewertet KI-Research-Reports nach Richtigkeit, Vollständigkeit und Lesbarkeit
+name: m26_quality_judge_prompt
+description: System-Prompt für den Quality Judge in M26 (Integration Pipeline) — bewertet KI-Research-Reports nach Richtigkeit, Vollständigkeit und Lesbarkeit
 variables: []
 ---
 

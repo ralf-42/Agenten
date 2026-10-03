@@ -1,6 +1,6 @@
 ---
-name: m29_multi_agent_prompt
-description: System-Prompt für den Multi-Server-Agenten in M29 (MCP Local, Math + Notiz)
+name: m30_multi_agent_prompt
+description: System-Prompt für den Multi-Server-Agenten in M30 (MCP Local, Math + Notiz)
 variables: []
 ---
 

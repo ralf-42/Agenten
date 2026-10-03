@@ -1,6 +1,6 @@
 ---
-name: m29_math_agent_prompt
-description: System-Prompt für den Mathe-Agenten in M29 (MCP Local)
+name: m30_math_agent_prompt
+description: System-Prompt für den Mathe-Agenten in M30 (MCP Local)
 variables: []
 ---
 

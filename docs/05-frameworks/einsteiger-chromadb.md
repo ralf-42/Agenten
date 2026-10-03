@@ -922,12 +922,12 @@ results = retriever.invoke("Meine Frage")
 
 | Dokument | Frage |
 |---|---|
-| [Embeddings](../03-grundlagen/embeddings.html) | Warum funktionieren semantische Suchvektoren? |
-| [RAG-Konzepte](../05-prompting-rag/rag-konzepte.html) | Wann wird ChromaDB Teil einer Retrieval-Architektur? |
+| [Embeddings](../04-agenten-implementierung/kontext-wissen/embeddings.html) | Warum funktionieren semantische Suchvektoren? |
+| [RAG-Konzepte](../04-agenten-implementierung/kontext-wissen/rag-konzepte.html) | Wann wird ChromaDB Teil einer Retrieval-Architektur? |
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

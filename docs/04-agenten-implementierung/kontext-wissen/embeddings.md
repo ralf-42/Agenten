@@ -177,7 +177,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 |---|---|
 | [Tokenizing & Chunking]({{ '/04-agenten-implementierung/kontext-wissen/tokenizing-chunking.html' | relative_url }}) | Wie wird Rohtext so vorbereitet, dass Embeddings später sinnvoll berechnet werden können? |
 | [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) | Wie werden Embeddings praktisch in Retrieval-Systemen genutzt? |
-| [Multimodal Bild]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }}) | Wie werden Vektorähnlichkeiten jenseits von reinem Text relevant? |
+| [Multimodale Eingaben]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}) | Wie werden Bilder und andere Inhalte in Modellaufrufe eingebunden? |
 
 ---
 

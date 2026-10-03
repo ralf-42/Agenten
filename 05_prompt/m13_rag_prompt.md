@@ -1,5 +1,5 @@
 ---
-name: m12_rag_prompt
+name: m13_rag_prompt
 description: RAG-Prompt für den Meeting- & Research-Briefing-Agent
 variables: [context, question]
 ---

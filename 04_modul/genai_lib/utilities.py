@@ -875,13 +875,13 @@ def copy_from_github(
     >>> from genai_lib.utilities import copy_from_github
     >>>
     >>> # Alle Notebooks aus dem Root eines Repos
-    >>> copy_from_github("ralf-42/GenAI", "./lokal", mask="*.ipynb")
+    >>> copy_from_github("ralf-42/Agenten", "./lokal", mask="*.ipynb")
     >>>
     >>> # Nur ein Unterverzeichnis, alle Dateien
-    >>> copy_from_github("ralf-42/GenAI/04_modul", "./module")
+    >>> copy_from_github("ralf-42/Agenten/04_modul", "./module")
     >>>
     >>> # Vorschau ohne Dateien zu kopieren
-    >>> copy_from_github("ralf-42/GenAI", "./ziel", dry_run=True)
+    >>> copy_from_github("ralf-42/Agenten", "./ziel", dry_run=True)
     """
     # Token aus Umgebungsvariable, falls nicht übergeben
     if token is None:

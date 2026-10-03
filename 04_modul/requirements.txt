@@ -33,3 +33,6 @@ pillow>=11.0.0,<12.0.0
 
 # Utilities
 requests>=2.32.0
+
+# Notebook tooling
+nbformat>=5.10.0

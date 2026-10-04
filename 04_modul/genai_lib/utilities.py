@@ -634,6 +634,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
                 project_name=project_name,
                 filter=f'eq(parent_run_id, "{str(last_run.id)}")',
             ))
+            children.sort(key=lambda r: r.start_time)  # chronologisch (LangSmith liefert neueste zuerst)
         except Exception as e:
             mprint(f"> ❌ Child-Runs konnten nicht abgerufen werden: `{e}`")
             return

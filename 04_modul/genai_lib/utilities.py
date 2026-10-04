@@ -612,7 +612,15 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
             f"{(run.end_time - run.start_time).total_seconds():.1f}s"
             if run.end_time and run.start_time else "—"
         )
-        children = len(run.child_run_ids) if run.child_run_ids else 0
+        # child_run_ids ist in list_runs nicht enthalten (deprecated) → per parent_run_id zählen
+        try:
+            children = sum(1 for _ in client.list_runs(
+                project_name=project_name,
+                filter=f'eq(parent_run_id, "{str(run.id)}")',
+                select=["id"],
+            ))
+        except Exception:
+            children = "—"
         status = "✅" if run.status == "success" else "❌"
         zeilen.append(f"| `{run.name or '—'}` | {status} {run.status} | {dauer} | {children} |")
 

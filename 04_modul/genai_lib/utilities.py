@@ -621,7 +621,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
             ))
         except Exception:
             children = "—"
-        status = "✅" if run.status == "success" else "❌"
+        status = "✅" if run.status == "success" else ("⏳" if run.status == "pending" else "❌")
         zeilen.append(f"| `{run.name or '—'}` | {status} {run.status} | {dauer} | {children} |")
 
     mprint("\n".join(zeilen))
@@ -653,7 +653,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
                 f"{(child.end_time - child.start_time).total_seconds():.1f}s"
                 if child.end_time and child.start_time else "—"
             )
-            status = "✅" if child.status == "success" else "❌"
+            status = "✅" if child.status == "success" else ("⏳" if child.status == "pending" else "❌")
             step_zeilen.append(
                 f"| {i} | `{child.run_type}` | `{child.name}` | {status} | {dauer} |"
             )

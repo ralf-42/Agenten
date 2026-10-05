@@ -32,7 +32,7 @@ Für den Kurs reicht als erste Unterscheidung:
 - **LangGraph** kontrolliert Abläufe: State, Routing, Schleifen, Unterbrechungen und Wiederaufnahme.
 - **LangSmith** macht Verhalten prüfbar: Traces, Evaluation, Regressionen und Qualitätsvergleiche.
 
-Für den Meeting- & Research-Briefing-Agent heißt das: LangChain liefert die Werkzeuge, LangGraph steuert den Arbeitsablauf, LangSmith zeigt, ob Quellen, Tool-Wahl und Eskalation nachvollziehbar funktionieren.
+Für den Meeting- & Briefing-Agent heißt das: LangChain liefert die Werkzeuge, LangGraph steuert den Arbeitsablauf, LangSmith zeigt, ob Quellen, Tool-Wahl und Eskalation nachvollziehbar funktionieren.
 
 ---
 

@@ -15,7 +15,7 @@ Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus
 
 **Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Der Kurs baut auf GenAI-Grundlagen auf, geht aber über einzelne KI-Features hinaus: Es entsteht ein System, das **plant** (Routing, State, Tool-Auswahl, Supervisor), **handelt** (Tool-Use, RAG als Evidence Tool, Workflows) und **geprüft wird** (Human-in-the-Loop, Security, Evaluation).
 
-Der durchgehende Anwendungsfall ist ein **Meeting- & Research-Briefing-Agent**: Eine fiktive Projektleiterin, Mara Vogt, baut schrittweise ein kontrolliertes Agentensystem, das einen Projektkorpus aus Protokollen, Entscheidungen, Risiken und Fachartikeln semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG als Evidence Tool, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben kontrollierten Arbeitssystems erarbeitet.
+Der durchgehende Anwendungsfall ist ein **Meeting- & Briefing-Agent**: Eine fiktive Projektleiterin, Mara Vogt, baut schrittweise ein kontrolliertes Agentensystem, das einen Projektkorpus aus Protokollen, Entscheidungen, Risiken und Fachartikeln semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG als Evidence Tool, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben kontrollierten Arbeitssystems erarbeitet.
 
 ## 🌐 Kurs-Website
 
@@ -120,7 +120,7 @@ Agenten/
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M26 | Integration Pipeline | Meeting- & Research-Briefing-System als End-to-End-Pipeline |
+| M26 | Integration Pipeline | Meeting- & Briefing-System als End-to-End-Pipeline |
 | M27 | Projekt-Templates & MVP | Eigene Templates A/B/C und MVP-Definition |
 | M28 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
 | M29 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
@@ -159,7 +159,7 @@ Alle Notebooks sind eigenständig lauffähig und für Google Colab optimiert. Da
 
 ## 🎓 Projektziel
 
-Am Ende steht ein eigener **Meeting- & Research-Briefing-Agent** als Capstone-Variante. Der Bauplan bleibt gleich, der Korpus oder die Persona kann variieren:
+Am Ende steht ein eigener **Meeting- & Briefing-Agent** als Capstone-Variante. Der Bauplan bleibt gleich, der Korpus oder die Persona kann variieren:
 
 - PDF-Korpus reproduzierbar laden
 - semantische Suche mit ChromaDB nutzen

@@ -216,7 +216,7 @@
   {
     "id": "q19",
     "typ": "synthese",
-    "frage": "Welche Mindestbestandteile sollte ein einsteigergeeigneter Meeting- & Research-Briefing-Agent aus diesem Korpus ableiten?",
+    "frage": "Welche Mindestbestandteile sollte ein einsteigergeeigneter Meeting- & Briefing-Agent aus diesem Korpus ableiten?",
     "erwartete_antwort_kurz": "Dokumenten-Ingestion, Chunking, Embeddings, Retrieval, quellengebundene Zusammenfassung von Entscheidungen und offenen Punkten, Evaluation und menschliche Freigabe bei Unsicherheit oder Konflikten.",
     "erwartete_quelle": "entscheidungsprotokoll_gesamt.pdf",
     "erwartete_begriffe": [

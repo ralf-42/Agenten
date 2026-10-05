@@ -10,7 +10,7 @@ has_toc: true
 
 Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Für den kürzesten Einstieg eignet sich zuerst [Zuerst lesen](./zuerst-lesen.html). Danach hilft der Lernpfad dabei, je nach Ziel gezielt zu vertiefen.
 
-Der durchgehende Anwendungsfall des Kurses ist ein **Meeting- & Research-Briefing-Agent**. Die Modul- und Tagesstruktur des fünftägigen Grundlagenpfads mit vier 90-Minuten-Blöcken pro Tag ist im [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html) beschrieben.
+Der durchgehende Anwendungsfall des Kurses ist ein **Meeting- & Briefing-Agent**. Die Modul- und Tagesstruktur des fünftägigen Grundlagenpfads mit vier 90-Minuten-Blöcken pro Tag ist im [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html) beschrieben.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }

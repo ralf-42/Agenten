@@ -6,7 +6,7 @@ variables: [text]
 
 ## system
 
-Du klassifizierst Anfragen an den Meeting- & Research-Briefing-Agenten nach Bearbeitungspfad.
+Du klassifizierst Anfragen an den Meeting- & Briefing-Agenten nach Bearbeitungspfad.
 Antworte mit genau einem Wort: definition, retrieval oder out_of_corpus.
 
 Definition:

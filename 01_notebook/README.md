@@ -20,14 +20,14 @@ Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule 
 
 ---
 
-Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting- & Research-Briefing-Agent**. Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
+Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting- & Briefing-Agent**. Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M02)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, Meeting- & Research-Briefing-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
-| M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster Meeting- & Research-Briefing-Agent mit `create_agent()` | 🟢 Grundlagen |
+| M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, Meeting- & Briefing-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
+| M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster Meeting- & Briefing-Agent mit `create_agent()` | 🟢 Grundlagen |
 
 ---
 
@@ -46,7 +46,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting-
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M07 | `M07_Warum_LangGraph.ipynb` | Warum der Meeting- & Research-Briefing-Agent kontrollierten State braucht | 🟢 Grundlagen |
+| M07 | `M07_Warum_LangGraph.ipynb` | Warum der Meeting- & Briefing-Agent kontrollierten State braucht | 🟢 Grundlagen |
 | M08 | `M08_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Grundlagen |
 | M09 | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics und Planning-Patterns | 🟢 Grundlagen |
 | M10 | `M10_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Grundlagen |
@@ -88,7 +88,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting-
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🔵 Aufbau |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark, RAGAS-Live-Lauf | 🔵 Aufbau |
 | M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🔵 Aufbau |
-| M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Research-Briefing-System als End-to-End-Pipeline | 🔵 Aufbau |
+| M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Briefing-System als End-to-End-Pipeline | 🔵 Aufbau |
 | M27 | `M27_Projekt_Templates.ipynb` | Eigene Projekt-Templates A/B/C, MVP-Definition | 🔵 Aufbau |
 | M28 | `M28_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Aufbau |
 | M29 | `M29_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🟣 Vertiefung |

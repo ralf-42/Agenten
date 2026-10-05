@@ -1,6 +1,6 @@
 # Kursbibliothek Agenten
 
-Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie unterstützt den durchgehenden Meeting- & Research-Briefing-Anwendungsfall: Umgebung einrichten, Modelle rollenbasiert auswählen, Prompts laden, Mermaid-Diagramme anzeigen, LangSmith-Traces prüfen und nur bei Bedarf zusätzliche Pakete installieren.
+Diese Bibliothek stellt Hilfsmittel und Funktionen für den Kurs **"KI-Agenten"** bereit. Sie unterstützt den durchgehenden Meeting- & Briefing-Anwendungsfall: Umgebung einrichten, Modelle rollenbasiert auswählen, Prompts laden, Mermaid-Diagramme anzeigen, LangSmith-Traces prüfen und nur bei Bedarf zusätzliche Pakete installieren.
 
 ## 1. Installation
 

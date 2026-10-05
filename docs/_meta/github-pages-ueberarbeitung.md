@@ -171,7 +171,7 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 - `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/meeting-research-briefing-agent.md` zusammengeführt,
 - `02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
 - `08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` wurde aus den Frameworks in Deployment & Betrieb verlagert, weil der Text den Weg vom Modell zur produktionsnahen Anwendung beschreibt.
-- Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Meeting- & Research-Briefing-Agent`.
+- Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Meeting- & Briefing-Agent`.
 
 ## Feinschliff und Konsistenz
 

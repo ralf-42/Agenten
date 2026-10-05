@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Meeting- & Research-Briefing-Agent
+title: Meeting- & Briefing-Agent
 parent: "Orientierung & Entscheidung"
 nav_order: 4
-description: "Zielbild und roter Faden: quellengebundenes Meeting- & Research-Briefing mit RAG, Evaluation und Freigabe"
+description: "Zielbild und roter Faden: quellengebundenes Meeting- & Briefing mit RAG, Evaluation und Freigabe"
 has_toc: true
 ---
 
-# Meeting- & Research-Briefing-Agent
+# Meeting- & Briefing-Agent
 {: .no_toc }
 
-Ein Meeting- & Research-Briefing-Agent hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, offene Fragen und passende Fachartikel. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
+Ein Meeting- & Briefing-Agent hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, offene Fragen und passende Fachartikel. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
 Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt. Er bereitet ein Briefing vor. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
@@ -45,7 +45,7 @@ KI-generiertes Bild
 
 ## Zielbild
 
-Ein brauchbarer Meeting- & Research-Briefing-Agent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort enthält eine Zusammenfassung, Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
+Ein brauchbarer Meeting- & Briefing-Agent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort enthält eine Zusammenfassung, Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
 In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
@@ -104,7 +104,7 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ## Leitplanken
 
-Der Meeting- & Research-Briefing-Agent bleibt ein Assistenzsystem für Briefing und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder Entscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
+Der Meeting- & Briefing-Agent bleibt ein Assistenzsystem für Briefing und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder Entscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
 
 Die Leitplanken setzen **Prüfen** praktisch um. Sie legen fest, wann der Agent stoppt, eskaliert oder eine Ausgabe verweigert, statt eine plausible Antwort zu erzwingen.
 
@@ -136,7 +136,7 @@ Für eine erste Version ist eine pragmatische Schwelle sinnvoll: Die semantische
 
 ## Vom Einzelagenten zum Multi-Agent-System
 
-Der Meeting- & Research-Briefing-Agent beginnt nicht als Multi-Agent-System. Zuerst muss der einfache Pfad funktionieren: Korpus laden, Passage finden, Antwort strukturieren, Quelle belegen. Erst danach lohnt sich Rollenaufteilung.
+Der Meeting- & Briefing-Agent beginnt nicht als Multi-Agent-System. Zuerst muss der einfache Pfad funktionieren: Korpus laden, Passage finden, Antwort strukturieren, Quelle belegen. Erst danach lohnt sich Rollenaufteilung.
 
 Eine sinnvolle Multi-Agent-Variante trennt nicht künstlich ähnliche Aufgaben, sondern unterschiedliche Dokument- oder Fragetypen:
 
@@ -171,7 +171,7 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI- oder Agentenvorhaben überhaupt sinnvoll? |
 | [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann reicht Prompting, wann braucht es RAG, Workflow oder Agent? |
 | [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Welche Begriffe werden für Tools, State, Memory und Guardrails verwendet? |
-| [Meeting- & Research-Briefing-Agent Workshop]({{ '/08-deployment-betrieb/meeting-research-briefing-agent.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
+| [Meeting- & Briefing-Agent Workshop]({{ '/08-deployment-betrieb/meeting-research-briefing-agent.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
 
 ---
 

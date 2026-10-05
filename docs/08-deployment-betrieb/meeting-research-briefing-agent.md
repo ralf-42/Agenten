@@ -1,17 +1,17 @@
 ---
 layout: default
-title: Meeting- & Research-Briefing-Agent
+title: Meeting- & Briefing-Agent
 parent: "Deployment & Betrieb"
 nav_order: 5
-description: "Praxisprojekt: quellengebundener Meeting- & Research-Briefing-Agent"
+description: "Praxisprojekt: quellengebundener Meeting- & Briefing-Agent"
 has_toc: true
 ---
 
-# Meeting- & Research-Briefing-Agent Workshop
+# Meeting- & Briefing-Agent Workshop
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Wie entsteht ein quellengebundener Meeting- & Research-Briefing-Agent, der Protokolle, Entscheidungen, Risiken und Fachartikel durchsucht, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
+> Wie entsteht ein quellengebundener Meeting- & Briefing-Agent, der Protokolle, Entscheidungen, Risiken und Fachartikel durchsucht, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
 
 ---
 
@@ -25,14 +25,14 @@ has_toc: true
 
 ## Projektübersicht
 
-In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Research-Briefing-Agent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Fachartikel sichten, sucht relevante Passagen und will geprüfte Briefings erhalten, statt einem vollautomatischen System blind zu vertrauen.
+In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Briefing-Agent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Fachartikel sichten, sucht relevante Passagen und will geprüfte Briefings erhalten, statt einem vollautomatischen System blind zu vertrauen.
 
 > [!NOTE] Dateiname und URL<br>
 > Diese Seite liegt unter `meeting-research-briefing-agent.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
 
 Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Risikolisten und Fachartikeln, sucht semantisch nach relevanten Passagen, formuliert eine strukturierte Antwort mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung.
 
-Das Zielbild der Leitaufgabe ist in [Meeting- & Research-Briefing-Agent]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }}) beschrieben.
+Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
@@ -67,7 +67,7 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der Meeting- & Research-Briefing-Agent ist ein Assistenzsystem, kein autonomes Entscheidungssystem.
+Der Meeting- & Briefing-Agent ist ein Assistenzsystem, kein autonomes Entscheidungssystem.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -434,7 +434,7 @@ def chat_with_briefing_agent(message, history, thread_id):
     return "", history + [(message, result["answer"])]
 
 with gr.Blocks() as demo:
-    gr.Markdown("# Meeting- & Research-Briefing-Agent")
+    gr.Markdown("# Meeting- & Briefing-Agent")
     thread_id = gr.Textbox(label="Session ID", value="mara_001")
     chatbot = gr.Chatbot(height=450)
     msg = gr.Textbox(placeholder="Frage zum Projektkorpus stellen ...")
@@ -524,7 +524,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 - [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
 
 **Projektinterne Dokumente:**
-- [Meeting- & Research-Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }})
+- [Meeting- & Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }})
 - [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }})
 - [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 - [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})

@@ -110,7 +110,7 @@ def quellen_check(thema: str) -> str:
 agent = create_agent(
     model=init_chat_model("openai:gpt-5.4-mini"),
     tools=[quellen_check],
-    system_prompt="Du bist ein Meeting- & Research-Briefing-Agent. Nutze Tools für Korpusfragen.",
+    system_prompt="Du bist ein Meeting- & Briefing-Agent. Nutze Tools für Korpusfragen.",
 )
 
 result = agent.invoke({"messages": [HumanMessage(content="Prüfe RAG-Evaluation.")]})

@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts Meeting- & Research-Briefing-Agent); `research/` liefert die Recherche-Fähigkeit (Evidence Tool) als Teilbaustein, `compliance/` dient als domänenneutrales Transferbeispiel.
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts Meeting- & Briefing-Agent); `research/` liefert die Recherche-Fähigkeit (Evidence Tool) als Teilbaustein, `compliance/` dient als domänenneutrales Transferbeispiel.
 
 ---
 

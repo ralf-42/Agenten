@@ -1,5 +1,5 @@
 """
-briefing_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Research-Briefing-Agenten
+briefing_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Briefing-Agenten
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (PDF-Laden, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),

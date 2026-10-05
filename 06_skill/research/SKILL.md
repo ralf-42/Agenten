@@ -11,7 +11,7 @@ description: >-
 
 # Research Skill
 
-Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Research-Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_meeting_briefing/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
+Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_meeting_briefing/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
 
 ## Aktivierungsbedingung
 

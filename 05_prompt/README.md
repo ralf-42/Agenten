@@ -14,7 +14,7 @@ m##_beschreibung.md
 
 ### Hinweis zu `research_*` nach dem Move-B-Pivot
 
-Einige Prompt-Dateien behalten `research` im Dateinamen (`m03_research_*`, `m09_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Research-Briefing-Agenten**, nicht ein eigenes Leitprojekt.
+Einige Prompt-Dateien behalten `research` im Dateinamen (`m03_research_*`, `m09_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Briefing-Agenten**, nicht ein eigenes Leitprojekt.
 
 Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
 

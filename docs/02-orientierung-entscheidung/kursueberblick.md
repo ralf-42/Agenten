@@ -26,7 +26,7 @@ has_toc: true
 
 Der Kurs zeigt, wie aus einzelnen KI-Funktionen kontrollierte Agentensysteme werden: Anwendungen, die planen, Werkzeuge nutzen, Zwischenergebnisse prüfen und bei Bedarf Menschen einbeziehen.
 
-Der rote Faden ist ein **Meeting- & Research-Briefing-Agent**. Er arbeitet mit einem kuratierten Projektkorpus, sucht relevante Quellen, erstellt belegbare Antworten, erkennt Grenzen des Wissens und macht kritische Entscheidungen prüfbar.
+Der rote Faden ist ein **Meeting- & Briefing-Agent**. Er arbeitet mit einem kuratierten Projektkorpus, sucht relevante Quellen, erstellt belegbare Antworten, erkennt Grenzen des Wissens und macht kritische Entscheidungen prüfbar.
 
 Der Fokus liegt auf praktischer Umsetzung mit Python, LangChain, LangGraph, LangSmith und ChromaDB. Theorie wird so weit erklärt, wie sie für Entwurf, Implementierung und Bewertung nötig ist.
 
@@ -52,7 +52,7 @@ Nach dem Kurs ist es möglich:
 - RAG als Evidence Tool in Agenten einzubinden,
 - LangGraph für kontrollierte mehrstufige Abläufe zu nutzen,
 - Human-in-the-Loop im Grundlagenpfad umzusetzen und Evaluation, Security und Budgetkontrolle über die Aufbaumodule einzuplanen,
-- einen Meeting- & Research-Briefing-Agenten als eigenes Capstone-Projekt weiterzuentwickeln.
+- einen Meeting- & Briefing-Agenten als eigenes Capstone-Projekt weiterzuentwickeln.
 
 Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, relevante Evidenz sammelt, Entscheidungen sichtbar macht, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
 
@@ -156,7 +156,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M23  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
 |  M24  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
 |  M25  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | Meeting- & Research-Briefing-System als E2E-Pipeline   |
+|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | Meeting- & Briefing-System als E2E-Pipeline   |
 |  M27  | Aufbau: Qualität und Integration  | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
 |  M28  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
 |  M29  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
@@ -170,9 +170,9 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M37  | Vertiefung: Skills und Produktion | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
 |  M38  | Vertiefung: Skills und Produktion | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
 
-In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Research-Briefing-Agenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
+In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Briefing-Agenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
 
-| Kursblock | Ausbau am Meeting- & Research-Briefing-Agenten |
+| Kursblock | Ausbau am Meeting- & Briefing-Agenten |
 |---|---|
 | **M01-M02: Agenten-Grundlagen** | Der Agent bekommt ein Zielbild, erste Tools und einen einfachen LangChain-Harness. |
 | **M03-M06: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
@@ -206,7 +206,7 @@ Nützliche Einstiege:
 
 ## Arbeitsweise
 
-Der Kurs ist als Werkstatt aufgebaut. Die Notebooks sind nicht nur Lesematerial, sondern sollen ausgeführt, verändert und kritisch geprüft werden. Jede größere Technik wird am Meeting- & Research-Briefing-Agenten eingeordnet: Was plant der Agent, welche Handlung führt er aus, und wie wird das Ergebnis geprüft?
+Der Kurs ist als Werkstatt aufgebaut. Die Notebooks sind nicht nur Lesematerial, sondern sollen ausgeführt, verändert und kritisch geprüft werden. Jede größere Technik wird am Meeting- & Briefing-Agenten eingeordnet: Was plant der Agent, welche Handlung führt er aus, und wie wird das Ergebnis geprüft?
 
 Sinnvoll ist es, eigene Fragen oder kleine Prozessideen mitzubringen. Dadurch wird schneller sichtbar, wann ein Agent wirklich hilft und wann ein klassischer Workflow, eine einfache Chain oder ein RAG-System ohne Agent ausreicht.
 
@@ -235,7 +235,7 @@ Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
 
 Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Die Auswahl richtet sich nach **Vorkenntnissen** und **Lerntempo**: Grundlagen sichern das zentrale Verständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben bieten zusätzliche Übung, Varianten oder Transferfragen.
 
-Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer: Meeting- & Research-Briefing-Agent**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
+Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer: Meeting- & Briefing-Agent**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
 
 ## Zeitfenster für Aufgaben
 
@@ -257,7 +257,7 @@ Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldu
 |---|---|
 | [Lohnt es sich?](./lohnt-es-sich.html) | Ist ein Agent für diese Aufgabe überhaupt sinnvoll? |
 | [Aufgabenklassen & Lösungswege](./aufgabenklassen-und-loesungswege.html) | Welche Lösungsklasse passt zur Aufgabe? |
-| [Meeting- & Research-Briefing-Agent](./meeting-research-briefing-leitaufgabe.html) | Welches Kursprojekt verbindet die Module? |
+| [Meeting- & Briefing-Agent](./meeting-research-briefing-leitaufgabe.html) | Welches Kursprojekt verbindet die Module? |
 | [Lernpfad](../lernpfad.html) | Welche Dokumente passen zu meinem Lernziel? |
 
 ---

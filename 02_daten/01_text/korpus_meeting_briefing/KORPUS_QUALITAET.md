@@ -4,7 +4,7 @@
 
 ## Ergebnis
 
-Der Meeting- & Research-Briefing-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeignet.
+Der Meeting- & Briefing-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeignet.
 
 | Kriterium | Ergebnis |
 |---|---|

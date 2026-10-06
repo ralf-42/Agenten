@@ -612,12 +612,12 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | Produktion | `"chatbot-production"`                       |
 | Experiment | `"rag-experiment-2026-03"`                   |
 
-> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_v2_enabled(...)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing-in-kurs-notebooks). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
+> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing-in-kurs-notebooks). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
 
 ```python
-from langchain_core.tracers.context import tracing_v2_enabled
+from langsmith import tracing_context
 
-with tracing_v2_enabled(project_name="M02-Erste-Agenten", tags=["M02", "langsmith"]):
+with tracing_context(enabled=True):
     result = agent.with_config(
         run_name="M02_Kap5_AgentTrace",
         tags=["M02", "agent", "langsmith"],
@@ -937,7 +937,7 @@ Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig gen
 
 **Kontrolle:**
 - Sensitive Daten vorher filtern/anonymisieren
-- Für einzelne Referenzläufe: `tracing_v2_enabled(...)` verwenden
+- Für einzelne Referenzläufe: `tracing_context(enabled=True)` verwenden
 - `@traceable(enabled=False)` nur für einzelne, funktionsbezogene Ausnahmen
 - Self-Hosted LangSmith für vollständige Kontrolle
 
@@ -962,7 +962,7 @@ client.create_example_from_run(run_id=run_id, dataset_name="wichtige-runs")
 
 ```python
 # Global für das Notebook deaktivieren; für einzelne Referenzläufe
-# anschließend tracing_v2_enabled(...) verwenden.
+# anschließend tracing_context(enabled=True) verwenden.
 os.environ["LANGSMITH_TRACING"] = "false"
 
 # Für einzelne Funktionen

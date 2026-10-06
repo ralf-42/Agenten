@@ -438,14 +438,15 @@ result = chain.invoke("...")
 
 ### Selektives Tracing in Kurs-Notebooks
 
-In frühen Kurs-Notebooks erzeugen mehrere `invoke()`-Aufrufe schnell unübersichtliche Traces. Für solche Fälle bleibt das globale Tracing zunächst deaktiviert; nur der ausgewählte Referenzlauf wird explizit erfasst. Dafür den LangChain-Tracing-Kontext verwenden – nicht `LANGSMITH_TRACING` nach der Agent-Erstellung umschalten.
+In frühen Kurs-Notebooks erzeugen mehrere `invoke()`-Aufrufe schnell unübersichtliche Traces. Für solche Fälle bleibt das globale Tracing zunächst deaktiviert; nur der ausgewählte Referenzlauf wird explizit erfasst. Dafür den LangSmith-Kontext `tracing_context` verwenden (offiziell empfohlene Variante für selektives Tracing) – nicht `LANGSMITH_TRACING` nach der Agent-Erstellung umschalten.
 
 ```python
 import os
-from langchain_core.tracers.context import tracing_v2_enabled
+from langsmith import tracing_context
 
 # In der Setup-Cell, vor den LangChain-Imports:
 os.environ["LANGSMITH_TRACING"] = "false"
+os.environ["LANGSMITH_PROJECT"] = "M02-Erste-Agenten"
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 run_cfg = {
@@ -453,11 +454,9 @@ run_cfg = {
     "tags": ["M02", "agent", "langsmith"],
 }
 
-# Nur dieser Lauf erscheint im LangSmith-Projekt:
-with tracing_v2_enabled(
-    project_name="M02-Erste-Agenten",
-    tags=run_cfg["tags"],
-):
+# Nur dieser Lauf erscheint im LangSmith-Projekt (Projekt, run_name und tags
+# kommen aus der Setup-Cell bzw. aus run_cfg):
+with tracing_context(enabled=True):
     result = agent.with_config(**run_cfg).invoke({"messages": [...]})
 ```
 
@@ -637,7 +636,7 @@ os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"
 os.environ["LANGSMITH_PROJECT"] = "M04-Structured-Output"  # zu spät
 ```
 
-**Kompatibilitäts-Workaround** (wenn ein bestehendes Notebook noch den älteren LangSmith-SDK-Kontext verwendet): `ls.tracing_context()`:
+**Alternative** (wenn der Projektname für einen einzelnen Lauf gesetzt werden soll): `ls.tracing_context(project_name=...)`:
 ```python
 import langsmith as ls
 with ls.tracing_context(project_name="M04-Structured-Output"):
@@ -744,6 +743,10 @@ client = Client(
 
 ## Changelog
 
+### Version 2.5 (2026-10-06)
+- ✅ Selektives Tracing in Kurs-Notebooks: `tracing_context(enabled=True)` (langsmith) ersetzt `tracing_v2_enabled(...)` als kanonisches Muster
+- ✅ Projektname und Tags kommen aus Setup-Cell bzw. `run_cfg`, nicht mehr aus dem Kontext
+
 ### Version 2.4 (2026-10-03)
 - ✅ Selektives Tracing für Kurs-Notebooks mit `tracing_v2_enabled(...)` als kanonisches Muster ergänzt
 - ✅ Älteren `ls.tracing_context()`-Workaround als Kompatibilitätslösung gekennzeichnet
@@ -816,6 +819,6 @@ client = Client(
 
 ---
 
-**Version:** 2.4<br>
+**Version:** 2.5<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

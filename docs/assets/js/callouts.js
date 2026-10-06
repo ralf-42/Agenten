@@ -11,6 +11,7 @@
   const CALLOUT_CONFIG = {
     'NOTE': { icon: 'ℹ️', title: 'Hinweis', className: 'note' },
     'INFO': { icon: 'ℹ️', title: 'Information', className: 'info' },
+    'IMPORTANT': { icon: '❗', title: 'Wichtig', className: 'important' },
     'TIP': { icon: '💡', title: 'Tipp', className: 'tip' },
     'TIPP': { icon: '💡', title: 'Tipp', className: 'tipp' },
     'WARNING': { icon: '⚠️', title: 'Warnung', className: 'warning' },

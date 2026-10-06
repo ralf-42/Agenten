@@ -152,6 +152,16 @@ figure.highlight {
   }
 }
 
+.callout[data-callout="important"] {
+  background-color: rgba(156, 39, 176, 0.1);
+  border-color: #9c27b0;
+
+  .callout-title {
+    background-color: rgba(156, 39, 176, 0.15);
+    border-bottom-color: rgba(156, 39, 176, 0.2);
+  }
+}
+
 .callout[data-callout="tip"],
 .callout[data-callout="tipp"] {
   background-color: rgba(0, 191, 165, 0.1);

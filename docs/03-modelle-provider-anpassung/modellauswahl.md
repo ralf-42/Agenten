@@ -30,19 +30,19 @@ Diese Rollen stehen in `genai_lib.model_config.py`. Die Datei ist der technische
 
 Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. Für viele Agentenschritte sind Kosten, Latenz, Tool-Zuverlässigkeit oder strukturierte Ausgabe wichtiger als maximale Benchmark-Leistung.
 
-| Kursrolle | Konstante | Modell | Einsatz |
-|---|---|---|---|
-| Baseline / Demo | `BASELINE` | `openai:gpt-5.6-luna` | einfache Beispiele, erste Läufe, Kostenkontrolle |
-| Router / leichter Reasoner | `ROUTER` | `openai:gpt-5.6-luna` | klare Auswahlentscheidungen mit wenigen Wegen |
-| Worker / Synthese | `WORKER` | `openai:gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
-| Coding-Worker | `CODING` | `openai:gpt-5.4-mini` | Codegenerierung, Refactoring, technische Agenten |
-| Judge / starker Reasoner | `JUDGE` | `openai:gpt-5.4` | Bewertung, Evaluation, Supervisor, Compliance |
-| Planner | `PLANNER` | `openai:gpt-5.4` | Aufgabenzerlegung, Schrittplanung, Agentic RAG |
-| Hochwertiger Worker | `WORKER_PREMIUM` | `openai:gpt-5.6-terra` | komplexe Synthese, finale Reports |
-| Frontier / maximale Qualität | `FRONTIER` | `openai:gpt-5.6-sol` | schwierige Coding-, Judge- und Agenten-Aufgaben |
-| Bildgenerierung | `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung über die OpenAI Images API |
-| Audio-Transkription | `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS` | `gpt-4o-mini-transcribe`, `whisper-1` | Transkription, mit Segmenten bei Bedarf Zeitstempel |
-| Embeddings | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
+| Rolle                        | Konstante                                 | Modell                                | Einsatz                                               |
+| ---------------------------- | ----------------------------------------- | ------------------------------------- | ----------------------------------------------------- |
+| Baseline / Demo              | `BASELINE`                                | `openai:gpt-5.6-luna`                 | einfache Beispiele, erste Läufe, Kostenkontrolle      |
+| Router / leichter Reasoner   | `ROUTER`                                  | `openai:gpt-5.6-luna`                 | klare Auswahlentscheidungen mit wenigen Wegen         |
+| Worker / Synthese            | `WORKER`                                  | `openai:gpt-5.4-mini`                 | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
+| Coding-Worker                | `CODING`                                  | `openai:gpt-5.4-mini`                 | Codegenerierung, Refactoring, technische Agenten      |
+| Judge / starker Reasoner     | `JUDGE`                                   | `openai:gpt-5.4`                      | Bewertung, Evaluation, Supervisor, Compliance         |
+| Planner                      | `PLANNER`                                 | `openai:gpt-5.4`                      | Aufgabenzerlegung, Schrittplanung, Agentic RAG        |
+| Hochwertiger Worker          | `WORKER_PREMIUM`                          | `openai:gpt-5.6-terra`                | komplexe Synthese, finale Reports                     |
+| Frontier / maximale Qualität | `FRONTIER`                                | `openai:gpt-5.6-sol`                  | schwierige Coding-, Judge- und Agenten-Aufgaben       |
+| Bildgenerierung              | `IMAGE_GENERATION`                        | `gpt-image-2`                         | Bildgenerierung über die OpenAI Images API            |
+| Audio-Transkription          | `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS` | `gpt-4o-mini-transcribe`, `whisper-1` | Transkription, mit Segmenten bei Bedarf Zeitstempel   |
+| Embeddings                   | `EMBEDDINGS`                              | `text-embedding-3-small`              | Retrieval, Chunk-Suche, Vektorindizes                 |
 
 Diese Rollen machen Modellwahl im Kurs überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Router, Worker, Planner oder Judge ist. Die konkreten Modell-IDs sind Kurskonfiguration, nicht allgemeine Marktberatung. Vor produktiven Projekten muss die aktuelle Provider-Dokumentation geprüft werden, weil Modellverfügbarkeit, Preise und API-Parameter regelmäßig wechseln.
 

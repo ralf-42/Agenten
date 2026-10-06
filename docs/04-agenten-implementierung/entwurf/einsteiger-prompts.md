@@ -166,15 +166,30 @@ Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
 
 ### Häufig verwendete Tags im Kurs
 
-| Tag | Typischer Inhalt |
-|---|---|
-| `<Role>` | Rolle und Hauptauftrag des Agenten |
-| `<Team>` | verfügbare Agenten, Teams oder Tools |
-| `<Task>` | Was das Modell / der Agent tun soll |
-| `<Workflow>` | erwarteter Ablauf oder Routing-Logik |
-| `<Instructions>` | Schritt-für-Schritt-Anweisungen |
-| `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen |
-| `<OutputRules>` | Gewünschtes Format und Struktur der Antwort |
+| Tag | Zweck | Beispiel für den Inhalt |
+|---|---|---|
+| `<role>` | Rolle oder Perspektive festlegen | Du bist ein geduldiger Python-Tutor. |
+| `<task>` | Aufgabe beschreiben | Erkläre den folgenden Python-Code. |
+| `<goal>` | Gewünschtes Ergebnis benennen | Die Lernenden sollen Schleifen verstehen. |
+| `<context>` | Hintergrundinformationen bereitstellen | Der Code stammt aus einem Einsteigerkurs. |
+| `<audience>` | Zielgruppe und Vorwissen beschreiben | Erwachsene ohne Programmiererfahrung. |
+| `<input>` | Zu bearbeitende Inhalte abgrenzen | Ein Text, eine Frage oder ein Datensatz. |
+| `<document>` | Dokumentinhalt kennzeichnen | Inhalt eines Berichts. |
+| `<code>` | Programmcode abgrenzen | `for number in range(5): print(number)` |
+| `<instructions>` | Vorgehensweise festlegen | Erkläre zuerst die Idee, dann die einzelnen Schritte. |
+| `<rules>` | Verhaltensregeln definieren | Gib die vollständige Lösung erst auf Nachfrage. |
+| `<constraints>` | Grenzen und Einschränkungen setzen | Maximal 200 Wörter; keine externen Bibliotheken. |
+| `<style>` | Ton und Sprache bestimmen | Sachlich, verständlich, auf Deutsch. |
+| `<output_format>` | Form der Antwort festlegen | Markdown-Tabelle mit drei Spalten. |
+| `<examples>` | Mehrere Muster bündeln | Beispiele für passende Erklärungen. |
+| `<example>` | Ein einzelnes Muster abgrenzen | Eine Beispiel-Frage mit Beispiel-Antwort. |
+| `<criteria>` | Qualitätsanforderungen nennen | Fachlich korrekt, verständlich und praxisnah. |
+| `<validation>` | Abschließende Kontrolle anfordern | Prüfe, ob alle Anforderungen erfüllt sind. |
+| `<sources>` | Quellenmaterial abgrenzen | Auszüge aus bereitgestellten Fachtexten. |
+| `<Team>` | Verfügbare Agenten, Teams oder Tools benennen | Recherche-Agent, Schreib-Agent und Prüf-Agent. |
+| `<Workflow>` | Erwarteten Ablauf oder Routing-Logik festlegen | Recherchiere, prüfe die Quellen und formuliere anschließend die Antwort. |
+| `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen festlegen | Maximal drei Suchaufrufe; stoppe, sobald die Anfrage beantwortbar ist. |
+| `<OutputRules>` | Gewünschtes Format und die Struktur der Antwort festlegen | Mindestens drei Kernfakten als Stichpunkte, maximal 200 Wörter. |
 
 Tag-Namen enthalten keine Leerzeichen. Deshalb wird im Kurs `<HardLimits>` verwendet, nicht `<Hard Limits>`.
 

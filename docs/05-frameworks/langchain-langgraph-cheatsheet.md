@@ -247,14 +247,14 @@ builder.add_edge("revise", "check")
 
 ```python
 @tool
-def research_signal(text: str) -> str:
-    """Extrahiert einfache Research-Signale."""
-    begriffe = ["rag", "retrieval", "evaluation", "quelle"]
+def classify_briefing_request(text: str) -> str:
+    """Extrahiert einfache Meeting-Briefing-Signale."""
+    begriffe = ["entscheidung", "risiko", "action item", "frist", "quelle"]
     treffer = [b for b in begriffe if b in text.lower()]
     return ", ".join(treffer) if treffer else "Keine klaren Signale."
 
 
-tools = [research_signal]
+tools = [classify_briefing_request]
 llm_with_tools = llm.bind_tools(tools)
 
 

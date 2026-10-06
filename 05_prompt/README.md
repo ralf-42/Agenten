@@ -14,7 +14,7 @@ m##_beschreibung.md
 
 ### Hinweis zu `research_*` nach dem Move-B-Pivot
 
-Einige Prompt-Dateien behalten `research` im Dateinamen (`m03_research_*`, `m09_research_routing_prompt.md`, `m21_research_lead_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Briefing-Agenten**, nicht ein eigenes Leitprojekt.
+Einige Prompt-Dateien behalten `research` im Dateinamen (`m03_research_*`, `m04_research_review_prompt.md`, `m09_research_routing_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Briefing-Agenten**, nicht ein eigenes Leitprojekt.
 
 Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
 
@@ -79,10 +79,10 @@ Regeln:
 from genai_lib.utilities import load_prompt
 
 # System-only → mode="S"
-system_prompt = load_prompt("05_prompt/m02_agent_system_prompt.md", mode="S")
+system_prompt = load_prompt("05_prompt/m03_research_system_prompt.md", mode="S")
 
-# Template oder Few-Shot mit ## system / ## human Sections → mode="T"
-prompt = load_prompt("05_prompt/m03_research_few_shot_prompt.md", mode="T")
+# Template mit ## system / ## human Sections → mode="T"
+prompt = load_prompt("05_prompt/m03_research_template_prompt.md", mode="T")
 
 # Mit Variablen befüllen
 chain = prompt | llm
@@ -95,8 +95,7 @@ result = chain.invoke({"variable1": "Wert"})
 
 | Modul | Dateien |
 |-------|---------|
-| M02 | `m02_agent_system_prompt.md` |
-| M03 | `m03_research_template_prompt.md`, `m03_research_system_prompt.md`, `m03_research_few_shot_prompt.md`, `m03_research_zero_shot_prompt.md` |
+| M03 | `m03_research_template_prompt.md`, `m03_research_system_prompt.md` |
 | M04 | `m04_studien_zusammenfassung_prompt.md`, `m04_research_signal_classification_prompt.md`, `m04_citation_format_prompt.md`, `m04_research_review_prompt.md` |
 | M05 | `m05_multi_tool_system_prompt.md`, `m05_robust_research_system_prompt.md` |
 | M09 | `m09_research_routing_prompt.md` |
@@ -106,7 +105,7 @@ result = chain.invoke({"variable1": "Wert"})
 | M26 | `m26_quality_judge_prompt.md`, `m26_security_gate_prompt.md` |
 | M30 | `m30_math_agent_prompt.md`, `m30_multi_agent_prompt.md`, `m30_notiz_agent_prompt.md` |
 
-`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-03: M08, M15, M20–M23, `m03_research_query`, `m05_format_check`, `m30_crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
+`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-06: M08, M15, M20–M23, `m02_agent_system`, `m03_research_few_shot`, `m03_research_zero_shot`, `m03_research_query`, `m05_format_check`, `m30_crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
 
 ## Weiterführend
 

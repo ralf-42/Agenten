@@ -412,12 +412,10 @@ flowchart TD
 
 | Typ | Datei | Modul |
 |---|---|---|
-| System-only, einfach | `m02_agent_system_prompt.md` | M02 ReAct |
+| System-only, einfach | `m03_research_system_prompt.md` | M03 Prompt Engineering |
 | System-only, einfach | `m05_multi_tool_system_prompt.md` | M05 Multi-Tool |
 | Template mit Variablen | `m09_research_routing_prompt.md` | M09 Routing |
-| Few-Shot | `m03_research_few_shot_prompt.md` | M03 Few-Shot |
-| Komplex mit XML-Tags | `m21_research_lead_prompt.md` | M21 Hierarchical Agent Teams |
-| Komplex mit XML-Tags | `m22_multi_hop_agent_prompt.md` | M22 Agentic RAG |
+| Komplex mit XML-Tags | `m14_rag_agent_system_prompt.md` | M14 RAG-Agent |
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
 
@@ -433,5 +431,5 @@ Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen l
 ---
 
 **Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

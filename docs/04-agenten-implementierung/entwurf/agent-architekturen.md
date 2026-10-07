@@ -108,6 +108,80 @@ Typische Situationen lassen sich damit schnell einordnen:
 
 Im Capstone dient diese Auswahl als Architektur-Check: Die gewählte Lösung sollte begründen, warum sie Tool-Calling, Single-Agent, Workflow, Multi-Agent oder eine Kombination daraus nutzt und welche Kontrollpunkte sie ergänzt.
 
+## Das Kontroll-Dilemma: Wer entscheidet über den nächsten Schritt?
+
+Bei agentischen Systemen muss eine zentrale Architekturfrage beantwortet werden: Entscheidet die Anwendung beziehungsweise der Graph über den nächsten Schritt, oder darf das Modell selbst aus den verfügbaren Werkzeugen wählen? Beide Varianten sind sinnvoll, aber für unterschiedliche Arten von Unsicherheit.
+
+### Explizites Conditional Routing
+
+Beim **Conditional Routing** legt die Anwendung die möglichen Pfade fest. Eine Routing-Funktion liest zum Beispiel den State, ein Klassifikationsergebnis oder ein Sicherheits-Flag und leitet den Graphen an den passenden Node weiter.
+
+```mermaid
+flowchart LR
+    A[Anfrage] --> B[Analyse oder Klassifikation]
+    B --> C{Explizite Route}
+    C -->|Support| S[Support-Pfad]
+    C -->|Sales| V[Sales-Pfad]
+    C -->|unsicher oder verboten| E[Eskalation oder Stopp]
+```
+
+Das Muster eignet sich besonders dort, wo die Kontrolle wichtiger ist als maximale Flexibilität:
+
+- Sicherheitsprüfungen und Guardrails
+- strikte Verzweigungen nach Kundenkategorie oder Berechtigung
+- Qualitäts-Gates und finale Validierungen
+- klar begrenzte, auditierbare Prozesspfade
+
+Der Vorteil ist ein vorhersehbarer und meist kostengünstiger Ablauf. Wichtig ist die begriffliche Präzisierung: Conditional Routing muss nicht vollständig regelbasiert sein. Auch ein LLM-Klassifizierer kann die Vorentscheidung liefern. Die erlaubten Zielpfade, die Sicherheitsgrenzen und die Abbruchbedingungen bleiben aber im Graphen oder in der Anwendung explizit kontrollierbar.
+
+### Modellgesteuerte Tool-Auswahl
+
+Bei der **modellgesteuerten Tool-Auswahl** erhält das LLM mehrere beschriebene Werkzeuge und entscheidet anhand der Anfrage, ob und welches davon sinnvoll ist. Mit `bind_tools()` erzeugt das Modell zunächst eine strukturierte Tool-Absicht. Die Laufzeit oder ein `ToolNode` validiert und führt den Aufruf aus; bei Bedarf kann anschließend ein weiterer Modell- und Tool-Schritt folgen.
+
+Dieses Muster eignet sich für offene Aufgaben, deren Lösungsweg vorab nicht vollständig bekannt ist, zum Beispiel:
+
+- freie Webrecherche
+- mehrstufige Datenbank- oder Datenanalysen
+- Suche, Bewertung und anschließende Verfeinerung einer Anfrage
+- Aufgaben, bei denen das Ergebnis eines Tools die nächste Aktion bestimmt
+
+Der Vorteil ist die hohe Flexibilität. Dem stehen variable Kosten, höhere Latenz und eine größere Abhängigkeit von Tool-Beschreibungen, Modellverhalten und Laufzeitbegrenzungen gegenüber. Tool-Aufrufe brauchen deshalb weiterhin Validierung, Berechtigungen und ein Iterations- oder Budgetlimit.
+
+### Zwei Alternativen am Datenbankbeispiel
+
+Angenommen, eine Anfrage kann zusätzliches Wissen aus einer Datenbank benötigen. Dafür gibt es zwei grundsätzliche Entwürfe:
+
+| Variante | Ablauf | Stärke | Grenze |
+|---|---|---|---|
+| **A: Conditional Routing** | Ein Router prüft zuerst, ob die Datenbank gebraucht wird. Danach folgt entweder der Retrieval-Pfad oder direkt die Antwort-Node. | Geringe Kosten und Latenz; Verhalten gut vorhersehbar. | Eine falsche Vorentscheidung kann den gesamten Pfad verfehlen. |
+| **B: Modellgesteuerte Tool-Auswahl** | Das LLM erhält das Datenbank-Tool, entscheidet selbst über den Aufruf und kann das Ergebnis bewerten oder eine weitere Abfrage starten. | Flexibel bei unbekannten oder mehrstufigen Suchwegen. | Mehr Modellaufrufe, variable Kosten und höherer Kontrollbedarf. |
+
+Die Entscheidung sollte nicht danach getroffen werden, welches Muster moderner klingt. Ausschlaggebend sind die Fehlerkosten, die Offenheit des Lösungswegs und die Frage, ob ein falscher Pfad sicher abgefangen werden kann.
+
+### Best Practice: grobe Weiche plus autonomer Tool-Loop
+
+In produktionsnahen Systemen werden beide Muster häufig kombiniert. Eine explizite Kontrollschicht übernimmt die Entscheidungen, die nicht dem Modell überlassen werden dürfen. Innerhalb eines zulässigen Bearbeitungspfads darf ein Agent anschließend flexibel geeignete Werkzeuge auswählen.
+
+```mermaid
+flowchart LR
+    A[Anfrage] --> G{Security und Policy}
+    G -->|blockieren| X[Stopp oder Eskalation]
+    G -->|zulässig| R{Grobe Weiche}
+    R -->|direkte Antwort| L[LLM-Antwort]
+    R -->|Recherche nötig| T[Agent mit Tool-Loop]
+    T --> T
+    L --> Q[Validierung und Qualitäts-Gate]
+    T --> Q
+    Q -->|nicht ausreichend| N[Nachbessern oder Eskalation]
+    Q -->|ausreichend| E[Antwort]
+```
+
+Eine robuste Grundregel lautet:
+
+> **Policies, Berechtigungen, Sicherheitsprüfungen und finale Gates gehören in explizite Kontrolllogik. Offene fachliche Zwischenschritte und die Auswahl unter mehreren geeigneten Werkzeugen können dem Modell überlassen werden.**
+
+So entsteht keine Entweder-oder-Architektur: Der Entwickler kontrolliert die Grenzen, während das Modell innerhalb dieser Grenzen flexibel handeln kann.
+
 ## Tool-Calling: wenn das Modell Werkzeuge steuern soll
 
 Beim Tool-Calling entscheidet das Modell, welches Werkzeug mit welchen Parametern aufgerufen werden soll. Dieses Muster ist oft der sinnvollste Einstieg, weil die Freiheitsgrade begrenzt bleiben und die Architektur trotzdem bereits deutlich mehr kann als ein reiner Chatbot.

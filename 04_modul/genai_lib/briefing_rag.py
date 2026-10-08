@@ -32,10 +32,10 @@ Import im Notebook:
 from pathlib import Path
 
 from langchain_chroma import Chroma
-from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from langchain_core.tools import tool
 from langchain_openai import OpenAIEmbeddings
+from pypdf import PdfReader
 
 from genai_lib.model_config import EMBEDDINGS
 
@@ -56,12 +56,21 @@ def _require_drive_mounted(persist_directory: str) -> None:
 
 
 def load_pdf_documents(directory_path: str) -> list[Document]:
-    """Lädt alle PDF-Seiten aus einem Verzeichnis (identisch zu M13/M14)."""
+    """Lädt alle PDF-Seiten aus einem Verzeichnis mit pypdf."""
     documents: list[Document] = []
     for pdf_path in sorted(Path(directory_path).glob("*.pdf")):
         try:
-            loader = PyPDFLoader(str(pdf_path))
-            documents.extend(loader.load())
+            reader = PdfReader(str(pdf_path))
+            for page_number, page in enumerate(reader.pages):
+                documents.append(
+                    Document(
+                        page_content=page.extract_text() or "",
+                        metadata={
+                            "source": str(pdf_path),
+                            "page": page_number,
+                        },
+                    )
+                )
         except Exception as exc:
             print(f"  ⚠ {pdf_path.name} übersprungen: {exc}")
     return documents

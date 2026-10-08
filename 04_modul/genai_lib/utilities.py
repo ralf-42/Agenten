@@ -4,7 +4,6 @@
 # Stand: 04.12.2025
 #
 from IPython.display import display, Markdown, HTML
-from IPython import get_ipython
 import requests
 import sys
 import warnings
@@ -86,9 +85,9 @@ def install_packages(packages, upgrade=False):
     - Die IPython-Umgebung muss aktiv sein (z. B. in Colab-Notebooks).
     """
     import importlib
+    import subprocess
 
     # Zugriff auf das aktuelle IPython-Shell-Objekt
-    shell = get_ipython()
 
     for package in packages:
         # Bestimme Install- und Import-Namen
@@ -110,8 +109,11 @@ def install_packages(packages, upgrade=False):
         try:
             aktion = "Aktualisiere" if upgrade else "Installiere"
             print(f"🔄 {aktion} {install_name}...")
-            upgrade_flag = "--upgrade " if upgrade else ""
-            shell.run_line_magic("system", f"uv pip install --system -q {upgrade_flag}{install_name}")
+            command = ["uv", "pip", "install", "--system", "-q"]
+            if upgrade:
+                command.append("--upgrade")
+            command.append(install_name)
+            subprocess.run(command, check=True)
 
             # Versuche erneut zu importieren nach der Installation
             importlib.import_module(import_name)

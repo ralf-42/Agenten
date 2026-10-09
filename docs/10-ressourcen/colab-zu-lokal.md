@@ -94,7 +94,8 @@ check_environment()
 | **M11, M12** (RAG) | `install_packages([...])` für markitdown, unstructured | `pip install markitdown[all] unstructured[all-docs]` |
 | **M29** (Gradio) | `demo.launch(quiet=True)` | Bleibt unverändert — öffnet automatisch im Browser |
 | **M30** (MCP) | `!uv pip install fastmcp langchain-mcp-adapters` | `pip install fastmcp langchain-mcp-adapters` |
-| **M12, M13, M15, M16** (Datenbanken) | Lokale DB-Dateien (`chroma_m12/`, `chroma_m13/`, `chroma_m15/`, `m15_checkpoints.sqlite`) | Werden im Arbeitsverzeichnis angelegt — funktioniert identisch |
+| **M11, M16** (Datenbanken) | Lokale DB-Dateien (`chroma_m12/`, `chroma_m13/`, `m16_checkpoints.sqlite`) | Werden im Arbeitsverzeichnis angelegt — funktioniert identisch |
+| **M14, M15** (Wissensdatenbank) | Chroma-Collection `chroma_briefing` auf Google Drive (`/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/`). M14 baut sie auf, M15 öffnet sie nur (`get_briefing_vectorstore()`) | `drive.mount(...)` entfällt. Lokalen Pfad setzen, z. B. `persist_directory="chroma_briefing"` in M14 und `get_briefing_vectorstore(persist_directory="chroma_briefing")` in M15. M14 muss vor M15 laufen |
 
 ---
 

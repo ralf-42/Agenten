@@ -70,7 +70,7 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 | **Aufbau: Qualität und Integration** | Agentic RAG, Security, Evaluation, Routing, Kostenkontrolle, Pipeline, Projekt-Templates, Advanced RAG |
 | **Vertiefung: Skills und Produktion** | UI, MCP, Skill-Design, DeepAgents, Deployment, Capstone |
 
-Der Grundlagenpfad M01–M21 ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. Die Aufbaumodule M22–M28 und die Vertiefungsmodule M29–M38 erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
+Der Grundlagenpfad M01–M17 sowie M19–M21 ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. M18 ist als früheres Memory-Modul in M16 integriert und liegt nur noch als Legacy-Backup vor. Die Aufbaumodule M22–M28 und die Vertiefungsmodule M29–M38 erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
 
 Ergänzend geht es um Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
 
@@ -104,7 +104,7 @@ timeline
                                      : M11-M15
     section Kontrollierte Zusammenarbeit
         Sessions, Freigabe und Teams  : Checkpointing, HITL, Memory, Multi-Agent-Patterns
-                                     : M16-M21
+                                     : M16-M17, M19-M21
     section Aufbau
         Belastbare Agentensysteme     : Agentic RAG, Security, Evaluation, Routing, Kosten, Pipeline, Advanced RAG
                                      : M22-M28
@@ -120,9 +120,9 @@ Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zwe
 | Reifegrad | Kurzbeschreibung | Kursbezug | Einordnung |
 |---|---|---|---|
 | **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | M01-M05, M30 | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
-| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | M03-M10, M16-M18 | Prompts, Schemas, Routing, Checkpointing und Human-in-the-Loop machen Verhalten kontrollierbarer. |
+| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | M03-M10, M16-M17 | Prompts, Schemas, Routing, Checkpointing, Memory und Human-in-the-Loop machen Verhalten kontrollierbarer. |
 | **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | M15, M19-M24 | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
-| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M18, M22-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
+| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M16, M22-M37 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
 | **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24, M37-M38 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
 
 Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Modell hilft beim Einordnen: Welche zusätzliche Freiheit bekommt der Agent, und welche Kontrolle muss dadurch sichtbar werden? Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
@@ -146,9 +146,8 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M13  | Wissensbasierte Agenten           | RAG Chain mit LangChain              | Retriever, Quellenbindung, Antwortkette                |
 |  M14  | Wissensbasierte Agenten           | RAG-Agent                            | Retrieval als Agenten-Tool                             |
 |  M15  | Wissensbasierte Agenten           | LangSmith Evaluations Basics         | Eval-Set, Retrieval-Score, Regression                  |
-|  M16  | Kontrollierte Zusammenarbeit      | Checkpointing & Sessions             | Sitzung, Thread-ID, Fortsetzen                         |
+|  M16  | Kontrollierte Zusammenarbeit      | Sessions, Checkpointing & Memory     | Thread-ID, Fortsetzen, Kurzzeit- und Langzeit-Memory   |
 |  M17  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
-|  M18  | Kontrollierte Zusammenarbeit      | Memory-Systeme                       | Kurzzeit- und Langzeitgedächtnis                       |
 |  M19  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
 |  M20  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
 |  M21  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
@@ -178,7 +177,7 @@ In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitr
 | **M03-M06: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
 | **M07-M10: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
 | **M11-M15: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
-| **M16-M21: Kontrollierte Zusammenarbeit** | Sessions, Human-in-the-Loop, Memory und Multi-Agent-Muster machen längere Abläufe steuerbar. |
+| **M16-M17, M19-M21: Kontrollierte Zusammenarbeit** | Sessions, Memory, Human-in-the-Loop und Multi-Agent-Muster machen längere Abläufe steuerbar. |
 | **M22-M28: Aufbau: Qualität und Integration** | Agentic RAG, Security, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab; Pipeline, Projekt-Templates und Advanced RAG führen die Bausteine zusammen. |
 | **M29-M38: Vertiefung: Skills und Produktion** | UI, MCP-Integration, Skills, DeepAgents, Deployment und Capstone bringen den Agenten in einen betriebsnahen Zustand. |
 

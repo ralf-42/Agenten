@@ -65,16 +65,17 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting-
 
 ---
 
-## Phase  5 – HITL, Memory & Multi-Agent (M16–M21)
+## Phase  5 – Sessions, Memory, HITL & Multi-Agent (M16–M17, M19–M21)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M16 | `M16_Checkpointing_Sessions.ipynb` | Briefing-Sessions mit InMemorySaver und SQLite fortsetzen | 🟢 Grundlagen |
+| M16 | `M16_Sessions_Checkpointing_und_Memory.ipynb` | Sessions, Checkpointing, Kurzzeit-Memory, semantisches Memory und Per-User-Memory | 🟢 Grundlagen |
 | M17 | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Grundlagen |
-| M18 | `M18_Memory_Systeme.ipynb` | Kuratiertes Briefing-Memory und Per-User-Präferenzen | 🟢 Grundlagen |
 | M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Hierarchie und Pipeline für Briefing- und Rechercheaufgaben | 🟢 Grundlagen |
 | M20 | `M20_Supervisor_Pattern.ipynb` | Briefing-Supervisor mit Quellen-, Kritik- und Guardrail-Gates | 🟢 Grundlagen |
 | M21 | `M21_Hierarchical_Pattern.ipynb` | Quellen-, Synthese- und Qualitäts-Team als Hierarchie | 🟢 Grundlagen |
+
+> M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Systeme. Die ursprünglichen Notebooks liegen zur Nachvollziehbarkeit unter `01_notebook/_backups/`.
 
 ---
 

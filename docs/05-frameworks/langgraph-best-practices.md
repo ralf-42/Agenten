@@ -164,6 +164,69 @@ Typischer Fehler: In einer Node wird zu viel Logik gesammelt. Wenn eine Funktion
 
 **Robustheit (ab v1.2.0):** `add_node()` akzeptiert `timeout=` (mit `NodeTimeoutError` bei Überschreitung) und `error_handler=` (erhält ein typisiertes `NodeError`, kann per `Command` zu einem Kompensations-Node routen). Damit lassen sich hängende Tool-Calls absichern und Saga-Muster ohne globales Exception-Handling umsetzen.
 
+### Supervisor-Graphen: Node-IDs und Rückkanten
+
+Bei Supervisor-Graphen müssen die Namen in `add_node()`, `add_edge()` und
+`add_conditional_edges()` exakt übereinstimmen. Ein Ziel, das nicht als Node
+registriert wurde, führt spätestens bei `compile()` zu einem Fehler.
+
+Für wiederkehrende Worker- und Gate-Strukturen ist ein zentrales Mapping aus
+Node-ID und Node-Funktion robuster als eine separate Namensliste. Registrierung
+und Rückkanten können daraus gemeinsam abgeleitet werden:
+
+```python
+worker_nodes = {
+    "fragentyp_node": fragentyp_node,
+    "tabellen_worker_node": tabellen_worker_node,
+    "text_worker_node": text_worker_node,
+    "vergleich_worker_node": vergleich_worker_node,
+    "quellen_gate_node": quellen_gate_node,
+    "synthese_worker_node": synthese_worker_node,
+    "kritik_gate_node": kritik_gate_node,
+}
+
+for node_name, node_function in worker_nodes.items():
+    supervisor_builder.add_node(node_name, node_function)
+
+supervisor_builder.add_edge(START, "supervisor")
+
+# Für Lehrbeispiele: die erlaubten Routen explizit sichtbar machen.
+supervisor_builder.add_conditional_edges(
+    "supervisor",
+    supervisor_router,
+    {
+        "fragentyp_node": "fragentyp_node",
+        "tabellen_worker_node": "tabellen_worker_node",
+        "text_worker_node": "text_worker_node",
+        "vergleich_worker_node": "vergleich_worker_node",
+        "quellen_gate_node": "quellen_gate_node",
+        "synthese_worker_node": "synthese_worker_node",
+        "kritik_gate_node": "kritik_gate_node",
+        END: END,
+    },
+)
+
+# Alle Worker und Gates haben denselben festen Rückweg.
+for node_name in worker_nodes:
+    supervisor_builder.add_edge(node_name, "supervisor")
+```
+
+Kurzregeln:
+
+- Verschiedene Routing-Entscheidungen explizit als Conditional Map definieren.
+- Identische Rückwege in einer Schleife zusammenfassen.
+- `START → supervisor` explizit definieren.
+- Router-Rückgaben auf registrierte Node-IDs oder `END` begrenzen.
+- Einen State-Zähler wie `attempts` und ein `recursion_limit` als Schutz gegen Endlosschleifen verwenden.
+- Für Produktivcode kann die Map aus den zentralen IDs abgeleitet werden: `{name: name for name in worker_nodes} | {END: END}`.
+- Für Lehrbeispiele ist die ausgeschriebene Map lesbarer und dokumentiert die erlaubten Pfade direkt.
+
+`Command(goto=...)` ist eine alternative Routing-Architektur, bei der ein Node
+seine nächste Route zusammen mit einem State-Update zurückgibt. Für einen
+zentral entscheidenden Supervisor bleibt `add_conditional_edges()` didaktisch
+klarer. Die beiden Muster sollten nicht ohne bewusste Architekturentscheidung
+vermischt werden.
+
 ## Conditional Routing
 
 Conditional Routing macht Entscheidungen explizit. Statt in einer großen Node mehrere Fälle zu verschachteln, entscheidet eine Routing-Funktion, welcher Pfad als Nächstes ausgeführt wird.
@@ -376,6 +439,9 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ## Changelog
 
+### Version 1.11 (2026-10-09)
+- Supervisor-Graphen: zentrale Node-IDs, explizite Conditional-Maps, Schleifen für identische Rückkanten und Abbruchschutz ergänzt.
+
 ### Version 1.9 (2026-09-29)
 - ✅ Gegen `_docs/LangGraph_Best_Practices.md` v1.9 geprüft (LangGraph v1.2.9 → v1.2.12) — keine kaputten Code-Beispiele gefunden, `response_schema`/Subgraph-Bytecode-Fix als Advanced-Themen bewusst nicht in die kompakte Einsteiger-Fassung übernommen
 
@@ -399,7 +465,7 @@ Migration sollte schrittweise erfolgen. Zuerst wird der bestehende Ablauf als Gr
 
 ---
 
-**Version:** 1.10<br>
+**Version:** 1.11<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

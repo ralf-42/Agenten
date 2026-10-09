@@ -96,16 +96,17 @@ Agenten/
 | M14 | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
 | M15 | LangSmith Evaluations Basics | Eval-Dataset, Quellen-Treffer, Out-of-Corpus-Checks |
 
-### Block 5: Kontrollierte Zusammenarbeit (M16–M21)
+### Block 5: Kontrollierte Zusammenarbeit (M16–M17, M19–M21)
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M16 | Checkpointing & Sessions | MemorySaver, Thread-ID, State |
+| M16 | Sessions, Checkpointing & Memory | Thread-ID, State, InMemorySaver/SQLite, Kurzzeit-, semantisches und Per-User-Memory |
 | M17 | Human-in-the-Loop | interrupt(), Review und Freigabe vor finaler Research-Antwort |
-| M18 | Memory-Systeme | Konversationsspeicher, Semantic Memory, Per-User Memory |
 | M19 | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
 | M20 | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | M21 | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Tool-Delegation |
+
+M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Systeme. Die alten Notebooks liegen in `01_notebook/_backups/`.
 
 ### Block 6: Qualität und Betriebsvorbereitung (M22–M25)
 

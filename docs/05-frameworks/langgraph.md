@@ -14,6 +14,7 @@ Diese Orientierungsseite bündelt die LangGraph-Dokumente: StateGraph-Grundlagen
 | Frage | Dokument | Bezug |
 |---|---|---|
 | **Wie** starte ich mit LangGraph? | [Einsteiger LangGraph]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }}) | Nodes, Edges, Routing und erste StateGraph-Workflows. |
+| **Wie** baue ich Nodes und Edges sauber auf? | [Graphen mit LangGraph aufbauen]({{ '/05-frameworks/graphen-aufbauen.html' | relative_url }}) | Bauplan, Conditional Maps, Rückkanten und Abbruchschutz. |
 | **Welche** Patterns halten Graphen wartbar? | [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | StateGraph, Conditional Routing, Checkpointing und HITL. |
 | **Welche** Code-Bausteine brauche ich schnell im Notebook? | [Cheatsheet]({{ '/05-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | State, Routing, Tool-Loop, Checkpointing, Memory, HITL und LangSmith. |
 

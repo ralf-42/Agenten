@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Graphen mit LangGraph aufbauen
+title: Graphen aufbauen
 parent: LangGraph
 grand_parent: Frameworks
 nav_order: 3
-description: "Nodes, Edges und Conditional Routing in LangGraph verständlich und robust aufbauen"
+description: Nodes, Edges und Conditional Routing in LangGraph verständlich und robust aufbauen
 has_toc: true
 ---
 
-# Graphen mit LangGraph aufbauen
+# Graphen aufbauen
 {: .no_toc }
 
 > **Kurzleitfaden für den Aufbau verständlicher und robuster StateGraph-Workflows**

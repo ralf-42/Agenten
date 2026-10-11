@@ -115,7 +115,7 @@ graph = g.compile()
 ```python
 from IPython.display import Image
 
-display(Image(graph.get_graph().draw_mermaid_png()))
+display(Image(graph.get_graph(xray=True).draw_mermaid_png()))
 ```
 
 Dieser minimale Workflow sieht so aus:

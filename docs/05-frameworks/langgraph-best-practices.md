@@ -155,7 +155,7 @@ graph_builder.add_edge("agent", END)
 graph = graph_builder.compile()
 
 try:
-    display(Image(graph.get_graph().draw_mermaid_png()))
+    display(Image(graph.get_graph(xray=True).draw_mermaid_png()))
 except Exception as exc:
     print(f"Graph-Visualisierung nicht verfügbar: {exc}")
 ```

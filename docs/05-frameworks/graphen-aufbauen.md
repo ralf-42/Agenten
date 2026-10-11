@@ -160,7 +160,7 @@ Das gefundene Muster ist also korrekt, sofern jeder Name zuvor mit
 ### 7. Kompilieren, visualisieren und begrenzen
 
 ```python
-from IPython.display import display
+from IPython.display import display, Image
 
 supervisor_agent = supervisor_builder.compile()
 
@@ -169,7 +169,7 @@ result = supervisor_agent.invoke(
     config={"recursion_limit": 15},
 )
 
-display(supervisor_agent.get_graph().draw_mermaid_png())
+display(Image(supervisor_agent.get_graph(xray=True).draw_mermaid_png()))
 ```
 
 Ein State-Zähler wie `attempts` und ein begrenzender `recursion_limit` schützen

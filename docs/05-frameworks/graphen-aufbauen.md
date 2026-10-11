@@ -8,7 +8,7 @@ description: Nodes, Edges und Conditional Routing in LangGraph verständlich und
 has_toc: true
 ---
 
-# Graphen aufbauen
+# Graphen mit LangGraph aufbauen
 {: .no_toc }
 
 > **Kurzleitfaden für den Aufbau verständlicher und robuster StateGraph-Workflows**

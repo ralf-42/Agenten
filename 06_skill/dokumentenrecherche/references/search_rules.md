@@ -15,7 +15,7 @@ Diese Regeln definieren die Suchstrategie des Dokumentenrecherche-Skills.
 
 - Thema in **2–3 unabhängige Suchqueries** zerlegen
 - Queries so formulieren, dass unterschiedliche Aspekte abgedeckt werden
-- Begriffe aus `eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json` als Prüfanker nutzen
+- Begriffe aus `eval_pmo.json` und `eval_pmo_edge.json` als Prüfanker nutzen
 - Entscheidungs-IDs (D1, D2) und Risiko-IDs (R1–R4) als Suchbegriffe verwenden, wenn bekannt
 
 ## Relevanz-Schwellwert

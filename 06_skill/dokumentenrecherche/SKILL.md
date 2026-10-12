@@ -27,7 +27,7 @@ Dieser Skill wird aktiv, wenn der Nutzer eine Rechercheaufgabe in den Projektunt
 4. **Nie halluzinieren** — fehlende Fakten explizit als "nicht belegt" markieren.
 5. **Datum nennen** — bei Entscheidungen und Risikostatus immer das Datum der Quelle angeben; bei Widersprüchen die neuere Quelle kennzeichnen.
 6. **Format strikt einhalten** — keine eigenen Strukturen erfinden.
-7. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json`.
+7. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_pmo.json` und `eval_pmo_edge.json`.
 
 ## Workflow
 

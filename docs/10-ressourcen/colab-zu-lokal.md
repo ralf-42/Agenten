@@ -95,7 +95,7 @@ check_environment()
 | **M29** (Gradio) | `demo.launch(quiet=True)` | Bleibt unverändert — öffnet automatisch im Browser |
 | **M30** (MCP) | `!uv pip install fastmcp langchain-mcp-adapters` | `pip install fastmcp langchain-mcp-adapters` |
 | **M11, M16** (Datenbanken) | Lokale DB-Dateien (`chroma_m12/`, `chroma_m13/`, `m16_checkpoints.sqlite`) | Werden im Arbeitsverzeichnis angelegt — funktioniert identisch |
-| **M14, M15** (Wissensdatenbank) | Chroma-Collection `chroma_briefing` auf Google Drive (`/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/`). M14 baut sie auf, M15 öffnet sie nur (`get_briefing_vectorstore()`) | `drive.mount(...)` entfällt. Lokalen Pfad setzen, z. B. `persist_directory="chroma_briefing"` in M14 und `get_briefing_vectorstore(persist_directory="chroma_briefing")` in M15. M14 muss vor M15 laufen |
+| **M14, M15** (Wissensdatenbank) | Chroma-Collection `chroma_pmo` auf Google Drive (`/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/`). M14 baut sie auf, M15 öffnet sie nur (`get_pmo_vectorstore()`) | `drive.mount(...)` entfällt. Lokalen Pfad setzen, z. B. `persist_directory="chroma_pmo"` in M14 und `get_pmo_vectorstore(persist_directory="chroma_pmo")` in M15. M14 muss vor M15 laufen |
 
 ---
 

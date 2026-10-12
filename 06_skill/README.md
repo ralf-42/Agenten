@@ -39,7 +39,7 @@ Meeting-Vorbereitung und Nachbereitung mit festen Abschnitten, Quellenpflicht un
 | `references/agenda_rules.md` | Pflichtabschnitte und Reihenfolge |
 | `references/action_rules.md` | Regeln für Action-Item-Extraktion |
 | `references/writer-format.md` | Formatvorgaben für den Writer-Subagenten |
-| `references/examples.md` | Beispiel-Briefings (Sprint-Review, Kundengespräch) |
+| `references/examples.md` | Beispiel-Briefings (Steuerkreis-Vorbereitung und -Nachbereitung, Quellenkonflikt) |
 | `scripts/extract_actions.py` | Tool: Action Items aus Kontext-Dokumenten extrahieren |
 
 Verwendet in: **M34** (vollständiger Skill-Workflow mit Sub-Agent), **M35** (Multi-Skill-Routing)

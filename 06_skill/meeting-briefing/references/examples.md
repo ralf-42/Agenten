@@ -1,11 +1,11 @@
 # Beispielfälle
 
-## Beispiel 1: Vorbereitung — Projektmeeting (vollständige Unterlagen)
+## Beispiel 1: Vorbereitung — Steuerkreis (vollständige Unterlagen)
 
 Eingabe:
-- Thema: „Sprint-Review KI-Agenten Modul M23"
-- Teilnehmer: Anna (PO), Björn (Entwicklung), Caro (QA)
-- Kontext: Sprint-Bericht vom 18.03., offene Tickets aus Jira
+- Thema: „Nächster Steuerkreis Projekt Kompass"
+- Teilnehmer: Mara Vogt (Projektleitung), Jonas Reiter (IT-Architektur), Dr. Thomas Brandt (Datenschutz/Compliance)
+- Kontext: Meeting-Auftrag, Projektstatus vom 20.05.2026, Mail-Verlauf, Notizen der Vorbesprechung
 - Typ: Vorbereitung
 
 Strukturierter Skill-Output (vereinfacht):
@@ -13,60 +13,60 @@ Strukturierter Skill-Output (vereinfacht):
 {
   "type": "vorbereitung",
   "meeting_type": "Projektmeeting",
-  "topic": "Sprint-Review KI-Agenten Modul M23",
-  "participants": ["Anna (PO)", "Björn (Entwicklung)", "Caro (QA)"],
+  "topic": "Nächster Steuerkreis Projekt Kompass",
+  "date": "[offen]",
+  "participants": ["Mara Vogt (Projektleitung)", "Jonas Reiter (IT-Architektur)", "Dr. Thomas Brandt (Datenschutz/Compliance)"],
   "agenda": [
-    {"priority": "hoch", "point": "Blockierung: Tool-Calling-Fehler in M23", "goal": "entscheiden", "duration": 15, "owner": "Björn"},
-    {"priority": "hoch", "point": "Deadline Abnahme bis 25.03.", "goal": "klären", "duration": 10, "owner": "Anna"},
-    {"priority": "mittel", "point": "Status Sprint-Fortschritt", "goal": "informieren", "duration": 10, "owner": "Caro"},
-    {"priority": "gering", "point": "Sonstiges", "goal": "informieren", "duration": 5, "owner": "alle"}
+    {"priority": "hoch", "point": "Rechte- und Rollensteuerung: Optionen und Mindestanforderungen", "goal": "entscheiden", "duration": 20, "owner": "Mara Vogt"},
+    {"priority": "mittel", "point": "Stand Risiko R2 (mitigiert für den kuratierten Korpus)", "goal": "klären", "duration": 10, "owner": "Dr. Thomas Brandt"},
+    {"priority": "mittel", "point": "Offene Aufgaben aus dem Follow-up-Tracker", "goal": "informieren", "duration": 10, "owner": "Mara Vogt"},
+    {"priority": "gering", "point": "Nächste Schritte", "goal": "informieren", "duration": 5, "owner": "Mara Vogt"}
   ],
-  "open_questions": ["Ist der Bugfix bis 25.03. realistisch?", "Wer übernimmt das Testing nach dem Fix?"],
+  "open_questions": ["Welche technische Option für die Zugriffssteuerung ist für den Prototyp realistisch?", "Wann findet der nächste Steuerkreis statt? [offen]"],
   "action_items": [
-    {"task": "Bugfix Tool-Calling dokumentieren", "owner": "Björn", "due": "2026-03-22"},
-    {"task": "Abnahmekriterien finalisieren", "owner": "Anna", "due": "2026-03-20"}
+    {"task": "Zwei technische Optionen für die Zugriffssteuerung skizzieren", "owner": "Jonas Reiter", "due": "[offen]"},
+    {"task": "Mindestanforderungen für datenschutzkonforme Dokumentzugriffe formulieren", "owner": "Dr. Thomas Brandt", "due": "[offen]"}
   ],
-  "risks": ["Blockierung durch Tool-Calling-Bug verzögert Abnahme"],
+  "risks": ["Nachträgliche Filterung allein ist kein ausreichender Schutz", "R1, R3, R4: nur Stand 17.03.2026 dokumentiert"],
   "status": "ok"
 }
 ```
 
-Erwartetes Ergebnis: Vollständiges Briefing, Agenda mit 4 Punkten (Hoch zuerst), 2 Action Items, 1 Risiko
+Erwartetes Ergebnis: Vollständiges Briefing, Agenda mit 4 Punkten (Hoch zuerst), 2 Action Items, 2 Risiken, Rechte- und Rollensteuerung als „diskutiert, nicht beschlossen"
 
 ---
 
-## Beispiel 2: Nachbereitung — Kundengespräch
+## Beispiel 2: Nachbereitung — Steuerkreis vom 28.04.2026
 
 Eingabe:
-- Thema: „Abstimmung Pilotprojekt mit Firma XYZ"
-- Teilnehmer: Ralf (intern), Dr. Müller (Kunde), Petra (Vertrieb)
-- Kontext: Gesprächsnotizen 19.03.2026
+- Thema: „Steuerkreis Projekt Kompass: Risikoliste-Update"
+- Teilnehmer: Mara Vogt, Dr. Thomas Brandt, Jonas Reiter
+- Kontext: protokoll_steuerkreis_2026-04-28.pdf
 - Typ: Nachbereitung
 
 Strukturierter Skill-Output (vereinfacht):
 ```json
 {
   "type": "nachbereitung",
-  "meeting_type": "Kundengespräch",
-  "topic": "Abstimmung Pilotprojekt mit Firma XYZ",
-  "date": "2026-03-19",
-  "participants": ["Ralf (intern)", "Dr. Müller (Kunde)", "Petra (Vertrieb)"],
+  "meeting_type": "Projektmeeting",
+  "topic": "Steuerkreis Projekt Kompass: Risikoliste-Update",
+  "date": "2026-04-28",
+  "participants": ["Mara Vogt", "Dr. Thomas Brandt", "Jonas Reiter"],
   "decisions": [
-    "Pilotprojekt startet am 01.04.2026",
-    "Scope: 3 Use Cases, Laufzeit 8 Wochen",
-    "Ansprechpartner Kunde: Dr. Müller"
+    "Status von Risiko R2 (Datenschutzfreigabe) von offen auf mitigiert geändert (D3)",
+    "Die Freigabe gilt für den kuratierten Testkorpus; für produktive Daten ist eine separate Prüfung erforderlich"
   ],
   "action_items": [
-    {"task": "Projektvertrag an Dr. Müller senden", "owner": "Petra", "due": "2026-03-21"},
-    {"task": "Kick-off-Termin abstimmen", "owner": "Ralf", "due": "2026-03-25"},
-    {"task": "Use-Case-Dokumentation erstellen", "owner": "Ralf", "due": "2026-03-28"}
+    {"task": "Risikoliste aktualisieren und den Statuswechsel vermerken", "owner": "Mara Vogt", "due": "[offen]"},
+    {"task": "Formulierungen für Datenschutzgrenzen liefern", "owner": "Dr. Thomas Brandt", "due": "[offen]"},
+    {"task": "Technische Logging- und Zugriffskonzepte vorbereiten", "owner": "Jonas Reiter", "due": "[offen]"}
   ],
-  "open_points": ["Budgetfreigabe seitens XYZ noch ausstehend"],
+  "open_points": ["Mitigiert bedeutet nicht erledigt: Das Risiko bleibt beobachtet"],
   "status": "ok"
 }
 ```
 
-Erwartetes Ergebnis: Nachbereitungs-Format, 3 Entscheidungen, 3 Action Items mit Datum, 1 offener Punkt
+Erwartetes Ergebnis: Nachbereitungs-Format, 2 Entscheidungen, 3 Action Items (Fälligkeit [offen]), 1 offener Punkt
 
 ---
 
@@ -91,24 +91,24 @@ Erwartetes Ergebnis: Leeres Briefing-Template mit Platzhaltern `[offen]`, Hinwei
 
 ---
 
-## Beispiel 4: Widersprüchliche Agenda-Punkte
+## Beispiel 4: Widersprüchliche Quellen
 
 Eingabe:
-- Thema: „Budget-Review Q2"
-- Kontext: Zwei Dokumente mit abweichenden Budgetzahlen (Dok A: 120k€, Dok B: 95k€)
+- Thema: „Vektordatenbank-Entscheidung"
+- Kontext: Zwei Protokolle mit abweichenden Entscheidungen (Steuerkreis 17.03.2026: D1, Steuerkreis 14.04.2026: D2)
 
 Strukturierter Skill-Output (Auszug):
 ```json
 {
   "conflict": true,
   "findings": [
-    {"fact": "Budget Q2: 120.000 €", "source": "Finanzplanung Q2 v1", "score": 0.88},
-    {"fact": "Budget Q2: 95.000 €", "source": "Aktualisierte Planung März", "score": 0.91}
+    {"fact": "D1 (17.03.2026): ChromaDB wird für den Prototyp evaluiert", "source": "protokoll_steuerkreis_2026-03-17.pdf", "score": 0.89},
+    {"fact": "D2 (14.04.2026): Verwaltete Cloud-Vektordatenbank für den produktiven Einsatz; ChromaDB verworfen", "source": "protokoll_steuerkreis_2026-04-14.pdf", "score": 0.93}
   ],
   "agenda": [
-    {"priority": "hoch", "point": "Budgetwiderspruch klären (120k vs. 95k)", "goal": "entscheiden", "duration": 20, "owner": "[offen]"}
+    {"priority": "hoch", "point": "Aktuelle Entscheidung bestätigen: D2 ersetzt D1", "goal": "klären", "duration": 10, "owner": "Jonas Reiter"}
   ]
 }
 ```
 
-Erwartetes Ergebnis: Konflikt-Markierung im Abschnitt „Bekannte Risiken / Konflikte", beide Zahlen explizit genannt
+Erwartetes Ergebnis: Konflikt-Markierung im Abschnitt „Bekannte Risiken / Konflikte", beide Entscheidungen mit Datum genannt, D2 als aktiv und D1 als überholt gekennzeichnet

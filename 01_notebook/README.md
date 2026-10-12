@@ -20,7 +20,7 @@ Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule 
 
 ---
 
-Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting- & Briefing-Agent**. Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
+Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting- & Briefing-Agent als projektbezogener PMO-Assistent** (Meeting-Vorbereitung, Aufgabenverfolgung, Statusreporting). Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M02)
 

@@ -4,55 +4,57 @@ import json
 import sys
 
 
-HIGH_RISK_COUNTRIES = {"IR", "KP", "SY", "RU"}
+EXTERNAL_SCOPES = {"extern", "external"}
+PRODUCTION_DATA = {"produktivdaten", "production"}
 
 
 def parse_bool(value: object) -> bool:
     if isinstance(value, bool):
         return value
     if isinstance(value, str):
-        return value.strip().lower() in {"1", "true", "yes", "y"}
+        return value.strip().lower() in {"1", "true", "yes", "y", "ja"}
     return bool(value)
 
 
 def assess(case: dict) -> dict:
-    sanctions_hit = parse_bool(case.get("sanctions_hit", False))
-    adverse_media_hit = parse_bool(case.get("adverse_media_hit", False))
-    pep_flag = parse_bool(case.get("pep_flag", False))
-    documents_complete = parse_bool(case.get("documents_complete", True))
-    country = str(case.get("country", "")).upper()
-    amount = float(case.get("transaction_amount", 0) or 0)
+    """Bewertet die Freigabe eines Briefings oder Berichts (deterministischer Schulungs-Score)."""
+    privacy_clearance_denied = parse_bool(case.get("privacy_clearance_denied", False))
+    confidential_content = parse_bool(case.get("confidential_content", False))
+    conflict_unresolved = parse_bool(case.get("conflict_unresolved", False))
+    sources_complete = parse_bool(case.get("sources_complete", True))
+    recipient_scope = str(case.get("recipient_scope", "")).strip().lower()
+    data_basis = str(case.get("data_basis", "testkorpus")).strip().lower()
 
     score = 0
     reasons = []
 
-    if sanctions_hit:
+    if privacy_clearance_denied:
         score += 100
-        reasons.append("sanctions_hit")
-    if pep_flag:
+        reasons.append("privacy_clearance_denied")
+    if confidential_content:
         score += 40
-        reasons.append("pep_flag")
-    if adverse_media_hit:
+        reasons.append("confidential_content")
+    if conflict_unresolved:
         score += 30
-        reasons.append("adverse_media_hit")
-    if country in HIGH_RISK_COUNTRIES:
+        reasons.append("conflict_unresolved")
+    if recipient_scope in EXTERNAL_SCOPES:
         score += 25
-        reasons.append(f"high_risk_country:{country}")
-    if amount >= 10000:
-        score += 15
-        reasons.append("large_transaction")
-    if not documents_complete:
+        reasons.append("external_recipients")
+    if data_basis in PRODUCTION_DATA:
+        score += 20
+        reasons.append("production_data_needs_separate_review")
+    if not sources_complete:
         score += 10
-        reasons.append("missing_documents")
+        reasons.append("missing_sources")
 
-    if sanctions_hit or score >= 50:
+    if privacy_clearance_denied or score >= 50:
         level = "high"
     elif score >= 20:
         level = "medium"
     else:
         level = "low"
 
-    if sanctions_hit:
+    if privacy_clearance_denied:
         decision = "block"
     elif level == "high":
         decision = "block"

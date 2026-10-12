@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts Meeting- & Briefing-Agent); `research/` liefert die Recherche-Fähigkeit (Evidence Tool) als Teilbaustein, `compliance/` dient als domänenneutrales Transferbeispiel.
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts Meeting- & Briefing-Agent); `research/` liefert die Dokumentenrecherche (Evidence Tool) als Teilbaustein, `compliance/` prüft die Freigabe von Briefings, Protokollen und Berichten.
 
 ---
 
@@ -9,13 +9,13 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
 | `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M34_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
-| `research/`         | Evidence-Tool-Baustein: strukturierte Recherche in der Fachartikel-Teilmenge des Projektkorpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Report-Synthese | `M35_DeepAgent_Multi_Skill.ipynb` |
-| `compliance/`       | Transfer: domänenneutrale Risikoprüfung mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
+| `research/`         | Evidence-Tool-Baustein: strukturierte Dokumentenrecherche in den Projektartefakten des Korpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Berichtssynthese | `M35_DeepAgent_Multi_Skill.ipynb` |
+| `compliance/`       | Freigabeprüfung vor dem Versand eines Briefings oder Berichts mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
 
 ### Skill-Details
 
 #### `compliance/`
-Risikoprüfung für Lieferanten- und Transaktions-Compliance.
+Freigabeprüfung für Briefings, Protokolle und Statusberichte (Datenschutzfreigabe, Empfängerkreis, Datenbasis).
 
 | Datei | Inhalt |
 |-------|--------|
@@ -47,15 +47,15 @@ Verwendet in: **M34** (vollständiger Skill-Workflow mit Sub-Agent), **M35** (Mu
 ---
 
 #### `research/`
-Strukturierte Recherche mit Relevanz-Bewertung, Quellen-Synthese und zitierfähigem Report.
+Strukturierte Dokumentenrecherche in Projektunterlagen mit Relevanz-Bewertung, Quellen-Synthese und zitierfähigem Bericht.
 
 | Datei | Inhalt |
 |-------|--------|
 | `SKILL.md` | Recherche-Workflow, Quellen-Regeln, Ausgabeformat |
-| `references/examples.md` | Beispiel-Reports und Musterantworten |
-| `references/format_rules.md` | Regeln für Report-Struktur und Ausgabeformat |
+| `references/examples.md` | Beispielberichte und Musterantworten |
+| `references/format_rules.md` | Regeln für Berichtsstruktur und Ausgabeformat |
 | `references/search_rules.md` | Regeln für Recherche und Quellenbindung |
-| `references/writer-format.md` | Formatvorgaben für den Research-Report |
+| `references/writer-format.md` | Formatvorgaben für den Recherchebericht |
 | `scripts/score_relevance.py` | Deterministisches Scoring-Tool für Quellen-Relevanz |
 
 Verwendet in: **M35** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)

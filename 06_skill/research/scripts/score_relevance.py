@@ -1,11 +1,11 @@
 """
 score_relevance.py — Deterministischer Relevanz-Scorer für den Research-Skill.
 
-Bewertet eine Quelle anhand von Keyword-Übereinstimmung und Metadaten.
+Bewertet eine Quelle (Projektdokument) anhand von Keyword-Übereinstimmung und Metadaten.
 Wird vom Research-Skill als Tool aufgerufen.
 
 Verwendung:
-    python score_relevance.py '{"query": "LangGraph Streaming", "source_text": "...", "source_url": "..."}'
+    python score_relevance.py '{"query": "Status Risiko R2", "source_text": "...", "source_url": "risikoliste_v1.pdf"}'
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def score(query: str, source_text: str, source_url: str = "") -> dict:
 
     Faktoren:
     - Keyword-Overlap zwischen Query und Source-Text (Hauptfaktor)
-    - URL-Bonus für bekannte hochwertige Quellen
+    - Dokumenttyp-Bonus für Protokolle, Entscheidungsprotokoll, Risikoliste und Tracker
     - Längenmalus bei sehr kurzen Texten (< 100 Zeichen)
     """
     query_tokens = tokenize(query)
@@ -38,17 +38,15 @@ def score(query: str, source_text: str, source_url: str = "") -> dict:
     overlap = query_tokens & source_tokens
     keyword_score = len(overlap) / len(query_tokens)
 
-    # URL-Bonus: offizielle Dokumentationsseiten bevorzugen
-    trusted_domains = [
-        "docs.langchain.com",
-        "langchain-ai.github.io",
-        "python.langchain.com",
-        "docs.smith.langchain.com",
-        "platform.openai.com",
-        "arxiv.org",
-        "github.com",
+    # Dokumenttyp-Bonus: verbindliche Projektdokumente bevorzugen
+    trusted_prefixes = [
+        "protokoll_",
+        "entscheidungsprotokoll",
+        "risikoliste",
+        "follow_up_tracker",
+        "projektauftrag",
     ]
-    url_bonus = 0.1 if any(d in source_url for d in trusted_domains) else 0.0
+    url_bonus = 0.1 if any(source_url.lower().startswith(p) for p in trusted_prefixes) else 0.0
 
     # Längenmalus
     length_penalty = -0.2 if len(source_text.strip()) < 100 else 0.0

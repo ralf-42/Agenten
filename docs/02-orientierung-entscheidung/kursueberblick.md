@@ -26,7 +26,7 @@ has_toc: true
 
 Der Kurs zeigt, wie aus einzelnen KI-Funktionen kontrollierte Agentensysteme werden: Anwendungen, die planen, Werkzeuge nutzen, Zwischenergebnisse prüfen und bei Bedarf Menschen einbeziehen.
 
-Der rote Faden ist ein **Meeting- & Briefing-Agent**. Er arbeitet mit einem kuratierten Projektkorpus, sucht relevante Quellen, erstellt belegbare Antworten, erkennt Grenzen des Wissens und macht kritische Entscheidungen prüfbar.
+Der rote Faden ist ein **Meeting- & Briefing-Agent als projektbezogener PMO-Assistent**. Er unterstützt die Meeting-Vorbereitung, die Aufgabenverfolgung und das Statusreporting. Dazu arbeitet er mit einem kuratierten Projektkorpus, sucht relevante Quellen, erstellt belegbare Antworten, erkennt Grenzen des Wissens und macht kritische Ausgaben prüfbar. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
 Der Fokus liegt auf praktischer Umsetzung mit Python, LangChain, LangGraph, LangSmith und ChromaDB. Theorie wird so weit erklärt, wie sie für Entwurf, Implementierung und Bewertung nötig ist.
 
@@ -52,9 +52,9 @@ Nach dem Kurs ist es möglich:
 - RAG als Evidence Tool in Agenten einzubinden,
 - LangGraph für kontrollierte mehrstufige Abläufe zu nutzen,
 - Human-in-the-Loop im Grundlagenpfad umzusetzen und Evaluation, Security und Budgetkontrolle über die Aufbaumodule einzuplanen,
-- einen Meeting- & Briefing-Agenten als eigenes Capstone-Projekt weiterzuentwickeln.
+- einen Meeting- & Briefing-Agenten als projektbezogenen PMO-Assistenten für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting weiterzuentwickeln.
 
-Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, relevante Evidenz sammelt, Entscheidungen sichtbar macht, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
+Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, Meeting-Briefings und Statusübersichten erstellt, offene Aufgaben strukturiert erfasst, relevante Evidenz sammelt, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
 
 ## Kursstruktur
 
@@ -132,7 +132,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
 | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
 |  M01  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
-|  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Meeting- & Briefing-Agent  |
+|  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Meeting- & Briefing-Agent als PMO-Assistent  |
 |  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
 |  M04  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
 |  M05  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
@@ -169,7 +169,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M37  | Vertiefung: Skills und Produktion | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |
 |  M38  | Vertiefung: Skills und Produktion | Capstone                             | Eigenes Agentensystem mit Architekturcheck und Smoke-Test |
 
-In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Briefing-Agenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
+In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den Meeting- & Briefing-Agenten als PMO-Assistenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
 
 | Kursblock | Ausbau am Meeting- & Briefing-Agenten |
 |---|---|

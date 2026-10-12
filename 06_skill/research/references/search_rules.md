@@ -6,9 +6,9 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 | Situation | Modus |
 |-----------|-------|
-| Fachartikel aus dem Kurskorpus | `search_docs` |
+| Protokolle, Entscheidungen, Risiken, Aufgaben aus dem Projektkorpus | `search_docs` |
 | Out-of-Corpus-Verdacht | `search_docs`, danach Stopp-Gate |
-| Aktuelle Ereignisse, News, aktuelle Daten | `search_web` nur als explizite Transfer- oder Aktualitätsvariante |
+| Aktuelle Ereignisse oder externe Daten | `search_web` nur als explizite Transfer- oder Aktualitätsvariante |
 | Kombination aus Korpus und Aktualität | Erst `search_docs`, dann Web nur mit klarer Kennzeichnung |
 
 ## Query-Konstruktion
@@ -16,7 +16,7 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 - Thema in **2–3 unabhängige Suchqueries** zerlegen
 - Queries so formulieren, dass unterschiedliche Aspekte abgedeckt werden
 - Begriffe aus `eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json` als Prüfanker nutzen
-- Englisch nur bevorzugen, wenn die Quelle oder der Fachbegriff englisch ist
+- Entscheidungs-IDs (D1, D2) und Risiko-IDs (R1–R4) als Suchbegriffe verwenden, wenn bekannt
 
 ## Relevanz-Schwellwert
 
@@ -26,14 +26,15 @@ Diese Regeln definieren die Suchstrategie des Research-Skills.
 
 ## Mindestanforderungen
 
-- Mindestens **2 relevante Quellen** für einen vollständigen Report
+- Mindestens **2 relevante Quellen** für einen vollständigen Bericht
 - Bei < 2 Quellen: Status `"insufficient_sources"` zurückgeben
 - Bei 0 Quellen mit Score ≥ 0.4: `"Nicht im Korpus"` zurückgeben
 - Maximal **8 Quellen** verarbeiten (Kontext-Budget)
 
 ## Konflikt-Erkennung
 
-Wenn zwei Quellen eine Kernaussage gegensätzlich darstellen:
+Wenn zwei Quellen eine Kernaussage gegensätzlich darstellen (zum Beispiel D1 und D2):
 - Beide Quellen behalten
 - `"conflict": true` im Output markieren
-- Writer kennzeichnet den Konflikt im Report explizit
+- Datum der Quellen nennen und die neuere kennzeichnen
+- Writer kennzeichnet den Konflikt im Bericht explizit

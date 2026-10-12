@@ -1,65 +1,64 @@
 # Beispielfälle
 
-## Beispiel 1: Technische Recherche (ausreichend Quellen)
+## Beispiel 1: Recherche mit ausreichend Quellen
 
 Eingabe:
-- query: "Was sind die Neuerungen in LangGraph 1.0?"
-- mode: search_web
+- query: "Wie hat sich der Status von Risiko R2 zwischen 17.03. und 28.04.2026 verändert?"
+- mode: search_docs
 
 Strukturierter Skill-Output (vereinfacht):
 ```json
 {
-  "topic": "LangGraph 1.0 Neuerungen",
+  "topic": "Status Risiko R2",
   "sources_evaluated": 4,
-  "sources_relevant": 3,
+  "sources_relevant": 2,
   "findings": [
-    {"fact": "Streaming-Events für alle Node-Typen", "source": "LangGraph Docs", "score": 0.92},
-    {"fact": "Native Checkpointer-API vereinfacht", "source": "LangGraph Blog", "score": 0.85},
-    {"fact": "Interrupt-Mechanismus für HITL überarbeitet", "source": "GitHub Changelog", "score": 0.78}
+    {"fact": "R2 (Datenschutzfreigabe) war am 17.03.2026 offen und hoch eingestuft", "source": "risikoliste_v1.pdf, 17.03.2026", "score": 0.91},
+    {"fact": "R2 wurde am 28.04.2026 auf mitigiert gesetzt, Freigabe von Dr. Thomas Brandt liegt vor", "source": "protokoll_steuerkreis_2026-04-28.pdf", "score": 0.88}
   ],
-  "open_questions": ["Migrationspfad von 0.x noch unklar"],
+  "open_questions": ["Für produktive Daten ist eine separate Prüfung erforderlich"],
   "status": "ok"
 }
 ```
 
-Erwartetes Ergebnis: vollständiger Report, 3 Kernaussagen
+Erwartetes Ergebnis: vollständiger Bericht, 2 Kernaussagen mit Datum
 
 ---
 
 ## Beispiel 2: Zu wenig Quellen
 
 Eingabe:
-- query: "Vergleich proprietärer Agent-Frameworks 2027"
-- mode: search_web
+- query: "Wie hoch ist das exakte Projektbudget in Euro?"
+- mode: search_docs
 
 Strukturierter Skill-Output:
 ```json
 {
-  "topic": "Agent-Framework-Vergleich 2027",
+  "topic": "Projektbudget",
   "sources_evaluated": 5,
-  "sources_relevant": 1,
-  "status": "insufficient_sources"
+  "sources_relevant": 0,
+  "status": "out_of_scope"
 }
 ```
 
-Erwartetes Ergebnis: Kurzformat mit Hinweis, keine vollständigen Kernaussagen
+Erwartetes Ergebnis: "Nicht im Korpus", keine Kernaussagen
 
 ---
 
 ## Beispiel 3: Konflikt zwischen Quellen
 
 Eingabe:
-- query: "Kostenvergleich GPT-5.6 Luna vs. GPT-5.6 Sol"
+- query: "Welche Entscheidung zur Vektordatenbank gilt aktuell?"
 
 Strukturierter Skill-Output (Auszug):
 ```json
 {
   "findings": [
-    {"fact": "GPT-5.6 Luna günstiger pro Token als GPT-5.6 Sol", "source": "OpenAI Pricing Page", "score": 0.88},
-    {"fact": "GPT-5.6 Sol leistungsfähiger bei komplexen Tasks trotz höherem Preis", "source": "AI Benchmark Blog", "score": 0.75}
+    {"fact": "D1 (17.03.2026): ChromaDB wird für den Prototyp evaluiert", "source": "protokoll_steuerkreis_2026-03-17.pdf", "score": 0.89},
+    {"fact": "D2 (14.04.2026): Eine verwaltete Cloud-Vektordatenbank wird für den produktiven Einsatz genutzt", "source": "protokoll_steuerkreis_2026-04-14.pdf", "score": 0.93}
   ],
   "conflict": true
 }
 ```
 
-Erwartetes Ergebnis: Konflikt-Markierung im Report, beide Aussagen genannt
+Erwartetes Ergebnis: Konflikt-Markierung im Bericht, beide Aussagen mit Datum genannt, D2 als neuere Entscheidung gekennzeichnet

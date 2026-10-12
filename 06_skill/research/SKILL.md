@@ -1,30 +1,33 @@
 ---
 name: research
 description: >-
-  Führt strukturierte Recherche-Workflows im Fachartikel-Korpus durch — Quellen
-  identifizieren, Relevanz bewerten, Wissen synthetisieren, Out-of-Corpus-Fragen
-  stoppen und einen zitierfähigen Research-Report erstellen. Aktivieren wenn Nutzer sagt: "recherchiere zu",
-  "fasse zusammen", "was weiß man über", "erstelle einen Bericht",
-  "analysiere das Thema", "suche Quellen zu", "research report",
-  "Literaturüberblick", "Marktrecherche" oder "Hintergrundinformation zu".
+  Führt strukturierte Dokumentenrecherchen in den Projektunterlagen durch —
+  Fundstellen identifizieren, Relevanz bewerten, Aussagen mit Quellen belegen,
+  Out-of-Corpus-Fragen stoppen und einen zitierfähigen Recherchebericht
+  erstellen. Aktivieren wenn Nutzer sagt: "suche in den Projektunterlagen",
+  "wo steht das", "welche Quelle belegt", "was wurde entschieden",
+  "Fundstellen zu", "fasse die Unterlagen zusammen", "Dokumentenrecherche",
+  "Hintergrundinformation aus den Protokollen" oder "erstelle einen
+  Recherchebericht".
 ---
 
 # Research Skill
 
-Dieser Skill deckt die Recherche-Fähigkeit (Evidence Tool) des Meeting- & Briefing-Agenten ab: quellengebundene Fachartikel-Recherche als ein Baustein neben Protokoll-, Risiko- und Entscheidungsauswertung. Standard-Suchraum ist die Fachartikel-Teilmenge im Projektkorpus `02_daten/01_text/korpus_meeting_briefing/`; Websuche ist nur eine explizite Transfer- oder Aktualitätsvariante.
+Dieser Skill deckt die Dokumentenrecherche (Evidence Tool) des Meeting- & Briefing-Agenten ab: quellengebundene Suche in Projektunterlagen als ein Baustein neben Protokoll-, Aufgaben- und Risikoauswertung. Standard-Suchraum sind die Projektartefakte im Korpus `02_daten/01_text/korpus_meeting_briefing/` (Protokolle, Entscheidungsprotokoll, Risikoliste, Follow-up-Tracker, Projektauftrag).
 
 ## Aktivierungsbedingung
 
-Dieser Skill wird aktiv, wenn der Nutzer eine Recherche-Aufgabe formuliert. Typische Trigger-Phrasen sind in der `description` aufgeführt.
+Dieser Skill wird aktiv, wenn der Nutzer eine Rechercheaufgabe in den Projektunterlagen formuliert. Typische Trigger-Phrasen sind in der `description` aufgeführt.
 
 ## Hard Rules
 
-1. **Immer Korpusgrenze prüfen** — Standard ist `search_docs` in der Fachartikel-Teilmenge des Projektkorpus.
+1. **Immer Korpusgrenze prüfen** — Standard ist `search_docs` in den Projektartefakten des Korpus.
 2. **Out-of-Corpus stoppen** — wenn keine passende Quelle gefunden wird, `"Nicht im Korpus"` ausgeben.
 3. **Quellenbewertung ist bindend** — Relevanz-Score < 0.4 → Quelle verwerfen.
 4. **Nie halluzinieren** — fehlende Fakten explizit als "nicht belegt" markieren.
-5. **Format strikt einhalten** — keine eigenen Strukturen erfinden.
-6. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json`.
+5. **Datum nennen** — bei Entscheidungen und Risikostatus immer das Datum der Quelle angeben; bei Widersprüchen die neuere Quelle kennzeichnen.
+6. **Format strikt einhalten** — keine eigenen Strukturen erfinden.
+7. **Eval-Set beachten** — typische Prüf- und Grenzfragen stehen in `02_daten/05_sonstiges/eval_meeting_briefing.json` und `eval_meeting_briefing_edge.json`.
 
 ## Workflow
 
@@ -34,26 +37,26 @@ Nutzeranfrage
     ▼
 [Research-Skill]
     ├─ Thema analysieren & Suchstrategie definieren
-    ├─ Tool: search_docs (Fachartikel-Teilmenge im Projektkorpus)
+    ├─ Tool: search_docs (Projektartefakte im Korpus)
     ├─ Tool: score_relevance (Quellen bewerten)
     ├─ Gate: Out-of-Corpus, wenn keine Quelle Score ≥ 0.4 erreicht
-    └─ Research-Report im definierten Ausgabeformat generieren
+    └─ Recherchebericht im definierten Ausgabeformat generieren
 ```
 
 ## Aufgaben
 
 - Thema in 2–3 Suchqueries zerlegen
-- Quellen aus der Fachartikel-Teilmenge des Projektkorpus abrufen
+- Quellen aus den Projektartefakten des Korpus abrufen
 - Jede Quelle mit `score_relevance` bewerten
 - Quellen mit Score < 0.4 ausschließen
 - Bei fehlender Korpusabdeckung stoppen statt zu raten
-- Strukturierten Research-Output erzeugen
+- Strukturierten Recherche-Output erzeugen
 - Keine eigenen Interpretationen — nur belegte Aussagen
 
 ## Ausgabeformat
 
 ```
-### Research-Report: [Thema]
+### Recherchebericht: [Thema]
 
 **Fragestellung:** [Originale Nutzeranfrage]
 **Quellen ausgewertet:** [Anzahl] | **Relevante Quellen:** [Anzahl nach Filter]
@@ -62,8 +65,8 @@ Nutzeranfrage
 
 #### Kernaussagen
 
-1. [Aussage] — Quelle: [Quelle], Relevanz: [Score]
-2. [Aussage] — Quelle: [Quelle], Relevanz: [Score]
+1. [Aussage] — Quelle: [Dokument, Datum], Relevanz: [Score]
+2. [Aussage] — Quelle: [Dokument, Datum], Relevanz: [Score]
 ...
 
 #### Offene Fragen / Nicht belegte Aspekte
@@ -87,6 +90,6 @@ Nutzeranfrage
 
 ## Verwandte Module
 
-- M22 – Agentic RAG (Retrieval-gesteuerte Recherche)
-- M26 – Integration Pipeline (Research als Teilschritt)
+- M22 – Agentic RAG (Retrieval-gesteuerte Dokumentensuche)
+- M26 – Integration Pipeline (Recherche als Teilschritt)
 - M28 – Advanced RAG Pipeline Patterns (Self-RAG, Reranking)

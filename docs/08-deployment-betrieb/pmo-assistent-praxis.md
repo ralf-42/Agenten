@@ -30,7 +30,7 @@ In diesem Praxisprojekt entsteht schrittweise ein **PMO-Assistent**. Ausgangspun
 > [!NOTE] Dateiname und URL<br>
 > Diese Seite liegt unter `pmo-assistent-praxis.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
 
-Der Agent lädt einen Projektkorpus aus PDFs, Markdown- und CSV-Dateien mit Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
+Der Agent lädt einen Projektkorpus aus Besprechungs- und Projektunterlagen in unterstützten Dateiformaten mit Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
 Das Zielbild ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
 

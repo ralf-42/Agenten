@@ -148,6 +148,12 @@ class StatusberichtResult(BaseModel):
     risiken: list[StatusEintrag]
     offene_punkte: list[str] = Field(description="Was nicht entschieden oder nicht belegt ist")
     sicherheit: str = Field(description="hoch / mittel / niedrig")
+
+
+class ActionItemResult(BaseModel):
+    task: str = Field(description="Aufgabenbeschreibung — kurz, aktionsorientiert")
+    owner: str = Field(description="Verantwortliche Person laut Protokoll oder '[offen]'")
+    due: str = Field(description="Fälligkeitsdatum im Format TT.MM.JJJJ oder '[offen]'")
 ```
 
 ## Leitplanken

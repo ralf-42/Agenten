@@ -216,7 +216,7 @@ Typischer Fehler: Ein einziges Tool für zu viele unterschiedliche Aufgaben zu b
 
 Ein einzelner Agent übernimmt die vollständige Bearbeitung einer Aufgabe. Er kann ein Ziel in Zwischenschritte zerlegen, Tools nutzen, Ergebnisse auswerten und den nächsten Schritt wählen. Das ist mehr als ein einzelner Tool-Aufruf, aber noch kein Agententeam.
 
-Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein Meeting- & Briefing-Agent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
+Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein PMO-Assistent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
 
 **Vorteile:**
 

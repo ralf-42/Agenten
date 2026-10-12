@@ -13,7 +13,7 @@ description: >-
 
 # Meeting-Briefing Skill
 
-Dieser Skill ist der Kern-Baustein des Leitprojekts **Meeting- & Briefing-Agent**: er erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
+Dieser Skill ist der Kern-Baustein des Leitprojekts **PMO-Assistent**: er erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
 Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen. Im Leitprojekt-Szenario nutzt Mara Vogt (Projektleiterin, Projekt "Kompass") diesen Skill, um Protokolle, Risikolisten und offene Punkte in ein geprüftes Briefing zu verwandeln. Der PMO-Bezug umfasst drei Kernfunktionen: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting.
 
 ## Aktivierungsbedingung

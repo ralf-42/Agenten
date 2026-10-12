@@ -20,14 +20,14 @@ Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule 
 
 ---
 
-Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting- & Briefing-Agent als projektbezogener PMO-Assistent** (Meeting-Vorbereitung, Aufgabenverfolgung, Statusreporting). Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
+Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assistent** (Meeting-Vorbereitung, Dokumentenaufbereitung, Aufgabenverfolgung, quellengebundene Briefings und Statusübersichten). Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M02)
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
 | M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, Meeting- & Briefing-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
-| M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster Meeting- & Briefing-Agent mit `create_agent()` | 🟢 Grundlagen |
+| M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
 
 ---
 
@@ -35,7 +35,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting-
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den Meeting- & Briefing-Agent | 🟢 Grundlagen |
+| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den PMO-Assistent | 🟢 Grundlagen |
 | M04   | `M04_Structured_Output.ipynb`               | Antwortschema, Quellenpflicht und strukturierte Prüfbarkeit mit Pydantic und `with_structured_output()` | 🟢 Grundlagen |
 | M05   | `M05_Multi_Tool_Agents.ipynb`               | Mehrere Projekt- und Recherche-Tools, Tool-Auswahl, robuste Fehlerbehandlung | 🟢 Grundlagen |
 | M06   | `M06_LCEL_Chains.ipynb`                     | Kontrollierte Teilketten für Antwort, Prüfung und Übergang zu LangGraph | 🟢 Grundlagen |
@@ -46,7 +46,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **Meeting-
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M07 | `M07_Warum_LangGraph.ipynb` | Warum der Meeting- & Briefing-Agent kontrollierten State braucht | 🟢 Grundlagen |
+| M07 | `M07_Warum_LangGraph.ipynb` | Warum der PMO-Assistent kontrollierten State braucht | 🟢 Grundlagen |
 | M08 | `M08_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Grundlagen |
 | M09 | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics und Planning-Patterns | 🟢 Grundlagen |
 | M10 | `M10_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Grundlagen |

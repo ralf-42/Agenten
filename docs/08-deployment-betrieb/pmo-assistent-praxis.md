@@ -1,17 +1,17 @@
 ---
 layout: default
-title: Meeting- & Briefing-Agent
+title: PMO-Assistent
 parent: "Deployment & Betrieb"
 nav_order: 5
-description: "Praxisprojekt: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
+description: "Praxisprojekt: PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---
 
-# Meeting- & Briefing-Agent Workshop
+# PMO-Assistent – Praxisworkshop
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Wie entsteht ein projektbezogener PMO-Assistent, der Meetings vorbereitet, Aufgaben verfolgt und Statusberichte aus Protokollen, Entscheidungen und Projektdokumenten erstellt, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
+> Wie entsteht ein PMO-Assistent, der Meetings vorbereitet, Aufgaben verfolgt und Statusberichte aus Protokollen, Entscheidungen und Projektdokumenten erstellt, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
 
 ---
 
@@ -25,14 +25,14 @@ has_toc: true
 
 ## Projektübersicht
 
-In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Briefing-Agent als projektbezogener PMO-Assistent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Projektdokumente sichten, Meetings vorbereiten, Aufgabenstände verfolgen und geprüfte Briefings und Statusübersichten erhalten, statt einem vollautomatischen System blind zu vertrauen.
+In diesem Praxisprojekt entsteht schrittweise ein **PMO-Assistent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Projektdokumente sichten, Meetings vorbereiten, Aufgabenstände verfolgen und geprüfte Briefings und Statusübersichten erhalten, statt einem vollautomatischen System blind zu vertrauen.
 
 > [!NOTE] Dateiname und URL<br>
-> Diese Seite liegt unter `meeting-research-briefing-agent.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
+> Diese Seite liegt unter `pmo-assistent-praxis.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
 
 Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
-Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
+Das Zielbild der Leitaufgabe ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
@@ -70,7 +70,7 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der Meeting- & Briefing-Agent ist ein projektbezogener PMO-Assistent und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
+Der PMO-Assistent ist ein PMO-Assistent und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -440,7 +440,7 @@ def chat_with_briefing_agent(message, history, thread_id):
     return "", history + [(message, result["answer"])]
 
 with gr.Blocks() as demo:
-    gr.Markdown("# Meeting- & Briefing-Agent")
+    gr.Markdown("# PMO-Assistent")
     thread_id = gr.Textbox(label="Session ID", value="mara_001")
     chatbot = gr.Chatbot(height=450)
     msg = gr.Textbox(placeholder="Frage zum Projektkorpus stellen ...")
@@ -531,7 +531,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 - [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
 
 **Projektinterne Dokumente:**
-- [Meeting- & Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }})
+- [PMO-Assistent – Leitaufgabe]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }})
 - [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }})
 - [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 - [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})
@@ -544,7 +544,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 Nein. Eine Basisversion darf mit Retrieval-Light starten. Für eine stärkere Lösung sind Embeddings, ChromaDB und Score-Thresholds sinnvoll.
 
 **Muss ich eine UI bauen?**  
-Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Meeting- & Briefing-Agent-Graph.
+Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte PMO-Assistent-Graph.
 
 **Muss ich Multi-Agent implementieren?**  
 Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervisor plus zwei Worker die empfohlene Ausbauvariante.

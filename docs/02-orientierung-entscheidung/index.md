@@ -16,7 +16,7 @@ Bevor mit der technischen Umsetzung begonnen wird, hilft diese Seite dabei, das 
 | **Lohnt** sich der Einsatz von KI oder Agenten? | [Lohnt es sich?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Vorprüfung von Nutzen, Datenlage, Aufwand und Risiken. |
 | **Welche** Lösungsklasse passt zur Aufgabe? | [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Abgrenzung zwischen Prompt, Workflow, RAG, Agent und klassischem Code. |
 | **Welche** Sprache braucht das Team? | [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Gemeinsame Begriffe für State, Tools, Memory, Guardrails und Architekturen. |
-| **Welche** Leitaufgabe verbindet den Kurs? | [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) | Zielbild und roter Faden für den projektbezogenen PMO-Assistenten: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. |
+| **Welche** Leitaufgabe verbindet den Kurs? | [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) | Zielbild und roter Faden für den PMO-Assistenten: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. |
 
 ---
 

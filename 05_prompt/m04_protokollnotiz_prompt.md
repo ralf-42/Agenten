@@ -1,6 +1,6 @@
 ---
-name: m04_studien_zusammenfassung_prompt
-description: Extraktion einer strukturierten Protokollnotiz für den Meeting- & Briefing-Agent
+name: m04_protokollnotiz_prompt
+description: Extraktion einer strukturierten Protokollnotiz für den PMO-Assistent
 variables: [text]
 ---
 

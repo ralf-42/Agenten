@@ -154,66 +154,6 @@
     ]
   },
   {
-    "id": "q14",
-    "typ": "faktisch",
-    "frage": "Welche drei Kernbestandteile eines RAG-Frameworks nennt der RAG-Survey?",
-    "erwartete_antwort_kurz": "Retrieval, Generation und Augmentation.",
-    "erwartete_quelle": "rag_survey_2312_10997.pdf",
-    "erwartete_begriffe": [
-      "retrieval",
-      "generation",
-      "augmentation"
-    ]
-  },
-  {
-    "id": "q15",
-    "typ": "faktisch",
-    "frage": "Welches Problem adressiert RAGAS bei der Evaluation von RAG-Systemen?",
-    "erwartete_antwort_kurz": "RAGAS zielt auf die Evaluation von RAG-Pipelines, insbesondere Antworttreue, Kontextrelevanz und Antwortrelevanz.",
-    "erwartete_quelle": "ragas_evaluation_2309_15217.pdf",
-    "erwartete_begriffe": [
-      "faithfulness",
-      "context",
-      "answer relevancy"
-    ]
-  },
-  {
-    "id": "q16",
-    "typ": "faktisch",
-    "frage": "Welche typischen Komponenten werden in Surveys zu LLM-basierten autonomen Agenten beschrieben?",
-    "erwartete_antwort_kurz": "Typische Komponenten sind Planung, Memory, Tool-Nutzung bzw. Handlungsausführung und Interaktion mit Umgebung oder Nutzer.",
-    "erwartete_quelle": "llm_autonomous_agents_survey_2308_11432.pdf",
-    "erwartete_begriffe": [
-      "planning",
-      "memory",
-      "tool"
-    ]
-  },
-  {
-    "id": "q17",
-    "typ": "faktisch",
-    "frage": "Welche Rolle spielt Prompt Engineering laut Prompt-Engineering-Survey für LLM-Anwendungen?",
-    "erwartete_antwort_kurz": "Prompt Engineering steuert und verbessert das Verhalten von LLMs durch Aufgabenbeschreibung, Beispiele, Rollen oder strukturierte Anweisungen ohne zwingendes Modelltraining.",
-    "erwartete_quelle": "prompt_engineering_survey_2402_07927.pdf",
-    "erwartete_begriffe": [
-      "prompt engineering",
-      "techniques",
-      "large language models"
-    ]
-  },
-  {
-    "id": "q18",
-    "typ": "grenze",
-    "frage": "Welches Risiko entsteht, wenn ein RAG-System irrelevante Kontexte in den Prompt bekommt?",
-    "erwartete_antwort_kurz": "Irrelevante Kontexte können die Antwortqualität verschlechtern, die Modellantwort ablenken oder zu falschen Schlussfolgerungen führen.",
-    "erwartete_quelle": "robust_rag_irrelevant_context_2310_01558.pdf",
-    "erwartete_begriffe": [
-      "irrelevant context",
-      "robustness",
-      "retrieval-augmented"
-    ]
-  },
-  {
     "id": "q19",
     "typ": "synthese",
     "frage": "Welche Mindestbestandteile sollte ein einsteigergeeigneter Meeting- & Briefing-Agent aus diesem Korpus ableiten?",

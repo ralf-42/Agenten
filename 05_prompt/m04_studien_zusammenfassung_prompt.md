@@ -1,6 +1,6 @@
 ---
 name: m04_studien_zusammenfassung_prompt
-description: Extraktion einer strukturierten Paper- oder Studiennotiz für den Meeting- & Briefing-Agent
+description: Extraktion einer strukturierten Protokollnotiz für den Meeting- & Briefing-Agent
 variables: [text]
 ---
 
@@ -12,5 +12,5 @@ Wenn eine Angabe fehlt, markiere sie als nicht genannt oder lasse optionale Feld
 
 ## human
 
-Textauszug:
+Protokollauszug:
 {text}

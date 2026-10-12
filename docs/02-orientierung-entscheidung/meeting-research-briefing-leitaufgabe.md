@@ -10,7 +10,7 @@ has_toc: true
 # Meeting- & Briefing-Agent
 {: .no_toc }
 
-Ein Meeting- & Briefing-Agent hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, offene Fragen und passende Fachartikel. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
+Der Meeting- & Briefing-Agent ist ein projektbezogener Assistent zur Aufbereitung von Besprechungs- und Projektdokumenten, zur Erstellung quellengebundener Briefings und zur Unterstützung von Entscheidungs- und Freigabeprozessen. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
 Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt. Er bereitet ein Briefing vor. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
@@ -18,7 +18,7 @@ Drei Fähigkeiten ziehen sich durch den Bauplan: Der Agent muss **planen** (welc
 
 Die Leitfrage lautet:
 
-> Wie entsteht ein Agent, der Fragen zu Protokollen, Entscheidungen, Risiken und Fachartikeln beantwortet, relevante Passagen findet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
+> Wie entsteht ein Agent, der Fragen zu Protokollen, Entscheidungen, Risiken und Aufgaben beantwortet, relevante Passagen findet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
 
 ---
 
@@ -32,7 +32,7 @@ Die Leitfrage lautet:
 
 ## Ausgangssituation
 
-Mara Vogt leitet das interne Vorhaben "Projekt Kompass" bei der fiktiven Nordlicht Software GmbH. Vor Jour-fixe-Terminen liest sie Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten und Fachartikel. Oft sucht sie nicht ein einzelnes Stichwort, sondern den aktuellen Stand: Was wurde entschieden? Welche Risiken sind offen? Wo widersprechen sich ältere und neuere Unterlagen?
+Mara Vogt leitet das interne Vorhaben "Projekt Kompass" bei der fiktiven Nordlicht Software GmbH. Vor Jour-fixe-Terminen liest sie Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten und Aufgabenlisten. Oft sucht sie nicht ein einzelnes Stichwort, sondern den aktuellen Stand: Was wurde entschieden? Welche Risiken sind offen? Wo widersprechen sich ältere und neuere Unterlagen?
 
 Eine einfache Volltextsuche hilft nur begrenzt. Sie liefert zu viele Treffer, übersieht semantisch passende Stellen oder zeigt nicht, dass zwei Dokumente unterschiedliche Stände beschreiben.
 
@@ -42,6 +42,22 @@ Das Ziel ist kein Agent, der beliebige Antworten erzeugt. Der Nutzen entsteht er
 <p><font color='black' size="2">
 KI-generiertes Bild
 </font></p>
+
+## Anwendungsfälle im Kurs
+
+Beispiele und Aufgaben im Kurs richten sich an sieben typischen Aufgaben rund um Besprechungen und Projektsteuerung aus. Sie beziehen sich auf die Projektdokumente von Projekt Kompass, nicht auf allgemeine Recherchethemen.
+
+| Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
+|---|---|---|---|
+| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34 |
+| Protokollerstellung | Strukturierte Zusammenfassung von Besprechungsnotizen | Sehr hoch | M04, M06, M34 |
+| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10 |
+| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21, M26 |
+| Risikomanagement | Identifikation möglicher Risiken in Projektberichten | Hoch | M04, M09, M23 |
+| Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | M11, M14, M22, M28 |
+| Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | M03, M17, M25 |
+
+Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig geübt wird. Freigabe und Entscheidungsunterstützung ziehen sich als Querschnitt durch alle Fälle, besonders in M17 (Human-in-the-Loop), M20 und M21 (Supervisor).
 
 ## Zielbild
 
@@ -63,7 +79,7 @@ Das Zielbild lässt sich in fünf Ausbaustufen lesen:
 
 Der Korpus sollte klein genug sein, um verstanden zu werden, und sauber genug, um Evaluation zu ermöglichen. Zehn bis zwanzig PDF-Dokumente aus einem klaren Themenfeld reichen für einen ersten Prototyp oft aus. Ein größerer, aber unsauberer Bestand verschlechtert die Lern- und Prüfbarkeit: Retrieval-Fehler lassen sich dann schwer von Datenproblemen unterscheiden.
 
-Geeignete Quellen sind Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten, Rollenlisten sowie öffentlich zugängliche Fachartikel als Recherche-Hintergrund. Für den Kurs werden reale Projektdaten durch synthetische, fiktive Beispieldokumente ersetzt — urheberrechtlich geschützte Lehrbücher, echte interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
+Geeignete Quellen sind Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten, Aufgabenlisten und Rollenlisten. Fachartikel gehören höchstens als Hintergrund in den Korpus; Beispiele und Aufgaben beziehen sich auf die Projektdokumente. Für den Kurs werden reale Projektdaten durch synthetische, fiktive Beispieldokumente ersetzt — urheberrechtlich geschützte Lehrbücher, echte interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
 
 Für jede Passage sollten mindestens diese Metadaten verfügbar sein:
 
@@ -72,8 +88,8 @@ Für jede Passage sollten mindestens diese Metadaten verfügbar sein:
 | `dokument_id` | stabile interne ID |
 | `titel` | Titel des Dokuments |
 | `autor_oder_organisation` | Autor, Institution oder Herausgeber |
-| `jahr` | Veröffentlichungsjahr, soweit vorhanden |
-| `dokumenttyp` | Paper, Bericht, Guidance oder Kurztext |
+| `datum` | Datum des Dokuments, wichtig für Aktualität und Widersprüche |
+| `dokumenttyp` | Protokoll, Entscheidungsprotokoll, Risikoliste, Tracker oder Projektunterlage |
 | `dateiname` | Datei im Korpus |
 | `quelle_url` | reproduzierbare Abrufquelle |
 | `seite` | Seite oder Seitenbereich, soweit verfügbar |
@@ -127,7 +143,7 @@ Ein erstes Eval-Set sollte verschiedene Fragetypen enthalten:
 | Fragetyp | Erwartung |
 |---|---|
 | Faktische Frage | richtige Quelle und passende Passage |
-| Methodenfrage | korrekt erkannte Methode oder Empfehlung |
+| Konfliktfrage | aktuelle Entscheidung mit Datum und Quelle (zum Beispiel D2 statt D1) |
 | Vergleichsfrage | zwei Quellen sauber gegenübergestellt |
 | Inferenzfrage | begründete Zusammenführung mehrerer Passagen |
 | Negativbeispiel | Antwort "Nicht im Korpus" |
@@ -175,6 +191,6 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 
 ---
 
-**Version:** 2.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 2.2<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

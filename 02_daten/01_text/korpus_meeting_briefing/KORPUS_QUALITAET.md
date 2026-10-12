@@ -29,7 +29,7 @@ Der Meeting- & Briefing-Korpus (Projekt Kompass) ist für die überarbeitete Kur
 
 ## Ground-Truth-Abdeckung
 
-Das Eval-Set `eval_meeting_briefing.json` enthält 33 reguläre Fragen und deckt alle 13 neuen Dokumente sowie die 5 Recherche-Hintergrund-Dokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_meeting_briefing_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
+Das Eval-Set `eval_meeting_briefing.json` enthält 28 reguläre Fragen und deckt alle 13 neuen Projektdokumente ab. Die 5 Fachartikel (Recherche-Hintergrund) bleiben im Korpus, werden aber nicht abgefragt. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_meeting_briefing_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
 
 | Datei | Abdeckung |
 |---|---|
@@ -46,16 +46,11 @@ Das Eval-Set `eval_meeting_briefing.json` enthält 33 reguläre Fragen und deckt
 | `entscheidungsprotokoll_gesamt.pdf` | q11, q19, q32 |
 | `follow_up_tracker.pdf` | q12, q29 |
 | `agenda_vorlage_steuerkreis.pdf` | q13, q30, e09 |
-| `rag_survey_2312_10997.pdf` | q14 |
-| `ragas_evaluation_2309_15217.pdf` | q15 |
-| `llm_autonomous_agents_survey_2308_11432.pdf` | q16 |
-| `prompt_engineering_survey_2402_07927.pdf` | q17 |
-| `robust_rag_irrelevant_context_2310_01558.pdf` | q18 |
 
 ## Hinweise für den Unterricht
 
 - In M10/M11 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
-- In M12/M13 den gesamten Korpus verwenden, inklusive der Recherche-Hintergrund-Dokumente.
+- In M12/M13 den gesamten Korpus verwenden, die Fachartikel (Recherche-Hintergrund) bleiben im Korpus, werden aber nicht abgefragt.
 - In M14/M23 mit `eval_meeting_briefing.json` starten und Edge-Cases aus `eval_meeting_briefing_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
 - Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M16/M22, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.

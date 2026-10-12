@@ -1,5 +1,5 @@
 ---
-name: m04_research_review_prompt
+name: m04_pmo_review_prompt
 description: Strukturierte Risikobewertung eines Protokoll- oder Berichtsauszugs für Trace-Demo
 variables: [text]
 ---

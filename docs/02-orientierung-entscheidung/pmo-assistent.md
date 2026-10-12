@@ -3,14 +3,14 @@ layout: default
 title: PMO-Assistent
 parent: Orientierung & Entscheidung
 nav_order: 4
-description: "Zielbild und roter Faden: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
+description: "Zielbild und roter Faden: PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---
 
 # PMO-Assistent
 {: .no_toc }
 
-Der projektbezogener PMO-Assistent unterstützt Meeting-Vorbereitung,  Aufbereitung von Besprechungs- und Projektdokumenten, Aufgabenverfolgung und zur Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
+Der PMO-Assistent unterstützt die Meeting-Vorbereitung, die Aufbereitung von Besprechungs- und Projektdokumenten, die Aufgabenverfolgung sowie die Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
 Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt und ersetzt kein vollständiges PMO-System. Er bereitet Meetings, Aufgabenstände und Statusinformationen auf. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
@@ -18,7 +18,7 @@ Drei Fähigkeiten ziehen sich durch den Bauplan: Der Agent muss **planen** (welc
 
 Die Leitfrage lautet:
 
-> Wie entsteht ein projektbezogener PMO-Assistent, der Meetings vorbereitet, Aufgabenstände und Statusinformationen aus Protokollen, Entscheidungen und Projektdokumenten aufbereitet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
+> Wie entsteht ein PMO-Assistent, der Meetings vorbereitet, Aufgabenstände und Statusinformationen aus Protokollen, Entscheidungen und Projektdokumenten aufbereitet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
 
 ---
 
@@ -45,7 +45,7 @@ KI-generiertes Bild
 
 ## Anwendungsfälle im Kurs
 
-Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen eines projektbezogenen PMO-Assistenten: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Ergänzend werden Protokollerstellung, Risikomanagement, Dokumentenmanagement und Stakeholderkommunikation als unterstützende Funktionen behandelt. Alle Beispiele beziehen sich auf die Projektdokumente von Projekt Kompass, nicht auf allgemeine Recherchethemen.
+Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen eines PMO-Assistenten: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Ergänzend werden Protokollerstellung, Risikomanagement, Dokumentenmanagement und Stakeholderkommunikation als unterstützende Funktionen behandelt. Alle Beispiele beziehen sich auf die Projektdokumente von Projekt Kompass, nicht auf allgemeine Recherchethemen.
 
 | Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
 |---|---|---|---|
@@ -61,7 +61,7 @@ Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig ge�
 
 ## Zielbild
 
-Ein brauchbarer Meeting- & Briefing-Agent als PMO-Assistent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
+Ein brauchbarer PMO-Assistent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
 In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
@@ -152,7 +152,7 @@ class StatusberichtResult(BaseModel):
 
 ## Leitplanken
 
-Der Meeting- & Briefing-Agent bleibt ein Assistenzsystem für PMO-nahe Informationsaufbereitung und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder verbindliche Projektentscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
+Der PMO-Assistent bleibt ein Assistenzsystem für PMO-nahe Informationsaufbereitung und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder verbindliche Projektentscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
 
 Die Leitplanken setzen **Prüfen** praktisch um. Sie legen fest, wann der Agent stoppt, eskaliert oder eine Ausgabe verweigert, statt eine plausible Antwort zu erzwingen.
 
@@ -186,7 +186,7 @@ Für eine erste Version ist eine pragmatische Schwelle sinnvoll: Die semantische
 
 ## Vom Einzelagenten zum Multi-Agent-System
 
-Der Meeting- & Briefing-Agent beginnt nicht als Multi-Agent-System. Zuerst muss der einfache Pfad funktionieren: Korpus laden, Passage finden, Antwort strukturieren, Quelle belegen. Erst danach lohnt sich Rollenaufteilung.
+Der PMO-Assistent beginnt nicht als Multi-Agent-System. Zuerst muss der einfache Pfad funktionieren: Korpus laden, Passage finden, Antwort strukturieren, Quelle belegen. Erst danach lohnt sich Rollenaufteilung.
 
 Eine sinnvolle Multi-Agent-Variante trennt nicht künstlich ähnliche Aufgaben, sondern unterschiedliche Dokument- oder Fragetypen:
 
@@ -223,7 +223,7 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann ist ein KI- oder Agentenvorhaben überhaupt sinnvoll? |
 | [Aufgabenklassen & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann reicht Prompting, wann braucht es RAG, Workflow oder Agent? |
 | [Terminologie]({{ '/02-orientierung-entscheidung/terminologie.html' | relative_url }}) | Welche Begriffe werden für Tools, State, Memory und Guardrails verwendet? |
-| [Meeting- & Briefing-Agent Workshop]({{ '/08-deployment-betrieb/meeting-research-briefing-agent.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
+| [PMO-Assistent – Praxisworkshop]({{ '/08-deployment-betrieb/pmo-assistent-praxis.html' | relative_url }}) | Wie wird das Zielbild als zusammenhängendes Praxisprojekt umgesetzt? |
 
 ---
 

@@ -12,9 +12,9 @@ m##_beschreibung.md
 - Kleinbuchstaben, Unterstriche statt Leerzeichen
 - Kein `M##` (Großbuchstaben) — das ist die Notebook-Konvention
 
-### Hinweis zu `research_*` nach dem Move-B-Pivot
+### Hinweis zu `pmo_*`
 
-Einige Prompt-Dateien behalten `research` im Dateinamen (`m03_research_*`, `m04_research_review_prompt.md`, `m09_research_routing_prompt.md`). Das bezeichnet hier den Recherche- und Evidence-Anteil des aktuellen **Meeting- & Briefing-Agenten**, nicht ein eigenes Leitprojekt.
+Prompt-Dateien, die den PMO-Assistenten betreffen, tragen `pmo` im Dateinamen (`m03_pmo_*`, `m04_pmo_*`, `m05_robust_pmo_system_prompt.md`, `m09_pmo_routing_prompt.md`). Der Name `research` wird nicht mehr verwendet.
 
 Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
 
@@ -79,10 +79,10 @@ Regeln:
 from genai_lib.utilities import load_prompt
 
 # System-only → mode="S"
-system_prompt = load_prompt("05_prompt/m03_research_system_prompt.md", mode="S")
+system_prompt = load_prompt("05_prompt/m03_pmo_system_prompt.md", mode="S")
 
 # Template mit ## system / ## human Sections → mode="T"
-prompt = load_prompt("05_prompt/m03_research_template_prompt.md", mode="T")
+prompt = load_prompt("05_prompt/m03_pmo_template_prompt.md", mode="T")
 
 # Mit Variablen befüllen
 chain = prompt | llm
@@ -95,10 +95,10 @@ result = chain.invoke({"variable1": "Wert"})
 
 | Modul | Dateien |
 |-------|---------|
-| M03 | `m03_research_template_prompt.md`, `m03_research_system_prompt.md` |
-| M04 | `m04_studien_zusammenfassung_prompt.md`, `m04_research_signal_classification_prompt.md`, `m04_citation_format_prompt.md`, `m04_research_review_prompt.md` |
-| M05 | `m05_multi_tool_system_prompt.md`, `m05_robust_research_system_prompt.md` |
-| M09 | `m09_research_routing_prompt.md` |
+| M03 | `m03_pmo_template_prompt.md`, `m03_pmo_system_prompt.md` |
+| M04 | `m04_protokollnotiz_prompt.md`, `m04_pmo_signal_classification_prompt.md`, `m04_citation_format_prompt.md`, `m04_pmo_review_prompt.md` |
+| M05 | `m05_multi_tool_system_prompt.md`, `m05_robust_pmo_system_prompt.md` |
+| M09 | `m09_pmo_routing_prompt.md` |
 | M12 | `m12_query_rewrite_prompt.md` |
 | M13 | `m13_rag_prompt.md` |
 | M14 | `m14_rag_agent_system_prompt.md` |

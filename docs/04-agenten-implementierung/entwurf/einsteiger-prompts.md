@@ -412,9 +412,9 @@ flowchart TD
 
 | Typ | Datei | Modul |
 |---|---|---|
-| System-only, einfach | `m03_research_system_prompt.md` | M03 Prompt Engineering |
+| System-only, einfach | `m03_pmo_system_prompt.md` | M03 Prompt Engineering |
 | System-only, einfach | `m05_multi_tool_system_prompt.md` | M05 Multi-Tool |
-| Template mit Variablen | `m09_research_routing_prompt.md` | M09 Routing |
+| Template mit Variablen | `m09_pmo_routing_prompt.md` | M09 Routing |
 | Komplex mit XML-Tags | `m14_rag_agent_system_prompt.md` | M14 RAG-Agent |
 
 > Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.

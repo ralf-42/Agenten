@@ -1,5 +1,5 @@
 """
-pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Briefing-Agenten (PMO-Assistent)
+pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den PMO-Assistenten
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (PDF-Laden, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),

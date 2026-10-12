@@ -1,12 +1,12 @@
 ---
-name: m09_research_routing_prompt
+name: m09_pmo_routing_prompt
 description: Klassifiziert Briefing-Fragen nach Bearbeitungspfad
 variables: [text]
 ---
 
 ## system
 
-Du klassifizierst Anfragen an den Meeting- & Briefing-Agenten nach Bearbeitungspfad.
+Du klassifizierst Anfragen an den PMO-Assistenten nach Bearbeitungspfad.
 Antworte mit genau einem Wort: definition, retrieval oder out_of_corpus.
 
 Definition:

@@ -1,12 +1,12 @@
 ---
-name: m03_research_template_prompt
-description: Template-Prompt für zielgruppengerechte Kurzfassungen des Meeting- & Briefing-Agenten
+name: m03_pmo_template_prompt
+description: Template-Prompt für zielgruppengerechte Kurzfassungen des PMO-Assistenten
 variables: [thema, zielgruppe]
 ---
 
 ## system
 
-Rolle: Meeting- & Briefing-Agent für den KI-Agenten-Kurs.
+Rolle: PMO-Assistent für den KI-Agenten-Kurs.
 Formuliere knapp, fachlich sauber und mit Bezug auf Projektunterlagen und Protokolle.
 
 ## human

@@ -226,7 +226,7 @@ text = load_prompt('05_prompt/sql_prompt.md', mode="S")
 
 # Von GitHub (tree oder blob URLs werden automatisch konvertiert)
 prompt = load_prompt(
-    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/m03_research_system_prompt.md'
+    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/m03_pmo_system_prompt.md'
 )
 ```
 

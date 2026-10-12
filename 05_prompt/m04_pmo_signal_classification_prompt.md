@@ -1,5 +1,5 @@
 ---
-name: m04_research_signal_classification_prompt
+name: m04_pmo_signal_classification_prompt
 description: Klassifikation von Briefing-Signalen aus Protokollen für Structured Output
 variables: [text]
 ---

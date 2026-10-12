@@ -12,7 +12,7 @@ description: >-
 
 # Compliance Skill
 
-Dieser Skill definiert einen wiederverwendbaren Freigabe-Workflow für den Meeting- & Briefing-Agent. Das Freigabe-Gate in Schritt 5 ist eine konkrete Ausprägung des kursweiten **Gate**-Begriffs (siehe `docs/02-orientierung-entscheidung/terminologie.md`): ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe, hier automatisiert über den Risiko-Score aus `compliance_check`.
+Dieser Skill definiert einen wiederverwendbaren Freigabe-Workflow für den PMO-Assistent. Das Freigabe-Gate in Schritt 5 ist eine konkrete Ausprägung des kursweiten **Gate**-Begriffs (siehe `docs/02-orientierung-entscheidung/terminologie.md`): ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe, hier automatisiert über den Risiko-Score aus `compliance_check`.
 
 ## Schnellstart
 

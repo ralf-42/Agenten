@@ -1,9 +1,9 @@
 """
-briefing_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Briefing-Agenten
+pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den Meeting- & Briefing-Agenten (PMO-Assistent)
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (PDF-Laden, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
-damit M26/M35 dieselbe Kette wiederverwenden statt sie zu duplizieren.
+damit M15 und die nachfolgenden Module (M26, M28, M29, M36-M38) dieselbe Kette wiederverwenden statt sie zu duplizieren.
 
 M12/M13/M14 bleiben didaktisch davon unberührt und bauen die Kette weiterhin
 Schritt für Schritt selbst als Inline-Code — dieses Modul bündelt nur den
@@ -22,7 +22,7 @@ Installation (einmalig):
     !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 Import im Notebook:
-    from genai_lib.briefing_rag import get_briefing_vectorstore, index_briefing_corpus, make_suche_wissensdatenbank_tool
+    from genai_lib.pmo_rag import get_briefing_vectorstore, index_briefing_corpus, make_suche_wissensdatenbank_tool
 
     vectorstore = get_briefing_vectorstore()
     index_briefing_corpus(vectorstore, KORPUS_TARGET)
@@ -39,7 +39,7 @@ from pypdf import PdfReader
 
 from genai_lib.model_config import EMBEDDINGS
 
-DEFAULT_COLLECTION_NAME = "meeting_briefing_korpus_m14"
+DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
 DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_briefing"
 
 
@@ -161,8 +161,7 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
 
     @tool
     def suche_wissensdatenbank(frage: str) -> str:
-        """Durchsucht den Meeting- & Projekt-Korpus zu Entscheidungen, Risiken und offenen Punkten
-        sowie die Fachartikel zu RAG, Retrieval, Evaluation und Agenten.
+        """Durchsucht den Meeting- & Projekt-Korpus zu Entscheidungen, Risiken, Aufgaben und offenen Punkten.
         Geeignet für belegbare Fragen zu Projekt Kompass und Fragen nach Quellen.
         """
         try:

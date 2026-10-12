@@ -36,6 +36,7 @@ Bei einem lokalen Pfad wird kein Google-Drive-Mount vorausgesetzt. Der
 Standardpfad bleibt für die Kurs-Notebooks die persistente Google-Drive-Collection.
 """
 
+import csv
 import json
 import urllib.request
 from functools import lru_cache
@@ -320,3 +321,60 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
             return f"Fehler bei der Datenbanksuche: {exc}"
 
     return suche_wissensdatenbank
+
+
+def make_lies_tabellendaten_tool(directory_path: str):
+    """Baut das @tool lies_tabellendaten für strukturierte CSV-Analysen im PMO-Korpus.
+
+    Ermöglicht dem Tabellen-Worker im Supervisor-Pattern den gezielten Zugriff
+    auf Controlling- und Ressourcentabellen (projektbudget_kostenstatus_q2_2026.csv,
+    ressourcen_kapazitaetsmatrix_2026.csv) ohne Vektor-Chunking-Verluste.
+    """
+    korpus_dir = Path(directory_path)
+
+    @tool
+    def lies_tabellendaten(bereich: str) -> str:
+        """Liest strukturierte Tabellendaten aus dem PMO-Korpus.
+        Gültige Bereiche: 'budget' (Kostenstatus, Forecast, Abweichungen) oder
+        'ressourcen' (Kapazitätsmatrix, Rollenallokation, Engpässe).
+        """
+        bereich_clean = bereich.strip().lower()
+        if "budget" in bereich_clean or "kosten" in bereich_clean:
+            datei = korpus_dir / "projektbudget_kostenstatus_q2_2026.csv"
+        elif "ressource" in bereich_clean or "kapazit" in bereich_clean or "allokation" in bereich_clean:
+            datei = korpus_dir / "ressourcen_kapazitaetsmatrix_2026.csv"
+        else:
+            return (
+                f"Unbekannter Tabellenbereich '{bereich}'. "
+                "Verfügbare Bereiche: 'budget' (Kostenstatus) und 'ressourcen' (Kapazitätsmatrix)."
+            )
+
+        if not datei.exists():
+            kandidaten = list(korpus_dir.rglob(datei.name))
+            if kandidaten:
+                datei = kandidaten[0]
+            else:
+                return f"Tabelle {datei.name} nicht im Verzeichnis {directory_path} gefunden."
+
+        try:
+            with open(datei, mode="r", encoding="utf-8") as f:
+                reader = csv.DictReader(f, delimiter=";")
+                zeilen = list(reader)
+            if not zeilen:
+                return f"Tabelle {datei.name} ist leer."
+
+            header = list(zeilen[0].keys())
+            md_zeilen = [
+                f"### Tabelle: {datei.name}",
+                "",
+                "| " + " | ".join(header) + " |",
+                "| " + " | ".join(["---"] * len(header)) + " |",
+            ]
+            for row in zeilen:
+                md_zeilen.append("| " + " | ".join(str(row.get(col, "")) for col in header) + " |")
+
+            return "\n".join(md_zeilen)
+        except Exception as exc:
+            return f"Fehler beim Lesen der Tabelle {datei.name}: {exc}"
+
+    return lies_tabellendaten

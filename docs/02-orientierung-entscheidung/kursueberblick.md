@@ -155,7 +155,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M23  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
 |  M24  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
 |  M25  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | PMO-Assistent-System als E2E-Pipeline   |
+|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | PMO-Assistentensystem als E2E-Pipeline   |
 |  M27  | Aufbau: Qualität und Integration  | Projekt-Templates & MVP              | Eigene Templates A/B/C, MVP-Definition                 |
 |  M28  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
 |  M29  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |

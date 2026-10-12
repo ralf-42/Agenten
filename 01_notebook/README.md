@@ -27,7 +27,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
 | M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, PMO-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
-| M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
+| M02 | `M02_LangChain_Erste_Agenten.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
 
 ---
 
@@ -35,7 +35,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den PMO-Assistent | 🟢 Grundlagen |
+| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den PMO-Assistenten | 🟢 Grundlagen |
 | M04   | `M04_Structured_Output.ipynb`               | Antwortschema, Quellenpflicht und strukturierte Prüfbarkeit mit Pydantic und `with_structured_output()` | 🟢 Grundlagen |
 | M05   | `M05_Multi_Tool_Agents.ipynb`               | Mehrere Projekt- und Recherche-Tools, Tool-Auswahl, robuste Fehlerbehandlung | 🟢 Grundlagen |
 | M06   | `M06_LCEL_Chains.ipynb`                     | Kontrollierte Teilketten für Antwort, Prüfung und Übergang zu LangGraph | 🟢 Grundlagen |
@@ -57,9 +57,9 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M11 | `M11_RAG_Konzepte_Embeddings.ipynb` | Meeting-Briefing-Korpus, RAG-Architektur, Embeddings, Chunking | 🟢 Grundlagen |
-| M12 | `M12_ChromaDB_Indexing.ipynb` | Meeting- und Projekt-PDFs indexieren und testbar abfragen | 🟢 Grundlagen |
-| M13 | `M13_RAG_Chain_LangChain.ipynb` | Quellengebundene RAG-Chain mit Retrieval-Treffern | 🟢 Grundlagen |
+| M11 | `M11_RAG_Grundlagen.ipynb` | PMO-Korpus, RAG-Architektur, Embeddings, Chunking, ChromaDB-Indexierung und RAG-Chain (enthält die früheren Module M12 und M13) | 🟢 Grundlagen |
+| M12 | (in `M11_RAG_Grundlagen.ipynb`) | Meeting- und Projekt-PDFs indexieren und testbar abfragen | 🟢 Grundlagen |
+| M13 | (in `M11_RAG_Grundlagen.ipynb`) | Quellengebundene RAG-Chain mit Retrieval-Treffern | 🟢 Grundlagen |
 | M14 | `M14_RAG_Agent.ipynb` | Retrieval als Tool, Quellenpflicht und Out-of-Corpus-Grenze | 🟢 Grundlagen |
 | M15 | `M15_LangSmith_Evaluations_Basics.ipynb` | Eval-Set, Retrieval-Score, Antwortqualität, Regression | 🟢 Grundlagen |
 

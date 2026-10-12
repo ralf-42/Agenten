@@ -248,7 +248,7 @@ builder.add_edge("revise", "check")
 ```python
 @tool
 def classify_briefing_request(text: str) -> str:
-    """Extrahiert einfache Meeting-Briefing-Signale."""
+    """Extrahiert einfache Projektsignale."""
     begriffe = ["entscheidung", "risiko", "action item", "frist", "quelle"]
     treffer = [b for b in begriffe if b in text.lower()]
     return ", ".join(treffer) if treffer else "Keine klaren Signale."

@@ -132,7 +132,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
 | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
 |  M01  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
-|  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Briefing-Agent  |
+|  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster Meeting- & Briefing-Agent  |
 |  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
 |  M04  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
 |  M05  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |

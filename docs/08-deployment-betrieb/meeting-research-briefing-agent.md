@@ -537,7 +537,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 Nein. Eine Basisversion darf mit Retrieval-Light starten. Für eine stärkere Lösung sind Embeddings, ChromaDB und Score-Thresholds sinnvoll.
 
 **Muss ich eine UI bauen?**  
-Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Briefing-Agent-Graph.
+Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Meeting- & Briefing-Agent-Graph.
 
 **Muss ich Multi-Agent implementieren?**  
 Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervisor plus zwei Worker die empfohlene Ausbauvariante.

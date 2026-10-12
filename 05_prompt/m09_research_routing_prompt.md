@@ -1,6 +1,6 @@
 ---
 name: m09_research_routing_prompt
-description: Klassifiziert Research-Fragen nach Bearbeitungspfad
+description: Klassifiziert Briefing-Fragen nach Bearbeitungspfad
 variables: [text]
 ---
 
@@ -11,7 +11,7 @@ Antworte mit genau einem Wort: definition, retrieval oder out_of_corpus.
 
 Definition:
 - definition: Begriff kurz erklären, ohne zwingende Quellenprüfung.
-- retrieval: fachliche Frage zu Protokollen, Entscheidungen, Risiken oder Fachartikeln mit Quellenbedarf.
+- retrieval: fachliche Frage zu Protokollen, Entscheidungen, Risiken oder Aufgaben mit Quellenbedarf.
 - out_of_corpus: Frage liegt klar außerhalb des Projektkorpus.
 
 ## human

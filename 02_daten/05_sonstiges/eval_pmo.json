@@ -97,12 +97,12 @@
     "id": "q09",
     "typ": "anwendung",
     "frage": "Welche Anforderungen wünscht sich der Vertrieb laut Workshop-Protokoll vom 05.05.2026?",
-    "erwartete_antwort_kurz": "Schnellen Zugriff auf Angebotsvorlagen, Kundenhistorien und Entscheidungsgrundlagen aus vergangenen Projekten.",
+    "erwartete_antwort_kurz": "Schnellen Zugriff auf Angebotsvorlagen, Kundenhistorien, Entscheidungsvorlagen und Lessons Learned aus vergangenen Projekten.",
     "erwartete_quelle": "protokoll_fachbereich_workshop_2026-05-05.pdf",
     "erwartete_begriffe": [
       "Angebotsvorlagen",
       "Kundenhistorien",
-      "Entscheidungsgrundlagen"
+      "Entscheidungsvorlagen"
     ]
   },
   {

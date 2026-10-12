@@ -121,7 +121,7 @@ M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Sys
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| M26 | Integration Pipeline | PMO-Assistent-System als End-to-End-Pipeline |
+| M26 | Integration Pipeline | PMO-Assistentensystem als End-to-End-Pipeline |
 | M27 | Projekt-Templates & MVP | Eigene Templates A/B/C und MVP-Definition |
 | M28 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
 | M29 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |

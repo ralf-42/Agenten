@@ -42,6 +42,16 @@ from genai_lib.model_config import EMBEDDINGS
 DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
 DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_pmo"
 
+# Fachartikel (corpus_part=background laut metadata.json) gehören nicht in die Wissensdatenbank:
+# Sie würden Out-of-Corpus-Fragen (z. B. "Was ist RAG?") mit Artikel-Treffern statt "Nicht im Korpus" beantworten.
+HINTERGRUND_PDFS = {
+    "rag_survey_2312_10997.pdf",
+    "llm_autonomous_agents_survey_2308_11432.pdf",
+    "prompt_engineering_survey_2402_07927.pdf",
+    "ragas_evaluation_2309_15217.pdf",
+    "robust_rag_irrelevant_context_2310_01558.pdf",
+}
+
 
 def _require_drive_mounted(persist_directory: str) -> None:
     """Bricht hart ab, wenn ein Drive-Pfad verwendet wird, aber Google Drive nicht gemountet ist."""
@@ -49,16 +59,21 @@ def _require_drive_mounted(persist_directory: str) -> None:
         return
     if not Path("/content/drive").is_dir():
         raise RuntimeError(
-            "Google Drive ist nicht gemountet. Vor dem Zugriff auf die Briefing-Collection "
+            "Google Drive ist nicht gemountet. Vor dem Zugriff auf die PMO-Collection "
             "muss zuerst 'from google.colab import drive; drive.mount(\"/content/drive\")' "
             "ausgeführt werden."
         )
 
 
-def load_pdf_documents(directory_path: str) -> list[Document]:
-    """Lädt alle PDF-Seiten aus einem Verzeichnis mit pypdf."""
+def load_pdf_documents(directory_path: str, include_background: bool = False) -> list[Document]:
+    """Lädt alle PDF-Seiten aus einem Verzeichnis mit pypdf.
+
+    Fachartikel (HINTERGRUND_PDFS) werden standardmäßig übersprungen.
+    """
     documents: list[Document] = []
     for pdf_path in sorted(Path(directory_path).glob("*.pdf")):
+        if not include_background and pdf_path.name in HINTERGRUND_PDFS:
+            continue
         try:
             reader = PdfReader(str(pdf_path))
             for page_number, page in enumerate(reader.pages):
@@ -98,7 +113,7 @@ def get_pmo_vectorstore(
     persist_directory: str = DEFAULT_PERSIST_DIRECTORY,
     collection_name: str = DEFAULT_COLLECTION_NAME,
 ) -> Chroma:
-    """Erstellt/lädt die produktive Meeting-Briefing-Collection.
+    """Erstellt/lädt die produktive PMO-Collection.
 
     Bei Drive-Pfaden (Standard) muss Google Drive vorher gemountet sein,
     sonst wird ein RuntimeError ausgelöst statt eines leeren Fallback-Index.
@@ -119,9 +134,12 @@ def index_pmo_corpus(
     chunk_overlap: int = 30,
     batch_size: int = 500,
     force: bool = False,
+    include_background: bool = False,
 ) -> int:
     """Indexiert PDFs aus directory_path in die Collection.
 
+    Fachartikel (HINTERGRUND_PDFS) bleiben standardmäßig draußen; bereits
+    indexierte Artikel-Chunks werden aus einer vorhandenen Collection entfernt.
     Indexiert nur, wenn die Collection leer ist. Mit force=True werden
     vorhandene Einträge zuerst gelöscht und die Collection neu aufgebaut —
     nötig, falls sich der PDF-Korpus nach dem ersten Aufbau ändert.
@@ -131,13 +149,23 @@ def index_pmo_corpus(
         if vorhandene_ids:
             vectorstore.delete(ids=vorhandene_ids)
     elif vectorstore._collection.count() > 0:
+        if not include_background:
+            vorhanden = vectorstore.get(include=["metadatas"])
+            hintergrund_ids = [
+                chunk_id
+                for chunk_id, meta in zip(vorhanden["ids"], vorhanden["metadatas"])
+                if Path((meta or {}).get("source", "")).name in HINTERGRUND_PDFS
+            ]
+            if hintergrund_ids:
+                vectorstore.delete(ids=hintergrund_ids)
+                print(f"  {len(hintergrund_ids)} Chunks von Fachartikeln aus der Collection entfernt")
         print(
             f"Collection hat bereits {vectorstore._collection.count()} Einträge "
             "— kein erneutes Indexieren (force=True für Neuaufbau)"
         )
         return 0
 
-    dokumente = load_pdf_documents(directory_path)
+    dokumente = load_pdf_documents(directory_path, include_background=include_background)
     chunks = split_documents_by_characters(
         dokumente, chunk_size=chunk_size, chunk_overlap=chunk_overlap
     )

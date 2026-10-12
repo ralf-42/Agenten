@@ -11,14 +11,14 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 ## Warum dieses Thema passt
 
 - Einsteigergeeignet: Der Use Case ist direkt verständlich: Fragen zu Entscheidungen, Risiken und offenen Punkten stellen und Antworten mit Quellen erhalten.
-- Passt zum Kurs: RAG, Embeddings, ChromaDB, Citations, Evaluation, HITL und Agenten lassen sich am Meeting-Briefing-Fall natürlich aufbauen.
+- Passt zum Kurs: RAG, Embeddings, ChromaDB, Citations, Evaluation, HITL und Agenten lassen sich am PMO-Fall natürlich aufbauen.
 - Realistische Mehrdeutigkeit: Entscheidungen werden revidiert, Risiken ändern ihren Status, offene Punkte bleiben ungeklärt — genau die Fälle, die ein kontrollierter Agent robust behandeln muss.
 - Didaktisch sauber: Konflikt, Versionierung, Unsicherheit und Prompt-Injection lassen sich an konkreten Dokumentenpaaren zeigen statt nur abstrakt zu erklären.
 - Datenschutzarm: Alle Personen, Firmen und Inhalte sind fiktiv.
 
 ## Korpusumfang
 
-Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Recherche-Hintergrund, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
+Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Hintergrundmaterial, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
 
 > [!NOTE]
 > Der Ordner heißt jetzt `korpus_pmo_assistent`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
@@ -53,15 +53,15 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit `corpus_part = "project"` 
 | `follow_up_tracker.pdf` | Tracker | nein | ja (1 offenes Item) | alle | mittel |
 | `agenda_vorlage_steuerkreis.pdf` | Vorlage | nein | nein | Mara Vogt | niedrig |
 
-## Enthaltene Dokumente — Recherche-Hintergrund
+## Enthaltene Dokumente — Hintergrundmaterial
 
 | Datei | arXiv | Rolle im Korpus |
 |---|---|---|
-| `rag_survey_2312_10997.pdf` | https://arxiv.org/abs/2312.10997 | Recherche-Hintergrund des Projektteams zur RAG-Technologiebewertung |
-| `llm_autonomous_agents_survey_2308_11432.pdf` | https://arxiv.org/abs/2308.11432 | Recherche-Hintergrund zu LLM-basierten Agenten |
-| `prompt_engineering_survey_2402_07927.pdf` | https://arxiv.org/abs/2402.07927 | Recherche-Hintergrund zu Prompting-Techniken |
-| `ragas_evaluation_2309_15217.pdf` | https://arxiv.org/abs/2309.15217 | Recherche-Hintergrund zur RAG-Evaluation |
-| `robust_rag_irrelevant_context_2310_01558.pdf` | https://arxiv.org/abs/2310.01558 | Recherche-Hintergrund zu Robustheit gegen irrelevanten Kontext |
+| `rag_survey_2312_10997.pdf` | https://arxiv.org/abs/2312.10997 | Hintergrund des Projektteams zur RAG-Technologiebewertung |
+| `llm_autonomous_agents_survey_2308_11432.pdf` | https://arxiv.org/abs/2308.11432 | Hintergrund zu LLM-basierten Agenten |
+| `prompt_engineering_survey_2402_07927.pdf` | https://arxiv.org/abs/2402.07927 | Hintergrund zu Prompting-Techniken |
+| `ragas_evaluation_2309_15217.pdf` | https://arxiv.org/abs/2309.15217 | Hintergrund zur RAG-Evaluation |
+| `robust_rag_irrelevant_context_2310_01558.pdf` | https://arxiv.org/abs/2310.01558 | Hintergrund zu Robustheit gegen irrelevanten Kontext |
 
 ## Empfohlene Nutzung im Kurs
 

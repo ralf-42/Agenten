@@ -70,7 +70,7 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der PMO-Assistent ist ein PMO-Assistent und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
+Der PMO-Assistent ist ein Assistenzsystem und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -547,7 +547,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 Nein. Eine Basisversion darf mit Retrieval-Light starten. Für eine stärkere Lösung sind Embeddings, ChromaDB und Score-Thresholds sinnvoll.
 
 **Muss ich eine UI bauen?**  
-Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte PMO-Assistent-Graph.
+Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Graph des PMO-Assistenten.
 
 **Muss ich Multi-Agent implementieren?**  
 Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervisor plus zwei Worker die empfohlene Ausbauvariante.

@@ -12,7 +12,7 @@ bewusst einen synthetischen In-Memory-Datensatz, M27 eine isolierte
 Experiment-Collection mit anderer Chunk-Granularität.
 
 Nur für Google Colab: Die produktive Collection liegt auf Google Drive
-(Agenten/02_daten/05_sonstiges/chroma_briefing). Vor dem ersten Zugriff muss
+(Agenten/02_daten/05_sonstiges/chroma_pmo). Vor dem ersten Zugriff muss
 in JEDEM Notebook Google Drive gemountet sein:
 
     from google.colab import drive
@@ -22,10 +22,10 @@ Installation (einmalig):
     !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 Import im Notebook:
-    from genai_lib.pmo_rag import get_briefing_vectorstore, index_briefing_corpus, make_suche_wissensdatenbank_tool
+    from genai_lib.pmo_rag import get_pmo_vectorstore, index_pmo_corpus, make_suche_wissensdatenbank_tool
 
-    vectorstore = get_briefing_vectorstore()
-    index_briefing_corpus(vectorstore, KORPUS_TARGET)
+    vectorstore = get_pmo_vectorstore()
+    index_pmo_corpus(vectorstore, KORPUS_TARGET)
     suche_wissensdatenbank = make_suche_wissensdatenbank_tool(vectorstore)
 """
 
@@ -40,7 +40,7 @@ from pypdf import PdfReader
 from genai_lib.model_config import EMBEDDINGS
 
 DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
-DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_briefing"
+DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_pmo"
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -94,7 +94,7 @@ def split_documents_by_characters(
     return chunks
 
 
-def get_briefing_vectorstore(
+def get_pmo_vectorstore(
     persist_directory: str = DEFAULT_PERSIST_DIRECTORY,
     collection_name: str = DEFAULT_COLLECTION_NAME,
 ) -> Chroma:
@@ -112,7 +112,7 @@ def get_briefing_vectorstore(
     )
 
 
-def index_briefing_corpus(
+def index_pmo_corpus(
     vectorstore: Chroma,
     directory_path: str,
     chunk_size: int = 300,

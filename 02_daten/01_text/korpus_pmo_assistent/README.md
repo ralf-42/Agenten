@@ -1,8 +1,8 @@
-# Meeting- & Briefing-Korpus: Projekt Kompass
+# PMO-Korpus: Projekt Kompass
 
 ## Thema
 
-**Ein KI-gestützter Meeting- & Briefing-Agent für ein internes Projekt: Entscheidungen, offene Punkte und Risiken aus Meetings verlässlich zusammenfassen und mit Quellen belegen.**
+**Ein KI-gestützter PMO-Assistent für ein internes Projekt: Entscheidungen, offene Punkte und Risiken aus Meetings verlässlich zusammenfassen und mit Quellen belegen.**
 
 ## Fiktives Szenario
 
@@ -77,8 +77,8 @@ Die passenden Eval-Dateien liegen unter `02_daten/05_sonstiges/`:
 
 | Datei | Rolle | Hinweis |
 |---|---|---|
-| `eval_meeting_briefing.json` | reguläre Fragen | Enthält Fragen zum Meeting- & Briefing-Korpus. |
-| `eval_meeting_briefing_edge.json` | Edge Cases | Enthält Negativ-, Konflikt-, Mehrdeutigkeits-, Prompt-Injection- und Versionierungsfälle. |
+| `eval_pmo.json` | reguläre Fragen | Enthält Fragen zum PMO-Korpus. |
+| `eval_pmo_edge.json` | Edge Cases | Enthält Negativ-, Konflikt-, Mehrdeutigkeits-, Prompt-Injection- und Versionierungsfälle. |
 
 Die früheren `eval_research*`-Dateinamen wurden abgelöst; Notebooks und Dokumentation verweisen auf die neuen Dateien.
 

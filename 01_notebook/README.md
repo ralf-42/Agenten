@@ -26,7 +26,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, Meeting- & Briefing-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
+| M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, PMO-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
 | M02 | `M02_Erste_Agenten_LangChain.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
 
 ---
@@ -89,7 +89,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🔵 Aufbau |
 | M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark, RAGAS-Live-Lauf | 🔵 Aufbau |
 | M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🔵 Aufbau |
-| M26 | `M26_Integration_Pipeline.ipynb` | Integration: Meeting- & Briefing-System als End-to-End-Pipeline | 🔵 Aufbau |
+| M26 | `M26_Integration_Pipeline.ipynb` | Integration: PMO-Assistent als End-to-End-Pipeline | 🔵 Aufbau |
 | M27 | `M27_Projekt_Templates.ipynb` | Eigene Projekt-Templates A/B/C, MVP-Definition | 🔵 Aufbau |
 | M28 | `M28_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Aufbau |
 | M29 | `M29_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🟣 Vertiefung |

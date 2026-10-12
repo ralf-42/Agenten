@@ -1,5 +1,5 @@
 ---
-name: research
+name: dokumentenrecherche
 description: >-
   Führt strukturierte Dokumentenrecherchen in den Projektunterlagen durch —
   Fundstellen identifizieren, Relevanz bewerten, Aussagen mit Quellen belegen,
@@ -11,7 +11,7 @@ description: >-
   Recherchebericht".
 ---
 
-# Research Skill
+# Dokumentenrecherche Skill
 
 Dieser Skill deckt die Dokumentenrecherche (Evidence Tool) des PMO-Assistenten ab: quellengebundene Suche in Projektunterlagen als ein Baustein neben Protokoll-, Aufgaben- und Risikoauswertung. Standard-Suchraum sind die Projektartefakte im Korpus `02_daten/01_text/korpus_pmo_assistent/` (Protokolle, Entscheidungsprotokoll, Risikoliste, Follow-up-Tracker, Projektauftrag).
 
@@ -35,7 +35,7 @@ Dieser Skill wird aktiv, wenn der Nutzer eine Rechercheaufgabe in den Projektunt
 Nutzeranfrage
     │
     ▼
-[Research-Skill]
+[Dokumentenrecherche-Skill]
     ├─ Thema analysieren & Suchstrategie definieren
     ├─ Tool: search_docs (Projektartefakte im Korpus)
     ├─ Tool: score_relevance (Quellen bewerten)
@@ -78,7 +78,7 @@ Nutzeranfrage
 [Kurze Handlungsempfehlung oder nächster Schritt]
 
 ---
-*Erstellt durch Research-Skill*
+*Erstellt durch Dokumentenrecherche-Skill*
 ```
 
 ## Eskalation

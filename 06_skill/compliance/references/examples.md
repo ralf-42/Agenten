@@ -1,67 +1,67 @@
 # Beispielfälle
 
-## Beispiel 1: Lieferant mit niedrigem Risiko
+## Beispiel 1: Interner Statusbericht mit niedrigem Risiko
 
 Eingabe:
 
-- subject_type: vendor
-- subject_name: Nordlicht Office GmbH
-- country: DE
-- transaction_amount: 2400
-- sanctions_hit: false
-- adverse_media_hit: false
-- pep_flag: false
-- documents_complete: true
+- subject_type: statusbericht
+- subject_name: Statusbericht Projekt Kompass (KW 21)
+- recipient_scope: projektteam
+- data_basis: testkorpus
+- privacy_clearance_denied: false
+- confidential_content: false
+- conflict_unresolved: false
+- sources_complete: true
 
 Erwartetes Ergebnis:
 
 - Risikoniveau: low
-- Entscheidung: genehmigen
+- Entscheidung: freigeben
 
-## Beispiel 2: Zahlung mit mittlerem Risiko
+## Beispiel 2: Briefing mit ungelöstem Widerspruch
 
 Eingabe:
 
-- subject_type: payment
-- subject_name: Baltic Export OU
-- country: EE
-- transaction_amount: 18000
-- sanctions_hit: false
-- adverse_media_hit: false
-- pep_flag: false
-- documents_complete: true
+- subject_type: briefing
+- subject_name: Briefing zur Vektordatenbank-Entscheidung
+- recipient_scope: steuerkreis
+- data_basis: testkorpus
+- privacy_clearance_denied: false
+- confidential_content: false
+- conflict_unresolved: true
+- sources_complete: true
 
 Erwartetes Ergebnis:
 
 - Risikoniveau: medium
-- Entscheidung: eskalieren
+- Entscheidung: eskalieren (Entscheidungen D1 und D2 widersprechen sich; der aktuelle Stand muss geklärt werden)
 
-## Beispiel 3: Gegenpartei mit hohem Risiko
+## Beispiel 3: Statusbericht an externe Empfänger mit Produktivdaten
 
 Eingabe:
 
-- subject_type: customer
-- subject_name: Example Trading LLC
-- country: RU
-- transaction_amount: 8000
-- sanctions_hit: false
-- adverse_media_hit: true
-- pep_flag: false
-- documents_complete: true
+- subject_type: statusbericht
+- subject_name: Statusbericht Projekt Kompass an externen Dienstleister
+- recipient_scope: extern
+- data_basis: produktivdaten
+- privacy_clearance_denied: false
+- confidential_content: true
+- conflict_unresolved: false
+- sources_complete: true
 
 Erwartetes Ergebnis:
 
 - Risikoniveau: high
-- Entscheidung: ablehnen oder eskalieren gemäß Richtlinie
+- Entscheidung: nicht freigeben (die Datenschutzfreigabe gilt nur für den Testkorpus)
 
 ## Beispiel-Ausgabemuster
 
-### Compliance-Entscheidung
+### Freigabe-Entscheidung
 
-- Fall: Lieferanten-Onboarding für Nordlicht Office GmbH
-- Durchgeführte Prüfungen: Sanktionsprüfung, geografische Prüfung, Transaktionsgrößenprüfung, Dokumentenprüfung
+- Fall: Statusbericht Projekt Kompass (KW 21) an das Projektteam
+- Durchgeführte Prüfungen: Datenschutzprüfung, Empfängerkreisprüfung, Datenbasisprüfung, Quellenprüfung
 - Risikoniveau: low
-- Entscheidung: genehmigen
-- Begründung: keine Hochrisikoindikatoren und vollständige Dokumentation
+- Entscheidung: freigeben
+- Begründung: interner Empfängerkreis, Testkorpus, keine vertraulichen Inhalte, alle Quellen belegt
 - Fehlende Informationen oder Eskalationspunkt: keine
-- Prüfungsnotiz: simulierte Schulungsbewertung, keine Live-Sanktionsquelle angebunden
+- Prüfungsnotiz: simulierte Schulungsbewertung, keine rechtliche Prüfung

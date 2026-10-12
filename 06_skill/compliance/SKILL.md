@@ -1,29 +1,29 @@
 ---
 name: compliance
 description: >-
-  Führt compliance-orientierte Agenten-Workflows durch — Sanktionsprüfung,
-  Risikobewertung (low/medium/high), Freigabe-Gate und auditierbare
-  Entscheidungsnotiz. Aktivieren wenn Nutzer sagt: "prüfe diesen Lieferanten",
-  "Sanktionsprüfung", "Onboarding prüfen", "Zahlung freigeben",
-  "KYC/KYB-Prüfung", "Risikobewertung", "Compliance-Check",
-  "ist dieser Kunde unbedenklich", "Zahlungsfreigabe",
-  "Go/No-Go-Entscheidung", "due diligence" oder "AML-Prüfung".
+  Führt Freigabeprüfungen für Briefings, Protokolle und Statusberichte durch —
+  Datenschutzfreigabe, Empfängerkreis, Datenbasis, Risikobewertung
+  (low/medium/high), Freigabe-Gate und auditierbare Entscheidungsnotiz.
+  Aktivieren wenn Nutzer sagt: "Briefing freigeben", "darf der Statusbericht
+  raus", "Protokoll versenden", "Freigabeprüfung", "Datenschutzprüfung",
+  "Versand prüfen", "Compliance-Check", "Go/No-Go für das Briefing",
+  "an externe Empfänger senden" oder "Freigabe-Gate".
 ---
 
 # Compliance Skill
 
-Dieser Skill definiert einen wiederverwendbaren Compliance-Workflow für Agentenprozesse mit Freigabe- und Dokumentationsanforderungen. Das Freigabe-Gate in Schritt 5 ist eine konkrete Ausprägung des kursweiten **Gate**-Begriffs (siehe `docs/02-orientierung-entscheidung/terminologie.md`): ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe, hier automatisiert über den Risiko-Score aus `compliance_check`.
+Dieser Skill definiert einen wiederverwendbaren Freigabe-Workflow für den Meeting- & Briefing-Agent. Das Freigabe-Gate in Schritt 5 ist eine konkrete Ausprägung des kursweiten **Gate**-Begriffs (siehe `docs/02-orientierung-entscheidung/terminologie.md`): ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe, hier automatisiert über den Risiko-Score aus `compliance_check`.
 
 ## Schnellstart
 
 Diesen Skill verwenden, wenn eine Anfrage eines oder mehrere dieser Muster enthält:
 
-- Eine Transaktion, ein Lieferant, ein Kunde oder ein Konto muss vor der Ausführung geprüft werden
+- Ein Briefing, Protokoll oder Statusbericht soll versendet oder veröffentlicht werden
 - Der Agent muss eine feste Prüfsequenz einhalten, bevor er handelt
-- Der Nutzer fragt nach Sanktionsprüfungen, KYC/KYB-Prüfungen, Risikobewertung, Freigabe-Gates oder Audit-Logging
+- Der Nutzer fragt nach Datenschutzfreigabe, Empfängerkreis, Vertraulichkeit oder Freigabe-Gates
 - Die Aufgabe erfordert eine dokumentierte Go/No-Go-Entscheidung
 
-Wenn die Anfrage rein informationell ist und keine operative Entscheidung erforderlich ist, eine normale Antwort geben und den vollständigen Workflow überspringen.
+Wenn die Anfrage rein informationell ist und keine operative Freigabe erforderlich ist, eine normale Antwort geben und den vollständigen Workflow überspringen.
 
 ## Kernworkflow
 
@@ -33,36 +33,39 @@ Diese Schritte der Reihe nach ausführen. Keinen Schritt überspringen.
 2. Feststellen, welche erforderlichen Eingaben noch fehlen. Nur nach diesen fragen — niemals nach Informationen fragen, die bereits angegeben wurden. **Hier stoppen und auf die Antwort warten, bevor weitergemacht wird.**
 3. Pflichtprüfungen durchführen.
 4. **Das Tool `compliance_check` aufrufen**, um den Risiko-Score zu berechnen. Risiko-Scores niemals manuell berechnen.
-5. Anhand des Tool-Ergebnisses entscheiden, ob der Fall genehmigt, abgelehnt oder eskaliert wird.
+5. Anhand des Tool-Ergebnisses entscheiden, ob das Dokument freigegeben, blockiert oder eskaliert wird.
 6. Eine prüfungsfähige Entscheidungsnotiz erstellen.
 
-Die Schritte 3 bis 6 niemals überspringen, wenn die Aufgabe eine operative Compliance-Entscheidung erfordert.
+Die Schritte 3 bis 6 niemals überspringen, wenn die Aufgabe eine operative Freigabeentscheidung erfordert.
 
 ## Mindestanforderungen an Eingaben
 
 Diese Felder aus der Nutzernachricht oder dem Gesprächsverlauf extrahieren, bevor eine Entscheidung getroffen wird:
 
-- subject_type: Person, Unternehmen, Lieferant, Kunde, Zahlung oder Konto
+- subject_type: Briefing, Protokoll oder Statusbericht
 - subject_name
-- country
-- transaction_amount (falls relevant)
-- business_purpose
-- source_of_funds oder Zahlungskontext (falls relevant)
-- sanctions_clearance_confirmed: ausdrückliche Bestätigung, dass eine formale Sanktionsprüfung durchgeführt wurde und ob ein Treffer vorlag
+- recipient_scope: projektteam, steuerkreis oder extern
+- data_basis: testkorpus oder produktivdaten
+- confidential_content: enthält das Dokument vertrauliche Inhalte (zum Beispiel Budget- oder Personalangaben)
+- conflict_unresolved: gibt es widersprüchliche Quellen, die noch nicht aufgelöst sind (zum Beispiel zwei Entscheidungen zum selben Thema)
+- sources_complete: sind alle Aussagen mit Quellen belegt
+- privacy_clearance_confirmed: ausdrückliche Bestätigung, dass eine formale Datenschutzprüfung durchgeführt wurde und ob eine Freigabe erteilt wurde
 
 Aus natürlicher Sprache extrahieren, wenn möglich. Nur nach Feldern fragen, die tatsächlich fehlen oder unklar sind — eine bereits beantwortete Frage niemals wiederholen.
 
-**Strikte Regel — niemals ableiten, niemals überspringen:** `sanctions_clearance_confirmed` kann nicht aus dem Kontext abgeleitet werden. Den Nutzer MUSS explizit gefragt werden, ob eine formale Sanktionsprüfung durchgeführt wurde und was das Ergebnis war. Nicht mit Schritt 3 fortfahren, bis dies bestätigt ist. Diese Regel überschreibt alles andere.
+**Strikte Regel — niemals ableiten, niemals überspringen:** `privacy_clearance_confirmed` kann nicht aus dem Kontext abgeleitet werden. Den Nutzer MUSS explizit gefragt werden, ob eine formale Datenschutzprüfung durchgeführt wurde und was das Ergebnis war. Nicht mit Schritt 3 fortfahren, bis dies bestätigt ist. Diese Regel überschreibt alles andere.
+
+**Hinweis zum Geltungsbereich:** Eine Datenschutzfreigabe gilt nur für die Datenbasis, für die sie erteilt wurde. Liegt die Freigabe nur für den Testkorpus vor, das Dokument nutzt aber produktive Daten, `data_basis` auf produktivdaten setzen — dafür ist eine separate Prüfung erforderlich.
 
 ## Pflichtprüfungen
 
 Diese Prüfungen immer durchführen:
 
-- Sanktionsprüfung
-- Geografische Prüfung
-- Transaktionsgrößenprüfung (wenn Geld im Spiel ist)
-- Prüfung auf negative Indikatoren
-- Prüfung der Vollständigkeit der Dokumentation
+- Datenschutzprüfung (Freigabe bestätigt, Geltungsbereich beachtet)
+- Empfängerkreisprüfung
+- Datenbasisprüfung (Testkorpus oder Produktivdaten)
+- Prüfung auf vertrauliche Inhalte
+- Prüfung auf ungelöste Widersprüche und fehlende Quellen
 
 Die genaue Checkliste steht in [references/checklist.md](references/checklist.md).
 
@@ -76,17 +79,17 @@ Das Tool gibt eine von drei Stufen zurück: low, medium, high.
 
 Diese Richtlinie anwenden:
 
-- `low` und alle Pflichtangaben vorhanden: genehmigen
+- `low` und alle Pflichtangaben vorhanden: freigeben
 - `medium`: zur menschlichen Prüfung eskalieren, es sei denn, der Nutzer hat ausdrücklich nur eine Empfehlung angefragt
-- `high`: ablehnen und begründen
-- jeder Sanktionstreffer: sofort ablehnen
+- `high`: nicht freigeben und begründen
+- verweigerte Datenschutzfreigabe: sofort nicht freigeben
 - fehlende kritische Daten: zurückhalten bis vollständig
 
 ## Ausgabeformat
 
 Die abschließende Antwort in dieser Struktur zurückgeben:
 
-### Compliance-Entscheidung
+### Freigabe-Entscheidung
 
 - Fall
 - Durchgeführte Prüfungen
@@ -117,6 +120,6 @@ Nur über das Tool `load_reference` laden — niemals direkt aus dem Kontext abl
 
 ## Leitplanken
 
-- Nicht behaupten, dass eine echte Sanktionsprüfung stattgefunden hat, wenn keine echte Datenquelle oder kein Tool verwendet wurde.
-- Wenn keine Live-Datenquelle verfügbar ist, darauf hinweisen, dass das Ergebnis eine simulierte oder Schulungsbewertung ist.
-- Die Zahlungs- oder Onboarding-Aktion im Rahmen der Prüfung nicht ausführen, es sei denn, der Nutzer fragt ausdrücklich nach einer Aktion nach der Genehmigung.
+- Nicht behaupten, dass eine echte Datenschutzprüfung stattgefunden hat, wenn dafür keine ausdrückliche Bestätigung des Nutzers vorliegt.
+- Darauf hinweisen, dass das Ergebnis eine simulierte Schulungsbewertung ist und keine rechtliche Prüfung ersetzt.
+- Das Dokument im Rahmen der Prüfung nicht versenden, es sei denn, der Nutzer fragt ausdrücklich nach einer Aktion nach der Freigabe.

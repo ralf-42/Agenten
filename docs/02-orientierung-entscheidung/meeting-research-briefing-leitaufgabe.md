@@ -3,22 +3,22 @@ layout: default
 title: Meeting- & Briefing-Agent
 parent: "Orientierung & Entscheidung"
 nav_order: 4
-description: "Zielbild und roter Faden: quellengebundenes Meeting- & Briefing mit RAG, Evaluation und Freigabe"
+description: "Zielbild und roter Faden: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---
 
 # Meeting- & Briefing-Agent
 {: .no_toc }
 
-Der Meeting- & Briefing-Agent ist ein projektbezogener Assistent zur Aufbereitung von Besprechungs- und Projektdokumenten, zur Erstellung quellengebundener Briefings und zur Unterstützung von Entscheidungs- und Freigabeprozessen. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
+Der Meeting- & Briefing-Agent ist ein projektbezogener PMO-Assistent zur Meeting-Vorbereitung, zur Aufbereitung von Besprechungs- und Projektdokumenten, zur Aufgabenverfolgung und zur Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
-Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt. Er bereitet ein Briefing vor. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
+Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt und ersetzt kein vollständiges PMO-System. Er bereitet Meetings, Aufgabenstände und Statusinformationen auf. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
 Drei Fähigkeiten ziehen sich durch den Bauplan: Der Agent muss **planen** (welches Tool, welche Route, welcher Zustand gilt gerade), **handeln** (Tools ausführen, Evidenz abrufen, einen Workflow durchlaufen) und **prüfen** (Freigabe, Security, Evaluation vor jeder folgenreichen Ausgabe). RAG ist dabei kein Selbstzweck. Es ist ein **Evidence Tool**: eine kontrollierte Fähigkeit, die der Agent gezielt nutzt.
 
 Die Leitfrage lautet:
 
-> Wie entsteht ein Agent, der Fragen zu Protokollen, Entscheidungen, Risiken und Aufgaben beantwortet, relevante Passagen findet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
+> Wie entsteht ein projektbezogener PMO-Assistent, der Meetings vorbereitet, Aufgabenstände und Statusinformationen aus Protokollen, Entscheidungen und Projektdokumenten aufbereitet, Aussagen nachvollziehbar belegt und bei Unsicherheit kontrolliert eskaliert?
 
 ---
 
@@ -45,7 +45,7 @@ KI-generiertes Bild
 
 ## Anwendungsfälle im Kurs
 
-Beispiele und Aufgaben im Kurs richten sich an sieben typischen Aufgaben rund um Besprechungen und Projektsteuerung aus. Sie beziehen sich auf die Projektdokumente von Projekt Kompass, nicht auf allgemeine Recherchethemen.
+Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen eines projektbezogenen PMO-Assistenten: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Ergänzend werden Protokollerstellung, Risikomanagement, Dokumentenmanagement und Stakeholderkommunikation als unterstützende Funktionen behandelt. Alle Beispiele beziehen sich auf die Projektdokumente von Projekt Kompass, nicht auf allgemeine Recherchethemen.
 
 | Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
 |---|---|---|---|
@@ -57,11 +57,11 @@ Beispiele und Aufgaben im Kurs richten sich an sieben typischen Aufgaben rund um
 | Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | M11, M14, M22, M28 |
 | Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | M03, M17, M25 |
 
-Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig geübt wird. Freigabe und Entscheidungsunterstützung ziehen sich als Querschnitt durch alle Fälle, besonders in M17 (Human-in-the-Loop), M20 und M21 (Supervisor).
+Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig geübt wird. Freigabe und Entscheidungsunterstützung ziehen sich als Querschnitt durch alle Fälle. Verbindliche Projektentscheidungen bleiben bei den verantwortlichen Personen.
 
 ## Zielbild
 
-Ein brauchbarer Meeting- & Briefing-Agent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort enthält eine Zusammenfassung, Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
+Ein brauchbarer Meeting- & Briefing-Agent als PMO-Assistent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
 In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
@@ -120,7 +120,7 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ## Leitplanken
 
-Der Meeting- & Briefing-Agent bleibt ein Assistenzsystem für Briefing und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder Entscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
+Der Meeting- & Briefing-Agent bleibt ein Assistenzsystem für PMO-nahe Informationsaufbereitung und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder verbindliche Projektentscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
 
 Die Leitplanken setzen **Prüfen** praktisch um. Sie legen fest, wann der Agent stoppt, eskaliert oder eine Ausgabe verweigert, statt eine plausible Antwort zu erzwingen.
 
@@ -133,10 +133,12 @@ Die Leitplanken setzen **Prüfen** praktisch um. Sie legen fest, wann der Agent 
 | Datenschutz | Keine personenbezogenen, vertraulichen oder regulierten Echtdaten im Korpus. |
 | Bewusstes Logging | Traces und Eval-Daten dürfen keine vertraulichen Inhalte unbedacht speichern. |
 | Evaluation vor Optimierung | Verbesserungen werden gegen ein Eval-Set geprüft, nicht nur nach Bauchgefühl bewertet. |
+| PMO-Abgrenzung | Der Assistent unterstützt Informationsaufbereitung und Nachverfolgung, ersetzt aber kein vollständiges PMO-System. |
+| Entscheidungsverantwortung | Verbindliche Projektentscheidungen und Freigaben bleiben bei verantwortlichen Personen. |
 
 ## Evaluation
 
-Evaluation prüft, ob relevante Passagen gefunden werden und Antworten im belegbaren Rahmen bleiben. Eine plausibel klingende Antwort zählt nicht als Erfolg, wenn sie die falsche Quelle nutzt oder eine Korpusgrenze überschreitet.
+Evaluation prüft, ob relevante Passagen gefunden werden und Antworten im belegbaren Rahmen bleiben. Das Eval-Set sollte Meeting-Briefings, Aufgabenstände und Statussynthesen ebenso wie Konflikt- und Out-of-Corpus-Fragen abdecken. Eine plausibel klingende Antwort zählt nicht als Erfolg, wenn sie die falsche Quelle nutzt oder eine Korpusgrenze überschreitet.
 
 Ein erstes Eval-Set sollte verschiedene Fragetypen enthalten:
 
@@ -166,7 +168,7 @@ Der Supervisor entscheidet nach Fragetyp, welche Rolle gebraucht wird. Bei Unsic
 
 ## Capstone und Transfer
 
-Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird und die semantische Suche relevante Passagen besser findet als eine naive Stichwortsuche. Antworten nutzen ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis.
+Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird und der PMO-Assistent Meeting-Briefings, Aufgabenstände oder Statusübersichten mit relevanten Quellen erzeugen kann. Die Antworten nutzen ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis. Der Prototyp bildet kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
 Außerdem müssen mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt erkennbar sein. Die Evaluation prüft Positivfälle und mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
 

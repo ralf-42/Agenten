@@ -52,7 +52,7 @@ Gerade für Entwickler ist diese Trennung wichtig, weil sonst zu viel Fachlogik 
 
 ## Wann Skills überhaupt sinnvoll werden
 
-Skills lohnen sich vor allem dort, wo derselbe fachliche Ablauf wiederkehrt, wo Pflichtschritte nicht ausgelassen werden dürfen oder wo Referenzen und Regeln regelmäßig in denselben Mustern gebraucht werden. Typische Bereiche sind Compliance, Review, strukturierte Analyse, Onboarding oder Dokumentation mit festen Anforderungen.
+Skills lohnen sich vor allem dort, wo derselbe fachliche Ablauf wiederkehrt, wo Pflichtschritte nicht ausgelassen werden dürfen oder wo Referenzen und Regeln regelmäßig in denselben Mustern gebraucht werden. Typische Bereiche sind Freigabeprüfung, Review, strukturierte Analyse, Protokollerstellung oder Dokumentation mit festen Anforderungen.
 
 Weniger geeignet sind Skills für reine Einmalanfragen, hochkreative freie Aufgaben ohne feste Prüfkriterien oder sehr kleine Tätigkeiten, die ein normaler Prompt bereits zuverlässig löst.
 
@@ -163,7 +163,7 @@ Entwickler unterschätzen oft, dass ein Skill nicht vor allem technische Komplex
 
 ## Praxisbezug im Projekt
 
-Im Projekt liegen fertige Beispiele unter `06_skill/`, etwa für Compliance, Recherche und Meeting-Briefings. Diese Beispiele zeigen denselben Grundgedanken: Kernlogik in `SKILL.md`, Detailwissen in `references/`, deterministische Teilaufgaben in `scripts/`.
+Im Projekt liegen fertige Beispiele unter `06_skill/`, etwa für Freigabeprüfung (Compliance), Dokumentenrecherche und Meeting-Briefings. Diese Beispiele zeigen denselben Grundgedanken: Kernlogik in `SKILL.md`, Detailwissen in `references/`, deterministische Teilaufgaben in `scripts/`.
 
 Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau diese Beispiele eignen sich gut, um den Unterschied zwischen freiem Prompt und reproduzierbarem Skill direkt zu sehen.
 

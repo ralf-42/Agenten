@@ -3,7 +3,7 @@ layout: default
 title: Meeting- & Briefing-Agent
 parent: "Deployment & Betrieb"
 nav_order: 5
-description: "Praxisprojekt: quellengebundener Meeting- & Briefing-Agent"
+description: "Praxisprojekt: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---
 
@@ -11,7 +11,7 @@ has_toc: true
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Wie entsteht ein quellengebundener Meeting- & Briefing-Agent, der Protokolle, Entscheidungen, Risiken und Fachartikel durchsucht, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
+> Wie entsteht ein projektbezogener PMO-Assistent, der Meetings vorbereitet, Aufgaben verfolgt und Statusberichte aus Protokollen, Entscheidungen und Projektdokumenten erstellt, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
 
 ---
 
@@ -25,12 +25,12 @@ has_toc: true
 
 ## Projektübersicht
 
-In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Briefing-Agent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Fachartikel sichten, sucht relevante Passagen und will geprüfte Briefings erhalten, statt einem vollautomatischen System blind zu vertrauen.
+In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Briefing-Agent als projektbezogener PMO-Assistent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Projektdokumente sichten, Meetings vorbereiten, Aufgabenstände verfolgen und geprüfte Briefings und Statusübersichten erhalten, statt einem vollautomatischen System blind zu vertrauen.
 
 > [!NOTE] Dateiname und URL<br>
 > Diese Seite liegt unter `meeting-research-briefing-agent.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
 
-Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Risikolisten und Fachartikeln, sucht semantisch nach relevanten Passagen, formuliert eine strukturierte Antwort mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung.
+Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
 Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }}) beschrieben.
 
@@ -38,6 +38,7 @@ Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientie
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
 - einen Projektkorpus (Protokolle, Entscheidungen, Risiken, Fachartikel) laden, strukturieren und durchsuchen
 - Retrieval-Ergebnisse in belegte Antworten überführen
+- Projektinformationen für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting strukturieren
 - Out-of-Corpus-Fragen sicher stoppen
 - Sessions mit Checkpointing speichern
 - Human-in-the-Loop für unsichere oder folgenreiche Antworten einbauen
@@ -55,11 +56,13 @@ Am Ende steht ein Agent, der:
 
 1. einen PDF-Korpus reproduzierbar lädt,
 2. Dokumente in Chunks zerlegt und optional in ChromaDB einbettet,
-3. Fragen in natürlicher Sprache beantwortet,
+3. Fragen in natürlicher Sprache beantwortet und Meeting-, Aufgaben- oder Statusinformationen aufbereitet,
 4. jede fachliche Antwort mit Dokumenttitel und Passagen-Zitat belegt,
 5. bei fehlendem Beleg "Nicht im Korpus" ausgibt,
 6. vor unsicheren finalen Antworten einen HITL-Schritt auslöst,
 7. optional als Supervisor-System mit Tabellen-Worker und Fließtext-Worker arbeitet.
+
+Der Assistent unterstützt ausgewählte PMO-nahe Informationsaufgaben. Er trifft keine verbindlichen Projektentscheidungen und schreibt nicht ohne Freigabe in operative Systeme.
 
 Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging Face Spaces und Multi-Agent-Ausbau sind Erweiterungen.
 
@@ -67,7 +70,7 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der Meeting- & Briefing-Agent ist ein Assistenzsystem, kein autonomes Entscheidungssystem.
+Der Meeting- & Briefing-Agent ist ein projektbezogener PMO-Assistent und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
 
 | Leitplanke | Bedeutung |
 |---|---|
@@ -77,6 +80,7 @@ Der Meeting- & Briefing-Agent ist ein Assistenzsystem, kein autonomes Entscheidu
 | Tool-Grenzen | Tools laden, suchen, zitieren oder formatieren; offene Seiteneffekte brauchen Freigabe. |
 | Datenschutz | Beispiele nutzen öffentliche Fachtexte oder synthetische Daten. |
 | Logging bewusst einsetzen | Tracing hilft beim Debugging, sensible Inhalte werden aber nicht unbedacht protokolliert. |
+| PMO-Abgrenzung | Der Assistent bereitet Informationen auf und verfolgt Aufgabenstände; verbindliche Projektentscheidungen bleiben beim Menschen. |
 
 ---
 
@@ -251,7 +255,7 @@ workflow.add_conditional_edges(
 
 ## Kapitel 3: Projektkorpus & Retrieval
 
-**Lernziel:** Protokolle, Entscheidungen, Risikolisten und Fachartikel laden, in Passagen strukturieren und als belegbaren Kontext in den Graphen einbinden.
+**Lernziel:** Protokolle, Entscheidungen, Aufgaben- und Risikolisten sowie ausgewählte Hintergrundquellen laden, in Passagen strukturieren und als belegbaren Kontext für Meeting-Briefings, Aufgabenverfolgung und Statusreporting in den Graphen einbinden.
 
 ### Aufgabe 3.1: Korpus laden
 
@@ -399,6 +403,8 @@ Mindestens diese fünf Fälle testen:
 - Tabellen- oder Statistikfrage für einen spezialisierten Worker
 - Out-of-Corpus-Frage mit Antwort: "Nicht im Korpus"
 
+Das Eval-Set sollte außerdem mindestens je einen Fall für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting enthalten.
+
 **Erfolgskriterium:**
 - Antworten bleiben beim belegten Korpus.
 - Quellenangaben sind nachvollziehbar.
@@ -485,6 +491,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 | Kontrolle | HITL oder eine vergleichbare Freigabelogik ist erkennbar. |
 | Sessions | Checkpointing speichert mindestens eine wiederaufnehmbare Session. |
 | Reflexion | Grenzen, Risiken und nächste Verbesserungen werden benannt. |
+| PMO-Abgrenzung | Der Assistent unterstützt ausgewählte PMO-nahe Aufgaben und trifft keine verbindlichen Projektentscheidungen. |
 
 **Bestanden:** Der Assistant beantwortet belegbare Fragen aus dem Korpus, verweigert unbelegte Fragen kontrolliert und zeigt den Kontrollpunkt für unsichere Antworten.
 
@@ -547,6 +554,9 @@ Ja. Der Korpus muss reproduzierbar geladen werden und genügend belegbare Fragen
 
 **Was ist der wichtigste Qualitätsmaßstab?**  
 Der Agent darf fachliche Aussagen nur mit Quellenbezug ausgeben und muss fehlendes Wissen sichtbar begrenzen.
+
+**Ist der Agent ein vollständiges PMO-System?**  
+Nein. Er unterstützt ausgewählte PMO-nahe Informationsaufgaben wie Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Verbindliche Projektentscheidungen und Freigaben bleiben bei verantwortlichen Personen.
 
 ---
 

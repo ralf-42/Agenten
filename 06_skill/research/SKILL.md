@@ -13,7 +13,7 @@ description: >-
 
 # Research Skill
 
-Dieser Skill deckt die Dokumentenrecherche (Evidence Tool) des Meeting- & Briefing-Agenten ab: quellengebundene Suche in Projektunterlagen als ein Baustein neben Protokoll-, Aufgaben- und Risikoauswertung. Standard-Suchraum sind die Projektartefakte im Korpus `02_daten/01_text/korpus_meeting_briefing/` (Protokolle, Entscheidungsprotokoll, Risikoliste, Follow-up-Tracker, Projektauftrag).
+Dieser Skill deckt die Dokumentenrecherche (Evidence Tool) des Meeting- & Briefing-Agenten ab: quellengebundene Suche in Projektunterlagen als ein Baustein neben Protokoll-, Aufgaben- und Risikoauswertung. Standard-Suchraum sind die Projektartefakte im Korpus `02_daten/01_text/korpus_pmo_assistent/` (Protokolle, Entscheidungsprotokoll, Risikoliste, Follow-up-Tracker, Projektauftrag).
 
 ## Aktivierungsbedingung
 

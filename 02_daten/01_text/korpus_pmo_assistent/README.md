@@ -21,7 +21,7 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Recherche-Hintergrund, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
 
 > [!NOTE]
-> Der Ordner heißt jetzt `korpus_meeting_briefing`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
+> Der Ordner heißt jetzt `korpus_pmo_assistent`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
 
 ## Maschinenlesbare Metadaten
 

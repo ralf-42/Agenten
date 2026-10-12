@@ -1,6 +1,6 @@
 # 06_skill — Skill-Bibliothek
 
-Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `meeting-briefing/` (Kern-Baustein des Leitprojekts PMO-Assistent); `dokumentenrecherche/` liefert die Dokumentenrecherche (Evidence Tool) als Teilbaustein, `compliance/` prüft die Freigabe von Briefings, Protokollen und Berichten.
+Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** Der Hauptskill ist `pmo-briefing/` (Kern-Baustein des Leitprojekts PMO-Assistent); `dokumentenrecherche/` liefert die Dokumentenrecherche (Evidence Tool) als Teilbaustein, `compliance/` prüft die Freigabe von Briefings, Protokollen und Berichten.
 
 ---
 
@@ -8,7 +8,7 @@ Fertige Skill-Beispiele für den Kurs **KI-Agenten. Planen. Handeln. Prüfen.** 
 
 | Skill               | Beschreibung                                                       | Demo-Notebook                                         |
 | ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
-| `meeting-briefing/` | Hauptskill: Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M34_DeepAgents_Skill_Meeting_Briefing.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
+| `pmo-briefing/` | Hauptskill für PMO-Briefings sowie Meeting-Vorbereitung und Nachbereitung mit Agenda und Action Items — Kern-Baustein des Leitprojekts | `M34_DeepAgents_Skill_PMO_Assistent.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
 | `dokumentenrecherche/`         | Evidence-Tool-Baustein: strukturierte Dokumentenrecherche in den Projektartefakten des Korpus mit Relevanz-Scoring, Out-of-Corpus-Gate und Berichtssynthese | `M35_DeepAgent_Multi_Skill.ipynb` |
 | `compliance/`       | Freigabeprüfung vor dem Versand eines Briefings oder Berichts mit deterministischem Scoring und Eskalationsregeln  | `M31_Agent_Skill_Compliance.ipynb`, `M35_DeepAgent_Multi_Skill.ipynb` |
 
@@ -30,7 +30,7 @@ Verwendet in: **M31** (Single-Skill), **M35** (Multi-Skill-Routing)
 
 ---
 
-#### `meeting-briefing/`
+#### `pmo-briefing/`
 Meeting-Vorbereitung und Nachbereitung mit festen Abschnitten, Quellenpflicht und Action-Item-Extraktion.
 
 | Datei | Inhalt |

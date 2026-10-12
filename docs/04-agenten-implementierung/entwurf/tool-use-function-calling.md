@@ -31,7 +31,7 @@ Werkzeuge erweitern die Fähigkeiten eines Modells über reines Sprachwissen hin
 
 | Grenze des Modells | Typisches Beispiel | Werkzeug löst das Problem |
 |---|---|---|
-| kein aktuelles Wissen | Wetter, Aktienkurse, heutige Termine | API oder Websuche |
+| kein aktuelles Wissen | Risikostatus von heute, Aktienkurse, heutige Termine | API oder Websuche |
 | keine verlässliche Berechnung | `17 * 243` | Rechen-Tool |
 | kein Dateizugriff | PDF oder Textdatei lesen | Datei-Tool |
 | keine echte Außenwirkung | Termin buchen, E-Mail senden | Kalender- oder Mail-Tool |
@@ -418,7 +418,7 @@ if tool_result.get("action_required") == "escalate_to_human":
 
 | Risikostufe | Beispiel | Zusätzliche Schranke |
 |---|---|---|
-| niedrig | Wetter abrufen | keine besondere Freigabe |
+| niedrig | Risikostatus abrufen | keine besondere Freigabe |
 | mittel | Datei zusammenfassen | Pfadbegrenzung und Leserechte |
 | hoch | E-Mail senden | Vorschau und Nutzerfreigabe |
 | kritisch | Daten löschen, Zahlung auslösen | Policy-Prüfung, Freigabe, Audit-Log |

@@ -138,7 +138,7 @@ print(ergebnis.kategorie)
 ## Minimaler LangGraph-State
 
 ```python
-class ResearchState(TypedDict):
+class PmoState(TypedDict):
     messages: Annotated[list, add_messages]
     routing: str
     antwort: str
@@ -157,17 +157,17 @@ class ResearchState(TypedDict):
 ## Minimaler StateGraph
 
 ```python
-def analyse_node(state: ResearchState) -> dict:
+def analyse_node(state: PmoState) -> dict:
     frage = state["messages"][-1].content
     routing = "retrieval" if "rag" in frage.lower() else "definition"
     return {"routing": routing}
 
 
-def antwort_node(state: ResearchState) -> dict:
+def antwort_node(state: PmoState) -> dict:
     return {"antwort": f"Gewählter Pfad: {state['routing']}"}
 
 
-builder = StateGraph(ResearchState)
+builder = StateGraph(PmoState)
 builder.add_node("analyse", analyse_node)
 builder.add_node("antwort", antwort_node)
 builder.add_edge(START, "analyse")
@@ -180,19 +180,19 @@ graph = builder.compile()
 ## Conditional Routing
 
 ```python
-def route_by_category(state: ResearchState) -> str:
+def route_by_category(state: PmoState) -> str:
     return state["routing"]
 
 
-def definition_node(state: ResearchState) -> dict:
+def definition_node(state: PmoState) -> dict:
     return {"antwort": "Definitionspfad: kurz erklären."}
 
 
-def retrieval_node(state: ResearchState) -> dict:
+def retrieval_node(state: PmoState) -> dict:
     return {"antwort": "Retrievalpfad: Korpus abrufen und Quellen nennen."}
 
 
-builder = StateGraph(ResearchState)
+builder = StateGraph(PmoState)
 builder.add_node("analyse", analyse_node)
 builder.add_node("definition", definition_node)
 builder.add_node("retrieval", retrieval_node)
@@ -430,12 +430,12 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 ```python
 run_cfg = {
-    "run_name": "research_assistant_demo",
-    "tags": ["cheatsheet", "langgraph", "research"],
+    "run_name": "pmo_assistent_demo",
+    "tags": ["cheatsheet", "langgraph", "pmo-assistent"],
     "metadata": {
         "kurs": "agenten",
         "version": "1.0",
-        "workflow": "meeting-research-briefing",
+        "workflow": "pmo-assistent",
     },
 }
 
@@ -446,7 +446,7 @@ Bei Sessions wird `thread_id` zusaetzlich in `configurable` gesetzt:
 
 ```python
 run_cfg = {
-    "run_name": "research_assistant_demo",
+    "run_name": "pmo_assistent_demo",
     "tags": ["cheatsheet", "checkpointing"],
     "metadata": {"kurs": "agenten", "workflow": "session"},
 }

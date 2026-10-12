@@ -115,7 +115,7 @@ SA["Schmaler Support-Agent"]:::support --> WM
 SA --> PM
 WA["Wissensassistent"]:::knowledge --> WM
 WA --> SM
-CA["Coding / Recherche-Agent"]:::coding --> WM
+CA["Coding / Quellen-Agent"]:::coding --> WM
 CA --> SM
 CA --> PM
 CA --> EM
@@ -345,12 +345,12 @@ Der Vorteil von Skills ist **Progressive Disclosure**: Der Agent muss nicht alle
 
 ```python
 workflow = {
-    "name": "Aktuelles Wetter abrufen",
-    "anfrage": "Was ist das aktuelle Wetter in Berlin?",
+    "name": "Risikostatus abrufen",
+    "anfrage": "Welchen Status hat Risiko R2?",
     "schritte": [
-        {"schritt": 1, "aktion": "get_location", "ergebnis": "Berlin, 52.5°N 13.4°E"},
-        {"schritt": 2, "aktion": "weather_api", "parameter": {"lat": 52.5, "lon": 13.4}},
-        {"schritt": 3, "aktion": "format_response", "ergebnis": "15°C, bedeckt"},
+        {"schritt": 1, "aktion": "suche_risikoliste", "ergebnis": "R2: Datenschutzfreigabe"},
+        {"schritt": 2, "aktion": "suche_protokoll", "parameter": {"risiko_id": "R2", "datum": "28.04.2026"}},
+        {"schritt": 3, "aktion": "format_response", "ergebnis": "R2 mitigiert seit 28.04.2026"},
     ],
     "ergebnis": "Erfolg"
 }

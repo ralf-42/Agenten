@@ -117,16 +117,16 @@ Mensch Überschriften und Absätze wahrnimmt.
 
 Ohne Tags (fließender Text — bei langen Prompts unübersichtlich):
 ```
-Du bist Recherche-Spezialist. Recherchiere Fakten zum Thema. Nutze maximal 3 Suchen.
+Du bist Projektanalyst. Suche Fakten zum Thema in den Projektunterlagen. Nutze maximal 3 Suchen.
 Gib mindestens 3 Kernfakten aus. Antworte auf Deutsch in maximal 200 Wörtern.
 ```
 
 Mit Tags (klar gegliedert — Modell "sieht" die Struktur):
 ```xml
-Du bist Recherche-Spezialist.
+Du bist Projektanalyst.
 
 <Role>
-Recherche-Spezialist für belegbare Kurzantworten.
+Projektanalyst für belegbare Kurzantworten.
 </Role>
 
 <Task>
@@ -186,7 +186,7 @@ Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
 | `<criteria>` | Qualitätsanforderungen nennen | Fachlich korrekt, verständlich und praxisnah. |
 | `<validation>` | Abschließende Kontrolle anfordern | Prüfe, ob alle Anforderungen erfüllt sind. |
 | `<sources>` | Quellenmaterial abgrenzen | Auszüge aus bereitgestellten Fachtexten. |
-| `<Team>` | Verfügbare Agenten, Teams oder Tools benennen | Recherche-Agent, Schreib-Agent und Prüf-Agent. |
+| `<Team>` | Verfügbare Agenten, Teams oder Tools benennen | Quellen-Agent, Schreib-Agent und Prüf-Agent. |
 | `<Workflow>` | Erwarteten Ablauf oder Routing-Logik festlegen | Recherchiere, prüfe die Quellen und formuliere anschließend die Antwort. |
 | `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen festlegen | Maximal drei Suchaufrufe; stoppe, sobald die Anfrage beantwortbar ist. |
 | `<OutputRules>` | Gewünschtes Format und die Struktur der Antwort festlegen | Mindestens drei Kernfakten als Stichpunkte, maximal 200 Wörter. |

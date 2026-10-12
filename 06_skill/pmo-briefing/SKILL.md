@@ -1,5 +1,5 @@
 ---
-name: meeting-briefing
+name: pmo-briefing
 description: >-
   Erstellt strukturierte Meeting-Briefings auf Basis von Kontext-Dokumenten,
   Agenda und Teilnehmerliste. Erfasst Action Items, offene Fragen und
@@ -11,7 +11,7 @@ description: >-
   "Action Items erfassen", "Statusbericht", "Projektstatus" oder "Nachbereitung".
 ---
 
-# Meeting-Briefing Skill
+# PMO-Briefing-Skill
 
 Dieser Skill ist der Kern-Baustein des Leitprojekts **PMO-Assistent**: er erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
 Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen. Im Leitprojekt-Szenario nutzt Mara Vogt (Projektleiterin, Projekt "Kompass") diesen Skill, um Protokolle, Risikolisten und offene Punkte in ein geprüftes Briefing zu verwandeln. Der PMO-Bezug umfasst drei Kernfunktionen: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting.
@@ -36,7 +36,7 @@ Typische Trigger-Phrasen sind in der `description` aufgeführt.
 Nutzeranfrage (Thema, Teilnehmer, Kontext)
     │
     ▼
-[Meeting-Briefing-Skill]
+[PMO-Briefing-Skill]
     ├─ Kontext-Dokumente laden & auswerten
     ├─ Agenda strukturieren (agenda_rules.md)
     ├─ Offene Fragen & Risiken identifizieren
@@ -101,7 +101,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 | 1 | ...     | ...           | ...    |
 
 ---
-*Erstellt durch Meeting-Briefing-Skill*
+*Erstellt durch PMO-Briefing-Skill*
 ```
 
 ## Ausgabeformat — Statusübersicht
@@ -131,7 +131,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - [Nur quellengebundene Angaben; fehlende Evidenz als „offen" markieren]
 
 ---
-*Erstellt durch Meeting-Briefing-Skill*
+*Erstellt durch PMO-Briefing-Skill*
 ```
 
 ## Ausgabeformat — Nachbereitung
@@ -160,7 +160,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - [Punkt, der nicht abgeschlossen wurde]
 
 ---
-*Erstellt durch Meeting-Briefing-Skill*
+*Erstellt durch PMO-Briefing-Skill*
 ```
 
 ## Eskalation
@@ -175,4 +175,4 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - M17 – Human-in-the-Loop (Briefing mit `interrupt()` vor Versand)
 - M20 – Supervisor Pattern (Briefing als Teilaufgabe im Supervisor-Workflow)
 - M26 – Integration Pipeline (Meeting-Briefing als Schritt in einer Prozesskette)
-- M34 – DeepAgents Skill Meeting Briefing (direkte Anwendung dieses Skills als Leitprojekt-Baustein)
+- M34 – DeepAgents-Skill für PMO-Briefings (direkte Anwendung dieses Skills als Leitprojekt-Baustein)

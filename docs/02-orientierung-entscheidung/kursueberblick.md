@@ -163,7 +163,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M31  | Vertiefung: Skills und Produktion | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
 |  M32  | Vertiefung: Skills und Produktion | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
 |  M33  | Vertiefung: Skills und Produktion | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
-|  M34  | Vertiefung: Skills und Produktion | DeepAgents Skill Meeting Briefing    | Meeting-Briefing als Skill                             |
+|  M34  | Vertiefung: Skills und Produktion | DeepAgents-Skill für PMO-Briefings  | PMO-Briefing als Skill für den PMO-Assistenten         |
 |  M35  | Vertiefung: Skills und Produktion | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
 |  M36  | Vertiefung: Skills und Produktion | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
 |  M37  | Vertiefung: Skills und Produktion | Production: API & Monitoring         | FastAPI, Monitoring, Kursrückblick                     |

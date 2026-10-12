@@ -32,11 +32,11 @@ In diesem Praxisprojekt entsteht schrittweise ein **PMO-Assistent**. Ausgangspun
 
 Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
-Das Zielbild der Leitaufgabe ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
+Das Zielbild ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
-- einen Projektkorpus (Protokolle, Entscheidungen, Risiken, Fachartikel) laden, strukturieren und durchsuchen
+- einen Projektkorpus (Protokolle, Entscheidungen, Risiken, Aufgaben) laden, strukturieren und durchsuchen
 - Retrieval-Ergebnisse in belegte Antworten überführen
 - Projektinformationen für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting strukturieren
 - Out-of-Corpus-Fragen sicher stoppen
@@ -93,7 +93,7 @@ Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
    ├── Kapitel 2: Intent Routing
    ├── Kapitel 3: Projektkorpus & Retrieval
    ├── Kapitel 4: Checkpointing & Sessions
-   ├── Kapitel 5: Research-Synthese, Quellen und Freigabe
+   ├── Kapitel 5: Synthese, Quellen und Freigabe
    └── Kapitel 6: UI, Evaluation und Ausbau
 ```
 
@@ -101,7 +101,7 @@ Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
 |---|---|---|
 | 1 | StateGraph Basics | Ein minimaler Graph mit State und Fallback |
 | 2 | Intent Routing | Fragen werden nach Typ geroutet |
-| 3 | Korpus & Retrieval | Relevante Passagen werden aus Protokollen, Entscheidungen und Fachartikeln geholt |
+| 3 | Korpus & Retrieval | Relevante Passagen werden aus Protokollen, Entscheidungen, Risiken und Aufgabenlisten geholt |
 | 4 | Sessions | Verlauf bleibt über Checkpointing erhalten |
 | 5 | Synthese & HITL | Antworten sind strukturiert, belegt und kontrollierbar |
 | 6 | Ausbau | UI, Evaluation oder Multi-Agent-Variante |
@@ -360,7 +360,7 @@ result2 = graph.invoke(
 
 ---
 
-## Kapitel 5: Research-Synthese, Quellen und Freigabe
+## Kapitel 5: Synthese, Quellen und Freigabe
 
 **Lernziel:** Antworten strukturieren, Quellenpflicht erzwingen und unsichere Ergebnisse zur Freigabe markieren.
 
@@ -373,12 +373,14 @@ class Quellenangabe(BaseModel):
     dokument: str = Field(description="Dateiname oder Titel der Quelle")
     passage: str = Field(description="Zitierter Textausschnitt, maximal 2 Sätze")
 
-class ResearchAntwort(BaseModel):
+class BriefingAntwort(BaseModel):
     antwort: str = Field(description="Synthese-Antwort auf die Frage")
     quellen: list[Quellenangabe] = Field(description="Mindestens eine Quellenangabe")
     sicherheit: str = Field(description="hoch / mittel / niedrig")
     hinweis: str = Field(description="'Nicht im Korpus' wenn out-of-scope")
 ```
+
+Je nach PMO-Kernfunktion ergänzt oder ersetzt ein eigenes Ergebnisformat dieses Schema: `GateOutputResult` (Meeting-Briefing, M34), `ActionItemResult` (offene Aufgaben, M04/M34), `StatusberichtResult` (Statusbericht, M27) und `RiskReviewResult` (Risikoübersicht, M04). Felder und Beispiele stehen unter [Ergebnisformate des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#ergebnisformate-des-pmo-assistenten).
 
 ### Aufgabe 5.2: Qualitäts-Gate ergänzen
 
@@ -402,6 +404,7 @@ Mindestens diese fünf Fälle testen:
 - Vergleichsfrage zu zwei Quellen
 - Tabellen- oder Statistikfrage für einen spezialisierten Worker
 - Out-of-Corpus-Frage mit Antwort: "Nicht im Korpus"
+- Statusbericht-Fall: Bericht aus Tracker, Risikoliste und Entscheidungsprotokoll mit Datum und Quelle je Aussage
 
 Das Eval-Set sollte außerdem mindestens je einen Fall für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting enthalten.
 

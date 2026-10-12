@@ -2,18 +2,19 @@
 name: meeting-briefing
 description: >-
   Erstellt strukturierte Meeting-Briefings auf Basis von Kontext-Dokumenten,
-  Agenda und Teilnehmerliste. Erfasst Action Items und offene Fragen.
+  Agenda und Teilnehmerliste. Erfasst Action Items, offene Fragen und
+  quellengebundene Statusinformationen.
   Aktivieren wenn Nutzer sagt: "bereite das Meeting vor",
   "erstelle ein Briefing", "was muss ich für das Gespräch wissen",
   "Meeting-Vorbereitung", "Agenda erstellen", "Besprechung vorbereiten",
   "fasse den Kontext zusammen", "welche Fragen sollte ich stellen",
-  "Action Items erfassen" oder "Nachbereitung".
+  "Action Items erfassen", "Statusbericht", "Projektstatus" oder "Nachbereitung".
 ---
 
 # Meeting-Briefing Skill
 
 Dieser Skill ist der Kern-Baustein des Leitprojekts **Meeting- & Briefing-Agent**: er erstellt strukturierte Meeting-Briefings für beliebige Gesprächstypen —
-Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen. Im Leitprojekt-Szenario nutzt Mara Vogt (Projektleiterin, Projekt "Kompass") diesen Skill, um Protokolle, Risikolisten und offene Punkte in ein geprüftes Briefing zu verwandeln.
+Projektmeetings, Kundengespräche, interne Reviews, Workshops oder Kurssitzungen. Im Leitprojekt-Szenario nutzt Mara Vogt (Projektleiterin, Projekt "Kompass") diesen Skill, um Protokolle, Risikolisten und offene Punkte in ein geprüftes Briefing zu verwandeln. Der PMO-Bezug umfasst drei Kernfunktionen: Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting.
 
 ## Aktivierungsbedingung
 
@@ -27,6 +28,7 @@ Typische Trigger-Phrasen sind in der `description` aufgeführt.
 3. **Action Items deterministisch extrahieren** — Tool `extract_actions` aufrufen, nie manuell.
 4. **Keine Annahmen über fehlende Informationen** — Lücken explizit als „offen" markieren.
 5. **Sprache des Meetings übernehmen** — Deutsch wenn Meeting auf Deutsch, sonst Englisch.
+6. **Keine verbindlichen Projektentscheidungen ohne Freigabe** — Status, Aufgaben und Empfehlungen bleiben quellengebunden; externe Aktionen oder verbindliche Entscheidungen erfordern menschliche Prüfung.
 
 ## Workflow
 
@@ -39,6 +41,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
     ├─ Agenda strukturieren (agenda_rules.md)
     ├─ Offene Fragen & Risiken identifizieren
     ├─ Tool: extract_actions (Action Items aus Kontext extrahieren)
+    ├─ Statusinformationen, Entscheidungen und Abweichungen quellengebunden zusammenfassen
     └─ Meeting-Briefing im definierten Ausgabeformat erstellen
 ```
 
@@ -50,6 +53,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - Offene Fragen und potenzielle Konflikte identifizieren
 - `extract_actions` für bestehende Action Items aufrufen
 - Briefing exakt im Ausgabeformat erstellen
+- Für Statusanfragen eine kompakte, quellengebundene Statusübersicht erstellen
 - Sachlicher, klarer Stil — keine Füllwörter
 - Keine eigenen Bewertungen ohne Quellenbeleg aus dem Kontext
 
@@ -100,6 +104,36 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 *Erstellt durch Meeting-Briefing-Skill*
 ```
 
+## Ausgabeformat — Statusübersicht
+
+```
+### Projektstatus: [Projekt / Vorhaben]
+
+**Stand:** [Datum oder „nicht angegeben"]
+**Quellen:** [Dokumente / „nicht angegeben"]
+
+---
+
+#### Statusübersicht
+
+| Bereich | Status | Quelle | Hinweis |
+|---------|--------|--------|---------|
+| ...     | ...    | ...    | ...     |
+
+#### Offene Aufgaben
+
+| # | Aufgabe | Verantwortlich | Fällig | Status |
+|---|---------|----------------|--------|--------|
+| 1 | ...     | ...            | ...    | ...    |
+
+#### Risiken, Entscheidungen und Abweichungen
+
+- [Nur quellengebundene Angaben; fehlende Evidenz als „offen" markieren]
+
+---
+*Erstellt durch Meeting-Briefing-Skill*
+```
+
 ## Ausgabeformat — Nachbereitung
 
 ```
@@ -134,6 +168,7 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - Kein Kontext übergeben → Gate gibt `"status": "no_context"` zurück, Writer erstellt leeres Template
 - Widersprüchliche Agenda-Punkte → Gate markiert `"conflict": true`
 - Mehr als 10 Action Items → Gate priorisiert nach Fälligkeit, Rest in „Backlog"
+- Fehlende Statusquelle → Status nicht ableiten, sondern als „offen / nicht belegt" ausgeben
 
 ## Verwandte Module
 

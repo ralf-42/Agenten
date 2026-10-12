@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Meeting- & Briefing-Agent
-parent: "Orientierung & Entscheidung"
+title: PMO-Assitent
+parent: Orientierung & Entscheidung
 nav_order: 4
 description: "Zielbild und roter Faden: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---
 
-# Meeting- & Briefing-Agent
+# PMO-Assistent
 {: .no_toc }
 
-Der Meeting- & Briefing-Agent ist ein projektbezogener PMO-Assistent zur Meeting-Vorbereitung, zur Aufbereitung von Besprechungs- und Projektdokumenten, zur Aufgabenverfolgung und zur Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
+Der projektbezogener PMO-Assistent unterstützt Meeting-Vorbereitung,  Aufbereitung von Besprechungs- und Projektdokumenten, Aufgabenverfolgung und zur Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
 Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt und ersetzt kein vollständiges PMO-System. Er bereitet Meetings, Aufgabenstände und Statusinformationen auf. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
@@ -49,10 +49,10 @@ Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen ei
 
 | Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
 |---|---|---|---|
-| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34 |
+| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34, M38 |
 | Protokollerstellung | Strukturierte Zusammenfassung von Besprechungsnotizen | Sehr hoch | M04, M06, M34 |
-| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10 |
-| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21, M26 |
+| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10, M34, M38 |
+| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21, M27, M38 |
 | Risikomanagement | Identifikation möglicher Risiken in Projektberichten | Hoch | M04, M09, M23 |
 | Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | M11, M14, M22, M28 |
 | Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | M03, M17, M25 |
@@ -118,6 +118,38 @@ class BriefingAntwort(BaseModel):
 
 Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das klingt plausibel, erzwingt aber keine prüfbare Struktur. Erst ein Schema macht sichtbar, ob eine Antwort ohne Quelle, mit niedriger Sicherheit oder außerhalb des Korpus entstanden ist.
 
+### Ergebnisformate des PMO-Assistenten
+
+Der PMO-Assistent liefert vier Produkte. Jedes hat ein eigenes Schema; die Feldnamen sind in Notebooks und Dokumenten gleich.
+
+| Produkt | Schema | Notebook | Inhalt |
+|---|---|---|---|
+| Meeting-Briefing | `GateOutputResult` | M34 | Agenda, offene Fragen, Aufgaben, Risiken, Status (`ok`, `no_context`, `conflict`) |
+| Statusbericht | `StatusberichtResult` | M27 (Template A) | Stand, Zusammenfassung, Entscheidungen, Aufgaben, Risiken, offene Punkte, Quellen |
+| Offene Aufgaben | `ActionItemResult` | M04, M34 | Aufgabe, Verantwortlich, Termin |
+| Risikoübersicht | `RiskReviewResult` | M04 | Risiken, Kritikalität, Maßnahmen |
+
+Der Statusbericht wird nicht als eigenes Dokument im Korpus abgelegt, sondern aus Follow-up-Tracker, Risikoliste und Entscheidungsprotokoll zusammengesetzt. Jede Aussage trägt ein Datum und eine Quelle; fehlende Angaben stehen als `[offen]` im Bericht.
+
+```python
+class StatusEintrag(BaseModel):
+    kennung: str = Field(description="D1, D2, R2 oder Kurzname der Aufgabe")
+    text: str = Field(description="Aussage in einem Satz")
+    status: str = Field(description="aktiv, überholt, erledigt, offen, vertagt oder mitigiert")
+    stand: str = Field(description="Datum der Quelle (TT.MM.JJJJ) oder [offen]")
+    quelle: str = Field(description="Dokumentname")
+
+
+class StatusberichtResult(BaseModel):
+    stand: str = Field(description="Datum des Berichts")
+    zusammenfassung: str = Field(description="Zwei Sätze zum Gesamtstand")
+    entscheidungen: list[StatusEintrag]
+    aufgaben: list[StatusEintrag]
+    risiken: list[StatusEintrag]
+    offene_punkte: list[str] = Field(description="Was nicht entschieden oder nicht belegt ist")
+    sicherheit: str = Field(description="hoch / mittel / niedrig")
+```
+
 ## Leitplanken
 
 Der Meeting- & Briefing-Agent bleibt ein Assistenzsystem für PMO-nahe Informationsaufbereitung und Recherche. Diese Grenze ist wichtiger als die konkrete Modellwahl. Wenn das System fehlende Evidenz frei ergänzt oder verbindliche Projektentscheidungen erfindet, ist es auch mit guter Architektur unbrauchbar.
@@ -170,6 +202,8 @@ Der Supervisor entscheidet nach Fragetyp, welche Rolle gebraucht wird. Bei Unsic
 
 Ein vollständiger Prototyp ist erreicht, wenn ein eigener oder bereitgestellter Korpus reproduzierbar geladen wird und der PMO-Assistent Meeting-Briefings, Aufgabenstände oder Statusübersichten mit relevanten Quellen erzeugen kann. Die Antworten nutzen ein strukturiertes Schema mit Quellen, Sicherheit und Hinweis. Der Prototyp bildet kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
+Das Capstone deckt mindestens eine der drei Kernfunktionen ab: Meeting-Vorbereitung, Aufgabenverfolgung oder Statusreporting. Das Ergebnis erscheint im passenden Schema aus „Ergebnisformate des PMO-Assistenten", mit Datum und Quelle je Aussage.
+
 Außerdem müssen mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt erkennbar sein. Die Evaluation prüft Positivfälle und mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
 
 Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein reiner Fachartikel-Assistent verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
@@ -193,6 +227,6 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 
 ---
 
-**Version:** 2.2<br>
+**Version:** 2.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

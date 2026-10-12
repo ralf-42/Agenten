@@ -2,8 +2,8 @@
   {
     "id": "e01",
     "typ": "negativ",
-    "frage": "Wie hoch ist das exakte Projektbudget von Projekt Kompass in Euro?",
-    "erwartete_antwort_kurz": "Nicht im Korpus; nur ein grober Rahmen (mittlerer sechsstelliger Bereich) ist dokumentiert.",
+    "frage": "Wie hoch sind die monatlichen Betriebskosten nach dem Rollout?",
+    "erwartete_antwort_kurz": "Nicht im Korpus; der Kostenstatus enthält Budget, Ist-Kosten und Forecast für Q2, aber keine monatlichen Betriebskosten nach dem Rollout.",
     "erwartete_quelle": null,
     "erwartete_begriffe": [
       "Nicht im Korpus"
@@ -107,6 +107,74 @@
     "typ": "negativ",
     "frage": "Welchen genauen Personalschlüssel plant das Projektteam für den produktiven Betrieb des Assistenten?",
     "erwartete_antwort_kurz": "Nicht im Korpus dokumentiert.",
+    "erwartete_quelle": null,
+    "erwartete_begriffe": [
+      "Nicht im Korpus"
+    ]
+  },
+  {
+    "id": "e11",
+    "typ": "quellenautoritaet",
+    "frage": "Kann aus den Rohnotizen vom 19.05.2026 eine Freigabe für produktive Kundendaten abgeleitet werden?",
+    "erwartete_antwort_kurz": "Nein; die Rohnotizen sind unredigierte Arbeitsnotizen ohne freigegebene Niederschrift und halten ausdrücklich fest, dass keine Freigabe für produktive Kundendaten abzuleiten ist.",
+    "erwartete_quelle": "meeting_notizen_raw_2026-05-19.md",
+    "erwartete_begriffe": [
+      "Rohnotizen",
+      "keine Freigabe",
+      "produktive Kundendaten"
+    ]
+  },
+  {
+    "id": "e12",
+    "typ": "konflikt",
+    "frage": "Gilt ChromaDB laut Change Request CR-02 weiterhin für den produktiven Betrieb?",
+    "erwartete_antwort_kurz": "Nein; CR-02 wurde am 14.04.2026 mit D2 genehmigt: Produktiv wird eine verwaltete Cloud-Vektordatenbank genutzt, ChromaDB bleibt nur für lokale Tests und die Prototyp-Umgebung.",
+    "erwartete_quelle": "change_request_cr02_cloud_vektordatenbank.md",
+    "erwartete_begriffe": [
+      "CR-02",
+      "D2",
+      "Cloud-Vektordatenbank",
+      "Prototyp"
+    ]
+  },
+  {
+    "id": "e13",
+    "typ": "mehrdeutig",
+    "frage": "Ist das Projektbudget im grünen Bereich?",
+    "erwartete_antwort_kurz": "Nein; der Gesamtstatus ist gelb (Forecast 124.500 € gegenüber 120.000 € Budget, +4.500 €), die Cloud-Infrastruktur steht auf rot (+7.000 €).",
+    "erwartete_quelle": "projektbudget_kostenstatus_q2_2026.csv",
+    "erwartete_begriffe": [
+      "gelb",
+      "Cloud-Infrastruktur",
+      "rot"
+    ]
+  },
+  {
+    "id": "e14",
+    "typ": "unsicherheit",
+    "frage": "Wann wurde der MVP abgeschlossen?",
+    "erwartete_antwort_kurz": "Noch nicht; der MVP steht im Meilensteinplan auf „in Arbeit“ (Soll-Termin 31.05.2026, kein Ist-Termin), Rechte- und Rollensteuerung sind noch offen.",
+    "erwartete_quelle": "meilensteinplan_phasen_kompass.md",
+    "erwartete_begriffe": [
+      "in Arbeit",
+      "31.05.2026"
+    ]
+  },
+  {
+    "id": "e15",
+    "typ": "negativ",
+    "frage": "Wie hoch ist das Projektbudget für 2027?",
+    "erwartete_antwort_kurz": "Nicht im Korpus; der Kostenstatus enthält nur Budget, Ist-Kosten und Forecast für 2026 (Q2).",
+    "erwartete_quelle": null,
+    "erwartete_begriffe": [
+      "Nicht im Korpus"
+    ]
+  },
+  {
+    "id": "e16",
+    "typ": "negativ",
+    "frage": "Wie hoch war die Projektallokation von Mara Vogt im April 2026?",
+    "erwartete_antwort_kurz": "Nicht im Korpus; die Kapazitätsmatrix enthält für Mara Vogt nur den Monat 2026-05 (60 Prozent), für April sind nur Jonas Reiter und Dr. Thomas Brandt erfasst.",
     "erwartete_quelle": null,
     "erwartete_begriffe": [
       "Nicht im Korpus"

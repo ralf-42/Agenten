@@ -18,7 +18,7 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 
 ## Korpusumfang
 
-Der Korpus enthält **13 kuratierte PDFs**: Meeting- und Projektartefakte zu "Projekt Kompass".
+Der Korpus enthält **18 kuratierte Wissensartefakte**: 13 PDFs sowie ergänzende Markdown- und CSV-Dateien zu Meeting- und Projektartefakten von "Projekt Kompass".
 
 > [!NOTE]
 > Der Ordner heißt jetzt `korpus_pmo_assistent`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
@@ -52,6 +52,11 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle 
 | `entscheidungsprotokoll_gesamt.pdf` | Decision Log | ja (D1-D3, kumulativ) | nein | alle | hoch |
 | `follow_up_tracker.pdf` | Tracker | nein | ja (1 offenes Item) | alle | mittel |
 | `agenda_vorlage_steuerkreis.pdf` | Vorlage | nein | nein | Mara Vogt | niedrig |
+| `meilensteinplan_phasen_kompass.md` | Meilensteinplan | nein | ja (Gates) | alle | hoch |
+| `projektbudget_kostenstatus_q2_2026.csv` | Controlling | nein | ja (Forecast) | Sabine Holler, Jonas Reiter | hoch |
+| `meeting_notizen_raw_2026-05-19.md` | Rohnotizen | nein | ja (Rechte/Rollen) | Mara Vogt, Jonas Reiter, Dr. Thomas Brandt | mittel |
+| `change_request_cr02_cloud_vektordatenbank.md` | Änderungsantrag | ja (CR-02) | nein | Jonas Reiter | hoch |
+| `ressourcen_kapazitaetsmatrix_2026.csv` | Ressourcenplanung | nein | ja (Engpässe) | alle | mittel |
 
 ## Empfohlene Nutzung im Kurs
 
@@ -59,7 +64,9 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle 
 2. M12/M13: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
 3. M14/M23: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
 4. M16/M22: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
-5. M35: Teilnehmer bauen eine Variante mit eigenem Meeting-Korpus oder Zusatzdokumenten.
+5. M19/M20/M27/M38: strukturierte CSV-Daten für Budget-, Status- und Kapazitätsfragen verwenden.
+6. M04/M06/M17/M34: Rohnotizen in ein strukturiertes Meeting-Ergebnis überführen.
+7. M35: Teilnehmer bauen eine Variante mit eigenem PMO-Korpus oder Zusatzdokumenten.
 
 ## Eval-Sets
 
@@ -79,6 +86,8 @@ Die früheren `eval_research*`-Dateinamen wurden abgelöst; Notebooks und Dokume
 | Faktisch | Wer ist Projektleiterin von Projekt Kompass? |
 | Vergleich | Wie unterscheidet sich die Formulierung zu ChromaDB am 17.03. von der am 31.03.? |
 | Anwendung | Welche offenen Punkte bestehen laut Follow-up-Tracker? |
+| Quantitativ | Wie hoch ist die Forecast-Abweichung im Kostenstatus? |
+| Strukturiert | Wer ist im Mai mit hoher Kapazitätsauslastung eingeplant? |
 | Konflikt | Welche Entscheidung zur Vektordatenbank gilt aktuell — D1 oder D2? |
 | Versionierung | Wie hat sich der Status von Risiko R2 zwischen dem 17.03. und dem 28.04. verändert? |
 | Negativ | Wie hoch ist das exakte Projektbudget in Euro? |

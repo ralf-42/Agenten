@@ -61,7 +61,7 @@ Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig ge�
 
 ## Zielbild
 
-Ein brauchbarer PMO-Assistent lädt einen Projektkorpus reproduzierbar, zerlegt PDF-Dokumente in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
+Ein brauchbarer PMO-Assistent lädt einen Projektkorpus reproduzierbar, konvertiert unterstützte Dokumentformate in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
 In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
 
@@ -77,7 +77,7 @@ Das Zielbild lässt sich in fünf Ausbaustufen lesen:
 
 ## Korpus und Metadaten
 
-Der Korpus sollte klein genug sein, um verstanden zu werden, und sauber genug, um Evaluation zu ermöglichen. Zehn bis zwanzig PDF-Dokumente aus einem klaren Themenfeld reichen für einen ersten Prototyp oft aus. Ein größerer, aber unsauberer Bestand verschlechtert die Lern- und Prüfbarkeit: Retrieval-Fehler lassen sich dann schwer von Datenproblemen unterscheiden.
+Der Korpus sollte klein genug sein, um verstanden zu werden, und sauber genug, um Evaluation zu ermöglichen. Zehn bis zwanzig Dokumente in unterstützten Formaten aus einem klaren Themenfeld reichen für einen ersten Prototyp oft aus. Ein größerer, aber unsauberer Bestand verschlechtert die Lern- und Prüfbarkeit: Retrieval-Fehler lassen sich dann schwer von Datenproblemen unterscheiden.
 
 Geeignete Quellen sind Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten, Aufgabenlisten und Rollenlisten. Beispiele und Aufgaben beziehen sich ausschließlich auf diese Projektdokumente. Für den Kurs werden reale Projektdaten durch synthetische, fiktive Beispieldokumente ersetzt — urheberrechtlich geschützte Lehrbücher, echte interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
 
@@ -120,13 +120,13 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ### Ergebnisformate des PMO-Assistenten
 
-Der PMO-Assistent liefert vier Produkte. Jedes hat ein eigenes Schema; die Feldnamen sind in Notebooks und Dokumenten gleich.
+Der PMO-Assistent liefert vier Produkte. Jedes hat ein eigenes Schema; die technischen Feldnamen sind in den Notebooks und Skripten gleich. Die Erläuterungen bleiben deutsch.
 
 | Produkt | Schema | Notebook | Inhalt |
 |---|---|---|---|
 | Meeting-Briefing | `GateOutputResult` | M34 | Agenda, offene Fragen, Aufgaben, Risiken, Status (`ok`, `no_context`, `conflict`) |
 | Statusbericht | `StatusberichtResult` | M27 (Template A) | Stand, Zusammenfassung, Entscheidungen, Aufgaben, Risiken, offene Punkte, Quellen |
-| Offene Aufgaben | `ActionItemResult` | M04, M34 | Aufgabe, Verantwortlich, Termin |
+| Offene Aufgaben | `ActionItemResult` | M04, M34 | `task` (Aufgabe), `owner` (Verantwortlich), `due` (Termin) |
 | Risikoübersicht | `RiskReviewResult` | M04 | Risiken, Kritikalität, Maßnahmen |
 
 Der Statusbericht wird nicht als eigenes Dokument im Korpus abgelegt, sondern aus Follow-up-Tracker, Risikoliste und Entscheidungsprotokoll zusammengesetzt. Jede Aussage trägt ein Datum und eine Quelle; fehlende Angaben stehen als `[offen]` im Bericht.
@@ -215,6 +215,22 @@ Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Var
 | Compliance-Prüfung | regulierte Branchen, Audit-Trail und Out-of-Corpus-Regel |
 | Support-Triage | Klassifikation, Tool-Use, HITL und Routing |
 | Code-Review-Agent | strukturierte Analyse, Quellen-/Diff-Bezug und Security |
+
+## Ausbaustufen: Vom Prototyp zum Einsatz
+
+Der Kurs-Prototyp arbeitet bewusst mit einem kleinen, fiktiven und kuratierten Korpus. Das macht Fehler sichtbar und Ergebnisse überprüfbar. Jede Vereinfachung des Prototyps benennt zugleich die nächste Ausbaustufe: Das Grundmuster aus Quellenpflicht, Evaluation und Freigabe bleibt gleich, während Datenbasis, Zugriffsschutz und Betrieb wachsen.
+
+| Ausbaustufe | Im Kurs-Prototyp | Nächster Schritt | Kursbezug |
+|---|---|---|---|
+| Datenbasis | Ein fiktives Projekt mit PDF-, Markdown- und CSV-Dateien in einem Ordner | Anbindung der realen Ablagen, etwa Dokumentenablage, Aufgaben-Tracker und Wiki, mit regelmäßiger Aktualisierung des Index | M26 |
+| Zugriffsrechte | Alle sehen den gesamten Korpus; die Rechte- und Rollensteuerung ist im Projekt Kompass als offener Punkt dokumentiert | Berechtigungsfilter bereits beim Retrieval, ergänzt durch eine Quellenprüfung nach der Antwort | M23 |
+| Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | M23, M37 |
+| Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | M24, M37 |
+| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | M36, M37 |
+| Aktionen | Der Assistent liest und schlägt vor | Kontrollierte Schreibaktionen wie das Anlegen einer Aufgabe, jeweils hinter einem Freigabe-Gate | M23, M26 |
+
+> [!TIP] Empfohlene Reihenfolge<br>
+> Zugriffsrechte und Datenschutz sollten vor der Anbindung echter Datenquellen geklärt sein. Danach liefert ein kleiner Pilot mit messbarem Nutzen die Grundlage für jede weitere Ausbaustufe.
 
 ## Abgrenzung zu verwandten Dokumenten
 

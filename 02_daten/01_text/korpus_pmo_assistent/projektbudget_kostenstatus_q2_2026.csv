@@ -1,0 +1,7 @@
+kostenart;budget_eur;ist_eur;forecast_eur;abweichung_eur;status;verantwortlich
+Lizenzen und Modelle;18000;12500;19500;1500;gelb;Jonas Reiter
+Externe Beratung;30000;12000;28000;-2000;gruen;Mara Vogt
+Cloud-Infrastruktur;45000;7500;52000;7000;rot;Jonas Reiter
+Test und Evaluation;12000;4000;10000;-2000;gruen;Elif Kaya
+Reserve;15000;0;15000;0;gruen;Sabine Holler
+GESAMT;120000;36000;124500;4500;gelb;Sabine Holler

@@ -1,0 +1,7 @@
+person;rolle;monat;projektallokation_prozent;linienaufgaben;kapazitaetsstatus;engpasshinweis
+Jonas Reiter;IT-Architektur;2026-04;70;Betrieb Architekturteam;hoch;Belastungstest und Cloud-Entscheidung überschneiden sich
+Jonas Reiter;IT-Architektur;2026-05;80;Architektur-Support;hoch;MVP, Retrieval und Vorbereitung der Zugriffsregeln parallel
+Mara Vogt;Projektleitung;2026-05;60;Bereichskoordination;mittel;Entscheidungsvorlage für Rechte und Rollen offen
+Elif Kaya;Fachbereich Vertrieb;2026-05;35;Vertriebsbetrieb;mittel;Anforderungen und Workshop-Auswertung parallel
+Dr. Thomas Brandt;Datenschutz und Compliance;2026-04;25;Compliance-Beratung;mittel;Freigabe für Testkorpus abgeschlossen, Produktionsprüfung offen
+Sabine Holler;Sponsorin und Geschäftsführung;2026-05;15;Geschäftsführung;normal;Rollout-Entscheidung erst nach Pilot-Evaluation

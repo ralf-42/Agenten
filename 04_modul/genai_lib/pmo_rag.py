@@ -2,12 +2,13 @@
 pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den PMO-Assistenten
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
-(PDF-Laden, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
+(Dokumentladen, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
 damit M15 und die nachfolgenden Module (M26, M28, M29, M36-M38) dieselbe Kette wiederverwenden statt sie zu duplizieren.
 
-M12/M13/M14 bleiben didaktisch davon unberührt und bauen die Kette weiterhin
-Schritt für Schritt selbst als Inline-Code — dieses Modul bündelt nur den
-bereits in M14 final genutzten Stand für die nachfolgenden Module. M22 nutzt
+M12/M13 bleiben didaktisch davon unberührt und bauen die Kette weiterhin
+Schritt für Schritt selbst als Inline-Code. M14 nutzt den Mehrformat-Lader
+dieses Moduls, damit der PMO-Korpus einschließlich Markdown- und CSV-Artefakten
+indexiert werden kann. M22 nutzt
 bewusst einen synthetischen In-Memory-Datensatz, M27 eine isolierte
 Experiment-Collection mit anderer Chunk-Granularität.
 
@@ -27,8 +28,17 @@ Import im Notebook:
     vectorstore = get_pmo_vectorstore()
     index_pmo_corpus(vectorstore, KORPUS_TARGET)
     suche_wissensdatenbank = make_suche_wissensdatenbank_tool(vectorstore)
+
+Lokaler Test ohne Google Drive:
+    vectorstore = get_pmo_vectorstore(persist_directory="./chroma_pmo_local")
+
+Bei einem lokalen Pfad wird kein Google-Drive-Mount vorausgesetzt. Der
+Standardpfad bleibt für die Kurs-Notebooks die persistente Google-Drive-Collection.
 """
 
+import json
+import urllib.request
+from functools import lru_cache
 from pathlib import Path
 
 from langchain_chroma import Chroma
@@ -41,6 +51,16 @@ from genai_lib.model_config import EMBEDDINGS
 
 DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
 DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_pmo"
+KORPUS_METADATA_URL = (
+    "https://raw.githubusercontent.com/ralf-42/Agenten/main/"
+    "02_daten/01_text/korpus_pmo_assistent/metadata.json"
+)
+
+SUPPORTED_EXTENSIONS = {
+    ".txt", ".md", ".pdf", ".docx", ".doc", ".xlsx",
+    ".html", ".htm", ".csv", ".json", ".xml",
+}
+IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json"}
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -76,6 +96,55 @@ def load_pdf_documents(directory_path: str) -> list[Document]:
     return documents
 
 
+def load_documents_from_directory(directory_path: str) -> list[Document]:
+    """Lädt unterstützte Dokumentformate mit MarkItDown.
+
+    Unterstützt werden PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und
+    Word-Dokumente. Verwaltungsdateien des PMO-Korpus werden nicht als
+    Wissensquellen indexiert. Die Konvertierung erzeugt pro Datei ein
+    LangChain-Document mit Dateiquelle und Dateityp als Metadaten.
+    """
+    try:
+        from markitdown import MarkItDown
+    except ImportError as exc:
+        raise ImportError(
+            "Für den Mehrformat-Korpuslader wird markitdown[all] benötigt. "
+            "Installieren Sie die Abhängigkeit aus requirements.txt."
+        ) from exc
+
+    converter = MarkItDown()
+    directory = Path(directory_path)
+    documents: list[Document] = []
+
+    for file_path in sorted(directory.rglob("*")):
+        if (
+            not file_path.is_file()
+            or file_path.suffix.lower() not in SUPPORTED_EXTENSIONS
+            or file_path.name in IGNORED_FILENAMES
+        ):
+            continue
+
+        try:
+            result = converter.convert(str(file_path))
+            text = (result.text_content or "").strip()
+            if not text:
+                print(f"  ⚠ {file_path.name} übersprungen (kein Text)")
+                continue
+            documents.append(
+                Document(
+                    page_content=text,
+                    metadata={
+                        "source": str(file_path),
+                        "file_type": file_path.suffix.lower().lstrip("."),
+                    },
+                )
+            )
+        except Exception as exc:
+            print(f"  ⚠ {file_path.name} übersprungen: {exc}")
+
+    return documents
+
+
 def split_documents_by_characters(
     documents: list[Document], chunk_size: int = 300, chunk_overlap: int = 30
 ) -> list[Document]:
@@ -102,6 +171,8 @@ def get_pmo_vectorstore(
 
     Bei Drive-Pfaden (Standard) muss Google Drive vorher gemountet sein,
     sonst wird ein RuntimeError ausgelöst statt eines leeren Fallback-Index.
+    Für lokale Tests kann ein eigener Pfad außerhalb von ``/content/drive``
+    übergeben werden; dafür ist kein Google-Drive-Mount erforderlich.
     """
     _require_drive_mounted(persist_directory)
     embeddings = OpenAIEmbeddings(model=EMBEDDINGS)
@@ -120,7 +191,7 @@ def index_pmo_corpus(
     batch_size: int = 500,
     force: bool = False,
 ) -> int:
-    """Indexiert PDFs aus directory_path in die Collection.
+    """Indexiert unterstützte Dokumente aus directory_path in die Collection.
 
     Indexiert nur, wenn die Collection leer ist. Mit force=True werden
     vorhandene Einträge zuerst gelöscht und die Collection neu aufgebaut —
@@ -137,7 +208,7 @@ def index_pmo_corpus(
         )
         return 0
 
-    dokumente = load_pdf_documents(directory_path)
+    dokumente = load_documents_from_directory(directory_path)
     chunks = split_documents_by_characters(
         dokumente, chunk_size=chunk_size, chunk_overlap=chunk_overlap
     )
@@ -149,6 +220,68 @@ def index_pmo_corpus(
         print(f"  Batch {start // batch_size + 1}: {ende}/{len(chunks)} Chunks indexiert")
 
     return len(chunks)
+
+
+@lru_cache(maxsize=4)
+def load_korpus_metadata(metadata_path: str | None = None) -> dict[str, dict]:
+    """Lädt die Dokument-Metadaten des Korpus als Dict {dateiname: eintrag}.
+
+    Ohne metadata_path wird metadata.json aus dem Kurs-Repository (GitHub, main)
+    geladen. Ist die Datei nicht erreichbar, wird ein leeres Dict zurückgegeben —
+    die Suche funktioniert dann wie bisher, nur ohne Datum und Dokumenttyp.
+    """
+    try:
+        if metadata_path:
+            inhalt = Path(metadata_path).read_text(encoding="utf-8")
+        else:
+            with urllib.request.urlopen(KORPUS_METADATA_URL, timeout=10) as antwort:
+                inhalt = antwort.read().decode("utf-8")
+        return {eintrag["file"]: eintrag for eintrag in json.loads(inhalt)["documents"]}
+    except Exception as exc:
+        print(f"  ⚠ Korpus-Metadaten nicht geladen: {exc}")
+        return {}
+
+
+def _format_metadaten(eintrag: dict | None) -> str:
+    """Formatiert Datum, Dokumenttyp sowie Entscheidungs- und Risiko-IDs als eine Zeile."""
+    if not eintrag:
+        return ""
+    teile = [f"Datum: {eintrag['date']}", f"Typ: {eintrag['document_type']}"]
+    if eintrag.get("decision_ids"):
+        teile.append("Entscheidungen: " + ", ".join(eintrag["decision_ids"]))
+    if eintrag.get("risk_ids"):
+        teile.append("Risiken: " + ", ".join(eintrag["risk_ids"]))
+    return " | ".join(teile)
+
+
+def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str]]:
+    """Vergleicht die unterstützten Korpusdateien mit den Quellen in der Collection.
+
+    Gibt zurück: {"fehlt_im_index": [...], "veraltet_im_index": [...]}.
+    "veraltet_im_index" enthält Quellen, die im Ordner nicht mehr existieren
+    (z. B. gelöschte Dokumente) — dann die Collection neu aufbauen
+    (index_pmo_corpus mit force=True bzw. M14 neu ausführen).
+    """
+    im_ordner = {
+        file_path.name
+        for file_path in Path(directory_path).rglob("*")
+        if (
+            file_path.is_file()
+            and file_path.suffix.lower() in SUPPORTED_EXTENSIONS
+            and file_path.name not in IGNORED_FILENAMES
+        )
+    }
+    metadaten = vectorstore.get(include=["metadatas"])["metadatas"]
+    im_index = {Path((meta or {}).get("source", "")).name for meta in metadaten} - {""}
+    ergebnis = {
+        "fehlt_im_index": sorted(im_ordner - im_index),
+        "veraltet_im_index": sorted(im_index - im_ordner),
+    }
+    if any(ergebnis.values()):
+        print(f"⚠ Index und Korpusordner weichen ab: {ergebnis}")
+    else:
+        print(f"Index passt zum Korpusordner ({len(im_ordner)} Dokumente)")
+    return ergebnis
 
 
 def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
@@ -169,13 +302,16 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
             if not ergebnisse:
                 return "Nicht im Korpus. Keine relevanten Informationen gefunden."
 
+            metadaten = load_korpus_metadata()
             antwort_teile = []
             for doc, score in ergebnisse:
                 quelle = doc.metadata.get("source", "unbekannt").split("/")[-1]
                 ausschnitt = doc.page_content.replace("\n", " ")[:700]
+                info = _format_metadaten(metadaten.get(quelle))
                 antwort_teile.append(
                     f"Quelle: {quelle}\n"
-                    f"Score: {score:.4f}\n"
+                    + (f"Dokument: {info}\n" if info else "")
+                    + f"Score: {score:.4f}\n"
                     f"Ausschnitt: {ausschnitt}"
                 )
 

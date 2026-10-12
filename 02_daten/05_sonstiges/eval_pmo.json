@@ -339,5 +339,67 @@
       "Vektordatenbank",
       "realistischer Nutzerlast"
     ]
+  },
+  {
+    "id": "q34",
+    "typ": "quantitativ",
+    "frage": "Wie hoch ist die Forecast-Abweichung des Projektbudgets im Kostenstatus Q2 2026?",
+    "erwartete_antwort_kurz": "Der Forecast liegt 4.500 EUR über dem Budgetrahmen; der Gesamtstatus ist gelb.",
+    "erwartete_quelle": "projektbudget_kostenstatus_q2_2026.csv",
+    "erwartete_begriffe": [
+      "124500",
+      "120000",
+      "4500",
+      "gelb"
+    ]
+  },
+  {
+    "id": "q35",
+    "typ": "anwendung",
+    "frage": "Welche drei Zugriffsebenen wurden in den Rohnotizen vom 19.05.2026 für die Rechte- und Rollensteuerung genannt?",
+    "erwartete_antwort_kurz": "Dokumentzugriff, Filterung während der Retrieval-Abfrage und nachträgliche Prüfung der Antwortquellen.",
+    "erwartete_quelle": "meeting_notizen_raw_2026-05-19.md",
+    "erwartete_begriffe": [
+      "Dokumentzugriff",
+      "Retrieval",
+      "Antwortquellen"
+    ]
+  },
+  {
+    "id": "q36",
+    "typ": "synthese",
+    "frage": "Welche Auswirkungen hat Change Request CR-02 auf Architektur und Betrieb?",
+    "erwartete_antwort_kurz": "Die produktive Vektordatenbank wird auf eine Managed Cloud Vector DB umgestellt; dafür sind Migration, Zugriffsregeln, Monitoring und Freigaben erforderlich.",
+    "erwartete_quelle": "change_request_cr02_cloud_vektordatenbank.md",
+    "erwartete_begriffe": [
+      "Managed Cloud",
+      "Migration",
+      "Monitoring",
+      "Freigaben"
+    ]
+  },
+  {
+    "id": "q37",
+    "typ": "quantitativ",
+    "frage": "Wer ist im Mai 2026 mit 80 Prozent Projektallokation und hoher Kapazitätsauslastung eingeplant?",
+    "erwartete_antwort_kurz": "Jonas Reiter in der IT-Architektur.",
+    "erwartete_quelle": "ressourcen_kapazitaetsmatrix_2026.csv",
+    "erwartete_begriffe": [
+      "Jonas Reiter",
+      "80",
+      "hoch"
+    ]
+  },
+  {
+    "id": "q38",
+    "typ": "synthese",
+    "frage": "Welcher Meilenstein ist nach dem MVP als Nächstes vorgesehen und welches Gate gilt dafür?",
+    "erwartete_antwort_kurz": "Der Pilotbetrieb im Juni/Juli; vorausgesetzt werden MVP-Abnahme und die Freigabe der Zugriffsregeln.",
+    "erwartete_quelle": "meilensteinplan_phasen_kompass.md",
+    "erwartete_begriffe": [
+      "Pilotbetrieb",
+      "MVP-Abnahme",
+      "Zugriffsregeln"
+    ]
   }
 ]

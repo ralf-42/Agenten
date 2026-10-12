@@ -239,19 +239,104 @@
       "risk_ids": [],
       "topics": ["Agenda", "Meeting-Vorbereitung", "Standardstruktur"],
       "recommended_modules": ["M17", "M33", "M36"]
+    },
+    {
+      "file": "meilensteinplan_phasen_kompass.md",
+      "document_id": "kompass_milestones_2026",
+      "title": "Meilenstein- und Phasenplan Projekt Kompass",
+      "corpus_part": "project",
+      "document_type": "milestone_plan",
+      "meeting_context": "Projektplanung",
+      "date": "2026-05-20",
+      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "priority": "hoch",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": ["D1", "D2"],
+      "risk_ids": ["R2"],
+      "topics": ["Meilensteine", "Phasen", "Roadmap", "Gates", "Status"],
+      "recommended_modules": ["M14", "M17", "M19", "M20", "M27"]
+    },
+    {
+      "file": "projektbudget_kostenstatus_q2_2026.csv",
+      "document_id": "kompass_budget_q2_2026",
+      "title": "Projektbudget und Kostenstatus Q2 2026",
+      "corpus_part": "project",
+      "document_type": "budget_tracker",
+      "meeting_context": "Controlling",
+      "date": "2026-05-20",
+      "stakeholders": ["Sabine Holler", "Mara Vogt", "Jonas Reiter"],
+      "priority": "hoch",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [],
+      "risk_ids": ["R4"],
+      "topics": ["Budget", "Ist-Kosten", "Forecast", "Abweichung", "Ampel"],
+      "recommended_modules": ["M19", "M20", "M27", "M38"]
+    },
+    {
+      "file": "meeting_notizen_raw_2026-05-19.md",
+      "document_id": "kompass_raw_notes_2026_05_19",
+      "title": "Rohnotizen Steuerkreis 19.05.2026",
+      "corpus_part": "project",
+      "document_type": "raw_meeting_notes",
+      "meeting_context": "Steuerkreis",
+      "date": "2026-05-19",
+      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Dr. Thomas Brandt"],
+      "priority": "mittel",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [],
+      "risk_ids": [],
+      "topics": ["Rohnotizen", "Rechte", "Rollensteuerung", "Offene Fragen"],
+      "recommended_modules": ["M04", "M06", "M17", "M34"]
+    },
+    {
+      "file": "change_request_cr02_cloud_vektordatenbank.md",
+      "document_id": "kompass_change_request_cr02",
+      "title": "Change Request CR-02 Managed Cloud Vector DB",
+      "corpus_part": "project",
+      "document_type": "change_request",
+      "meeting_context": "Änderungsantrag",
+      "date": "2026-04-14",
+      "stakeholders": ["Jonas Reiter", "Mara Vogt", "Sabine Holler", "Dr. Thomas Brandt"],
+      "priority": "hoch",
+      "has_decision": true,
+      "has_open_question": false,
+      "decision_ids": ["D1", "D2"],
+      "risk_ids": ["R2"],
+      "topics": ["Change Request", "Cloud-Vektordatenbank", "Architektur", "Auswirkungen"],
+      "recommended_modules": ["M17", "M19", "M20", "M38"]
+    },
+    {
+      "file": "ressourcen_kapazitaetsmatrix_2026.csv",
+      "document_id": "kompass_capacity_matrix_2026",
+      "title": "Ressourcen- und Kapazitätsmatrix 2026",
+      "corpus_part": "project",
+      "document_type": "capacity_matrix",
+      "meeting_context": "Ressourcenplanung",
+      "date": "2026-05-20",
+      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "priority": "mittel",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [],
+      "risk_ids": [],
+      "topics": ["Ressourcen", "Kapazität", "Auslastung", "Engpass"],
+      "recommended_modules": ["M19", "M20", "M27", "M38"]
     }
   ],
   "eval_sets": [
     {
       "file": "../../05_sonstiges/eval_pmo.json",
       "type": "regular",
-      "question_count": 28,
-      "note": "Dateiname wurde auf den PMO-Use-Case umgestellt."
+      "question_count": 33,
+      "note": "Enthält die 28 Ausgangsfragen und fünf Fragen zu den ergänzten PMO-Artefakten."
     },
     {
       "file": "../../05_sonstiges/eval_pmo_edge.json",
       "type": "edge_cases",
-      "question_count": 10,
+      "question_count": 16,
       "note": "Dateiname wurde auf den PMO-Use-Case umgestellt."
     }
   ]

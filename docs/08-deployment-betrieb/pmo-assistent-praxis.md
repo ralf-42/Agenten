@@ -30,7 +30,7 @@ In diesem Praxisprojekt entsteht schrittweise ein **PMO-Assistent**. Ausgangspun
 > [!NOTE] Dateiname und URL<br>
 > Diese Seite liegt unter `pmo-assistent-praxis.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
 
-Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
+Der Agent lädt einen Projektkorpus aus PDFs, Markdown- und CSV-Dateien mit Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
 Das Zielbild ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
 
@@ -54,7 +54,7 @@ Das Zielbild ist in [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assist
 
 Am Ende steht ein Agent, der:
 
-1. einen PDF-Korpus reproduzierbar lädt,
+1. einen Projektkorpus in unterstützten Formaten reproduzierbar lädt,
 2. Dokumente in Chunks zerlegt und optional in ChromaDB einbettet,
 3. Fragen in natürlicher Sprache beantwortet und Meeting-, Aufgaben- oder Statusinformationen aufbereitet,
 4. jede fachliche Antwort mit Dokumenttitel und Passagen-Zitat belegt,
@@ -118,7 +118,7 @@ Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets od
 
 ```python
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-!uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite langchain-chroma gradio pypdf
+!uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite langchain-chroma gradio pypdf markitdown[all]
 ```
 
 ### API-Key laden und Umgebung prüfen
@@ -265,11 +265,13 @@ Der Beispielkorpus liegt im Repository unter `02_daten/01_text/korpus_pmo_assist
 from genai_lib.github import copy_from_github
 
 KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text/korpus_pmo_assistent"
-KORPUS_MASKE = "*.pdf"
+KORPUS_MASKE = "*"
 KORPUS_TARGET = "/content/files"
 
-copy_from_github(KORPUS_QUELLE, KORPUS_TARGET, pattern=KORPUS_MASKE)
+copy_from_github(KORPUS_QUELLE, KORPUS_TARGET, mask=KORPUS_MASKE)
 ```
+
+Der zentrale Mehrformat-Lader `genai_lib.pmo_rag.load_documents_from_directory` verarbeitet PDFs, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word-Dokumente. README, Qualitätsbeschreibung und Metadaten werden im PMO-Korpus als Verwaltungsdateien erkannt und nicht indexiert.
 
 Jedes Dokument braucht mindestens:
 
@@ -459,7 +461,7 @@ Ein kleines Eval-Set prüft Retrieval und Quellenbindung:
   "id": "q01",
   "frage": "Welche Methode wird in Dokument X zur Chunking-Optimierung vorgeschlagen?",
   "erwartete_passage": "...exakter Textausschnitt...",
-  "quelle": "dateiname.pdf",
+  "quelle": "dateiname.<format>",
   "typ": "faktisch"
 }
 ```
@@ -487,13 +489,13 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 
 | Kriterium | Mindestanforderung |
 |---|---|
-| Korpus | PDF-Korpus wird reproduzierbar geladen oder dokumentiert eingebunden. |
+| Korpus | Projektkorpus in unterstützten Formaten wird reproduzierbar geladen oder dokumentiert eingebunden. |
 | Retrieval | Relevante Passagen werden besser gefunden als mit reinem Stichwortabgleich. |
 | Antwortformat | Ausgabe folgt einem strukturierten Schema mit Antwort, Quellen, Sicherheit und Hinweis. |
 | Quellenbindung | Mindestens eine Antwort enthält nachvollziehbare Quellenangaben. |
 | Kontrolle | HITL oder eine vergleichbare Freigabelogik ist erkennbar. |
 | Sessions | Checkpointing speichert mindestens eine wiederaufnehmbare Session. |
-| Reflexion | Grenzen, Risiken und nächste Verbesserungen werden benannt. |
+| Reflexion | Grenzen, Risiken und nächste Verbesserungen werden benannt; mindestens eine der [Ausbaustufen]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#ausbaustufen-vom-prototyp-zum-einsatz) (Datenbasis, Zugriffsrechte, Datenschutz, Nutzenmessung, Betrieb, Aktionen) wird als erster Ausbauschritt begründet. |
 | PMO-Abgrenzung | Der Assistent unterstützt ausgewählte PMO-nahe Aufgaben und trifft keine verbindlichen Projektentscheidungen. |
 
 **Bestanden:** Der Assistant beantwortet belegbare Fragen aus dem Korpus, verweigert unbelegte Fragen kontrolliert und zeigt den Kontrollpunkt für unsichere Antworten.
@@ -505,7 +507,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 **Pflicht:**
 - mindestens fünf dokumentierte Testfragen mit Ergebnissen
 - kurze Architekturübersicht, gern als Mermaid-Diagramm
-- kurze Reflexion zu Quellenbindung, Unsicherheit und Grenzen
+- kurze Reflexion zu Quellenbindung, Unsicherheit und Grenzen, einschließlich des ersten sinnvollen Ausbauschritts
 
 **Optional:**
 - `briefing_agent_sessions.db`

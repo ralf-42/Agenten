@@ -8,14 +8,14 @@ Der PMO-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeigne
 
 | Kriterium | Ergebnis |
 |---|---|
-| Umfang | 13 PDF-Dateien (Meeting-/Projektartefakte) |
+| Umfang | 18 Wissensartefakte: 13 PDFs, 3 Markdown-Dateien und 2 CSV-Dateien; README, Qualitätsdatei und Metadaten werden nicht indexiert |
 | Tiefe der Projektartefakte | Die 13 neuen Projekt-PDFs wurden auf ca. 300-500 Wörter erweitert; aktuelle Spanne: 321-396 Wörter |
-| Dateiformat | Alle Dateien haben gültigen `%PDF`-Header, mit `PyPDFLoader` geprüft |
+| Dateiformat | Die 13 PDFs haben gültige `%PDF`-Header; Markdown und CSV werden über den Mehrformat-Lader mit MarkItDown eingelesen |
 | Umlaute | Alle neuen PDFs enthalten echte deutsche Umlaute, kein Mojibake (mit `PyPDFLoader`-Extraktion verifiziert) |
-| Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage |
+| Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage, Meilensteine, Budget, Rohnotizen, Change Request, Ressourcen |
 | Eingebaute Edge Cases | Konflikt (D1 vs. D2), Mehrdeutigkeit, Versionierung (Risiko R2), Unsicherheit, Prompt Injection (zitiert, nicht auszuführen) |
 | Datenschutz | Vollständig fiktive Firma, Personen und Inhalte (Nordlicht Software GmbH, Projekt Kompass) |
-| Einsteigerpassung | Geeignet, wenn im Unterricht mit Teilkorpus und geführten Fragen gestartet wird |
+| Einsteigerpassung | Geeignet, wenn im Unterricht mit Teilkorpus und geführten Fragen gestartet wird; CSV und Rohnotizen werden schrittweise eingeführt |
 
 ## Dokumentgruppen
 
@@ -25,10 +25,12 @@ Der PMO-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeigne
 | Meeting-Protokolle | `protokoll_kickoff_2026-03-03.pdf`, `protokoll_steuerkreis_2026-03-17.pdf`, `protokoll_steuerkreis_2026-03-31.pdf`, `protokoll_steuerkreis_2026-04-14.pdf`, `protokoll_steuerkreis_2026-04-28.pdf`, `protokoll_fachbereich_workshop_2026-05-05.pdf`, `protokoll_steuerkreis_2026-05-19.pdf` |
 | Entscheidungs- und Nachverfolgungs-Dokumente | `entscheidungsprotokoll_gesamt.pdf`, `follow_up_tracker.pdf` |
 | Vorlagen | `agenda_vorlage_steuerkreis.pdf` |
+| Planung und Controlling | `meilensteinplan_phasen_kompass.md`, `projektbudget_kostenstatus_q2_2026.csv`, `ressourcen_kapazitaetsmatrix_2026.csv` |
+| Roh- und Ergänzungsdokumente | `meeting_notizen_raw_2026-05-19.md`, `change_request_cr02_cloud_vektordatenbank.md` |
 
 ## Ground-Truth-Abdeckung
 
-Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neuen Projektdokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_pmo_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
+Das Eval-Set `eval_pmo.json` enthält 33 reguläre Fragen und deckt alle 18 Wissensartefakte ab. Die fünf ergänzten Artefakte sind jeweils mit mindestens einer gezielten Frage vertreten. Das Edge-Case-Set `eval_pmo_edge.json` enthält 16 Fälle und deckt 9 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze, quellenautoritaet.
 
 | Datei | Abdeckung |
 |---|---|
@@ -45,6 +47,11 @@ Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neue
 | `entscheidungsprotokoll_gesamt.pdf` | q11, q19, q32 |
 | `follow_up_tracker.pdf` | q12, q29 |
 | `agenda_vorlage_steuerkreis.pdf` | q13, q30, e09 |
+| `meilensteinplan_phasen_kompass.md` | q38 |
+| `projektbudget_kostenstatus_q2_2026.csv` | q34 |
+| `meeting_notizen_raw_2026-05-19.md` | q35 |
+| `change_request_cr02_cloud_vektordatenbank.md` | q36 |
+| `ressourcen_kapazitaetsmatrix_2026.csv` | q37 |
 
 ## Hinweise für den Unterricht
 
@@ -53,3 +60,4 @@ Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neue
 - In M14/M23 mit `eval_pmo.json` starten und Edge-Cases aus `eval_pmo_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
 - Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M16/M22, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.
+- Die ergänzten Markdown- und CSV-Dateien eignen sich für Mehrformat-Laden, Tabellenfragen, Statussynthese und die Überführung von Rohnotizen in strukturierte Ergebnisse.

@@ -79,7 +79,7 @@ Das Zielbild lässt sich in fünf Ausbaustufen lesen:
 
 Der Korpus sollte klein genug sein, um verstanden zu werden, und sauber genug, um Evaluation zu ermöglichen. Zehn bis zwanzig PDF-Dokumente aus einem klaren Themenfeld reichen für einen ersten Prototyp oft aus. Ein größerer, aber unsauberer Bestand verschlechtert die Lern- und Prüfbarkeit: Retrieval-Fehler lassen sich dann schwer von Datenproblemen unterscheiden.
 
-Geeignete Quellen sind Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten, Aufgabenlisten und Rollenlisten. Fachartikel gehören höchstens als Hintergrund in den Korpus; Beispiele und Aufgaben beziehen sich auf die Projektdokumente. Für den Kurs werden reale Projektdaten durch synthetische, fiktive Beispieldokumente ersetzt — urheberrechtlich geschützte Lehrbücher, echte interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
+Geeignete Quellen sind Meeting-Protokolle, Entscheidungsvorlagen, Risikolisten, Aufgabenlisten und Rollenlisten. Beispiele und Aufgaben beziehen sich ausschließlich auf diese Projektdokumente. Für den Kurs werden reale Projektdaten durch synthetische, fiktive Beispieldokumente ersetzt — urheberrechtlich geschützte Lehrbücher, echte interne Dokumente oder personenbezogene Daten eignen sich nicht für eine erste Version.
 
 Für jede Passage sollten mindestens diese Metadaten verfügbar sein:
 
@@ -206,11 +206,11 @@ Das Capstone deckt mindestens eine der drei Kernfunktionen ab: Meeting-Vorbereit
 
 Außerdem müssen mindestens drei Tools, ein StateGraph oder klarer Agenten-Workflow sowie mindestens ein Gate oder HITL-Schritt erkennbar sein. Die Evaluation prüft Positivfälle und mindestens einen Negativfall, bei dem das System korrekt ablehnt oder eskaliert. Ebenso wichtig ist die Reflexion: Welche Grenze wurde sichtbar, welche Quelle fehlte, welcher Eval-Fall scheiterte — und wann darf der Agent nicht autonom handeln?
 
-Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein reiner Fachartikel-Assistent verschiebt den Schwerpunkt zurück auf klassische RAG-Recherche ohne Projektkorpus. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
+Der Bauplan lässt sich auf andere Domänen übertragen. Eine Legal-Research-Variante ergänzt Aktenzeichen, Fundstellen und strengere Freigaberegeln. Eine Compliance-Variante braucht Audit-Trail und Rollenklärung. Ein Wissens-Assistent für Handbücher und Richtlinien verschiebt den Schwerpunkt auf klassische RAG-Auskunft ohne Projektbezug. Die Architektur bleibt ähnlich, aber Korpus, Metadaten und Risiken ändern sich.
 
 | Transferfall | Rolle |
 |---|---|
-| Fachartikel-Assistent | reine RAG-Recherche ohne Projektkontext, frühere Kursversion als Transferbeispiel |
+| Wissens-Assistent | RAG-Auskunft zu Handbüchern und Richtlinien ohne Projektkontext |
 | Legal-Recherche-Assistent | regulierte Recherche, Fundstellenpflicht, HITL und Quellenqualität |
 | Compliance-Prüfung | regulierte Branchen, Audit-Trail und Out-of-Corpus-Regel |
 | Support-Triage | Klassifikation, Tool-Use, HITL und Routing |

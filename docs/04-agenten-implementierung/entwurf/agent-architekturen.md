@@ -311,7 +311,7 @@ Die wichtigsten Koordinationsmuster werden dort ausführlich behandelt:
 ```mermaid
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
-    S --> R[Research-Agent]
+    S --> R[Quellen-Agent]
     S --> W[Writer-Agent]
     S --> C[Code-Agent]
     R --> S
@@ -320,7 +320,7 @@ flowchart TD
     S --> E[Finale Antwort]
 ```
 
-Ein Beispiel ist eine Content-Pipeline: Ein Recherche-Agent sammelt Quellen, ein Schreib-Agent formuliert, ein Prüf-Agent bewertet Qualität und Konsistenz. Solch eine Trennung kann sinnvoll sein, wenn die Teilaufgaben fachlich oder technisch wirklich unterschiedlich sind. Ohne klare Zuständigkeiten entsteht allerdings schnell mehr Koordinationsaufwand als Nutzen.
+Ein Beispiel ist eine Statusbericht-Pipeline: Ein Quellen-Agent sammelt Quellen, ein Schreib-Agent formuliert, ein Prüf-Agent bewertet Qualität und Konsistenz. Solch eine Trennung kann sinnvoll sein, wenn die Teilaufgaben fachlich oder technisch wirklich unterschiedlich sind. Ohne klare Zuständigkeiten entsteht allerdings schnell mehr Koordinationsaufwand als Nutzen.
 
 Entwickler unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
 

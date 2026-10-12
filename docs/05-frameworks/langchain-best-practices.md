@@ -340,13 +340,13 @@ Die aktuelle Kurs-Signatur orientiert sich an `langchain_core.tools.tool`. Für 
 from langchain_core.tools import tool
 
 @tool(
-    "weather_lookup",
-    description="Gibt eine kurze Wetterauskunft für eine Stadt zurück.",
+    "risikostatus_lookup",
+    description="Gibt den Status eines Risikos der Risikoliste (R1-R4) zurück.",
     return_direct=False,
     infer_schema=True,
 )
-def weather_lookup(city: str) -> str:
-    return f"Wetter für {city}: Beispielausgabe"
+def risikostatus_lookup(risiko_id: str) -> str:
+    return f"Status von {risiko_id}: Beispielausgabe"
 ```
 
 > [!WARNING] Versionsabhängige Parameter<br>
@@ -876,7 +876,7 @@ robust_llm = llm.with_retry(
     wait_exponential_jitter=True   # Exponential Backoff + Jitter
 )
 
-result = robust_llm.invoke("Wie ist das Wetter?")
+result = robust_llm.invoke("Welchen Status hat Risiko R2?")
 ```
 
 #### Auf LCEL-Chains anwenden

@@ -179,15 +179,15 @@ Für isolierte Funktionstests (`@tool`-dekorierte Funktionen) die Python-Funktio
 from langchain_core.tools import tool
 
 @tool
-def celsius_nach_fahrenheit(temperatur: float) -> float:
-    """Rechnet Celsius in Fahrenheit um."""
-    return round(temperatur * 9 / 5 + 32, 2)
+def tage_bis_termin(tage_bis_stichtag: int, vorlauf: int) -> int:
+    """Berechnet die verbleibenden Tage nach Abzug des Vorlaufs."""
+    return tage_bis_stichtag - vorlauf
 
 # ✅ Kein Tracing – direkte Python-Funktion
-ergebnis = celsius_nach_fahrenheit.func(temperatur=37.0)
+ergebnis = tage_bis_termin.func(tage_bis_stichtag=21, vorlauf=7)
 
 # ⚠️ Mit Tracing – geht durch das Runnable-Framework
-ergebnis = celsius_nach_fahrenheit.invoke({"temperatur": 37.0})
+ergebnis = tage_bis_termin.invoke({"tage_bis_stichtag": 21, "vorlauf": 7})
 ```
 
 **Wann `.func()` einsetzen:**

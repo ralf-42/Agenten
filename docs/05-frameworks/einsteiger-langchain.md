@@ -238,12 +238,12 @@ Für die meisten Einsteigerbeispiele reichen `@tool`, Type Hints und ein klarer 
 from langchain_core.tools import tool
 
 @tool(
-    "weather_lookup",
-    description="Gibt eine kurze Wetterauskunft für eine Stadt zurück.",
+    "risikostatus_lookup",
+    description="Gibt den Status eines Risikos der Risikoliste (R1-R4) zurück.",
     return_direct=False,
 )
-def weather_lookup(city: str) -> str:
-    return f"Wetter für {city}: Beispielausgabe"
+def risikostatus_lookup(risiko_id: str) -> str:
+    return f"Status von {risiko_id}: Beispielausgabe"
 ```
 
 ### Beispiel: Ein einfaches Rechentool

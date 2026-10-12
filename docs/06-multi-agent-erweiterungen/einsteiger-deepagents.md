@@ -275,7 +275,7 @@ Jeder Sub-Agent arbeitet mit eigener History und klarer Rolle.
 
 Beispiele:
 
-- Recherche-Agent
+- Quellen-Agent
 - Schreib-Agent
 - Analyse-Agent
 
@@ -325,12 +325,12 @@ Bewährte Regeln:
 Sub-Agenten werden als Konfigurationsobjekte beschrieben und dem Hauptagenten übergeben.
 
 ```python
-research_subagent = {
-    "name": "recherche",
-    "description": "Sammelt gezielt Fachinformationen zu agentischen Konzepten",
+quellen_subagent = {
+    "name": "quellen",
+    "description": "Sammelt gezielt belegte Informationen aus den Projektunterlagen",
     "system_prompt": (
-        "Spezialisierter Recherche-Agent. "
-        "Knappe, saubere Fachzusammenfassungen auf Deutsch liefern."
+        "Spezialisierter Quellen-Agent. "
+        "Knappe, saubere Zusammenfassungen belegter Projektfakten auf Deutsch liefern."
     ),
     "tools": [begriff_erklaeren, kurs_thema_info],
     # "model": "openai:gpt-5.6-luna",  # Optional: eigenes Modell seit 0.4.11
@@ -359,7 +359,7 @@ Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 agent = create_deep_agent(
     model=init_chat_model("openai:gpt-5.6-luna"),
     tools=[],
-    subagents=[research_subagent],
+    subagents=[quellen_subagent],
     system_prompt=(
         "Ein Koordinator-Agent. "
         "Recherche-Aufgaben bei Bedarf an den Sub-Agenten delegieren."

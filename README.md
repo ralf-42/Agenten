@@ -42,7 +42,7 @@ Agenten/
 ├── 03_skript/      # Kursfolien & Intro-Präsentation
 ├── 04_modul/       # Python-Module (genai_lib)
 ├── 05_prompt/      # Prompt-Templates (Markdown-Format)
-├── 06_skill/       # Agent Skills (compliance, meeting-briefing, research)
+├── 06_skill/       # Agent Skills (compliance, pmo-briefing, research)
 └── docs/           # GitHub-Pages-Dokumentation, Lernpfad, Ressourcen
 ```
 
@@ -129,7 +129,7 @@ M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Sys
 | M31 | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
 | M32 | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
 | M33 | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| M34 | DeepAgents Skill: Meeting-Briefing | Meeting-Briefing als Skill mit DeepAgents |
+| M34 | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
 | M35 | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
 | M36 | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
 | M37 | Production: API & Monitoring | FastAPI-Endpoints, Production Monitoring und Kursrückblick |

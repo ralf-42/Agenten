@@ -42,7 +42,7 @@ Multi-Agent lohnt sich, wenn mindestens einer dieser Punkte zum echten Engpass w
 
 ## Ein einfaches Beispiel
 
-Ein System soll einen Marktanalyse-Report erstellen. Eine Person oder ein einzelner Agent müsste recherchieren, ordnen, formulieren und prüfen. In einem Multi-Agent-System kann ein Recherche-Agent Quellen sammeln, ein Schreib-Agent den Bericht formulieren und ein Review-Agent auf Konsistenz und Qualität prüfen.
+Ein System soll einen Statusbericht für den Steuerkreis erstellen. Eine Person oder ein einzelner Agent müsste recherchieren, ordnen, formulieren und prüfen. In einem Multi-Agent-System kann ein Quellen-Agent Quellen sammeln, ein Schreib-Agent den Bericht formulieren und ein Review-Agent auf Konsistenz und Qualität prüfen.
 
 Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer selbst willen, sondern klar unterscheidbare Rollen mit echter Arbeitsteilung.
 
@@ -75,7 +75,7 @@ Das Supervisor-Pattern ist der naheliegende Einstieg, wenn eine zentrale Stelle 
 flowchart TD
     A[Aufgabe] --> S[Supervisor]
     S -->|Code| C[Code-Agent]
-    S -->|Recherche| R[Research-Agent]
+    S -->|Quellen| R[Quellen-Agent]
     S -->|Text| W[Writer-Agent]
     C --> S
     R --> S
@@ -95,8 +95,8 @@ def supervisor_node(state: TeamState) -> Command:
     last_message = state["messages"][-1].content.lower()
     if "code" in last_message:
         return Command(goto="code_agent")
-    if "recherche" in last_message:
-        return Command(goto="research_agent")
+    if "quellen" in last_message:
+        return Command(goto="quellen_agent")
     return Command(goto="writer_agent")
 ```
 
@@ -129,7 +129,7 @@ Das Pipeline-Muster eignet sich, wenn Aufgaben in fester Reihenfolge voneinander
 
 ```mermaid
 flowchart LR
-    A[Aufgabe] --> B[Recherche-Agent]
+    A[Aufgabe] --> B[Quellen-Agent]
     B -->|Ergebnis| C[Struktur-Agent]
     C -->|Ergebnis| D[Writer-Agent]
     D --> E[Finale Ausgabe]
@@ -208,7 +208,7 @@ Beim Blackboard-Muster kommunizieren Agenten nicht primär direkt miteinander. S
 ```mermaid
 flowchart TB
     B[(Shared Workspace / Blackboard)]
-    R[Recherche-Agent] <--> B
+    R[Quellen-Agent] <--> B
     A[Analyse-Agent] <--> B
     W[Writer-Agent] <--> B
     Q[Review-Agent] <--> B
@@ -250,7 +250,7 @@ Bei Swarm- oder Peer-to-Peer-Architekturen arbeiten mehrere Agenten ohne festen 
 
 ```mermaid
 flowchart TD
-    A[Aufgabe] --> R[Recherche-Agent]
+    A[Aufgabe] --> R[Quellen-Agent]
     A --> W[Writer-Agent]
     A --> C[Critic-Agent]
     R <--> W
@@ -296,7 +296,7 @@ Parallelität ist ein eigener Gewinn von Multi-Agent-Systemen, aber nur dann, we
 ```mermaid
 flowchart TD
     A[Aufgabe] --> S[Orchestrator]
-    S --> R[Research-Agent]
+    S --> R[Quellen-Agent]
     S --> D[Data-Agent]
     S --> W[Writer-Agent]
     R --> J[Aggregator]

@@ -55,7 +55,7 @@ Die 7 MUST-HAVE Features für LangChain 1.0+ sind vollständig dokumentiert in:
 
 - **PascalCase** für:
   - Klassen: `TypedDict`, `BaseModel` (Pydantic)
-  - Beispiele: `ResearchState`, `Person`
+  - Beispiele: `PmoState`, `Person`
 
 - **UPPER_CASE** für:
   - Konstanten: `MAX_TOKENS`, `DEFAULT_TEMPERATURE`
@@ -288,16 +288,16 @@ def test_agent_with_tools():
     llm = init_chat_model("openai:gpt-5.6-luna")
 
     @tool
-    def get_weather(location: str) -> str:
-        """Mock weather tool."""
-        return f"Sunny in {location}"
+    def get_risk_status(risk_id: str) -> str:
+        """Mock risk status tool."""
+        return f"Status of {risk_id}: mitigated"
 
-    agent = create_agent(model=llm, tools=[get_weather])
+    agent = create_agent(model=llm, tools=[get_risk_status])
     response = agent.invoke({
-        "messages": [{"role": "human", "content": "Weather in Berlin?"}]
+        "messages": [{"role": "human", "content": "What is the status of risk R2?"}]
     })
 
-    assert "Berlin" in response["messages"][-1].content
+    assert "R2" in response["messages"][-1].content
 ```
 
 ---

@@ -1,9 +1,9 @@
 """
-extract_actions.py — Deterministischer Action-Item-Extraktor für den Meeting-Briefing-Skill.
+extract_actions.py — Deterministischer Action-Item-Extraktor für den PMO-Briefing-Skill.
 
 Extrahiert Action Items aus Meeting-Notizen oder Kontext-Dokumenten anhand
 von Signalwörtern und Strukturmustern.
-Wird vom Meeting-Briefing-Skill als Tool aufgerufen.
+Wird vom PMO-Briefing-Skill als Tool aufgerufen.
 
 Verwendung:
     python extract_actions.py '{"text": "Anna übernimmt den Report bis Freitag."}'

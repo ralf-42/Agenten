@@ -1,8 +1,8 @@
 """
-score_relevance.py — Deterministischer Relevanz-Scorer für den Research-Skill.
+score_relevance.py — Deterministischer Relevanz-Scorer für den Dokumentenrecherche-Skill.
 
 Bewertet eine Quelle (Projektdokument) anhand von Keyword-Übereinstimmung und Metadaten.
-Wird vom Research-Skill als Tool aufgerufen.
+Wird vom Dokumentenrecherche-Skill als Tool aufgerufen.
 
 Verwendung:
     python score_relevance.py '{"query": "Status Risiko R2", "source_text": "...", "source_url": "risikoliste_v1.pdf"}'

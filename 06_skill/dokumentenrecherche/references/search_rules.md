@@ -1,6 +1,6 @@
 # Suchregeln
 
-Diese Regeln definieren die Suchstrategie des Research-Skills.
+Diese Regeln definieren die Suchstrategie des Dokumentenrecherche-Skills.
 
 ## Suchmodus-Auswahl
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: PMO-Assitent
+title: PMO-Assistent
 parent: Orientierung & Entscheidung
 nav_order: 4
 description: "Zielbild und roter Faden: projektbezogener PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"

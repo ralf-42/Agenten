@@ -169,7 +169,7 @@ Zusätzlich wurden weitere Redundanzen bereinigt:
 - der Navigationspunkt wurde auf `Modelle & Provider` gekürzt,
 - LangSmith-Seiten wurden aus `07-qualitaet-sicherheit/` nach `05-frameworks/` verschoben, weil sie konkrete Tool-Anleitungen sind,
 - `capstone-briefing.md` und `projekte.md` wurden entfernt; Workshop und Challenge wurden in `08-deployment-betrieb/meeting-research-briefing-agent.md` zusammengeführt,
-- `02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
+- `02-orientierung-entscheidung/pmo-assistent.md` wurde ergänzt, damit das Zielbild der übergreifenden Kursaufgabe getrennt von der praktischen Umsetzung dokumentiert ist.
 - `08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` wurde aus den Frameworks in Deployment & Betrieb verlagert, weil der Text den Weg vom Modell zur produktionsnahen Anwendung beschreibt.
 - Die Bezeichnung `Capstone` wurde aus der Hauptnavigation entfernt; der Abschlussbezug steckt nun im Praxisprojekt `Meeting- & Briefing-Agent`.
 

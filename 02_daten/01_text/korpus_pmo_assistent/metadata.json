@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "corpus_id": "meeting_research_briefing_kompass",
   "display_name": "Meeting- & Briefing-Korpus: Projekt Kompass",
-  "path": "02_daten/01_text/korpus_meeting_briefing",
+  "path": "02_daten/01_text/korpus_pmo_assistent",
   "previous_path": "02_daten/01_text/korpus_research",
   "language": "de",
   "created_for_course": "KI-Agenten. Planen. Handeln. Prüfen.",
@@ -14,7 +14,7 @@
       "corpus_part": "project"
     },
     "notes": [
-      "Der Korpus wurde von korpus_research nach korpus_meeting_briefing umbenannt.",
+      "Der Korpus wurde von korpus_research nach korpus_pmo_assistent umbenannt.",
       "Fuer erste RAG-Uebungen sollte mit corpus_part=project gestartet werden.",
       "Die Fachartikel sollten erst spaeter oder gezielt ueber corpus_part=background hinzugenommen werden."
     ]

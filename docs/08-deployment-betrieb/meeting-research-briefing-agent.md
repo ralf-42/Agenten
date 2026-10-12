@@ -32,7 +32,7 @@ In diesem Praxisprojekt entsteht schrittweise ein **Meeting- & Briefing-Agent al
 
 Der Agent lädt einen PDF-Korpus aus Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
 
-Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }}) beschrieben.
+Das Zielbild der Leitaufgabe ist in [Meeting- & Briefing-Agent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) beschrieben.
 
 **Lernziele:**
 - LangGraph State Machines für kontrollierte Antwortpfade einsetzen
@@ -259,12 +259,12 @@ workflow.add_conditional_edges(
 
 ### Aufgabe 3.1: Korpus laden
 
-Der Beispielkorpus liegt im Repository unter `02_daten/01_text/korpus_meeting_briefing/`. Im Notebook kann er reproduzierbar geladen werden:
+Der Beispielkorpus liegt im Repository unter `02_daten/01_text/korpus_pmo_assistent/`. Im Notebook kann er reproduzierbar geladen werden:
 
 ```python
 from genai_lib.github import copy_from_github
 
-KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text/korpus_meeting_briefing"
+KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text/korpus_pmo_assistent"
 KORPUS_MASKE = "*.pdf"
 KORPUS_TARGET = "/content/files"
 
@@ -531,7 +531,7 @@ Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die 
 - [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
 
 **Projektinterne Dokumente:**
-- [Meeting- & Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/meeting-research-briefing-leitaufgabe.html' | relative_url }})
+- [Meeting- & Briefing-Agent Leitaufgabe]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }})
 - [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }})
 - [Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})
 - [LangGraph Guide]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }})

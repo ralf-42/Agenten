@@ -256,7 +256,7 @@ Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldu
 |---|---|
 | [Lohnt es sich?](./lohnt-es-sich.html) | Ist ein Agent für diese Aufgabe überhaupt sinnvoll? |
 | [Aufgabenklassen & Lösungswege](./aufgabenklassen-und-loesungswege.html) | Welche Lösungsklasse passt zur Aufgabe? |
-| [Meeting- & Briefing-Agent](./meeting-research-briefing-leitaufgabe.html) | Welches Kursprojekt verbindet die Module? |
+| [Meeting- & Briefing-Agent](./pmo-assistent.html) | Welches Kursprojekt verbindet die Module? |
 | [Lernpfad](../lernpfad.html) | Welche Dokumente passen zu meinem Lernziel? |
 
 ---

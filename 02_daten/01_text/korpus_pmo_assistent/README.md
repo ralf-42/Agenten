@@ -18,7 +18,7 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 
 ## Korpusumfang
 
-Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakte zu "Projekt Kompass" sowie 5 weiterverwendete Fachartikel als Hintergrundmaterial, die das fiktive Projektteam bei der Tool-Bewertung selbst sichtet.
+Der Korpus enthält **13 kuratierte PDFs**: Meeting- und Projektartefakte zu "Projekt Kompass".
 
 > [!NOTE]
 > Der Ordner heißt jetzt `korpus_pmo_assistent`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
@@ -27,13 +27,13 @@ Der Korpus enthält **18 kuratierte PDFs**: 13 neue Meeting- und Projektartefakt
 
 Die Datei `metadata.json` beschreibt jedes Dokument mit stabilen Feldern für Retrieval, Filterung und Evaluation:
 
-- `corpus_part`: `project` für Projekt-/Meeting-Artefakte, `background` für Fachartikel
-- `document_type`: z. B. `meeting_protokoll`, `decision_log`, `risikoliste`, `fachartikel`
+- `corpus_part`: `project` für Projekt-/Meeting-Artefakte
+- `document_type`: z. B. `meeting_protokoll`, `decision_log`, `risikoliste`
 - `date`, `stakeholders`, `priority`
 - `has_decision`, `has_open_question`, `decision_ids`, `risk_ids`
 - `topics` und `recommended_modules`
 
-Empfehlung für den Unterricht: In M10/M11 zuerst mit `corpus_part = "project"` arbeiten. Die Fachartikel aus `corpus_part = "background"` sollten erst später oder gezielt zugeschaltet werden, damit sie die kurzen Projektartefakte im Retrieval nicht überlagern.
+Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle arbeiten und den Korpus erst danach vollständig verwenden.
 
 ## Enthaltene Dokumente — Meeting- & Projektartefakte
 
@@ -52,16 +52,6 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit `corpus_part = "project"` 
 | `entscheidungsprotokoll_gesamt.pdf` | Decision Log | ja (D1-D3, kumulativ) | nein | alle | hoch |
 | `follow_up_tracker.pdf` | Tracker | nein | ja (1 offenes Item) | alle | mittel |
 | `agenda_vorlage_steuerkreis.pdf` | Vorlage | nein | nein | Mara Vogt | niedrig |
-
-## Enthaltene Dokumente — Hintergrundmaterial
-
-| Datei | arXiv | Rolle im Korpus |
-|---|---|---|
-| `rag_survey_2312_10997.pdf` | https://arxiv.org/abs/2312.10997 | Hintergrund des Projektteams zur RAG-Technologiebewertung |
-| `llm_autonomous_agents_survey_2308_11432.pdf` | https://arxiv.org/abs/2308.11432 | Hintergrund zu LLM-basierten Agenten |
-| `prompt_engineering_survey_2402_07927.pdf` | https://arxiv.org/abs/2402.07927 | Hintergrund zu Prompting-Techniken |
-| `ragas_evaluation_2309_15217.pdf` | https://arxiv.org/abs/2309.15217 | Hintergrund zur RAG-Evaluation |
-| `robust_rag_irrelevant_context_2310_01558.pdf` | https://arxiv.org/abs/2310.01558 | Hintergrund zu Robustheit gegen irrelevanten Kontext |
 
 ## Empfohlene Nutzung im Kurs
 

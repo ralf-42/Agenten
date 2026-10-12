@@ -8,11 +8,11 @@ Der PMO-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeigne
 
 | Kriterium | Ergebnis |
 |---|---|
-| Umfang | 18 PDF-Dateien (13 neue Meeting-/Projektartefakte, 5 weiterverwendete Fachartikel) |
+| Umfang | 13 PDF-Dateien (Meeting-/Projektartefakte) |
 | Tiefe der Projektartefakte | Die 13 neuen Projekt-PDFs wurden auf ca. 300-500 Wörter erweitert; aktuelle Spanne: 321-396 Wörter |
 | Dateiformat | Alle Dateien haben gültigen `%PDF`-Header, mit `PyPDFLoader` geprüft |
 | Umlaute | Alle neuen PDFs enthalten echte deutsche Umlaute, kein Mojibake (mit `PyPDFLoader`-Extraktion verifiziert) |
-| Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage, RAG-/Agenten-Recherche-Hintergrund |
+| Thematische Perspektiven | Projektunterlagen, Meeting-Protokolle, Entscheidungs-Log, Risikoliste, Follow-up-Tracker, Agenda-Vorlage |
 | Eingebaute Edge Cases | Konflikt (D1 vs. D2), Mehrdeutigkeit, Versionierung (Risiko R2), Unsicherheit, Prompt Injection (zitiert, nicht auszuführen) |
 | Datenschutz | Vollständig fiktive Firma, Personen und Inhalte (Nordlicht Software GmbH, Projekt Kompass) |
 | Einsteigerpassung | Geeignet, wenn im Unterricht mit Teilkorpus und geführten Fragen gestartet wird |
@@ -25,11 +25,10 @@ Der PMO-Korpus (Projekt Kompass) ist für die überarbeitete Kursversion geeigne
 | Meeting-Protokolle | `protokoll_kickoff_2026-03-03.pdf`, `protokoll_steuerkreis_2026-03-17.pdf`, `protokoll_steuerkreis_2026-03-31.pdf`, `protokoll_steuerkreis_2026-04-14.pdf`, `protokoll_steuerkreis_2026-04-28.pdf`, `protokoll_fachbereich_workshop_2026-05-05.pdf`, `protokoll_steuerkreis_2026-05-19.pdf` |
 | Entscheidungs- und Nachverfolgungs-Dokumente | `entscheidungsprotokoll_gesamt.pdf`, `follow_up_tracker.pdf` |
 | Vorlagen | `agenda_vorlage_steuerkreis.pdf` |
-| Recherche-Hintergrund (RAG/Agenten) | `rag_survey_2312_10997.pdf`, `llm_autonomous_agents_survey_2308_11432.pdf`, `prompt_engineering_survey_2402_07927.pdf`, `ragas_evaluation_2309_15217.pdf`, `robust_rag_irrelevant_context_2310_01558.pdf` |
 
 ## Ground-Truth-Abdeckung
 
-Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neuen Projektdokumente ab. Die 5 Fachartikel (Recherche-Hintergrund) bleiben im Korpus, werden aber nicht abgefragt. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_pmo_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
+Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neuen Projektdokumente ab. Für jedes neue Projektartefakt gibt es mindestens 2 reguläre Fragen. Das Edge-Case-Set `eval_pmo_edge.json` enthält 10 Fälle und deckt 8 Fragetypen ab: negativ, out_of_scope, prompt_injection, konflikt, mehrdeutig, unsicherheit, versionierung, vergleich_mit_grenze.
 
 | Datei | Abdeckung |
 |---|---|
@@ -50,7 +49,7 @@ Das Eval-Set `eval_pmo.json` enthält 28 reguläre Fragen und deckt alle 13 neue
 ## Hinweise für den Unterricht
 
 - In M10/M11 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
-- In M12/M13 den gesamten Korpus verwenden, die Fachartikel (Recherche-Hintergrund) bleiben im Korpus, werden aber nicht abgefragt.
+- In M12/M13 den gesamten Korpus verwenden.
 - In M14/M23 mit `eval_pmo.json` starten und Edge-Cases aus `eval_pmo_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
 - Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M16/M22, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.

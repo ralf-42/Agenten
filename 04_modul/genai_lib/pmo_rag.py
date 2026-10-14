@@ -286,11 +286,17 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
 
 
 def format_docs(docs: list[Document]) -> str:
-    """Formatiert Retrieval-Treffer mit ihren Dateiquellen."""
+    """Formatiert Retrieval-Treffer mit Quellen und Korpus-Metadaten."""
+    metadaten = load_korpus_metadata()
     teile = []
     for doc in docs:
         quelle = doc.metadata.get("source", "?").split("/")[-1]
-        teile.append(f"Quelle: {quelle}\n{doc.page_content}")
+        info = _format_metadaten(metadaten.get(quelle))
+        teile.append(
+            f"Quelle: {quelle}\n"
+            + (f"Dokument: {info}\n" if info else "")
+            + f"Ausschnitt: {doc.page_content.replace(chr(10), ' ')[:700]}"
+        )
     return "\n\n---\n\n".join(teile)
 
 
@@ -300,32 +306,38 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
     Factory-Pattern nötig, weil @tool-Funktionen vom Agenten mit genau einem
     Argument (frage) aufgerufen werden — der vectorstore wird per Closure
     injiziert statt über globalen Modul-State.
+
+    Wird ``rag_chain`` übergeben, führt das Tool Retrieval, Kontextformatierung
+    und den Aufruf der reinen Chain explizit nacheinander aus. Ohne Chain wird
+    der formatierte Korpuskontext zurückgegeben.
     """
 
     @tool
     def suche_wissensdatenbank(frage: str) -> str:
         """Durchsucht den Meeting- & Projekt-Korpus zu Entscheidungen, Risiken, Aufgaben und offenen Punkten.
         Geeignet für belegbare Fragen zu Projekt Kompass und Fragen nach Quellen.
+
+        Ohne rag_chain wird der formatierte Korpuskontext zurückgegeben.
+        Mit rag_chain wird daraus eine quellengebundene Antwort erzeugt.
         """
         try:
-            ergebnisse = vectorstore.similarity_search_with_score(frage, k=3)
-            if not ergebnisse:
+            # 1. Dokumente explizit abrufen
+            retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+            retrieved = retriever.invoke(frage)
+
+            # 2. Dokumente formatieren
+            kontext_text = format_docs(retrieved)
+            if not retrieved:
                 return "Nicht im Korpus. Keine relevanten Informationen gefunden."
 
-            metadaten = load_korpus_metadata()
-            antwort_teile = []
-            for doc, score in ergebnisse:
-                quelle = doc.metadata.get("source", "unbekannt").split("/")[-1]
-                ausschnitt = doc.page_content.replace("\n", " ")[:700]
-                info = _format_metadaten(metadaten.get(quelle))
-                antwort_teile.append(
-                    f"Quelle: {quelle}\n"
-                    + (f"Dokument: {info}\n" if info else "")
-                    + f"Distanz (kleiner = ähnlicher): {score:.4f}\n"
-                    f"Ausschnitt: {ausschnitt}"
-                )
+            if rag_chain is None:
+                return kontext_text
 
-            return "\n\n---\n\n".join(antwort_teile)
+            # 3. Chain mit dem fertigen Dictionary aufrufen
+            return rag_chain.invoke(
+                {"context": kontext_text, "question": frage},
+                config={"run_name": "pmo_rag_chain_antwort"},
+            )
         except Exception as exc:
             return f"Fehler bei der Datenbanksuche: {exc}"
 

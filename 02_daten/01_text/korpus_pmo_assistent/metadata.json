@@ -255,7 +255,7 @@
       "decision_ids": ["D1", "D2"],
       "risk_ids": ["R2"],
       "topics": ["Meilensteine", "Phasen", "Roadmap", "Gates", "Status"],
-      "recommended_modules": ["M14", "M17", "M19", "M20", "M27"]
+      "recommended_modules": ["M14", "M17", "M19", "M20"]
     },
     {
       "file": "projektbudget_kostenstatus_q2_2026.csv",
@@ -272,7 +272,7 @@
       "decision_ids": [],
       "risk_ids": ["R4"],
       "topics": ["Budget", "Ist-Kosten", "Forecast", "Abweichung", "Ampel"],
-      "recommended_modules": ["M19", "M20", "M27", "M38"]
+      "recommended_modules": ["M19", "M20"]
     },
     {
       "file": "meeting_notizen_raw_2026-05-19.md",
@@ -306,7 +306,7 @@
       "decision_ids": ["D1", "D2"],
       "risk_ids": ["R2"],
       "topics": ["Change Request", "Cloud-Vektordatenbank", "Architektur", "Auswirkungen"],
-      "recommended_modules": ["M17", "M19", "M20", "M38"]
+      "recommended_modules": ["M17", "M19", "M20"]
     },
     {
       "file": "ressourcen_kapazitaetsmatrix_2026.csv",
@@ -323,7 +323,7 @@
       "decision_ids": [],
       "risk_ids": [],
       "topics": ["Ressourcen", "Kapazität", "Auslastung", "Engpass"],
-      "recommended_modules": ["M19", "M20", "M27", "M38"]
+      "recommended_modules": ["M19", "M20"]
     }
   ],
   "eval_sets": [

@@ -384,7 +384,7 @@ class BriefingAntwort(BaseModel):
     hinweis: str = Field(description="'Nicht im Korpus' wenn out-of-scope")
 ```
 
-Je nach PMO-Kernfunktion ergänzt oder ersetzt ein eigenes Ergebnisformat dieses Schema: `GateOutputResult` (Meeting-Briefing, M34), `ActionItemResult` (offene Aufgaben, M04/M34), `StatusberichtResult` (Statusbericht, M27) und `RiskReviewResult` (Risikoübersicht, M04). Felder und Beispiele stehen unter [Ergebnisformate des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#ergebnisformate-des-pmo-assistenten).
+Je nach PMO-Kernfunktion ergänzt oder ersetzt ein eigenes Ergebnisformat dieses Schema: `GateOutputResult` (Meeting-Briefing, M34), `ActionItemResult` (offene Aufgaben, M04/M34) und `RiskReviewResult` (Risikoübersicht, M04). Felder und Beispiele stehen unter [Ergebnisformate des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#ergebnisformate-des-pmo-assistenten).
 
 ### Aufgabe 5.2: Qualitäts-Gate ergänzen
 

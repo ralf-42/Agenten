@@ -285,7 +285,16 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
     return ergebnis
 
 
-def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
+def format_docs(docs: list[Document]) -> str:
+    """Formatiert Retrieval-Treffer mit ihren Dateiquellen."""
+    teile = []
+    for doc in docs:
+        quelle = doc.metadata.get("source", "?").split("/")[-1]
+        teile.append(f"Quelle: {quelle}\n{doc.page_content}")
+    return "\n\n---\n\n".join(teile)
+
+
+def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
     """Baut das @tool suche_wissensdatenbank für eine gegebene Vectorstore-Instanz.
 
     Factory-Pattern nötig, weil @tool-Funktionen vom Agenten mit genau einem

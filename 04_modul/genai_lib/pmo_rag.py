@@ -312,7 +312,7 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma):
                 antwort_teile.append(
                     f"Quelle: {quelle}\n"
                     + (f"Dokument: {info}\n" if info else "")
-                    + f"Score: {score:.4f}\n"
+                    + f"Distanz (kleiner = ähnlicher): {score:.4f}\n"
                     f"Ausschnitt: {ausschnitt}"
                 )
 

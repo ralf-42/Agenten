@@ -39,7 +39,6 @@ Standardpfad bleibt für die Kurs-Notebooks die persistente Google-Drive-Collect
 import csv
 import json
 import urllib.request
-from functools import lru_cache
 from pathlib import Path
 
 from langchain_chroma import Chroma
@@ -159,7 +158,12 @@ def split_documents_by_characters(
     an Absätzen, dann an Zeilenumbrüchen und Leerzeichen (RecursiveCharacterTextSplitter).
     Jeder Chunk beginnt mit einer Kopfzeile ``Dokument: <Dateiname ohne Endung>``.
     Dadurch kann das Embedding auch den Dokumenttyp (z. B. "risikoliste v1")
-    abbilden, der sonst nur in den Metadaten steht.
+    abbilden, der sonst nur in den Metadaten steht. Die Kopfzeile zählt nicht zu
+    ``chunk_size``; ein Chunk ist daher bis zu etwa 30 Zeichen länger.
+
+    Hinweis: Der Überlappungswert greift nur, wenn ganze Textstücke (Zeilen,
+    Sätze) hineinpassen. Bei kurzen Zeilen kann die tatsächliche Überlappung
+    kleiner ausfallen als ``chunk_overlap``.
     """
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap
@@ -206,9 +210,14 @@ def index_pmo_corpus(
 ) -> int:
     """Indexiert unterstützte Dokumente aus directory_path in die Collection.
 
-    Indexiert nur, wenn die Collection leer ist. Mit force=True werden
-    vorhandene Einträge zuerst gelöscht und die Collection neu aufgebaut —
-    nötig, falls sich der PDF-Korpus nach dem ersten Aufbau ändert.
+    Indexiert nur, wenn die Collection leer ist. Stammt eine vorhandene Collection
+    aus einem älteren Chunking (Kopfzeile oder ``chunk_version`` fehlen), wird sie
+    automatisch gelöscht und neu aufgebaut. Mit force=True werden vorhandene
+    Einträge immer zuerst gelöscht und die Collection neu aufgebaut — nötig,
+    falls sich der Korpus nach dem ersten Aufbau ändert oder ``chunk_size`` bzw.
+    ``chunk_overlap`` angepasst werden.
+
+    Gibt die Anzahl neu indexierter Chunks zurück (0, wenn nichts zu tun war).
     """
     if not force and vectorstore._collection.count() > 0:
         probe = vectorstore.get(limit=1, include=["documents", "metadatas"])
@@ -245,24 +254,32 @@ def index_pmo_corpus(
     return len(chunks)
 
 
-@lru_cache(maxsize=4)
+_KORPUS_METADATA_CACHE: dict[str | None, dict[str, dict]] = {}
+
+
 def load_korpus_metadata(metadata_path: str | None = None) -> dict[str, dict]:
     """Lädt die Dokument-Metadaten des Korpus als Dict {dateiname: eintrag}.
 
     Ohne metadata_path wird metadata.json aus dem Kurs-Repository (GitHub, main)
     geladen. Ist die Datei nicht erreichbar, wird ein leeres Dict zurückgegeben —
     die Suche funktioniert dann wie bisher, nur ohne Datum und Dokumenttyp.
+    Nur erfolgreiche Abrufe werden zwischengespeichert; nach einem Fehler wird
+    beim nächsten Aufruf erneut versucht (ein kurzer Netzausfall bleibt so folgenlos).
     """
+    if metadata_path in _KORPUS_METADATA_CACHE:
+        return _KORPUS_METADATA_CACHE[metadata_path]
     try:
         if metadata_path:
             inhalt = Path(metadata_path).read_text(encoding="utf-8")
         else:
             with urllib.request.urlopen(KORPUS_METADATA_URL, timeout=10) as antwort:
                 inhalt = antwort.read().decode("utf-8")
-        return {eintrag["file"]: eintrag for eintrag in json.loads(inhalt)["documents"]}
+        ergebnis = {eintrag["file"]: eintrag for eintrag in json.loads(inhalt)["documents"]}
     except Exception as exc:
         mprint(f"  ⚠ Korpus-Metadaten nicht geladen: {exc}")
         return {}
+    _KORPUS_METADATA_CACHE[metadata_path] = ergebnis
+    return ergebnis
 
 
 def _format_metadaten(eintrag: dict | None) -> str:
@@ -308,7 +325,7 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
 
 
 def format_docs(docs: list[Document]) -> str:
-    """Formatiert Retrieval-Treffer mit Quellen und Korpus-Metadaten."""
+    """Formatiert Retrieval-Treffer mit Quelle, Korpus-Metadaten (Zeile ``Metadaten:``) und Ausschnitt."""
     metadaten = load_korpus_metadata()
     teile = []
     for doc in docs:
@@ -316,7 +333,7 @@ def format_docs(docs: list[Document]) -> str:
         info = _format_metadaten(metadaten.get(quelle))
         teile.append(
             f"Quelle: {quelle}\n"
-            + (f"Dokument: {info}\n" if info else "")
+            + (f"Metadaten: {info}\n" if info else "")
             + f"Ausschnitt: {doc.page_content.replace(chr(10), ' ')[:700]}"
         )
     return "\n\n---\n\n".join(teile)

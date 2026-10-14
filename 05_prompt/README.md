@@ -99,8 +99,7 @@ result = chain.invoke({"variable1": "Wert"})
 | M04 | `m04_protokollnotiz_prompt.md`, `m04_pmo_signal_classification_prompt.md`, `m04_citation_format_prompt.md`, `m04_pmo_review_prompt.md` |
 | M05 | `m05_multi_tool_system_prompt.md`, `m05_robust_pmo_system_prompt.md` |
 | M09 | `m09_pmo_routing_prompt.md` |
-| M12 | `m12_query_rewrite_prompt.md` |
-| M13 | `m13_rag_prompt.md` |
+| M11 | `m11_query_rewrite_prompt.md`, `m11_rag_prompt.md` |
 | M14 | `m14_rag_agent_system_prompt.md` |
 | M26 | `m26_quality_judge_prompt.md`, `m26_security_gate_prompt.md` |
 | M30 | `m30_math_agent_prompt.md`, `m30_multi_agent_prompt.md`, `m30_notiz_agent_prompt.md` |

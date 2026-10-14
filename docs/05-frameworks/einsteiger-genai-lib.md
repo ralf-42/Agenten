@@ -15,7 +15,7 @@ has_toc: true
 
 ---
 
-Die `genai_lib` ist eine projektspezifische Python-Bibliothek, die speziell für die Anforderungen dieses Kurses entwickelt wurde. Sie bündelt wichtige Funktionen für multimodale RAG-Systeme und allgemeine Hilfsfunktionen.
+Die `genai_lib` ist eine projektspezifische Python-Bibliothek, die speziell für die Anforderungen dieses Kurses entwickelt wurde. Sie bündelt die PMO-RAG-Kette, Modellrollen und allgemeine Hilfsfunktionen.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -27,7 +27,7 @@ Die `genai_lib` ist eine projektspezifische Python-Bibliothek, die speziell für
 
 ## Kurzüberblick: Was ist GenAI_Lib?
 
-Die `genai_lib` bündelt wiederkehrende Hilfsfunktionen für den Agenten-Kurs: Environment-Checks, API-Key-Setup, Modellprofile, Rollenmodelle und multimodales RAG. Sie ist keine externe Produktbibliothek, sondern die gemeinsame Kursbibliothek für Notebooks und Beispiele.
+Die `genai_lib` bündelt wiederkehrende Hilfsfunktionen für den Agenten-Kurs: Environment-Checks, API-Key-Setup, Modellprofile, Rollenmodelle und die PMO-RAG-Kette. Sie ist keine externe Produktbibliothek, sondern die gemeinsame Kursbibliothek für Notebooks und Beispiele.
 
 ---
 
@@ -36,10 +36,10 @@ Die `genai_lib` bündelt wiederkehrende Hilfsfunktionen für den Agenten-Kurs: E
 | Konzept | Bedeutung |
 |---|---|
 | `utilities.py` | Setup-, Diagnose- und Komfortfunktionen für Notebooks |
-| `multimodal_rag.py` | Hilfen für Text-, Bild- und Cross-Modal-Retrieval |
+| `pmo_rag.py` | Laden, Chunking, Chroma-Indexierung und Agenten-Tools für den PMO-Korpus |
 | `model_config.py` | Rollenbasierte Modellwahl für Agenten-Komponenten |
 | Environment-Setup | Reproduzierbare Colab- und lokale Laufzeitumgebung |
-| Model Roles | Trennung von Baseline, Worker, Judge, Planner, Router und Vision |
+| Model Roles | Trennung von Baseline, Worker, Judge, Planner und Router |
 
 ---
 
@@ -62,14 +62,14 @@ Die Bibliothek besteht aus drei Hauptmodulen:
 | Modul | Beschreibung | Hauptfunktionen |
 |-------|-------------|----------------|
 | **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, GitHub-Datei-Download |
-| **multimodal_rag.py** | Multimodales RAG-System (v3.1) | Text- und Bildsuche, Bild-zu-Bild-Suche, Cross-Modal-Retrieval, System-Status |
+| **pmo_rag.py** | Wiederverwendbare PMO-RAG-Kette | Mehrformat-Lader, Chunking, Chroma-Vectorstore, Indexierung, Tools `suche_wissensdatenbank` und `lies_tabellendaten` |
 | **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, WORKER_PREMIUM, FRONTIER, Medien-Rollen, EMBEDDINGS |
 
 ---
 
 ## Typische Workflows
 
-Die folgenden Modulabschnitte zeigen typische Kurs-Workflows: Umgebung prüfen, API-Keys laden, Modellprofile vergleichen, multimodales RAG aufbauen und Modellrollen zentral konfigurieren.
+Die folgenden Modulabschnitte zeigen typische Kurs-Workflows: Umgebung prüfen, API-Keys laden, Modellprofile vergleichen, die PMO-RAG-Kette aufbauen und Modellrollen zentral konfigurieren.
 
 ---
 
@@ -488,220 +488,105 @@ show_trace("M13-RAG-Chain", limit=3, show_steps=True)
 
 ---
 
-## multimodal_rag.py - Multimodales RAG
+## pmo_rag.py - PMO-RAG-Kette
 
 ### Überblick
 
-Das `multimodal_rag`-Modul implementiert ein vollständiges RAG-System mit Unterstützung für Text- und Bilddokumente. Es kombiniert OpenAI-Embeddings für Text und CLIP-Embeddings für Bilder.
+Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie M14, M15, M26, M28, M29 und M36 bis M38 verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. M11 baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
 
 ### Architektur
 
 ```
-multimodal_rag
-├── Text-Pipeline: OpenAI Embeddings + ChromaDB
-├── Bild-Pipeline: CLIP Embeddings + ChromaDB
-├── Vision-LLM: gpt-5.4-mini für Bildbeschreibungen (via init_chat_model)
-└── Hybride Suche: Text ↔ Bild ↔ Bild
+pmo_rag
+├── Laden:      load_documents_from_directory (MarkItDown), load_pdf_documents (pypdf)
+├── Chunking:   split_documents_by_characters (Standard 300/30)
+├── Vectorstore: get_pmo_vectorstore + index_pmo_corpus (Chroma, Batching)
+├── Kontext:    load_korpus_metadata, format_docs
+└── Tools:      make_suche_wissensdatenbank_tool, make_lies_tabellendaten_tool
 ```
-
-> [!NOTE] LangChain 1.0+ Integration (v3.1)<br>
-> Das `multimodal_rag`-Modul verwendet moderne LangChain 1.0+ Patterns:
-> - Nutzt `init_chat_model(f"openai:{config.llm_model}")` für LLM-Initialisierung
-> - Vision-Analysen mit `HumanMessage` und Standard Content Blocks
-> - Provider-agnostische Multimodal-Verarbeitung
 
 ### Hauptfunktionen
 
-#### . `init_rag_system(config=None)`
-Initialisiert das vollständige RAG-System.
+| Funktion | Zweck |
+|---|---|
+| `get_pmo_vectorstore(persist_directory, collection_name)` | Erstellt oder lädt die Chroma-Collection `pmo_korpus_m14` mit `EMBEDDINGS` |
+| `index_pmo_corpus(vectorstore, directory_path, chunk_size=300, chunk_overlap=30, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; überspringt eine gefüllte Collection |
+| `load_documents_from_directory(directory_path)` | Mehrformat-Lader für PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word |
+| `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Zeichenbasiertes Chunking mit `chunk_index` in den Metadaten |
+| `make_suche_wissensdatenbank_tool(vectorstore, rag_chain=None)` | Erzeugt das Agenten-Tool `suche_wissensdatenbank` |
+| `make_lies_tabellendaten_tool(directory_path)` | Erzeugt das Tool `lies_tabellendaten` für Budget- und Ressourcentabellen |
+| `check_corpus(vectorstore, directory_path)` | Vergleicht Korpusdateien mit den indexierten Quellen |
+| `load_korpus_metadata(metadata_path=None)` | Lädt Datum, Dokumenttyp sowie Entscheidungs- und Risiko-IDs |
+| `format_docs(docs)` | Formatiert Treffer mit Quelle und Korpus-Metadaten |
+
+### Typischer Ablauf im Notebook
 
 ```python
-from genai_lib.multimodal_rag import init_rag_system, RAGConfig
+from google.colab import drive
+drive.mount("/content/drive")
 
-# Mit Standard-Konfiguration
-rag = init_rag_system()
-
-# Mit eigener Konfiguration
-config = RAGConfig(
-    chunk_size=300,
-    chunk_overlap=50,
-    clip_model='clip-ViT-B-32',
-    llm_model='gpt-5.4-mini',
-    vision_model='gpt-5.4-mini',
-    db_path='./my_rag_db'
-)
-rag = init_rag_system(config)
-```
-
-**Was wird initialisiert:**
-- OpenAI Text-Embeddings
-- CLIP-Modell für Bild-Embeddings
-- GPT-5.4-mini für Text und Vision (via `init_chat_model()` - LangChain 1.0+)
-- ChromaDB mit zwei Collections (texts, images)
-- MarkItDown für Dokumentenkonvertierung
-
-**Interne LangChain 1.0+ Patterns:**
-```python
-# System nutzt intern moderne LangChain APIs
-llm = init_chat_model(f"openai:{config.llm_model}")
-vision_llm = init_chat_model(f"openai:{config.vision_model}")
-
-from langchain_core.messages import HumanMessage
-
-# Vision-Analyse mit Standard Content Blocks
-message = HumanMessage(content=[
-    {"type": "text", "text": "Beschreibe dieses Bild"},
-    {"type": "image", "url": "data:image/png;base64,...", "mime_type": "image/png"}
-])
-```
-
-#### . `process_directory(rag, directory_path, auto_describe_images=True)`
-Verarbeitet ein Verzeichnis mit Text- und Bilddateien.
-
-```python
-from genai_lib.multimodal_rag import process_directory
-
-# Verzeichnis mit automatischen Bildbeschreibungen
-process_directory(rag, './files', auto_describe_images=True)
-
-# Ohne Bildbeschreibungen (nur CLIP-Embeddings)
-process_directory(rag, './files', auto_describe_images=False)
-```
-
-**Unterstützte Dateitypen:**
-- **Text:** `.txt`, `.md`, `.pdf`, `.docx`, `.pptx`, `.xlsx`
-- **Bilder:** `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`
-
-**Features:**
-- Automatische Dokumentenkonvertierung mit MarkItDown
-- Text-Chunking mit RecursiveCharacterTextSplitter
-- Automatische Bildbeschreibung mit gpt-5.4-mini
-- CLIP-Embeddings für Bilder
-- Fortschrittsanzeige
-
-#### . `multimodal_search(rag, query, k_text=3, k_images=3, enable_cross_modal=True)`
-Durchsucht Text und Bilder gleichzeitig und kann Bildtreffer zusätzlich über gefundene Bildbeschreibungen ableiten.
-
-```python
-from genai_lib.multimodal_rag import (
-    multimodal_search,
-    search_texts,
-    search_images,
+from genai_lib.pmo_rag import (
+    get_pmo_vectorstore,
+    index_pmo_corpus,
+    make_suche_wissensdatenbank_tool,
 )
 
-# Hybride Suche (Text + Bilder)
-results = multimodal_search(
-    rag,
-    "Roboter mit KI",
-    k_text=5,
-    k_images=5,
-    enable_cross_modal=True,
+vectorstore = get_pmo_vectorstore()
+index_pmo_corpus(vectorstore, "/content/files", chunk_size=300, chunk_overlap=30)
+
+suche_wissensdatenbank = make_suche_wissensdatenbank_tool(vectorstore)
+tools = [suche_wissensdatenbank]
+```
+
+Ohne `rag_chain` liefert das Tool den formatierten Korpuskontext (Quelle, Dokument-Metadaten, Ausschnitt). Mit `rag_chain` erzeugt es daraus eine quellengebundene Antwort.
+
+Der RAG-Ablauf bleibt in drei Schritte getrennt:
+
+```python
+# 1. Dokumente explizit abrufen
+retrieved = retriever.invoke(frage)
+
+# 2. Dokumente formatieren
+kontext_text = format_docs(retrieved)
+
+# 3. Reine Chain mit dem fertigen Dictionary aufrufen
+antwort = rag_chain.invoke(
+    {"context": kontext_text, "question": frage},
+    config={"run_name": "rag_chain_antwort"},
 )
-
-# Nur Text
-text_results = search_texts(rag, "Maschinelles Lernen", k=5)
-
-# Nur Bilder
-image_results = search_images(rag, "rote Autos", k=5)
 ```
 
-**Rückgabe:**
-- `multimodal_search`: formatierter Markdown-String mit LLM-Antwort, Quellen und Bildtreffern
-- `search_texts`: formatierter Markdown-String mit LLM-Antwort und Quellen
-- `search_images`: formatierter String mit Bildtreffern
-
-#### . `search_similar_images(rag, image_path, k=5)`
-Findet ähnliche Bilder zu einem Query-Bild (Bild → Bild Suche).
+Die Chain selbst umfasst ausschließlich:
 
 ```python
-from genai_lib.multimodal_rag import search_similar_images
-
-# Ähnliche Bilder finden
-similar = search_similar_images(rag, "./query_image.jpg", k=5)
-
-for img in similar:
-    print(f"Ähnlichkeit: {img['similarity']:.2f}")
-    print(f"Pfad: {img['path']}")
+rag_chain = prompt | llm | parser
 ```
 
-**Use Cases:**
-- Duplikate finden
-- Ähnliche Produkte vorschlagen
-- Bildkategorisierung
-
-#### . `search_text_by_image(rag, image_path, k=3, k_text=3)`
-Findet Textdokumente, die zum Bildinhalt passen (Bild → Text Suche).
+Das optionale `rag_chain` kann beim Erzeugen des Tools übergeben werden:
 
 ```python
-from genai_lib.multimodal_rag import search_text_by_image
-
-# Passende Texte zu einem Bild finden
-result = search_text_by_image(rag, "./product_image.jpg", k=3, k_text=3)
-print(result)
-```
-
-**Use Cases:**
-- Produktbeschreibungen zu Bildern finden
-- Dokumentation zu Screenshots suchen
-- Bild-Text-Verknüpfung in Datenbanken
-
-#### . `get_system_status(rag)`
-Gibt Statistiken über das RAG-System zurück.
-
-```python
-from genai_lib.multimodal_rag import get_system_status
-
-status = get_system_status(rag)
-print(f"Text-Chunks: {status['text_chunks']}")
-print(f"Bilder: {status['images']}")
-print(f"Bildbeschreibungen: {status['image_descriptions']}")
-```
-
-**Rückgabe:**
-- `text_chunks`: Anzahl der Text-Dokument-Chunks
-- `images`: Anzahl der Bilder in der Datenbank
-- `image_descriptions`: Anzahl der Bildbeschreibungen
-- `total_documents`: Gesamtanzahl aller Einträge
-
-#### . `cleanup_database(db_path)`
-Löscht die Datenbank komplett für einen Neustart.
-
-```python
-from genai_lib.multimodal_rag import cleanup_database
-
-cleanup_database('./multimodal_rag_db')
-```
-
-### Vollständiges Beispiel
-
-```python
-from genai_lib.multimodal_rag import (
-    init_rag_system,
-    process_directory,
-    multimodal_search,
-    search_similar_images,
-    get_system_status
+suche_wissensdatenbank = make_suche_wissensdatenbank_tool(
+    vectorstore,
+    rag_chain=rag_chain,
 )
-
-# . System initialisieren
-rag = init_rag_system()
-
-# . Dokumente verarbeiten
-process_directory(rag, './knowledge_base', auto_describe_images=True)
-
-# . Status prüfen
-status = get_system_status(rag)
-print(f"Verarbeitet: {status['text_chunks']} Texte, {status['images']} Bilder")
-
-# . Multimodale Suche (Text + Bilder + Cross-Modal)
-results = multimodal_search(rag, "Neuronale Netze", k_text=3, k_images=3)
-print(results)
-
-# . Bild-zu-Bild Suche
-similar = search_similar_images(rag, "./query_image.jpg", k=5)
-for img in similar:
-    print(f"{img['filename']}: {img['similarity']}")
 ```
+
+### Retriever und Relevanz-Score
+
+`pmo_rag.py` verwendet für das Tool den normalen Retriever-Aufruf
+`retriever.invoke(frage)`. Wenn in eigenen Experimenten zusätzlich Scores oder
+Schwellwerte ausgewertet werden, gilt: Ein `score_threshold` bei
+`as_retriever(search_type="similarity_score_threshold")` arbeitet mit einem
+**Relevanz-Score** (höher = besser). Andere Chroma-Suchmethoden können dagegen
+eine **Distanz** liefern (kleiner = ähnlicher). Beide Skalen dürfen nicht
+gemischt werden.
+
+### Grenzen und typische Fehler
+
+- **Typischer Fehler:** Google Drive ist nicht gemountet. Bei Drive-Pfaden bricht `get_pmo_vectorstore()` mit `RuntimeError` ab, statt einen leeren Index anzulegen.
+- **Typischer Fehler:** `force=True` am falschen Vectorstore. Der Aufruf löscht alle vorhandenen Einträge der Collection und baut sie neu auf.
+- **Metadaten:** `load_korpus_metadata()` lädt `metadata.json` standardmäßig von GitHub. Offline entfällt nur die Zeile `Dokument:` in der Tool-Ausgabe; die Suche selbst funktioniert weiter. Lokal hilft `metadata_path`.
+- **Chunking:** Wer `chunk_size` oder `chunk_overlap` ändert, muss die Collection mit `force=True` neu indexieren, sonst mischen sich alte und neue Chunks.
 
 ---
 
@@ -736,26 +621,22 @@ show_trace("M13-RAG-Chain")
 show_trace("M13-RAG-Chain", show_steps=True)
 ```
 
-### . Multimodales RAG-System
+### . PMO-RAG-Kette
 ```python
-from genai_lib.multimodal_rag import (
-    init_rag_system,
-    RAGConfig,
-    process_directory,
-    multimodal_search
+from genai_lib.pmo_rag import (
+    get_pmo_vectorstore,
+    index_pmo_corpus,
+    check_corpus,
 )
 
-# Custom Konfiguration für große Dokumente
-config = RAGConfig(
-    chunk_size=500,
-    chunk_overlap=100,
-    text_min_similarity=0.3,
-    image_threshold=0.8,
-    db_path='./projekt_rag'
-)
+# Lokaler Test ohne Google Drive
+vectorstore = get_pmo_vectorstore(persist_directory="./chroma_pmo_local")
 
-rag = init_rag_system(config)
-process_directory(rag, './docs', auto_describe_images=True)
+# Neuaufbau nach geänderten Dokumenten oder geänderter Chunk-Größe
+index_pmo_corpus(vectorstore, "./files", chunk_size=300, chunk_overlap=30, force=True)
+
+# Prüfen, ob alle Korpusdateien indexiert sind
+print(check_corpus(vectorstore, "./files"))
 ```
 
 ---
@@ -783,29 +664,44 @@ Prüfe die Rollen-Konfiguration in `model_config.py` und ob lokale Overrides ode
 ### Kern-Abhängigkeiten
 ```python
 # LangChain Stack
-langchain>=1.1.0
-langchain-core>=1.3.0
-langchain-openai>=1.0.0
-langgraph>=1.0.0
-langchain-community>=0.3.0
-langchain-text-splitters>=1.1.0
-langchain-chroma>=0.1.0
-langchain-ollama>=0.2.0
+langchain>=1.3.13
+langchain-core>=1.4.0
+langchain-openai>=1.2.2
+langchain-text-splitters>=1.1.2
+langchain-chroma>=1.1.0
+langchain-ollama>=1.1.0
+
+# Dokumente laden (pmo_rag)
+pypdf>=5.0.0
+markitdown[all]>=0.0.1
+
+# LangGraph Stack
+langgraph>=1.2.4
+langgraph-checkpoint>=4.1.1
+langgraph-checkpoint-sqlite>=3.1.0
+langgraph-prebuilt>=1.1.0
+langgraph-sdk>=0.4.2
+
+# LangSmith
+langsmith>=0.8.0
+
+# Agent Harness
+deepagents>=0.7.0
 
 # OpenAI
-openai>=1.0.0
-
-# Multimodal
-sentence-transformers>=3.0.0
-pillow>=10.0.0
-markitdown>=0.0.1
+openai>=2.0.0
 
 # Vektordatenbank
-chromadb>=0.5.0
+chromadb>=1.0.0
+
+# Pillow-Pin (Colab-Basisimage, wird u.a. von Gradio importiert)
+pillow>=11.0.0,<12.0.0
 
 # Utilities
-requests>=2.31.0
-langsmith>=0.1.0
+requests>=2.32.0
+
+# Notebook-Tooling
+nbformat>=5.10.0
 ```
 
 ---
@@ -865,7 +761,7 @@ frontier_llm = init_chat_model(FRONTIER)
 
 ## Zusammenfassung
 
-GenAI_Lib ist die gemeinsame technische Basis für Kurs-Notebooks im Agenten-Projekt. Für Einsteiger sind zuerst Installation, Environment-Check und API-Key-Setup wichtig; danach folgen Modellrollen und multimodales RAG als fortgeschrittene Bausteine.
+GenAI_Lib ist die gemeinsame technische Basis für Kurs-Notebooks im Agenten-Projekt. Für Einsteiger sind zuerst Installation, Environment-Check und API-Key-Setup wichtig; danach folgen Modellrollen und die PMO-RAG-Kette als fortgeschrittene Bausteine.
 
 ---
 
@@ -886,7 +782,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.4<br>
+**Version:** 3.5<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

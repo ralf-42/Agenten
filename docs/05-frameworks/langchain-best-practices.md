@@ -801,7 +801,7 @@ for block in message.content_blocks:
 ```
 
 ### Anwendungsfälle
-- ✅ Multimodale RAG-Systeme (perfekt für `04_modul/genai_lib/multimodal_rag.py`)
+- ✅ Multimodale RAG-Systeme (Text und Bilder in einer Pipeline)
 - ✅ Bild-zu-Text und Text-zu-Bild Pipelines
 - ✅ Audio/Video-Analyse mit LLMs
 - ✅ Provider-unabhängige Chatbots

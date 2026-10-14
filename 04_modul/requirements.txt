@@ -28,8 +28,7 @@ openai>=2.0.0
 # Vector Database
 chromadb>=1.0.0
 
-# Image Processing
-sentence-transformers>=5.0.0
+# Pillow-Pin (Colab-Basisimage, wird u.a. von Gradio importiert)
 pillow>=11.0.0,<12.0.0
 
 # Utilities

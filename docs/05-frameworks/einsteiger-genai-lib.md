@@ -585,8 +585,9 @@ gemischt werden.
 
 - **Typischer Fehler:** Google Drive ist nicht gemountet. Bei Drive-Pfaden bricht `get_pmo_vectorstore()` mit `RuntimeError` ab, statt einen leeren Index anzulegen.
 - **Typischer Fehler:** `force=True` am falschen Vectorstore. Der Aufruf löscht alle vorhandenen Einträge der Collection und baut sie neu auf.
-- **Metadaten:** `load_korpus_metadata()` lädt `metadata.json` standardmäßig von GitHub. Offline entfällt nur die Zeile `Dokument:` in der Tool-Ausgabe; die Suche selbst funktioniert weiter. Lokal hilft `metadata_path`.
+- **Metadaten:** `load_korpus_metadata()` lädt `metadata.json` standardmäßig von GitHub. Offline entfällt nur die Zeile `Metadaten:` in der Tool-Ausgabe; die Suche selbst funktioniert weiter. Nur erfolgreiche Abrufe werden zwischengespeichert, nach einem Netzfehler versucht die nächste Anfrage es erneut. Lokal hilft `metadata_path`.
 - **Chunking:** Chunks werden an Absätzen, Zeilenumbrüchen und Leerzeichen geschnitten, nicht mitten im Wort. Wer `chunk_size` oder `chunk_overlap` ändert, muss die Collection mit `force=True` neu indexieren, sonst mischen sich alte und neue Chunks.
+- **Überlappung:** `chunk_overlap` greift nur, wenn ganze Zeilen oder Sätze hineinpassen. Bei kurzen Zeilen (zum Beispiel Tabellen in PDFs) fällt die tatsächliche Überlappung kleiner aus.
 - **Chunk-Kopfzeile:** Jeder Chunk beginnt mit `Dokument: <Dateiname>` (zum Beispiel `Dokument: risikoliste v1`), damit Embeddings den Dokumenttyp abbilden. `index_pmo_corpus` erkennt Collections mit älterem Chunking (ohne Kopfzeile oder `chunk_version`) und baut sie automatisch neu auf.
 
 ---

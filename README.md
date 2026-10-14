@@ -122,7 +122,6 @@ M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Sys
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
 | M26 | Integration Pipeline | PMO-Assistentensystem als End-to-End-Pipeline |
-| M27 | Projekt-Templates & MVP | Eigene Templates A/B/C und MVP-Definition |
 | M28 | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
 | M29 | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
 | M30 | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
@@ -132,8 +131,6 @@ M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Sys
 | M34 | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
 | M35 | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
 | M36 | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
-| M37 | Production: API & Monitoring | FastAPI-Endpoints, Production Monitoring und Kursrückblick |
-| M38 | Capstone | Eigenes Agentensystem als Abschlussprojekt |
 
 ## 🔑 Voraussetzungen
 

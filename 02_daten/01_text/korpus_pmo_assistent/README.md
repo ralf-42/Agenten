@@ -64,7 +64,7 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle 
 2. M12/M13: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
 3. M14/M23: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
 4. M16/M22: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
-5. M19/M20/M27/M38: strukturierte CSV-Daten für Budget-, Status- und Kapazitätsfragen verwenden.
+5. M19/M20: strukturierte CSV-Daten für Budget-, Status- und Kapazitätsfragen verwenden.
 6. M04/M06/M17/M34: Rohnotizen in ein strukturiertes Meeting-Ergebnis überführen.
 7. M35: Teilnehmer bauen eine Variante mit eigenem PMO-Korpus oder Zusatzdokumenten.
 

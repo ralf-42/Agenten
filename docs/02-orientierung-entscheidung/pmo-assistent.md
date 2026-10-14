@@ -49,10 +49,10 @@ Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen ei
 
 | Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
 |---|---|---|---|
-| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34, M38 |
+| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34 |
 | Protokollerstellung | Strukturierte Zusammenfassung von Besprechungsnotizen | Sehr hoch | M04, M06, M34 |
-| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10, M34, M38 |
-| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21, M27, M38 |
+| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10, M34 |
+| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21 |
 | Risikomanagement | Identifikation möglicher Risiken in Projektberichten | Hoch | M04, M09, M23 |
 | Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | M11, M14, M22, M28 |
 | Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | M03, M17, M25 |
@@ -120,36 +120,15 @@ Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das
 
 ### Ergebnisformate des PMO-Assistenten
 
-Der PMO-Assistent liefert vier Produkte. Jedes hat ein eigenes Schema; die technischen Feldnamen sind in den Notebooks und Skripten gleich. Die Erläuterungen bleiben deutsch.
+Der PMO-Assistent liefert drei Produkte. Jedes hat ein eigenes Schema; die technischen Feldnamen sind in den Notebooks und Skripten gleich. Die Erläuterungen bleiben deutsch.
 
 | Produkt | Schema | Notebook | Inhalt |
 |---|---|---|---|
 | Meeting-Briefing | `GateOutputResult` | M34 | Agenda, offene Fragen, Aufgaben, Risiken, Status (`ok`, `no_context`, `conflict`) |
-| Statusbericht | `StatusberichtResult` | M27 (Template A) | Stand, Zusammenfassung, Entscheidungen, Aufgaben, Risiken, offene Punkte, Quellen |
 | Offene Aufgaben | `ActionItemResult` | M04, M34 | `task` (Aufgabe), `owner` (Verantwortlich), `due` (Termin) |
 | Risikoübersicht | `RiskReviewResult` | M04 | Risiken, Kritikalität, Maßnahmen |
 
-Der Statusbericht wird nicht als eigenes Dokument im Korpus abgelegt, sondern aus Follow-up-Tracker, Risikoliste und Entscheidungsprotokoll zusammengesetzt. Jede Aussage trägt ein Datum und eine Quelle; fehlende Angaben stehen als `[offen]` im Bericht.
-
 ```python
-class StatusEintrag(BaseModel):
-    kennung: str = Field(description="D1, D2, R2 oder Kurzname der Aufgabe")
-    text: str = Field(description="Aussage in einem Satz")
-    status: str = Field(description="aktiv, überholt, erledigt, offen, vertagt oder mitigiert")
-    stand: str = Field(description="Datum der Quelle (TT.MM.JJJJ) oder [offen]")
-    quelle: str = Field(description="Dokumentname")
-
-
-class StatusberichtResult(BaseModel):
-    stand: str = Field(description="Datum des Berichts")
-    zusammenfassung: str = Field(description="Zwei Sätze zum Gesamtstand")
-    entscheidungen: list[StatusEintrag]
-    aufgaben: list[StatusEintrag]
-    risiken: list[StatusEintrag]
-    offene_punkte: list[str] = Field(description="Was nicht entschieden oder nicht belegt ist")
-    sicherheit: str = Field(description="hoch / mittel / niedrig")
-
-
 class ActionItemResult(BaseModel):
     task: str = Field(description="Aufgabenbeschreibung — kurz, aktionsorientiert")
     owner: str = Field(description="Verantwortliche Person laut Protokoll oder '[offen]'")
@@ -230,9 +209,9 @@ Der Kurs-Prototyp arbeitet bewusst mit einem kleinen, fiktiven und kuratierten K
 |---|---|---|---|
 | Datenbasis | Ein fiktives Projekt mit PDF-, Markdown- und CSV-Dateien in einem Ordner | Anbindung der realen Ablagen, etwa Dokumentenablage, Aufgaben-Tracker und Wiki, mit regelmäßiger Aktualisierung des Index | M26 |
 | Zugriffsrechte | Alle sehen den gesamten Korpus; die Rechte- und Rollensteuerung ist im Projekt Kompass als offener Punkt dokumentiert | Berechtigungsfilter bereits beim Retrieval, ergänzt durch eine Quellenprüfung nach der Antwort | M23 |
-| Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | M23, M37 |
-| Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | M24, M37 |
-| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | M36, M37 |
+| Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | M23 |
+| Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | M24 |
+| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | M36 |
 | Aktionen | Der Assistent liest und schlägt vor | Kontrollierte Schreibaktionen wie das Anlegen einer Aufgabe, jeweils hinter einem Freigabe-Gate | M23, M26 |
 
 > [!TIP] Empfohlene Reihenfolge<br>

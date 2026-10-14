@@ -492,7 +492,7 @@ show_trace("M13-RAG-Chain", limit=3, show_steps=True)
 
 ### Überblick
 
-Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie M14, M15, M26, M28, M29 und M36 bis M38 verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. M11 baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
+Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie M14, M15, M26, M28, M29 und M36 verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. M11 baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
 
 ### Architektur
 

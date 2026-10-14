@@ -210,23 +210,30 @@ def setup_api_keys(key_names, create_globals=True):
             print(f"✗ Fehler beim Setzen von {key}: {e}")
 
 
-def mprint(text):
+def mprint(text=""):
     """
     Gibt den übergebenen Text als Markdown in Jupyter-Notebooks aus.
+    Außerhalb eines Jupyter-Kontexts oder bei nicht darstellbarem Inhalt
+    wird auf eine normale Textausgabe zurückgefallen.
 
     Diese Funktion nutzt IPythons `display()` zusammen mit `Markdown()`,
     um formatierte Markdown-Ausgabe in einem Jupyter-Notebook zu ermöglichen.
 
     Parameter:
     ----------
-    text : str
-        Der anzuzeigende Markdown-Text.
+    text : str, optional
+        Der anzuzeigende Markdown-Text. Ohne Argument wird eine Leerzeile
+        ausgegeben; andere Werte werden in Text umgewandelt.
 
     Beispiel:
     ---------
     >>> mprint("# Überschrift\n**fett** und *kursiv*")
     """
-    display(Markdown(text))
+    text = "" if text is None else str(text)
+    try:
+        display(Markdown(text))
+    except Exception:
+        print(text)
 
 
 def mermaid(code: str, width=None, height=None):

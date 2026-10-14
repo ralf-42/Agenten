@@ -46,6 +46,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.tools import tool
 from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pypdf import PdfReader
 
 from genai_lib.model_config import EMBEDDINGS
@@ -64,6 +65,7 @@ SUPPORTED_EXTENSIONS = {
 }
 IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json"}
 CHUNK_HEADER_PREFIX = "Dokument: "
+CHUNK_VERSION = 2  # 2 = Wortgrenzen (RecursiveCharacterTextSplitter) + Kopfzeile
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -151,26 +153,26 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
 def split_documents_by_characters(
     documents: list[Document], chunk_size: int = 300, chunk_overlap: int = 30
 ) -> list[Document]:
-    """Teilt Dokumente in überlappende Zeichen-Chunks.
+    """Teilt Dokumente in überlappende Chunks, ohne Wörter zu zerschneiden.
 
+    ``chunk_size`` und ``chunk_overlap`` zählen Zeichen. Geschnitten wird bevorzugt
+    an Absätzen, dann an Zeilenumbrüchen und Leerzeichen (RecursiveCharacterTextSplitter).
     Jeder Chunk beginnt mit einer Kopfzeile ``Dokument: <Dateiname ohne Endung>``.
     Dadurch kann das Embedding auch den Dokumenttyp (z. B. "risikoliste v1")
     abbilden, der sonst nur in den Metadaten steht.
     """
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size, chunk_overlap=chunk_overlap
+    )
     chunks: list[Document] = []
-    step = max(1, chunk_size - chunk_overlap)
     for doc in documents:
-        text = doc.page_content or ""
         titel = Path(doc.metadata.get("source", "")).stem.replace("_", " ")
         kopfzeile = f"{CHUNK_HEADER_PREFIX}{titel}\n" if titel else ""
-        for chunk_index, start in enumerate(range(0, len(text), step)):
-            chunk_text = text[start:start + chunk_size].strip()
-            if not chunk_text:
-                continue
-            chunk_text = kopfzeile + chunk_text
+        for chunk_index, chunk_text in enumerate(splitter.split_text(doc.page_content or "")):
             metadata = dict(doc.metadata)
             metadata["chunk_index"] = chunk_index
-            chunks.append(Document(page_content=chunk_text, metadata=metadata))
+            metadata["chunk_version"] = CHUNK_VERSION
+            chunks.append(Document(page_content=kopfzeile + chunk_text, metadata=metadata))
     return chunks
 
 
@@ -209,14 +211,19 @@ def index_pmo_corpus(
     nötig, falls sich der PDF-Korpus nach dem ersten Aufbau ändert.
     """
     if not force and vectorstore._collection.count() > 0:
-        probe = vectorstore.get(limit=1)["documents"]
-        if probe and probe[0].startswith(CHUNK_HEADER_PREFIX):
+        probe = vectorstore.get(limit=1, include=["documents", "metadatas"])
+        probe_text = (probe["documents"] or [""])[0]
+        probe_meta = (probe["metadatas"] or [{}])[0] or {}
+        if (
+            probe_text.startswith(CHUNK_HEADER_PREFIX)
+            and probe_meta.get("chunk_version") == CHUNK_VERSION
+        ):
             mprint(
                 f"Collection hat bereits {vectorstore._collection.count()} Einträge "
                 "— kein erneutes Indexieren (force=True für Neuaufbau)"
             )
             return 0
-        mprint("Collection enthält Chunks ohne Dokument-Kopfzeile — wird neu aufgebaut")
+        mprint("Collection stammt aus einem älteren Chunking (ohne Kopfzeile oder Wortgrenzen) — wird neu aufgebaut")
         force = True
 
     if force:

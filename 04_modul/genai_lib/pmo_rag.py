@@ -49,6 +49,7 @@ from langchain_openai import OpenAIEmbeddings
 from pypdf import PdfReader
 
 from genai_lib.model_config import EMBEDDINGS
+from genai_lib.utilities import mprint
 
 DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
 DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_pmo"
@@ -94,7 +95,7 @@ def load_pdf_documents(directory_path: str) -> list[Document]:
                     )
                 )
         except Exception as exc:
-            print(f"  ⚠ {pdf_path.name} übersprungen: {exc}")
+            mprint(f"  ⚠ {pdf_path.name} übersprungen: {exc}")
     return documents
 
 
@@ -130,7 +131,7 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
             result = converter.convert(str(file_path))
             text = (result.text_content or "").strip()
             if not text:
-                print(f"  ⚠ {file_path.name} übersprungen (kein Text)")
+                mprint(f"  ⚠ {file_path.name} übersprungen (kein Text)")
                 continue
             documents.append(
                 Document(
@@ -142,7 +143,7 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
                 )
             )
         except Exception as exc:
-            print(f"  ⚠ {file_path.name} übersprungen: {exc}")
+            mprint(f"  ⚠ {file_path.name} übersprungen: {exc}")
 
     return documents
 
@@ -210,12 +211,12 @@ def index_pmo_corpus(
     if not force and vectorstore._collection.count() > 0:
         probe = vectorstore.get(limit=1)["documents"]
         if probe and probe[0].startswith(CHUNK_HEADER_PREFIX):
-            print(
+            mprint(
                 f"Collection hat bereits {vectorstore._collection.count()} Einträge "
                 "— kein erneutes Indexieren (force=True für Neuaufbau)"
             )
             return 0
-        print("Collection enthält Chunks ohne Dokument-Kopfzeile — wird neu aufgebaut")
+        mprint("Collection enthält Chunks ohne Dokument-Kopfzeile — wird neu aufgebaut")
         force = True
 
     if force:
@@ -232,7 +233,7 @@ def index_pmo_corpus(
         batch = chunks[start:start + batch_size]
         vectorstore.add_documents(batch)
         ende = min(start + batch_size, len(chunks))
-        print(f"  Batch {start // batch_size + 1}: {ende}/{len(chunks)} Chunks indexiert")
+        mprint(f"  Batch {start // batch_size + 1}: {ende}/{len(chunks)} Chunks indexiert")
 
     return len(chunks)
 
@@ -253,7 +254,7 @@ def load_korpus_metadata(metadata_path: str | None = None) -> dict[str, dict]:
                 inhalt = antwort.read().decode("utf-8")
         return {eintrag["file"]: eintrag for eintrag in json.loads(inhalt)["documents"]}
     except Exception as exc:
-        print(f"  ⚠ Korpus-Metadaten nicht geladen: {exc}")
+        mprint(f"  ⚠ Korpus-Metadaten nicht geladen: {exc}")
         return {}
 
 
@@ -293,9 +294,9 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
         "veraltet_im_index": sorted(im_index - im_ordner),
     }
     if any(ergebnis.values()):
-        print(f"⚠ Index und Korpusordner weichen ab: {ergebnis}")
+        mprint(f"⚠ Index und Korpusordner weichen ab: {ergebnis}")
     else:
-        print(f"Index passt zum Korpusordner ({len(im_ordner)} Dokumente)")
+        mprint(f"Index passt zum Korpusordner ({len(im_ordner)} Dokumente)")
     return ergebnis
 
 

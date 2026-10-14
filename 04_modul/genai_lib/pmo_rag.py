@@ -62,6 +62,7 @@ SUPPORTED_EXTENSIONS = {
     ".html", ".htm", ".csv", ".json", ".xml",
 }
 IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json"}
+CHUNK_HEADER_PREFIX = "Dokument: "
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -149,15 +150,23 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
 def split_documents_by_characters(
     documents: list[Document], chunk_size: int = 300, chunk_overlap: int = 30
 ) -> list[Document]:
-    """Teilt Dokumentseiten in überlappende Zeichen-Chunks (identisch zu M13/M14)."""
+    """Teilt Dokumente in überlappende Zeichen-Chunks.
+
+    Jeder Chunk beginnt mit einer Kopfzeile ``Dokument: <Dateiname ohne Endung>``.
+    Dadurch kann das Embedding auch den Dokumenttyp (z. B. "risikoliste v1")
+    abbilden, der sonst nur in den Metadaten steht.
+    """
     chunks: list[Document] = []
     step = max(1, chunk_size - chunk_overlap)
     for doc in documents:
         text = doc.page_content or ""
+        titel = Path(doc.metadata.get("source", "")).stem.replace("_", " ")
+        kopfzeile = f"{CHUNK_HEADER_PREFIX}{titel}\n" if titel else ""
         for chunk_index, start in enumerate(range(0, len(text), step)):
             chunk_text = text[start:start + chunk_size].strip()
             if not chunk_text:
                 continue
+            chunk_text = kopfzeile + chunk_text
             metadata = dict(doc.metadata)
             metadata["chunk_index"] = chunk_index
             chunks.append(Document(page_content=chunk_text, metadata=metadata))
@@ -198,16 +207,21 @@ def index_pmo_corpus(
     vorhandene Einträge zuerst gelöscht und die Collection neu aufgebaut —
     nötig, falls sich der PDF-Korpus nach dem ersten Aufbau ändert.
     """
+    if not force and vectorstore._collection.count() > 0:
+        probe = vectorstore.get(limit=1)["documents"]
+        if probe and probe[0].startswith(CHUNK_HEADER_PREFIX):
+            print(
+                f"Collection hat bereits {vectorstore._collection.count()} Einträge "
+                "— kein erneutes Indexieren (force=True für Neuaufbau)"
+            )
+            return 0
+        print("Collection enthält Chunks ohne Dokument-Kopfzeile — wird neu aufgebaut")
+        force = True
+
     if force:
         vorhandene_ids = vectorstore.get()["ids"]
         if vorhandene_ids:
             vectorstore.delete(ids=vorhandene_ids)
-    elif vectorstore._collection.count() > 0:
-        print(
-            f"Collection hat bereits {vectorstore._collection.count()} Einträge "
-            "— kein erneutes Indexieren (force=True für Neuaufbau)"
-        )
-        return 0
 
     dokumente = load_documents_from_directory(directory_path)
     chunks = split_documents_by_characters(

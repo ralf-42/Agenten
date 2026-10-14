@@ -587,6 +587,7 @@ gemischt werden.
 - **Typischer Fehler:** `force=True` am falschen Vectorstore. Der Aufruf löscht alle vorhandenen Einträge der Collection und baut sie neu auf.
 - **Metadaten:** `load_korpus_metadata()` lädt `metadata.json` standardmäßig von GitHub. Offline entfällt nur die Zeile `Dokument:` in der Tool-Ausgabe; die Suche selbst funktioniert weiter. Lokal hilft `metadata_path`.
 - **Chunking:** Wer `chunk_size` oder `chunk_overlap` ändert, muss die Collection mit `force=True` neu indexieren, sonst mischen sich alte und neue Chunks.
+- **Chunk-Kopfzeile:** Jeder Chunk beginnt mit `Dokument: <Dateiname>` (zum Beispiel `Dokument: risikoliste v1`), damit Embeddings den Dokumenttyp abbilden. `index_pmo_corpus` erkennt Collections ohne diese Kopfzeile und baut sie automatisch neu auf.
 
 ---
 

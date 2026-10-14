@@ -499,7 +499,7 @@ Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden,
 ```
 pmo_rag
 ├── Laden:      load_documents_from_directory (MarkItDown), load_pdf_documents (pypdf)
-├── Chunking:   split_documents_by_characters (Standard 300/30)
+├── Chunking:   split_documents_by_characters (Standard 300/30, Wortgrenzen)
 ├── Vectorstore: get_pmo_vectorstore + index_pmo_corpus (Chroma, Batching)
 ├── Kontext:    load_korpus_metadata, format_docs
 └── Tools:      make_suche_wissensdatenbank_tool, make_lies_tabellendaten_tool
@@ -512,7 +512,7 @@ pmo_rag
 | `get_pmo_vectorstore(persist_directory, collection_name)` | Erstellt oder lädt die Chroma-Collection `pmo_korpus_m14` mit `EMBEDDINGS` |
 | `index_pmo_corpus(vectorstore, directory_path, chunk_size=300, chunk_overlap=30, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; überspringt eine gefüllte Collection |
 | `load_documents_from_directory(directory_path)` | Mehrformat-Lader für PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word |
-| `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Zeichenbasiertes Chunking mit `chunk_index` in den Metadaten |
+| `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Chunking mit Zeichenlängen an Wortgrenzen (`RecursiveCharacterTextSplitter`); `chunk_index` und `chunk_version` in den Metadaten |
 | `make_suche_wissensdatenbank_tool(vectorstore, rag_chain=None)` | Erzeugt das Agenten-Tool `suche_wissensdatenbank` |
 | `make_lies_tabellendaten_tool(directory_path)` | Erzeugt das Tool `lies_tabellendaten` für Budget- und Ressourcentabellen |
 | `check_corpus(vectorstore, directory_path)` | Vergleicht Korpusdateien mit den indexierten Quellen |
@@ -586,8 +586,8 @@ gemischt werden.
 - **Typischer Fehler:** Google Drive ist nicht gemountet. Bei Drive-Pfaden bricht `get_pmo_vectorstore()` mit `RuntimeError` ab, statt einen leeren Index anzulegen.
 - **Typischer Fehler:** `force=True` am falschen Vectorstore. Der Aufruf löscht alle vorhandenen Einträge der Collection und baut sie neu auf.
 - **Metadaten:** `load_korpus_metadata()` lädt `metadata.json` standardmäßig von GitHub. Offline entfällt nur die Zeile `Dokument:` in der Tool-Ausgabe; die Suche selbst funktioniert weiter. Lokal hilft `metadata_path`.
-- **Chunking:** Wer `chunk_size` oder `chunk_overlap` ändert, muss die Collection mit `force=True` neu indexieren, sonst mischen sich alte und neue Chunks.
-- **Chunk-Kopfzeile:** Jeder Chunk beginnt mit `Dokument: <Dateiname>` (zum Beispiel `Dokument: risikoliste v1`), damit Embeddings den Dokumenttyp abbilden. `index_pmo_corpus` erkennt Collections ohne diese Kopfzeile und baut sie automatisch neu auf.
+- **Chunking:** Chunks werden an Absätzen, Zeilenumbrüchen und Leerzeichen geschnitten, nicht mitten im Wort. Wer `chunk_size` oder `chunk_overlap` ändert, muss die Collection mit `force=True` neu indexieren, sonst mischen sich alte und neue Chunks.
+- **Chunk-Kopfzeile:** Jeder Chunk beginnt mit `Dokument: <Dateiname>` (zum Beispiel `Dokument: risikoliste v1`), damit Embeddings den Dokumenttyp abbilden. `index_pmo_corpus` erkennt Collections mit älterem Chunking (ohne Kopfzeile oder `chunk_version`) und baut sie automatisch neu auf.
 
 ---
 

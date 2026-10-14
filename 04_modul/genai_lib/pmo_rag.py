@@ -5,7 +5,7 @@ Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (Dokumentladen, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
 damit M15 und die nachfolgenden Module (M26, M28, M29, M36-M38) dieselbe Kette wiederverwenden statt sie zu duplizieren.
 
-M12/M13 bleiben didaktisch davon unberührt und bauen die Kette weiterhin
+M11 enthält die früheren M12/M13-Schritte und baut die Kette weiterhin
 Schritt für Schritt selbst als Inline-Code. M14 nutzt den Mehrformat-Lader
 dieses Moduls, damit der PMO-Korpus einschließlich Markdown- und CSV-Artefakten
 indexiert werden kann. M22 nutzt

@@ -1,5 +1,5 @@
 ---
-name: m13_rag_prompt
+name: m11_rag_prompt
 description: RAG-Prompt für den PMO-Assistenten
 variables: [context, question]
 ---

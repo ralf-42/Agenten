@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LangGraph – Interaktiver Explainer</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fcfcfb;
+  --surface: #f5f4f0;
+  --surface2: #eae8e1;
+  --border: rgba(0,0,0,0.06);
+  --border2: rgba(0,0,0,0.12);
+  --text: #1c1c1a;
+  --muted: #5e5e59;
+  --hint: #8c8c85;
+  
+  /* Kräftige Farben für CI und Badges */
+  --purple: #4432a5;
+  --purple-light: #eceaff;
+  --purple-mid: #6352d9;
+  --teal: #0b5945;
+  --teal-light: #e3f7f1;
+  --teal-mid: #148f6c;
+  --coral: #822a10;
+  --coral-light: #fdf0ec;
+  --amber: #542e03;
+  --amber-light: #fdf3e4;
+  --amber-mid: #d98204;
+  --gray-light: #e8e6df;
+  
+  /* Syntax Highlighting Base */
+  --code-bg: #f8f9fa;
+  --code-border: #e4e7eb;
+  --code-text: #24292e;
+  --syn-kw: #d73a49;     
+  --syn-fn: #6f42c1;     
+  --syn-st: #032f62;     
+  --syn-cm: #6a737d;     
+  --syn-nu: #e36209;     
+  --syn-cl2: #005cc5;    
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-ui: system-ui, -apple-system, sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border2);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--purple); letter-spacing: 0.5px; }
+.logo span { font-weight: 400; color: var(--purple); }
+.step-counter { margin-left: auto; font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 53px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border2);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all .15s;
+  text-decoration: none;
+  color: inherit;
+}
+.step-item:hover { background: var(--surface2); }
+.step-item.active {
+  background: var(--purple-light);
+  border-left-color: var(--purple-mid);
+}
+.step-num {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-item.active .step-num {
+  background: var(--purple-mid);
+  color: #fff;
+}
+.step-item.visited:not(.active) .step-num {
+  background: var(--purple-light);
+  border: 1px solid var(--purple-mid);
+  color: var(--purple);
+}
+.step-text { font-size: 12px; line-height: 1.4; }
+.step-text strong { display: block; font-weight: 600; font-size: 12.5px; color: #000; }
+.step-text span { color: var(--muted); font-size: 11px; }
+
+/* Content Area */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.panel {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+}
+.panel.active { display: flex; flex-direction: column; }
+
+.panel-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  max-width: 1000px;
+}
+
+.panel-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.panel-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Begriffstabelle */
+.concept-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 13px;
+}
+.concept-table th, .concept-table td {
+  border: 1px solid var(--border2);
+  padding: 10px 12px;
+  text-align: left;
+}
+.concept-table th {
+  background: var(--surface);
+  font-weight: 600;
+  color: #000;
+}
+.concept-table td strong {
+  color: var(--purple);
+}
+
+/* Concept Cards */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+.card-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+.badge-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(68,50,165,0.2); }
+.badge-teal   { background: var(--teal-light);   color: var(--teal); border: 1px solid rgba(11,89,69,0.2); }
+.badge-coral  { background: var(--coral-light);  color: var(--coral); border: 1px solid rgba(130,42,16,0.2); }
+.badge-amber  { background: var(--amber-light);  color: var(--amber); border: 1px solid rgba(84,46,3,0.2); }
+.badge-gray   { background: var(--gray-light);   color: #333; }
+
+.card p { font-size: 13px; color: var(--text); line-height: 1.6; }
+.card code { font-family: var(--font-mono); font-size: 12px; background: var(--surface); padding: 2px 5px; border-radius: 4px; color: var(--purple); font-weight: 600; }
+
+/* Code Block Light Mode */
+.code-wrap {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.code-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #f1f3f5;
+  border-bottom: 1px solid var(--code-border);
+}
+.code-dots { display: flex; gap: 6px; }
+.cd { width: 10px; height: 10px; border-radius: 50%; }
+.cd-r { background: #e54e4e; }
+.cd-y { background: #eccc47; }
+.cd-g { background: #49c450; }
+.code-filename { font-family: var(--font-mono); font-size: 11px; color: #495057; margin-left: 6px; font-weight: 500; }
+
+pre.code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  padding: 14px 0;
+  overflow-x: auto;
+  color: var(--code-text);
+}
+.cl {
+  display: flex;
+  align-items: baseline;
+  transition: background .1s;
+}
+.cl:hover { background: rgba(0,0,0,0.02); }
+
+/* Schrittspezifische Zeilenhervorhebungen */
+.hl-purple { background: rgba(99, 82, 217, 0.14) !important; font-weight: 500; }
+.hl-teal   { background: rgba(20, 143, 108, 0.15) !important; font-weight: 500; }
+.hl-coral  { background: rgba(130, 42, 16, 0.12) !important; font-weight: 500; }
+.hl-amber  { background: rgba(217, 130, 4, 0.14) !important; font-weight: 500; }
+.hl-summary { background: rgba(11, 89, 69, 0.10) !important; font-weight: 600; font-style: italic; }
+
+.ln {
+  width: 44px;
+  text-align: right;
+  padding-right: 16px;
+  color: #adb5bd;
+  font-size: 11px;
+  flex-shrink: 0;
+  user-select: none;
+}
+.ct { padding-right: 16px; white-space: pre; }
+
+/* High-Contrast Syntax Colors */
+.kw  { color: var(--syn-kw); font-weight: 600; }
+.fn  { color: var(--syn-fn); }
+.st  { color: var(--syn-st); }
+.cm  { color: var(--syn-cm); font-style: italic; }
+.nu  { color: var(--syn-nu); }
+.cl2 { color: var(--syn-cl2); font-weight: 600; }
+
+/* Info Box */
+.info-box {
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  line-height: 1.6;
+  border: 1px solid transparent;
+  border-left: 4px solid;
+}
+.info-purple { background: var(--purple-light); border-color: var(--purple-mid); color: #221566; }
+.info-teal   { background: var(--teal-light);   border-color: var(--teal-mid);   color: #053327; }
+.info-amber  { background: var(--amber-light);  border-color: var(--amber-mid);  color: #381e01; }
+.info-box strong { font-weight: 600; color: #000; }
+
+/* Pitfalls */
+.pitfall-list { display: flex; flex-direction: column; gap: 8px; }
+.pitfall {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px;
+  background: #fff0f0;
+  border: 1px solid #fcc2c2;
+  border-radius: var(--radius);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #610b0b;
+}
+.pitfall-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.pitfall code { font-family: var(--font-mono); font-size: 11.5px; background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px; color: #800; font-weight: 600; }
+
+/* Action Toolbar */
+.panel-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.btn-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--border2);
+  color: var(--coral);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-reset:hover {
+  background: var(--coral-light);
+  border-color: var(--coral);
+}
+
+/* Interactive Canvas Step 6 */
+.build-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.build-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.build-btn {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: #fff;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all .15s;
+}
+.build-btn:hover:not(.done) { background: var(--surface2); color: var(--text); }
+.build-btn.done { 
+  background: var(--purple-mid) !important; 
+  color: #ffffff !important; 
+  border-color: var(--purple-mid) !important; 
+  font-weight: 600; 
+  opacity: 1 !important; 
+  cursor: default;
+}
+.build-btn:disabled:not(.done) { opacity: 0.5; cursor: not-allowed; background: var(--surface); }
+
+.graph-canvas {
+  background: #101216;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+.chat-sim {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border2);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 150px;
+  justify-content: flex-end;
+}
+.chat-placeholder { font-size: 12px; color: var(--hint); text-align: center; margin: auto; font-style: italic; }
+.msg-bub { border-radius: 12px; padding: 8px 12px; font-size: 13px; line-height: 1.5; max-width: 85%; }
+.msg-user { background: var(--purple-mid); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+.msg-bot  { background: #fff; border: 1px solid var(--border2); color: var(--text); align-self: flex-start; border-bottom-left-radius: 2px; }
+.build-msg { font-size: 12.5px; color: var(--teal); min-height: 20px; margin-top: 6px; font-weight: 600; }
+
+/* Navigation Footer Bar */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-top: 1px solid var(--border2);
+  background: #fff;
+  flex-shrink: 0;
+}
+.nav-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text);
+  transition: all .15s;
+}
+.nav-btn:hover:not(:disabled) { background: var(--surface2); }
+.nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+.nav-btn.primary { background: var(--purple-mid); color: #fff; border-color: var(--purple-mid); font-weight: 600; }
+.nav-btn.primary:hover { background: var(--purple); }
+.nav-btn.done { background: var(--teal-mid); color: #fff; border-color: var(--teal-mid); font-weight: 600; cursor: default; }
+.nav-btn.done:hover { background: var(--teal); }
+
+.progress-dots { display: flex; gap: 8px; }
+.pdot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--border2);
+  transition: background .2s;
+  cursor: pointer;
+}
+.pdot.active { background: var(--purple-mid); }
+.pdot.visited { background: var(--purple-light); border: 1px solid var(--purple-mid); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="logo">Lang<span>graph</span></div>
+    <span style="font-size:12px; color:var(--muted); font-weight: 500;">| Interaktiver Explainer</span>
+    <span class="step-counter" id="step-counter">Schritt 1 von 6</span>
+  </header>
+
+  <div class="main">
+
+    <nav class="sidebar" id="sidebar">
+      <div class="step-item active" onclick="goTo(0)" id="si-0">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>State</strong><span>Das gemeinsame Tagebuch</span></div>
+      </div>
+      <div class="step-item" onclick="goTo(1)" id="si-1">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>MessagesState</strong><span>Spezial-Schema für Chats</span></div>
+      </div>
+      <div class="step-item" onclick="goTo(2)" id="si-2">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Nodes</strong><span>Die Stationen</span></div>
+      </div>
+      <div class="step-item" onclick="goTo(3)" id="si-3">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Edges</strong><span>Wege und Bedingungen</span></div>
+      </div>
+      <div class="step-item" onclick="goTo(4)" id="si-4">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>Checkpoint</strong><span>Das Reisetagebuch-Foto</span></div>
+      </div>
+      <div class="step-item" onclick="goTo(5)" id="si-5">
+        <div class="step-num">6</div>
+        <div class="step-text"><strong>Alles zusammen</strong><span>Der finale Testlauf</span></div>
+      </div>
+    </nav>
+
+    <div class="content">
+
+      <div class="panel active" id="panel-0">
+        <div class="panel-body">
+          <div class="panel-toolbar">
+            <div>
+              <div class="panel-title">State – das gemeinsame Reisetagebuch</div>
+              <div class="panel-desc">Als Metapher dient eine Reiseroute. Der State fungiert hierbei als zentrales Reisetagebuch, das von Station zu Station weitergereicht wird. Jede Station liest die bisherigen Einträge und fügt am Ende eigene Erkenntnisse hinzu, bevor das Tagebuch an die nächste Station übergeben wird.</div>
+            </div>
+            <button class="btn-reset" onclick="resetStep1()" style="margin-left: auto;">🔄 Code zurücksetzen</button>
+          </div>
+
+          <div class="info-box info-purple">
+            <strong>Das mentale Modell in einem Satz:</strong> LangGraph ist kein „magischer, autonomer Agent“, sondern ein präzise kontrollierter Zustandsautomat (Zustandsmaschine) für LLM-Anwendungen: Es wird exakt definiert, welche Stationen es gibt, wie Daten weitergereicht werden und wann Speicherpunkte gesetzt werden.
+          </div>
+
+          <table class="concept-table">
+            <thead>
+              <tr>
+                <th>Begriff</th>
+                <th>Einsteiger-Erklärung</th>
+                <th>Technischer Kern (für Entwickler)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>State</strong></td>
+                <td>Das gemeinsame Reisetagebuch</td>
+                <td>Mutierbare Datenstruktur (<code>TypedDict</code>), die im Graphen sequentiell weitergereicht wird.</td>
+              </tr>
+              <tr>
+                <td><strong>Node</strong></td>
+                <td>Eine Station auf der Route</td>
+                <td>Isolierte Python-Funktion mit der Signatur <code>def node(state: State) -> Dict</code>. Gibt nur Updates zurück.</td>
+              </tr>
+              <tr>
+                <td><strong>Edge</strong></td>
+                <td>Der Weg zwischen Stationen</td>
+                <td>Ablaufsteuerung (Leitplanke). Verbindet Nodes via <code>add_edge</code> (statisch) oder <code>add_conditional_edges</code> (konditional).</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="cards">
+            <div class="card">
+              <span class="card-badge badge-purple">TypedDict (Alternative 1: Überschreiben)</span>
+              <p>Wird ein Feld ohne zusätzliche Anweisungen angelegt, erfolgt bei jedem Schreibvorgang eine vollständige Löschung des alten Inhalts. Die Station, von der zuletzt geschrieben wird, bestimmt somit den Gesamtwert des Feldes im Reisetagebuch.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-teal">Annotated + Reducer (Alternative 2: Anhängen)</span>
+              <p>Durch die Kennzeichnung mit <code>Annotated[list, operator.add]</code> wird LangGraph signalisiert, dass bestehende Daten nicht gelöscht, sondern neue Einträge an die Liste im Reisetagebuch angehängt werden sollen. Dies ist für das Sammeln von Chat-Historien unverzichtbar.</p>
+            </div>
+          </div>
+
+          <div class="code-wrap">
+            <div class="code-toolbar">
+              <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+              <span class="code-filename">state_erklaerung.py</span>
+            </div>
+            <pre class="code" id="code-0"></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-1">
+        <div class="panel-body">
+          <div>
+            <div class="panel-title">MessagesState – Das Spezial-Tagebuch für Chatverläufe</div>
+            <div class="panel-desc">Da KI-Assistenten in der Regel eine Liste von Chat-Nachrichten benötigen, stellt LangGraph ein vorgefertigtes Tagebuch-Schema bereit: den <code>MessagesState</code>. Dieser verfügt standardmäßig über ein integriertes Feld namens <code>messages</code>.</div>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <span class="card-badge badge-teal">MessagesState (Alternative 1: Direkt importieren)</span>
+              <p>LangGraph stellt <code>MessagesState</code> fertig bereit – einfach importieren und verwenden. Das Feld <code>messages</code> sammelt automatisch den Gesprächsverlauf. <strong>Wichtig:</strong> Die Klasse nicht selbst neu definieren – das würde LangGraphs Original überschreiben und zu schwer nachvollziehbaren Fehlern führen.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-purple">Erweiterter State (Alternative 2: Eigene Zusatz-Felder)</span>
+              <p>Für eigene Felder wird eine neue Klasse von <code>MessagesState</code> <em>abgeleitet</em> (<code>class MeinChatNotizbuch(MessagesState)</code>). Die Chat-Historien-Logik bleibt vollständig erhalten, eigene Felder (z. B. <code>username</code>) werden ergänzt – ohne das Original anzutasten.</p>
+            </div>
+          </div>
+
+          <div class="code-wrap">
+            <div class="code-toolbar">
+              <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+              <span class="code-filename">messages_state.py</span>
+            </div>
+            <pre class="code" id="code-1"></pre>
+          </div>
+
+          <div class="info-box info-teal">
+            <strong>Struktureller Hinweis:</strong> <code>MessagesState</code> ist kein Sonderfall, sondern eine fertige Convenience-Klasse von LangGraph. Sie wird <em>importiert</em>, nicht nachgebaut. Für eigene Erweiterungen leitet man eine neue Klasse davon ab (<code>class Mein State(MessagesState)</code>) – das spart Tipparbeit und vermeidet Fehler durch versehentliches Überschreiben.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-2">
+        <div class="panel-body">
+          <div>
+            <div class="panel-title">Nodes – Die einzelnen Stationen der Reiseroute</div>
+            <div class="panel-desc">Ein Node stellt eine reguläre Python-Funktion dar, welche eine spezifische Aufgabe an einer Station übernimmt. Im Gegensatz zu den vorherigen State-Optionen schließen sich diese Stationen nicht aus, sondern arbeiten hier <strong>gemeinsam als funktionale Ergänzung</strong> auf der Route.</div>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <span class="card-badge badge-teal">Tool-Funktion + bind_tools (Voraussetzung)</span>
+              <p>Zuerst wird das Werkzeug als normale Python-Funktion definiert. Dann wird das Sprachmodell explizit mit <code>.bind_tools([...])</code> verknüpft. <strong>Ohne diesen Schritt</strong> kann das Modell keine Tool-Calls auslösen – der gesamte Tool-Fluss würde stillschweigend ignoriert.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-purple">LLM-Node + Tool-Node (Zusammenspiel)</span>
+              <p>Der LLM-Node sendet Nachrichten ans Modell und schreibt dessen Antwort zurück. Enthält die Antwort einen Tool-Call, übernimmt der Tool-Node (<code>ToolNode</code>) die Ausführung und dokumentiert das Resultat im State – bereit für den nächsten LLM-Aufruf.</p>
+            </div>
+          </div>
+
+          <div class="code-wrap">
+            <div class="code-toolbar">
+              <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+              <span class="code-filename">arbeitsstationen.py</span>
+            </div>
+            <pre class="code" id="code-2"></pre>
+          </div>
+
+          <div class="info-box info-amber">
+            <strong>Entwicklungsempfehlung:</strong> Die einzelnen Stationen (Nodes) sollten klein und fokussiert gehalten werden. Die Beschränkung einer Station auf eine einzige Kernaufgabe fördert die Übersichtlichkeit und erleichtert die spätere Fehlersuche.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-3">
+        <div class="panel-body">
+          <div>
+            <div class="panel-title">Edges – Wege, Weichen und der ReAct-Loop</div>
+            <div class="panel-desc">Edges steuern den Ablauf zwischen Nodes. Der entscheidende Unterschied zu einfachen Pipelines: LangGraph erlaubt <strong>Rückkanten</strong> – der Graph kann nach einem Tool-Aufruf wieder zum LLM zurückspringen. Dieses Muster heißt <strong>ReAct-Loop</strong> (Reason → Act → Reason …) und ist die Grundlage echter Agenten-Systeme.</div>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <span class="card-badge badge-purple">Statische Kante + Rückkante (der Loop)</span>
+              <p><code>add_edge(START, "chatbot")</code> ist der Eintrittspunkt. Die Rückkante <code>add_edge("werkzeuge", "chatbot")</code> ist das Herzstück: Nach jedem Tool-Aufruf landet der Graph wieder beim LLM – nicht bei <code>END</code>. Erst das erzeugt den echten Agenten-Loop.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-amber">Konditionale Weiche (Routing-Funktion)</span>
+              <p>Nach jeder LLM-Antwort prüft die Routing-Funktion: Enthält die Antwort einen Tool-Call? Ja → Werkzeug-Station. Nein → <code>END</code>. Das Modell entscheidet also selbst, ob ein weiterer Schritt nötig ist – solange, bis es fertig ist.</p>
+            </div>
+          </div>
+
+          <div class="code-wrap">
+            <div class="code-toolbar">
+              <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+              <span class="code-filename">wegweiser.py</span>
+            </div>
+            <pre class="code" id="code-3"></pre>
+          </div>
+
+          <div class="info-box info-purple">
+            <strong>Der ReAct-Zyklus im Überblick:</strong> <code>START → chatbot</code> (LLM antwortet) → konditionale Weiche → bei Tool-Call: <code>werkzeuge</code> (Tool ausführen) → <strong>zurück zu <code>chatbot</code></strong> (LLM wertet Ergebnis aus) → bei fertiger Antwort: <code>END</code>. Ohne die Rückkante <code>werkzeuge → chatbot</code> ist kein echter Agenten-Loop möglich – das Modell würde Tool-Ergebnisse nie verarbeiten.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-4">
+        <div class="panel-body">
+          <div>
+            <div class="panel-title">Checkpoint – Ein Foto des Reisetagebuchs</div>
+            <div class="panel-desc">Standardmäßig wird der Zustand nach dem Erreichen des Endpunktes (END) verworfen. Ein Checkpointer bereinigt dieses Verhalten, indem nach jedem Einzelschritt automatisch ein Foto des Reisetagebuchs (Snapshots des States) gesichert wird. Beide Elemente greifen hier <strong>gemeinsam als funktionale Ergänzung</strong> ineinander.</div>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <span class="card-badge badge-purple">thread_id (Basis-Komponente)</span>
+              <p>Zur fehlerfreien Trennung unterschiedlicher Routenverläufe wird jeder Konversation eine eindeutige Kennung (z. B. <code>thread_id: "raum-42"</code>) zugewiesen. Das System sucht und lädt das passende Tagebuch spezifisch unter dieser Kennung.</p>
+            </div>
+            <div class="card">
+              <span class="card-badge badge-teal">InMemorySaver (Zusatz-Komponente)</span>
+              <p>Speichert Snapshots <strong>im Arbeitsspeicher</strong> – d. h. nur für die Dauer des laufenden Prozesses. Nach einem Neustart ist der Verlauf unwiederbringlich verloren. Für echte Persistenz über Neustarts hinweg sind externe Backends nötig: <code>SqliteSaver</code> (lokal) oder <code>PostgresSaver</code> (produktiv).</p>
+            </div>
+          </div>
+
+          <div class="code-wrap">
+            <div class="code-toolbar">
+              <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+              <span class="code-filename">gedaechtnis.py</span>
+            </div>
+            <pre class="code" id="code-4"></pre>
+          </div>
+
+          <div class="pitfall-list">
+            <div class="pitfall">
+              <span class="pitfall-icon">⚠️</span>
+              <span><strong>Stolperstein 1: State ist nicht automatisch Memory.</strong> Erst die explizite Übergabe eines Checkpointers beim Kompilieren der Route (<code>.compile(checkpointer=...)</code>) in Kombination mit einer <code>thread_id</code> beim Aufruf erzeugt einen persistenten Gesprächsverlauf. Ohne das bleibt die KI nach jedem Aufruf dement.</span>
+            </div>
+            <div class="pitfall">
+              <span class="pitfall-icon">⚠️</span>
+              <span><strong>Stolperstein 2: InMemorySaver ist kein dauerhafter Speicher.</strong> Der Verlauf existiert nur so lange wie der Python-Prozess läuft. Nach jedem Neustart ist alles weg. Für Produktion: <code>SqliteSaver</code> (lokal, dateibasiert) oder <code>PostgresSaver</code> (server-basiert, skalierbar) verwenden.</span>
+            </div>
+            <div class="pitfall">
+              <span class="pitfall-icon">⚠️</span>
+              <span><strong>Stolperstein 3: Listen-Überschreibung ohne Reducer.</strong> Werden Listen-Felder im State definiert, ohne sie mit dem Reducer-Mechanismus <code>Annotated[list, operator.add]</code> auszustatten, löscht jede neue Station den gesamten vorherigen Verlauf des Feldes radikal aus.</span>
+            </div>
+            <div class="pitfall">
+              <span class="pitfall-icon">⚠️</span>
+              <span><strong>Stolperstein 4: Der Trugschluss um MessagesState.</strong> Der <code>MessagesState</code> ist kein natives Sonder-Konstrukt, sondern eine fertige Convenience-Klasse. Wichtig: importieren, nicht neu definieren – und für eigene Felder ableiten (<code>class MeinState(MessagesState)</code>), nicht überschreiben.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-5">
+        <div class="panel-body">
+          <div class="panel-toolbar">
+            <div>
+              <div class="panel-title">Alles zusammen – Der vollständige ReAct-Graph</div>
+              <div class="panel-desc">Der vollständige Agent mit Tool-Node und ReAct-Loop. Die fünf Schritte zeigen, wie Imports, Nodes, Edges (inkl. Rückkante), Checkpoint und invoke() zusammenspielen.</div>
+            </div>
+            <button class="btn-reset" onclick="resetStep6()" style="margin-left: auto;">🔄 Ablauf zurücksetzen</button>
+          </div>
+
+          <div class="build-btns" id="build-btns">
+            <button class="build-btn" id="bbtn-0" onclick="buildStep(0)">1 · Imports laden</button>
+            <button class="build-btn" id="bbtn-1" onclick="buildStep(1)">2 · Nodes einrichten (LLM + Tool)</button>
+            <button class="build-btn" id="bbtn-2" onclick="buildStep(2)">3 · Edges + ReAct-Loop ziehen</button>
+            <button class="build-btn" id="bbtn-3" onclick="buildStep(3)">4 · Kompilieren (compile)</button>
+            <button class="build-btn" id="bbtn-4" onclick="buildStep(4)">5 · Ausführen (invoke)</button>
+          </div>
+
+          <div class="build-area">
+            <div>
+              <div class="graph-canvas">
+                <canvas id="gc" width="340" height="310"></canvas>
+              </div>
+              <div class="build-msg" id="build-msg">— Schritt 1 anklicken, um den Prozess zu starten —</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="chat-sim" id="chat-sim">
+                <div class="chat-placeholder" id="chat-ph">Der Aufbau des Systems ermöglicht im Anschluss die Chatsimulation…</div>
+              </div>
+              <div class="code-wrap">
+                <div class="code-toolbar">
+                  <div class="code-dots"><div class="cd cd-r"></div><div class="cd cd-y"></div><div class="cd cd-g"></div></div>
+                  <span class="code-filename">mein_erster_graph.py</span>
+                </div>
+                <pre class="code" id="code-5"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-bar">
+        <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Zurück</button>
+        <div class="progress-dots" id="pdots"></div>
+        <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Weiter →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================
+   GLOBAL VARIABLES & CONFIG
+   ========================================== */
+let buildStepDone = -1;
+
+const CODES = {
+  0: [
+    { t: '<span class="kw">from</span> typing <span class="kw">import</span> <span class="cl2">TypedDict</span>, <span class="cl2">Annotated</span>' },
+    { t: '<span class="kw">import</span> operator' },
+    { t: '' },
+    { t: '<span class="cm"># ① Alternative 1 (Überschreiben): Werte werden bei jedem Schreibvorgang im Tagebuch komplett überschrieben</span>', c: 'hl-purple' },
+    { t: '<span class="kw">class</span> <span class="cl2">StandardNotizbuch</span>(<span class="cl2">TypedDict</span>):', c: 'hl-purple' },
+    { t: '    username: str        <span class="cm"># Der neueste Text überschreibt den vorherigen Tagebuch-Inhalt</span>', c: 'hl-purple' },
+    { t: '    status: str' },
+    { t: '' },
+    { t: '<span class="cm"># ② Alternative 2 (Anhängen): Neue Einträge werden an die Liste im Tagebuch angehängt</span>', c: 'hl-teal' },
+    { t: '<span class="kw">class</span> <span class="cl2">ListenNotizbuch</span>(<span class="cl2">TypedDict</span>):', c: 'hl-teal' },
+    { t: '    username: str' },
+    { t: '    verlauf: <span class="cl2">Annotated</span>[list, operator.add]  <span class="cm"># "operator.add" erzwingt das Anhängen ins Tagebuch</span>', c: 'hl-teal' },
+    { t: '' },
+    { t: '<span class="cm"># Eine Station gibt ausschließlich die zu ändernden Werte des Reisetagebuchs zurück</span>' },
+    { t: '<span class="kw">def</span> <span class="fn">mein_erster_node</span>(state: <span class="cl2">ListenNotizbuch</span>) -> dict:' },
+    { t: '    <span class="kw">return</span> {<span class="st">"verlauf"</span>: [<span class="st">"Station 1 erfolgreich durchlaufen!"</span>]}' },
+  ],
+
+  1: [
+    { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> <span class="cl2">MessagesState</span>  <span class="cm"># Fertig importieren, nicht neu definieren!</span>' },
+    { t: '<span class="kw">from</span> typing <span class="kw">import</span> <span class="cl2">TypedDict</span>, <span class="cl2">Annotated</span>' },
+    { t: '<span class="kw">from</span> langgraph.graph.message <span class="kw">import</span> add_messages' },
+    { t: '' },
+    { t: '<span class="cm"># Alternative 1 (Integrierter Verlauf): MessagesState direkt importieren und verwenden</span>', c: 'hl-teal' },
+    { t: '<span class="cm"># MessagesState enthält bereits: messages: Annotated[list, add_messages]</span>', c: 'hl-teal' },
+    { t: '<span class="cm"># → Einfach importieren und direkt als State nutzen – keine Neudefinition nötig</span>', c: 'hl-teal' },
+    { t: '' },
+    { t: '<span class="cm"># Alternative 2 (Zusatz-Felder): Eigene Klasse von MessagesState ableiten</span>', c: 'hl-purple' },
+    { t: '<span class="kw">class</span> <span class="cl2">MeinChatNotizbuch</span>(<span class="cl2">MessagesState</span>):  <span class="cm"># MessagesState wird erweitert, nicht überschrieben</span>', c: 'hl-purple' },
+    { t: '    username: str      <span class="cm"># Eigenes Zusatzfeld (wird bei Modifikation überschrieben)</span>', c: 'hl-purple' },
+    { t: '    kundennummer: int  <span class="cm"># Eigenes Zusatzfeld (wird bei Modifikation überschrieben)</span>', c: 'hl-purple' },
+  ],
+
+  2: [
+    { t: '<span class="kw">from</span> langchain_openai <span class="kw">import</span> <span class="cl2">ChatOpenAI</span>' },
+    { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> <span class="cl2">MessagesState</span>' },
+    { t: '<span class="kw">from</span> langgraph.prebuilt <span class="kw">import</span> <span class="cl2">ToolNode</span>' },
+    { t: '' },
+    { t: '<span class="cm"># ① Werkzeug definieren (Tool-Funktion)</span>', c: 'hl-teal' },
+    { t: '<span class="kw">def</span> <span class="fn">wetter_abfragen</span>(stadt: str) -> str:', c: 'hl-teal' },
+    { t: '    <span class="kw">return</span> <span class="fn">f</span><span class="st">"In {stadt} sind es aktuell 21°C und sonnig."</span>', c: 'hl-teal' },
+    { t: '' },
+    { t: '<span class="cm"># ② Modell mit Tools binden – erst dann kann das Modell Tool-Calls auslösen!</span>', c: 'hl-purple' },
+    { t: 'werkzeuge = [wetter_abfragen]', c: 'hl-purple' },
+    { t: 'ki_modell = <span class="cl2">ChatOpenAI</span>(model=<span class="st">"gpt-4o-mini"</span>).<span class="fn">bind_tools</span>(werkzeuge)  <span class="cm"># bind_tools ist Pflicht!</span>', c: 'hl-purple' },
+    { t: '' },
+    { t: '<span class="cm"># ③ LLM-Node: Sendet Nachrichten ans Modell, schreibt Antwort zurück</span>', c: 'hl-purple' },
+    { t: '<span class="kw">def</span> <span class="fn">chatbot_node</span>(state: <span class="cl2">MessagesState</span>) -> dict:', c: 'hl-purple' },
+    { t: '    ki_antwort = ki_modell.<span class="fn">invoke</span>(state[<span class="st">"messages"</span>])', c: 'hl-purple' },
+    { t: '    <span class="kw">return</span> {<span class="st">"messages"</span>: [ki_antwort]}' },
+    { t: '' },
+    { t: '<span class="cm"># ④ Tool-Node: Führt Werkzeug aus, wenn Modell einen Tool-Call zurückgibt</span>', c: 'hl-teal' },
+    { t: 'werkzeug_node = <span class="cl2">ToolNode</span>(werkzeuge)  <span class="cm"># Erhält Tool-Calls und führt sie aus</span>', c: 'hl-teal' },
+  ],
+
+  3: [
+    { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> START, END, <span class="cl2">StateGraph</span>, <span class="cl2">MessagesState</span>' },
+    { t: '' },
+    { t: 'builder = <span class="cl2">StateGraph</span>(<span class="cl2">MessagesState</span>)' },
+    { t: 'builder.<span class="fn">add_node</span>(<span class="st">"mein_chatbot"</span>, chatbot_node)' },
+    { t: 'builder.<span class="fn">add_node</span>(<span class="st">"meine_werkzeuge"</span>, werkzeug_node)' },
+    { t: '' },
+    { t: '<span class="cm"># ① Statische Kanten: Einstieg und Rückkante (der Loop!)</span>', c: 'hl-purple' },
+    { t: 'builder.<span class="fn">add_edge</span>(START, <span class="st">"mein_chatbot"</span>)         <span class="cm"># Eintrittspunkt</span>', c: 'hl-purple' },
+    { t: 'builder.<span class="fn">add_edge</span>(<span class="st">"meine_werkzeuge"</span>, <span class="st">"mein_chatbot"</span>)  <span class="cm"># Rückkante: nach Tool → zurück zum LLM!</span>', c: 'hl-purple' },
+    { t: '' },
+    { t: '<span class="cm"># ② Konditionale Weiche: Chatbot entscheidet nach jeder Antwort</span>', c: 'hl-amber' },
+    { t: '<span class="kw">def</span> <span class="fn">entscheide_weiteren_weg</span>(state) -> str:', c: 'hl-amber' },
+    { t: '    letzte_nachricht = state[<span class="st">"messages"</span>][<span class="nu">-1</span>]', c: 'hl-amber' },
+    { t: '    <span class="kw">if</span> <span class="fn">hasattr</span>(letzte_nachricht, <span class="st">"tool_calls"</span>) <span class="kw">and</span> letzte_nachricht.tool_calls:', c: 'hl-amber' },
+    { t: '        <span class="kw">return</span> <span class="st">"meine_werkzeuge"</span>  <span class="cm"># Tool-Call erkannt → Werkzeug-Station</span>', c: 'hl-amber' },
+    { t: '    <span class="kw">return</span> END                      <span class="cm"># Keine Tool-Calls → fertig</span>', c: 'hl-amber' },
+    { t: '' },
+    { t: 'builder.<span class="fn">add_conditional_edges</span>(<span class="st">"mein_chatbot"</span>, entscheide_weiteren_weg)', c: 'hl-amber' },
+    { t: '<span class="cm"># Ergebnis: chatbot → [Tool-Call?] → werkzeuge → chatbot → [fertig?] → END</span>', c: 'hl-coral' },
+  ],
+
+  4: [
+    { t: '<span class="kw">from</span> langgraph.checkpoint.memory <span class="kw">import</span> <span class="cl2">InMemorySaver</span>' },
+    { t: '' },
+    { t: '<span class="cm"># ① Basis-Komponente: Thread-ID festlegen (Prozess-Zuordnung)</span>', c: 'hl-purple' },
+    { t: 'einstellungen = {<span class="st">"configurable"</span>: {<span class="st">"thread_id"</span>: <span class="st">"raum-42"</span>}}', c: 'hl-purple' },
+    { t: '' },
+    { t: '<span class="cm"># ② Zusatz-Komponente: Speicher-Saver aktivieren und Verläufe sichern</span>', c: 'hl-teal' },
+    { t: 'app = builder.<span class="fn">compile</span>(<span class="fn">checkpointer</span>=<span class="cl2">InMemorySaver</span>())', c: 'hl-teal' },
+    { t: 'app.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [<span class="st">"Hallo!"</span>]}, einstellungen)', c: 'hl-teal' },
+    { t: '<span class="cm"># Greift auf Historie unter Beibehaltung der Basis-Komponente (Thread-ID) zurück:</span>', c: 'hl-teal' },
+    { t: 'app.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [<span class="st">"Wie lautet der Status?"</span>]}, einstellungen)', c: 'hl-teal' },
+  ],
+
+  5: [
+    { t: '<span class="kw">from</span> langgraph.checkpoint.memory <span class="kw">import</span> <span class="cl2">InMemorySaver</span>', id: 'b0' },
+    { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> START, END, <span class="cl2">MessagesState</span>, <span class="cl2">StateGraph</span>', id: 'b0_2' },
+    { t: '<span class="kw">from</span> langgraph.prebuilt <span class="kw">import</span> <span class="cl2">ToolNode</span>', id: 'b0_3' },
+    { t: '<span class="kw">from</span> langchain_openai <span class="kw">import</span> <span class="cl2">ChatOpenAI</span>', id: 'b0_4' },
+    { t: '' },
+    { t: '<span class="cm"># ① Werkzeug + Modell mit bind_tools vorbereiten</span>', id: 'b1' },
+    { t: '<span class="kw">def</span> <span class="fn">wetter_abfragen</span>(stadt: str) -> str:', id: 'b1_2' },
+    { t: '    <span class="kw">return</span> <span class="fn">f</span><span class="st">"In {stadt} sind es aktuell 21°C und sonnig."</span>', id: 'b1_3' },
+    { t: 'werkzeuge = [wetter_abfragen]', id: 'b1_4' },
+    { t: 'ki_modell = <span class="cl2">ChatOpenAI</span>(model=<span class="st">"gpt-4o-mini"</span>).<span class="fn">bind_tools</span>(werkzeuge)', id: 'b1_5' },
+    { t: '<span class="kw">def</span> <span class="fn">chatbot</span>(state): <span class="kw">return</span> {<span class="st">"messages"</span>: [ki_modell.<span class="fn">invoke</span>(state[<span class="st">"messages"</span>])]}', id: 'b1_6' },
+    { t: 'werkzeug_node = <span class="cl2">ToolNode</span>(werkzeuge)', id: 'b1_7' },
+    { t: '' },
+    { t: '<span class="cm"># ② Architektur aufbauen: Nodes + Edges inkl. ReAct-Loop</span>', id: 'b2a' },
+    { t: 'builder = <span class="cl2">StateGraph</span>(<span class="cl2">MessagesState</span>)', id: 'b2b' },
+    { t: 'builder.<span class="fn">add_node</span>(<span class="st">"chatbot"</span>, chatbot)', id: 'b2c' },
+    { t: 'builder.<span class="fn">add_node</span>(<span class="st">"werkzeuge"</span>, werkzeug_node)', id: 'b2d' },
+    { t: 'builder.<span class="fn">add_edge</span>(START, <span class="st">"chatbot"</span>)', id: 'b2e' },
+    { t: 'builder.<span class="fn">add_edge</span>(<span class="st">"werkzeuge"</span>, <span class="st">"chatbot"</span>)  <span class="cm"># Rückkante: nach Tool → zurück zum LLM</span>', id: 'b2f' },
+    { t: '<span class="kw">def</span> <span class="fn">route</span>(state): <span class="kw">return</span> <span class="st">"werkzeuge"</span> <span class="kw">if</span> state[<span class="st">"messages"</span>][<span class="nu">-1</span>].tool_calls <span class="kw">else</span> END', id: 'b2g' },
+    { t: 'builder.<span class="fn">add_conditional_edges</span>(<span class="st">"chatbot"</span>, route)', id: 'b2h' },
+    { t: '' },
+    { t: '<span class="cm"># ③ Kompilieren mit Checkpoint</span>', id: 'b3' },
+    { t: 'graph = builder.<span class="fn">compile</span>(<span class="fn">checkpointer</span>=<span class="cl2">InMemorySaver</span>())', id: 'b3_2' },
+    { t: '' },
+    { t: '<span class="cm"># ④ Ausführen mit thread_id</span>', id: 'b4a' },
+    { t: 'ergebnis = graph.<span class="fn">invoke</span>(', id: 'b4b' },
+    { t: '    {<span class="st">"messages"</span>: [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Wie ist das Wetter in Berlin?"</span>}]},', id: 'b4c' },
+    { t: '    {<span class="st">"configurable"</span>: {<span class="st">"thread_id"</span>: <span class="st">"test-id-1"</span>}}', id: 'b4d' },
+    { t: ')', id: 'b4e' },
+  ],
+};
+
+const BUILD_STEP_IDS = [
+  ['b0', 'b0_2', 'b0_3', 'b0_4'],
+  ['b1', 'b1_2', 'b1_3', 'b1_4', 'b1_5', 'b1_6', 'b1_7'],
+  ['b2a', 'b2b', 'b2c', 'b2d', 'b2e', 'b2f', 'b2g', 'b2h'],
+  ['b3', 'b3_2'],
+  ['b4a', 'b4b', 'b4c', 'b4d', 'b4e'],
+];
+
+const BUILD_STEP_COLOR_CLASSES = [
+  'hl-purple',
+  'hl-teal',
+  'hl-amber',
+  'hl-purple',
+  'hl-teal',
+];
+
+const BUILD_MSGS = [
+  '✅ Schritt 1: Imports geladen – MessagesState, StateGraph, ToolNode und ChatOpenAI bereit.',
+  '✅ Schritt 2: Werkzeug definiert, Modell mit bind_tools verknüpft, LLM-Node und Tool-Node eingerichtet.',
+  '✅ Schritt 3: Graph aufgebaut – Nodes registriert, statische Kante (START→chatbot), Rückkante (werkzeuge→chatbot) und konditionale Weiche gesetzt.',
+  '✅ Schritt 4: compile() hat Struktur validiert und InMemorySaver aktiviert.',
+  '🎉 Schritt 5: invoke() ausgeführt. Der ReAct-Loop läuft: LLM → Tool → LLM → Antwort.',
+];
+
+const STYLES = {
+  gray:   { fill:'#1f242e', stroke:'#4b5563', txt:'#9ca3af' },
+  purple: { fill:'#2c2463', stroke:'#8b7cf8', txt:'#d1c9ff' },
+  teal:   { fill:'#0a2e25', stroke:'#14b08a', txt:'#7fffd4' },
+};
+
+const NODES = [
+  { id:'START',    label:'START',    sub:'',             x:170, y:30,  style:'gray'   },
+  { id:'chatbot',  label:'chatbot',  sub:'MessagesState', x:170, y:110, style:'purple' },
+  { id:'werkzeuge',label:'werkzeuge',sub:'ToolNode',      x:170, y:195, style:'teal'   },
+  { id:'END',      label:'END',      sub:'',             x:170, y:275, style:'gray'   },
+];
+const EDGES = [
+  { f:'START',     t:'chatbot',   curved: false },
+  { f:'chatbot',   t:'werkzeuge', curved: false, label:'tool_call?' },
+  { f:'werkzeuge', t:'chatbot',   curved: true,  label:'zurück' },
+  { f:'chatbot',   t:'END',       curved: false, label:'fertig' },
+];
+
+/* ==========================================
+   CANVAS GRAPHICS RENDERING
+   ========================================= */
+function nodeById(id) { return NODES.find(n => n.id === id); }
+
+// FIX: Syntaxfehler behoben (ctx ruft sich nicht mehr selbst auf)
+function drawRoundedRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y); ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+function drawVectorArrow(ctx, x1, y1, x2, y2, col) {
+  const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+  const ux=dx/len, uy=dy/len, spacing=26;
+  const sx=x1+ux*spacing, sy=y1+uy*spacing, ex=x2-ux*spacing, ey=y2-uy*spacing;
+  
+  ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(ex,ey);
+  ctx.strokeStyle = col; ctx.lineWidth = 2; 
+  ctx.stroke();
+  
+  const alpha = Math.atan2(ey-sy, ex-sx);
+  ctx.beginPath(); ctx.moveTo(ex, ey);
+  ctx.lineTo(ex-8*Math.cos(alpha-.4), ey-8*Math.sin(alpha-.4));
+  ctx.lineTo(ex-8*Math.cos(alpha+.4), ey-8*Math.sin(alpha+.4));
+  ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+}
+
+const CV = document.getElementById('gc');
+const CTX = CV.getContext('2d');
+
+function drawGraph(activeSteps) {
+  const W = CV.width, H = CV.height;
+  CTX.clearRect(0, 0, W, H);
+  CTX.fillStyle = '#101216'; CTX.fillRect(0, 0, W, H);
+
+  const shown      = activeSteps >= 0;
+  const showNodes  = activeSteps >= 1;
+  const showEdges  = activeSteps >= 2;
+  const showCompile= activeSteps >= 3;
+
+  if (showCompile) {
+    CTX.beginPath();
+    CTX.rect(10, 10, W-20, H-20);
+    CTX.strokeStyle = 'rgba(139,124,248,0.4)';
+    CTX.lineWidth = 1.5;
+    CTX.setLineDash([6,4]);
+    CTX.stroke();
+    CTX.setLineDash([]);
+    CTX.font = '11px monospace';
+    CTX.fillStyle = 'rgba(139,124,248,0.8)';
+    CTX.textAlign = 'left';
+    CTX.fillText('compiled_graph', 18, 26);
+  }
+
+  if (showEdges) {
+    EDGES.forEach(e => {
+      const a = nodeById(e.f), b = nodeById(e.t);
+      if (!a || !b) return;
+      // Rückkante: gebogen links daneben
+      if (e.curved) {
+        const ox = -55; // Offset nach links
+        CTX.beginPath();
+        CTX.moveTo(a.x, a.y + 21);
+        CTX.bezierCurveTo(a.x + ox, a.y + 21, b.x + ox, b.y - 21, b.x, b.y - 21);
+        CTX.strokeStyle = '#14b08a'; CTX.lineWidth = 1.8;
+        CTX.setLineDash([4,3]); CTX.stroke(); CTX.setLineDash([]);
+        // Pfeilspitze oben an b
+        CTX.beginPath();
+        CTX.moveTo(b.x, b.y - 21);
+        CTX.lineTo(b.x - 6, b.y - 28);
+        CTX.lineTo(b.x + 6, b.y - 28);
+        CTX.closePath(); CTX.fillStyle = '#14b08a'; CTX.fill();
+        // Label
+        if (e.label) {
+          CTX.font = '9px monospace'; CTX.fillStyle = '#14b08a';
+          CTX.textAlign = 'center';
+          CTX.fillText(e.label, a.x + ox - 4, (a.y + b.y) / 2);
+        }
+      } else {
+        // Gerade Kante
+        const col = (e.f === 'chatbot' && e.t === 'END') ? '#d98204' :
+                    (e.f === 'chatbot' && e.t === 'werkzeuge') ? '#d98204' : '#7f71f5';
+        drawVectorArrow(CTX, a.x, a.y, b.x, b.y, col);
+        if (e.label) {
+          CTX.font = '9px monospace'; CTX.fillStyle = col;
+          CTX.textAlign = 'left';
+          CTX.fillText(e.label, (a.x + b.x) / 2 + 8, (a.y + b.y) / 2);
+        }
+      }
+    });
+  }
+
+  NODES.forEach(n => {
+    if (n.id === 'START'     && !shown)              return;
+    if (n.id === 'chatbot'   && activeSteps < 1)     return;
+    if (n.id === 'werkzeuge' && activeSteps < 1)     return;
+    if (n.id === 'END'       && activeSteps < 2)     return;
+
+    const st = STYLES[n.style];
+    const nw = 140, nh = 42;
+    const x = n.x - nw/2, y = n.y - nh/2;
+
+    drawRoundedRect(CTX, x, y, nw, nh, 8);
+    CTX.fillStyle = st.fill; CTX.fill();
+    CTX.strokeStyle = st.stroke; CTX.lineWidth = 1.5; CTX.stroke();
+
+    CTX.font = 'bold 12px monospace';
+    CTX.fillStyle = st.txt; CTX.textAlign = 'center';
+    CTX.fillText(n.label, n.x, n.y - (n.sub ? 4 : -4));
+
+    if (n.sub) {
+      CTX.font = '9px monospace'; CTX.fillStyle = n.style === 'teal' ? '#7fffd4' : '#a297ff';
+      CTX.fillText(n.sub, n.x, n.y + 12);
+    }
+  });
+}
+
+/* ==========================================
+   INTERACTIVE BUILD LOGIC
+   ========================================= */
+function buildStep(n) {
+  if (n <= buildStepDone) return; 
+  
+  if (n > buildStepDone + 1) {
+    const msgBox = document.getElementById('build-msg');
+    msgBox.style.color = 'var(--coral)';
+    msgBox.textContent = '⚠️ Die korrekte Reihenfolge ist einzuhalten. Bitte den nächsten logischen Schritt wählen.';
+    return;
+  }
+  
+  buildStepDone = n;
+  document.getElementById('build-msg').style.color = 'var(--teal)';
+
+  const currentBtn = document.getElementById('bbtn-' + n);
+  currentBtn.classList.add('done');
+  currentBtn.disabled = true;
+
+  const colorClass = BUILD_STEP_COLOR_CLASSES[n];
+
+  BUILD_STEP_IDS[n].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add(colorClass); 
+  });
+
+  drawGraph(n);
+  document.getElementById('build-msg').textContent = BUILD_MSGS[n];
+
+  if (n === 4) {
+    document.getElementById('chat-ph').style.display = 'none';
+    const sim = document.getElementById('chat-sim');
+    
+    const messages = [
+      { side: 'user', text: 'Wie ist das Wetter in Berlin?' },
+      { side: 'bot',  text: '🔧 Tool-Call: wetter_abfragen("Berlin")' },
+      { side: 'bot',  text: '🌤 Tool-Ergebnis: In Berlin sind es aktuell 21°C und sonnig.' },
+      { side: 'bot',  text: 'In Berlin ist es aktuell 21°C und sonnig. Der ReAct-Loop hat erfolgreich ein Werkzeug aufgerufen und die Antwort verarbeitet.' }
+    ];
+    
+    messages.forEach((m, i) => {
+      setTimeout(() => {
+        const bubble = document.createElement('div');
+        bubble.className = 'msg-bub msg-' + m.side;
+        if (m.text.startsWith('🔧') || m.text.startsWith('🌤')) {
+          bubble.style.cssText = 'background:#1a2a1a;border:1px solid #14b08a;color:#7fffd4;font-size:11px;font-family:monospace;';
+        }
+        bubble.textContent = m.text;
+        sim.appendChild(bubble);
+        sim.scrollTop = sim.scrollHeight;
+      }, i * 400);
+    });
+  }
+}
+
+/* ==========================================
+   CORE APPLICATION ENGINE & NAV
+   ========================================== */
+function renderCode(idx, highlightAll = false) {
+  const lines = CODES[idx];
+  const pre = document.getElementById('code-' + idx);
+  if (!pre) return;
+  
+  pre.innerHTML = lines.map((l, i) => {
+    const highlightClass = (highlightAll && l.c) ? ` ${l.c}` : '';
+    const idAttr = l.id ? ` id="${l.id}"` : '';
+    return `<div class="cl${highlightClass}"${idAttr}><span class="ln">${i+1}</span><span class="ct">${l.t || ' '}</span></div>`;
+  }).join('');
+}
+
+function initAllCodes() {
+  renderCode(0, true); 
+  renderCode(1, true); 
+  renderCode(2, true); 
+  renderCode(3, true); 
+  renderCode(4, true); 
+  renderCode(5, false); 
+}
+
+initAllCodes();
+
+function resetStep1() {
+  renderCode(0, true);
+}
+
+function resetStep6() {
+  buildStepDone = -1;
+  
+  for(let i=0; i<5; i++) {
+    const btn = document.getElementById('bbtn-' + i);
+    if(btn) {
+      btn.classList.remove('done');
+      btn.disabled = false;
+    }
+  }
+  
+  renderCode(5, false);
+  document.getElementById('build-msg').textContent = '— Schritt 1 anklicken, um den Prozess zu starten —';
+  
+  const sim = document.getElementById('chat-sim');
+  sim.innerHTML = '<div class="chat-placeholder" id="chat-ph">Nach Schritt 5 wird der ReAct-Loop simuliert…</div>';
+  
+  drawGraph(-1);
+}
+
+let current = 0;
+const visited = new Set([0]);
+
+const pdotsEl = document.getElementById('pdots');
+for (let i = 0; i < 6; i++) {
+  const d = document.createElement('div');
+  d.className = 'pdot' + (i === 0 ? ' active' : '');
+  d.id = 'pd-' + i;
+  d.onclick = () => goTo(i);
+  pdotsEl.appendChild(d);
+}
+
+function goTo(n) {
+  document.getElementById('panel-' + current).classList.remove('active');
+  document.getElementById('si-' + current).classList.remove('active');
+  document.getElementById('pd-' + current).classList.remove('active');
+
+  current = n;
+  visited.add(n);
+
+  document.getElementById('panel-' + current).classList.add('active');
+  document.getElementById('si-' + current).classList.add('active');
+  document.getElementById('pd-' + current).classList.add('active');
+  document.getElementById('step-counter').textContent = `Schritt ${current + 1} von 6`;
+  document.getElementById('btn-prev').disabled = current === 0;
+  const nextBtn = document.getElementById('btn-next');
+  if (current === 5) {
+    nextBtn.textContent = '✓ Abgeschlossen';
+    nextBtn.disabled = false;
+    nextBtn.classList.remove('primary');
+    nextBtn.classList.add('done');
+    nextBtn.onclick = () => goTo(0);
+  } else {
+    nextBtn.textContent = 'Weiter →';
+    nextBtn.disabled = false;
+    nextBtn.classList.add('primary');
+    nextBtn.classList.remove('done');
+    nextBtn.onclick = () => navigate(1);
+  }
+
+  for (let i = 0; i < 6; i++) {
+    const si = document.getElementById('si-' + i);
+    si.classList.remove('visited');
+    if (visited.has(i) && i !== current) si.classList.add('visited');
+    const pd = document.getElementById('pd-' + i);
+    pd.classList.remove('visited');
+    if (visited.has(i) && i !== current) pd.classList.add('visited');
+  }
+  
+  if(current === 5) {
+    drawGraph(buildStepDone);
+  }
+}
+
+function navigate(dir) {
+  const next = Math.max(0, Math.min(5, current + dir));
+  goTo(next);
+}
+
+drawGraph(-1);
+</script>
+</body>
+</html>

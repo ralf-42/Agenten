@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulation: KI-Agenten</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --card: #020617;
+      --card-alt: #0b1120;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --accent-strong: rgba(56, 189, 248, 0.35);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --danger: #f97373;
+      --success: #4ade80;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+      --radius-xl: 18px;
+      --radius-2xl: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app {
+      width: 1180px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      margin: 0 0 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h1 span.badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: var(--muted);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 320px 1.6fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #020617, #020617, #020617);
+      border-radius: var(--radius-2xl);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      pointer-events: none;
+    }
+
+    .card-header {
+      padding: 14px 16px 6px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--muted);
+    }
+
+    .card-body {
+      padding: 10px 14px 14px;
+      font-size: 13px;
+    }
+
+    .scenario-select {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+    }
+
+    .scenario-desc {
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 12px;
+      padding: 8px 10px;
+      border: 1px dashed rgba(55, 65, 81, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at left, rgba(30, 64, 175, 0.45), rgba(15, 23, 42, 0.9));
+      overflow: hidden;
+      margin-bottom: 10px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+      transition: width 0.25s ease-out;
+    }
+
+    .controls {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: radial-gradient(circle at top, rgba(31, 41, 55, 0.95), #020617);
+      color: var(--text);
+      font-size: 12px;
+      padding: 7px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    button.primary {
+      border-color: rgba(56, 189, 248, 0.8);
+      background: linear-gradient(to right, rgba(8, 47, 73, 0.98), rgba(30, 64, 175, 0.95));
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+      transform: none;
+    }
+
+    button:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.6);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
+      animation: pulse 1.4s infinite;
+    }
+
+    @keyframes pulse {
+      0%   { transform: scale(0.9); opacity: 0.8; }
+      50%  { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+
+    .mini-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      font-size: 10px;
+    }
+
+    .mini-badge {
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .agents {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .agent-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .agent-card {
+      flex: 1;
+      padding: 8px 9px;
+      border-radius: 14px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), #020617 55%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agent-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7), 0 14px 30px rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.65), #020617);
+    }
+
+    .agent-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .agent-role {
+      font-size: 10px;
+      color: var(--muted);
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+    }
+
+    .agent-state {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .agent-state span {
+      color: var(--accent);
+    }
+
+    .agent-emoji {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+
+    .tools {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tool {
+      flex: 1;
+      min-width: 90px;
+      padding: 6px 7px;
+      border-radius: 12px;
+      border: 1px dashed rgba(55, 65, 81, 0.95);
+      background: rgba(15, 23, 42, 0.95);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tool.active {
+      border-style: solid;
+      border-color: var(--accent);
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.65), #020617);
+      color: var(--text);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.7);
+    }
+
+    .tool-name {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .tool-tag {
+      font-size: 9px;
+      opacity: 0.75;
+    }
+
+    .terminal {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: radial-gradient(circle at top, #020617, #020617 40%, #020617);
+      border-radius: var(--radius-2xl);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 520px;
+    }
+
+    .terminal-header {
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), #020617);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.95);
+    }
+
+    .traffic-lights {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .light {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #1f2937;
+    }
+
+    .light.red { background: #f97373; }
+    .light.yellow { background: #fbbf24; }
+    .light.green { background: #4ade80; }
+
+    .terminal-title {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .badge-small {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      color: var(--muted);
+    }
+
+    .terminal-body {
+      padding: 10px 10px 10px;
+      font-size: 12px;
+      color: var(--text);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(55, 65, 81, 0.9) rgba(15, 23, 42, 0.9);
+    }
+
+    .terminal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .terminal-body::-webkit-scrollbar-thumb {
+      background: rgba(55, 65, 81, 0.9);
+      border-radius: 999px;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .log-prefix {
+      color: var(--muted);
+    }
+
+    .log-type-thought .log-prefix {
+      color: var(--accent);
+    }
+
+    .log-type-tool .log-prefix {
+      color: #fbbf24;
+    }
+
+    .log-type-result .log-prefix {
+      color: var(--success);
+    }
+
+    .log-type-final .log-prefix {
+      color: #a855f7;
+    }
+
+    .log-highlight {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 6px;
+      padding: 2px 4px;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        padding: 12px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .terminal {
+        max-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>
+      Simulation: KI-Agenten
+      <span class="badge"></span>
+    </h1>
+    <div class="subtitle">
+      Visualisierung eines LLM-basierten Agenten, der Ziele verfolgt, Tools auswählt und in mehreren Schritten eine Aufgabe löst.
+    </div>
+    <div class="tagline">
+      Nutze <strong>„Nächster Schritt“</strong> oder <strong>„Auto“</strong>, um den Agenten-Loop interaktiv zu zeigen.
+    </div>
+  </header>
+
+  <main class="grid">
+    <!-- LINKER BLOCK: Steuerung & Agentenübersicht -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">Szenario &amp; Steuerung</div>
+        <div class="pill" id="status-pill">Bereit</div>
+      </div>
+      <div class="card-body">
+        <div class="scenario-select">
+          <label for="scenario">
+            Szenario auswählen
+          </label>
+          <select id="scenario">
+            <option value="reise">Reiseplanung: Kurztrip</option>
+            <option value="support">IT-Support: Druckerproblem</option>
+            <option value="meeting">Meeting organisieren</option>
+          </select>
+          <div class="scenario-desc" id="scenario-desc"></div>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div class="controls">
+          <button class="primary" id="btn-start">
+            ▶ Simulation starten
+          </button>
+          <button id="btn-next" disabled>
+            ➜ Nächster Schritt
+          </button>
+          <button id="btn-auto" disabled>
+            ⏱ Auto (langsam)
+          </button>
+          <button id="btn-reset">
+            ⟲ Zurücksetzen
+          </button>
+        </div>
+
+        <div class="status-indicator">
+          <div class="dot" id="status-dot"></div>
+          <div id="status-text">Agent wartet auf Ziel …</div>
+        </div>
+
+        <div class="mini-badges">
+          <span class="mini-badge">Planung</span>
+          <span class="mini-badge">Tool-Auswahl</span>
+          <span class="mini-badge">Beobachtung → neuer Plan</span>
+          <span class="mini-badge">LLM-Agenten-Loop</span>
+        </div>
+
+        <hr style="border-color: rgba(31,41,55,0.9); border-style: solid; margin: 10px 0;" />
+
+        <div class="agents">
+          <div class="agent-row">
+            <div class="agent-card" id="agent-planner">
+              <div class="agent-title">
+                <span><span class="agent-emoji">🧠</span>Planer-Agent</span>
+                <span class="agent-role">Ziel &amp; Plan</span>
+              </div>
+              <div class="agent-state">
+                Status: <span id="planner-state">wartet …</span>
+              </div>
+            </div>
+            <div class="agent-card" id="agent-worker">
+              <div class="agent-title">
+                <span><span class="agent-emoji">⚙️</span>Ausführungs-Agent</span>
+                <span class="agent-role">Tools &amp; Schritte</span>
+              </div>
+              <div class="agent-state">
+                Status: <span id="worker-state">wartet …</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tools">
+            <div class="tool" id="tool-search">
+              <div class="tool-name">Web-/Daten-Suche</div>
+              <div class="tool-tag">z. B. Reise, FAQ, Wissensdatenbank</div>
+            </div>
+            <div class="tool" id="tool-calendar">
+              <div class="tool-name">Kalender-/Termin-Tool</div>
+              <div class="tool-tag">Slots prüfen, Einladungen planen</div>
+            </div>
+            <div class="tool" id="tool-system">
+              <div class="tool-name">System-Tool</div>
+              <div class="tool-tag">z. B. Drucker, Ticketsystem, E-Mail</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MITTLERER BLOCK: „Konsole“ / Reasoning-Log -->
+    <section class="terminal">
+      <div class="terminal-header">
+        <div class="traffic-lights">
+          <div class="light red"></div>
+          <div class="light yellow"></div>
+          <div class="light green"></div>
+        </div>
+        <div class="terminal-title">Agenten-Loop · Denken · Tools · Ergebnis</div>
+        <div class="badge-small">LLM-Agent</div>
+      </div>
+      <div class="terminal-body" id="log">
+        <div class="log-line log-type-info">
+<span class="log-prefix">system ▸</span> Willkommen in der Agenten-Simulation. Wähle ein Szenario und starte, um den Schritt-für-Schritt-Ablauf zu sehen.
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // --- Szenario-Definitionen -------------------------------------------------
+
+  const scenarios = {
+    reise: {
+      name: "Reiseplanung: Kurztrip",
+      description:
+        "Der Agent soll einen Wochenend-Kurztrip nach Hamburg planen: Anreise, Hotel, grobe Aktivitäten.",
+      steps: [
+        {
+          type: "thought",
+          agent: "planner",
+          text: "Ziel erhalten: „Plane einen Wochenend-Kurztrip nach Hamburg mit Zug, Hotel und grobem Programm.“"
+        },
+        {
+          type: "plan",
+          agent: "planner",
+          text: "Ich zerlege das Ziel in Schritte: (1) passende Reisedaten und Zug, (2) Hotel in Zentrumsnähe, (3) einfache Aktivitätenliste."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "search",
+          text: "Nutze Reise-/Web-Suche für Zugverbindungen (Hin: Fr, Rück: So)."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text: "Suche liefert mehrere ICE-Verbindungen; sinnvoll: Freitag 17:00 ab, Sonntag 18:00 zurück."
+        },
+        {
+          type: "thought",
+          agent: "planner",
+          text: "Reisezeiten festgelegt. Nächster Schritt: Hotel nahe Hbf & Innenstadt."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "search",
+          text: "Suche nach Hotels in der Nähe des Hamburger Hauptbahnhofs mit guter Bewertung."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text: "Geeignet: „Hotel Nordwind“, 4★, 8,7/10, 10 Gehminuten vom Hbf."
+        },
+        {
+          type: "thought",
+          agent: "planner",
+          text: "Jetzt ein einfaches Programm mit 2-3 Aktivitäten pro Tag planen."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "search",
+          text: "Suche nach typischen Aktivitäten in Hamburg (z. B. Speicherstadt, Elbphilharmonie, Hafenrundfahrt)."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text: "Als Highlights werden Speicherstadt, Elbphilharmonie-Plaza und Hafenrundfahrten vorgeschlagen."
+        },
+        {
+          type: "plan",
+          agent: "planner",
+          text:
+            "Baue alles zu einem konsistenten Vorschlag zusammen: Zugzeiten, Hotel, Tagesprogramm für Sa & So."
+        },
+        {
+          type: "final",
+          agent: "planner",
+          text:
+            "Vorschlag: Anreise Fr Abend, Hotel Nordwind; Sa: Speicherstadt & Hafenrundfahrt; So: Elbphilharmonie-Plaza & Spaziergang an der Alster, Rückfahrt So Abend."
+        }
+      ]
+    },
+    support: {
+      name: "IT-Support: Druckerproblem",
+      description:
+        "Ein Mitarbeiter meldet: „Ich kann nicht drucken, der Drucker ist offline.“ Der Agent soll strukturiert helfen.",
+      steps: [
+        {
+          type: "thought",
+          agent: "planner",
+          text:
+            "Ziel erhalten: „Behebe ein Druckerproblem (offline).“ Ich brauche Kontext, dann passende Maßnahmen."
+        },
+        {
+          type: "plan",
+          agent: "planner",
+          text:
+            "Schritte: (1) Infos sammeln, (2) einfache Checks (Kabel, Netz), (3) Neustart / Treiber prüfen, (4) Ticket anlegen, falls nicht lösbar."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "system",
+          text:
+            "Frage über System-Tool nach weiteren Details: Gerät, Betriebssystem, Netzwerk-Drucker oder lokal?"
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text:
+            "Antwort: Windows-Laptop, Netzwerk-Drucker „HP-Office-4F“, andere Kollegen können drucken."
+        },
+        {
+          type: "thought",
+          agent: "planner",
+          text:
+            "Wenn andere drucken können, wahrscheinlich lokales Problem am Laptop (Spooler, Treiber, Verbindung)."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "system",
+          text:
+            "Starte Druckerwarteschlange neu und prüfe Druckerverbindung auf dem Laptop."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text:
+            "Nach Neustart der Warteschlange ist der Drucker wieder „online“ sichtbar."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "system",
+          text:
+            "Fordere Testdruck über System-Tool an (eine Seite)."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text:
+            "Testdruck erfolgreich. Problem scheint behoben."
+        },
+        {
+          type: "final",
+          agent: "planner",
+          text:
+            "Lösungszusammenfassung: Ursache war vermutlich ein lokaler Warteschlangenfehler. Spooler neu gestartet, Verbindung geprüft, Testdruck erfolgreich."
+        }
+      ]
+    },
+    meeting: {
+      name: "Meeting organisieren",
+      description:
+        "Der Agent soll ein 60-Minuten-Meeting mit drei Personen nächste Woche finden und einen Terminvorschlag erstellen.",
+      steps: [
+        {
+          type: "thought",
+          agent: "planner",
+          text:
+            "Ziel: „Finde einen 60-Minuten-Slot nächste Woche für drei Teilnehmer:innen und mach einen Vorschlag.“"
+        },
+        {
+          type: "plan",
+          agent: "planner",
+          text:
+            "Schritte: (1) verfügbare Zeitfenster pro Person prüfen, (2) Überschneidungen finden, (3) passenden Slot auswählen, (4) Vorschlag formulieren."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "calendar",
+          text:
+            "Kalender-Tool: Verfügbarkeit von Person A, B und C nächste Woche (Mo-Fr) mit Arbeitszeit 9–17 Uhr abrufen."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text:
+            "Gefunden: Gemeinsame freie Slots am Dienstag 10–11 Uhr, Mittwoch 15–16 Uhr und Donnerstag 9–10 Uhr."
+        },
+        {
+          type: "thought",
+          agent: "planner",
+          text:
+            "Als Standard wähle ich einen Slot in der Mitte der Woche und nicht zu früh am Morgen."
+        },
+        {
+          type: "plan",
+          agent: "planner",
+          text:
+            "Bevorzugter Slot: Mittwoch 15–16 Uhr. Optionaler Ausweichslot: Dienstag 10–11 Uhr."
+        },
+        {
+          type: "tool",
+          agent: "worker",
+          tool: "calendar",
+          text:
+            "Erzeuge Meeting-Entwurf „Planungsmeeting Q2“ am Mittwoch 15–16 Uhr mit den drei Teilnehmer:innen."
+        },
+        {
+          type: "result",
+          agent: "worker",
+          text:
+            "Kalender-Eintrag als Entwurf erstellt, aber noch nicht versendet."
+        },
+        {
+          type: "final",
+          agent: "planner",
+          text:
+            "Vorschlag: Meeting am Mittwoch 15–16 Uhr. Alternativ Dienstag 10–11 Uhr. Kalender-Entwurf wurde vorbereitet."
+        }
+      ]
+    }
+  };
+
+  // --- DOM-Referenzen --------------------------------------------------------
+
+  const scenarioSelect = document.getElementById("scenario");
+  const scenarioDesc = document.getElementById("scenario-desc");
+  const btnStart = document.getElementById("btn-start");
+  const btnNext = document.getElementById("btn-next");
+  const btnAuto = document.getElementById("btn-auto");
+  const btnReset = document.getElementById("btn-reset");
+  const logEl = document.getElementById("log");
+  const statusDot = document.getElementById("status-dot");
+  const statusText = document.getElementById("status-text");
+  const statusPill = document.getElementById("status-pill");
+  const progressBar = document.getElementById("progress-bar");
+  const plannerCard = document.getElementById("agent-planner");
+  const workerCard = document.getElementById("agent-worker");
+  const plannerState = document.getElementById("planner-state");
+  const workerState = document.getElementById("worker-state");
+  const toolSearch = document.getElementById("tool-search");
+  const toolCalendar = document.getElementById("tool-calendar");
+  const toolSystem = document.getElementById("tool-system");
+
+  // --- Simulationszustand ----------------------------------------------------
+
+  let currentScenarioKey = scenarioSelect.value;
+  let currentStepIndex = -1;
+  let autoMode = false;
+  let autoTimer = null;
+
+  function getCurrentScenario() {
+    return scenarios[currentScenarioKey];
+  }
+
+  // --- UI-Helfer -------------------------------------------------------------
+
+  function setStatus(text, mode = "idle") {
+    statusText.textContent = text;
+    statusPill.textContent = {
+      idle: "Bereit",
+      running: "Simulation läuft",
+      paused: "Pausiert",
+      done: "Abgeschlossen"
+    }[mode] || "Status";
+
+    if (mode === "running") {
+      statusDot.style.background = "var(--accent)";
+      statusDot.style.boxShadow = "0 0 0 4px rgba(56, 189, 248, 0.4)";
+    } else if (mode === "done") {
+      statusDot.style.background = "var(--success)";
+      statusDot.style.boxShadow = "0 0 0 4px rgba(74, 222, 128, 0.35)";
+    } else {
+      statusDot.style.background = "#4b5563";
+      statusDot.style.boxShadow = "0 0 0 0 transparent";
+    }
+  }
+
+  function resetAgentsAndTools() {
+    plannerCard.classList.remove("active");
+    workerCard.classList.remove("active");
+    plannerState.textContent = "wartet …";
+    workerState.textContent = "wartet …";
+    [toolSearch, toolCalendar, toolSystem].forEach(t => t.classList.remove("active"));
+  }
+
+  function activateAgent(agent, description) {
+    resetAgentsAndTools();
+    if (agent === "planner") {
+      plannerCard.classList.add("active");
+      plannerState.textContent = description || "denkt / plant …";
+    } else if (agent === "worker") {
+      workerCard.classList.add("active");
+      workerState.textContent = description || "führt Tool aus …";
+    }
+  }
+
+  function activateTool(tool) {
+    [toolSearch, toolCalendar, toolSystem].forEach(t => t.classList.remove("active"));
+    if (!tool) return;
+    if (tool === "search") toolSearch.classList.add("active");
+    if (tool === "calendar") toolCalendar.classList.add("active");
+    if (tool === "system") toolSystem.classList.add("active");
+  }
+
+  function appendLogLine(step) {
+    const div = document.createElement("div");
+    div.classList.add("log-line");
+
+    let cssType = "log-type-info";
+    let prefix = "agent ▸";
+
+    switch (step.type) {
+      case "thought":
+        cssType = "log-type-thought";
+        prefix = step.agent === "planner" ? "planer ▸" : "agent ▸";
+        break;
+      case "plan":
+        cssType = "log-type-thought";
+        prefix = "planer ▸";
+        break;
+      case "tool":
+        cssType = "log-type-tool";
+        prefix = "tool ▸";
+        break;
+      case "result":
+        cssType = "log-type-result";
+        prefix = "beobachtung ▸";
+        break;
+      case "final":
+        cssType = "log-type-final";
+        prefix = "ergebnis ▸";
+        break;
+    }
+
+    div.classList.add(cssType);
+    div.innerHTML =
+      '<span class="log-prefix">' + prefix + '</span> ' +
+      '<span class="log-highlight">' + step.text + "</span>";
+
+    logEl.appendChild(div);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function updateProgress() {
+    const total = getCurrentScenario().steps.length;
+    const done = Math.max(0, currentStepIndex + 1);
+    const pct = Math.min(100, Math.round((done / total) * 100));
+    progressBar.style.width = pct + "%";
+  }
+
+  function updateScenarioDescription() {
+    const scenario = getCurrentScenario();
+    scenarioDesc.textContent = scenario.description;
+  }
+
+  // --- Simulation ------------------------------------------------------------
+
+  function resetSimulation() {
+    currentStepIndex = -1;
+    autoMode = false;
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+    logEl.innerHTML =
+      '<div class="log-line"><span class="log-prefix">system ▸</span> Simulation zurückgesetzt. Wähle ein Szenario und starte erneut.</div>';
+    resetAgentsAndTools();
+    updateScenarioDescription();
+    updateProgress();
+    setStatus("Agent wartet auf Ziel …", "idle");
+    btnNext.disabled = true;
+    btnAuto.disabled = true;
+    btnStart.disabled = false;
+    btnAuto.textContent = "⏱ Auto (langsam)";
+  }
+
+  function startSimulation() {
+    resetSimulation();
+    btnStart.disabled = true;
+    btnNext.disabled = false;
+    btnAuto.disabled = false;
+    setStatus("Ziel wird an Agent übergeben …", "running");
+
+    const scenario = getCurrentScenario();
+    const intro = {
+      type: "info",
+      text:
+        `Neues Szenario: „${scenario.name}“. Agent erhält das Ziel in natürlicher Sprache und startet den Planungs-Loop.`
+    };
+    appendLogLine(intro);
+  }
+
+  function stepSimulation() {
+    const scenario = getCurrentScenario();
+    if (currentStepIndex >= scenario.steps.length - 1) {
+      setStatus("Alle Schritte durchgeführt. Agent liefert Ergebnis.", "done");
+      btnNext.disabled = true;
+      btnAuto.disabled = true;
+      autoMode = false;
+      return;
+    }
+
+    currentStepIndex++;
+    const step = scenario.steps[currentStepIndex];
+
+    if (step.type === "thought" || step.type === "plan" || step.type === "final") {
+      activateAgent("planner");
+      if (step.type === "final") {
+        plannerState.textContent = "liefert Ergebnis & Zusammenfassung.";
+      }
+    } else if (step.type === "tool" || step.type === "result") {
+      activateAgent("worker");
+      if (step.type === "tool") {
+        workerState.textContent = "ruft Tool auf …";
+      } else {
+        workerState.textContent = "verarbeitet Tool-Ergebnis.";
+      }
+    }
+
+    if (step.type === "tool") {
+      activateTool(step.tool);
+    } else {
+      activateTool(null);
+    }
+
+    appendLogLine(step);
+    updateProgress();
+
+    if (currentStepIndex === scenario.steps.length - 1) {
+      setStatus("Simulation abgeschlossen. Nutze Reset für ein neues Szenario.", "done");
+      btnNext.disabled = true;
+      btnAuto.disabled = true;
+      autoMode = false;
+    } else {
+      setStatus("Agenten-Loop läuft …", "running");
+    }
+  }
+
+  function toggleAutoMode() {
+    autoMode = !autoMode;
+    if (autoMode) {
+      btnAuto.textContent = "⏸ Auto pausieren";
+      btnNext.disabled = true;
+      runAutoLoop();
+    } else {
+      btnAuto.textContent = "⏱ Auto (langsam)";
+      btnNext.disabled = false;
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+      setStatus("Auto-Modus pausiert. Nutze „Nächster Schritt“.", "paused");
+    }
+  }
+
+  function runAutoLoop() {
+    if (!autoMode) return;
+    const scenario = getCurrentScenario();
+    if (currentStepIndex >= scenario.steps.length - 1) {
+      setStatus("Simulation abgeschlossen (Auto-Modus).", "done");
+      btnAuto.disabled = true;
+      return;
+    }
+
+    stepSimulation();
+
+    const currentStep = scenario.steps[currentStepIndex];
+    let delay = 1500;
+    if (currentStep.type === "plan" || currentStep.type === "thought") delay = 1700;
+    if (currentStep.type === "tool") delay = 1400;
+    if (currentStep.type === "result") delay = 1100;
+
+    autoTimer = setTimeout(runAutoLoop, delay);
+  }
+
+  // --- Events ----------------------------------------------------------------
+
+  scenarioSelect.addEventListener("change", () => {
+    currentScenarioKey = scenarioSelect.value;
+    resetSimulation();
+  });
+
+  btnStart.addEventListener("click", startSimulation);
+  btnNext.addEventListener("click", stepSimulation);
+  btnReset.addEventListener("click", resetSimulation);
+  btnAuto.addEventListener("click", toggleAutoMode);
+
+  // --- Initialisierung -------------------------------------------------------
+
+  updateScenarioDescription();
+  updateProgress();
+  setStatus("Agent wartet auf Ziel …", "idle");
+</script>
+</body>
+</html>

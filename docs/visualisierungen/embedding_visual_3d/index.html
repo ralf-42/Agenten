@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Embeddings Visualisierung - Fahrzeuge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 700px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: move;
+            background: white;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            align-items: center;
+        }
+        
+        .controls button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        
+        .controls button:hover {
+            background: #5568d3;
+        }
+        
+        .controls label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .vector-list {
+            list-style: none;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        
+        .vector-list li {
+            background: white;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .similarity-list {
+            list-style: none;
+            line-height: 1.8;
+        }
+        
+        .similarity-list li {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .distance {
+            background: #667eea;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        
+        .analogy-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .analogy-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .analogy-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .category-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .category-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .category-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .category-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        
+        .highlight h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .legend-gradient {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(to right, #d73027, #fee08b, #1a9850);
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 3D Embeddings Visualisierung</h1>
+            <p>Interaktive 3D-Darstellung von Fahrzeugtypen im Embedding-Raum</p>
+        </div>
+        
+        <div class="content">
+            <!-- Visualisierung -->
+            <div class="section">
+                <h2>📊 3D Canvas Visualisierung</h2>
+                <div id="canvas-container">
+                    <canvas id="embeddingCanvas" width="1000" height="650"></canvas>
+                    <div id="tooltip"></div>
+                </div>
+                <div class="legend">
+                    <strong>Umweltfreundlichkeit:</strong>
+                    <div class="legend-gradient"></div>
+                    <span style="font-size: 0.9em;">Rot (niedriger) → Gelb → Grün (höher)</span>
+                </div>
+                <div class="controls">
+                    <button id="resetView">🔄 Ansicht zurücksetzen</button>
+                    <button id="rotateAuto">▶️ Auto-Rotation</button>
+                    <label>
+                        <input type="checkbox" id="showAxes" checked> Achsen anzeigen
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showGrid" checked> Gitter anzeigen
+                    </label>
+                </div>
+                <p style="color: #666; margin-top: 10px;">
+                    <em>💡 Tipp: Klicken und ziehen zum Rotieren der 3D-Ansicht</em>
+                </p>
+            </div>
+            
+            <!-- Embedding-Vektoren -->
+            <div class="section">
+                <h2>🔢 3D-Embedding-Vektoren</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Fahrzeug-Koordinaten</h3>
+                        <ul class="vector-list" id="vectorList"></ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Drei Dimensionen</h3>
+                        <p><strong>X-Achse (Geschwindigkeit):</strong><br>
+                        0.0 = sehr langsam<br>
+                        1.0 = sehr schnell</p>
+                        <br>
+                        <p><strong>Y-Achse (Größe):</strong><br>
+                        0.0 = sehr klein<br>
+                        1.0 = sehr groß</p>
+                        <br>
+                        <p><strong>Z-Achse (Umwelt):</strong><br>
+                        0.0 = hoher CO₂-Ausstoß<br>
+                        1.0 = sehr umweltfreundlich</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ähnlichkeiten -->
+            <div class="section">
+                <h2>🔍 Ähnlichkeitsanalyse (3D-Distanz)</h2>
+                <div class="info-card">
+                    <h3>Top-5 Ähnlichste Fahrzeugpaare</h3>
+                    <ul class="similarity-list" id="similarityList"></ul>
+                    <p style="margin-top: 15px; color: #666;">
+                        <em>Je kleiner die Distanz, desto ähnlicher sind die Fahrzeuge im 3D-Embedding-Raum.</em>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Kategorien -->
+            <div class="section">
+                <h2>📋 Analyse nach Kategorien</h2>
+                <div class="category-grid" id="categoriesGrid"></div>
+            </div>
+            
+            <!-- Interessante Kombinationen -->
+            <div class="section">
+                <h2>💎 Interessante Kombinationen</h2>
+                <div class="highlight">
+                    <h4><span class="emoji">⚡🌱</span> Schnell UND Umweltfreundlich</h4>
+                    <div id="schnellUmwelt"></div>
+                </div>
+                <div class="highlight">
+                    <h4><span class="emoji">📦🌱</span> Groß UND Umweltfreundlich</h4>
+                    <div id="grossUmwelt"></div>
+                </div>
+            </div>
+            
+            <!-- Semantische Analogien -->
+            <div class="section">
+                <h2>💡 Semantische Analogie (3D)</h2>
+                <div class="analogy-box">
+                    <h4>Vektorarithmetik im 3D-Embedding-Raum:</h4>
+                    <div class="analogy-formula" id="analogyFormula"></div>
+                    <div id="analogyResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 3D-Embedding-Daten
+        const embeddings_data = {
+            'Fahrrad': { coords: [0.2, 0.1, 1.0], color: null },
+            'Motorrad': { coords: [0.9, 0.2, 0.3], color: null },
+            'PKW': { coords: [0.6, 0.4, 0.4], color: null },
+            'LKW': { coords: [0.4, 1.0, 0.1], color: null },
+            'Sportwagen': { coords: [1.0, 0.3, 0.2], color: null },
+            'Bus': { coords: [0.5, 0.9, 0.5], color: null },
+            'E-Auto': { coords: [0.7, 0.4, 0.9], color: null },
+            'E-Bike': { coords: [0.4, 0.15, 0.95], color: null }
+        };
+
+        // Farbe basierend auf Umweltfreundlichkeit (z-Wert)
+        function getColorFromValue(value) {
+            // Rot-Gelb-Grün Farbverlauf
+            if (value < 0.5) {
+                // Rot zu Gelb
+                const ratio = value * 2;
+                const r = 215;
+                const g = Math.floor(48 + ratio * (224 - 48));
+                const b = Math.floor(39 + ratio * (139 - 39));
+                return `rgb(${r}, ${g}, ${b})`;
+            } else {
+                // Gelb zu Grün
+                const ratio = (value - 0.5) * 2;
+                const r = Math.floor(254 - ratio * (254 - 26));
+                const g = Math.floor(224 + ratio * (152 - 224));
+                const b = Math.floor(139 - ratio * (139 - 80));
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+        }
+
+        // Farben initialisieren
+        for (const [vehicle, data] of Object.entries(embeddings_data)) {
+            data.color = getColorFromValue(data.coords[2]);
+        }
+
+        // Canvas-Setup
+        const canvas = document.getElementById('embeddingCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        
+        // 3D-Rotationswinkel
+        let rotationX = 0.5;
+        let rotationY = 0.5;
+        let rotationZ = 0;
+        let scale = 300;
+        let autoRotate = false;
+        let showAxes = true;
+        let showGrid = true;
+        
+        // Maus-Interaktion
+        let isDragging = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        // 3D nach 2D Projektion
+        function project3D(x, y, z) {
+            // Rotation um Y-Achse
+            let tempX = x * Math.cos(rotationY) - z * Math.sin(rotationY);
+            let tempZ = x * Math.sin(rotationY) + z * Math.cos(rotationY);
+            x = tempX;
+            z = tempZ;
+            
+            // Rotation um X-Achse
+            let tempY = y * Math.cos(rotationX) - z * Math.sin(rotationX);
+            tempZ = y * Math.sin(rotationX) + z * Math.cos(rotationX);
+            y = tempY;
+            z = tempZ;
+            
+            // Rotation um Z-Achse
+            tempX = x * Math.cos(rotationZ) - y * Math.sin(rotationZ);
+            tempY = x * Math.sin(rotationZ) + y * Math.cos(rotationZ);
+            x = tempX;
+            y = tempY;
+            
+            // Perspektivische Projektion
+            const perspective = 600;
+            const scaleProj = perspective / (perspective + z * scale);
+            
+            return {
+                x: canvas.width / 2 + x * scale * scaleProj,
+                y: canvas.height / 2 - y * scale * scaleProj,
+                z: z,
+                scale: scaleProj
+            };
+        }
+
+        // Zeichne 3D-Achsen
+        function drawAxes() {
+            if (!showAxes) return;
+            
+            ctx.lineWidth = 2;
+            
+            // X-Achse (Rot)
+            ctx.strokeStyle = '#ff0000';
+            let start = project3D(0, 0, 0);
+            let end = project3D(1.2, 0, 0);
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+            ctx.fillStyle = '#ff0000';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('X (Geschwindigkeit)', end.x + 5, end.y);
+            
+            // Y-Achse (Grün)
+            ctx.strokeStyle = '#00ff00';
+            end = project3D(0, 1.2, 0);
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+            ctx.fillStyle = '#00ff00';
+            ctx.fillText('Y (Größe)', end.x + 5, end.y);
+            
+            // Z-Achse (Blau)
+            ctx.strokeStyle = '#0000ff';
+            end = project3D(0, 0, 1.2);
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+            ctx.fillStyle = '#0000ff';
+            ctx.fillText('Z (Umwelt)', end.x + 5, end.y);
+        }
+
+        // Zeichne 3D-Gitter
+        function drawGrid() {
+            if (!showGrid) return;
+            
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 0.5;
+            
+            // XY-Ebene
+            for (let i = 0; i <= 10; i++) {
+                const val = i / 10;
+                // Parallel zur X-Achse
+                let p1 = project3D(0, val, 0);
+                let p2 = project3D(1, val, 0);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+                
+                // Parallel zur Y-Achse
+                p1 = project3D(val, 0, 0);
+                p2 = project3D(val, 1, 0);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+            
+            // XZ-Ebene (leicht transparent)
+            ctx.globalAlpha = 0.3;
+            for (let i = 0; i <= 10; i++) {
+                const val = i / 10;
+                // Parallel zur X-Achse
+                let p1 = project3D(0, 0, val);
+                let p2 = project3D(1, 0, val);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+                
+                // Parallel zur Z-Achse
+                p1 = project3D(val, 0, 0);
+                p2 = project3D(val, 0, 1);
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1.0;
+        }
+
+        // Zeichne 3D-Visualisierung
+        function draw3D() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Hintergrund
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            drawGrid();
+            drawAxes();
+            
+            // Sortiere Punkte nach Z-Tiefe für korrektes Rendering
+            const sortedVehicles = Object.entries(embeddings_data)
+                .map(([vehicle, data]) => {
+                    const proj = project3D(data.coords[0], data.coords[1], data.coords[2]);
+                    return { vehicle, data, proj };
+                })
+                .sort((a, b) => a.proj.z - b.proj.z);
+            
+            // Zeichne Datenpunkte
+            sortedVehicles.forEach(({ vehicle, data, proj }) => {
+                const size = 10 * proj.scale;
+                
+                // Punkt
+                ctx.fillStyle = data.color;
+                ctx.beginPath();
+                ctx.arc(proj.x, proj.y, size, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Label
+                ctx.fillStyle = '#000';
+                ctx.font = `bold ${Math.max(12, 14 * proj.scale)}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText(vehicle, proj.x, proj.y - size - 10);
+            });
+        }
+
+        // Maus-Events
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
+                
+                rotationY += deltaX * 0.01;
+                rotationX += deltaY * 0.01;
+                
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                
+                draw3D();
+            }
+            
+            // Tooltip
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            let found = false;
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const proj = project3D(data.coords[0], data.coords[1], data.coords[2]);
+                const distance = Math.sqrt(Math.pow(mouseX - proj.x, 2) + Math.pow(mouseY - proj.y, 2));
+                
+                if (distance < 15) {
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = (e.clientX + 10) + 'px';
+                    tooltip.style.top = (e.clientY + 10) + 'px';
+                    tooltip.innerHTML = `<strong>${vehicle}</strong><br>` +
+                        `X: ${data.coords[0].toFixed(2)}<br>` +
+                        `Y: ${data.coords[1].toFixed(2)}<br>` +
+                        `Z: ${data.coords[2].toFixed(2)}`;
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+            tooltip.style.display = 'none';
+        });
+
+        // Buttons
+        document.getElementById('resetView').addEventListener('click', () => {
+            rotationX = 0.5;
+            rotationY = 0.5;
+            rotationZ = 0;
+            draw3D();
+        });
+
+        document.getElementById('rotateAuto').addEventListener('click', (e) => {
+            autoRotate = !autoRotate;
+            e.target.textContent = autoRotate ? '⏸️ Auto-Rotation' : '▶️ Auto-Rotation';
+        });
+
+        document.getElementById('showAxes').addEventListener('change', (e) => {
+            showAxes = e.target.checked;
+            draw3D();
+        });
+
+        document.getElementById('showGrid').addEventListener('change', (e) => {
+            showGrid = e.target.checked;
+            draw3D();
+        });
+
+        // Auto-Rotation
+        function animate() {
+            if (autoRotate) {
+                rotationY += 0.01;
+                draw3D();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Euklidische Distanz (3D)
+        function euclideanDistance(point1, point2) {
+            return Math.sqrt(
+                Math.pow(point1[0] - point2[0], 2) + 
+                Math.pow(point1[1] - point2[1], 2) +
+                Math.pow(point1[2] - point2[2], 2)
+            );
+        }
+
+        // Vektor-Liste ausgeben
+        function displayVectors() {
+            const list = document.getElementById('vectorList');
+            list.innerHTML = '';
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const li = document.createElement('li');
+                li.textContent = `${vehicle.padEnd(12)} : [${data.coords[0].toFixed(1)}, ${data.coords[1].toFixed(1)}, ${data.coords[2].toFixed(1)}]`;
+                list.appendChild(li);
+            }
+        }
+
+        // Ähnlichkeiten berechnen
+        function displaySimilarities() {
+            const vehicles = Object.keys(embeddings_data);
+            const distances = [];
+            
+            for (let i = 0; i < vehicles.length; i++) {
+                for (let j = i + 1; j < vehicles.length; j++) {
+                    const dist = euclideanDistance(
+                        embeddings_data[vehicles[i]].coords, 
+                        embeddings_data[vehicles[j]].coords
+                    );
+                    distances.push({
+                        v1: vehicles[i],
+                        v2: vehicles[j],
+                        distance: dist
+                    });
+                }
+            }
+            
+            distances.sort((a, b) => a.distance - b.distance);
+            
+            const list = document.getElementById('similarityList');
+            list.innerHTML = '';
+            
+            for (let i = 0; i < 5; i++) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${i + 1}. ${distances[i].v1} ↔ ${distances[i].v2}</span>
+                    <span class="distance">${distances[i].distance.toFixed(3)}</span>
+                `;
+                list.appendChild(li);
+            }
+        }
+
+        // Kategorien anzeigen
+        function displayCategories() {
+            const categories = [
+                {
+                    title: '🌱 Umweltfreundlich',
+                    emoji: '🌱',
+                    filter: (v, coords) => coords[2] > 0.7,
+                    desc: 'Z-Wert > 0.7'
+                },
+                {
+                    title: '⚡ Schnelle Fahrzeuge',
+                    emoji: '⚡',
+                    filter: (v, coords) => coords[0] > 0.7,
+                    desc: 'X-Wert > 0.7'
+                },
+                {
+                    title: '📦 Große Fahrzeuge',
+                    emoji: '📦',
+                    filter: (v, coords) => coords[1] > 0.7,
+                    desc: 'Y-Wert > 0.7'
+                },
+                {
+                    title: '🚲 Kompakte Fahrzeuge',
+                    emoji: '🚲',
+                    filter: (v, coords) => coords[1] < 0.3,
+                    desc: 'Y-Wert < 0.3'
+                }
+            ];
+            
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                
+                const filtered = Object.entries(embeddings_data)
+                    .filter(([v, data]) => cat.filter(v, data.coords))
+                    .map(([v, data]) => v);
+                
+                card.innerHTML = `
+                    <h4>${cat.emoji} ${cat.title}</h4>
+                    <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">${cat.desc}</p>
+                    <ul>
+                        ${filtered.length > 0 
+                            ? filtered.map(v => `<li>${v}</li>`).join('') 
+                            : '<li style="color: #999;">Keine</li>'}
+                    </ul>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Interessante Kombinationen
+        function displayCombinations() {
+            const schnellUmwelt = Object.entries(embeddings_data)
+                .filter(([v, data]) => data.coords[0] > 0.6 && data.coords[2] > 0.7)
+                .map(([v, data]) => `<p><strong>${v}:</strong> Geschw.=${data.coords[0].toFixed(1)}, Umwelt=${data.coords[2].toFixed(1)}</p>`)
+                .join('');
+            
+            document.getElementById('schnellUmwelt').innerHTML = 
+                schnellUmwelt || '<p style="color: #999;">Keine gefunden</p>';
+            
+            const grossUmwelt = Object.entries(embeddings_data)
+                .filter(([v, data]) => data.coords[1] > 0.7 && data.coords[2] > 0.4)
+                .map(([v, data]) => `<p><strong>${v}:</strong> Größe=${data.coords[1].toFixed(1)}, Umwelt=${data.coords[2].toFixed(1)}</p>`)
+                .join('');
+            
+            document.getElementById('grossUmwelt').innerHTML = 
+                grossUmwelt || '<p style="color: #999;">Keine gefunden</p>';
+        }
+
+        // Semantische Analogie
+        function displayAnalogy() {
+            const pkw = embeddings_data['PKW'].coords;
+            const sportwagen = embeddings_data['Sportwagen'].coords;
+            const e_auto = embeddings_data['E-Auto'].coords;
+            
+            const vektor_diff = [
+                sportwagen[0] - pkw[0],
+                sportwagen[1] - pkw[1],
+                sportwagen[2] - pkw[2]
+            ];
+            
+            const result = [
+                e_auto[0] + vektor_diff[0],
+                e_auto[1] + vektor_diff[1],
+                e_auto[2] + vektor_diff[2]
+            ];
+            
+            let minDist = Infinity;
+            let nearest = '';
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const dist = euclideanDistance(result, data.coords);
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearest = vehicle;
+                }
+            }
+            
+            document.getElementById('analogyFormula').innerHTML = `
+                <strong>PKW → Sportwagen</strong> entspricht <strong>E-Auto → ?</strong><br><br>
+                Vektor-Differenz: [${vektor_diff[0].toFixed(2)}, ${vektor_diff[1].toFixed(2)}, ${vektor_diff[2].toFixed(2)}]<br>
+                Ergebnis: [${result[0].toFixed(2)}, ${result[1].toFixed(2)}, ${result[2].toFixed(2)}]
+            `;
+            
+            document.getElementById('analogyResult').innerHTML = `
+                <p style="margin-top: 10px;">
+                    <strong>Nächstes Fahrzeug:</strong> ${nearest} (Distanz: ${minDist.toFixed(3)})<br>
+                    <strong>Interpretation:</strong> Ein schnelles, kompaktes Fahrzeug mit guter Umweltbilanz
+                </p>
+            `;
+        }
+
+        // Initialisierung
+        window.addEventListener('load', () => {
+            draw3D();
+            animate();
+            displayVectors();
+            displaySimilarities();
+            displayCategories();
+            displayCombinations();
+            displayAnalogy();
+        });
+    </script>
+</body>
+</html>

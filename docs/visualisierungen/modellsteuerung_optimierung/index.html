@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verfahren zur Modelloptimierung</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        #chart {
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%, transparent 75%, #f8f9fa 75%, #f8f9fa),
+                        linear-gradient(45deg, #f8f9fa 25%, transparent 25%, transparent 75%, #f8f9fa 75%, #f8f9fa);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .legend {
+            max-width: 1400px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .legend-item {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .legend-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .legend-item.selected {
+            border-left-color: #e74c3c;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffeaea 100%);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.2);
+        }
+        
+        .legend-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+            transition: background-color 0.3s ease;
+        }
+        
+        .legend-item.selected .legend-number {
+            background: #e74c3c;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .legend-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .legend-details {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        
+        .axis-label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        .quadrant-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .chart-point {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-point:hover {
+            stroke: #e74c3c;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 10px rgba(231, 76, 60, 0.6));
+        }
+        
+        .chart-point.highlighted {
+            fill: #e74c3c !important;
+            stroke: #c0392b !important;
+            stroke-width: 3 !important;
+            filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.8)) !important;
+        }
+        
+        .chart-text.highlighted {
+            fill: white !important;
+            font-weight: bold !important;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            max-width: 250px;
+            display: none;
+        }
+        
+        .reset-button {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .reset-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verfahren zur Modelloptimierung</h1>
+        <div class="subtitle">Interaktive Übersicht der 15 wichtigsten KI-Optimierungsmethoden</div>
+        
+        <div class="reset-button">
+            <button class="reset-btn" onclick="resetSelection()">Auswahl zurücksetzen</button>
+        </div>
+        
+        <div class="chart-container">
+            <svg id="chart" width="600" height="500">
+                <!-- Koordinatensystem -->
+                <line x1="50" y1="450" x2="550" y2="450" stroke="#34495e" stroke-width="2"/>
+                <line x1="50" y1="450" x2="50" y2="50" stroke="#34495e" stroke-width="2"/>
+                
+                <!-- Achsenbeschriftung -->
+                <text x="300" y="485" text-anchor="middle" class="axis-label">Modellanpassungstiefe →</text>
+                <text x="25" y="250" text-anchor="middle" transform="rotate(-90, 25, 250)" class="axis-label">↑ Externe Wissensintegration</text>
+                
+                <!-- Quadranten-Labels -->
+                <text x="150" y="70" text-anchor="middle" class="quadrant-label">Wissens-Integration</text>
+                <text x="450" y="70" text-anchor="middle" class="quadrant-label">Vollständige Anpassung</text>
+                <text x="150" y="430" text-anchor="middle" class="quadrant-label">Basis-Prompting</text>
+                <text x="450" y="430" text-anchor="middle" class="quadrant-label">Modell-Training</text>
+                
+                <!-- Gitterlinien -->
+                <g stroke="#ecf0f1" stroke-width="1" opacity="0.5">
+                    <line x1="100" y1="50" x2="100" y2="450"/>
+                    <line x1="150" y1="50" x2="150" y2="450"/>
+                    <line x1="200" y1="50" x2="200" y2="450"/>
+                    <line x1="250" y1="50" x2="250" y2="450"/>
+                    <line x1="300" y1="50" x2="300" y2="450"/>
+                    <line x1="350" y1="50" x2="350" y2="450"/>
+                    <line x1="400" y1="50" x2="400" y2="450"/>
+                    <line x1="450" y1="50" x2="450" y2="450"/>
+                    <line x1="500" y1="50" x2="500" y2="450"/>
+                    
+                    <line x1="50" y1="100" x2="550" y2="100"/>
+                    <line x1="50" y1="150" x2="550" y2="150"/>
+                    <line x1="50" y1="200" x2="550" y2="200"/>
+                    <line x1="50" y1="250" x2="550" y2="250"/>
+                    <line x1="50" y1="300" x2="550" y2="300"/>
+                    <line x1="50" y1="350" x2="550" y2="350"/>
+                    <line x1="50" y1="400" x2="550" y2="400"/>
+                </g>
+                
+                <!-- Skalenbeschriftung -->
+                <g class="axis-label" font-size="10">
+                    <text x="50" y="465" text-anchor="middle">0</text>
+                    <text x="150" y="465" text-anchor="middle">2</text>
+                    <text x="250" y="465" text-anchor="middle">4</text>
+                    <text x="350" y="465" text-anchor="middle">6</text>
+                    <text x="450" y="465" text-anchor="middle">8</text>
+                    <text x="550" y="465" text-anchor="middle">10</text>
+                    
+                    <text x="40" y="455" text-anchor="middle">0</text>
+                    <text x="40" y="370" text-anchor="middle">2</text>
+                    <text x="40" y="290" text-anchor="middle">4</text>
+                    <text x="40" y="210" text-anchor="middle">6</text>
+                    <text x="40" y="130" text-anchor="middle">8</text>
+                    <text x="40" y="55" text-anchor="middle">10</text>
+                </g>
+            </svg>
+        </div>
+        
+        <div class="tooltip" id="tooltip"></div>
+        
+        <div class="legend">
+            <div class="legend-item" data-method="1">
+                <span class="legend-number">1</span>
+                <span class="legend-title">Prompt Engineering</span>
+                <div class="legend-details">Systematische Gestaltung von Eingabetexten zur Optimierung der Modellausgaben.</div>
+            </div>
+            
+            <div class="legend-item" data-method="2">
+                <span class="legend-number">2</span>
+                <span class="legend-title">Few-Shot Prompting</span>
+                <div class="legend-details">Bereitstellung weniger Beispiele im Prompt, damit das Modell neue Aufgaben ohne Training lernt.</div>
+            </div>
+            
+            <div class="legend-item" data-method="3">
+                <span class="legend-number">3</span>
+                <span class="legend-title">RAG (Retrieval-Augmented Generation)</span>
+                <div class="legend-details">Kombination von Informationsabruf aus externen Datenquellen mit Textgenerierung.</div>
+            </div>
+            
+            <div class="legend-item" data-method="4">
+                <span class="legend-number">4</span>
+                <span class="legend-title">Chain-of-Thought Prompting</span>
+                <div class="legend-details">Anleitung des Modells, Denkschritte explizit zu formulieren für bessere Problemlösung.</div>
+            </div>
+            
+            <div class="legend-item" data-method="5">
+                <span class="legend-number">5</span>
+                <span class="legend-title">LLM-Konfiguration (API-Parameter)</span>
+                <div class="legend-details">Anpassung von Temperature, Top-p, Max-Tokens etc. zur Steuerung der Ausgabecharakteristik.</div>
+            </div>
+            
+            <div class="legend-item" data-method="6">
+                <span class="legend-number">6</span>
+                <span class="legend-title">Function Calling / Tool Use</span>
+                <div class="legend-details">Ermöglicht dem Modell, strukturierte externe Funktionen und APIs aufzurufen.</div>
+            </div>
+            
+            <div class="legend-item" data-method="7">
+                <span class="legend-number">7</span>
+                <span class="legend-title">Adapter-Tuning / LoRA</span>
+                <div class="legend-details">Trainiert nur kleine Adapterschichten statt des gesamten Modells für spezifische Aufgaben.</div>
+            </div>
+            
+            <div class="legend-item" data-method="8">
+                <span class="legend-number">8</span>
+                <span class="legend-title">LangChain / LCEL Pipelines</span>
+                <div class="legend-details">Framework zur Orchestrierung komplexer LLM-Workflows und -Ketten.</div>
+            </div>
+            
+            <div class="legend-item" data-method="9">
+                <span class="legend-number">9</span>
+                <span class="legend-title">Self-Consistency Prompting</span>
+                <div class="legend-details">Mehrfache Ausführung derselben Anfrage und Auswahl der konsistentesten Antwort.</div>
+            </div>
+            
+            <div class="legend-item" data-method="10">
+                <span class="legend-number">10</span>
+                <span class="legend-title">Context Engineering</span>
+                <div class="legend-details">Strategische Anordnung und Strukturierung von Kontextinformationen im Prompt.</div>
+            </div>
+            
+            <div class="legend-item" data-method="11">
+                <span class="legend-number">11</span>
+                <span class="legend-title">Multimodales Prompting</span>
+                <div class="legend-details">Verwendung mehrerer Eingabemodalitäten (Text, Bild, Audio) in einem Prompt.</div>
+            </div>
+            
+            <div class="legend-item" data-method="12">
+                <span class="legend-number">12</span>
+                <span class="legend-title">Fine-Tuning</span>
+                <div class="legend-details">Training des gesamten Modells auf spezifischen Daten für maximale Anpassung.</div>
+            </div>
+            
+            <div class="legend-item" data-method="13">
+                <span class="legend-number">13</span>
+                <span class="legend-title">Agentic Workflows</span>
+                <div class="legend-details">Aufbau autonomer Systeme, die eigenständig Entscheidungen treffen und Aktionen ausführen.</div>
+            </div>
+            
+            <div class="legend-item" data-method="14">
+                <span class="legend-number">14</span>
+                <span class="legend-title">Instruction Tuning</span>
+                <div class="legend-details">Training auf Instruktions-Response-Paaren zur Verbesserung der Befolgung von Anweisungen.</div>
+            </div>
+            
+            <div class="legend-item" data-method="15">
+                <span class="legend-number">15</span>
+                <span class="legend-title">Modell-Ensemble / Routing</span>
+                <div class="legend-details">Kombination mehrerer Modelle oder intelligente Weiterleitung an spezialisierte Modelle.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const methods = [
+            {num: 1, x: 1, y: 0, title: "Prompt Engineering"},
+            {num: 2, x: 1.5, y: 1, title: "Few-Shot Learning"},
+            {num: 3, x: 0, y: 9, title: "RAG"},
+            {num: 4, x: 1, y: 0.5, title: "Chain-of-Thought Prompting"},
+            {num: 5, x: 0.5, y: 0, title: "API Parameter Tuning"},
+            {num: 6, x: 2, y: 7, title: "Function Calling / Tool Use"},
+            {num: 7, x: 8, y: 2, title: "Adapter-Tuning / LoRA"},
+            {num: 8, x: 3, y: 5, title: "LangChain / LCEL Pipelines"},
+            {num: 9, x: 0.5, y: 1, title: "Self-Consistency Prompting"},
+            {num: 10, x: 1, y: 2, title: "Context Engineering"},
+            {num: 11, x: 2, y: 3, title: "Multimodales Prompting"},
+            {num: 12, x: 10, y: 4, title: "Fine-Tuning"},
+            {num: 13, x: 4, y: 6, title: "Agentic Workflows"},
+            {num: 14, x: 9, y: 3, title: "Instruction Tuning"},
+            {num: 15, x: 5, y: 4, title: "Modell-Ensemble / Routing"}
+        ];
+        
+        const svg = document.getElementById('chart');
+        const tooltip = document.getElementById('tooltip');
+        let currentSelection = null;
+        
+        function scaleX(x) { return 50 + (x * 50); }
+        function scaleY(y) { return 450 - (y * 40); }
+        
+        function highlightPoint(methodNum) {
+            resetSelection();
+            const circle = document.getElementById(`circle-${methodNum}`);
+            const text = document.getElementById(`text-${methodNum}`);
+            const legendItem = document.querySelector(`[data-method="${methodNum}"]`);
+            
+            if (circle && text && legendItem) {
+                circle.classList.add('highlighted');
+                text.classList.add('highlighted');
+                legendItem.classList.add('selected');
+                currentSelection = methodNum;
+            }
+        }
+        
+        function resetSelection() {
+            document.querySelectorAll('.chart-point.highlighted').forEach(el => el.classList.remove('highlighted'));
+            document.querySelectorAll('.chart-text.highlighted').forEach(el => el.classList.remove('highlighted'));
+            document.querySelectorAll('.legend-item.selected').forEach(el => el.classList.remove('selected'));
+            currentSelection = null;
+        }
+        
+        methods.forEach(method => {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            
+            circle.setAttribute('id', `circle-${method.num}`);
+            text.setAttribute('id', `text-${method.num}`);
+            
+            circle.setAttribute('cx', scaleX(method.x));
+            circle.setAttribute('cy', scaleY(method.y));
+            circle.setAttribute('r', 15);
+            circle.setAttribute('fill', '#3498db');
+            circle.setAttribute('stroke', '#2980b9');
+            circle.setAttribute('stroke-width', '2');
+            circle.setAttribute('class', 'chart-point');
+            
+            text.setAttribute('x', scaleX(method.x));
+            text.setAttribute('y', scaleY(method.y) + 5);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', 'white');
+            text.setAttribute('font-weight', 'bold');
+            text.setAttribute('font-size', '12');
+            text.setAttribute('class', 'chart-text');
+            text.textContent = method.num;
+            
+            [circle, text].forEach(element => {
+                element.addEventListener('click', () => {
+                    if (currentSelection === method.num) {
+                        resetSelection();
+                    } else {
+                        highlightPoint(method.num);
+                    }
+                });
+            });
+            
+            [circle, text].forEach(element => {
+                element.addEventListener('mouseenter', (e) => {
+                    tooltip.style.display = 'block';
+                    tooltip.innerHTML = `<strong>${method.num}. ${method.title}</strong><br>Anpassung: ${method.x}/10<br>Ext. Wissen: ${method.y}/10`;
+                });
+                
+                element.addEventListener('mousemove', (e) => {
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 10 + 'px';
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+            });
+            
+            svg.appendChild(circle);
+            svg.appendChild(text);
+        });
+        
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const methodNum = parseInt(item.getAttribute('data-method'));
+                if (currentSelection === methodNum) {
+                    resetSelection();
+                } else {
+                    highlightPoint(methodNum);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

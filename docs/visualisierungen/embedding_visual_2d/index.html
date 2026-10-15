@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embeddings Visualisierung - Fahrzeuge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 600px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: crosshair;
+            background: white;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .vector-list {
+            list-style: none;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        
+        .vector-list li {
+            background: white;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .similarity-list {
+            list-style: none;
+            line-height: 1.8;
+        }
+        
+        .similarity-list li {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .distance {
+            background: #667eea;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        
+        .analogy-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .analogy-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .analogy-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .quadrant-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .quadrant {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .quadrant h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Embeddings Visualisierung</h1>
+            <p>Interaktive 2D-Darstellung von Fahrzeugtypen im Embedding-Raum</p>
+        </div>
+        
+        <div class="content">
+            <!-- Visualisierung -->
+            <div class="section">
+                <h2>📊 Canvas Visualisierung</h2>
+                <div id="canvas-container">
+                    <canvas id="embeddingCanvas" width="800" height="500"></canvas>
+                    <div id="tooltip"></div>
+                </div>
+                <div class="legend" id="legend"></div>
+            </div>
+            
+            <!-- Embedding-Vektoren -->
+            <div class="section">
+                <h2>🔢 Embedding-Vektoren</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Fahrzeug-Koordinaten</h3>
+                        <ul class="vector-list" id="vectorList"></ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Dimensionen</h3>
+                        <p><strong>X-Achse (Geschwindigkeit):</strong><br>
+                        0.0 = sehr langsam<br>
+                        1.0 = sehr schnell</p>
+                        <br>
+                        <p><strong>Y-Achse (Größe):</strong><br>
+                        0.0 = sehr klein<br>
+                        1.0 = sehr groß</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ähnlichkeiten -->
+            <div class="section">
+                <h2>🔍 Ähnlichkeitsanalyse</h2>
+                <div class="info-card">
+                    <h3>Top-5 Ähnlichste Fahrzeugpaare (Euklidische Distanz)</h3>
+                    <ul class="similarity-list" id="similarityList"></ul>
+                    <p style="margin-top: 15px; color: #666;">
+                        <em>Je kleiner die Distanz, desto ähnlicher sind die Fahrzeuge im Embedding-Raum.</em>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Semantische Analogien -->
+            <div class="section">
+                <h2>💡 Semantische Analogien</h2>
+                <div class="analogy-box">
+                    <h4>Vektorarithmetik im Embedding-Raum:</h4>
+                    <div class="analogy-formula" id="analogyFormula"></div>
+                    <div id="analogyResult"></div>
+                </div>
+            </div>
+            
+            <!-- Quadranten -->
+            <div class="section">
+                <h2>📍 Quadranten-Analyse</h2>
+                <div class="quadrant-info">
+                    <div class="quadrant">
+                        <h4>🏎️ Klein & Schnell</h4>
+                        <p id="quadrant1"></p>
+                    </div>
+                    <div class="quadrant">
+                        <h4>🚚 Groß & Schnell</h4>
+                        <p id="quadrant2"></p>
+                    </div>
+                    <div class="quadrant">
+                        <h4>🚲 Klein & Langsam</h4>
+                        <p id="quadrant3"></p>
+                    </div>
+                    <div class="quadrant">
+                        <h4>🚛 Groß & Langsam</h4>
+                        <p id="quadrant4"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Embedding-Daten definieren
+        const embeddings_data = {
+            'Fahrrad': { coords: [0.2, 0.1], color: '#FF6B6B' },
+            'Motorrad': { coords: [0.9, 0.2], color: '#4ECDC4' },
+            'PKW': { coords: [0.6, 0.4], color: '#45B7D1' },
+            'LKW': { coords: [0.4, 1.0], color: '#FFA07A' },
+            'Sportwagen': { coords: [1.0, 0.3], color: '#98D8C8' },
+            'Bus': { coords: [0.5, 0.9], color: '#F7DC6F' }
+        };
+
+        // Canvas-Setup
+        const canvas = document.getElementById('embeddingCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        
+        const padding = 60;
+        const width = canvas.width;
+        const height = canvas.height;
+        const plotWidth = width - 2 * padding;
+        const plotHeight = height - 2 * padding;
+
+        // Koordinaten-Transformation
+        function toCanvasX(x) {
+            return padding + x * plotWidth;
+        }
+
+        function toCanvasY(y) {
+            return height - padding - y * plotHeight;
+        }
+
+        // Euklidische Distanz berechnen
+        function euclideanDistance(point1, point2) {
+            return Math.sqrt(
+                Math.pow(point1[0] - point2[0], 2) + 
+                Math.pow(point1[1] - point2[1], 2)
+            );
+        }
+
+        // Canvas-Visualisierung zeichnen
+        function drawVisualization() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Hintergrund
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Achsen zeichnen
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            
+            // X-Achse
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+            
+            // Y-Achse
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+            
+            // Gitterlinien
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (i / 10) * plotWidth;
+                const y = height - padding - (i / 10) * plotHeight;
+                
+                // Vertikale Gitterlinien
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+                
+                // Horizontale Gitterlinien
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+            
+            // Mittellinie (gestrichelt)
+            ctx.strokeStyle = '#999';
+            ctx.setLineDash([5, 5]);
+            
+            const midX = toCanvasX(0.5);
+            const midY = toCanvasY(0.5);
+            
+            ctx.beginPath();
+            ctx.moveTo(midX, padding);
+            ctx.lineTo(midX, height - padding);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(padding, midY);
+            ctx.lineTo(width - padding, midY);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // Achsenbeschriftungen
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            
+            // X-Achse Beschriftung
+            ctx.fillText('Geschwindigkeit (0=langsam, 1=schnell)', width / 2, height - 20);
+            
+            // Y-Achse Beschriftung
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Größe/Kapazität (0=klein, 1=groß)', 0, 0);
+            ctx.restore();
+            
+            // Skalen-Markierungen
+            ctx.font = '12px Arial';
+            for (let i = 0; i <= 10; i += 2) {
+                const val = (i / 10).toFixed(1);
+                
+                // X-Achse
+                const x = toCanvasX(i / 10);
+                ctx.textAlign = 'center';
+                ctx.fillText(val, x, height - padding + 20);
+                
+                // Y-Achse
+                const y = toCanvasY(i / 10);
+                ctx.textAlign = 'right';
+                ctx.fillText(val, padding - 10, y + 5);
+            }
+            
+            // Datenpunkte zeichnen
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const x = toCanvasX(data.coords[0]);
+                const y = toCanvasY(data.coords[1]);
+                
+                // Punkt
+                ctx.fillStyle = data.color;
+                ctx.beginPath();
+                ctx.arc(x, y, 12, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Label
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(vehicle, x, y - 20);
+            }
+        }
+
+        // Maus-Interaktion
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            let found = false;
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const x = toCanvasX(data.coords[0]);
+                const y = toCanvasY(data.coords[1]);
+                
+                const distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
+                
+                if (distance < 15) {
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = (e.clientX + 10) + 'px';
+                    tooltip.style.top = (e.clientY + 10) + 'px';
+                    tooltip.innerHTML = `<strong>${vehicle}</strong><br>Koordinaten: [${data.coords[0].toFixed(1)}, ${data.coords[1].toFixed(1)}]`;
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                tooltip.style.display = 'none';
+            }
+        });
+        
+        canvas.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
+        // Legende erstellen
+        function createLegend() {
+            const legend = document.getElementById('legend');
+            legend.innerHTML = '';
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                
+                const colorBox = document.createElement('div');
+                colorBox.className = 'legend-color';
+                colorBox.style.backgroundColor = data.color;
+                
+                const label = document.createElement('span');
+                label.textContent = vehicle;
+                
+                item.appendChild(colorBox);
+                item.appendChild(label);
+                legend.appendChild(item);
+            }
+        }
+
+        // Vektor-Liste ausgeben
+        function displayVectors() {
+            const list = document.getElementById('vectorList');
+            list.innerHTML = '';
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const li = document.createElement('li');
+                li.textContent = `${vehicle.padEnd(12)} : [${data.coords[0].toFixed(1)}, ${data.coords[1].toFixed(1)}]`;
+                list.appendChild(li);
+            }
+        }
+
+        // Ähnlichkeiten berechnen und anzeigen
+        function displaySimilarities() {
+            const vehicles = Object.keys(embeddings_data);
+            const distances = [];
+            
+            for (let i = 0; i < vehicles.length; i++) {
+                for (let j = i + 1; j < vehicles.length; j++) {
+                    const dist = euclideanDistance(
+                        embeddings_data[vehicles[i]].coords, 
+                        embeddings_data[vehicles[j]].coords
+                    );
+                    distances.push({
+                        v1: vehicles[i],
+                        v2: vehicles[j],
+                        distance: dist
+                    });
+                }
+            }
+            
+            distances.sort((a, b) => a.distance - b.distance);
+            
+            const list = document.getElementById('similarityList');
+            list.innerHTML = '';
+            
+            for (let i = 0; i < 5; i++) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${i + 1}. ${distances[i].v1} ↔ ${distances[i].v2}</span>
+                    <span class="distance">${distances[i].distance.toFixed(3)}</span>
+                `;
+                list.appendChild(li);
+            }
+        }
+
+        // Semantische Analogie berechnen
+        function displayAnalogy() {
+            const pkw = embeddings_data['PKW'].coords;
+            const fahrrad = embeddings_data['Fahrrad'].coords;
+            const bus = embeddings_data['Bus'].coords;
+            
+            const result = [
+                pkw[0] - fahrrad[0] + bus[0],
+                pkw[1] - fahrrad[1] + bus[1]
+            ];
+            
+            // Finde nächstes Fahrzeug
+            let minDist = Infinity;
+            let nearest = '';
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const dist = euclideanDistance(result, data.coords);
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearest = vehicle;
+                }
+            }
+            
+            document.getElementById('analogyFormula').innerHTML = `
+                PKW - Fahrrad + Bus = [${result[0].toFixed(1)}, ${result[1].toFixed(1)}]
+            `;
+            
+            document.getElementById('analogyResult').innerHTML = `
+                <p style="margin-top: 10px;">
+                    <strong>Interpretation:</strong> Mittlere Geschwindigkeit, große Kapazität<br>
+                    <strong>Nächstes Fahrzeug:</strong> ${nearest} (Distanz: ${minDist.toFixed(3)})
+                </p>
+            `;
+        }
+
+        // Quadranten-Analyse
+        function displayQuadrants() {
+            const quadrants = {
+                q1: [], // Klein & Schnell (x > 0.5, y < 0.5)
+                q2: [], // Groß & Schnell (x > 0.5, y > 0.5)
+                q3: [], // Klein & Langsam (x < 0.5, y < 0.5)
+                q4: []  // Groß & Langsam (x < 0.5, y > 0.5)
+            };
+            
+            for (const [vehicle, data] of Object.entries(embeddings_data)) {
+                const coords = data.coords;
+                if (coords[0] > 0.5 && coords[1] < 0.5) quadrants.q1.push(vehicle);
+                else if (coords[0] > 0.5 && coords[1] > 0.5) quadrants.q2.push(vehicle);
+                else if (coords[0] < 0.5 && coords[1] < 0.5) quadrants.q3.push(vehicle);
+                else if (coords[0] < 0.5 && coords[1] > 0.5) quadrants.q4.push(vehicle);
+            }
+            
+            document.getElementById('quadrant1').textContent = quadrants.q1.join(', ') || 'Keine';
+            document.getElementById('quadrant2').textContent = quadrants.q2.join(', ') || 'Keine';
+            document.getElementById('quadrant3').textContent = quadrants.q3.join(', ') || 'Keine';
+            document.getElementById('quadrant4').textContent = quadrants.q4.join(', ') || 'Keine';
+        }
+
+        // Initialisierung
+        window.addEventListener('load', () => {
+            drawVisualization();
+            createLegend();
+            displayVectors();
+            displaySimilarities();
+            displayAnalogy();
+            displayQuadrants();
+        });
+    </script>
+</body>
+</html>

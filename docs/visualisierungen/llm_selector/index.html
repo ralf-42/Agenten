@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM-Finder – Finde dein passendes KI-Modell</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #252542;
+            --accent-1: #6366f1;
+            --accent-2: #8b5cf6;
+            --accent-3: #a855f7;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --openai: #10a37f;
+            --google: #4285f4;
+            --anthropic: #d4a574;
+            --border: rgba(255,255,255,0.08);
+            --glow: rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 32px var(--glow);
+        }
+
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 32px;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-card);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.6s ease-out;
+            flex: 1;
+        }
+
+        .question-number {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-2);
+            background: rgba(139, 92, 246, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .question-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .question-hint {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .option:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(8px);
+        }
+
+        .option.selected {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .option-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-icon {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .option-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .option-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--text-muted);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-check {
+            background: var(--accent-1);
+            border-color: var(--accent-1);
+        }
+
+        .option.selected .option-check::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 16px;
+        }
+
+        .btn {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-back:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            box-shadow: 0 8px 24px var(--glow);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px var(--glow);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-restart {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            margin-top: 24px;
+        }
+
+        .btn-restart:hover {
+            background: var(--bg-card);
+        }
+
+        /* Results */
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .results-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--success), #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .results-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .result-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .result-card:nth-child(1) { animation-delay: 0.1s; }
+        .result-card:nth-child(2) { animation-delay: 0.2s; }
+        .result-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-rank {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; }
+        .rank-2 { background: linear-gradient(135deg, #e5e7eb, #9ca3af); color: #374151; }
+        .rank-3 { background: linear-gradient(135deg, #fdba74, #f97316); color: #7c2d12; }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-provider {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .provider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .provider-openai .provider-dot { background: var(--openai); }
+        .provider-google .provider-dot { background: var(--google); }
+        .provider-anthropic .provider-dot { background: var(--anthropic); }
+
+        .provider-openai { color: var(--openai); }
+        .provider-google { color: var(--google); }
+        .provider-anthropic { color: var(--anthropic); }
+
+        .result-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .result-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+        }
+
+        .result-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .score-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Welcome Screen */
+        .welcome {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .welcome-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .welcome-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .welcome-desc {
+            color: var(--text-secondary);
+            font-size: 17px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            font-size: 18px;
+            padding: 18px 48px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px var(--glow);
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 48px var(--glow);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card {
+                padding: 28px 20px;
+            }
+            .question-title {
+                font-size: 22px;
+            }
+            .welcome-title {
+                font-size: 28px;
+            }
+            .result-card {
+                flex-direction: column;
+            }
+            .result-score {
+                flex-direction: row;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <span class="logo-text">LLM-Finder</span>
+            </div>
+            <p class="tagline">Finde das perfekte KI-Modell für deine Anforderungen</p>
+        </header>
+
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressStep">Frage 1 von 5</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+
+        <main class="card" id="mainCard">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome">
+                <div class="welcome-icon">✨</div>
+                <h1 class="welcome-title">Welches KI-Modell passt zu dir?</h1>
+                <p class="welcome-desc">
+                    Beantworte 5 einfache Fragen und erhalte eine personalisierte Empfehlung 
+                    der Top 3 KI-Modelle von OpenAI, Google und Anthropic.
+                </p>
+                <button class="btn btn-start" onclick="startQuiz()">
+                    Los geht's! →
+                </button>
+            </div>
+
+            <!-- Question Screen -->
+            <div id="questionScreen" class="hidden">
+                <span class="question-number" id="questionNumber">FRAGE 1 VON 5</span>
+                <h2 class="question-title" id="questionTitle"></h2>
+                <p class="question-hint" id="questionHint"></p>
+                <div class="options" id="optionsContainer"></div>
+                <div class="nav-buttons">
+                    <button class="btn btn-back" id="btnBack" onclick="previousQuestion()">
+                        ← Zurück
+                    </button>
+                    <button class="btn btn-next" id="btnNext" onclick="nextQuestion()" disabled>
+                        Weiter →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="resultsScreen" class="hidden">
+                <div class="results-header">
+                    <h2 class="results-title">🎯 Deine Top 3 Empfehlungen</h2>
+                    <p class="results-subtitle">Basierend auf deinen Antworten sind diese Modelle ideal für dich:</p>
+                </div>
+                <div class="result-cards" id="resultCards"></div>
+                <div style="text-align: center;">
+                    <button class="btn btn-restart" onclick="restartQuiz()">
+                        🔄 Nochmal starten
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Model Database with scoring weights
+        const models = [
+            {
+                id: 'gpt-4o',
+                name: 'GPT-4o',
+                provider: 'openai',
+                providerName: 'OpenAI',
+                desc: 'Das vielseitigste Modell von OpenAI. Schnell, intelligent und multimodal – versteht Text, Bilder und Audio.',
+                tags: ['Allrounder', 'Multimodal', 'Schnell'],
+                scores: { creative: 8, code: 9, analysis: 9, simple: 7, complex: 9, speed: 8, quality: 9, budget: 6, vision: 10 }
+            },
+            {
+                id: 'gpt-4o-mini',
+                name: 'GPT-4o mini',
+                provider: 'openai',
+                providerName: 'OpenAI',
+                desc: 'Die kostengünstige Variante von GPT-4o. Ideal für einfachere Aufgaben mit gutem Preis-Leistungs-Verhältnis.',
+                tags: ['Günstig', 'Schnell', 'Einsteiger'],
+                scores: { creative: 6, code: 7, analysis: 6, simple: 9, complex: 5, speed: 10, quality: 6, budget: 10, vision: 8 }
+            },
+            {
+                id: 'o1',
+                name: 'o1',
+                provider: 'openai',
+                providerName: 'OpenAI',
+                desc: 'OpenAIs Reasoning-Modell für komplexe Logik und wissenschaftliche Aufgaben. Denkt Schritt für Schritt.',
+                tags: ['Reasoning', 'Wissenschaft', 'Mathematik'],
+                scores: { creative: 5, code: 10, analysis: 10, simple: 4, complex: 10, speed: 3, quality: 10, budget: 2, vision: 0 }
+            },
+            {
+                id: 'o3-mini',
+                name: 'o3-mini',
+                provider: 'openai',
+                providerName: 'OpenAI',
+                desc: 'Kompaktes Reasoning-Modell mit gutem Kosten-Nutzen-Verhältnis für logische Aufgaben.',
+                tags: ['Reasoning', 'Günstig', 'Logik'],
+                scores: { creative: 4, code: 8, analysis: 8, simple: 5, complex: 8, speed: 6, quality: 8, budget: 7, vision: 0 }
+            },
+            {
+                id: 'claude-opus',
+                name: 'Claude Opus 4.5',
+                provider: 'anthropic',
+                providerName: 'Anthropic',
+                desc: 'Das leistungsstärkste Claude-Modell. Exzellent bei komplexen Analysen und nuanciertem Schreiben.',
+                tags: ['Premium', 'Analyse', 'Schreiben'],
+                scores: { creative: 10, code: 9, analysis: 10, simple: 6, complex: 10, speed: 5, quality: 10, budget: 2, vision: 9 }
+            },
+            {
+                id: 'claude-sonnet',
+                name: 'Claude Sonnet 4.5',
+                provider: 'anthropic',
+                providerName: 'Anthropic',
+                desc: 'Die ausgewogene Wahl: Hohe Qualität bei moderaten Kosten. Stark bei Texten und Code.',
+                tags: ['Ausgewogen', 'Vielseitig', 'Code'],
+                scores: { creative: 9, code: 9, analysis: 8, simple: 7, complex: 8, speed: 7, quality: 9, budget: 6, vision: 9 }
+            },
+            {
+                id: 'claude-haiku',
+                name: 'Claude Haiku 4.5',
+                provider: 'anthropic',
+                providerName: 'Anthropic',
+                desc: 'Schnell und kostengünstig. Perfekt für einfache Aufgaben und hohe Volumen.',
+                tags: ['Schnell', 'Günstig', 'Effizient'],
+                scores: { creative: 6, code: 6, analysis: 5, simple: 10, complex: 4, speed: 10, quality: 6, budget: 10, vision: 7 }
+            },
+            {
+                id: 'gemini-2-flash',
+                name: 'Gemini 2.0 Flash',
+                provider: 'google',
+                providerName: 'Google',
+                desc: 'Googles schnellstes Modell mit hervorragender Performance und günstigem Preis.',
+                tags: ['Schnell', 'Multimodal', 'Günstig'],
+                scores: { creative: 7, code: 8, analysis: 7, simple: 9, complex: 7, speed: 10, quality: 7, budget: 9, vision: 9 }
+            },
+            {
+                id: 'gemini-1.5-pro',
+                name: 'Gemini 1.5 Pro',
+                provider: 'google',
+                providerName: 'Google',
+                desc: 'Extrem großes Kontextfenster (1M+ Tokens). Ideal für lange Dokumente und Code-Analyse.',
+                tags: ['Großer Kontext', 'Dokumente', 'Video'],
+                scores: { creative: 8, code: 8, analysis: 9, simple: 6, complex: 9, speed: 6, quality: 8, budget: 5, vision: 10 }
+            },
+            {
+                id: 'gemini-1.5-flash',
+                name: 'Gemini 1.5 Flash',
+                provider: 'google',
+                providerName: 'Google',
+                desc: 'Schnelle und günstige Alternative mit großem Kontextfenster.',
+                tags: ['Schnell', 'Großer Kontext', 'Budget'],
+                scores: { creative: 6, code: 7, analysis: 6, simple: 8, complex: 6, speed: 9, quality: 6, budget: 9, vision: 8 }
+            }
+        ];
+
+        // Questions
+        const questions = [
+            {
+                title: 'Was möchtest du hauptsächlich mit der KI machen?',
+                hint: 'Wähle den Bereich, der am besten zu deinem typischen Anwendungsfall passt.',
+                options: [
+                    { icon: '✍️', title: 'Texte schreiben', desc: 'Blogposts, E-Mails, kreative Inhalte', weights: { creative: 3 } },
+                    { icon: '💻', title: 'Programmieren', desc: 'Code schreiben, debuggen, erklären', weights: { code: 3 } },
+                    { icon: '📊', title: 'Analysieren & Recherchieren', desc: 'Daten auswerten, Zusammenfassungen, Fakten', weights: { analysis: 3 } },
+                    { icon: '💬', title: 'Chatten & Fragen beantworten', desc: 'Allgemeine Fragen, Lernhilfe, Unterhaltung', weights: { simple: 2, speed: 1 } }
+                ]
+            },
+            {
+                title: 'Wie komplex sind deine typischen Aufgaben?',
+                hint: 'Überlege, wie viel Nachdenken die KI für deine Aufgaben benötigt.',
+                options: [
+                    { icon: '🌱', title: 'Einfach', desc: 'Kurze Fragen, einfache Texte, schnelle Antworten', weights: { simple: 3, speed: 1 } },
+                    { icon: '🌿', title: 'Mittel', desc: 'Längere Texte, mehrstufige Aufgaben', weights: { simple: 1, complex: 1 } },
+                    { icon: '🌳', title: 'Komplex', desc: 'Tiefe Analysen, schwierige Probleme, viel Kontext', weights: { complex: 3, quality: 1 } },
+                    { icon: '🔬', title: 'Sehr komplex', desc: 'Wissenschaft, Mathematik, komplexes Reasoning', weights: { complex: 4, quality: 2 } }
+                ]
+            },
+            {
+                title: 'Wie wichtig ist dir die Geschwindigkeit?',
+                hint: 'Manche Modelle sind schneller, andere nehmen sich mehr Zeit für bessere Ergebnisse.',
+                options: [
+                    { icon: '⚡', title: 'Sehr wichtig', desc: 'Ich brauche sofortige Antworten', weights: { speed: 3, budget: 1 } },
+                    { icon: '⏱️', title: 'Wichtig', desc: 'Schnell ist gut, aber Qualität zählt auch', weights: { speed: 2, quality: 1 } },
+                    { icon: '🎯', title: 'Qualität vor Tempo', desc: 'Lieber bessere Ergebnisse als schnelle', weights: { quality: 3 } },
+                    { icon: '🧘', title: 'Egal', desc: 'Ich habe Zeit, Hauptsache gute Ergebnisse', weights: { quality: 2, complex: 1 } }
+                ]
+            },
+            {
+                title: 'Arbeitest du mit Bildern oder nur mit Text?',
+                hint: 'Multimodale Modelle können Bilder analysieren und verstehen.',
+                options: [
+                    { icon: '📝', title: 'Nur Text', desc: 'Ich arbeite ausschließlich mit Texten', weights: {} },
+                    { icon: '🖼️', title: 'Manchmal Bilder', desc: 'Gelegentlich möchte ich Bilder analysieren', weights: { vision: 2 } },
+                    { icon: '📸', title: 'Oft Bilder', desc: 'Bildanalyse ist wichtig für mich', weights: { vision: 4 } },
+                    { icon: '🎬', title: 'Bilder und Videos', desc: 'Ich arbeite mit verschiedenen Medien', weights: { vision: 5 } }
+                ]
+            },
+            {
+                title: 'Wie wichtig ist dir der Preis?',
+                hint: 'Premium-Modelle liefern oft bessere Ergebnisse, kosten aber mehr.',
+                options: [
+                    { icon: '💰', title: 'Sehr wichtig', desc: 'Ich möchte so wenig wie möglich ausgeben', weights: { budget: 4 } },
+                    { icon: '⚖️', title: 'Ausgewogen', desc: 'Gutes Preis-Leistungs-Verhältnis', weights: { budget: 2, quality: 1 } },
+                    { icon: '💎', title: 'Qualität zählt', desc: 'Für gute Ergebnisse zahle ich gerne mehr', weights: { quality: 3 } },
+                    { icon: '🏆', title: 'Das Beste', desc: 'Ich will die beste Qualität, Kosten egal', weights: { quality: 4, complex: 1 } }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let quizStarted = false;
+
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('progressContainer').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `FRAGE ${currentQuestion + 1} VON ${questions.length}`;
+            document.getElementById('questionTitle').textContent = q.title;
+            document.getElementById('questionHint').textContent = q.hint;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
+                const div = document.createElement('div');
+                div.className = 'option' + (answers[currentQuestion] === index ? ' selected' : '');
+                div.onclick = () => selectOption(index);
+                div.innerHTML = `
+                    <div class="option-icon">${opt.icon}</div>
+                    <div class="option-content">
+                        <div class="option-title">${opt.title}</div>
+                        <div class="option-desc">${opt.desc}</div>
+                    </div>
+                    <div class="option-check"></div>
+                `;
+                container.appendChild(div);
+            });
+
+            // Update buttons
+            document.getElementById('btnBack').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+            document.getElementById('btnNext').disabled = answers[currentQuestion] === undefined;
+            document.getElementById('btnNext').textContent = currentQuestion === questions.length - 1 ? 'Ergebnis anzeigen →' : 'Weiter →';
+            
+            updateProgress();
+        }
+
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+            document.getElementById('btnNext').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) return;
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressStep').textContent = `Frage ${currentQuestion + 1} von ${questions.length}`;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+        }
+
+        function calculateScores() {
+            // Collect all weights from answers
+            let weights = {};
+            answers.forEach((answerIndex, qIndex) => {
+                const selectedOption = questions[qIndex].options[answerIndex];
+                if (selectedOption && selectedOption.weights) {
+                    for (const [key, value] of Object.entries(selectedOption.weights)) {
+                        weights[key] = (weights[key] || 0) + value;
+                    }
+                }
+            });
+
+            // Calculate total score for each model
+            const scored = models.map(model => {
+                let totalScore = 0;
+                let maxPossible = 0;
+                
+                for (const [key, weight] of Object.entries(weights)) {
+                    if (model.scores[key] !== undefined) {
+                        totalScore += model.scores[key] * weight;
+                        maxPossible += 10 * weight;
+                    }
+                }
+                
+                // Normalize to percentage
+                const percentage = maxPossible > 0 ? Math.round((totalScore / maxPossible) * 100) : 50;
+                
+                return {
+                    ...model,
+                    totalScore: percentage
+                };
+            });
+
+            // Sort by score and return top 3
+            return scored.sort((a, b) => b.totalScore - a.totalScore).slice(0, 3);
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            document.getElementById('progressContainer').classList.add('hidden');
+
+            const topModels = calculateScores();
+            const container = document.getElementById('resultCards');
+            container.innerHTML = '';
+
+            topModels.forEach((model, index) => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <div class="result-rank rank-${index + 1}">${index + 1}</div>
+                    <div class="result-info">
+                        <div class="result-provider provider-${model.provider}">
+                            <span class="provider-dot"></span>
+                            ${model.providerName}
+                        </div>
+                        <div class="result-name">${model.name}</div>
+                        <div class="result-desc">${model.desc}</div>
+                        <div class="result-tags">
+                            ${model.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="result-score">
+                        <div class="score-value">${model.totalScore}%</div>
+                        <div class="score-label">Match</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('progressContainer').classList.add('hidden');
+            currentQuestion = 0;
+            answers = [];
+            quizStarted = false;
+        }
+
+        // Initialize
+        document.getElementById('progressContainer').classList.add('hidden');
+    </script>
+</body>
+</html>

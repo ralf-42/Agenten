@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Self-Attention Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #141823;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #1e2538;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid #2d3748;
+        }
+        h1 { margin-top: 0; color: #fff; font-size: 24px; text-align: center; }
+        p.subtitle { color: #94a3b8; text-align: center; margin-top: -10px; margin-bottom: 25px; }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            background: #181d2c;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .control-group { display: flex; flex-direction: column; width: 100%; max-width: 400px; }
+        label { font-size: 13px; color: #a0aec0; margin-bottom: 8px; font-weight: 600; text-align: center; }
+        select {
+            background: #2d3748;
+            color: #fff;
+            border: 1px solid #4a5568;
+            padding: 10px 12px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .visualization-space {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        svg {
+            background: #181d2c;
+            border-radius: 8px;
+            border: 1px solid #2d3748;
+        }
+        .info-box {
+            background: #232a3d;
+            border-left: 4px solid #4287f5;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 140px;
+        }
+        .matrix-cell:hover { stroke: #fff; stroke-width: 2px; cursor: pointer; }
+        .highlight-blue { color: #63b3ed; font-weight: bold; }
+        .highlight-orange { color: #f6ad55; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Transformer Self-Attention Simulator</h1>
+    <p class="subtitle">Echtzeit-Berechnung der mathematischen Wort-Beziehungen (Attention)</p>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="sentence-select">Wähle einen Beispielsatz aus:</label>
+            <select id="sentence-select">
+                <option value="0">AI can read text fast</option>
+                <option value="1">Attention is all you need for deep learning</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="visualization-space">
+        <svg id="simulator-canvas" width="850" height="460"></svg>
+        
+        <div class="info-box" id="explanation">
+            💡 <strong>Erste Schritte:</strong> Fahre mit der Maus über die Quadrate in der Matrix. Jedes Quadrat zeigt dir, wie intensiv zwei Wörter logisch und grammatikalisch vom KI-Modell miteinander verknüpft werden.
+        </div>
+    </div>
+</div>
+
+<script>
+    // Beispiel-Datensätze für den Simulator
+    const sentences = [
+        ["AI", "can", "read", "text", "fast"],
+        ["Attention", "is", "all", "you", "need", "for", "deep", "learning"]
+    ];
+
+    let currentSentenceIdx = 0;
+    const dkDivider = 4; // Der Skalierungsfaktor läuft unbemerkt und fest im Hintergrund weiter
+
+    // Event-Listener für Satz-Auswahl
+    const select = document.getElementById('sentence-select');
+    const explanation = document.getElementById('explanation');
+
+    select.addEventListener('change', (e) => { currentSentenceIdx = parseInt(e.target.value); updateVisualization(); });
+
+    // Kern-Mathematik: Berechnet die Beziehungen unbemerkt im Hintergrund
+    function calculateAttention(words, divider) {
+        const n = words.length;
+        
+        let seed = 42;
+        function random() {
+            let x = Math.sin(seed++) * 10000;
+            return x - Math.floor(x);
+        }
+
+        let Q = words.map(() => Array.from({length: 4}, () => random() * 2));
+        let K = words.map(() => Array.from({length: 4}, () => random() * 2));
+
+        let scores = math.multiply(Q, math.transpose(K));
+
+        // Verleiht der Diagonale die realistische Grund-Aufmerksamkeit
+        for (let i = 0; i < n; i++) {
+            scores[i][i] += 1.8;
+        }
+
+        let scaledScores = math.divide(scores, divider);
+
+        let attentionMatrix = [];
+        for (let i = 0; i < n; i++) {
+            let row = scaledScores[i];
+            let exponents = row.map(val => Math.exp(val));
+            let sumExponents = exponents.reduce((a, b) => a + b, 0);
+            
+            let finalRow = exponents.map(exp => exp / sumExponents);
+            
+            // Verhindert optische Rundungsfehler, sodass für den Nutzer immer exakt 100% rauskommen
+            let roundedSum = finalRow.reduce((acc, val) => acc + Math.round(val * 100) / 100, 0);
+            let diff = 1.00 - roundedSum;
+            if (Math.abs(diff) > 0.001) {
+                let maxIdx = finalRow.indexOf(Math.max(...finalRow));
+                finalRow[maxIdx] += diff;
+            }
+
+            attentionMatrix.push(finalRow);
+        }
+
+        return attentionMatrix;
+    }
+
+    // D3.js Render-Pipeline
+    function updateVisualization() {
+        const words = sentences[currentSentenceIdx];
+        const matrix = calculateAttention(words, dkDivider);
+        const n = words.length;
+
+        const svg = d3.select("#simulator-canvas");
+        svg.selectAll("*").remove(); 
+
+        const margin = {top: 110, right: 140, bottom: 40, left: 140};
+        const width = 850 - margin.left - margin.right;
+        const height = 460 - margin.top - margin.bottom;
+
+        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+        const cellSize = Math.min(width / n, height / n);
+
+        // Y-Achse (Queries - Zeilen)
+        g.selectAll(".y-label")
+            .data(words)
+            .enter().append("text")
+            .attr("x", -15)
+            .attr("y", (d, i) => i * cellSize + cellSize / 2)
+            .attr("text-anchor", "end")
+            .attr("dominant-baseline", "middle")
+            .attr("fill", "#a0aec0")
+            .style("font-size", "14px")
+            .text(d => d);
+
+        // X-Achse (Keys - Spalten)
+        g.selectAll(".x-label")
+            .data(words)
+            .enter().append("text")
+            .attr("transform", (d, i) => `translate(${i * cellSize + cellSize / 2}, -15) rotate(-45)`)
+            .attr("text-anchor", "end")
+            .attr("fill", "#a0aec0")
+            .style("font-size", "14px")
+            .text(d => d);
+
+        // Achsenbeschriftungen vereinfacht und eingedeutscht für Einsteiger
+        g.append("text")
+            .attr("x", -15)
+            .attr("y", -15)
+            .attr("text-anchor", "end")
+            .attr("fill", "#63b3ed")
+            .style("font-size", "11px")
+            .style("font-weight", "bold")
+            .text("Wort im Fokus (Query) ⬇");
+
+        g.append("text")
+            .attr("x", (n * cellSize) / 2)
+            .attr("y", -55)
+            .attr("text-anchor", "middle")
+            .attr("fill", "#4287f5")
+            .style("font-size", "11px")
+            .style("font-weight", "bold")
+            .text("Bezug zu Wort (Key) ➔");
+
+        // Matrix-Zellen zeichnen
+        for (let r = 0; r < n; r++) {
+            for (let c = 0; c < n; c++) {
+                const weight = matrix[r][c];
+                
+                const cell = g.append("rect")
+                    .attr("class", "matrix-cell")
+                    .attr("x", c * cellSize)
+                    .attr("y", r * cellSize)
+                    .attr("width", cellSize - 2)
+                    .attr("height", cellSize - 2)
+                    .attr("rx", 5)
+                    .attr("fill", d3.interpolateBlues(weight * 1.5 + 0.1))
+                    .style("transition", "all 0.15s");
+
+                // Hover-Effekt mit verständlichem, analogen Feedback
+                cell.on("mouseover", function() {
+                    d3.select(this).attr("stroke", "#63b3ed").attr("stroke-width", "2.5px");
+                    
+                    let pct = Math.round(weight * 100);
+                    let restPct = 100 - pct;
+                    let textContent = "";
+
+                    if (r === c) {
+                        textContent = `<strong>Was bedeutet das für dieses Wort?</strong><br><br>
+                        <strong>Bezug zu sich selbst (Self-Attention):</strong> Du hast ein Quadrat auf der Hauptdiagonale ausgewählt. Diese <span class="highlight-blue">${pct}%</span> zeigen, wie stark das Wort unbeeinflusst im Raum steht. Das Modell sagt damit: <em>"Um das Wort '${words[r]}' zu verstehen, ist seine eigene Grundbedeutung zu ${pct}% wichtig."</em><br><br>
+                        <strong>Der Kontext-Fokus (${restPct}%):</strong> Die verbleibenden <span class="highlight-orange">${restPct}%</span> der Aufmerksamkeit fließen in die restlichen Wörter des Satzes, damit '${words[r]}' seine Bedeutung an die Umgebung anpassen kann.`;
+                    } else {
+                        textContent = `<strong>Was bedeutet das für diese Verknüpfung?</strong><br><br>
+                        <strong>Beziehung im Satz (Kontext-Verknüpfung):</strong> Das KI-Modell verbindet zwei unterschiedliche Wörter. Diese <span class="highlight-blue">${pct}%</span> zeigen die Stärke ihrer Beziehung. Das Modell sagt: <em>"Um die genaue Rolle von '${words[r]}' im Satz zu verstehen, muss ich zu ${pct}% den Kontext des Wortes '${words[c]}' hinzuziehen."</em><br><br>
+                        <strong>Der restliche Fokus (${restPct}%):</strong> Die verbleibenden <span class="highlight-orange">${restPct}%</span> der Aufmerksamkeit nutzt das Wort '${words[r]}', um sich auf sich selbst oder andere Satzglieder zu konzentrieren.`;
+                    }
+                    
+                    explanation.innerHTML = textContent;
+                }).on("mouseout", function() {
+                    d3.select(this).attr("stroke", "none");
+                });
+
+                if (cellSize > 30) {
+                    g.append("text")
+                        .attr("x", c * cellSize + cellSize / 2)
+                        .attr("y", r * cellSize + cellSize / 2)
+                        .attr("text-anchor", "middle")
+                        .attr("dominant-baseline", "middle")
+                        .attr("fill", weight > 0.4 ? "#fff" : "#718096")
+                        .style("font-size", "11px")
+                        .style("pointer-events", "none")
+                        .text(weight.toFixed(2));
+                }
+            }
+        }
+    }
+
+    updateVisualization();
+</script>
+
+</body>
+</html>

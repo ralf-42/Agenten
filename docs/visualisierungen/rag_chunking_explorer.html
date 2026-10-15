@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Chunking Multi-Strategy Explorer</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- p5.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090d16; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    #canvas-parent canvas {
+      display: block;
+      width: 100% !important;
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 bg-[#0c1220]/90 backdrop-blur px-5 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 shadow-md">
+    <div class="flex items-center space-x-3">
+      <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold text-lg">
+        ⚡
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-sm md:text-base font-extrabold tracking-tight text-white">RAG Chunking Multi-Strategy Explorer</h1>
+          <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">LangChain &amp; LlamaIndex</span>
+        </div>
+        <p class="text-[11px] text-slate-400">Interaktive visuelle Chunking-Analyse mit leuchtender Overlap-Hervorhebung</p>
+      </div>
+    </div>
+
+    <!-- Live Counters -->
+    <div class="flex items-center gap-3 text-xs bg-slate-950/90 px-3.5 py-1.5 rounded-xl border border-slate-800/80 font-mono-code shadow-inner">
+      <div class="flex items-center gap-1.5">
+        <span class="text-slate-500">Input:</span>
+        <span id="stat-input-chars" class="text-indigo-400 font-bold">0</span> <span class="text-[10px] text-slate-500">chars</span>
+      </div>
+      <div class="text-slate-700">|</div>
+      <div class="flex items-center gap-1.5">
+        <span class="text-slate-500">Chunks:</span>
+        <span id="stat-chunks-count" class="text-emerald-400 font-bold">0</span>
+      </div>
+      <div class="text-slate-700">|</div>
+      <div class="flex items-center gap-1.5">
+        <span class="text-slate-500">Ø Größe:</span>
+        <span id="stat-avg-size" class="text-amber-400 font-bold">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hauptbereich -->
+  <main class="flex-1 max-w-[1920px] w-full mx-auto p-3 md:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+    
+    <!-- LINKE SPALTE: Strategie-Wahl & Konfiguration -->
+    <div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+      
+      <!-- Strategie-Auswahl Tabs -->
+      <div class="bg-[#0f172a] border border-slate-800/90 rounded-2xl p-2.5 shadow-xl">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 block mb-2">Chunking-Strategie wählen</span>
+        <div class="grid grid-cols-3 gap-1.5 font-medium text-xs">
+          <button id="tab-recursive" onclick="selectStrategy('recursive')" class="px-2 py-2 rounded-xl border transition-all text-center flex flex-col items-center gap-1 bg-indigo-600/20 border-indigo-500/50 text-indigo-300 font-semibold shadow-sm">
+            <span class="text-base">✂️</span>
+            <span>Recursive</span>
+          </button>
+          <button id="tab-markdown" onclick="selectStrategy('markdown')" class="px-2 py-2 rounded-xl border transition-all text-center flex flex-col items-center gap-1 bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+            <span class="text-base">📑</span>
+            <span>Markdown</span>
+          </button>
+          <button id="tab-token" onclick="selectStrategy('token')" class="px-2 py-2 rounded-xl border transition-all text-center flex flex-col items-center gap-1 bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+            <span class="text-base">🪙</span>
+            <span>Token BPE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dokument-Eingabe -->
+      <div class="bg-[#0f172a] border border-slate-800/90 rounded-2xl p-4 shadow-xl flex flex-col">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+            <span>📄</span> Eingabedokument
+          </label>
+          <button onclick="loadCurrentPreset()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700/80 text-[11px] font-medium flex items-center gap-1">
+            <span>↻</span> Preset laden
+          </button>
+        </div>
+
+        <textarea id="input-text" rows="7" class="w-full bg-[#080c14] border border-slate-800 rounded-xl p-3 text-xs md:text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 font-mono-code resize-y transition-all leading-relaxed" placeholder="Dokument hier eingeben..."></textarea>
+      </div>
+
+      <!-- Dynamische Parameter-Box -->
+      <div class="bg-[#0f172a] border border-slate-800/90 rounded-2xl p-4 shadow-xl flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <span>⚙️</span> Parameter &amp; Einstellungen
+          </h2>
+          <span id="strategy-badge" class="text-[10px] font-mono-code bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full">RecursiveCharacter</span>
+        </div>
+
+        <!-- 1. PARAMETERS FOR RECURSIVE -->
+        <div id="params-recursive" class="space-y-4">
+          <!-- Chunk Size -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-semibold">Chunk Size (Zeichen)</span>
+              <div class="flex items-center gap-1 font-mono-code">
+                <input type="number" id="rec-size-num" min="60" max="1000" value="220" class="w-16 bg-[#080c14] border border-slate-700 rounded-md px-2 py-0.5 text-right text-indigo-400 font-bold focus:outline-none text-xs">
+                <span class="text-slate-500 text-[10px]">chars</span>
+              </div>
+            </div>
+            <input type="range" id="rec-size-slider" min="60" max="1000" step="10" value="220" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+          </div>
+
+          <!-- Chunk Overlap -->
+          <div class="space-y-1.5 bg-amber-500/5 p-3 rounded-xl border border-amber-500/20">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-amber-300 font-bold flex items-center gap-1.5">
+                Chunk Overlap (Zeichen)
+                <span class="px-1.5 py-0.2 bg-amber-400/20 text-amber-300 rounded text-[9px] font-bold uppercase">Sliding Overlap</span>
+              </span>
+              <div class="flex items-center gap-1 font-mono-code">
+                <input type="number" id="rec-overlap-num" min="0" max="300" value="65" class="w-16 bg-[#080c14] border border-amber-500/40 rounded-md px-2 py-0.5 text-right text-amber-400 font-bold focus:outline-none text-xs">
+                <span class="text-slate-500 text-[10px]">chars</span>
+              </div>
+            </div>
+            <input type="range" id="rec-overlap-slider" min="0" max="300" step="5" value="65" class="w-full accent-amber-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+            <p class="text-[11px] text-amber-400/80">Wird mit sattem gelbem Marker hervorgehoben.</p>
+          </div>
+
+          <!-- Separatoren-Kaskade -->
+          <div class="space-y-1">
+            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Separatoren-Kaskade (LangChain)</span>
+            <div class="grid grid-cols-4 gap-1 text-center font-mono-code text-[11px]">
+              <div class="bg-slate-950 p-1.5 rounded-lg border border-slate-800 text-amber-400 font-bold">\n\n<div class="text-[8px] text-slate-500">Absatz</div></div>
+              <div class="bg-slate-950 p-1.5 rounded-lg border border-slate-800 text-indigo-400 font-bold">\n<div class="text-[8px] text-slate-500">Zeile</div></div>
+              <div class="bg-slate-950 p-1.5 rounded-lg border border-slate-800 text-emerald-400 font-bold">&quot; &quot;<div class="text-[8px] text-slate-500">Wort</div></div>
+              <div class="bg-slate-950 p-1.5 rounded-lg border border-slate-800 text-rose-400 font-bold">&quot;&quot;<div class="text-[8px] text-slate-500">Zeichen</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PARAMETERS FOR MARKDOWN HEADER -->
+        <div id="params-markdown" class="space-y-4 hidden">
+          <div class="space-y-2">
+            <span class="text-xs font-semibold text-slate-300">Zu trennende Header-Ebenen</span>
+            <div class="flex flex-wrap gap-2 text-xs font-mono-code">
+              <label class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 cursor-pointer">
+                <input type="checkbox" id="md-h1" checked class="accent-indigo-500">
+                <span class="text-indigo-300 font-bold"># H1</span>
+              </label>
+              <label class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 cursor-pointer">
+                <input type="checkbox" id="md-h2" checked class="accent-indigo-500">
+                <span class="text-amber-300 font-bold">## H2</span>
+              </label>
+              <label class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 cursor-pointer">
+                <input type="checkbox" id="md-h3" checked class="accent-indigo-500">
+                <span class="text-emerald-300 font-bold">### H3</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- strip_headers Toggle (Standard: False) -->
+          <div class="bg-indigo-950/40 p-3 rounded-xl border border-indigo-500/30 flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-indigo-300 flex items-center gap-1.5">
+                <span>strip_headers</span>
+                <span id="strip-status-badge" class="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 rounded text-[9px] font-mono-code">False (Beibehalten)</span>
+              </span>
+              <span class="text-[10px] text-slate-400">Header (# H1, ## H2 etc.) verbleiben im Chunk-Fließtext</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="md-strip-headers" class="sr-only peer">
+              <div class="w-10 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+            </label>
+          </div>
+
+          <!-- Section Size & Overlap -->
+          <div class="space-y-3 bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-300 font-semibold">Max. Section Size</span>
+                <span id="md-size-val" class="text-indigo-400 font-mono-code">240 chars</span>
+              </div>
+              <input type="range" id="md-size-slider" min="80" max="600" step="20" value="240" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded">
+            </div>
+
+            <div class="space-y-1 bg-amber-500/5 p-2 rounded-lg border border-amber-500/20">
+              <div class="flex justify-between text-xs">
+                <span class="text-amber-300 font-bold">Section Overlap</span>
+                <span id="md-overlap-val" class="text-amber-400 font-mono-code">65 chars</span>
+              </div>
+              <input type="range" id="md-overlap-slider" min="0" max="250" step="5" value="65" class="w-full accent-amber-500 cursor-pointer h-1.5 bg-slate-800 rounded">
+              <p class="text-[10px] text-amber-400/80">Übertrag zwischen aufeinanderfolgenden Abschnitten.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. PARAMETERS FOR TOKEN -->
+        <div id="params-token" class="space-y-4 hidden">
+          <!-- Token Size -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-300 font-semibold">Token Size (Zielanzahl Tokens)</span>
+              <div class="flex items-center gap-1 font-mono-code">
+                <input type="number" id="tok-size-num" min="10" max="300" value="45" class="w-16 bg-[#080c14] border border-slate-700 rounded-md px-2 py-0.5 text-right text-indigo-400 font-bold focus:outline-none text-xs">
+                <span class="text-slate-500 text-[10px]">tokens</span>
+              </div>
+            </div>
+            <input type="range" id="tok-size-slider" min="10" max="300" step="5" value="45" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+          </div>
+
+          <!-- Token Overlap -->
+          <div class="space-y-1.5 bg-amber-500/5 p-3 rounded-xl border border-amber-500/20">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-amber-300 font-bold flex items-center gap-1.5">
+                Token Overlap
+                <span class="px-1.5 py-0.2 bg-amber-400/20 text-amber-300 rounded text-[9px] font-bold uppercase">BPE Overlap</span>
+              </span>
+              <div class="flex items-center gap-1 font-mono-code">
+                <input type="number" id="tok-overlap-num" min="0" max="100" value="14" class="w-16 bg-[#080c14] border border-amber-500/40 rounded-md px-2 py-0.5 text-right text-amber-400 font-bold focus:outline-none text-xs">
+                <span class="text-slate-500 text-[10px]">tokens</span>
+              </div>
+            </div>
+            <input type="range" id="tok-overlap-slider" min="0" max="100" step="2" value="14" class="w-full accent-amber-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+            <p class="text-[11px] text-amber-400/80">Exakte Übernahme der letzten N Tokens in Folgechunks.</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+            <span>BPE Tokenizer Modus:</span>
+            <span class="font-mono-code text-indigo-300 font-semibold">cl100k_base / GPT-4 &amp; Embedding</span>
+          </div>
+        </div>
+
+        <!-- Ausführen Button -->
+        <button onclick="recalculateChunks()" class="w-full bg-gradient-to-r from-amber-500 via-indigo-600 to-violet-600 hover:brightness-110 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-indigo-600/20 text-xs uppercase tracking-wider flex items-center justify-center gap-2 active:scale-[0.99] transition-all">
+          <span>⚡</span> Text jetzt zerlegen
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RECHTE SPALTE: p5.js Visualisierungs-Canvas -->
+    <div class="lg:col-span-7 xl:col-span-8 flex flex-col min-h-[660px]">
+      <div class="bg-[#0f172a] border border-slate-800/90 rounded-2xl p-4 shadow-2xl flex flex-col flex-1 h-full">
+        
+        <!-- Toolbar & Legende -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+          <div class="flex items-center gap-4 text-xs">
+            <!-- Overlap Legend -->
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded bg-amber-400 border border-amber-300 shadow-sm shadow-amber-400/60 ring-2 ring-amber-400/20"></span>
+              <span class="text-amber-300 font-bold flex items-center gap-1">
+                Overlap
+                <span class="text-[10px] text-amber-400/70 font-normal">(aus Vor-Chunk)</span>
+              </span>
+            </div>
+            <!-- Neuer Text Legend -->
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded bg-slate-700 border border-slate-500"></span>
+              <span class="text-slate-300">Neuer Text</span>
+            </div>
+            <!-- Metadata Flag (Markdown) -->
+            <div id="legend-meta" class="hidden flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded bg-indigo-500/40 border border-indigo-400"></span>
+              <span class="text-indigo-300">Metadaten</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="resetCanvasView()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 text-xs font-medium transition flex items-center gap-1.5 shadow-sm">
+              <span>🎯</span> Ansicht zentrieren
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div id="canvas-parent" class="relative flex-1 w-full min-h-[580px] mt-3 bg-[#080c14] rounded-xl overflow-hidden border border-slate-800/80 cursor-grab active:cursor-grabbing">
+          <!-- p5.js injiziert hier das responsive Canvas -->
+        </div>
+
+        <div class="pt-2.5 flex items-center justify-between text-[11px] text-slate-500 font-mono-code">
+          <span>🖱️ Scrollen per Rad / Drag | Klick auf Karte öffnet Volltext-Inspektor</span>
+          <span id="canvas-status" class="text-slate-400">Bereit</span>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Detail Modal Dialog (Chunk-Inspektor) -->
+  <div id="chunk-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0f172a] border border-slate-700/80 rounded-2xl max-w-2xl w-full p-5 shadow-2xl flex flex-col gap-4 transform transition-all scale-95 opacity-0 duration-200" id="chunk-modal-box">
+      
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <span id="modal-title" class="px-2.5 py-1 rounded-lg text-xs font-mono-code font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">Chunk #1</span>
+          <span id="modal-length" class="text-xs text-slate-400 font-mono-code">200 Zeichen</span>
+          <span id="modal-tokens" class="text-xs text-emerald-400 font-mono-code bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">~45 Tokens</span>
+        </div>
+        <button onclick="closeModal()" class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+          ✕
+        </button>
+      </div>
+
+      <!-- Metadaten Box (bei Markdown) -->
+      <div id="modal-metadata-box" class="hidden bg-indigo-950/30 border border-indigo-500/30 rounded-xl p-3 text-xs space-y-1">
+        <div class="text-[10px] uppercase font-bold text-indigo-400 tracking-wider">Extrahierte Header Metadaten:</div>
+        <div id="modal-metadata-content" class="font-mono-code text-indigo-200 text-xs"></div>
+      </div>
+
+      <!-- Overlap Alert Badge -->
+      <div id="modal-overlap-alert" class="hidden bg-amber-500/15 border border-amber-500/40 rounded-xl p-3 text-xs text-amber-300 flex items-center gap-2">
+        <span class="text-base">⚡</span>
+        <span id="modal-overlap-text-desc" class="font-medium"></span>
+      </div>
+
+      <!-- Chunk Inhalt -->
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Chunk Inhalt (mit Overlap-Textmarker)</span>
+          <button onclick="copyChunkContent()" class="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-mono-code transition">
+            <span id="copy-feedback">📋 Kopieren</span>
+          </button>
+        </div>
+        <div id="modal-content" class="bg-[#080c14] p-4 rounded-xl border border-slate-800 text-xs md:text-sm text-slate-200 font-mono-code max-h-72 overflow-y-auto whitespace-pre-wrap leading-relaxed select-text shadow-inner">
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition">
+          Schließen
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. PRESETS
+    // ==========================================
+    const PRESETS = {
+      recursive: `Retrieval-Augmented Generation (RAG) kombiniert Information-Retrieval mit generativen Sprachmodellen.
+
+Beim Chunking wird ein Dokument in kleinere Abschnitte zerlegt. Diese Fragmente werden in Vektordatenbanken wie Chroma oder Pinecone indexiert.
+
+Der RecursiveCharacterTextSplitter ist der Standardansatz: Er versucht Text zuerst an Absätzen (\\n\\n) zu trennen. Reicht das nicht aus, wechselt er rekursiv zu Zeilen (\\n), Leerzeichen und schließlich Zeichen.
+
+Der Overlap stellt sicher, dass kein Sinnzusammenhang an Schnittstellen verloren geht. Die Information bleibt in beiden aufeinanderfolgenden Chunks erhalten.`,
+
+      markdown: `# Unternehmenshandbuch KI-Systeme
+
+## 1. Einleitung und Zielsetzung
+Dieses Dokument definiert die Standards für Machine Learning und Vektorsuch-Systeme im gesamten Unternehmensnetzwerk.
+
+## 2. Datenaufbereitung für RAG
+Rohdaten müssen validiert, bereinigt und in standardisierte Markdown-Strukturen überführt werden.
+
+### 2.1 Chunking-Vorgaben
+Alle Fließtexte werden anhand von Überschriften segmentiert. Dadurch bleiben Überschriften stets als Metadaten an den Chunks haften.
+
+### 2.2 Vektorisierung & Speicherung
+Die Chunks werden über Embedding-Modelle wie text-embedding-3-small in Vektoren gewandelt.
+
+## 3. Sicherheitsrichtlinien
+Sensible Kundendaten dürfen nicht ohne Maskierung in öffentliche LLM-Pipelines gelangen.`,
+
+      token: `Large Language Models verarbeiten Texte nicht zeichenweise, sondern in Tokens. Ein Token entspricht im Durchschnitt etwa 4 Zeichen oder 0.75 Wörtern der englischen bzw. deutschen Sprache.
+
+Beim TokenTextSplitter wird das Dokument direkt auf Token-Ebene unterteilt. Dies stellt sicher, dass das Kontextfenster (z. B. 4096 oder 8192 Tokens) mathematisch exakt eingehalten wird und keine Tokens mitten im Satz unerwartet abgeschnitten werden.
+
+Wird ein Overlap von z. B. 15 Tokens definiert, wiederholen sich exakt diese 15 Tokens im darauffolgenden Chunk. Dies garantiert nahtlose Einbettung für Embedding-Modelle.`
+    };
+
+    // ==========================================
+    // 2. SIMULIERTER TOKENIZER (BPE)
+    // ==========================================
+    function tokenizeText(text) {
+      if (!text) return [];
+      const tokenRegex = /(\s+|[a-zA-ZäöüÄÖÜß]+|[0-9]+|[^\s\w])/g;
+      const matches = text.match(tokenRegex);
+      return matches ? matches : (text.length > 0 ? [text] : []);
+    }
+
+    // ==========================================
+    // 3. CHUNKING IMPLEMENTIERUNGEN
+    // ==========================================
+    function splitTextRecursively(text, maxLen, seps) {
+      if (text.length <= maxLen) return [text];
+      let sep = seps[seps.length - 1];
+      let nextSeps = [];
+
+      for (let i = 0; i < seps.length; i++) {
+        if (seps[i] === "") {
+          sep = "";
+          break;
+        }
+        if (text.includes(seps[i])) {
+          sep = seps[i];
+          nextSeps = seps.slice(i + 1);
+          break;
+        }
+      }
+
+      const rawSplits = sep !== "" ? text.split(sep) : Array.from(text);
+      const goodSplits = [];
+
+      for (let i = 0; i < rawSplits.length; i++) {
+        const s = rawSplits[i];
+        const reconstructed = (i < rawSplits.length - 1 && sep !== "") ? s + sep : s;
+        if (reconstructed.length > 0) goodSplits.push(reconstructed);
+      }
+
+      const results = [];
+      for (const s of goodSplits) {
+        if (s.length <= maxLen) {
+          results.push(s);
+        } else {
+          if (nextSeps.length > 0) {
+            results.push(...splitTextRecursively(s, maxLen, nextSeps));
+          } else {
+            for (let c = 0; c < s.length; c += maxLen) {
+              results.push(s.slice(c, c + maxLen));
+            }
+          }
+        }
+      }
+      return results;
+    }
+
+    // RECURSIVE CHARACTER TEXT SPLITTER
+    function runRecursiveSplitter(text, chunkSize, chunkOverlap) {
+      if (!text || text.trim().length === 0) return [];
+      const safeOverlap = Math.max(0, Math.min(chunkOverlap, Math.floor(chunkSize * 0.75)));
+      const separators = ["\n\n", "\n", " ", ""];
+      const splits = splitTextRecursively(text, chunkSize, separators);
+
+      const chunks = [];
+      let currentPieces = [];
+      let currentLength = 0;
+      let prevChunkText = "";
+      let chunkIdx = 1;
+
+      for (let i = 0; i < splits.length; i++) {
+        const piece = splits[i];
+
+        if (currentLength + piece.length > chunkSize && currentPieces.length > 0) {
+          const rawChunkText = currentPieces.join("");
+          
+          let overlapStr = "";
+          if (chunkIdx > 1 && prevChunkText.length > 0) {
+            overlapStr = prevChunkText.slice(-safeOverlap);
+            const spaceIdx = overlapStr.indexOf(" ");
+            if (spaceIdx > 0 && spaceIdx < 15) {
+              overlapStr = overlapStr.slice(spaceIdx + 1);
+            }
+          }
+
+          let newPart = rawChunkText;
+          if (overlapStr.length > 0 && rawChunkText.startsWith(overlapStr)) {
+            newPart = rawChunkText.slice(overlapStr.length);
+          }
+
+          const fullText = overlapStr.length > 0 && !rawChunkText.startsWith(overlapStr) 
+            ? (overlapStr + " " + rawChunkText) 
+            : rawChunkText;
+
+          chunks.push({
+            id: chunkIdx++,
+            strategy: 'recursive',
+            text: fullText,
+            overlapText: overlapStr,
+            newText: overlapStr.length > 0 && !rawChunkText.startsWith(overlapStr) ? (" " + rawChunkText) : newPart,
+            overlapLength: overlapStr.length,
+            overlapUnit: 'Zeichen',
+            totalLength: fullText.length,
+            tokensCount: tokenizeText(fullText).length,
+            meta: null
+          });
+
+          prevChunkText = fullText;
+          currentPieces = [];
+          currentLength = 0;
+        }
+
+        currentPieces.push(piece);
+        currentLength += piece.length;
+      }
+
+      if (currentPieces.length > 0) {
+        const rawChunkText = currentPieces.join("");
+        let overlapStr = "";
+        if (chunkIdx > 1 && prevChunkText.length > 0) {
+          overlapStr = prevChunkText.slice(-safeOverlap);
+          const spaceIdx = overlapStr.indexOf(" ");
+          if (spaceIdx > 0 && spaceIdx < 15) {
+            overlapStr = overlapStr.slice(spaceIdx + 1);
+          }
+        }
+
+        let newPart = rawChunkText;
+        if (overlapStr.length > 0 && rawChunkText.startsWith(overlapStr)) {
+          newPart = rawChunkText.slice(overlapStr.length);
+        }
+
+        const fullText = overlapStr.length > 0 && !rawChunkText.startsWith(overlapStr)
+          ? (overlapStr + " " + rawChunkText)
+          : rawChunkText;
+
+        chunks.push({
+          id: chunkIdx++,
+          strategy: 'recursive',
+          text: fullText,
+          overlapText: overlapStr,
+          newText: overlapStr.length > 0 && !rawChunkText.startsWith(overlapStr) ? (" " + rawChunkText) : newPart,
+          overlapLength: overlapStr.length,
+          overlapUnit: 'Zeichen',
+          totalLength: fullText.length,
+          tokensCount: tokenizeText(fullText).length,
+          meta: null
+        });
+      }
+
+      return chunks;
+    }
+
+    // MARKDOWN HEADER TEXT SPLITTER
+    function runMarkdownHeaderSplitter(text, levels, maxSectionSize, sectionOverlap, stripHeaders = false) {
+      if (!text || text.trim().length === 0) return [];
+      const lines = text.split("\n");
+      const sections = [];
+      let currentHeaders = {};
+      let currentBuffer = [];
+
+      function getHeaderLevel(line) {
+        if (line.startsWith("# ") && levels.h1) return { level: 1, title: line.replace("# ", "").trim(), raw: line };
+        if (line.startsWith("## ") && levels.h2) return { level: 2, title: line.replace("## ", "").trim(), raw: line };
+        if (line.startsWith("### ") && levels.h3) return { level: 3, title: line.replace("### ", "").trim(), raw: line };
+        return null;
+      }
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const hInfo = getHeaderLevel(line);
+
+        if (hInfo) {
+          if (currentBuffer.length > 0 || Object.keys(currentHeaders).length > 0) {
+            const content = currentBuffer.join("\n").trim();
+            if (content.length > 0) {
+              sections.push({
+                content: content,
+                metadata: { ...currentHeaders }
+              });
+            }
+            currentBuffer = [];
+          }
+
+          if (hInfo.level === 1) {
+            currentHeaders = { "Header 1": hInfo.title };
+          } else if (hInfo.level === 2) {
+            currentHeaders = { "Header 1": currentHeaders["Header 1"] || "", "Header 2": hInfo.title };
+          } else if (hInfo.level === 3) {
+            currentHeaders = { "Header 1": currentHeaders["Header 1"] || "", "Header 2": currentHeaders["Header 2"] || "", "Header 3": hInfo.title };
+          }
+
+          if (!stripHeaders) {
+            currentBuffer.push(hInfo.raw);
+          }
+        } else {
+          currentBuffer.push(line);
+        }
+      }
+
+      if (currentBuffer.length > 0) {
+        const content = currentBuffer.join("\n").trim();
+        if (content.length > 0) {
+          sections.push({
+            content: content,
+            metadata: { ...currentHeaders }
+          });
+        }
+      }
+
+      const finalChunks = [];
+      let chunkIdx = 1;
+      let prevSectionText = "";
+      const safeOverlap = Math.max(0, Math.min(sectionOverlap, Math.floor(maxSectionSize * 0.75)));
+
+      for (let s = 0; s < sections.length; s++) {
+        const sec = sections[s];
+        const secSplits = runRecursiveSplitter(sec.content, maxSectionSize, safeOverlap);
+
+        for (let i = 0; i < secSplits.length; i++) {
+          const sub = secSplits[i];
+          let overlapStr = sub.overlapText;
+
+          if (i === 0 && chunkIdx > 1 && prevSectionText.length > 0 && overlapStr.length === 0) {
+            overlapStr = prevSectionText.slice(-safeOverlap);
+            const spaceIdx = overlapStr.indexOf(" ");
+            if (spaceIdx > 0 && spaceIdx < 15) overlapStr = overlapStr.slice(spaceIdx + 1);
+          }
+
+          let fullText = sub.text;
+          let newPart = sub.newText;
+
+          if (overlapStr.length > 0 && !fullText.startsWith(overlapStr)) {
+            fullText = overlapStr + " " + sub.text;
+            newPart = " " + sub.text;
+          }
+
+          finalChunks.push({
+            id: chunkIdx++,
+            strategy: 'markdown',
+            text: fullText,
+            overlapText: overlapStr,
+            newText: newPart,
+            overlapLength: overlapStr.length,
+            overlapUnit: 'Zeichen',
+            totalLength: fullText.length,
+            tokensCount: tokenizeText(fullText).length,
+            meta: sec.metadata
+          });
+
+          prevSectionText = fullText;
+        }
+      }
+
+      return finalChunks;
+    }
+
+    // TOKEN TEXT SPLITTER (BPE)
+    function runTokenSplitter(text, tokenSize, tokenOverlap) {
+      if (!text || text.trim().length === 0) return [];
+      const tokens = tokenizeText(text);
+      if (tokens.length === 0) return [];
+
+      const safeOverlap = Math.max(0, Math.min(tokenOverlap, tokenSize - 1));
+      const step = Math.max(1, tokenSize - safeOverlap);
+      const chunks = [];
+      let chunkIdx = 1;
+
+      for (let i = 0; i < tokens.length; i += step) {
+        const chunkTokens = tokens.slice(i, i + tokenSize);
+        if (chunkTokens.length === 0) break;
+
+        const chunkText = chunkTokens.join("");
+        let overlapTokensCount = 0;
+        let overlapText = "";
+
+        if (chunkIdx > 1) {
+          overlapTokensCount = Math.min(safeOverlap, chunkTokens.length);
+          const overlapToks = chunkTokens.slice(0, overlapTokensCount);
+          overlapText = overlapToks.join("");
+        }
+
+        const newPart = chunkText.slice(overlapText.length);
+
+        chunks.push({
+          id: chunkIdx++,
+          strategy: 'token',
+          text: chunkText,
+          overlapText: overlapText,
+          newText: newPart,
+          overlapLength: overlapTokensCount,
+          overlapUnit: 'Tokens',
+          totalLength: chunkText.length,
+          tokensCount: chunkTokens.length,
+          meta: null
+        });
+
+        if (i + tokenSize >= tokens.length) break;
+      }
+
+      return chunks;
+    }
+
+    // ==========================================
+    // 4. UI-CONTROLLER
+    // ==========================================
+    let currentStrategy = 'recursive';
+    let chunks = [];
+    let scrollY = 0;
+    let targetScrollY = 0;
+    let totalCanvasHeight = 800;
+    let hoveredChunk = -1;
+
+    function selectStrategy(strategy) {
+      currentStrategy = strategy;
+
+      ['recursive', 'markdown', 'token'].forEach(tab => {
+        const btn = document.getElementById(`tab-${tab}`);
+        const panel = document.getElementById(`params-${tab}`);
+        if (tab === strategy) {
+          btn.className = "px-2 py-2 rounded-xl border transition-all text-center flex flex-col items-center gap-1 bg-indigo-600/20 border-indigo-500/50 text-indigo-300 font-semibold shadow-sm";
+          panel.classList.remove('hidden');
+        } else {
+          btn.className = "px-2 py-2 rounded-xl border transition-all text-center flex flex-col items-center gap-1 bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60";
+          panel.classList.add('hidden');
+        }
+      });
+
+      const badge = document.getElementById('strategy-badge');
+      const metaLegend = document.getElementById('legend-meta');
+      if (strategy === 'recursive') {
+        badge.innerText = "RecursiveCharacter";
+        metaLegend.classList.add('hidden');
+      } else if (strategy === 'markdown') {
+        badge.innerText = "MarkdownHeader";
+        metaLegend.classList.remove('hidden');
+      } else {
+        badge.innerText = "TokenTextSplitter";
+        metaLegend.classList.add('hidden');
+      }
+
+      loadCurrentPreset();
+    }
+
+    function loadCurrentPreset() {
+      document.getElementById('input-text').value = PRESETS[currentStrategy];
+      recalculateChunks();
+    }
+
+    function recalculateChunks() {
+      const text = document.getElementById('input-text').value;
+
+      if (currentStrategy === 'recursive') {
+        const size = parseInt(document.getElementById('rec-size-num').value) || 220;
+        const overlap = parseInt(document.getElementById('rec-overlap-num').value) || 65;
+        chunks = runRecursiveSplitter(text, size, overlap);
+      } 
+      else if (currentStrategy === 'markdown') {
+        const levels = {
+          h1: document.getElementById('md-h1').checked,
+          h2: document.getElementById('md-h2').checked,
+          h3: document.getElementById('md-h3').checked
+        };
+        const subSize = parseInt(document.getElementById('md-size-slider').value) || 240;
+        const subOverlap = parseInt(document.getElementById('md-overlap-slider').value) || 65;
+        const stripHeaders = document.getElementById('md-strip-headers').checked;
+        chunks = runMarkdownHeaderSplitter(text, levels, subSize, subOverlap, stripHeaders);
+      } 
+      else if (currentStrategy === 'token') {
+        const tokSize = parseInt(document.getElementById('tok-size-num').value) || 45;
+        const tokOverlap = parseInt(document.getElementById('tok-overlap-num').value) || 14;
+        chunks = runTokenSplitter(text, tokSize, tokOverlap);
+      }
+
+      // Stats
+      document.getElementById('stat-input-chars').innerText = text.length;
+      document.getElementById('stat-chunks-count').innerText = chunks.length;
+      if (chunks.length > 0) {
+        const total = chunks.reduce((acc, c) => acc + (currentStrategy === 'token' ? c.tokensCount : c.totalLength), 0);
+        const unit = currentStrategy === 'token' ? 'tok' : 'chars';
+        document.getElementById('stat-avg-size').innerText = `${Math.round(total / chunks.length)} ${unit}`;
+      } else {
+        document.getElementById('stat-avg-size').innerText = "0";
+      }
+
+      const statusEl = document.getElementById('canvas-status');
+      if (statusEl) statusEl.innerText = `${chunks.length} Chunks generiert`;
+    }
+
+    function resetCanvasView() {
+      targetScrollY = 0;
+      scrollY = 0;
+    }
+
+    // Modal Handling
+    let activeModalChunk = null;
+
+    function openModalForChunk(index) {
+      if (index < 0 || index >= chunks.length) return;
+      const ch = chunks[index];
+      activeModalChunk = ch;
+
+      document.getElementById('modal-title').innerText = `Chunk #${ch.id}`;
+      document.getElementById('modal-length').innerText = `${ch.totalLength} Zeichen`;
+      document.getElementById('modal-tokens').innerText = `~${ch.tokensCount} Tokens`;
+
+      const metaBox = document.getElementById('modal-metadata-box');
+      const metaContent = document.getElementById('modal-metadata-content');
+      if (ch.meta && Object.keys(ch.meta).length > 0) {
+        metaBox.classList.remove('hidden');
+        metaContent.innerText = JSON.stringify(ch.meta, null, 2);
+      } else {
+        metaBox.classList.add('hidden');
+      }
+
+      const alertBox = document.getElementById('modal-overlap-alert');
+      const modalContent = document.getElementById('modal-content');
+
+      if (ch.overlapLength > 0 && ch.overlapText.length > 0) {
+        alertBox.classList.remove('hidden');
+        document.getElementById('modal-overlap-text-desc').innerText = 
+          `Dieser Chunk übernimmt ${ch.overlapLength} ${ch.overlapUnit} (${ch.overlapText.length} Zeichen) aus dem Ende von Chunk #${ch.id - 1}.`;
+
+        modalContent.innerHTML = 
+          `<mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded shadow-sm border border-amber-300 inline mr-1">${escapeHtml(ch.overlapText)}</mark>` +
+          `<span>${escapeHtml(ch.newText)}</span>`;
+      } else {
+        alertBox.classList.add('hidden');
+        modalContent.textContent = ch.text;
+      }
+
+      const modal = document.getElementById('chunk-modal');
+      const box = document.getElementById('chunk-modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        box.classList.remove('scale-95', 'opacity-0');
+        box.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('chunk-modal');
+      const box = document.getElementById('chunk-modal-box');
+      box.classList.remove('scale-100', 'opacity-100');
+      box.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    function copyChunkContent() {
+      if (!activeModalChunk) return;
+      const copyText = activeModalChunk.text;
+      const tempArea = document.createElement("textarea");
+      tempArea.value = copyText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        const feedback = document.getElementById('copy-feedback');
+        feedback.innerText = "✓ Kopiert!";
+        setTimeout(() => { feedback.innerText = "📋 Kopieren"; }, 1500);
+      } catch (err) {}
+      document.body.removeChild(tempArea);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function bindSliderAndNum(sliderId, numId, callback) {
+      const s = document.getElementById(sliderId);
+      const n = document.getElementById(numId);
+      s.addEventListener('input', (e) => { n.value = e.target.value; callback(); });
+      n.addEventListener('input', (e) => { s.value = e.target.value; callback(); });
+    }
+
+    bindSliderAndNum('rec-size-slider', 'rec-size-num', recalculateChunks);
+    bindSliderAndNum('rec-overlap-slider', 'rec-overlap-num', recalculateChunks);
+    bindSliderAndNum('tok-size-slider', 'tok-size-num', recalculateChunks);
+    bindSliderAndNum('tok-overlap-slider', 'tok-overlap-num', recalculateChunks);
+
+    document.getElementById('md-h1').addEventListener('change', recalculateChunks);
+    document.getElementById('md-h2').addEventListener('change', recalculateChunks);
+    document.getElementById('md-h3').addEventListener('change', recalculateChunks);
+    
+    const stripHeadersToggle = document.getElementById('md-strip-headers');
+    const stripBadge = document.getElementById('strip-status-badge');
+    stripHeadersToggle.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        stripBadge.innerText = "True (Entfernt)";
+        stripBadge.className = "px-1.5 py-0.2 bg-rose-500/20 text-rose-300 rounded text-[9px] font-mono-code";
+      } else {
+        stripBadge.innerText = "False (Beibehalten)";
+        stripBadge.className = "px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 rounded text-[9px] font-mono-code";
+      }
+      recalculateChunks();
+    });
+
+    document.getElementById('md-size-slider').addEventListener('input', (e) => {
+      document.getElementById('md-size-val').innerText = `${e.target.value} chars`;
+      recalculateChunks();
+    });
+    document.getElementById('md-overlap-slider').addEventListener('input', (e) => {
+      document.getElementById('md-overlap-val').innerText = `${e.target.value} chars`;
+      recalculateChunks();
+    });
+    document.getElementById('input-text').addEventListener('input', recalculateChunks);
+
+    // ==========================================
+    // 5. p5.js CANVAS VISUALISIERUNG
+    // ==========================================
+    const sketch = (p) => {
+      let isDragging = false;
+      let startMouseY = 0;
+      let startScroll = 0;
+
+      p.setup = () => {
+        const container = document.getElementById('canvas-parent');
+        const c = p.createCanvas(container.clientWidth, container.clientHeight || 620);
+        c.parent('canvas-parent');
+        p.textFont('Inter');
+        p.frameRate(60);
+      };
+
+      p.windowResized = () => {
+        const container = document.getElementById('canvas-parent');
+        if (container) {
+          p.resizeCanvas(container.clientWidth, Math.max(560, container.clientHeight));
+        }
+      };
+
+      p.mouseWheel = (e) => {
+        if (p.mouseX >= 0 && p.mouseX <= p.width && p.mouseY >= 0 && p.mouseY <= p.height) {
+          targetScrollY -= e.deltaY * 0.85;
+          return false;
+        }
+      };
+
+      p.mousePressed = () => {
+        if (p.mouseX >= 0 && p.mouseX <= p.width && p.mouseY >= 0 && p.mouseY <= p.height) {
+          isDragging = true;
+          startMouseY = p.mouseY;
+          startScroll = targetScrollY;
+
+          if (hoveredChunk >= 0) {
+            openModalForChunk(hoveredChunk);
+          }
+        }
+      };
+
+      p.mouseDragged = () => {
+        if (isDragging) {
+          targetScrollY = startScroll + (p.mouseY - startMouseY);
+        }
+      };
+
+      p.mouseReleased = () => {
+        isDragging = false;
+      };
+
+      let touchStartY = 0;
+      p.touchStarted = () => {
+        if (p.touches.length > 0) {
+          touchStartY = p.touches[0].y;
+          startScroll = targetScrollY;
+        }
+      };
+      p.touchMoved = () => {
+        if (p.touches.length > 0) {
+          targetScrollY = startScroll + (p.touches[0].y - touchStartY);
+          return false;
+        }
+      };
+
+      p.draw = () => {
+        scrollY = p.lerp(scrollY, targetScrollY, 0.22);
+
+        const maxScroll = Math.max(0, totalCanvasHeight - p.height + 60);
+        if (targetScrollY > 0) targetScrollY = p.lerp(targetScrollY, 0, 0.25);
+        if (targetScrollY < -maxScroll) targetScrollY = p.lerp(targetScrollY, -maxScroll, 0.25);
+
+        p.background(8, 12, 20);
+        drawGrid(p);
+
+        p.push();
+        p.translate(0, scrollY);
+
+        let curY = 28;
+        const cardMargin = 24;
+        const cardW = Math.max(280, p.width - cardMargin * 2);
+        hoveredChunk = -1;
+
+        if (chunks.length === 0) {
+          p.fill(148, 163, 184);
+          p.textAlign(p.CENTER, p.CENTER);
+          p.textSize(14);
+          p.text("Keine Chunks vorhanden. Bitte Text eingeben.", p.width / 2, 120);
+          p.pop();
+          return;
+        }
+
+        // Chunks rendern
+        for (let i = 0; i < chunks.length; i++) {
+          const ch = chunks[i];
+
+          p.textFont('JetBrains Mono');
+          p.textSize(11.5);
+          const maxTextW = cardW - 36;
+
+          const displayClean = ch.text.replace(/\r?\n/g, ' ↵ ');
+          const lines = wrapLines(p, displayClean, maxTextW);
+          const lineCount = Math.max(1, lines.length);
+
+          const headerH = 36;
+          const metaBadgeH = (ch.meta && Object.keys(ch.meta).length > 0) ? 26 : 0;
+          const bodyH = lineCount * 20 + 20;
+          const cardH = headerH + metaBadgeH + bodyH;
+
+          ch.y = curY;
+          ch.height = cardH;
+
+          const isHover = (
+            p.mouseX >= cardMargin &&
+            p.mouseX <= cardMargin + cardW &&
+            p.mouseY - scrollY >= curY &&
+            p.mouseY - scrollY <= curY + cardH
+          );
+
+          if (isHover) hoveredChunk = i;
+
+          // Verbindungselement & Overlap-Pfeil zum Vor-Chunk
+          if (i > 0) {
+            const hasOverlap = ch.overlapLength > 0 && ch.overlapText.length > 0;
+            const lineX = cardMargin + 42;
+
+            if (hasOverlap) {
+              p.stroke(245, 158, 11);
+              p.strokeWeight(2);
+            } else {
+              p.stroke(51, 65, 85);
+              p.strokeWeight(1.2);
+            }
+
+            p.line(lineX, curY - 18, lineX, curY);
+
+            if (hasOverlap) {
+              p.fill(245, 158, 11);
+              p.noStroke();
+              p.triangle(lineX - 4, curY - 3, lineX + 4, curY - 3, lineX, curY + 2);
+
+              p.fill(245, 158, 11, 40);
+              p.stroke(245, 158, 11, 180);
+              p.strokeWeight(1);
+              const pillW = 150;
+              p.rect(lineX + 12, curY - 15, pillW, 14, 4);
+
+              p.noStroke();
+              p.fill(251, 191, 36);
+              p.textFont('Inter');
+              p.textStyle(p.BOLD);
+              p.textSize(9);
+              p.textAlign(p.CENTER, p.CENTER);
+              p.text(`⚡ ${ch.overlapLength} ${ch.overlapUnit} Übertrag`, lineX + 12 + pillW / 2, curY - 8);
+            }
+          }
+
+          renderChunkCard(p, cardMargin, curY, cardW, cardH, ch, isHover, lines, metaBadgeH);
+          curY += cardH + 20;
+        }
+
+        totalCanvasHeight = curY;
+        p.pop();
+
+        drawScrollIndicator(p, maxScroll);
+      };
+
+      function drawGrid(p) {
+        p.stroke(255, 255, 255, 5);
+        p.strokeWeight(1);
+        for (let x = 0; x < p.width; x += 32) p.line(x, 0, x, p.height);
+        for (let y = 0; y < p.height; y += 32) p.line(0, y, p.width, y);
+      }
+
+      function wrapLines(p, text, maxWidth) {
+        const words = text.split(' ');
+        const lines = [];
+        let current = "";
+        let startChar = 0;
+
+        for (let i = 0; i < words.length; i++) {
+          const w = words[i];
+          const test = current.length === 0 ? w : current + " " + w;
+          if (p.textWidth(test) <= maxWidth) {
+            current = test;
+          } else {
+            if (current.length > 0) {
+              lines.push({ text: current, start: startChar, end: startChar + current.length });
+              startChar += current.length + 1;
+              current = w;
+            } else {
+              lines.push({ text: w, start: startChar, end: startChar + w.length });
+              startChar += w.length + 1;
+              current = "";
+            }
+          }
+        }
+        if (current.length > 0) {
+          lines.push({ text: current, start: startChar, end: startChar + current.length });
+        }
+        return lines;
+      }
+
+      function renderChunkCard(p, x, y, w, h, ch, isHover, lines, metaBadgeH) {
+        const hasOverlap = ch.overlapLength > 0 && ch.overlapText.length > 0;
+
+        // Glow
+        if (isHover) {
+          p.drawingContext.shadowColor = hasOverlap ? 'rgba(245, 158, 11, 0.45)' : 'rgba(99, 102, 241, 0.35)';
+          p.drawingContext.shadowBlur = 18;
+        } else {
+          p.drawingContext.shadowBlur = 0;
+        }
+
+        // Body
+        p.fill(15, 23, 42, 245);
+        p.stroke(isHover ? (hasOverlap ? '#f59e0b' : '#818cf8') : (hasOverlap ? '#64748b' : '#334155'));
+        p.strokeWeight(isHover ? 1.8 : 1.1);
+        p.rect(x, y, w, h, 14);
+        p.drawingContext.shadowBlur = 0;
+
+        // Header bar
+        p.noStroke();
+        p.fill(255, 255, 255, 6);
+        p.rect(x, y, w, 34, 14, 14, 0, 0);
+
+        // Chunk ID
+        p.textFont('Inter');
+        p.textStyle(p.BOLD);
+        p.textSize(12);
+        p.textAlign(p.LEFT, p.CENTER);
+        p.fill(241, 245, 249);
+        p.text(`Chunk #${ch.id}`, x + 16, y + 17);
+
+        // Stats Header rechts
+        p.textStyle(p.NORMAL);
+        p.textSize(11);
+        p.textAlign(p.RIGHT, p.CENTER);
+        p.fill(148, 163, 184);
+        const statsStr = `${ch.totalLength} chars | ~${ch.tokensCount} tok`;
+        p.text(statsStr, x + w - (hasOverlap ? 210 : 16), y + 17);
+
+        // OVERLAP BADGE
+        if (hasOverlap) {
+          const badgeW = 195;
+          const badgeX = x + w - badgeW - 12;
+          const badgeY = y + 7;
+
+          p.fill(245, 158, 11, 240);
+          p.noStroke();
+          p.rect(badgeX, badgeY, badgeW, 20, 6);
+
+          p.fill(15, 23, 42);
+          p.textFont('Inter');
+          p.textStyle(p.BOLD);
+          p.textSize(9.5);
+          p.textAlign(p.CENTER, p.CENTER);
+          p.text(`⚡ OVERLAP: ${ch.overlapLength} ${ch.overlapUnit.toUpperCase()}`, badgeX + badgeW / 2, badgeY + 10);
+        }
+
+        let contentStartY = y + 36;
+
+        // Metadaten Breadcrumbs
+        if (ch.meta && Object.keys(ch.meta).length > 0) {
+          const metaY = contentStartY + 4;
+          p.fill(99, 102, 241, 30);
+          p.stroke(99, 102, 241, 140);
+          p.strokeWeight(1);
+          p.rect(x + 14, metaY, w - 28, 18, 5);
+
+          p.noStroke();
+          p.fill(199, 210, 254);
+          p.textFont('Inter');
+          p.textStyle(p.BOLD);
+          p.textSize(9.5);
+          p.textAlign(p.LEFT, p.CENTER);
+          const metaPairs = Object.entries(ch.meta).map(([k, v]) => `${k}: "${v}"`).join(" > ");
+          p.text(`🏷️ Header: ${metaPairs}`, x + 22, metaY + 9);
+
+          contentStartY += metaBadgeH;
+        }
+
+        // TEXT-DARSTELLUNG MIT AMBER-HIGHLIGHTER FÜR DEN OVERLAP
+        p.textFont('JetBrains Mono');
+        p.textSize(11.5);
+        p.textAlign(p.LEFT, p.TOP);
+
+        let textY = contentStartY + 8;
+        const textPadX = x + 16;
+        const overlapCharLimit = ch.overlapText.length;
+
+        for (let l = 0; l < lines.length; l++) {
+          const item = lines[l];
+          const lineStart = item.start;
+          const lineEnd = item.end;
+
+          // A) Ganze Zeile im Overlap
+          if (hasOverlap && lineEnd <= overlapCharLimit) {
+            const lineW = p.textWidth(item.text);
+
+            p.noStroke();
+            p.fill(245, 158, 11, 230);
+            p.rect(textPadX - 3, textY - 1, lineW + 6, 18, 4);
+
+            p.fill(15, 23, 42);
+            p.textStyle(p.BOLD);
+            p.text(item.text, textPadX, textY);
+            p.textStyle(p.NORMAL);
+          }
+          // B) Zeile schneidet den Übergang
+          else if (hasOverlap && lineStart < overlapCharLimit && lineEnd > overlapCharLimit) {
+            const splitIdx = overlapCharLimit - lineStart;
+            const overPart = item.text.substring(0, splitIdx);
+            const normPart = item.text.substring(splitIdx);
+            const overW = p.textWidth(overPart);
+
+            p.noStroke();
+            p.fill(245, 158, 11, 230);
+            p.rect(textPadX - 3, textY - 1, overW + 5, 18, 4);
+
+            p.fill(15, 23, 42);
+            p.textStyle(p.BOLD);
+            p.text(overPart, textPadX, textY);
+            p.textStyle(p.NORMAL);
+
+            p.fill(241, 245, 249);
+            p.text(normPart, textPadX + overW, textY);
+          }
+          // C) Neuer Text
+          else {
+            p.noStroke();
+            p.fill(226, 232, 240);
+            p.text(item.text, textPadX, textY);
+          }
+
+          textY += 20;
+        }
+      }
+
+      function drawScrollIndicator(p, maxScroll) {
+        if (maxScroll <= 0) return;
+        const barW = 5;
+        const barH = Math.max(30, (p.height / (totalCanvasHeight + 60)) * p.height);
+        const barY = (-scrollY / maxScroll) * (p.height - barH);
+
+        p.noStroke();
+        p.fill(148, 163, 184, 120);
+        p.rect(p.width - barW - 4, barY, barW, barH, 4);
+      }
+    };
+
+    new p5(sketch);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      selectStrategy('recursive');
+    });
+  </script>
+</body>
+</html>

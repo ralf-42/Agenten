@@ -94,6 +94,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | Thema        | Beschreibung                                  | Link                                                                |
 | ------------ | --------------------------------------------- | ------------------------------------------------------------------- |
 | **KI-Agent** | Visualisierung eines LLM-basierten KI-Agenten | [KI_Agenten]({{ '/visualisierungen/ki_agenten/' | relative_url }}){:target="_blank" rel="noopener"} |
+| **KI-Agenten-Architektur** | Architektur eines LLM-Agenten mit Tool-Aufrufen und Schritt-für-Schritt-Simulation | [KI-Agenten-Architektur]({{ '/visualisierungen/ki_agent_architektur/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer]({{ '/visualisierungen/langgraph_explainer/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Trimming und Summary** | Context-Management-Strategien (Trimming, Summary) für LangGraph Memory | [Trimming und Summary]({{ '/visualisierungen/trimming_summary/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (M17) | [DSPy]({{ '/visualisierungen/prompt_dspy/' | relative_url }}){:target="_blank" rel="noopener"} |
@@ -181,8 +182,8 @@ Eigenständige HTML-Visualisierungen, die direkt aus dem Kursverzeichnis `visual
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Entwickler mit Interaktive Visualisierungen? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
+| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}){:target="_blank" rel="noopener"} | Wo starte ich als Entwickler mit Interaktive Visualisierungen? |
+| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}){:target="_blank" rel="noopener"} | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
 
 ---
 

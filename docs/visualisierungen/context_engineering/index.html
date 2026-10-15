@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context Engineering für KI-Agenten</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+    .wrapper {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 8px 12px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      background: #0b1329;
+      border-color: #1e3a8a;
+    }
+    .nav-step-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .nav-step-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* Canvas Frame */
+    #canvas-container {
+      width: 100%;
+      background: #020617;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Interactive Panels */
+    .page-panel {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .page-panel.active {
+      display: flex;
+    }
+
+    /* Page 1 Details Grid */
+    .grid-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 14px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.1s;
+    }
+    .info-card:hover {
+      border-color: var(--accent);
+    }
+    .info-card.selected {
+      border-color: var(--accent);
+      background: #172554;
+    }
+    .info-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Page 2 Failure Controls */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      min-height: 52px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 6px;
+    }
+    button.action-btn {
+      flex: 1;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-trigger {
+      background: #334155;
+      color: #f8fafc;
+    }
+    .btn-trigger:hover {
+      background: #475569;
+    }
+    .btn-fix {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    .btn-fix:hover {
+      background: var(--success);
+      color: white;
+    }
+    .btn-reset {
+      background: #475569;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .btn-reset:hover {
+      background: #64748b;
+    }
+
+    /* Erklärungsboxen unterhalb */
+    .explanation-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    @media (max-width: 768px) {
+      .explanation-section {
+        grid-template-columns: 1fr;
+      }
+    }
+    .explain-card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .explain-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .explain-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .explain-card strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Top Nav -->
+    <nav class="nav-bar">
+      <div class="nav-tabs">
+        <button id="tab-btn-1" class="tab-btn active" onclick="switchPage(1)">1. Aufbau des Kontext-Fensters</button>
+        <button id="tab-btn-2" class="tab-btn" onclick="switchPage(2)">2. Die 4 Failure Modes</button>
+      </div>
+      <button id="next-page-btn" class="nav-step-btn" onclick="switchPage(2)">
+        Weiter zu Seite 2 &rarr;
+      </button>
+    </nav>
+
+    <!-- Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- SEITE 1: AUFBAU DES KONTEXT-FENSTERS -->
+    <div id="page-1" class="page-panel active">
+      <div class="grid-info">
+        <div class="info-card" onclick="selectSegment(0)" id="card-seg-0">
+          <h4><span style="color:#38bdf8;">■</span> 1. System Prompt</h4>
+          <p>Grundlegende Verhaltensregeln, Rolle und Systemgrenzen des Agenten. Liegt fest am Beginn des Fensters.</p>
+        </div>
+        <div class="info-card" onclick="selectSegment(1)" id="card-seg-1">
+          <h4><span style="color:#06b6d4;">■</span> 2. User Prompt (Agent Task)</h4>
+          <p>Der konkrete Arbeitsauftrag des Benutzers (oft nur wenige Zeilen, aber die wichtigste Vorgabe).</p>
+        </div>
+        <div class="info-card" onclick="selectSegment(2)" id="card-seg-2">
+          <h4><span style="color:#818cf8;">■</span> 3. Project Docs (z.B. agents.md)</h4>
+          <p>Projekt-Konventionen, Verzeichnisstrukturen und Build-Anweisungen aus dem Dateisystem.</p>
+        </div>
+        <div class="info-card" onclick="selectSegment(3)" id="card-seg-3">
+          <h4><span style="color:#f472b6;">■</span> 4. Tool Definitions</h4>
+          <p>JSON/Schema-Definitionen aller Schnittstellen (Bash, DB, Git etc.), die das Modell aufrufen kann.</p>
+        </div>
+        <div class="info-card" onclick="selectSegment(4)" id="card-seg-4">
+          <h4><span style="color:#fbbf24;">■</span> 5. Message History</h4>
+          <p>Chronologischer Schritt-für-Schritt-Verlauf aller bisherigen Aktionen und Agenten-Gedanken.</p>
+        </div>
+        <div class="info-card" onclick="selectSegment(5)" id="card-seg-5">
+          <h4><span style="color:#94a3b8;">■</span> 6. Tool Results & Dumps</h4>
+          <p>Große Ausgaben wie Dateiinhalte, Log-Dumps und Testergebnisse. Belegt oft den größten Teil des Speichers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEITE 2: DIE 4 FAILURE MODES -->
+    <div id="page-2" class="page-panel">
+      <div class="controls-grid">
+        <!-- Poisoning -->
+        <div class="card">
+          <h3>☠️ 1. Poisoning</h3>
+          <p>Ein falscher Fakt dringt ein (z. B. fehlerhafte Notiz) und wird als unverrückbare Wahrheit weitergeführt.</p>
+          <div class="btn-group">
+            <button class="action-btn btn-trigger" onclick="injectFailure('poison')">Fehler simulieren</button>
+            <button class="action-btn btn-fix" onclick="applyFix('validate')">Fix: Validate</button>
+          </div>
+        </div>
+
+        <!-- Distraction -->
+        <div class="card">
+          <h3>🌀 2. Distraction</h3>
+          <p>Ein überlanger Verlauf dominiert das Attention-Budget: Das Modell verfällt in alte Handlungsmuster.</p>
+          <div class="btn-group">
+            <button class="action-btn btn-trigger" onclick="injectFailure('distract')">Fehler simulieren</button>
+            <button class="action-btn btn-fix" onclick="applyFix('compact')">Fix: Compact</button>
+          </div>
+        </div>
+
+        <!-- Confusion -->
+        <div class="card">
+          <h3>🧰 3. Confusion</h3>
+          <p>Zu viele Werkzeug-Definitionen (z. B. 46 statt 19) überfordern die Auswahlentscheidung des Modells.</p>
+          <div class="btn-group">
+            <button class="action-btn btn-trigger" onclick="injectFailure('confuse')">Fehler simulieren</button>
+            <button class="action-btn btn-fix" onclick="applyFix('curate')">Fix: Curate</button>
+          </div>
+        </div>
+
+        <!-- Clash -->
+        <div class="card">
+          <h3>⚡ 4. Clash</h3>
+          <p>Widersprüchliche Aussagen (alt vs. korrigiert) stehen gleichzeitig im Fenster – das Modell irrt umher.</p>
+          <div class="btn-group">
+            <button class="action-btn btn-trigger" onclick="injectFailure('clash')">Fehler simulieren</button>
+            <button class="action-btn btn-fix" onclick="applyFix('prune')">Fix: Prune</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-reset" onclick="resetState()">Standard-Zustand wiederherstellen</button>
+    </div>
+
+    <!-- PRÄGNANTE ERKLÄRUNGEN UNTERHALB DER VISUALISIERUNG -->
+    <div class="explanation-section">
+      <div class="explain-card">
+        <h4><span style="color: var(--accent);">📊</span> Attention Budget</h4>
+        <p>
+          Aufmerksamkeit ist im Transformer eine <strong>endliche Ressource</strong> (Summe der Softmax-Gewichte = 100&nbsp;%). Jedes zusätzliche Token konkurriert mit allen anderen. Wird das Fenster mit Logs und langen Verläufen überfüllt, verdünnt sich die Aufmerksamkeit (<strong>Attention Dilution / Context Rot</strong>) – die Zuverlässigkeit des Modells sinkt rapide.
+        </p>
+      </div>
+      <div class="explain-card">
+        <h4><span style="color: var(--danger);">📉</span> Lost-in-the-Middle-Effekt</h4>
+        <p>
+          Die Aufmerksamkeit verteilt sich nicht gleichmäßig: Tokens am <strong>Anfang</strong> (Primacy: System-Prompt) und am <strong>Ende</strong> (Recency: letzte Aktionen) werden stark fokussiert. In der <strong>Mitte des Fensters bricht die Aufmerksamkeit ein</strong> (U-Kurve) – dort vergrabene Regeln, Notizen oder Testergebnisse werden vom Modell am leichtesten übersehen oder ignoriert.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    let selectedSegmentIndex = null;
+
+    // Standard-Bestandteile
+    const defaultSegments = [
+      { name: "System Prompt", tokens: 250, color: "#38bdf8", status: "ok" },
+      { name: "Agent Task", tokens: 120, color: "#06b6d4", status: "ok" },
+      { name: "Project Docs", tokens: 450, color: "#818cf8", status: "ok" },
+      { name: "Tool Definitions", tokens: 380, color: "#f472b6", status: "ok" },
+      { name: "Message History", tokens: 600, color: "#fbbf24", status: "ok" },
+      { name: "Tool Results & Dumps", tokens: 800, color: "#94a3b8", status: "ok" }
+    ];
+
+    let segments = JSON.parse(JSON.stringify(defaultSegments));
+    let statusMessage = "Regulärer Zustand: Das Kontext-Fenster ist optimal ausbalanciert.";
+    let statusType = "normal";
+
+    function setup() {
+      let canvas = createCanvas(940, 390);
+      canvas.parent('canvas-container');
+      textFont('sans-serif');
+    }
+
+    function draw() {
+      background(15, 23, 42);
+
+      let totalTokens = segments.reduce((sum, s) => sum + s.tokens, 0);
+      let maxContextCapacity = 4500;
+
+      // Header-Titel
+      fill(248, 250, 252);
+      textSize(15);
+      textStyle(BOLD);
+      if (currentPage === 1) {
+        text("Zusammensetzung des Kontext-Fensters (" + totalTokens + " Tokens belegt)", 30, 34);
+      } else {
+        text("Context Rot & Failure Mode Simulation (" + totalTokens + " / " + maxContextCapacity + " Tokens)", 30, 34);
+      }
+
+      // Statuszeile
+      textStyle(NORMAL);
+      textSize(13);
+      if (statusType === "error") fill(239, 68, 68);
+      else if (statusType === "fixed") fill(16, 185, 129);
+      else fill(148, 163, 184);
+
+      if (currentPage === 1) {
+        text("Klicke auf ein Segment oder eine Karte unten, um Details anzuzeigen.", 30, 56);
+      } else {
+        text(statusMessage, 30, 56);
+      }
+
+      // Hauptbalken (Kontextfenster)
+      let barX = 30;
+      let barY = 78;
+      let barW = width - 60;
+      let barH = 50;
+
+      // Hintergrundrahmen
+      noFill();
+      stroke(51, 65, 85);
+      strokeWeight(2);
+      rect(barX, barY, barW, barH, 8);
+
+      // Segmente im Balken zeichnen
+      let currentX = barX;
+      noStroke();
+      for (let i = 0; i < segments.length; i++) {
+        let s = segments[i];
+        let segW = (s.tokens / maxContextCapacity) * barW;
+
+        if (s.status === "poisoned") fill(239, 68, 68);
+        else if (s.status === "clashing") fill(249, 115, 22);
+        else if (s.status === "confusing") fill(236, 72, 153);
+        else fill(s.color);
+
+        rect(currentX, barY, segW, barH);
+
+        // Hervorhebung bei Auswahl (Seite 1)
+        if (currentPage === 1 && selectedSegmentIndex === i) {
+          stroke(255);
+          strokeWeight(2);
+          noFill();
+          rect(currentX, barY, segW, barH, 4);
+          noStroke();
+        }
+
+        currentX += segW;
+      }
+
+      if (currentPage === 1) {
+        drawPage1View(barX, barY + barH + 32, barW);
+      } else {
+        drawPage2View(barX, barY + barH + 28, barW, totalTokens);
+      }
+    }
+
+    // Seite 1: Legende mit sicherem 3-Spalten-Grid (kein Überlappen)
+    function drawPage1View(x, y, w) {
+      fill(203, 213, 225);
+      textSize(12);
+      textStyle(BOLD);
+      text("Übersicht der Segmente im Token-Stream:", x, y);
+
+      let cols = 3;
+      let colWidth = w / cols;
+      let startY = y + 22;
+
+      textSize(11);
+      textStyle(NORMAL);
+
+      for (let i = 0; i < segments.length; i++) {
+        let s = segments[i];
+        let col = i % cols;
+        let row = Math.floor(i / cols);
+
+        let itemX = x + col * colWidth;
+        let itemY = startY + row * 34;
+
+        fill(s.color);
+        rect(itemX, itemY, 12, 12, 3);
+
+        fill(226, 232, 240);
+        text(s.name, itemX + 18, itemY + 10);
+        fill(148, 163, 184);
+        text(s.tokens + " Tokens", itemX + 18, itemY + 23);
+      }
+    }
+
+    // Seite 2: Verstärkte "Lost in the Middle"-U-Kurve mit Beschriftungen & Gefahrenzone
+    function drawPage2View(x, y, w, tokens) {
+      let baseY = y + 80;
+
+      fill(203, 213, 225);
+      textSize(12);
+      textStyle(BOLD);
+      text("Attention Density & 'Lost in the Middle'-Effekt", x, y);
+
+      let rotFactor = constrain(map(tokens, 1500, 4500, 1.0, 0.28), 0.25, 1.0);
+
+      fill(56, 189, 248);
+      textSize(12);
+      text("Effektive Attention-Stärke: " + Math.round(rotFactor * 100) + "%", x + w - 240, y);
+
+      // Schattierter Gefahrenbereich in der Mitte
+      noStroke();
+      fill(239, 68, 68, 28);
+      rect(x + w * 0.25, y + 12, w * 0.5, baseY - (y + 12), 6);
+
+      stroke(71, 85, 105);
+      strokeWeight(1);
+      line(x, baseY, x + w, baseY);
+
+      // Starke U-Kurven-Berechnung
+      let curvePoints = [];
+      let steps = 40;
+      for (let i = 0; i <= steps; i++) {
+        let normX = i / steps;
+        let px = x + normX * w;
+
+        let dip = Math.pow(sin(normX * Math.PI), 1.6);
+        let depthMultiplier = lerp(0.55, 0.88, (1.0 - rotFactor));
+        let attentionLevel = (1.0 - depthMultiplier * dip) * rotFactor;
+
+        let py = baseY - (attentionLevel * 68);
+        curvePoints.push({ x: px, y: py, normX: normX, level: attentionLevel });
+      }
+
+      // Füllung unter der Kurve
+      noStroke();
+      fill(56, 189, 248, 35);
+      beginShape();
+      vertex(x, baseY);
+      for (let pt of curvePoints) {
+        vertex(pt.x, pt.y);
+      }
+      vertex(x + w, baseY);
+      endShape(CLOSE);
+
+      // Kurvenlinie mit Farbverlauf
+      strokeWeight(3.5);
+      noFill();
+      for (let i = 0; i < curvePoints.length - 1; i++) {
+        let pt1 = curvePoints[i];
+        let pt2 = curvePoints[i + 1];
+
+        let midFactor = sin(pt1.normX * Math.PI);
+        let r = lerp(56, 239, midFactor);
+        let g = lerp(189, 68, midFactor);
+        let b = lerp(248, 68, midFactor);
+        stroke(r, g, b);
+
+        line(pt1.x, pt1.y, pt2.x, pt2.y);
+      }
+
+      // Punkt-Marker & Beschriftungen
+      noStroke();
+      textSize(11);
+      textStyle(BOLD);
+
+      // Primacy
+      fill(56, 189, 248);
+      ellipse(curvePoints[0].x, curvePoints[0].y, 7, 7);
+      text("▲ Anfang (Primacy)", x, curvePoints[0].y - 8);
+
+      // Recency
+      ellipse(curvePoints[steps].x, curvePoints[steps].y, 7, 7);
+      textAlign(RIGHT);
+      text("Ende (Recency) ▲", x + w, curvePoints[steps].y - 8);
+      textAlign(LEFT);
+
+      // Lost in the middle
+      let midPt = curvePoints[Math.floor(steps / 2)];
+      fill(239, 68, 68);
+      ellipse(midPt.x, midPt.y, 8, 8);
+      textAlign(CENTER);
+      text("⚠️ Gefahrenzone: 'Lost in the Middle'", x + w * 0.5, midPt.y - 10);
+      textStyle(NORMAL);
+      textSize(10);
+      fill(148, 163, 184);
+      text("(Tokens werden hier am leichtesten übersehen)", x + w * 0.5, midPt.y + 18);
+      textAlign(LEFT);
+
+      // Legende (3 Spalten gegen Überlappen)
+      let startLegY = baseY + 28;
+      let cols = 3;
+      let colWidth = w / cols;
+      textSize(11);
+
+      for (let i = 0; i < segments.length; i++) {
+        let s = segments[i];
+        let col = i % cols;
+        let row = Math.floor(i / cols);
+
+        let itemX = x + col * colWidth;
+        let itemY = startLegY + row * 24;
+
+        let displayColor = s.color;
+        if (s.status === "poisoned") displayColor = "#ef4444";
+        if (s.status === "clashing") displayColor = "#f97316";
+        if (s.status === "confusing") displayColor = "#ec4899";
+
+        fill(displayColor);
+        rect(itemX, itemY, 12, 12, 2);
+
+        fill(226, 232, 240);
+        let label = s.name.length > 27 ? s.name.substring(0, 25) + "..." : s.name;
+        text(label + " (" + s.tokens + "t)", itemX + 18, itemY + 10);
+      }
+    }
+
+    function selectSegment(index) {
+      selectedSegmentIndex = index;
+      for (let i = 0; i < 6; i++) {
+        let card = document.getElementById("card-seg-" + i);
+        if (card) {
+          if (i === index) card.classList.add("selected");
+          else card.classList.remove("selected");
+        }
+      }
+    }
+
+    function injectFailure(type) {
+      resetState();
+      if (type === 'poison') {
+        segments.splice(4, 0, { name: "Poison-Notiz: 'Kein Retry nötig'", tokens: 350, color: "#ef4444", status: "poisoned" });
+        statusMessage = "Context Poisoning: Falsche Agenten-Notiz wird ungeprüft als Ground-Truth übernommen!";
+        statusType = "error";
+      } else if (type === 'distract') {
+        let hist = segments.find(s => s.name === "Message History");
+        if (hist) hist.tokens = 2200;
+        statusMessage = "Context Distraction: Gigantischer Verlauf überlagert das Ziel – Agent verfällt in Endlos-Muster.";
+        statusType = "error";
+      } else if (type === 'confuse') {
+        let tools = segments.find(s => s.name === "Tool Definitions");
+        if (tools) {
+          tools.tokens = 1450;
+          tools.name = "Tools (46 Tools definiert)";
+          tools.status = "confusing";
+        }
+        statusMessage = "Context Confusion: Zu viele Werkzeuge (46 Stück). Das Modell wählt fehlerhafte Tools aus.";
+        statusType = "error";
+      } else if (type === 'clash') {
+        segments.splice(4, 0, { name: "Alt: 'Kein Retry nötig'", tokens: 240, color: "#f97316", status: "clashing" });
+        segments.splice(5, 0, { name: "Neu: 'Retry zwingend nötig'", tokens: 240, color: "#f97316", status: "clashing" });
+        statusMessage = "Context Clash: Veraltete und korrigierte Fakten stehen gleichzeitig im Kontext!";
+        statusType = "error";
+      }
+    }
+
+    function applyFix(fix) {
+      if (fix === 'validate') {
+        segments = segments.filter(s => s.status !== "poisoned");
+        statusMessage = "Fix: Validate! Fakten vor dem Festhalten getestet – fehlerhafte Notiz wurde abgefangen.";
+        statusType = "fixed";
+      } else if (fix === 'compact') {
+        let hist = segments.find(s => s.name === "Message History");
+        if (hist) {
+          hist.tokens = 280;
+          hist.name = "Message History (Summarized)";
+        }
+        statusMessage = "Fix: Compact! Verlauf komprimiert & Detailprotokolle in Dateien ausgelagert.";
+        statusType = "fixed";
+      } else if (fix === 'curate') {
+        let tools = segments.find(s => s.name.includes("Tool"));
+        if (tools) {
+          tools.tokens = 240;
+          tools.name = "Curated Tools (Nur 5 relevante)";
+          tools.status = "ok";
+        }
+        statusMessage = "Fix: Curate! Nur die für die Datenbank-Migration notwendigen Werkzeuge bereitgestellt.";
+        statusType = "fixed";
+      } else if (fix === 'prune') {
+        segments = segments.filter(s => s.status !== "clashing");
+        segments.splice(4, 0, { name: "Bereinigt: 'Retry zwingend'", tokens: 200, color: "#10b981", status: "ok" });
+        statusMessage = "Fix: Prune! Veraltete Notiz gelöscht oder Fenster mit aktuellem Status frisch aufgesetzt.";
+        statusType = "fixed";
+      }
+    }
+
+    function resetState() {
+      segments = JSON.parse(JSON.stringify(defaultSegments));
+      statusMessage = "Regulärer Zustand: Das Kontext-Fenster ist optimal ausbalanciert.";
+      statusType = "normal";
+    }
+
+    function switchPage(page) {
+      currentPage = page;
+      document.getElementById('page-1').classList.toggle('active', page === 1);
+      document.getElementById('page-2').classList.toggle('active', page === 2);
+      document.getElementById('tab-btn-1').classList.toggle('active', page === 1);
+      document.getElementById('tab-btn-2').classList.toggle('active', page === 2);
+
+      let nextBtn = document.getElementById('next-page-btn');
+      if (page === 1) {
+        nextBtn.innerHTML = "Weiter zu Seite 2 &rarr;";
+        nextBtn.onclick = () => switchPage(2);
+      } else {
+        nextBtn.innerHTML = "&larr; Zurück zu Seite 1";
+        nextBtn.onclick = () => switchPage(1);
+      }
+      resetState();
+    }
+  </script>
+</body>
+</html>

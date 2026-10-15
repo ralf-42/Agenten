@@ -133,7 +133,7 @@ Retrieval Augmented Generation - Wissensabruf und Anreicherung
 | **Embedding Projector**  | TensorFlow Embedding-Visualisierung (PCA, t-SNE, UMAP) | [TF Projector](https://projector.tensorflow.org/?hl=de)                                     |
 | **Tokenizer**            | OpenAI Tokenizer - Token-Visualisierung                | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |
 | **Tokenizer Playground** | Token-Visualisierung mit Kontextfenster                | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |
-| **ChunkViz**             | Text-Chunking Visualisierung für RAG                   | [ChunkViz](https://chunkviz.up.railway.app/)                                                |
+| **RAG Chunking Explorer** | Chunking-Strategien für RAG im Vergleich | [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer/' | relative_url }}){:target="_blank" rel="noopener"} |
 
 ---
 

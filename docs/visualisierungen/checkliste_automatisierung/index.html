@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatisierung Checkliste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .question-card {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .ko-criteria { background: linear-gradient(135deg, #ff6b6b, #ffa500); color: white; }
+        .quality { background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; }
+        .implementation { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+        .operations { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; }
+
+        .question-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .question-details {
+            background: #f8f9fa;
+            border-left: 4px solid #4facfe;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+        }
+
+        .question-details ul {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .question-details li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .rating-container {
+            margin: 30px 0;
+        }
+
+        .rating-label {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .rating-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .rating-option:hover {
+            background: rgba(79, 172, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .rating-option input {
+            margin-bottom: 8px;
+            transform: scale(1.5);
+        }
+
+        .rating-option label {
+            font-size: 0.9em;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-card {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-card.active {
+            display: block;
+        }
+
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .recommendation {
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .recommendation.excellent {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            color: white;
+        }
+
+        .recommendation.good {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .recommendation.moderate {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #333;
+        }
+
+        .recommendation.poor {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+        }
+
+        .details-breakdown {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .restart-btn {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Automatisierung Checkliste</h1>
+            <p>Schritt-für-Schritt Bewertung Ihres Automatisierungsprojekts</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Frage 1 von 15</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Question Cards -->
+            <div class="question-card active" data-question="0">
+                <div class="category-badge ko-criteria">K.O.-Kriterium</div>
+                <h2 class="question-title">1. Existenz fertiger Lösungen</h2>
+                <div class="question-details">
+                    <p><strong>Gibt es bereits eine fertige Lösung für das Problem?</strong></p>
+                    <ul>
+                        <li>Recherche nach bestehenden Tools und Skripten</li>
+                        <li>Evaluation von Open-Source-Alternativen</li>
+                        <li>Prüfung kommerzieller Lösungen</li>
+                        <li>Kosten-Nutzen-Vergleich: Eigenentwicklung vs. Kauf vs. Anpassung</li>
+                        <li>Können ähnliche Lösungen angepasst werden?</li>
+                    </ul>
+                </div>
+                <div class="rating-container">
+                    <div class="rating-label">Bewertung (1-5):</div>
+                    <div class="rating-scale">
+                        <div class="rating-option">
+                            <input type="radio" name="q0" value="1" id="q0_1">
+                            <label for="q0_1">1<br>Keine Lösung<br>verfügbar</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="q0" value="2" id="q0_2">
+                            <label for="q0_2">2<br>Teilweise<br>anpassbar</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="q0" value="3" id="q0_3">
+                            <label for="q0_3">3<br>Lösungen mit<br>Anpassungen</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="q0" value="4" id="q0_4">
+                            <label for="q0_4">4<br>Gute fertige<br>Lösungen</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="q0" value="5" id="q0_5">
+                            <label for="q0_5">5<br>Perfekte Lösung<br>existiert</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Card -->
+            <div class="result-card" id="resultCard">
+                <h2>📊 Ergebnis Ihrer Bewertung</h2>
+                <div class="score-display" id="totalScore">0 / 135</div>
+                <div class="recommendation" id="recommendation"></div>
+                <div class="details-breakdown" id="breakdown">
+                    <h3>Detailierte Bewertung:</h3>
+                    <div id="breakdownContent"></div>
+                </div>
+                <button class="btn restart-btn" onclick="restartAssessment()">Neue Bewertung starten</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Zurück</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                category: "K.O.-Kriterium",
+                categoryClass: "ko-criteria",
+                title: "1. Existenz fertiger Lösungen",
+                question: "Gibt es bereits eine fertige Lösung für das Problem?",
+                details: [
+                    "Recherche nach bestehenden Tools und Skripten",
+                    "Evaluation von Open-Source-Alternativen", 
+                    "Prüfung kommerzieller Lösungen",
+                    "Kosten-Nutzen-Vergleich: Eigenentwicklung vs. Kauf vs. Anpassung",
+                    "Können ähnliche Lösungen angepasst werden?"
+                ],
+                weight: 3,
+                labels: ["Keine Lösung<br>verfügbar", "Teilweise<br>anpassbar", "Lösungen mit<br>Anpassungen", "Gute fertige<br>Lösungen", "Perfekte Lösung<br>existiert"]
+            },
+            {
+                category: "K.O.-Kriterium",
+                categoryClass: "ko-criteria",
+                title: "2. Häufigkeit der Aufgabe",
+                question: "Wird die Aufgabe regelmäßig wiederholt?",
+                details: [
+                    "Täglich, wöchentlich, monatlich oder in anderen regelmäßigen Intervallen?",
+                    "Wie oft wird die Aufgabe voraussichtlich in der Zukunft anfallen?",
+                    "Ist die Häufigkeit stabil oder wird sie sich ändern?"
+                ],
+                weight: 3,
+                labels: ["Sehr selten<br>(< 1x/Monat)", "Selten<br>(1x/Monat)", "Regelmäßig<br>(1x/Woche)", "Häufig<br>(mehrmals/Woche)", "Sehr häufig<br>(täglich+)"]
+            },
+            {
+                category: "K.O.-Kriterium", 
+                categoryClass: "ko-criteria",
+                title: "3. Zeitaufwand",
+                question: "Ist die Aufgabe zeitintensiv, wenn sie manuell ausgeführt wird?",
+                details: [
+                    "Wie viel Zeit nimmt die manuelle Bearbeitung in Anspruch?",
+                    "Wie viele Personen sind beteiligt?",
+                    "Was sind die Opportunitätskosten der manuellen Bearbeitung?"
+                ],
+                weight: 3,
+                labels: ["< 15 Min<br>pro Vorgang", "15-60 Min<br>pro Vorgang", "1-4 Stunden<br>pro Vorgang", "4-8 Stunden<br>pro Vorgang", "> 8 Stunden<br>pro Vorgang"]
+            },
+            {
+                category: "K.O.-Kriterium",
+                categoryClass: "ko-criteria", 
+                title: "4. Kosten-Nutzen-Rechnung",
+                question: "Rechtfertigen die Einsparungen den Entwicklungsaufwand?",
+                details: [
+                    "Entwicklungskosten: Programmierung, Testing, Dokumentation",
+                    "Infrastrukturkosten: Server, Lizenzen, Cloud-Services",
+                    "Wartungskosten: Updates, Bugfixes, Monitoring",
+                    "Schulungskosten: Team-Training, Wissensvermittlung",
+                    "Erwartete Einsparungen: Zeit, Personal, Fehlerkosten",
+                    "ROI-Berechnung: Amortisationszeit der Investition"
+                ],
+                weight: 3,
+                labels: ["ROI < 0<br>(Verlust)", "ROI 0-50%<br>(Grenzwertig)", "ROI 50-150%<br>(Positiv)", "ROI 150-300%<br>(Sehr gut)", "ROI > 300%<br>(Exzellent)"]
+            },
+            {
+                category: "K.O.-Kriterium",
+                categoryClass: "ko-criteria",
+                title: "5. Technische Machbarkeit", 
+                question: "Kann die Aufgabe technisch automatisiert werden?",
+                details: [
+                    "Ist Python die beste Wahl oder gibt es bessere Alternativen?",
+                    "Sind alle benötigten Bibliotheken verfügbar und aktuell?",
+                    "Entsprechen Performance-Anforderungen den technischen Möglichkeiten?",
+                    "Gibt es unüberwindbare technische Hindernisse?"
+                ],
+                weight: 3,
+                labels: ["Unmöglich<br>umsetzbar", "Sehr schwierig<br>umsetzbar", "Aufwändig aber<br>machbar", "Gut<br>umsetzbar", "Einfach<br>umsetzbar"]
+            },
+            {
+                category: "K.O.-Kriterium",
+                categoryClass: "ko-criteria",
+                title: "6. Datenqualität und -verfügbarkeit",
+                question: "Sind die benötigten Daten strukturiert, vollständig und zuverlässig verfügbar?", 
+                details: [
+                    "Sind Datenformate konsistent und vorhersagbar?",
+                    "Sind alle Datenquellen zuverlässig erreichbar?",
+                    "Gibt es Datenqualitätsprobleme oder häufige Inkonsistenzen?",
+                    "Sind Datenschutz und Zugriffsrechte geklärt?"
+                ],
+                weight: 2,
+                labels: ["Daten fehlen<br>komplett", "Schlechte<br>Datenqualität", "Mittlere<br>Datenqualität", "Gute<br>Datenqualität", "Exzellente<br>Datenqualität"]
+            },
+            {
+                category: "K.O.-Kriterium", 
+                categoryClass: "ko-criteria",
+                title: "7. Sicherheit und Compliance",
+                question: "Werden sensible Daten verarbeitet oder Sicherheitsrichtlinien berührt?",
+                details: [
+                    "Entspricht die Lösung Datenschutzbestimmungen (DSGVO, etc.)?",
+                    "Sind Zugriffsrechte und Authentifizierung sicher implementierbar?", 
+                    "Gibt es branchenspezifische Compliance-Anforderungen?",
+                    "Sind Audit-Trails und Nachverfolgbarkeit gewährleistet?"
+                ],
+                weight: 2,
+                labels: ["Hohe Sicherheits-<br>risiken", "Einige Sicherheits-<br>bedenken", "Moderate<br>Anforderungen", "Gute Sicherheit<br>möglich", "Vollständig<br>compliant"]
+            },
+            {
+                category: "Qualitätskriterium",
+                categoryClass: "quality", 
+                title: "8. Skalierbarkeit",
+                question: "Muss die Aufgabe für eine große Datenmenge oder viele Fälle ausgeführt werden?",
+                details: [
+                    "Wächst das Datenvolumen oder die Anzahl der Fälle?",
+                    "Kann die manuelle Bearbeitung mit dem Wachstum mithalten?",
+                    "Ist die Automatisierung skalierbar konzipiert?"
+                ],
+                weight: 2,
+                labels: ["Keine<br>Skalierung nötig", "Geringes<br>Wachstum", "Moderates<br>Wachstum", "Starkes<br>Wachstum", "Exponentielles<br>Wachstum"]
+            },
+            {
+                category: "Qualitätskriterium",
+                categoryClass: "quality",
+                title: "9. Fehleranfälligkeit", 
+                question: "Sind manuelle Fehler möglich oder häufig?",
+                details: [
+                    "Wie kritisch sind Fehler bei dieser Aufgabe?",
+                    "Treten regelmäßig menschliche Fehler auf?",
+                    "Können Fehler durch Automatisierung vermieden werden?",
+                    "Ist die Datenqualität nach Automatisierung besser?"
+                ],
+                weight: 2,
+                labels: ["Keine Fehler<br>möglich", "Seltene<br>Fehler", "Gelegentliche<br>Fehler", "Häufige<br>Fehler", "Sehr kritische<br>Fehler"]
+            },
+            {
+                category: "Implementierung",
+                categoryClass: "implementation",
+                title: "10. Abhängigkeiten und Schnittstellen",
+                question: "Welche externen Systeme, APIs oder Dienste werden benötigt?", 
+                details: [
+                    "Sind alle APIs stabil und gut dokumentiert?",
+                    "Gibt es Rate-Limits oder Nutzungsbeschränkungen?",
+                    "Wie wird Authentifizierung und Autorisierung gehandhabt?",
+                    "Was passiert bei Ausfällen externer Services?", 
+                    "Sind Backup-Lösungen vorhanden?"
+                ],
+                weight: 1,
+                labels: ["Viele kritische<br>Abhängigkeiten", "Einige<br>Abhängigkeiten", "Moderate<br>Abhängigkeiten", "Wenige<br>Abhängigkeiten", "Keine externen<br>Abhängigkeiten"]
+            },
+            {
+                category: "Implementierung",
+                categoryClass: "implementation", 
+                title: "11. Mit einem einfachen Anwendungsfall starten",
+                question: "Ist es möglich, mit einem kleinen, überschaubaren Anwendungsfall zu beginnen?",
+                details: [
+                    "Kann ein Minimal Viable Product (MVP) erstellt werden?",
+                    "Gibt es einen repräsentativen Teilbereich für Tests?",
+                    "Können Erkenntnisse aus dem Pilotprojekt gesammelt werden?",
+                    "Ist eine schrittweise Erweiterung möglich?"
+                ],
+                weight: 1,
+                labels: ["Kein MVP<br>möglich", "Schwierig<br>abgrenzbar", "MVP mit<br>Aufwand", "Gutes MVP<br>möglich", "Einfaches MVP<br>möglich"]
+            },
+            {
+                category: "Implementierung",
+                categoryClass: "implementation",
+                title: "12. Stakeholder-Akzeptanz", 
+                question: "Sind alle Beteiligten mit der Automatisierung einverstanden?",
+                details: [
+                    "Gibt es Widerstände im Team oder Management?",
+                    "Bestehen Sorgen um Arbeitsplätze?",
+                    "Ist Schulungsbedarf vorhanden und eingeplant?",
+                    "Sind Change-Management-Prozesse berücksichtigt?"
+                ],
+                weight: 1,
+                labels: ["Starke<br>Widerstände", "Einige<br>Bedenken", "Neutral<br>eingestellt", "Positive<br>Einstellung", "Begeisterte<br>Unterstützung"]
+            },
+            {
+                category: "Betrieb", 
+                categoryClass: "operations",
+                title: "13. Wartung und Monitoring",
+                question: "Wer überwacht die Automatisierung und behebt Probleme?",
+                details: [
+                    "Ist ein Monitoring-System implementiert?",
+                    "Sind Logs und Alerts konfiguriert?",
+                    "Wer ist für Wartung und Updates verantwortlich?",
+                    "Gibt es dokumentierte Troubleshooting-Prozesse?",
+                    "Sind regelmäßige Reviews geplant?"
+                ],
+                weight: 1,
+                labels: ["Keine Wartung<br>geplant", "Minimale<br>Wartung", "Basis<br>Monitoring", "Gutes<br>Monitoring", "Vollständiges<br>Monitoring"]
+            },
+            {
+                category: "Betrieb",
+                categoryClass: "operations",
+                title: "14. Rollback-Strategie", 
+                question: "Was passiert, wenn die Automatisierung fehlschlägt?",
+                details: [
+                    "Gibt es einen dokumentierten Notfallplan?",
+                    "Können Änderungen rückgängig gemacht werden?",
+                    "Sind manuelle Backup-Prozesse vorhanden?",
+                    "Ist die Datenintegrität bei Fehlern gewährleistet?",
+                    "Gibt es Kommunikationspläne für Ausfälle?"
+                ],
+                weight: 1,
+                labels: ["Keine Rollback-<br>Strategie", "Basis<br>Rollback", "Guter<br>Rollback-Plan", "Umfassender<br>Rollback", "Perfekte<br>Ausfallsicherheit"]
+            },
+            {
+                category: "Betrieb",
+                categoryClass: "operations", 
+                title: "15. Einmaliger Aufwand vs. Langfristiger Nutzen",
+                question: "Ist das Verhältnis von Entwicklungsaufwand zu langfristigem Nutzen positiv?",
+                details: [
+                    "Bei seltenen Aufgaben: Ist manuelle Bearbeitung effizienter?",
+                    "Langfristige Perspektive: Entwickelt sich die Aufgabe weiter?",
+                    "Lerneffekte: Bringt die Automatisierung zusätzlichen Wert?",
+                    "Übertragbarkeit: Kann die Lösung für andere Bereiche genutzt werden?"
+                ],
+                weight: 1,
+                labels: ["Negativer<br>Langzeitnutzen", "Geringer<br>Langzeitnutzen", "Ausgeglichenes<br>Verhältnis", "Guter<br>Langzeitnutzen", "Exzellenter<br>Langzeitnutzen"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(0);
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Frage ${currentQuestion + 1} von ${questions.length}`;
+        }
+
+        function createQuestionCard(index) {
+            const question = questions[index];
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.setAttribute('data-question', index);
+            
+            card.innerHTML = `
+                <div class="category-badge ${question.categoryClass}">${question.category}</div>
+                <h2 class="question-title">${question.title}</h2>
+                <div class="question-details">
+                    <p><strong>${question.question}</strong></p>
+                    <ul>
+                        ${question.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="rating-container">
+                    <div class="rating-label">Bewертung (1-5):</div>
+                    <div class="rating-scale">
+                        ${question.labels.map((label, i) => `
+                            <div class="rating-option">
+                                <input type="radio" name="q${index}" value="${i + 1}" id="q${index}_${i + 1}">
+                                <label for="q${index}_${i + 1}">${i + 1}<br>${label}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function initializeQuestions() {
+            const content = document.querySelector('.content');
+            const firstCard = content.querySelector('.question-card');
+            
+            // Create all question cards
+            for (let i = 1; i < questions.length; i++) {
+                const card = createQuestionCard(i);
+                content.insertBefore(card, content.querySelector('.result-card'));
+            }
+            
+            // Add event listeners to all radio buttons
+            questions.forEach((_, index) => {
+                const radios = document.querySelectorAll(`input[name="q${index}"]`);
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        answers[index] = parseInt(this.value);
+                        updateNavigationButtons();
+                    });
+                });
+            });
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Auswertung';
+                nextBtn.disabled = answers[currentQuestion] === 0;
+            } else {
+                nextBtn.textContent = 'Weiter';
+                nextBtn.disabled = answers[currentQuestion] === 0;
+            }
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            const currentCard = document.querySelector(`[data-question="${index}"]`);
+            if (currentCard) {
+                currentCard.classList.add('active');
+            }
+            
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            let maxScore = 0;
+            
+            questions.forEach((question, index) => {
+                const score = answers[index] * question.weight;
+                totalScore += score;
+                maxScore += 5 * question.weight;
+            });
+            
+            return { totalScore, maxScore };
+        }
+
+        function getRecommendation(score, maxScore) {
+            const percentage = (score / maxScore) * 100;
+            
+            if (percentage >= 74) {
+                return {
+                    class: 'excellent',
+                    title: '🚀 Automatisierung dringend empfohlen!',
+                    text: 'Ihr Projekt erfüllt alle wichtigen Kriterien. Die Automatisierung wird sich definitiv lohnen und sollte prioritär umgesetzt werden.'
+                };
+            } else if (percentage >= 52) {
+                return {
+                    class: 'good',
+                    title: '✅ Automatisierung sinnvoll',
+                    text: 'Ihr Projekt hat gute Erfolgsaussichten. Prüfen Sie die schwächeren Bereiche und starten Sie mit einem MVP.'
+                };
+            } else if (percentage >= 37) {
+                return {
+                    class: 'moderate',
+                    title: '⚠️ Grenzfall - MVP testen',
+                    text: 'Das Projekt ist grenzwertig. Starten Sie mit einem kleinen Prototyp um die Machbarkeit zu validieren.'
+                };
+            } else {
+                return {
+                    class: 'poor',
+                    title: '❌ Automatisierung nicht empfohlen',
+                    text: 'Das Projekt erfüllt zu wenige Kriterien. Überdenken Sie die Anforderungen oder bleiben Sie bei manueller Bearbeitung.'
+                };
+            }
+        }
+
+        function showResults() {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            const { totalScore, maxScore } = calculateScore();
+            const recommendation = getRecommendation(totalScore, maxScore);
+            
+            document.getElementById('totalScore').textContent = `${totalScore} / ${maxScore}`;
+            
+            const recElement = document.getElementById('recommendation');
+            recElement.className = `recommendation ${recommendation.class}`;
+            recElement.innerHTML = `
+                <div style="font-size: 1.3em; margin-bottom: 10px;">${recommendation.title}</div>
+                <div style="font-size: 1em; font-weight: normal;">${recommendation.text}</div>
+            `;
+            
+            // Create breakdown
+            const breakdownContent = document.getElementById('breakdownContent');
+            breakdownContent.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const score = answers[index] * question.weight;
+                const maxQuestionScore = 5 * question.weight;
+                
+                const item = document.createElement('div');
+                item.className = 'breakdown-item';
+                item.innerHTML = `
+                    <span>${question.title}</span>
+                    <span><strong>${score} / ${maxQuestionScore}</strong> (${answers[index]}/5 × ${question.weight})</span>
+                `;
+                breakdownContent.appendChild(item);
+            });
+            
+            document.getElementById('resultCard').classList.add('active');
+            document.querySelector('.navigation').style.display = 'none';
+        }
+
+        function restartAssessment() {
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(0);
+            
+            // Reset all radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide results and show first question
+            document.getElementById('resultCard').classList.remove('active');
+            document.querySelector('.navigation').style.display = 'flex';
+            showQuestion(0);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeQuestions();
+            updateNavigationButtons();
+        });
+    </script>
+</body>
+</html>
+            

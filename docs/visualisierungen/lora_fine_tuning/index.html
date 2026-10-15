@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoRA Fine-Tuning Visualisierung</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-card: #111827;
+            --bg-matrix: #1a2332;
+            --frozen-color: #3b82f6;
+            --trainable-color: #10b981;
+            --rank-color: #f59e0b;
+            --din-color: #a855f7;
+            --dout-color: #ec4899;
+            --layers-color: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-dim: #64748b;
+            --grid-line: rgba(59, 130, 246, 0.1);
+            --border-subtle: rgba(148, 163, 184, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .blueprint-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--frozen-color), var(--trainable-color), var(--rank-color));
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary), var(--frozen-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Model Presets */
+        .model-presets {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .model-btn {
+            background: var(--bg-matrix);
+            border: 2px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .model-btn:hover {
+            border-color: var(--trainable-color);
+            color: var(--text-primary);
+        }
+
+        .model-btn.active {
+            border-color: var(--trainable-color);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--trainable-color);
+        }
+
+        /* Controls Grid */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .controls-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 500px) {
+            .controls-grid { grid-template-columns: 1fr; }
+        }
+
+        .control-box {
+            background: var(--bg-matrix);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid transparent;
+        }
+
+        .control-box.rank-control { border-color: var(--rank-color); }
+        .control-box.dim-control { border-color: var(--din-color); }
+        .control-box.layers-control { border-color: var(--layers-color); }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .control-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .rank-control .control-label { color: var(--rank-color); }
+        .dim-control .control-label { color: var(--din-color); }
+        .layers-control .control-label { color: var(--layers-color); }
+
+        .control-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .rank-control .control-value { color: var(--rank-color); }
+        .dim-control .control-value { color: var(--din-color); }
+        .layers-control .control-value { color: var(--layers-color); }
+
+        .control-desc {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 4px;
+            background: var(--bg-dark);
+            appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--trainable-color);
+        }
+
+        .rank-control input::-webkit-slider-thumb { background: var(--rank-color); }
+        .dim-control input::-webkit-slider-thumb { background: var(--din-color); }
+        .layers-control input::-webkit-slider-thumb { background: var(--layers-color); }
+
+        /* Target Modules */
+        .target-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .target-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .target-explanation {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .transformer-block-diagram {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .block-section {
+            flex: 1;
+            min-width: 200px;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 1rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .module-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .module-box {
+            background: var(--bg-matrix);
+            border: 2px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 60px;
+        }
+
+        .module-box:hover {
+            border-color: var(--trainable-color);
+            transform: translateY(-2px);
+        }
+
+        .module-box.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--trainable-color);
+        }
+
+        .module-box.active::after {
+            content: ' 🔥';
+            font-size: 0.7rem;
+        }
+
+        .module-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .module-box.active .module-name {
+            color: var(--trainable-color);
+        }
+
+        .module-desc {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-top: 0.2rem;
+        }
+
+        .target-note {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .layer-multiply-note {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--layers-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .multiply-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--layers-color);
+            background: var(--bg-dark);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .layer-multiply-note strong {
+            color: var(--layers-color);
+        }
+
+        .target-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .target-btn {
+            background: var(--bg-dark);
+            border: 2px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .target-btn:hover {
+            border-color: var(--trainable-color);
+        }
+
+        .target-btn.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--trainable-color);
+            color: var(--trainable-color);
+        }
+
+        .target-btn .size {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        .target-btn.active .size {
+            color: var(--trainable-color);
+            opacity: 0.7;
+        }
+
+        /* Single Matrix Explanation */
+        .matrix-explanation {
+            background: var(--bg-matrix);
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .matrix-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding: 1rem 0;
+        }
+
+        .matrix-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.6rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            min-width: 80px;
+        }
+
+        .matrix-box.frozen-box { border: 2px solid var(--frozen-color); }
+        .matrix-box.trainable-box { border: 2px solid var(--trainable-color); }
+
+        .matrix-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .frozen-box .matrix-label { color: var(--frozen-color); }
+        .trainable-box .matrix-label { color: var(--trainable-color); }
+
+        .matrix-visual {
+            display: grid;
+            gap: 2px;
+            margin: 0.4rem 0;
+        }
+
+        .matrix-cell {
+            width: 6px;
+            height: 6px;
+            border-radius: 1px;
+        }
+
+        .matrix-cell.frozen { background: var(--frozen-color); opacity: 0.7; }
+        .matrix-cell.trainable { background: var(--trainable-color); animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .matrix-dims {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .operator {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            color: var(--text-dim);
+        }
+
+        /* Full Calculation */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 700px) {
+            .calc-grid { grid-template-columns: 1fr; }
+        }
+
+        .calc-section {
+            background: var(--bg-matrix);
+            padding: 1.25rem;
+            border-radius: 10px;
+        }
+
+        .calc-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calc-title.frozen { color: var(--frozen-color); }
+        .calc-title.trainable { color: var(--trainable-color); }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .calc-row:last-child {
+            border-bottom: none;
+            padding-top: 0.6rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .calc-formula { color: var(--text-secondary); }
+        .calc-result { color: var(--text-primary); }
+
+        .calc-section.trainable .calc-row:last-child .calc-result {
+            color: var(--trainable-color);
+        }
+
+        /* Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+
+        .summary-box {
+            background: var(--bg-matrix);
+            padding: 1.25rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .summary-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-box.frozen .summary-value { color: var(--frozen-color); }
+        .summary-box.lora .summary-value { color: var(--trainable-color); }
+        .summary-box.savings .summary-value { color: var(--rank-color); }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Comparison Bar */
+        .comparison-bar {
+            margin-top: 1.5rem;
+        }
+
+        .bar-row {
+            margin-bottom: 0.75rem;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .bar-container {
+            height: 24px;
+            background: var(--bg-matrix);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: white;
+            transition: width 0.4s ease;
+        }
+
+        .bar-fill.frozen { background: var(--frozen-color); }
+        .bar-fill.lora { background: var(--trainable-color); }
+
+        /* Transformer Diagram */
+        .transformer-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .block {
+            background: var(--bg-dark);
+            border: 2px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .block.has-lora {
+            border-color: var(--trainable-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .block-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .block.has-lora .block-title { color: var(--trainable-color); }
+
+        .block-sub {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .multiply-sign {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--layers-color);
+            font-weight: bold;
+        }
+
+        .layer-count {
+            background: var(--layers-color);
+            color: var(--bg-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .info-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            background: var(--bg-matrix);
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 3px solid var(--trainable-color);
+        }
+
+        /* Selection Guide Styles */
+        .selection-guide {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .guide-intro {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .guide-grid { grid-template-columns: 1fr; }
+        }
+
+        .guide-section {
+            background: var(--bg-matrix);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .guide-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .guide-icon {
+            font-size: 1.2rem;
+        }
+
+        .guide-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Module Explanation */
+        .module-explanation {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .module-exp-item {
+            padding: 0.75rem;
+            border-radius: 6px;
+            background: var(--bg-dark);
+        }
+
+        .attention-exp {
+            border-left: 3px solid var(--frozen-color);
+        }
+
+        .ffn-exp {
+            border-left: 3px solid var(--din-color);
+        }
+
+        .exp-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
+        }
+
+        .exp-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .exp-desc strong {
+            color: var(--text-primary);
+        }
+
+        /* Task Tiers */
+        .task-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .task-tier {
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            background: var(--bg-dark);
+        }
+
+        .tier-simple { border-left: 3px solid var(--trainable-color); }
+        .tier-medium { border-left: 3px solid var(--rank-color); }
+        .tier-complex { border-left: 3px solid var(--dout-color); }
+
+        .tier-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .tier-simple .tier-label { color: var(--trainable-color); }
+        .tier-medium .tier-label { color: var(--rank-color); }
+        .tier-complex .tier-label { color: var(--dout-color); }
+
+        .tier-examples {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 0.3rem;
+        }
+
+        .tier-recommendation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Findings */
+        .findings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+        }
+
+        .finding strong {
+            color: var(--text-primary);
+        }
+
+        .finding-badge {
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .finding-badge.good {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--trainable-color);
+        }
+
+        .finding-badge.neutral {
+            background: rgba(148, 163, 184, 0.2);
+            color: var(--text-secondary);
+        }
+
+        /* Decision Flow */
+        .decision-flow {
+            background: var(--bg-matrix);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .flow-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .flow-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flow-step.start {
+            background: var(--bg-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-subtle);
+        }
+
+        .flow-question {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .flow-branches {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        @media (max-width: 700px) {
+            .flow-branches { grid-template-columns: 1fr; }
+        }
+
+        .flow-branch {
+            background: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .branch-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .branch-arrow {
+            color: var(--trainable-color);
+            font-size: 1.2rem;
+            margin: 0.25rem 0;
+        }
+
+        .branch-answer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--trainable-color);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .branch-detail {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        /* Practical Tips */
+        .practical-tips {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--trainable-color);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .tips-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--trainable-color);
+        }
+
+        .tips-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .tip-step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            background: var(--trainable-color);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            color: var(--text-secondary);
+        }
+
+        .step-text strong {
+            color: var(--text-primary);
+        }
+
+        /* Tradeoff Note */
+        .tradeoff-note {
+            background: var(--bg-matrix);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .tradeoff-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .tradeoff-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tradeoff-item {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            align-items: baseline;
+        }
+
+        .tradeoff-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .tradeoff-effect {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="blueprint-grid"></div>
+    
+    <div class="container">
+        <header>
+            <h1>LoRA Fine-Tuning</h1>
+            <p class="subtitle">Low-Rank Adaptation – Parameter-Berechnung für das gesamte Modell</p>
+        </header>
+
+        <!-- Model Selection -->
+        <div class="card">
+            <div class="card-title">① Modell wählen</div>
+            
+            <div class="model-presets">
+                <button class="model-btn" onclick="setModel('bert')">BERT-base</button>
+                <button class="model-btn" onclick="setModel('bert-large')">BERT-large</button>
+                <button class="model-btn" onclick="setModel('gpt2')">GPT-2</button>
+                <button class="model-btn" onclick="setModel('llama-7b')">LLaMA-7B</button>
+                <button class="model-btn" onclick="setModel('llama-13b')">LLaMA-13B</button>
+                <button class="model-btn active" onclick="setModel('custom')">Custom</button>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-box dim-control">
+                    <div class="control-header">
+                        <span class="control-label">d_model</span>
+                        <span class="control-value" id="dim-value">768</span>
+                    </div>
+                    <div class="control-desc">Hidden Size</div>
+                    <input type="range" id="dim-slider" min="256" max="8192" step="256" value="768">
+                </div>
+
+                <div class="control-box layers-control">
+                    <div class="control-header">
+                        <span class="control-label">Layers</span>
+                        <span class="control-value" id="layers-value">12</span>
+                    </div>
+                    <div class="control-desc">Transformer-Blöcke</div>
+                    <input type="range" id="layers-slider" min="1" max="80" value="12">
+                </div>
+
+                <div class="control-box rank-control">
+                    <div class="control-header">
+                        <span class="control-label">Rank (r)</span>
+                        <span class="control-value" id="rank-value">8</span>
+                    </div>
+                    <div class="control-desc">LoRA-Rang</div>
+                    <input type="range" id="rank-slider" min="1" max="128" value="8">
+                </div>
+
+                <div class="control-box dim-control">
+                    <div class="control-header">
+                        <span class="control-label">FFN-Mult</span>
+                        <span class="control-value" id="ffn-value">4</span>
+                    </div>
+                    <div class="control-desc">FFN = d_model × Mult</div>
+                    <input type="range" id="ffn-slider" min="1" max="8" step="0.5" value="4">
+                </div>
+            </div>
+
+            <!-- Target Modules -->
+            <div class="target-section">
+                <div class="target-title">🎯 Target Modules – Wo werden LoRA-Adapter eingefügt?</div>
+                
+                <div class="target-explanation">
+                    <p>Ein Transformer-Layer besteht aus mehreren Gewichtsmatrizen. Du wählst, welche davon LoRA-Adapter bekommen:</p>
+                </div>
+
+                <div class="transformer-block-diagram">
+                    <div class="block-section attention-section">
+                        <div class="section-label">Self-Attention</div>
+                        <div class="module-row">
+                            <div class="module-box" id="module-q">
+                                <div class="module-name">W<sub>Q</sub></div>
+                                <div class="module-desc" id="desc-q">Query</div>
+                            </div>
+                            <div class="module-box" id="module-k">
+                                <div class="module-name">W<sub>K</sub></div>
+                                <div class="module-desc" id="desc-k">Key</div>
+                            </div>
+                            <div class="module-box" id="module-v">
+                                <div class="module-name">W<sub>V</sub></div>
+                                <div class="module-desc" id="desc-v">Value</div>
+                            </div>
+                            <div class="module-box" id="module-o">
+                                <div class="module-name">W<sub>O</sub></div>
+                                <div class="module-desc" id="desc-o">Output</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-section ffn-section">
+                        <div class="section-label">Feed-Forward (MLP)</div>
+                        <div class="module-row">
+                            <div class="module-box" id="module-ffn_up">
+                                <div class="module-name">W<sub>up</sub></div>
+                                <div class="module-desc" id="desc-ffn_up">d → 4d</div>
+                            </div>
+                            <div class="module-box" id="module-ffn_down">
+                                <div class="module-name">W<sub>down</sub></div>
+                                <div class="module-desc" id="desc-ffn_down">4d → d</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="target-note">
+                    ↑ Klicke auf die Module um LoRA-Adapter hinzuzufügen/zu entfernen
+                </div>
+
+                <div class="layer-multiply-note">
+                    <span class="multiply-icon">×</span>
+                    <span>Diese Struktur wiederholt sich <strong id="layer-repeat">12</strong> mal (= Anzahl Layer)</span>
+                </div>
+
+                <div class="target-grid" style="display: none;">
+                    <button class="target-btn active" data-target="q" onclick="toggleTarget('q')">
+                        Q<span class="size" id="q-size">d × d</span>
+                    </button>
+                    <button class="target-btn" data-target="k" onclick="toggleTarget('k')">
+                        K<span class="size" id="k-size">d × d</span>
+                    </button>
+                    <button class="target-btn active" data-target="v" onclick="toggleTarget('v')">
+                        V<span class="size" id="v-size">d × d</span>
+                    </button>
+                    <button class="target-btn" data-target="o" onclick="toggleTarget('o')">
+                        O<span class="size" id="o-size">d × d</span>
+                    </button>
+                    <button class="target-btn" data-target="ffn_up" onclick="toggleTarget('ffn_up')">
+                        FFN↑<span class="size" id="ffn_up-size">d → 4d</span>
+                    </button>
+                    <button class="target-btn" data-target="ffn_down" onclick="toggleTarget('ffn_down')">
+                        FFN↓<span class="size" id="ffn_down-size">4d → d</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Matrix Explanation -->
+        <div class="card">
+            <div class="card-title">② Pro Gewichtsmatrix</div>
+            
+            <div class="matrix-explanation">
+                <div class="matrix-row">
+                    <div class="matrix-box frozen-box">
+                        <div class="matrix-label">W ❄️</div>
+                        <div class="matrix-visual" id="matrix-w"></div>
+                        <div class="matrix-dims" id="w-dims">768 × 768</div>
+                    </div>
+                    <div class="operator">+</div>
+                    <div class="matrix-box trainable-box">
+                        <div class="matrix-label">B 🔥</div>
+                        <div class="matrix-visual" id="matrix-b"></div>
+                        <div class="matrix-dims" id="b-dims">768 × 8</div>
+                    </div>
+                    <div class="operator">×</div>
+                    <div class="matrix-box trainable-box">
+                        <div class="matrix-label">A 🔥</div>
+                        <div class="matrix-visual" id="matrix-a"></div>
+                        <div class="matrix-dims" id="a-dims">8 × 768</div>
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 0.85rem; color: var(--text-secondary);">
+                    Für eine Matrix der Größe <strong id="single-w">d × d</strong>: 
+                    LoRA = <strong id="single-lora" style="color: var(--trainable-color);">(d + d) × r</strong> Parameter
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Model Calculation -->
+        <div class="card">
+            <div class="card-title">③ Gesamtrechnung</div>
+
+            <div class="transformer-diagram">
+                <div class="block has-lora">
+                    <div class="block-title">Attention</div>
+                    <div class="block-sub" id="attn-targets">Q, V</div>
+                </div>
+                <div class="block has-lora" id="ffn-block" style="display: none;">
+                    <div class="block-title">FFN</div>
+                    <div class="block-sub" id="ffn-targets">-</div>
+                </div>
+                <div class="multiply-sign">×</div>
+                <div class="layer-count" id="layer-badge">12 Layers</div>
+            </div>
+
+            <div class="calc-grid">
+                <div class="calc-section">
+                    <div class="calc-title frozen">❄️ Full Fine-Tuning</div>
+                    <div id="full-calc-rows">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+                <div class="calc-section trainable">
+                    <div class="calc-title trainable">🔥 LoRA (r = <span id="calc-rank">8</span>)</div>
+                    <div id="lora-calc-rows">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary-grid">
+                <div class="summary-box frozen">
+                    <div class="summary-value" id="total-full">85M</div>
+                    <div class="summary-label">Full Fine-Tuning</div>
+                </div>
+                <div class="summary-box lora">
+                    <div class="summary-value" id="total-lora">295K</div>
+                    <div class="summary-label">LoRA Parameter</div>
+                </div>
+                <div class="summary-box savings">
+                    <div class="summary-value" id="total-savings">99.7%</div>
+                    <div class="summary-label">Einsparung</div>
+                </div>
+            </div>
+
+            <!-- Comparison Bar -->
+            <div class="comparison-bar">
+                <div class="bar-row">
+                    <div class="bar-label">
+                        <span style="color: var(--frozen-color);">Full Fine-Tuning</span>
+                        <span id="bar-full-label">85M</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill frozen" style="width: 100%;">100%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">
+                        <span style="color: var(--trainable-color);">LoRA</span>
+                        <span id="bar-lora-label">295K</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill lora" id="lora-bar">0.3%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-note">
+                💡 <strong>Hinweis:</strong> Diese Berechnung zeigt nur die trainierbaren Parameter der ausgewählten Target-Module. 
+                Das Gesamtmodell hat zusätzlich Embedding-Schichten, Layer-Norms, etc.
+            </div>
+        </div>
+
+        <!-- Target Module Selection Guide -->
+        <div class="card">
+            <div class="card-title">④ Welche Module auswählen?</div>
+            
+            <div class="selection-guide">
+                <div class="guide-intro">
+                    <p>Die Wahl der Target Modules hängt von drei Faktoren ab:</p>
+                </div>
+
+                <div class="guide-grid">
+                    <!-- Factor 1: What do modules learn? -->
+                    <div class="guide-section">
+                        <div class="guide-header">
+                            <span class="guide-icon">🧠</span>
+                            <span class="guide-title">Was lernen die Module?</span>
+                        </div>
+                        <div class="module-explanation">
+                            <div class="module-exp-item attention-exp">
+                                <div class="exp-label">Attention (Q, K, V, O)</div>
+                                <div class="exp-desc">
+                                    <strong>Beziehungen zwischen Tokens</strong><br>
+                                    Welche Wörter zusammengehören, Kontext verstehen, Syntax
+                                </div>
+                            </div>
+                            <div class="module-exp-item ffn-exp">
+                                <div class="exp-label">FFN (W_up, W_down)</div>
+                                <div class="exp-desc">
+                                    <strong>Faktenwissen & Domänenwissen</strong><br>
+                                    Gespeicherte Fakten, fachspezifisches Vokabular, Weltwissen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Factor 2: Task complexity -->
+                    <div class="guide-section">
+                        <div class="guide-header">
+                            <span class="guide-icon">🎯</span>
+                            <span class="guide-title">Aufgaben-Komplexität</span>
+                        </div>
+                        <div class="task-tiers">
+                            <div class="task-tier tier-simple">
+                                <div class="tier-label">Einfach</div>
+                                <div class="tier-examples">Sentiment, Klassifikation, NER</div>
+                                <div class="tier-recommendation">→ Q, V reichen meist</div>
+                            </div>
+                            <div class="task-tier tier-medium">
+                                <div class="tier-label">Mittel</div>
+                                <div class="tier-examples">Summarization, QA, Translation</div>
+                                <div class="tier-recommendation">→ Q, K, V, O</div>
+                            </div>
+                            <div class="task-tier tier-complex">
+                                <div class="tier-label">Komplex</div>
+                                <div class="tier-examples">Code, Reasoning, neue Domäne</div>
+                                <div class="tier-recommendation">→ Alle + höherer Rank</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Factor 3: Empirical findings -->
+                    <div class="guide-section">
+                        <div class="guide-header">
+                            <span class="guide-icon">📊</span>
+                            <span class="guide-title">Empirische Erkenntnisse</span>
+                        </div>
+                        <div class="findings-list">
+                            <div class="finding">
+                                <span class="finding-badge good">✓</span>
+                                <span><strong>Q + V zusammen</strong> ist oft am effektivsten (Original-Paper)</span>
+                            </div>
+                            <div class="finding">
+                                <span class="finding-badge neutral">~</span>
+                                <span><strong>K allein</strong> bringt wenig Verbesserung</span>
+                            </div>
+                            <div class="finding">
+                                <span class="finding-badge good">✓</span>
+                                <span><strong>Rank erhöhen</strong> ist oft besser als mehr Module</span>
+                            </div>
+                            <div class="finding">
+                                <span class="finding-badge neutral">~</span>
+                                <span><strong>FFN</strong> hilft bei Domänenadaption (neues Faktenwissen)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decision Flowchart -->
+                <div class="decision-flow">
+                    <div class="flow-title">🔀 Entscheidungsbaum</div>
+                    <div class="flow-chart">
+                        <div class="flow-step start">
+                            <div class="flow-question">Start: Was ist dein Ziel?</div>
+                        </div>
+                        <div class="flow-branches">
+                            <div class="flow-branch">
+                                <div class="branch-label">Stil/Ton anpassen</div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="branch-answer">Q, V (r=8-16)</div>
+                                <div class="branch-detail">Attention steuert "wie" geschrieben wird</div>
+                            </div>
+                            <div class="flow-branch">
+                                <div class="branch-label">Besseres Reasoning</div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="branch-answer">Q, K, V, O (r=16-32)</div>
+                                <div class="branch-detail">Komplexere Attention-Muster</div>
+                            </div>
+                            <div class="flow-branch">
+                                <div class="branch-label">Neue Domäne/Fakten</div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="branch-answer">Alle + FFN (r=32-64)</div>
+                                <div class="branch-detail">FFN speichert Faktenwissen</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practical Tips -->
+                <div class="practical-tips">
+                    <div class="tips-title">💡 Praktische Vorgehensweise</div>
+                    <div class="tips-steps">
+                        <div class="tip-step">
+                            <span class="step-num">1</span>
+                            <span class="step-text"><strong>Starte minimal:</strong> Q, V mit r=8</span>
+                        </div>
+                        <div class="tip-step">
+                            <span class="step-num">2</span>
+                            <span class="step-text"><strong>Evaluiere:</strong> Ist die Performance ausreichend?</span>
+                        </div>
+                        <div class="tip-step">
+                            <span class="step-num">3</span>
+                            <span class="step-text"><strong>Skaliere hoch:</strong> Erst Rank erhöhen (r=16, 32), dann Module hinzufügen</span>
+                        </div>
+                        <div class="tip-step">
+                            <span class="step-num">4</span>
+                            <span class="step-text"><strong>FFN nur wenn nötig:</strong> Bei Domänenwissen oder wenn Attention allein nicht reicht</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Tradeoff -->
+                <div class="tradeoff-note">
+                    <div class="tradeoff-title">⚖️ Tradeoff</div>
+                    <div class="tradeoff-content">
+                        <div class="tradeoff-item">
+                            <span class="tradeoff-label">Mehr Module</span>
+                            <span class="tradeoff-effect">= mehr Parameter = mehr VRAM = längeres Training</span>
+                        </div>
+                        <div class="tradeoff-item">
+                            <span class="tradeoff-label">Aber:</span>
+                            <span class="tradeoff-effect">LoRA ist so effizient, dass man oft "großzügig" sein kann</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let dim = 768;
+        let layers = 12;
+        let rank = 8;
+        let ffnMult = 4;
+        let targets = { q: true, k: false, v: true, o: false, ffn_up: false, ffn_down: false };
+
+        // Model presets
+        const models = {
+            'bert': { dim: 768, layers: 12, ffnMult: 4 },
+            'bert-large': { dim: 1024, layers: 24, ffnMult: 4 },
+            'gpt2': { dim: 768, layers: 12, ffnMult: 4 },
+            'llama-7b': { dim: 4096, layers: 32, ffnMult: 2.6875 }, // 11008/4096
+            'llama-13b': { dim: 5120, layers: 40, ffnMult: 2.7 },
+            'custom': null
+        };
+
+        // DOM
+        const dimSlider = document.getElementById('dim-slider');
+        const layersSlider = document.getElementById('layers-slider');
+        const rankSlider = document.getElementById('rank-slider');
+        const ffnSlider = document.getElementById('ffn-slider');
+
+        function formatNum(n) {
+            if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+            return n.toString();
+        }
+
+        function createMatrixCells(container, rows, cols, type) {
+            container.innerHTML = '';
+            const maxSize = 8;
+            const displayRows = Math.min(Math.ceil(rows / 100), maxSize);
+            const displayCols = Math.min(Math.ceil(cols / 100), maxSize);
+            container.style.gridTemplateColumns = `repeat(${displayCols}, 1fr)`;
+            for (let i = 0; i < displayRows * displayCols; i++) {
+                const cell = document.createElement('div');
+                cell.className = `matrix-cell ${type}`;
+                container.appendChild(cell);
+            }
+        }
+
+        function toggleTarget(t) {
+            targets[t] = !targets[t];
+            
+            // Update old buttons (hidden but keep for compatibility)
+            const oldBtn = document.querySelector(`[data-target="${t}"]`);
+            if (oldBtn) oldBtn.classList.toggle('active', targets[t]);
+            
+            // Update new module boxes
+            const moduleBox = document.getElementById(`module-${t}`);
+            if (moduleBox) moduleBox.classList.toggle('active', targets[t]);
+            
+            // Set to custom mode
+            document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.model-btn:last-child').classList.add('active');
+            
+            update();
+        }
+
+        // Make module boxes clickable
+        function setupModuleBoxes() {
+            ['q', 'k', 'v', 'o', 'ffn_up', 'ffn_down'].forEach(t => {
+                const box = document.getElementById(`module-${t}`);
+                if (box) {
+                    box.addEventListener('click', () => toggleTarget(t));
+                    box.classList.toggle('active', targets[t]);
+                }
+            });
+        }
+
+        function setModel(name) {
+            document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (models[name]) {
+                dim = models[name].dim;
+                layers = models[name].layers;
+                ffnMult = models[name].ffnMult;
+                dimSlider.value = dim;
+                layersSlider.value = layers;
+                ffnSlider.value = ffnMult;
+            }
+            update();
+        }
+
+        function update() {
+            const ffnDim = Math.round(dim * ffnMult);
+            
+            // Update displays
+            document.getElementById('dim-value').textContent = dim;
+            document.getElementById('layers-value').textContent = layers;
+            document.getElementById('rank-value').textContent = rank;
+            document.getElementById('ffn-value').textContent = ffnMult;
+            document.getElementById('calc-rank').textContent = rank;
+            document.getElementById('layer-badge').textContent = layers + ' Layers';
+            document.getElementById('layer-repeat').textContent = layers;
+
+            // Update module box states and descriptions
+            ['q', 'k', 'v', 'o', 'ffn_up', 'ffn_down'].forEach(t => {
+                const box = document.getElementById(`module-${t}`);
+                if (box) box.classList.toggle('active', targets[t]);
+            });
+            
+            // Update module descriptions with actual dimensions
+            document.getElementById('desc-q').textContent = `${dim}×${dim}`;
+            document.getElementById('desc-k').textContent = `${dim}×${dim}`;
+            document.getElementById('desc-v').textContent = `${dim}×${dim}`;
+            document.getElementById('desc-o').textContent = `${dim}×${dim}`;
+            document.getElementById('desc-ffn_up').textContent = `${dim}→${ffnDim}`;
+            document.getElementById('desc-ffn_down').textContent = `${ffnDim}→${dim}`;
+
+            // Update target sizes
+            document.getElementById('q-size').textContent = `${dim} × ${dim}`;
+            document.getElementById('k-size').textContent = `${dim} × ${dim}`;
+            document.getElementById('v-size').textContent = `${dim} × ${dim}`;
+            document.getElementById('o-size').textContent = `${dim} × ${dim}`;
+            document.getElementById('ffn_up-size').textContent = `${dim} → ${ffnDim}`;
+            document.getElementById('ffn_down-size').textContent = `${ffnDim} → ${dim}`;
+
+            // Update attention/FFN display
+            const attnTargets = ['q', 'k', 'v', 'o'].filter(t => targets[t]).map(t => t.toUpperCase()).join(', ') || '-';
+            const ffnTargetsArr = ['ffn_up', 'ffn_down'].filter(t => targets[t]);
+            const ffnTargetsStr = ffnTargetsArr.map(t => t === 'ffn_up' ? '↑' : '↓').join(', ') || '-';
+            
+            document.getElementById('attn-targets').textContent = attnTargets;
+            document.getElementById('ffn-targets').textContent = ffnTargetsStr;
+            document.getElementById('ffn-block').style.display = ffnTargetsArr.length > 0 ? 'block' : 'none';
+
+            // Matrix visualization (for d×d)
+            createMatrixCells(document.getElementById('matrix-w'), dim, dim, 'frozen');
+            createMatrixCells(document.getElementById('matrix-b'), dim, rank * 10, 'trainable');
+            createMatrixCells(document.getElementById('matrix-a'), rank * 10, dim, 'trainable');
+            document.getElementById('w-dims').textContent = `${dim} × ${dim}`;
+            document.getElementById('b-dims').textContent = `${dim} × ${rank}`;
+            document.getElementById('a-dims').textContent = `${rank} × ${dim}`;
+            document.getElementById('single-w').textContent = `${dim} × ${dim}`;
+            document.getElementById('single-lora').textContent = `(${dim} + ${dim}) × ${rank} = ${formatNum(2 * dim * rank)}`;
+
+            // Calculate full and LoRA parameters
+            let fullCalcHtml = '';
+            let loraCalcHtml = '';
+            let totalFull = 0;
+            let totalLora = 0;
+
+            // Attention targets (all d×d)
+            const attnActive = ['q', 'k', 'v', 'o'].filter(t => targets[t]);
+            if (attnActive.length > 0) {
+                const perMatrix = dim * dim;
+                const perMatrixLora = 2 * dim * rank;
+                const fullAttn = perMatrix * attnActive.length * layers;
+                const loraAttn = perMatrixLora * attnActive.length * layers;
+                totalFull += fullAttn;
+                totalLora += loraAttn;
+
+                fullCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">${attnActive.map(t => t.toUpperCase()).join(',')} (${dim}×${dim}) × ${attnActive.length} × ${layers}</span>
+                        <span class="calc-result">${formatNum(fullAttn)}</span>
+                    </div>
+                `;
+                loraCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">${attnActive.map(t => t.toUpperCase()).join(',')} (2×${dim}×${rank}) × ${attnActive.length} × ${layers}</span>
+                        <span class="calc-result">${formatNum(loraAttn)}</span>
+                    </div>
+                `;
+            }
+
+            // FFN up (d → ffnDim)
+            if (targets.ffn_up) {
+                const full = dim * ffnDim * layers;
+                const lora = (dim + ffnDim) * rank * layers;
+                totalFull += full;
+                totalLora += lora;
+
+                fullCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">FFN↑ (${dim}×${ffnDim}) × ${layers}</span>
+                        <span class="calc-result">${formatNum(full)}</span>
+                    </div>
+                `;
+                loraCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">FFN↑ (${dim}+${ffnDim})×${rank} × ${layers}</span>
+                        <span class="calc-result">${formatNum(lora)}</span>
+                    </div>
+                `;
+            }
+
+            // FFN down (ffnDim → d)
+            if (targets.ffn_down) {
+                const full = ffnDim * dim * layers;
+                const lora = (ffnDim + dim) * rank * layers;
+                totalFull += full;
+                totalLora += lora;
+
+                fullCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">FFN↓ (${ffnDim}×${dim}) × ${layers}</span>
+                        <span class="calc-result">${formatNum(full)}</span>
+                    </div>
+                `;
+                loraCalcHtml += `
+                    <div class="calc-row">
+                        <span class="calc-formula">FFN↓ (${ffnDim}+${dim})×${rank} × ${layers}</span>
+                        <span class="calc-result">${formatNum(lora)}</span>
+                    </div>
+                `;
+            }
+
+            // Totals
+            fullCalcHtml += `
+                <div class="calc-row">
+                    <span class="calc-formula">Gesamt</span>
+                    <span class="calc-result">${formatNum(totalFull)}</span>
+                </div>
+            `;
+            loraCalcHtml += `
+                <div class="calc-row">
+                    <span class="calc-formula">Gesamt</span>
+                    <span class="calc-result">${formatNum(totalLora)}</span>
+                </div>
+            `;
+
+            document.getElementById('full-calc-rows').innerHTML = fullCalcHtml;
+            document.getElementById('lora-calc-rows').innerHTML = loraCalcHtml;
+
+            // Summary
+            const savings = totalFull > 0 ? ((totalFull - totalLora) / totalFull * 100).toFixed(1) : 0;
+            const loraPercent = totalFull > 0 ? (totalLora / totalFull * 100).toFixed(2) : 0;
+
+            document.getElementById('total-full').textContent = formatNum(totalFull);
+            document.getElementById('total-lora').textContent = formatNum(totalLora);
+            document.getElementById('total-savings').textContent = savings + '%';
+
+            document.getElementById('bar-full-label').textContent = formatNum(totalFull);
+            document.getElementById('bar-lora-label').textContent = formatNum(totalLora);
+            document.getElementById('lora-bar').style.width = Math.max(parseFloat(loraPercent), 1) + '%';
+            document.getElementById('lora-bar').textContent = loraPercent + '%';
+        }
+
+        // Event listeners
+        dimSlider.addEventListener('input', e => { dim = parseInt(e.target.value); update(); });
+        layersSlider.addEventListener('input', e => { layers = parseInt(e.target.value); update(); });
+        rankSlider.addEventListener('input', e => { rank = parseInt(e.target.value); update(); });
+        ffnSlider.addEventListener('input', e => { ffnMult = parseFloat(e.target.value); update(); });
+
+        // Initial
+        setupModuleBoxes();
+        update();
+    </script>
+</body>
+</html>

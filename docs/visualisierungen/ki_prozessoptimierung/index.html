@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Prozessoptimierung Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 14.28%;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .phase-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .phase-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #e2e8f0;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .phase-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .phase-btn.completed {
+            background: #48bb78;
+            color: white;
+        }
+
+        .phase-btn.completed::after {
+            content: '✓';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #38a169;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .phase-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .phase-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phase-header {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .phase-title {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .phase-description {
+            color: #4a5568;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .input-group:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .results-container {
+            background: linear-gradient(135deg, #f0fff4, #e6fffa);
+            border: 2px solid #48bb78;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .results-title {
+            color: #2f855a;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #48bb78;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2f855a;
+        }
+
+        .metric-label {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .use-case-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .use-case-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
+        }
+
+        .use-case-card.selected {
+            border-color: #48bb78;
+            background: linear-gradient(135deg, #f0fff4, #e6fffa);
+        }
+
+        .use-case-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .use-case-roi {
+            background: #48bb78;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .use-case-description {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            flex-grow: 1;
+        }
+
+        .floating-help {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .floating-help:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .phase-navigation {
+                gap: 5px;
+            }
+            
+            .phase-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 KI-Prozessoptimierung Framework</h1>
+            <p>Strukturierter Weg von der Ideenfindung zur erfolgreichen KI-Implementierung</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="phase-navigation">
+                <button class="phase-btn active" data-phase="1">1. Analyse</button>
+                <button class="phase-btn" data-phase="2">2. Ideenfindung</button>
+                <button class="phase-btn" data-phase="3">3. Bewertung</button>
+                <button class="phase-btn" data-phase="4">4. Zieldefinition</button>
+                <button class="phase-btn" data-phase="5">5. Use Cases</button>
+                <button class="phase-btn" data-phase="6">6. Roadmap</button>
+                <button class="phase-btn" data-phase="7">7. Monitoring</button>
+            </div>
+
+            <!-- Phase 1: Strategische Analyse -->
+            <div class="phase-content active" id="phase-1">
+                <div class="phase-header">
+                    <div class="phase-title">📊 Phase 1: Strategische Analyse & Vorbereitung</div>
+                    <div class="phase-description">Schaffen Sie die Grundlage für Ihre KI-Transformation durch eine umfassende Analyse Ihrer aktuellen Situation.</div>
+                </div>
+
+                <div class="input-group">
+                    <label>Unternehmensname</label>
+                    <input type="text" id="companyName" placeholder="Ihr Unternehmen">
+                </div>
+
+                <div class="input-group">
+                    <label>Branche</label>
+                    <select id="industry">
+                        <option value="">Bitte wählen...</option>
+                        <option value="manufacturing">Produzierende Industrie</option>
+                        <option value="services">Dienstleistung</option>
+                        <option value="retail">Handel</option>
+                        <option value="finance">Finanzwesen</option>
+                        <option value="healthcare">Gesundheitswesen</option>
+                        <option value="logistics">Logistik</option>
+                        <option value="other">Sonstige</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Mitarbeiteranzahl</label>
+                    <select id="companySize">
+                        <option value="">Bitte wählen...</option>
+                        <option value="small">1-50 Mitarbeiter</option>
+                        <option value="medium">51-250 Mitarbeiter</option>
+                        <option value="large">251-1000 Mitarbeiter</option>
+                        <option value="enterprise">1000+ Mitarbeiter</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Größte Herausforderungen (mehrere auswählbar)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge1" value="manual-processes">
+                            <label for="challenge1">Zu viele manuelle Prozesse</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge2" value="data-quality">
+                            <label for="challenge2">Schlechte Datenqualität</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge3" value="customer-service">
+                            <label for="challenge3">Überlasteter Kundenservice</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge4" value="forecasting">
+                            <label for="challenge4">Ungenaue Prognosen</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge5" value="quality-control">
+                            <label for="challenge5">Qualitätsprobleme</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="challenge6" value="efficiency">
+                            <label for="challenge6">Niedrige Effizienz</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Jährliches IT-Budget (€)</label>
+                    <select id="budget">
+                        <option value="">Bitte wählen...</option>
+                        <option value="low">< 100.000€</option>
+                        <option value="medium">100.000€ - 500.000€</option>
+                        <option value="high">500.000€ - 2.000.000€</option>
+                        <option value="enterprise">> 2.000.000€</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zu Ideenfindung →</button>
+                </div>
+            </div>
+
+            <!-- Phase 2: Ideenfindung -->
+            <div class="phase-content" id="phase-2">
+                <div class="phase-header">
+                    <div class="phase-title">💡 Phase 2: Ideenfindung & Use Case Sammlung</div>
+                    <div class="phase-description">Sammeln Sie systematisch potenzielle KI-Anwendungsfälle für Ihr Unternehmen.</div>
+                </div>
+
+                <div class="input-group">
+                    <label>Beschreiben Sie Ihre Vision für KI in Ihrem Unternehmen</label>
+                    <textarea id="vision" rows="4" placeholder="Wie soll KI Ihr Unternehmen in 2-3 Jahren unterstützen?"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Welche Prozesse sind besonders zeitaufwändig oder fehleranfällig?</label>
+                    <textarea id="painPoints" rows="4" placeholder="Beschreiben Sie konkrete Problembereiche..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Interessante KI-Anwendungsbereiche (mehrere auswählbar)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase1" value="chatbots">
+                            <label for="usecase1">Chatbots & Virtuelle Assistenten</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase2" value="document-processing">
+                            <label for="usecase2">Automatisierte Dokumentenverarbeitung</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase3" value="predictive-maintenance">
+                            <label for="usecase3">Predictive Maintenance</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase4" value="demand-forecasting">
+                            <label for="usecase4">Nachfrageprognose</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase5" value="quality-control">
+                            <label for="usecase5">Automatisierte Qualitätskontrolle</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="usecase6" value="personalization">
+                            <label for="usecase6">Personalisierung & Empfehlungen</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zur Bewertung →</button>
+                </div>
+            </div>
+
+            <!-- Phase 3: Bewertung -->
+            <div class="phase-content" id="phase-3">
+                <div class="phase-header">
+                    <div class="phase-title">⚖️ Phase 3: Use Case Bewertung & Priorisierung</div>
+                    <div class="phase-description">Bewerten Sie Ihre Use Cases nach verschiedenen Kriterien und priorisieren Sie diese.</div>
+                </div>
+
+                <div id="useCaseEvaluation">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zur Zieldefinition →</button>
+                </div>
+            </div>
+
+            <!-- Phase 4: Zieldefinition -->
+            <div class="phase-content" id="phase-4">
+                <div class="phase-header">
+                    <div class="phase-title">🎯 Phase 4: SMART-Ziele & KPIs definieren</div>
+                    <div class="phase-description">Definieren Sie messbare Ziele für Ihr prioritäres KI-Projekt.</div>
+                </div>
+
+                <div id="smartGoals">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zu Use Cases →</button>
+                </div>
+            </div>
+
+            <!-- Phase 5: Use Cases -->
+            <div class="phase-content" id="phase-5">
+                <div class="phase-header">
+                    <div class="phase-title">🔍 Phase 5: Detaillierte Use Case Analyse</div>
+                    <div class="phase-description">Entdecken Sie passende Use Cases mit konkreten ROI-Erwartungen für Ihre Branche.</div>
+                </div>
+
+                <div id="recommendedUseCases">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zur Roadmap →</button>
+                </div>
+            </div>
+
+            <!-- Phase 6: Roadmap -->
+            <div class="phase-content" id="phase-6">
+                <div class="phase-header">
+                    <div class="phase-title">🗺️ Phase 6: Implementierungs-Roadmap</div>
+                    <div class="phase-description">Ihre personalisierte Roadmap zur erfolgreichen KI-Implementierung.</div>
+                </div>
+
+                <div id="implementationRoadmap">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="nextPhase()">Weiter zum Monitoring →</button>
+                </div>
+            </div>
+
+            <!-- Phase 7: Monitoring -->
+            <div class="phase-content" id="phase-7">
+                <div class="phase-header">
+                    <div class="phase-title">📈 Phase 7: Monitoring & Erfolgsmessung</div>
+                    <div class="phase-description">Dashboard und KPIs für die kontinuierliche Überwachung Ihrer KI-Projekte.</div>
+                </div>
+
+                <div id="monitoringDashboard">
+                    <!-- Wird dynamisch gefüllt -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="previousPhase()">← Zurück</button>
+                    <button class="btn btn-primary" onclick="generateReport()">📊 Vollständigen Report generieren</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-help" onclick="showHelp()">?</div>
+
+    <script>
+        let currentPhase = 1;
+        let userData = {};
+        let selectedUseCases = [];
+        let evaluationResults = {};
+
+        // Use Case Datenbank
+        const useCaseDatabase = {
+            manufacturing: [
+                {
+                    title: "Predictive Maintenance",
+                    roi: "10-30% weniger Stillstände",
+                    description: "KI-basierte Vorhersage von Wartungsbedarf durch Sensordatenanalyse",
+                    timeframe: "12-18 Monate",
+                    complexity: "Mittel",
+                    investment: "150.000€ - 500.000€"
+                },
+                {
+                    title: "Qualitätskontrolle mit Computer Vision",
+                    roi: "15-25% weniger Ausschuss",
+                    description: "Automatische Erkennung von Produktfehlern in Echtzeit",
+                    timeframe: "6-12 Monate",
+                    complexity: "Mittel",
+                    investment: "100.000€ - 300.000€"
+                },
+                {
+                    title: "Produktionsoptimierung",
+                    roi: "30-50% Produktivitätssteigerung",
+                    description: "KI-gesteuerte Optimierung von Produktionsprozessen",
+                    timeframe: "18-24 Monate",
+                    complexity: "Hoch",
+                    investment: "300.000€ - 1.000.000€"
+                }
+            ],
+            services: [
+                {
+                    title: "Intelligenter Chatbot",
+                    roi: "50% weniger Support-Anfragen",
+                    description: "24/7 Kundenbetreuung mit KI-gestützten Chatbots",
+                    timeframe: "3-6 Monate",
+                    complexity: "Niedrig",
+                    investment: "50.000€ - 150.000€"
+                },
+                {
+                    title: "Automatisierte Dokumentenverarbeitung",
+                    roi: "60-80% Zeitersparnis",
+                    description: "OCR und KI für automatische Verarbeitung von Dokumenten",
+                    timeframe: "6-9 Monate",
+                    complexity: "Mittel",
+                    investment: "75.000€ - 200.000€"
+                },
+                {
+                    title: "Customer Lifetime Value Prognose",
+                    roi: "20-30% bessere Marketing-Effizienz",
+                    description: "Identifikation wertvoller Kunden für gezieltes Marketing",
+                    timeframe: "9-12 Monate",
+                    complexity: "Mittel",
+                    investment: "100.000€ - 250.000€"
+                }
+            ],
+            retail: [
+                {
+                    title: "Personalisierte Produktempfehlungen",
+                    roi: "5-35% Umsatzsteigerung",
+                    description: "KI-basierte Empfehlungen für personalisierte Kundenerlebnisse",
+                    timeframe: "6-9 Monate",
+                    complexity: "Mittel",
+                    investment: "100.000€ - 300.000€"
+                },
+                {
+                    title: "Dynamische Preisoptimierung",
+                    roi: "5-15% Margensteigerung",
+                    description: "Echtzeit-Preisanpassung basierend auf Nachfrage und Konkurrenz",
+                    timeframe: "9-12 Monate",
+                    complexity: "Hoch",
+                    investment: "200.000€ - 500.000€"
+                },
+                {
+                    title: "Bestandsmanagement",
+                    roi: "20-30% optimierte Kapitalbindung",
+                    description: "KI-gestützte Nachfrageprognose und Bestandsoptimierung",
+                    timeframe: "12-15 Monate",
+                    complexity: "Mittel",
+                    investment: "150.000€ - 400.000€"
+                }
+            ]
+        };
+
+        function nextPhase() {
+            if (validateCurrentPhase()) {
+                savePhaseData();
+                if (currentPhase < 7) {
+                    currentPhase++;
+                    showPhase(currentPhase);
+                    updateProgress();
+                }
+            }
+        }
+
+        function previousPhase() {
+            if (currentPhase > 1) {
+                currentPhase--;
+                showPhase(currentPhase);
+                updateProgress();
+            }
+        }
+
+        function showPhase(phase) {
+            // Hide all phases
+            document.querySelectorAll('.phase-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show current phase
+            document.getElementById(`phase-${phase}`).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.phase-btn').forEach((btn, index) => {
+                btn.classList.remove('active', 'completed');
+                if (index + 1 === phase) {
+                    btn.classList.add('active');
+                } else if (index + 1 < phase) {
+                    btn.classList.add('completed');
+                }
+            });
+            
+            // Load phase-specific content
+            loadPhaseContent(phase);
+        }
+
+        function loadPhaseContent(phase) {
+            switch(phase) {
+                case 3:
+                    loadUseCaseEvaluation();
+                    break;
+                case 4:
+                    loadSmartGoals();
+                    break;
+                case 5:
+                    loadRecommendedUseCases();
+                    break;
+                case 6:
+                    loadImplementationRoadmap();
+                    break;
+                case 7:
+                    loadMonitoringDashboard();
+                    break;
+            }
+        }
+
+        function loadUseCaseEvaluation() {
+            const container = document.getElementById('useCaseEvaluation');
+            const selectedUseCases = getSelectedUseCases();
+            
+            if (selectedUseCases.length === 0) {
+                container.innerHTML = '<p>Bitte gehen Sie zurück und wählen Sie mindestens einen Use Case aus.</p>';
+                return;
+            }
+
+            let html = '<h3>Bewerten Sie Ihre ausgewählten Use Cases:</h3>';
+            
+            selectedUseCases.forEach(useCase => {
+                html += `
+                    <div class="input-group">
+                        <label>${getUseCaseLabel(useCase)} - Bewertung (1-5 Punkte)</label>
+                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 10px;">
+                            <div>
+                                <label>💰 Geschäftswert</label>
+                                <select id="${useCase}-business-value" onchange="updateEvaluation()">
+                                    <option value="">Bitte bewerten...</option>
+                                    <option value="1">⭐ Marginaler Nutzen (< 50.000€ p.a.)</option>
+                                    <option value="2">⭐⭐ Geringer Nutzen (50-100.000€ p.a.)</option>
+                                    <option value="3">⭐⭐⭐ Mittlerer Nutzen (100-250.000€ p.a.)</option>
+                                    <option value="4">⭐⭐⭐⭐ Hoher Nutzen (250-500.000€ p.a.)</option>
+                                    <option value="5">⭐⭐⭐⭐⭐ Strategischer Durchbruch (> 500.000€ p.a.)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>🔧 Umsetzbarkeit</label>
+                                <select id="${useCase}-feasibility" onchange="updateEvaluation()">
+                                    <option value="">Bitte bewerten...</option>
+                                    <option value="1">🔴 Sehr komplex (> 18 Monate, hohe Risiken)</option>
+                                    <option value="2">🟠 Komplex (12-18 Monate, mittlere Risiken)</option>
+                                    <option value="3">🟡 Machbar (6-12 Monate, überschaubare Risiken)</option>
+                                    <option value="4">🟢 Gut machbar (3-6 Monate, geringe Risiken)</option>
+                                    <option value="5">✅ Einfach (< 3 Monate, minimale Risiken)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>📊 Datenverfügbarkeit</label>
+                                <select id="${useCase}-data-availability" onchange="updateEvaluation()">
+                                    <option value="">Bitte bewerten...</option>
+                                    <option value="1">❌ Keine/schlechte Daten (< 3 Monate Historie)</option>
+                                    <option value="2">🔴 Wenige Daten (3-6 Monate, niedrige Qualität)</option>
+                                    <option value="3">🟡 Ausreichend (6-12 Monate, mittlere Qualität)</option>
+                                    <option value="4">🟢 Gute Datenbasis (1-2 Jahre, hohe Qualität)</option>
+                                    <option value="5">💎 Exzellente Daten (> 2 Jahre, perfekte Qualität)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>⏱️ Zeitaufwand</label>
+                                <select id="${useCase}-time-effort" onchange="updateEvaluation()">
+                                    <option value="">Bitte bewerten...</option>
+                                    <option value="5">🚀 Quick Win (< 3 Monate)</option>
+                                    <option value="4">⚡ Schnell (3-6 Monate)</option>
+                                    <option value="3">⏳ Normal (6-12 Monate)</option>
+                                    <option value="2">🐌 Langwierig (12-18 Monate)</option>
+                                    <option value="1">🏗️ Langzeitprojekt (> 18 Monate)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>⚠️ Risiko-Level</label>
+                                <select id="${useCase}-risk" onchange="updateEvaluation()">
+                                    <option value="">Bitte bewerten...</option>
+                                    <option value="5">🛡️ Minimal (bewährte Technologie, geringe Auswirkung)</option>
+                                    <option value="4">💚 Niedrig (Standard-Use-Case, kontrollierbar)</option>
+                                    <option value="3">🟡 Mittel (neue Technologie, mittlere Auswirkung)</option>
+                                    <option value="2">🟠 Hoch (experimentell, hohe Auswirkung)</option>
+                                    <option value="1">🔴 Kritisch (unbekannte Technologie, geschäftskritisch)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="${useCase}-score" class="metric-card" style="margin-top: 15px; display: none;">
+                            <div class="metric-value">0</div>
+                            <div class="metric-label">Gesamtpunktzahl</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function loadSmartGoals() {
+            const container = document.getElementById('smartGoals');
+            const topUseCase = getTopRatedUseCase();
+            
+            if (!topUseCase) {
+                container.innerHTML = '<p>Bitte vervollständigen Sie zunächst die Bewertung in der vorherigen Phase.</p>';
+                return;
+            }
+
+            const useCaseLabel = getUseCaseLabel(topUseCase);
+            
+            container.innerHTML = `
+                <div class="results-container">
+                    <div class="results-title">🎯 Ihr priorisierter Use Case: ${useCaseLabel}</div>
+                    <p>Basierend auf Ihrer Bewertung ist dies Ihr vielversprechendster Use Case für den Start.</p>
+                </div>
+
+                <div class="input-group">
+                    <label>S - Spezifisches Ziel</label>
+                    <textarea id="smart-specific" rows="3" placeholder="Was genau wollen Sie erreichen? (z.B. Automatisierung der Rechnungsverarbeitung)"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>M - Messbare Kennzahl</label>
+                    <input type="text" id="smart-measurable" placeholder="z.B. 80% Reduktion der Bearbeitungszeit">
+                </div>
+
+                <div class="input-group">
+                    <label>A - Erreichbares Ziel</label>
+                    <textarea id="smart-achievable" rows="2" placeholder="Warum ist dieses Ziel mit Ihren Ressourcen erreichbar?"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>R - Relevanter Nutzen</label>
+                    <input type="text" id="smart-relevant" placeholder="z.B. Kosteneinsparung von 150.000€ p.a.">
+                </div>
+
+                <div class="input-group">
+                    <label>T - Terminiertes Ziel</label>
+                    <input type="date" id="smart-timely" min="${new Date().toISOString().split('T')[0]}">
+                </div>
+
+                <div class="input-group">
+                    <label>Wichtigste KPIs für das Monitoring</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi1" value="processing-time">
+                            <label for="kpi1">Bearbeitungszeit pro Vorgang</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi2" value="error-rate">
+                            <label for="kpi2">Fehlerrate</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi3" value="automation-rate">
+                            <label for="kpi3">Automatisierungsgrad</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi4" value="cost-savings">
+                            <label for="kpi4">Kosteneinsparung</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi5" value="user-satisfaction">
+                            <label for="kpi5">Nutzerzufriedenheit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kpi6" value="roi">
+                            <label for="kpi6">Return on Investment</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadRecommendedUseCases() {
+            const container = document.getElementById('recommendedUseCases');
+            const industry = userData.industry || 'services';
+            const useCases = useCaseDatabase[industry] || useCaseDatabase.services;
+            
+            let html = `
+                <div class="results-container">
+                    <div class="results-title">💡 Empfohlene Use Cases für Ihre Branche</div>
+                    <p>Diese Use Cases haben sich in Ihrer Branche bereits bewährt und zeigen konkrete ROI-Werte.</p>
+                </div>
+            `;
+            
+            useCases.forEach((useCase, index) => {
+                html += `
+                    <div class="use-case-card" onclick="selectUseCase(${index})">
+                        <div class="use-case-title">${useCase.title}</div>
+                        <div class="use-case-roi">${useCase.roi}</div>
+                        <div class="use-case-description">${useCase.description}</div>
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.9rem; color: #666;">
+                            <div><strong>Zeitrahmen:</strong> ${useCase.timeframe}</div>
+                            <div><strong>Komplexität:</strong> ${useCase.complexity}</div>
+                            <div><strong>Investment:</strong> ${useCase.investment}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function loadImplementationRoadmap() {
+            const container = document.getElementById('implementationRoadmap');
+            const companySize = userData.companySize || 'medium';
+            
+            const roadmapItems = [
+                {
+                    phase: "Wochen 1-2",
+                    title: "Kick-off & Team-Setup",
+                    description: "Projektteam zusammenstellen, Stakeholder-Alignment, detaillierte Anforderungsanalyse"
+                },
+                {
+                    phase: "Wochen 3-6",
+                    title: "Proof of Concept",
+                    description: "Technische Machbarkeitsstudie, erste Prototypen, Datenaufbereitung"
+                },
+                {
+                    phase: "Wochen 7-12",
+                    title: "MVP-Entwicklung",
+                    description: "Minimum Viable Product entwickeln, interne Tests, Feedback-Integration"
+                },
+                {
+                    phase: "Wochen 13-18",
+                    title: "Pilotphase",
+                    description: "Rollout an Testgruppe, Monitoring, Performance-Optimierung"
+                },
+                {
+                    phase: "Wochen 19-24",
+                    title: "Vollständiger Rollout",
+                    description: "Unternehmensweite Einführung, Schulungen, Change Management"
+                },
+                {
+                    phase: "Ab Woche 25",
+                    title: "Optimierung & Skalierung",
+                    description: "Kontinuierliche Verbesserung, neue Use Cases, Lessons Learned"
+                }
+            ];
+
+            let html = `
+                <div class="results-container">
+                    <div class="results-title">🗺️ Ihre personalisierte Implementierungs-Roadmap</div>
+                    <p>Zeitplan und Meilensteine für die erfolgreiche Umsetzung Ihres KI-Projekts.</p>
+                </div>
+
+                <div class="roadmap-timeline">
+            `;
+
+            roadmapItems.forEach(item => {
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4 style="color: #667eea; margin-bottom: 5px;">${item.phase}</h4>
+                            <h5 style="margin-bottom: 10px;">${item.title}</h5>
+                            <p style="color: #666;">${item.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+
+                <div class="input-group">
+                    <label>Geplantes Startdatum</label>
+                    <input type="date" id="project-start-date" min="${new Date().toISOString().split('T')[0]}">
+                </div>
+
+                <div class="input-group">
+                    <label>Verfügbare Ressourcen</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource1" value="project-manager">
+                            <label for="resource1">Dedicated Projektleiter</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource2" value="developers">
+                            <label for="resource2">Interne Entwickler</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource3" value="data-scientists">
+                            <label for="resource3">Data Scientists</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource4" value="external-consultants">
+                            <label for="resource4">Externe Berater</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource5" value="change-management">
+                            <label for="resource5">Change Management</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resource6" value="training-budget">
+                            <label for="resource6">Budget für Schulungen</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function loadMonitoringDashboard() {
+            const container = document.getElementById('monitoringDashboard');
+            
+            // Simulate some KPIs
+            const kpis = [
+                { label: "Projektfortschritt", value: "75%", trend: "up" },
+                { label: "Budget verwendet", value: "45%", trend: "neutral" },
+                { label: "Automatisierungsgrad", value: "0%", trend: "up" },
+                { label: "ROI (erwartet)", value: "0%", trend: "up" },
+                { label: "Team-Zufriedenheit", value: "85%", trend: "up" },
+                { label: "Risiko-Level", value: "Niedrig", trend: "down" }
+            ];
+
+            let html = `
+                <div class="results-container">
+                    <div class="results-title">📊 Ihr KI-Projekt Dashboard</div>
+                    <p>Überwachen Sie kontinuierlich den Fortschritt und Erfolg Ihrer KI-Initiative.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0;">
+            `;
+
+            kpis.forEach(kpi => {
+                const trendIcon = kpi.trend === 'up' ? '📈' : kpi.trend === 'down' ? '📉' : '➡️';
+                html += `
+                    <div class="metric-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div class="metric-value">${kpi.value}</div>
+                                <div class="metric-label">${kpi.label}</div>
+                            </div>
+                            <div style="font-size: 2rem;">${trendIcon}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+
+                <div class="input-group">
+                    <label>Monitoring-Frequenz</label>
+                    <select id="monitoring-frequency">
+                        <option value="daily">Täglich</option>
+                        <option value="weekly" selected>Wöchentlich</option>
+                        <option value="monthly">Monatlich</option>
+                        <option value="quarterly">Quartalsweise</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Stakeholder für Reports</label>
+                    <textarea id="stakeholder-list" rows="3" placeholder="E-Mail-Adressen der Stakeholder, die regelmäßige Updates erhalten sollen..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Kritische Erfolgsfaktoren</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success1" value="user-adoption" checked>
+                            <label for="success1">Nutzerakzeptanz > 80%</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success2" value="performance" checked>
+                            <label for="success2">Systemperformance wie geplant</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success3" value="roi-target" checked>
+                            <label for="success3">ROI-Ziel nach 12 Monaten erreicht</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success4" value="quality" checked>
+                            <label for="success4">Qualitätsziele erreicht</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success5" value="timeline" checked>
+                            <label for="success5">Zeitplan eingehalten</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="success6" value="budget" checked>
+                            <label for="success6">Budget eingehalten</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function updateEvaluation() {
+            const selectedUseCases = getSelectedUseCases();
+            
+            selectedUseCases.forEach(useCase => {
+                const businessValue = parseInt(document.getElementById(`${useCase}-business-value`).value) || 0;
+                const feasibility = parseInt(document.getElementById(`${useCase}-feasibility`).value) || 0;
+                const dataAvailability = parseInt(document.getElementById(`${useCase}-data-availability`).value) || 0;
+                const timeEffort = parseInt(document.getElementById(`${useCase}-time-effort`).value) || 0;
+                const risk = parseInt(document.getElementById(`${useCase}-risk`).value) || 0;
+                
+                const totalScore = (businessValue * 0.25) + (feasibility * 0.20) + (dataAvailability * 0.20) + (timeEffort * 0.15) + (risk * 0.20);
+                
+                evaluationResults[useCase] = {
+                    businessValue,
+                    feasibility,
+                    dataAvailability,
+                    timeEffort,
+                    risk,
+                    totalScore: totalScore.toFixed(1)
+                };
+                
+                const scoreElement = document.getElementById(`${useCase}-score`);
+                if (scoreElement && totalScore > 0) {
+                    scoreElement.style.display = 'block';
+                    scoreElement.querySelector('.metric-value').textContent = totalScore.toFixed(1);
+                }
+            });
+        }
+
+        function validateCurrentPhase() {
+            switch(currentPhase) {
+                case 1:
+                    return document.getElementById('companyName').value && 
+                           document.getElementById('industry').value && 
+                           document.getElementById('companySize').value;
+                case 2:
+                    return document.getElementById('vision').value && 
+                           getSelectedUseCases().length > 0;
+                case 3:
+                    return Object.keys(evaluationResults).length > 0;
+                default:
+                    return true;
+            }
+        }
+
+        function savePhaseData() {
+            switch(currentPhase) {
+                case 1:
+                    userData.companyName = document.getElementById('companyName').value;
+                    userData.industry = document.getElementById('industry').value;
+                    userData.companySize = document.getElementById('companySize').value;
+                    userData.budget = document.getElementById('budget').value;
+                    userData.challenges = getSelectedChallenges();
+                    break;
+                case 2:
+                    userData.vision = document.getElementById('vision').value;
+                    userData.painPoints = document.getElementById('painPoints').value;
+                    userData.selectedUseCases = getSelectedUseCases();
+                    break;
+                case 3:
+                    userData.evaluationResults = evaluationResults;
+                    break;
+            }
+        }
+
+        function getSelectedUseCases() {
+            const checkboxes = document.querySelectorAll('#phase-2 input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function getSelectedChallenges() {
+            const checkboxes = document.querySelectorAll('#phase-1 input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function getUseCaseLabel(value) {
+            const labels = {
+                'chatbots': 'Chatbots & Virtuelle Assistenten',
+                'document-processing': 'Automatisierte Dokumentenverarbeitung',
+                'predictive-maintenance': 'Predictive Maintenance',
+                'demand-forecasting': 'Nachfrageprognose',
+                'quality-control': 'Automatisierte Qualitätskontrolle',
+                'personalization': 'Personalisierung & Empfehlungen'
+            };
+            return labels[value] || value;
+        }
+
+        function getTopRatedUseCase() {
+            let topUseCase = null;
+            let highestScore = 0;
+            
+            for (const [useCase, evaluation] of Object.entries(evaluationResults)) {
+                if (evaluation.totalScore > highestScore) {
+                    highestScore = evaluation.totalScore;
+                    topUseCase = useCase;
+                }
+            }
+            
+            return topUseCase;
+        }
+
+        function selectUseCase(index) {
+            const cards = document.querySelectorAll('.use-case-card');
+            cards.forEach(card => card.classList.remove('selected'));
+            cards[index].classList.add('selected');
+        }
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const percentage = (currentPhase / 7) * 100;
+            progressFill.style.width = percentage + '%';
+        }
+
+        function showHelp() {
+            const helpTexts = {
+                1: "In dieser Phase erfassen wir Ihre Ausgangssituation. Seien Sie ehrlich bei der Einschätzung Ihrer Herausforderungen - das hilft bei der späteren Empfehlung passender Use Cases.",
+                2: "Denken Sie groß! Sammeln Sie alle Ideen, auch wenn sie zunächst unrealistisch erscheinen. Die Bewertung kommt später.",
+                3: "Bewerten Sie realistisch. Eine 5 bedeutet 'sehr gut/einfach', eine 1 bedeutet 'schlecht/schwer'. Bei Unsicherheit wählen Sie 3.",
+                4: "SMART-Ziele sind der Schlüssel zum Erfolg. Je konkreter Sie hier sind, desto besser können Sie später den Erfolg messen.",
+                5: "Diese Use Cases basieren auf realen Erfahrungen aus Ihrer Branche. Die ROI-Angaben sind Durchschnittswerte aus der Praxis.",
+                6: "Die Roadmap ist ein Vorschlag. Passen Sie die Zeiten an Ihre Ressourcen und Prioritäten an.",
+                7: "Monitoring ist entscheidend! Definieren Sie schon jetzt, wie Sie den Erfolg messen wollen."
+            };
+            
+            alert(helpTexts[currentPhase] || "Allgemeine Hilfe: Diese WebApp führt Sie strukturiert durch den KI-Optimierungsprozess. Bei Fragen zu einzelnen Feldern, lesen Sie die Beschreibungen oder kontaktieren Sie Ihren KI-Berater.");
+        }
+
+        function generateReport() {
+            const report = `
+# KI-Transformations-Report für ${userData.companyName || 'Ihr Unternehmen'}
+
+## Zusammenfassung
+**Branche:** ${userData.industry}
+**Unternehmensgröße:** ${userData.companySize}
+**Prioritärer Use Case:** ${getUseCaseLabel(getTopRatedUseCase())}
+
+## Empfohlene nächste Schritte:
+1. Team-Setup und Stakeholder-Alignment
+2. Detailanalyse des prioritären Use Cases
+3. Technologie-Evaluation und Vendor-Auswahl
+4. Pilotprojekt-Definition und -start
+
+## Geschätzter ROI:
+- Zeitrahmen bis ROI: 12-18 Monate
+- Erwartete Kosteneinsparung: 150.000€ - 500.000€ p.a.
+- Produktivitätssteigerung: 20-40%
+
+*Report generiert am: ${new Date().toLocaleDateString('de-DE')}*
+            `;
+            
+            // Create download
+            const blob = new Blob([report], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `KI-Report-${userData.companyName || 'Unternehmen'}-${new Date().toISOString().split('T')[0]}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('📊 Ihr vollständiger KI-Transformations-Report wurde heruntergeladen!');
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.phase-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const phase = parseInt(e.target.dataset.phase);
+                if (phase <= currentPhase || e.target.classList.contains('completed')) {
+                    currentPhase = phase;
+                    showPhase(phase);
+                    updateProgress();
+                }
+            });
+        });
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>

@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Sampling Simulator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #4fc3f7;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #90a4ae;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card h2 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .slider-label {
+            font-weight: 500;
+            color: #b0bec5;
+        }
+        
+        .slider-value {
+            background: #4fc3f7;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .slider-value.topk {
+            background: #81c784;
+        }
+        
+        .slider-value.topp {
+            background: #ffb74d;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #37474f;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #4fc3f7;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(79, 195, 247, 0.5);
+        }
+        
+        input[type="range"].topk::-webkit-slider-thumb {
+            background: #81c784;
+        }
+        
+        input[type="range"].topp::-webkit-slider-thumb {
+            background: #ffb74d;
+        }
+
+        /* Firefox-spezifische Anpassungen */
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #4fc3f7;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(79, 195, 247, 0.5);
+            border: none;
+        }
+        
+        .prob-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .prob-table th, .prob-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .prob-table th {
+            color: #4fc3f7;
+            font-weight: 500;
+        }
+        
+        .prob-bar-container {
+            width: 100%;
+            height: 24px;
+            background: #263238;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .prob-bar {
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .prob-bar-text {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .excluded {
+            opacity: 0.3;
+        }
+        
+        .excluded .prob-bar {
+            background: #546e7a !important;
+        }
+        
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .wheel-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .wheel-outer {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(79, 195, 247, 0.3);
+            overflow: hidden;
+        }
+        
+        #wheel {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); /* Animation in JS definiert */
+        }
+        
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #ff5722;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .spin-btn {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.4);
+        }
+        
+        .spin-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.6);
+        }
+        
+        .spin-btn:disabled {
+            background: #546e7a;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-display {
+            text-align: center;
+            padding: 15px;
+            background: rgba(79, 195, 247, 0.1);
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid transparent;
+        }
+        
+        .result-display.highlight {
+            border-color: #4fc3f7;
+            animation: pulse 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .result-word {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        
+        .result-prob {
+            color: #90a4ae;
+            margin-top: 5px;
+        }
+        
+        .history-container {
+            margin-top: 20px;
+        }
+        
+        .history-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* 6 Spalten für 6 Tokens */
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 700px) {
+             .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .stat-item.excluded {
+            opacity: 0.3;
+        }
+        
+        .stat-word {
+            font-size: 0.9rem;
+            color: #b0bec5;
+        }
+        
+        .stat-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        
+        .stat-percent {
+            font-size: 0.8rem;
+            color: #90a4ae;
+        }
+        
+        .info-box {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-box h3 {
+            color: #ff9800;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .info-box p {
+            color: #b0bec5;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .clear-btn {
+            background: transparent;
+            border: 1px solid #546e7a;
+            color: #90a4ae;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-btn:hover {
+            border-color: #4fc3f7;
+            color: #4fc3f7;
+        }
+        
+        .context-display {
+            background: #263238;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-bottom: 15px;
+        }
+        
+        .context-text {
+            color: #81c784;
+        }
+        
+        .context-cursor {
+            color: #4fc3f7;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .method-pills {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .method-pill.topk {
+            background: rgba(129, 199, 132, 0.2);
+            color: #81c784;
+            border-color: #81c784;
+        }
+        
+        .method-pill.topp {
+            background: rgba(255, 183, 77, 0.2);
+            color: #ffb74d;
+            border-color: #ffb74d;
+        }
+        
+        .method-pill.inactive {
+            opacity: 0.4;
+            border-color: transparent;
+        }
+        
+        .filter-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #90a4ae;
+        }
+        
+        .filter-summary strong {
+            color: #4fc3f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎰 LLM Sampling Simulator</h1>
+        <p class="subtitle">Interaktive Visualisierung von Temperatur, Top-k und Top-p Sampling</p>
+        
+        <div class="main-grid">
+            <div class="card">
+                <h2>⚙️ Parameter</h2>
+                <div class="controls">
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">🌡️ Temperatur</span>
+                            <span class="slider-value" id="temp-value">1.0</span>
+                        </div>
+                        <input type="range" id="temperature" min="0" max="2" step="0.1" value="1.0">
+                    </div>
+                    
+                    <div class="method-pills">
+                        <span class="method-pill topk" id="topk-pill">Top-k aktiv</span>
+                        <span class="method-pill topp" id="topp-pill">Top-p aktiv</span>
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">🔢 Top-k (Anzahl)</span>
+                            <span class="slider-value topk" id="topk-value">6</span>
+                        </div>
+                        <input type="range" class="topk" id="topk" min="1" max="6" step="1" value="6">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">📊 Top-p (Nucleus)</span>
+                            <span class="slider-value topp" id="topp-value">1.0</span>
+                        </div>
+                        <input type="range" class="topp" id="topp" min="0.1" max="1.0" step="0.05" value="1.0">
+                    </div>
+                    
+                    <div class="filter-summary" id="filter-summary">
+                        Alle 6 Tokens aktiv (100% Wahrscheinlichkeitsmasse)
+                    </div>
+                </div>
+                
+                <div class="context-display">
+                    <span class="context-text" id="context-text">Der Himmel</span>
+                    <span class="context-cursor">▌</span>
+                </div>
+                
+                <h2 style="margin-top: 20px;">📊 Wahrscheinlichkeiten</h2>
+                <table class="prob-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Original</th>
+                            <th>Nach Filterung</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prob-body">
+                    </tbody>
+                </table>
+                
+                <div class="info-box">
+                    <h3>💡 Was passiert hier?</h3>
+                    <p id="info-text">
+                        Bei T=1.0 stimmen die gefilterten Wahrscheinlichkeiten mit den Original-Wahrscheinlichkeiten überein, da alle 6 Tokens berücksichtigt werden.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🎡 Sampling Simulation</h2>
+                
+                <div class="wheel-container">
+                    <div class="wheel-wrapper">
+                        <div class="wheel-pointer"></div>
+                        <div class="wheel-outer">
+                            <canvas id="wheel" width="300" height="300"></canvas>
+                        </div>
+                    </div>
+                    
+                    <button class="spin-btn" id="spin-btn" onclick="spin()">
+                        🎲 Token sampeln
+                    </button>
+                    
+                    <div class="result-display" id="result-display" style="display: none;">
+                        <div class="result-word" id="result-word">-</div>
+                        <div class="result-prob" id="result-prob">-</div>
+                    </div>
+                </div>
+                
+                <div class="history-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="margin: 0; border: none; padding: 0;">📜 Sampling-Historie</h2>
+                        <button class="clear-btn" onclick="clearHistory()">Zurücksetzen</button>
+                    </div>
+                    
+                    <div class="stats-grid" id="stats-grid">
+                    </div>
+                    
+                    <div class="history-grid" id="history-grid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Originale Wahrscheinlichkeiten (Summe = 1.0)
+        const originalTokens = [
+            { word: 'ist', prob: 0.30, color: '#4fc3f7' },
+            { word: 'war', prob: 0.20, color: '#81c784' },
+            { word: 'wurde', prob: 0.15, color: '#ffb74d' },
+            { word: 'sei', prob: 0.12, color: '#f06292' },
+            { word: 'wäre', prob: 0.10, color: '#ba68c8' },
+            { word: 'bleibt', prob: 0.13, color: '#ff8a65' } // Summe = 1.00
+        ];
+        
+        const N_TOKENS = originalTokens.length; // 6
+        
+        let currentProbs = [];
+        let activeTokens = [];
+        let history = [];
+        let stats = {};
+        let isSpinning = false;
+        let spinCount = 0; 
+        let segments = [];
+        
+        originalTokens.forEach(t => stats[t.word] = 0);
+        
+        // Initialisierung der Slider-Grenzwerte
+        document.getElementById('topk').max = N_TOKENS;
+        document.getElementById('topk-value').textContent = N_TOKENS;
+        document.getElementById('topk').value = N_TOKENS;
+        
+        
+        function softmax(logits) {
+            const maxLogit = Math.max(...logits);
+            const expLogits = logits.map(l => Math.exp(l - maxLogit));
+            const sumExp = expLogits.reduce((a, b) => a + b, 0);
+            return expLogits.map(e => e / sumExp);
+        }
+        
+        function applyTopK(tokens, k) {
+            return tokens.slice(0, k);
+        }
+        
+        function applyTopP(tokens, p) {
+            let cumulative = 0;
+            let result = [];
+            for (let token of tokens) {
+                result.push(token);
+                cumulative += token.prob;
+                if (cumulative >= p) break;
+            }
+            return result;
+        }
+        
+        function calculateProbs(temperature, topK, topP) {
+            // Sortierung nach Original-Prob
+            let tokens = [...originalTokens].sort((a, b) => b.prob - a.prob);
+            
+            // 1. Top-k Filter anwenden
+            tokens = applyTopK(tokens, topK);
+            
+            // 2. Top-p Filter anwenden
+            if (topP < 1.0) {
+                tokens = applyTopP(tokens, topP);
+            }
+            
+            // Re-Normalisierung der verbleibenden Tokens
+            const sumFiltered = tokens.reduce((sum, t) => sum + t.prob, 0);
+            if (sumFiltered === 0) return [];
+
+            activeTokens = tokens.map(t => t.word);
+            
+            // 3. Anwendung der Temperatur und finale Normalisierung (Softmax)
+            
+            if (temperature === 0) {
+                // Greedy: 100% für das wahrscheinlichste Token (Index 0, da vorsortiert)
+                const maxIndex = 0; // Nach Top-k/Top-p ist das wahrscheinlichste Token an Index 0
+                
+                return tokens.map((t, i) => ({
+                    ...t,
+                    originalProb: originalTokens.find(ot => ot.word === t.word).prob,
+                    adjustedProb: i === maxIndex ? 1.0 : 0.0,
+                    active: true
+                }));
+            }
+            
+            // Logits aus den gefilterten Wahrscheinlichkeiten berechnen
+            const logits = tokens.map(t => Math.log(t.prob));
+            
+            // Softmax anwenden (Temperatur und Re-Normalisierung in einem Schritt)
+            const probs = softmax(logits.map(l => l / temperature));
+            
+            return tokens.map((t, i) => ({
+                ...t,
+                originalProb: originalTokens.find(ot => ot.word === t.word).prob,
+                adjustedProb: probs[i],
+                active: true
+            }));
+        }
+        
+        function updateDisplay() {
+            const temp = parseFloat(document.getElementById('temperature').value);
+            const topK = parseInt(document.getElementById('topk').value);
+            const topP = parseFloat(document.getElementById('topp').value);
+            
+            document.getElementById('temp-value').textContent = temp.toFixed(1);
+            document.getElementById('topk-value').textContent = topK;
+            document.getElementById('topp-value').textContent = topP.toFixed(2);
+            
+            document.getElementById('topk-pill').classList.toggle('inactive', topK >= N_TOKENS);
+            document.getElementById('topp-pill').classList.toggle('inactive', topP >= 1.0);
+            
+            currentProbs = calculateProbs(temp, topK, topP);
+            
+            const activeCount = currentProbs.length;
+            const summaryEl = document.getElementById('filter-summary');
+            
+            let summaryParts = [];
+            if (topK < N_TOKENS) summaryParts.push(`Top-${topK}`);
+            if (topP < 1.0) summaryParts.push(`Top-p=${topP.toFixed(2)}`);
+            
+            if (summaryParts.length > 0) {
+                summaryEl.innerHTML = `<strong>${activeCount} Token${activeCount !== 1 ? 's' : ''}</strong> aktiv nach ${summaryParts.join(' + ')}`;
+            } else {
+                summaryEl.innerHTML = `Alle <strong>${N_TOKENS} Tokens</strong> aktiv`;
+            }
+            
+            const tbody = document.getElementById('prob-body');
+            tbody.innerHTML = '';
+            
+            originalTokens.forEach((token) => {
+                const activeToken = currentProbs.find(t => t.word === token.word);
+                const isActive = !!activeToken;
+                const row = document.createElement('tr');
+                
+                if (!isActive) row.classList.add('excluded');
+                
+                const originalPercent = (token.prob * 100).toFixed(1);
+                const adjustedPercent = isActive ? (activeToken.adjustedProb * 100).toFixed(1) : '0.0';
+                
+                row.innerHTML = `
+                    <td><span style="color: ${token.color}; font-weight: bold;">● ${token.word}</span>
+                        ${!isActive ? '<span style="color: #f44336; font-size: 0.8rem;"> ✗</span>' : ''}
+                    </td>
+                    <td>${originalPercent}%</td>
+                    <td>
+                        <div class="prob-bar-container">
+                            <div class="prob-bar" style="width: ${adjustedPercent}%; background: ${token.color};"></div>
+                            <span class="prob-bar-text">${adjustedPercent}%</span>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            updateInfoText(temp, topK, topP);
+            drawWheel();
+            updateStatsDisplay();
+
+            document.getElementById('spin-btn').disabled = (currentProbs.length === 0) || isSpinning;
+        }
+        
+        function updateInfoText(temp, topK, topP) {
+            const infoText = document.getElementById('info-text');
+            let text = '';
+            
+            if (temp === 0) {
+                text = `<strong>Greedy Decoding (T=0):</strong> Immer das wahrscheinlichste Token. Deterministisch.`;
+            } else if (temp < 0.5) {
+                text = `<strong>Niedrige Temperatur (T=${temp.toFixed(1)}):</strong> Fokussiert auf wahrscheinlichste Tokens.`;
+            } else if (temp <= 1.0) {
+                if (topK === N_TOKENS && topP === 1.0) {
+                     text = `<strong>T=1.0 ohne Filter:</strong> Gefilterte Wahrscheinlichkeiten entsprechen exakt den Original-Wahrscheinlichkeiten, da die Summe 100% beträgt.`;
+                } else {
+                     text = `<strong>Moderate Temperatur (T=${temp.toFixed(1)}):</strong> ${temp === 1.0 ? 'Originalverteilung.' : 'Leicht fokussiert.'}`;
+                }
+            } else {
+                text = `<strong>Hohe Temperatur (T=${temp.toFixed(1)}):</strong> Flachere Verteilung, mehr Zufall.`;
+            }
+            
+            if (topK < N_TOKENS) text += `<br><br><strong>Top-${topK}:</strong> Nur die ${topK} wahrscheinlichsten Tokens.`;
+            if (topP < 1.0) text += `<br><br><strong>Top-p=${topP.toFixed(2)}:</strong> Tokens bis ${(topP * 100).toFixed(0)}% kumulative Wahrscheinlichkeit.`;
+            
+            infoText.innerHTML = text;
+        }
+        
+        function drawWheel() {
+            const canvas = document.getElementById('wheel');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (currentProbs.length === 0) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#37474f';
+                ctx.fill();
+                return;
+            }
+            
+            segments = [];
+            let cumulativeAngle = 0;
+            
+            currentProbs.forEach((token, i) => {
+                const segmentAngle = token.adjustedProb * 360;
+                
+                segments.push({
+                    index: i,
+                    word: token.word,
+                    color: token.color,
+                    prob: token.adjustedProb,
+                    startAngle: cumulativeAngle,
+                    endAngle: cumulativeAngle + segmentAngle
+                });
+                
+                const startRad = (cumulativeAngle - 90) * Math.PI / 180;
+                const endRad = (cumulativeAngle + segmentAngle - 90) * Math.PI / 180;
+                
+                // Segment zeichnen
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startRad, endRad);
+                ctx.closePath();
+                ctx.fillStyle = token.color;
+                ctx.fill();
+                ctx.strokeStyle = '#1a1a2e';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                // Label zeichnen
+                if (token.adjustedProb > 0.05) {
+                    const midAngle = cumulativeAngle + segmentAngle / 2;
+                    const midRad = (midAngle - 90) * Math.PI / 180;
+                    const labelRadius = radius * 0.65;
+                    const labelX = centerX + Math.cos(midRad) * labelRadius;
+                    const labelY = centerY + Math.sin(midRad) * labelRadius;
+                    
+                    ctx.save();
+                    ctx.translate(labelX, labelY);
+                    
+                    ctx.fillStyle = '#1a1a2e';
+                    ctx.font = 'bold 12px Segoe UI';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(token.word, 0, 0);
+                    ctx.restore();
+                }
+                
+                cumulativeAngle += segmentAngle;
+            });
+            
+            // Mittelpunkt
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 15, 0, 2 * Math.PI);
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fill();
+            ctx.strokeStyle = '#4fc3f7';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+        
+        function spin() {
+            if (isSpinning || currentProbs.length === 0) return;
+            
+            const temp = parseFloat(document.getElementById('temperature').value);
+            
+            if (temp === 0) {
+                const winner = currentProbs[0];
+                showResult(winner);
+                return;
+            }
+            
+            isSpinning = true;
+            document.getElementById('spin-btn').disabled = true;
+            document.getElementById('result-display').style.display = 'none';
+            
+            // ===== SCHRITT 1: Token per gewichtetem Sampling auswählen =====
+            const random = Math.random();
+            let cumulative = 0;
+            let winnerIndex = 0;
+            
+            for (let i = 0; i < currentProbs.length; i++) {
+                cumulative += currentProbs[i].adjustedProb;
+                if (random < cumulative) {
+                    winnerIndex = i;
+                    break;
+                }
+            }
+            
+            const winner = currentProbs[winnerIndex];
+            const winnerSegment = segments[winnerIndex];
+            
+            // ===== SCHRITT 2: Zufällige Zielposition im Gewinner-Segment =====
+            const randomOffset = Math.random();
+            const targetAngle = winnerSegment.startAngle + 
+                randomOffset * (winnerSegment.endAngle - winnerSegment.startAngle);
+            
+            // ===== SCHRITT 3: Rotation berechnen (Absolutwert-Logik) =====
+            
+            // R_target: Die Drehung, die notwendig ist, um den targetAngle von der 0°-Position (Start) unter den Pfeil zu bringen.
+            const baseRotation = (360 - targetAngle % 360) % 360;
+            
+            // Normalisierte aktuelle Rotation
+            const currentNormalizedRotation = spinCount * 7 * 360 % 360; 
+            
+            // R_extra: Die zusätzliche Drehung, die von der aktuellen Position aus nötig ist.
+            let extraRotationFromCurrentPos = baseRotation - currentNormalizedRotation;
+            
+            if (extraRotationFromCurrentPos < 0) {
+                extraRotationFromCurrentPos += 360;
+            }
+            
+            // 5 bis 8 Umdrehungen
+            const fullSpins = 5 + Math.floor(Math.random() * 3);
+            
+            // Berechnung der neuen Gesamtrotation
+            const totalRotation = (spinCount * 7 * 360) + fullSpins * 360 + extraRotationFromCurrentPos;
+            
+            spinCount++;
+            
+            // Animation
+            const canvas = document.getElementById('wheel');
+            canvas.style.transform = `rotate(${totalRotation}deg)`;
+            
+            setTimeout(() => {
+                showResult(winner);
+                isSpinning = false;
+                document.getElementById('spin-btn').disabled = false;
+            }, 4000);
+        }
+        
+        function showResult(winner) {
+            const resultDisplay = document.getElementById('result-display');
+            resultDisplay.style.display = 'block';
+            resultDisplay.classList.remove('highlight');
+            void resultDisplay.offsetWidth; // Force reflow
+            resultDisplay.classList.add('highlight');
+            
+            document.getElementById('result-word').textContent = winner.word;
+            document.getElementById('result-word').style.color = winner.color;
+            document.getElementById('result-prob').textContent = 
+                `Wahrscheinlichkeit: ${(winner.adjustedProb * 100).toFixed(1)}%`;
+            
+            history.push(winner);
+            stats[winner.word]++;
+            updateHistory();
+            
+            document.getElementById('context-text').textContent += ' ' + winner.word;
+        }
+        
+        function updateStatsDisplay() {
+            const statsGrid = document.getElementById('stats-grid');
+            statsGrid.innerHTML = '';
+            
+            const total = history.length;
+            
+            originalTokens.forEach(token => {
+                const count = stats[token.word] || 0;
+                const percent = total > 0 ? (count / total * 100).toFixed(0) : 0;
+                const isActive = activeTokens.includes(token.word);
+                
+                const div = document.createElement('div');
+                div.className = 'stat-item' + (isActive ? '' : ' excluded');
+                div.innerHTML = `
+                    <div class="stat-word" style="color: ${token.color};">${token.word}</div>
+                    <div class="stat-count">${count}</div>
+                    <div class="stat-percent">${percent}%</div>
+                `;
+                statsGrid.appendChild(div);
+            });
+        }
+        
+        function updateHistory() {
+            updateStatsDisplay();
+            
+            const historyGrid = document.getElementById('history-grid');
+            historyGrid.innerHTML = '';
+            
+            history.slice(-30).forEach((token) => {
+                const span = document.createElement('span');
+                span.className = 'history-item';
+                span.style.background = token.color + '33';
+                span.style.color = token.color;
+                span.textContent = token.word;
+                historyGrid.appendChild(span);
+            });
+            
+            historyGrid.scrollTop = historyGrid.scrollHeight;
+        }
+        
+        function clearHistory() {
+            history = [];
+            originalTokens.forEach(t => stats[t.word] = 0);
+            updateHistory();
+            document.getElementById('result-display').style.display = 'none';
+            document.getElementById('context-text').textContent = 'Der Himmel';
+            
+            const canvas = document.getElementById('wheel');
+            canvas.style.transition = 'none';
+            canvas.style.transform = 'rotate(0deg)';
+            spinCount = 0;
+            
+            setTimeout(() => {
+                canvas.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+            }, 50);
+        }
+        
+        document.getElementById('temperature').addEventListener('input', updateDisplay);
+        document.getElementById('topk').addEventListener('input', updateDisplay);
+        document.getElementById('topp').addEventListener('input', updateDisplay);
+        
+        updateDisplay();
+    </script>
+</body>
+</html>

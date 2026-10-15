@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Architekturen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .architecture-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .architecture-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .architecture-card.active {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .architecture-visual {
+            height: 120px;
+            margin: 20px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .component {
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 0 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .encoder {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .decoder {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #666;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .use-cases {
+            margin-top: 20px;
+        }
+
+        .use-case-item {
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .examples {
+            margin-top: 15px;
+        }
+
+        .example-models {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .model-tag {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .details-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .interactive-demo {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .demo-output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            min-height: 60px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #2196F3;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            cursor: help;
+            margin-left: 5px;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .architecture-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Transformer Architekturen</h1>
+            <p class="subtitle">Entdecke die drei grundlegenden Transformer-Architektur-Typen</p>
+        </header>
+
+        <div class="architecture-grid">
+            <!-- Encoder-only -->
+            <div class="architecture-card" data-type="encoder-only">
+                <h3 class="card-title">🔍 Encoder-only</h3>
+                <div class="architecture-visual">
+                    <div class="component encoder">Input → Encoder</div>
+                    <div class="arrow">→</div>
+                    <div class="component encoder">Representation</div>
+                </div>
+                <div class="use-cases">
+                    <strong>Hauptverwendung:</strong>
+                    <div class="use-case-item">Embedding-Erzeugung für RAG-Systeme</div>
+                    <div class="use-case-item">Sentiment-Analyse und Klassifikation</div>
+                    <div class="use-case-item">Named Entity Recognition</div>
+                    <div class="use-case-item">Semantic Search und Ähnlichkeitssuche</div>
+                </div>
+                <div class="examples">
+                    <strong>Bekannte Modelle:</strong>
+                    <div class="example-models">
+                        <span class="model-tag">BERT</span>
+                        <span class="model-tag">RoBERTa</span>
+                        <span class="model-tag">DeBERTa</span>
+                        <span class="model-tag">sentence-transformers</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decoder-only -->
+            <div class="architecture-card" data-type="decoder-only">
+                <h3 class="card-title">✍️ Decoder-only</h3>
+                <div class="architecture-visual">
+                    <div class="component decoder">Input → Decoder</div>
+                    <div class="arrow">→</div>
+                    <div class="component decoder">Next Token</div>
+                </div>
+                <div class="use-cases">
+                    <strong>Hauptverwendung:</strong>
+                    <div class="use-case-item">Chat-Systeme und Konversation</div>
+                    <div class="use-case-item">Textgenerierung und Creative Writing</div>
+                    <div class="use-case-item">Code-Generierung und -Vervollständigung</div>
+                    <div class="use-case-item">LLMs (7B-540B) und SLMs (1M-7B Parameter)</div>
+                </div>
+                <div class="examples">
+                    <strong>Bekannte Modelle:</strong>
+                    <div class="example-models">
+                        <span class="model-tag">GPT-4</span>
+                        <span class="model-tag">Claude</span>
+                        <span class="model-tag">LLaMA</span>
+                        <span class="model-tag">Gemini</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encoder-Decoder -->
+            <div class="architecture-card" data-type="encoder-decoder">
+                <h3 class="card-title">🔄 Encoder-Decoder</h3>
+                <div class="architecture-visual">
+                    <div class="component encoder">Encoder</div>
+                    <div class="arrow">→</div>
+                    <div class="component decoder">Decoder</div>
+                    <div class="arrow">→</div>
+                    <div class="component encoder">Output</div>
+                </div>
+                <div class="use-cases">
+                    <strong>Hauptverwendung:</strong>
+                    <div class="use-case-item">Maschinelle Übersetzung</div>
+                    <div class="use-case-item">Text-Zusammenfassung</div>
+                    <div class="use-case-item">T5's "Text-to-Text" Paradigma</div>
+                    <div class="use-case-item">Strukturelle Text-Transformationen</div>
+                </div>
+                <div class="examples">
+                    <strong>Bekannte Modelle:</strong>
+                    <div class="example-models">
+                        <span class="model-tag">T5</span>
+                        <span class="model-tag">BART</span>
+                        <span class="model-tag">Pegasus</span>
+                        <span class="model-tag">mT5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailpanel -->
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Wähle eine Architektur aus</h3>
+            <div id="details-content">
+                <p>Klicke auf eine der Karten oben, um detaillierte Informationen zu erhalten.</p>
+            </div>
+        </div>
+
+        <!-- Vergleichstabelle -->
+        <div class="interactive-demo">
+            <h3>📊 Architektur-Vergleich</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspekt</th>
+                        <th>Encoder-only</th>
+                        <th>Decoder-only</th>
+                        <th>Encoder-Decoder</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Architektur-Typ</strong></td>
+                        <td><strong>Bidirektionale Modelle</strong><br><em>(Encoder-only)</em></td>
+                        <td><strong>Autoregressive Modelle</strong><br><em>(Decoder-only)</em></td>
+                        <td><strong>Encoder-Decoder Modelle</strong><br><em>(Kombination beider)</em></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Attention</strong></td>
+                        <td>Self-Attention (bidirektional)</td>
+                        <td>Causal Self-Attention</td>
+                        <td>Self- + Cross-Attention</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Moderne LLMs</strong></td>
+                        <td>Embedding-Modelle (BERT-Familie)</td>
+                        <td><strong>GPT-4, Claude, Gemini</strong></td>
+                        <td>T5, BART, Pegasus</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Training</strong></td>
+                        <td>Masked Language Modeling</td>
+                        <td>Next Token Prediction</td>
+                        <td>Teacher Forcing (Seq2Seq)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stärken</strong></td>
+                        <td>Exzellente Textanalyse, schnell</td>
+                        <td>Hohe Textqualität, natürliche Gespräche</td>
+                        <td>Flexible Transformationen, Strukturwandel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Typische Anwendung</strong></td>
+                        <td>Embeddings für RAG-Systeme</td>
+                        <td>Chat-Systeme und LLMs</td>
+                        <td>T5's Text-to-Text Paradigma</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Interaktive Demo -->
+        <div class="interactive-demo">
+            <h3>🎮 Interaktive Demo</h3>
+            <p>Teste verschiedene Eingaben und sehe, wie sie von verschiedenen Architekturen verarbeitet würden:</p>
+            
+            <input type="text" class="demo-input" id="demo-input" placeholder="Gib einen Beispieltext ein..." value="Das Wetter heute ist wunderschön.">
+            
+            <div style="margin: 20px 0;">
+                <label>
+                    <input type="radio" name="task" value="classification" checked> 
+                    Klassifikation (Encoder-only)
+                </label>
+                <label style="margin-left: 20px;">
+                    <input type="radio" name="task" value="generation"> 
+                    Generierung (Decoder-only)
+                </label>
+                <label style="margin-left: 20px;">
+                    <input type="radio" name="task" value="translation"> 
+                    Übersetzung (Encoder-Decoder)
+                </label>
+            </div>
+            
+            <button class="demo-button" onclick="runDemo()">Demo ausführen</button>
+            
+            <div class="demo-output" id="demo-output">
+                Wähle eine Task-Art und klicke auf "Demo ausführen"
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Architektur-Details
+        const architectureDetails = {
+            'encoder-only': {
+                title: '🔍 Encoder-only Architektur',
+                content: `
+                    <h4>Funktionsweise:</h4>
+                    <p>Encoder-only Modelle verarbeiten Input-Sequenzen und erstellen reichhaltige Repräsentationen, die für Verständnis-Tasks optimiert sind.</p>
+                    
+                    <h4>Self-Attention (bidirektional):</h4>
+                    <p>Diese Modelle können auf den gesamten Kontext (links und rechts) zugreifen, was sie ideal für Verständnis-Aufgaben macht.</p>
+                    
+                    <h4>Training:</h4>
+                    <p>Mit Masked Language Modeling (MLM) und Next Sentence Prediction trainiert - zufällige Tokens werden maskiert und das Modell lernt sie basierend auf bidirektionalem Kontext vorherzusagen.</p>
+                    
+                    <h4>Vorteile:</h4>
+                    <ul>
+                        <li>Exzellent für Text-Klassifikation</li>
+                        <li>Starke kontextuelle Repräsentationen</li>
+                        <li>Effizient für Verständnis-Tasks</li>
+                    </ul>
+                    
+                    <h4>Nachteile:</h4>
+                    <ul>
+                        <li>Nicht für Textgenerierung geeignet</li>
+                        <li>Benötigt zusätzliche Schichten für spezifische Tasks</li>
+                    </ul>
+                `
+            },
+            'decoder-only': {
+                title: '✍️ Decoder-only Architektur',
+                content: `
+                    <h4>Funktionsweise:</h4>
+                    <p>Decoder-only Modelle generieren Text autoregressiv - sie produzieren ein Token nach dem anderen basierend auf dem vorherigen Kontext.</p>
+                    
+                    <h4>Causal Self-Attention:</h4>
+                    <p>Diese Modelle können nur auf vorherige Tokens zugreifen (maskierte/kausale Attention), was sie für Generierung optimiert.</p>
+                    
+                    <h4>Training:</h4>
+                    <p>Mit Next Token Prediction trainiert - das Modell lernt das nächste Token in einer Sequenz vorherzusagen basierend auf dem mathematischen Prinzip P(Wort_n | Wort_1, ..., Wort_n-1).</p>
+                    
+                    <h4>Vorteile:</h4>
+                    <ul>
+                        <li>Natürliche Textgenerierung</li>
+                        <li>Skaliert gut mit Größe</li>
+                        <li>Vielseitig für verschiedene Generierungs-Tasks</li>
+                        <li>In-Context Learning möglich</li>
+                    </ul>
+                    
+                    <h4>Nachteile:</h4>
+                    <ul>
+                        <li>Weniger effizient für reine Verständnis-Tasks</li>
+                        <li>Kann bei langen Kontexten Schwierigkeiten haben</li>
+                    </ul>
+                `
+            },
+            'encoder-decoder': {
+                title: '🔄 Encoder-Decoder Architektur',
+                content: `
+                    <h4>Funktionsweise:</h4>
+                    <p>Encoder-Decoder Modelle kombinieren das Beste aus beiden Welten: bidirektionales Verständnis im Encoder und autoregressive Generierung im Decoder.</p>
+                    
+                    <h4>Self- + Cross-Attention:</h4>
+                    <p>Der Encoder nutzt bidirektionale Self-Attention, während der Decoder sowohl Causal Self-Attention als auch Cross-Attention auf Encoder-Repräsentationen verwendet.</p>
+                    
+                    <h4>Training:</h4>
+                    <p>Mit Teacher Forcing für Sequenz-zu-Sequenz Aufgaben trainiert - dem Decoder wird während des Trainings die korrekte Zielsequenz gezeigt, während er bei der Inferenz seine eigenen Vorhersagen verwenden muss.</p>
+                    
+                    <h4>Vorteile:</h4>
+                    <ul>
+                        <li>Flexible Input-/Output-Längen</li>
+                        <li>Exzellent für Übersetzung und Zusammenfassung</li>
+                        <li>Kann komplexe Transformationen durchführen</li>
+                        <li>Gute Kontrolle über Output-Generation</li>
+                    </ul>
+                    
+                    <h4>Nachteile:</h4>
+                    <ul>
+                        <li>Komplexere Architektur</li>
+                        <li>Mehr Parameter als reine Encoder/Decoder</li>
+                        <li>Aufwendigeres Training</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Event Listeners für Karten
+        document.querySelectorAll('.architecture-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Alle Karten deaktivieren
+                document.querySelectorAll('.architecture-card').forEach(c => c.classList.remove('active'));
+                
+                // Aktuelle Karte aktivieren
+                this.classList.add('active');
+                
+                // Details anzeigen
+                const type = this.dataset.type;
+                const details = architectureDetails[type];
+                
+                document.getElementById('details-title').textContent = details.title;
+                document.getElementById('details-content').innerHTML = details.content;
+                document.getElementById('details-panel').classList.add('active');
+            });
+        });
+
+        // Demo-Funktion
+        function runDemo() {
+            const input = document.getElementById('demo-input').value;
+            const task = document.querySelector('input[name="task"]:checked').value;
+            const output = document.getElementById('demo-output');
+            
+            if (!input.trim()) {
+                output.innerHTML = '<span style="color: red;">Bitte gib einen Text ein!</span>';
+                return;
+            }
+            
+            let result = '';
+            
+            switch(task) {
+                case 'classification':
+                    // Simuliere Encoder-only Klassifikation mit einfacher regelbasierter Analyse
+                    const positiveWords = ['wunderschön', 'toll', 'super', 'fantastisch', 'großartig', 'liebe', 'freue', 'glücklich', 'perfekt', 'ausgezeichnet'];
+                    const negativeWords = ['schlecht', 'furchtbar', 'schrecklich', 'hasse', 'traurig', 'böse', 'ärgerlich', 'katastrophal', 'enttäuscht'];
+                    
+                    const inputLower = input.toLowerCase();
+                    const hasPositive = positiveWords.some(word => inputLower.includes(word));
+                    const hasNegative = negativeWords.some(word => inputLower.includes(word));
+                    
+                    let sentiment;
+                    if (hasPositive && !hasNegative) {
+                        sentiment = 'Positiv 😊';
+                    } else if (hasNegative && !hasPositive) {
+                        sentiment = 'Negativ 😞';
+                    } else if (hasPositive && hasNegative) {
+                        sentiment = 'Gemischt 🤔';
+                    } else {
+                        sentiment = 'Neutral 😐';
+                    }
+                    
+                    result = `
+                        <strong>Encoder-only Klassifikation:</strong><br>
+                        <strong>Input:</strong> "${input}"<br>
+                        <strong>Sentiment:</strong> ${sentiment}<br>
+                        <em>Hinweis: Dies ist eine vereinfachte regelbasierte Simulation zu Demonstrationszwecken.</em>
+                    `;
+                    break;
+                    
+                case 'generation':
+                    // Simuliere Decoder-only Generierung
+                    const continuations = [
+                        ' Es scheint ein perfekter Tag für einen Spaziergang zu sein.',
+                        ' Die Sonne scheint hell und die Vögel singen.',
+                        ' Solche Tage machen einfach glücklich.',
+                        ' Man sollte die schönen Momente im Leben schätzen.'
+                    ];
+                    const randomContinuation = continuations[Math.floor(Math.random() * continuations.length)];
+                    result = `
+                        <strong>Decoder-only Generierung:</strong><br>
+                        <strong>Input:</strong> "${input}"<br>
+                        <strong>Fortsetzung:</strong> "${input}${randomContinuation}"<br>
+                        <em>Hinweis: Dies ist eine simulierte Ausgabe zu Demonstrationszwecken.</em>
+                    `;
+                    break;
+                    
+                case 'translation':
+                    // Simuliere Encoder-Decoder Übersetzung
+                    const translations = {
+                        'Das Wetter heute ist wunderschön.': 'The weather today is beautiful.',
+                        'Hallo, wie geht es dir?': 'Hello, how are you?',
+                        'Ich liebe es zu programmieren.': 'I love to program.'
+                    };
+                    const translation = translations[input] || 'The translation would appear here.';
+                    result = `
+                        <strong>Encoder-Decoder Übersetzung:</strong><br>
+                        <strong>Deutsch:</strong> "${input}"<br>
+                        <strong>Englisch:</strong> "${translation}"<br>
+                        <em>Hinweis: Dies ist eine simulierte Ausgabe zu Demonstrationszwecken.</em>
+                    `;
+                    break;
+            }
+            
+            output.innerHTML = result;
+        }
+
+        // Erste Karte als Standard auswählen
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.architecture-card').click();
+        });
+    </script>
+</body>
+</html>

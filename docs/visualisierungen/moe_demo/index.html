@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mixture of Experts – Interaktive Visualisierung</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a25;
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --accent-router: #ff6b35;
+            --accent-expert-1: #00d4aa;
+            --accent-expert-2: #7c4dff;
+            --accent-expert-3: #ff4081;
+            --accent-expert-4: #00b0ff;
+            --accent-expert-5: #ffab00;
+            --accent-expert-6: #69f0ae;
+            --accent-expert-7: #ea80fc;
+            --accent-expert-8: #40c4ff;
+            --accent-inactive: #2a2a35;
+            --border: #2a2a35;
+            --glow: rgba(255, 107, 53, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-router) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-router);
+            border-radius: 50%;
+        }
+
+        /* Input Section */
+        .input-section textarea {
+            width: 100%;
+            height: 100px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            resize: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-section textarea:focus {
+            outline: none;
+            border-color: var(--accent-router);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-router) 0%, #ff8f65 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-router);
+        }
+
+        /* Settings */
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 0.9rem;
+        }
+
+        .setting-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent-router);
+        }
+
+        input[type="range"] {
+            width: 120px;
+            accent-color: var(--accent-router);
+        }
+
+        /* Visualization Area */
+        .viz-container {
+            min-height: 500px;
+            position: relative;
+        }
+
+        /* Token Display */
+        .tokens-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            min-height: 50px;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+        }
+
+        .token {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .token.active {
+            border-color: var(--accent-router);
+            box-shadow: 0 0 15px var(--glow);
+            transform: scale(1.05);
+        }
+
+        .token.processed {
+            opacity: 0.5;
+        }
+
+        /* Router */
+        .router-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .router-box {
+            width: 200px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+            border: 2px solid var(--accent-router);
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .router-box::before {
+            content: 'GATING';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-router);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .router-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .router-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .current-token-display {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-router);
+        }
+
+        /* Experts Grid */
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .expert-card {
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expert-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--expert-color, var(--border));
+            transition: height 0.3s;
+        }
+
+        .expert-card.active {
+            border-color: var(--expert-color);
+            box-shadow: 0 0 25px color-mix(in srgb, var(--expert-color) 30%, transparent);
+            transform: translateY(-4px);
+        }
+
+        .expert-card.active::before {
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .expert-card.inactive {
+            opacity: 0.3;
+            filter: grayscale(0.8);
+        }
+
+        .expert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .expert-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .expert-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .expert-card.active .expert-status {
+            background: var(--expert-color);
+            box-shadow: 0 0 10px var(--expert-color);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .expert-name {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .expert-score-bar {
+            height: 6px;
+            background: var(--bg-dark);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .expert-score-fill {
+            height: 100%;
+            background: var(--expert-color, var(--border));
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .expert-score-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-align: right;
+            color: var(--text-secondary);
+        }
+
+        .expert-card.active .expert-score-value {
+            color: var(--expert-color);
+            font-weight: 600;
+        }
+
+        /* Stats Panel */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-router) 0%, var(--accent-expert-1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .stat-detail {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .comparison-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .comparison-card.moe {
+            border-color: var(--accent-expert-1);
+        }
+
+        .comparison-card.dense {
+            border-color: var(--accent-expert-3);
+        }
+
+        .comparison-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-title .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .comparison-card.moe .dot { background: var(--accent-expert-1); }
+        .comparison-card.dense .dot { background: var(--accent-expert-3); }
+
+        .param-bar {
+            height: 24px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .param-fill {
+            height: 100%;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            padding-left: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .comparison-card.moe .param-fill {
+            background: linear-gradient(90deg, var(--accent-expert-1), var(--accent-expert-2));
+        }
+
+        .comparison-card.dense .param-fill {
+            background: linear-gradient(90deg, var(--accent-expert-3), var(--accent-expert-7));
+        }
+
+        /* Animation Lines */
+        .connection-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Info Tooltip */
+        .info-box {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: var(--accent-router);
+        }
+
+        /* Speed indicator */
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .speed-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .experts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .experts-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mixture of Experts</h1>
+            <p class="subtitle">Interaktive Visualisierung der Sparse-Activation-Architektur</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left Panel: Input & Settings -->
+            <div class="left-column">
+                <div class="panel input-section">
+                    <div class="panel-title">Eingabe</div>
+                    <textarea id="inputText" placeholder="Text eingeben...">Python ist eine Programmiersprache für maschinelles Lernen.</textarea>
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="startVisualization()">
+                            ▶ Starten
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetVisualization()">
+                            ↺ Reset
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top: 1rem;">
+                    <div class="panel-title">MoE Konfiguration</div>
+                    <div class="setting-row">
+                        <span class="setting-label">Anzahl Experten</span>
+                        <span class="setting-value" id="numExpertsValue">8</span>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">Top-K Aktivierung</span>
+                        <div>
+                            <input type="range" id="topK" min="1" max="4" value="2" onchange="updateTopK()">
+                            <span class="setting-value" id="topKValue">2</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">Gesamt-Parameter</span>
+                        <span class="setting-value">47B</span>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">Aktive Parameter</span>
+                        <span class="setting-value" id="activeParams">~13B</span>
+                    </div>
+                    
+                    <div class="speed-control">
+                        <span class="speed-label">Geschwindigkeit:</span>
+                        <input type="range" id="speedSlider" min="1" max="5" value="3">
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top: 1rem;">
+                    <div class="panel-title">Legende</div>
+                    <div class="info-box">
+                        <strong>Router (Gating):</strong> Berechnet Scores für alle Experten basierend auf dem Input-Token.<br><br>
+                        <strong>Top-K Selection:</strong> Nur die K Experten mit den höchsten Scores werden aktiviert.<br><br>
+                        <strong>Sparse Activation:</strong> Die inaktiven Experten verbrauchen keine Rechenzeit.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Visualization -->
+            <div class="panel viz-container">
+                <div class="panel-title">Token-zu-Experten Routing</div>
+                
+                <!-- Tokens -->
+                <div class="tokens-row" id="tokensContainer">
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Klicke "Starten" um die Tokens zu sehen...
+                    </span>
+                </div>
+
+                <!-- Router -->
+                <div class="router-section">
+                    <div class="router-box">
+                        <div class="router-title">Router</div>
+                        <div class="router-subtitle">Softmax Gating Function</div>
+                        <div class="current-token-display" id="currentToken">—</div>
+                    </div>
+                </div>
+
+                <!-- Experts Grid -->
+                <div class="experts-grid" id="expertsGrid">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="processedTokens">0</div>
+                <div class="stat-label">Verarbeitete Tokens</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalExpertCalls">0</div>
+                <div class="stat-label">Experten-Aufrufe</div>
+                <div class="stat-detail">Bei Dense: <span id="denseComparison">0</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="efficiencyGain">0%</div>
+                <div class="stat-label">Rechenersparnis</div>
+                <div class="stat-detail">vs. Dense Model</div>
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="comparison-section">
+            <div class="comparison-card moe">
+                <div class="comparison-title">
+                    <span class="dot"></span>
+                    Sparse MoE (z.B. Mixtral 8x7B)
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                    47B Parameter gesamt, ~13B aktiv pro Token
+                </div>
+                <div class="param-bar">
+                    <div class="param-fill" id="moeBar" style="width: 28%;">~13B aktiv</div>
+                </div>
+                <div style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    ✓ Schnelle Inferenz &nbsp; ✓ Mehr Wissen &nbsp; ✓ Kosteneffizient
+                </div>
+            </div>
+            <div class="comparison-card dense">
+                <div class="comparison-title">
+                    <span class="dot"></span>
+                    Dense Model (z.B. Llama 70B)
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                    70B Parameter, alle aktiv pro Token
+                </div>
+                <div class="param-bar">
+                    <div class="param-fill" id="denseBar" style="width: 100%;">70B aktiv</div>
+                </div>
+                <div style="font-size: 0.8rem; margin-top: 0.5rem;">
+                    ✓ Einfacher zu trainieren &nbsp; ✓ Weniger VRAM für Weights
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Expert configuration
+        const expertColors = [
+            '#00d4aa', '#7c4dff', '#ff4081', '#00b0ff',
+            '#ffab00', '#69f0ae', '#ea80fc', '#40c4ff'
+        ];
+        
+        const expertNames = [
+            'Syntax & Struktur',
+            'Semantik & Bedeutung',
+            'Code & Technik',
+            'Kreativ & Stil',
+            'Fakten & Wissen',
+            'Logik & Reasoning',
+            'Sprache & Übersetzung',
+            'Kontext & Referenz'
+        ];
+
+        let numExperts = 8;
+        let topK = 2;
+        let tokens = [];
+        let currentTokenIndex = 0;
+        let isRunning = false;
+        let animationTimeout = null;
+        let totalExpertCalls = 0;
+        let processedCount = 0;
+
+        // Initialize experts grid
+        function initExpertsGrid() {
+            const grid = document.getElementById('expertsGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < numExperts; i++) {
+                const card = document.createElement('div');
+                card.className = 'expert-card';
+                card.id = `expert-${i}`;
+                card.style.setProperty('--expert-color', expertColors[i]);
+                card.innerHTML = `
+                    <div class="expert-header">
+                        <span class="expert-id">E${i + 1}</span>
+                        <span class="expert-status"></span>
+                    </div>
+                    <div class="expert-name">${expertNames[i]}</div>
+                    <div class="expert-score-bar">
+                        <div class="expert-score-fill" id="score-fill-${i}"></div>
+                    </div>
+                    <div class="expert-score-value" id="score-value-${i}">0%</div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        // Simple tokenizer (word-based for visualization)
+        function tokenize(text) {
+            return text.split(/(\s+|[.,!?;:])/).filter(t => t.trim().length > 0);
+        }
+
+        // Generate fake expert scores based on token content
+        function generateExpertScores(token) {
+            const scores = [];
+            let total = 0;
+            
+            // Generate pseudo-random but consistent scores based on token
+            for (let i = 0; i < numExperts; i++) {
+                // Create a simple hash-based score
+                let score = 0;
+                for (let j = 0; j < token.length; j++) {
+                    score += token.charCodeAt(j) * (i + 1) * (j + 1);
+                }
+                score = (score % 100) / 100;
+                
+                // Boost certain experts based on token characteristics
+                if (i === 2 && /[A-Z]/.test(token[0])) score += 0.3; // Code/Tech for capitalized
+                if (i === 0 && /[.,!?;:]/.test(token)) score += 0.5; // Syntax for punctuation
+                if (i === 4 && token.length > 6) score += 0.2; // Facts for longer words
+                if (i === 6 && /[äöüß]/i.test(token)) score += 0.4; // Language for German chars
+                
+                scores.push(Math.max(0.05, Math.min(0.95, score)));
+                total += scores[i];
+            }
+            
+            // Normalize to sum to 1 (softmax-like)
+            return scores.map(s => s / total);
+        }
+
+        // Update expert visualization
+        function updateExperts(scores, activeIndices) {
+            for (let i = 0; i < numExperts; i++) {
+                const card = document.getElementById(`expert-${i}`);
+                const fill = document.getElementById(`score-fill-${i}`);
+                const value = document.getElementById(`score-value-${i}`);
+                
+                const score = scores[i];
+                const percentage = Math.round(score * 100);
+                
+                fill.style.width = `${percentage}%`;
+                value.textContent = `${percentage}%`;
+                
+                if (activeIndices.includes(i)) {
+                    card.classList.add('active');
+                    card.classList.remove('inactive');
+                } else {
+                    card.classList.remove('active');
+                    card.classList.add('inactive');
+                }
+            }
+        }
+
+        // Reset all experts to neutral state
+        function resetExperts() {
+            for (let i = 0; i < numExperts; i++) {
+                const card = document.getElementById(`expert-${i}`);
+                const fill = document.getElementById(`score-fill-${i}`);
+                const value = document.getElementById(`score-value-${i}`);
+                
+                card.classList.remove('active', 'inactive');
+                fill.style.width = '0%';
+                value.textContent = '0%';
+            }
+        }
+
+        // Get top-k indices
+        function getTopK(scores, k) {
+            const indexed = scores.map((score, idx) => ({ score, idx }));
+            indexed.sort((a, b) => b.score - a.score);
+            return indexed.slice(0, k).map(item => item.idx);
+        }
+
+        // Start visualization
+        function startVisualization() {
+            if (isRunning) return;
+            
+            const text = document.getElementById('inputText').value;
+            tokens = tokenize(text);
+            currentTokenIndex = 0;
+            totalExpertCalls = 0;
+            processedCount = 0;
+            isRunning = true;
+            
+            // Display tokens
+            const container = document.getElementById('tokensContainer');
+            container.innerHTML = '';
+            tokens.forEach((token, idx) => {
+                const span = document.createElement('span');
+                span.className = 'token';
+                span.id = `token-${idx}`;
+                span.textContent = token;
+                span.onclick = () => processToken(idx);
+                container.appendChild(span);
+            });
+            
+            updateStats();
+            processNextToken();
+        }
+
+        // Process next token
+        function processNextToken() {
+            if (currentTokenIndex >= tokens.length) {
+                isRunning = false;
+                document.getElementById('currentToken').textContent = '✓ Fertig';
+                return;
+            }
+            
+            processToken(currentTokenIndex);
+            currentTokenIndex++;
+            
+            const speed = 6 - document.getElementById('speedSlider').value;
+            animationTimeout = setTimeout(processNextToken, speed * 400);
+        }
+
+        // Process a specific token
+        function processToken(idx) {
+            const token = tokens[idx];
+            
+            // Update token highlighting
+            document.querySelectorAll('.token').forEach((el, i) => {
+                el.classList.remove('active');
+                if (i < idx) el.classList.add('processed');
+            });
+            document.getElementById(`token-${idx}`).classList.add('active');
+            
+            // Update router display
+            document.getElementById('currentToken').textContent = `"${token}"`;
+            
+            // Generate and display scores
+            const scores = generateExpertScores(token);
+            const activeIndices = getTopK(scores, topK);
+            
+            updateExperts(scores, activeIndices);
+            
+            // Update stats
+            processedCount = idx + 1;
+            totalExpertCalls += topK;
+            updateStats();
+        }
+
+        // Update statistics display
+        function updateStats() {
+            document.getElementById('processedTokens').textContent = processedCount;
+            document.getElementById('totalExpertCalls').textContent = totalExpertCalls;
+            
+            const denseEquivalent = processedCount * numExperts;
+            document.getElementById('denseComparison').textContent = denseEquivalent;
+            
+            const efficiency = denseEquivalent > 0 
+                ? Math.round((1 - totalExpertCalls / denseEquivalent) * 100)
+                : 0;
+            document.getElementById('efficiencyGain').textContent = `${efficiency}%`;
+        }
+
+        // Reset visualization
+        function resetVisualization() {
+            if (animationTimeout) clearTimeout(animationTimeout);
+            isRunning = false;
+            currentTokenIndex = 0;
+            totalExpertCalls = 0;
+            processedCount = 0;
+            
+            document.getElementById('tokensContainer').innerHTML = `
+                <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                    Klicke "Starten" um die Tokens zu sehen...
+                </span>
+            `;
+            document.getElementById('currentToken').textContent = '—';
+            resetExperts();
+            updateStats();
+        }
+
+        // Update top-K setting
+        function updateTopK() {
+            topK = parseInt(document.getElementById('topK').value);
+            document.getElementById('topKValue').textContent = topK;
+            
+            // Update active params display (rough calculation based on Mixtral-like architecture)
+            const activeB = Math.round(5.6 * topK + 1.6); // ~5.6B per expert + shared params
+            document.getElementById('activeParams').textContent = `~${activeB}B`;
+            
+            // Update MoE bar
+            const percentage = Math.round((activeB / 47) * 100);
+            document.getElementById('moeBar').style.width = `${percentage}%`;
+            document.getElementById('moeBar').textContent = `~${activeB}B aktiv`;
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initExpertsGrid();
+            updateTopK();
+        });
+    </script>
+</body>
+</html>

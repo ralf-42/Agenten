@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuronale Netze - Training mit Forward & Backward Propagation</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121a2b;
+            --bg-tertiary: #1a2540;
+            --text-primary: #e8edf5;
+            --text-secondary: #8b9dc3;
+            --text-muted: #5a6a8a;
+            --accent-forward: #00d4aa;
+            --accent-forward-glow: rgba(0, 212, 170, 0.4);
+            --accent-backward: #ff6b9d;
+            --accent-backward-glow: rgba(255, 107, 157, 0.4);
+            --accent-neutral: #4a90d9;
+            --accent-warning: #f39c12;
+            --neuron-input: #3498db;
+            --neuron-hidden: #9b59b6;
+            --neuron-output: #e67e22;
+            --connection: #2d3a52;
+            --connection-active: #00d4aa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1500px; margin: 0 auto; padding: 1.5rem; }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-forward) 0%, var(--accent-neutral) 50%, var(--accent-backward) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle { color: var(--text-secondary); font-size: 1rem; font-weight: 300; }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 1.5rem;
+        }
+
+        .left-column { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .visualization-area {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--bg-tertiary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualization-area::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-forward), var(--accent-backward), transparent);
+            opacity: 0.5;
+        }
+
+        #network-canvas { width: 100%; height: 450px; display: block; }
+
+        .phase-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .phase {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            opacity: 0.4;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+        }
+
+        .phase.active { opacity: 1; }
+        .phase.forward.active { background: rgba(0,212,170,0.15); box-shadow: 0 0 15px var(--accent-forward-glow); }
+        .phase.backward.active { background: rgba(255,107,157,0.15); box-shadow: 0 0 15px var(--accent-backward-glow); }
+        .phase.update.active { background: rgba(243,156,18,0.15); box-shadow: 0 0 15px rgba(243,156,18,0.4); }
+
+        .phase-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
+        .phase.forward .phase-dot { background: var(--accent-forward); }
+        .phase.backward .phase-dot { background: var(--accent-backward); }
+        .phase.update .phase-dot { background: var(--accent-warning); }
+        .phase-label { font-weight: 600; font-size: 0.85rem; }
+
+        .chart-area {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .chart-stats { display: flex; gap: 1.5rem; }
+        .stat { text-align: right; }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+        .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 600; }
+        .stat-value.epoch { color: var(--accent-neutral); }
+        .stat-value.loss { color: var(--accent-backward); }
+        .stat-value.accuracy { color: var(--accent-forward); }
+
+        #loss-canvas { width: 100%; height: 140px; display: block; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 1rem; max-width: 340px; }
+
+        .panel {
+            background: var(--bg-secondary);
+            border-radius: 14px;
+            padding: 1.25rem;
+            border: 1px solid var(--bg-tertiary);
+            overflow: hidden;
+        }
+
+        .panel-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.875rem;
+        }
+
+        .controls { display: flex; flex-direction: column; gap: 0.6rem; }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary { background: linear-gradient(135deg, var(--accent-forward) 0%, #00b894 100%); color: var(--bg-primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-forward-glow); }
+        .btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid #2d3a52; }
+        .btn-secondary:hover { background: #243350; border-color: var(--accent-neutral); }
+        .btn-warning { background: linear-gradient(135deg, var(--accent-warning) 0%, #e67e22 100%); color: var(--bg-primary); }
+        .btn-warning:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(243,156,18,0.4); }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        .input-group { margin-bottom: 0.875rem; overflow: hidden; width: 100%; }
+        .input-label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        .input-row { display: flex; gap: 0.5rem; width: 100%; max-width: 100%; }
+
+        .input-field {
+            flex: 1 1 0;
+            min-width: 0;
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid #2d3a52;
+            border-radius: 6px;
+            padding: 0.5rem 0.25rem;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: border-color 0.25s ease;
+            box-sizing: border-box;
+            -moz-appearance: textfield;
+        }
+
+        .input-field::-webkit-outer-spin-button,
+        .input-field::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .input-field:focus { outline: none; border-color: var(--accent-neutral); }
+
+        .slider-group { margin-bottom: 0.875rem; }
+        .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .slider-value { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-neutral); }
+
+        .slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 5px;
+            border-radius: 3px;
+            background: var(--bg-tertiary);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--accent-neutral);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .info-box { background: var(--bg-tertiary); border-radius: 8px; padding: 0.75rem; }
+        .info-box.full { grid-column: 1 / -1; }
+        .info-title { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.3rem; text-transform: uppercase; }
+        .info-value { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 600; }
+        .info-value.forward { color: var(--accent-forward); }
+        .info-value.backward { color: var(--accent-backward); }
+        .info-value.neutral { color: var(--accent-neutral); }
+
+        .explanation { background: var(--bg-tertiary); border-radius: 10px; padding: 1rem; min-height: 100px; }
+        .explanation-step { font-size: 0.7rem; color: var(--accent-neutral); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+        .explanation-text { font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary); }
+
+        .formula {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-secondary);
+            padding: 0.6rem 0.875rem;
+            border-radius: 6px;
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--accent-forward);
+            border-left: 3px solid var(--accent-forward);
+        }
+
+        .formula.backward { color: var(--accent-backward); border-left-color: var(--accent-backward); }
+        .formula.update { color: var(--accent-warning); border-left-color: var(--accent-warning); }
+        .formula-concrete {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-secondary);
+            padding: 0.45rem 0.875rem;
+            border-radius: 6px;
+            margin-top: 0.35rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--text-muted);
+            opacity: 0.85;
+        }
+
+        .legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .legend-dot.input { background: var(--neuron-input); }
+        .legend-dot.hidden { background: var(--neuron-hidden); }
+        .legend-dot.output { background: var(--neuron-output); }
+
+        .convergence-badge {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(0,212,170,0.15);
+            border: 1px solid var(--accent-forward);
+            border-radius: 8px;
+            color: var(--accent-forward);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .convergence-badge.show { display: flex; }
+
+        /* Aktuelle Werte — horizontale Leiste unter dem Chart */
+        .metrics-bar {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+        .metrics-bar .panel-title {
+            margin-bottom: 0.75rem;
+        }
+        .metrics-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .metrics-row .info-box {
+            flex: 1 1 120px;
+            min-width: 0;
+        }
+        .metrics-row .info-box.wide {
+            flex: 2 1 240px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .sidebar { grid-template-columns: 1fr; }
+            .phase-indicator { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Training eines Neuronalen Netzes</h1>
+        <p class="subtitle">Forward & Backward Propagation · Hidden: ReLU · Output: Sigmoid · Loss: Binary Cross-Entropy</p>
+    </header>
+
+    <div class="main-layout">
+        <div class="left-column">
+            <div class="visualization-area">
+                <canvas id="network-canvas"></canvas>
+                <div class="phase-indicator">
+                    <div class="phase forward" id="phase-forward">
+                        <span class="phase-dot"></span>
+                        <span class="phase-label">Forward</span>
+                    </div>
+                    <div class="phase backward" id="phase-backward">
+                        <span class="phase-dot"></span>
+                        <span class="phase-label">Backward</span>
+                    </div>
+                    <div class="phase update" id="phase-update">
+                        <span class="phase-dot"></span>
+                        <span class="phase-label">Update</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-area">
+                <div class="chart-header">
+                    <span class="chart-title">Trainingsverlauf (Loss über Epochen)</span>
+                    <div class="chart-stats">
+                        <div class="stat">
+                            <div class="stat-label">Epoche</div>
+                            <div class="stat-value epoch" id="epoch-display">0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Loss</div>
+                            <div class="stat-value loss" id="loss-display">—</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Δ Loss</div>
+                            <div class="stat-value accuracy" id="delta-display">—</div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="loss-canvas"></canvas>
+            </div>
+
+            <!-- Aktuelle Werte — horizontal unter dem Chart -->
+            <div class="metrics-bar">
+                <div class="panel-title">Aktuelle Werte</div>
+                <div class="metrics-row">
+                    <div class="info-box">
+                        <div class="info-title">Output (ŷ)</div>
+                        <div class="info-value forward" id="current-output">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Loss</div>
+                        <div class="info-value backward" id="current-loss">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Abweichung (y − ŷ)</div>
+                        <div class="info-value neutral" id="current-diff">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Hidden h₁</div>
+                        <div class="info-value neutral" id="hidden-1">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Hidden h₂</div>
+                        <div class="info-value neutral" id="hidden-2">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Hidden h₃</div>
+                        <div class="info-value neutral" id="hidden-3">—</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-title">Grad. Output (δ)</div>
+                        <div class="info-value backward" id="grad-output">—</div>
+                    </div>
+                    <div class="info-box wide">
+                        <div class="info-title">Gradienten Hidden (δ₁ | δ₂ | δ₃)</div>
+                        <div class="info-value backward" id="grad-hidden">—</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="panel">
+                <div class="panel-title">Steuerung</div>
+                <div class="controls">
+                    <button class="btn btn-primary" id="btn-step">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                        1 Schritt
+                    </button>
+                    <button class="btn btn-warning" id="btn-train10">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                        10 Epochen trainieren
+                    </button>
+                    <button class="btn btn-secondary" id="btn-reset">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                        Komplett zurücksetzen
+                    </button>
+                    <div class="convergence-badge" id="convergence-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Konvergiert!
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Parameter</div>
+                <div class="input-group">
+                    <label class="input-label">Eingabe (x₁, x₂)</label>
+                    <div class="input-row">
+                        <input type="number" class="input-field" id="input-1" value="0.5" step="0.1">
+                        <input type="number" class="input-field" id="input-2" value="0.8" step="0.1">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Zielwert (y)</label>
+                    <input type="number" class="input-field" id="target" value="1.0" step="0.1" min="0" max="1" style="width: 100%;">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="input-label">Lernrate (η)</span>
+                        <span class="slider-value" id="lr-value">0.5</span>
+                    </div>
+                    <input type="range" class="slider" id="lr-slider" min="0.1" max="2" step="0.1" value="0.5">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span class="input-label">Animationstempo</span>
+                        <span class="slider-value" id="speed-value">1x</span>
+                    </div>
+                    <input type="range" class="slider" id="speed-slider" min="0.5" max="3" step="0.5" value="1">
+                </div>
+            </div>
+
+
+
+            <div class="panel">
+                <div class="panel-title">Erklärung</div>
+                <div class="explanation" id="explanation">
+                    <div class="explanation-step">Bereit</div>
+                    <div class="explanation-text">
+                        Starte das Training, um zu beobachten, wie das Netzwerk lernt. Mit jeder Iteration werden die Gewichte angepasst, um den Loss zu minimieren.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Legende</div>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-dot input"></span>Input</div>
+                    <div class="legend-item"><span class="legend-dot hidden"></span>Hidden</div>
+                    <div class="legend-item"><span class="legend-dot output"></span>Output</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// IIFE — kapselt alles, vermeidet Kollisionen mit p5.js-Globals
+// (setup, draw, reset, frameCount …). Kein async/await — nur
+// setTimeout + requestAnimationFrame, damit p5.js nichts blockiert.
+(function() {
+'use strict';
+
+// ─── Canvas & UI ─────────────────────────────────────────────────────────────
+const canvas    = document.getElementById('network-canvas');
+const ctx       = canvas.getContext('2d');
+const lossCanvas = document.getElementById('loss-canvas');
+const lossCtx   = lossCanvas.getContext('2d');
+
+const btnStep   = document.getElementById('btn-step');
+const btnTrain10 = document.getElementById('btn-train10');
+const btnReset  = document.getElementById('btn-reset');
+const speedSlider = document.getElementById('speed-slider');
+const speedValue  = document.getElementById('speed-value');
+const lrSlider  = document.getElementById('lr-slider');
+const lrValue   = document.getElementById('lr-value');
+const input1    = document.getElementById('input-1');
+const input2    = document.getElementById('input-2');
+const targetInput = document.getElementById('target');
+const currentOutput = document.getElementById('current-output');
+const currentLoss   = document.getElementById('current-loss');
+const currentDiff   = document.getElementById('current-diff');
+const explanationEl = document.getElementById('explanation');
+const phaseForward  = document.getElementById('phase-forward');
+const phaseBackward = document.getElementById('phase-backward');
+const phaseUpdate   = document.getElementById('phase-update');
+const epochDisplay  = document.getElementById('epoch-display');
+const lossDisplay   = document.getElementById('loss-display');
+const deltaDisplay  = document.getElementById('delta-display');
+const convergenceBadge = document.getElementById('convergence-badge');
+const hiddenDisp = [
+    document.getElementById('hidden-1'),
+    document.getElementById('hidden-2'),
+    document.getElementById('hidden-3')
+];
+const gradOutputDisp = document.getElementById('grad-output');
+const gradHiddenDisp = document.getElementById('grad-hidden');
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let animationSpeed = 1;
+let learningRate   = 0.5;
+let isRunning      = false;
+let currentStep    = 0;
+let epoch          = 0;
+let lossHistory    = [];
+let hasConverged   = false;
+
+// ─── Network ─────────────────────────────────────────────────────────────────
+const network = {
+    weights: {
+        hidden: [[0.3,0.4],[0.5,0.6],[0.7,0.2]],
+        output: [[0.5,0.4,0.3]]
+    },
+    biases: {
+        hidden: [0.1, 0.05, 0.15],
+        output: [-0.5]
+    },
+    activations: {
+        input:   [0.5, 0.8],
+        hiddenZ: [0, 0, 0],
+        hidden:  [0, 0, 0],
+        outputZ: [0],
+        output:  [0]
+    },
+    gradients: { hidden: [0,0,0], output: [0] }
+};
+
+const initialWeights = JSON.parse(JSON.stringify(network.weights));
+const initialBiases  = JSON.parse(JSON.stringify(network.biases));
+
+let neuronPositions = { input:[], hidden:[], output:[] };
+let activeConnections = [];
+let activeNeurons     = [];
+let weightChanges     = [];
+
+const colors = {
+    input:    '#3498db',
+    hidden:   '#9b59b6',
+    output:   '#e67e22',
+    connection:'#2d3a52',
+    forward:  '#00d4aa',
+    backward: '#ff6b9d',
+    update:   '#f39c12'
+};
+
+// ─── Math ────────────────────────────────────────────────────────────────────
+const sigmoid  = x => 1 / (1 + Math.exp(-Math.max(-500, Math.min(500, x))));
+const sigPrime = x => x * (1 - x); // nicht mehr fuer Loss-Gradient benoetigt (BCE+Sigmoid vereinfacht)
+const relu     = x => Math.max(0, x);
+const reluPrime= x => x > 0 ? 1 : 0;
+
+// ─── FIX: centralised input reader ──────────────────────────────────────────
+function getInputs() {
+    return [parseFloat(input1.value) || 0, parseFloat(input2.value) || 0];
+}
+
+function getTarget() { return parseFloat(targetInput.value) || 0; }
+
+// ─── Forward pass ────────────────────────────────────────────────────────────
+function forwardPass() {
+    // FIX: always read current UI values before computing
+    network.activations.input = getInputs();
+    const inputs = network.activations.input;
+
+    for (let h = 0; h < 3; h++) {
+        let sum = network.biases.hidden[h];
+        for (let i = 0; i < 2; i++) sum += inputs[i] * network.weights.hidden[h][i];
+        network.activations.hiddenZ[h] = sum;
+        network.activations.hidden[h]  = relu(sum);
+    }
+
+    let sum = network.biases.output[0];
+    for (let h = 0; h < 3; h++) sum += network.activations.hidden[h] * network.weights.output[0][h];
+    network.activations.outputZ[0] = sum;
+    network.activations.output[0]  = sigmoid(sum);
+
+    return network.activations.output[0];
+}
+
+// ─── Backward pass ───────────────────────────────────────────────────────────
+function backwardPass() {
+    const target = getTarget();
+    const output = network.activations.output[0];
+
+    // BCE + Sigmoid: kombinierter Gradient vereinfacht sich zu (output - target)
+    // (Sigmoid-Ableitung kuerzt sich mit BCE-Gradient heraus)
+    network.gradients.output[0] = output - target;
+
+    for (let h = 0; h < 3; h++) {
+        network.gradients.hidden[h] =
+            network.gradients.output[0] *
+            network.weights.output[0][h] *
+            reluPrime(network.activations.hiddenZ[h]);
+    }
+
+    // BCE Loss: -[y*log(y_hat) + (1-y)*log(1-y_hat)]
+    var eps = 1e-15; // Numerische Stabilitaet (log(0) vermeiden)
+    var yh  = Math.min(Math.max(output, eps), 1 - eps);
+    return -(target * Math.log(yh) + (1 - target) * Math.log(1 - yh));
+}
+
+// ─── Weight update ───────────────────────────────────────────────────────────
+function updateWeights() {
+    weightChanges = [];
+
+    // Gradient Descent: w -= lr * gradient
+    // BCE-Gradient grad_out = yhat - y (kein negatives Vorzeichen wie bei MSE)
+    for (let h = 0; h < 3; h++) {
+        const delta = learningRate * network.gradients.output[0] * network.activations.hidden[h];
+        weightChanges.push({ layer:'output', h, i:0, delta: -delta, oldWeight: network.weights.output[0][h] });
+        network.weights.output[0][h] -= delta;
+    }
+    network.biases.output[0] -= learningRate * network.gradients.output[0];
+
+    for (let h = 0; h < 3; h++) {
+        for (let i = 0; i < 2; i++) {
+            const delta = learningRate * network.gradients.hidden[h] * network.activations.input[i];
+            weightChanges.push({ layer:'hidden', h, i, delta: -delta, oldWeight: network.weights.hidden[h][i] });
+            network.weights.hidden[h][i] -= delta;
+        }
+        network.biases.hidden[h] -= learningRate * network.gradients.hidden[h];
+    }
+}
+
+// ─── Canvas resize ────────────────────────────────────────────────────────────
+function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width  = rect.width - 48;
+    canvas.height = 450;
+    const lossRect = lossCanvas.parentElement.getBoundingClientRect();
+    lossCanvas.width  = lossRect.width - 40;
+    lossCanvas.height = 140;
+    calculateNeuronPositions();
+    renderNetwork();
+    drawLossChart();
+}
+
+function calculateNeuronPositions() {
+    const w = canvas.width, h = canvas.height, padding = 80;
+    const layerWidth = (w - padding * 2) / 2;
+    neuronPositions = { input:[], hidden:[], output:[] };
+
+    const iSp = (h - padding*2) / 3;
+    for (let i = 0; i < 2; i++)
+        neuronPositions.input.push({ x: padding, y: padding + iSp + i*iSp });
+
+    const hSp = (h - padding*2) / 4;
+    for (let i = 0; i < 3; i++)
+        neuronPositions.hidden.push({ x: padding+layerWidth, y: padding+hSp+i*hSp });
+
+    neuronPositions.output.push({ x: w-padding, y: h/2 });
+}
+
+// ─── Drawing helpers ─────────────────────────────────────────────────────────
+function shadeColor(color, percent) {
+    const num = parseInt(color.replace('#',''), 16), amt = Math.round(2.55*percent);
+    const R = (num>>16)+amt, G = (num>>8&0x00FF)+amt, B = (num&0x0000FF)+amt;
+    return '#'+(0x1000000+(R<255?R<1?0:R:255)*0x10000+(G<255?G<1?0:G:255)*0x100+(B<255?B<1?0:B:255)).toString(16).slice(1);
+}
+
+function drawWeightLabel(x, y, weight, active, type, delta) {
+    const absW = Math.abs(weight);
+    const text = absW>=10 ? weight.toFixed(1) : weight.toFixed(2);
+    ctx.font = 'bold 11px JetBrains Mono';
+    const tw = ctx.measureText(text).width;
+    const bw = tw+8, bh = 16;
+
+    ctx.fillStyle = active
+        ? (type==='update' ? 'rgba(243,156,18,0.95)' : type==='backward' ? 'rgba(255,107,157,0.95)' : 'rgba(0,212,170,0.95)')
+        : 'rgba(26,37,64,0.95)';
+    ctx.beginPath();
+    ctx.roundRect(x-bw/2, y-bh/2, bw, bh, 4);
+    ctx.fill();
+
+    ctx.strokeStyle = active
+        ? (type==='update' ? '#f39c12' : type==='backward' ? '#ff6b9d' : '#00d4aa')
+        : '#3d4a6a';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = active ? '#0a0e17' : '#a8b8d8';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, x, y);
+
+    if (type==='update' && delta!=null && Math.abs(delta)>0.00001) {
+        const dt = (delta>=0?'+':'')+delta.toFixed(4);
+        ctx.font = 'bold 9px JetBrains Mono';
+        const dw = ctx.measureText(dt).width+6, dy = y+bh/2+10;
+        ctx.fillStyle = delta>=0 ? 'rgba(0,212,170,0.9)' : 'rgba(255,107,157,0.9)';
+        ctx.beginPath(); ctx.roundRect(x-dw/2, dy-7, dw, 14, 3); ctx.fill();
+        ctx.fillStyle = '#0a0e17';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(dt, x, dy);
+    }
+}
+
+function getWeightLabelPosition(from, to, offset=0.35, perpOffset=0) {
+    const x = from.x+(to.x-from.x)*offset, y = from.y+(to.y-from.y)*offset;
+    const dx=to.x-from.x, dy=to.y-from.y, len=Math.sqrt(dx*dx+dy*dy);
+    return { x: x+(-dy/len*perpOffset), y: y+(dx/len*perpOffset) };
+}
+
+function drawConnection(from, to, weight, active, type, progress) {
+    ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y);
+    const bw = Math.abs(weight)*2.5+0.5;
+    ctx.lineWidth = active ? bw+1 : bw;
+    if (active) {
+        ctx.strokeStyle = type==='backward' ? colors.backward : type==='update' ? colors.update : colors.forward;
+        ctx.shadowColor = ctx.strokeStyle; ctx.shadowBlur = 12;
+    } else {
+        ctx.strokeStyle = colors.connection; ctx.shadowBlur = 0;
+    }
+    ctx.stroke(); ctx.shadowBlur = 0;
+
+    if (active && progress>0 && progress<1) {
+        const bwd = type==='backward';
+        const sx = bwd ? to.x+(from.x-to.x)*progress : from.x+(to.x-from.x)*progress;
+        const sy = bwd ? to.y+(from.y-to.y)*progress : from.y+(to.y-from.y)*progress;
+        ctx.beginPath(); ctx.arc(sx, sy, 6, 0, Math.PI*2);
+        ctx.fillStyle = ctx.strokeStyle; ctx.shadowColor = ctx.strokeStyle; ctx.shadowBlur = 15;
+        ctx.fill(); ctx.shadowBlur = 0;
+    }
+}
+
+function drawAllWeightLabels() {
+    const ihOffsets = [[0.30,-18],[0.30,18],[0.45,-15],[0.45,15],[0.30,-18],[0.30,18]];
+    let idx=0;
+    for (let h=0; h<3; h++) {
+        for (let i=0; i<2; i++) {
+            const conn = activeConnections.find(c=>c.from===`i${i}`&&c.to===`h${h}`);
+            const [lp,po] = ihOffsets[idx];
+            const pos = getWeightLabelPosition(neuronPositions.input[i], neuronPositions.hidden[h], lp, po);
+            const wc  = weightChanges.find(w=>w.layer==='hidden'&&w.h===h&&w.i===i);
+            drawWeightLabel(pos.x, pos.y, network.weights.hidden[h][i],
+                !!conn, conn?.type||'none', (conn?.type==='update'&&wc)?wc.delta:null);
+            idx++;
+        }
+    }
+    const hoOffsets = [[0.65,-22],[0.65,0],[0.65,22]];
+    for (let h=0; h<3; h++) {
+        const conn = activeConnections.find(c=>c.from===`h${h}`&&c.to==='o0');
+        const [lp,po] = hoOffsets[h];
+        const pos = getWeightLabelPosition(neuronPositions.hidden[h], neuronPositions.output[0], lp, po);
+        const wc  = weightChanges.find(w=>w.layer==='output'&&w.h===h);
+        drawWeightLabel(pos.x, pos.y, network.weights.output[0][h],
+            !!conn, conn?.type||'none', (conn?.type==='update'&&wc)?wc.delta:null);
+    }
+}
+
+function drawNeuron(x, y, radius, color, value, active, gradient, label, bias) {
+    if (active) {
+        ctx.beginPath(); ctx.arc(x, y, radius+8, 0, Math.PI*2);
+        const glow = ctx.createRadialGradient(x, y, radius, x, y, radius+15);
+        glow.addColorStop(0, color+'60'); glow.addColorStop(1,'transparent');
+        ctx.fillStyle = glow; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI*2);
+    const grad = ctx.createRadialGradient(x-radius/3, y-radius/3, 0, x, y, radius);
+    grad.addColorStop(0, color); grad.addColorStop(1, shadeColor(color,-30));
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.strokeStyle = active ? '#fff' : shadeColor(color,20);
+    ctx.lineWidth = active ? 2.5 : 1.5; ctx.stroke();
+
+    if (value !== null) {
+        ctx.fillStyle = '#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        const av = Math.abs(value);
+        ctx.font = av>=100 ? 'bold 10px JetBrains Mono' : av>=10 ? 'bold 10px JetBrains Mono' : 'bold 11px JetBrains Mono';
+        ctx.fillText(av>=100?value.toFixed(1):av>=10?value.toFixed(2):value.toFixed(3), x, y);
+    }
+    if (gradient!==null && Math.abs(gradient)>0.0001) {
+        // Gradient auf 4-Uhr-Position (dx=0.866, dy=0.5)
+        var gText = 'δ: ' + gradient.toFixed(3);
+        ctx.font = '9px JetBrains Mono';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        var gDist = radius + 34;
+        var gCx = x + 0.866 * gDist;
+        var gCy = y + 0.5   * gDist;
+        var gw = ctx.measureText(gText).width + 6;
+        ctx.fillStyle = 'rgba(255,107,157,0.20)';
+        ctx.beginPath();
+        ctx.roundRect(gCx - gw/2, gCy - 7, gw, 14, 3);
+        ctx.fill();
+        ctx.fillStyle = colors.backward;
+        ctx.fillText(gText, gCx, gCy);
+    }
+    if (label) {
+        ctx.fillStyle='#8b9dc3'; ctx.font='11px Outfit'; ctx.textAlign='center';
+        ctx.fillText(label, x, y-radius-8);
+    }
+    // Bias-Wert auf 7-Uhr-Position (dx=-0.5, dy=0.866)
+    if (bias !== undefined && bias !== null) {
+        var biasText = 'b=' + (bias >= 0 ? '+' : '') + bias.toFixed(2);
+        ctx.font = '9px JetBrains Mono';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        var bDist = radius + 34;
+        var bCx = x + (-0.866) * bDist;
+        var bCy = y + 0.5    * bDist;
+        var bw = ctx.measureText(biasText).width + 6;
+        ctx.fillStyle = 'rgba(243,156,18,0.22)';
+        ctx.beginPath();
+        ctx.roundRect(bCx - bw/2, bCy - 7, bw, 14, 3);
+        ctx.fill();
+        ctx.fillStyle = '#f39c12';
+        ctx.fillText(biasText, bCx, bCy);
+    }
+}
+
+function renderNetwork() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const showValues   = currentStep >= 1;
+    const showGradients = currentStep>=4 && currentStep<=6;
+
+    for (let h=0; h<3; h++) for (let i=0; i<2; i++) {
+        const conn = activeConnections.find(c=>c.from===`i${i}`&&c.to===`h${h}`);
+        drawConnection(neuronPositions.input[i], neuronPositions.hidden[h],
+            network.weights.hidden[h][i], !!conn, conn?.type||'none', conn?.progress||0);
+    }
+    for (let h=0; h<3; h++) {
+        const conn = activeConnections.find(c=>c.from===`h${h}`&&c.to==='o0');
+        drawConnection(neuronPositions.hidden[h], neuronPositions.output[0],
+            network.weights.output[0][h], !!conn, conn?.type||'none', conn?.progress||0);
+    }
+
+    drawAllWeightLabels();
+
+    for (let i=0; i<2; i++) {
+        const pos=neuronPositions.input[i];
+        drawNeuron(pos.x, pos.y, 26, colors.input,
+            network.activations.input[i], activeNeurons.includes(`i${i}`), null, `x${i+1}`);
+    }
+    for (let h=0; h<3; h++) {
+        const pos=neuronPositions.hidden[h];
+        drawNeuron(pos.x, pos.y, 26, colors.hidden,
+            showValues?network.activations.hidden[h]:null,
+            activeNeurons.includes(`h${h}`),
+            showGradients?network.gradients.hidden[h]:null, `h${h+1}`,
+            network.biases.hidden[h]);
+    }
+    const op=neuronPositions.output[0];
+    drawNeuron(op.x, op.y, 30, colors.output,
+        showValues?network.activations.output[0]:null,
+        activeNeurons.includes('o0'),
+        showGradients?network.gradients.output[0]:null, 'ŷ',
+        network.biases.output[0]);
+
+    ctx.fillStyle='#5a6a8a'; ctx.font='600 10px Outfit'; ctx.textAlign='center';
+    ctx.fillText('INPUT',  neuronPositions.input[0].x,  22);
+    ctx.fillText('HIDDEN', neuronPositions.hidden[0].x, 22);
+    ctx.fillText('OUTPUT', neuronPositions.output[0].x, 22);
+}
+
+// ─── Loss chart ───────────────────────────────────────────────────────────────
+function drawLossChart() {
+    const w=lossCanvas.width, h=lossCanvas.height;
+    const pad={top:10,right:10,bottom:25,left:45};
+    lossCtx.clearRect(0,0,w,h);
+    lossCtx.fillStyle='#0d1219';
+    lossCtx.fillRect(pad.left,pad.top,w-pad.left-pad.right,h-pad.top-pad.bottom);
+
+    if (!lossHistory.length) {
+        lossCtx.fillStyle='#5a6a8a'; lossCtx.font='12px Outfit'; lossCtx.textAlign='center';
+        lossCtx.fillText('Starte Training, um den Verlauf zu sehen', w/2, h/2);
+        return;
+    }
+
+    const cw=w-pad.left-pad.right, ch=h-pad.top-pad.bottom;
+    const maxLoss=Math.max(...lossHistory,0.1);
+
+    lossCtx.strokeStyle='#1a2540'; lossCtx.lineWidth=1;
+    for (let i=0;i<=4;i++) {
+        const y=pad.top+(ch/4)*i;
+        lossCtx.beginPath(); lossCtx.moveTo(pad.left,y); lossCtx.lineTo(w-pad.right,y); lossCtx.stroke();
+        lossCtx.fillStyle='#5a6a8a'; lossCtx.font='9px JetBrains Mono'; lossCtx.textAlign='right';
+        lossCtx.fillText((maxLoss-(maxLoss/4)*i).toFixed(3), pad.left-5, y+3);
+    }
+    lossCtx.fillStyle='#5a6a8a'; lossCtx.font='10px Outfit'; lossCtx.textAlign='center';
+    lossCtx.fillText('Epochen', w/2, h-5);
+
+    if (lossHistory.length>1) {
+        const xs=cw/Math.max(lossHistory.length-1,1);
+        const gradient=lossCtx.createLinearGradient(0,pad.top,0,h-pad.bottom);
+        gradient.addColorStop(0,'rgba(255,107,157,0.3)'); gradient.addColorStop(1,'rgba(255,107,157,0)');
+        lossCtx.beginPath(); lossCtx.moveTo(pad.left,pad.top+ch);
+        for (let i=0;i<lossHistory.length;i++) {
+            lossCtx.lineTo(pad.left+i*xs, pad.top+ch-(lossHistory[i]/maxLoss)*ch);
+        }
+        lossCtx.lineTo(pad.left+(lossHistory.length-1)*xs, pad.top+ch);
+        lossCtx.closePath(); lossCtx.fillStyle=gradient; lossCtx.fill();
+
+        lossCtx.beginPath();
+        for (let i=0;i<lossHistory.length;i++) {
+            const x=pad.left+i*xs, y=pad.top+ch-(lossHistory[i]/maxLoss)*ch;
+            i===0?lossCtx.moveTo(x,y):lossCtx.lineTo(x,y);
+        }
+        lossCtx.strokeStyle=colors.backward; lossCtx.lineWidth=2; lossCtx.stroke();
+
+        const lx=pad.left+(lossHistory.length-1)*xs;
+        const ly=pad.top+ch-(lossHistory[lossHistory.length-1]/maxLoss)*ch;
+        lossCtx.beginPath(); lossCtx.arc(lx,ly,5,0,Math.PI*2);
+        lossCtx.fillStyle=colors.backward; lossCtx.fill();
+        lossCtx.strokeStyle='#fff'; lossCtx.lineWidth=2; lossCtx.stroke();
+    }
+}
+
+// ─── Displays ────────────────────────────────────────────────────────────────
+function updateHiddenOnly() {
+    for (var hi=0;hi<3;hi++) {
+        hiddenDisp[hi].textContent = network.activations.hidden[hi].toFixed(4);
+    }
+}
+
+function updateDisplays() {
+    const output=network.activations.output[0], target=getTarget();
+    var eps=1e-15, yh=Math.min(Math.max(output,eps),1-eps);
+    const loss=-(target*Math.log(yh)+(1-target)*Math.log(1-yh)), diff=target-output;
+    currentOutput.textContent = output.toFixed(4);
+    currentLoss.textContent   = loss.toFixed(4);
+    currentDiff.textContent   = (diff>=0?'+':'')+diff.toFixed(4);
+    epochDisplay.textContent  = epoch;
+    lossDisplay.textContent   = loss.toFixed(4);
+    if (lossHistory.length>1) {
+        const d=lossHistory[lossHistory.length-1]-lossHistory[lossHistory.length-2];
+        deltaDisplay.textContent = (d>=0?'+':'')+d.toFixed(5);
+    }
+    if (loss<0.01 && !hasConverged) { hasConverged=true; convergenceBadge.classList.add('show'); }
+    // Hidden-Aktivierungen
+    for (var hi=0;hi<3;hi++) {
+        hiddenDisp[hi].textContent = network.activations.hidden[hi].toFixed(4);
+    }
+    // Gradienten (werden erst nach backwardPass befüllt)
+    gradOutputDisp.textContent = network.gradients.output[0].toFixed(4);
+    gradHiddenDisp.textContent = network.gradients.hidden.map(function(g){return g.toFixed(4);}).join(' | ');
+}
+
+// ─── Animation — reine requestAnimationFrame, kein async/await ───────────────
+// Zustand: welche Connections gerade animiert werden
+let animConnTimer  = null;   // rAF handle während Connection-Animation
+let stepTimer      = null;   // setTimeout handle zwischen Schritten
+let fastTimer      = null;   // setTimeout handle für schnelles Training
+
+// Startet Connection-Animation; ruft onDone() wenn fertig
+function animateConnections(onDone) {
+    const duration = 600 / animationSpeed;
+    const startTime = performance.now();
+    function tick(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        activeConnections.forEach(c => c.progress = progress);
+        renderNetwork();
+        if (progress < 1) {
+            animConnTimer = requestAnimationFrame(tick);
+        } else {
+            animConnTimer = null;
+            if (onDone) onDone();
+        }
+    }
+    animConnTimer = requestAnimationFrame(tick);
+}
+
+// ─── Step-Definitionen ────────────────────────────────────────────────────────
+// Jeder Step hat: syncAction() — läuft sofort;
+//                 animAction(onDone) — optional, läuft mit Animation + ruft onDone()
+const stepDefs = [
+    {
+        name:'forward_input', title:'Schritt 1 – Eingabe',
+        text:'Die zwei Eingabewerte x₁ und x₂ werden ins Netzwerk gegeben. Das sind die Merkmale, aus denen das Netz eine Vorhersage berechnet.',
+        formula:'x₁ = {x1}, x₂ = {x2}', concrete:'', type:'forward',
+        syncAction() {
+            network.activations.input = getInputs();
+            activeNeurons = ['i0','i1'];
+            phaseForward.classList.add('active');
+            phaseBackward.classList.remove('active');
+            phaseUpdate.classList.remove('active');
+        }
+    },
+    {
+        name:'forward_hidden', title:'Schritt 2 – Hidden Layer',
+        text:'Jedes Hidden-Neuron berechnet eine gewichtete Summe seiner Eingaben und addiert den Bias. Negative Ergebnisse werden auf 0 gesetzt (ReLU). Der Knotenwert zeigt das Ergebnis nach ReLU.',
+        formula:'h = ReLU(x₁·w₁ + x₂·w₂ + b)', concrete:'h₁ = ReLU({x1}·{wh00} + {x2}·{wh01} + {bh0}) = {h1z} → {h1}\nh₂ = ReLU({x1}·{wh10} + {x2}·{wh11} + {bh1}) = {h2z} → {h2}\nh₃ = ReLU({x1}·{wh20} + {x2}·{wh21} + {bh2}) = {h3z} → {h3}', type:'forward',
+        syncAction() {
+            for (let h=0;h<3;h++) for (let i=0;i<2;i++)
+                activeConnections.push({from:`i${i}`,to:`h${h}`,progress:0,type:'forward'});
+        },
+        animAction(onDone) {
+            animateConnections(function() {
+                forwardPass();
+                updateHiddenOnly();
+                activeNeurons = ['h0','h1','h2'];
+                activeConnections = [];
+                renderNetwork();
+                onDone();
+            });
+        }
+    },
+    {
+        name:'forward_output', title:'Schritt 3 – Vorhersage (Output)',
+        text:'Das Output-Neuron bündelt alle Hidden-Werte, gewichtet sie und wendet Sigmoid an. Sigmoid quetscht das Ergebnis auf einen Wert zwischen 0 und 1 — die Vorhersage ŷ.',
+        formula:'ŷ = σ(h₁·w₁ + h₂·w₂ + h₃·w₃ + b)', concrete:'ŷ = σ({h1}·{wo0} + {h2}·{wo1} + {h3}·{wo2} + {bo}) = σ({z_out}) = {output}', type:'forward',
+        syncAction() {
+            for (let h=0;h<3;h++)
+                activeConnections.push({from:`h${h}`,to:'o0',progress:0,type:'forward'});
+        },
+        animAction(onDone) {
+            animateConnections(function() {
+                activeNeurons = ['o0'];
+                activeConnections = [];
+                updateDisplays();
+                renderNetwork();
+                onDone();
+            });
+        }
+    },
+    {
+        name:'loss', title:'Schritt 4 – Loss berechnen',
+        text:'Der Loss misst: Wie falsch liegt das Netz? Bei Ziel y=1 und Vorhersage ŷ=0.57 ist der Loss hoch. Je näher ŷ am Ziel, desto kleiner der Loss. Ziel des Trainings: Loss minimieren.',
+        formula:'L = −[y·log(ŷ) + (1−y)·log(1−ŷ)]', concrete:'L = −[{target}·log({output}) + (1−{target})·log(1−{output})] = {loss}', type:'backward',
+        syncAction() {
+            backwardPass();
+            phaseForward.classList.remove('active');
+            phaseBackward.classList.add('active');
+            activeNeurons = ['o0'];
+            updateDisplays();
+        }
+    },
+    {
+        name:'backward_output', title:'Schritt 5 – Wie groß war der Fehler?',
+        text:'Das Netz berechnet, wie stark es daneben lag: δ = ŷ − y. Ist ŷ zu hoch, ist δ positiv — die Gewichte müssen sinken. Ist ŷ zu niedrig, ist δ negativ — die Gewichte müssen steigen.',
+        formula:'δ_out = ŷ − y', concrete:'δ_out = {output} − {target} = {grad_out}', type:'backward',
+        syncAction() {
+            for (let h=0;h<3;h++)
+                activeConnections.push({from:`h${h}`,to:'o0',progress:0,type:'backward'});
+        },
+        animAction(onDone) {
+            animateConnections(function() {
+                activeNeurons = ['h0','h1','h2'];
+                activeConnections = [];
+                renderNetwork();
+                onDone();
+            });
+        }
+    },
+    {
+        name:'backward_hidden', title:'Schritt 6 – Fehler zurückgeben',
+        text:'Der Fehler wird rückwärts an die Hidden-Neuronen weitergegeben. Jedes Neuron erhält seinen Anteil am Gesamtfehler. War ein Neuron inaktiv (ReLU = 0), bekommt es keinen Fehleranteil — es lernt in dieser Runde nichts.',
+        formula:'δ_h = δ_out × w × ReLU\'(z_h)', concrete:'δ_h₁ = {grad_out}·{wo0}·ReLU\'({h1z}) = {gh0}\nδ_h₂ = {grad_out}·{wo1}·ReLU\'({h2z}) = {gh1}\nδ_h₃ = {grad_out}·{wo2}·ReLU\'({h3z}) = {gh2}', type:'backward',
+        syncAction() {
+            for (let h=0;h<3;h++) for (let i=0;i<2;i++)
+                activeConnections.push({from:`i${i}`,to:`h${h}`,progress:0,type:'backward'});
+        },
+        animAction(onDone) {
+            animateConnections(function() {
+                activeNeurons = ['i0','i1'];
+                activeConnections = [];
+                renderNetwork();
+                onDone();
+            });
+        }
+    },
+    {
+        name:'update', title:'Schritt 7 – Gewichte anpassen',
+        text:'Alle Gewichte und Biases werden um einen kleinen Schritt korrigiert. Die Lernrate η bestimmt die Schrittgröße. Zu groß: das Netz springt über das Ziel. Zu klein: das Netz lernt sehr langsam.',
+        formula:'w_neu = w_alt − η × δ × Eingabe', concrete:'Lernrate η = {lr}\nBeispiel: w(h₁→ŷ) = {wo0_old} − {lr}·{grad_out}·{h1} = {wo0}', type:'update',
+        syncAction() {
+            phaseBackward.classList.remove('active');
+            phaseUpdate.classList.add('active');
+            updateWeights();
+            for (let h=0;h<3;h++) {
+                for (let i=0;i<2;i++)
+                    activeConnections.push({from:`i${i}`,to:`h${h}`,progress:1,type:'update'});
+                activeConnections.push({from:`h${h}`,to:'o0',progress:1,type:'update'});
+            }
+            activeNeurons = ['i0','i1','h0','h1','h2','o0'];
+        }
+    },
+    {
+        name:'complete', title:'Epoche {epoch} abgeschlossen',
+        text:'Eine Trainingsrunde ist fertig. Sinkt der Loss, lernt das Netz. Δ zeigt die Veränderung zum letzten Schritt — je kleiner Δ wird, desto näher ist das Netz an einer guten Lösung.',
+        formula:'Loss: {loss} | Δ: {delta}', type:'complete',
+        syncAction() {
+            var _o=network.activations.output[0], _t=getTarget(), _eps=1e-15;
+            var _yh=Math.min(Math.max(_o,_eps),1-_eps);
+            var currentLossVal=-(_t*Math.log(_yh)+(1-_t)*Math.log(1-_yh));
+            var prevLossVal = lossHistory.length > 0 ? lossHistory[lossHistory.length-1] : currentLossVal;
+            var deltaVal = currentLossVal - prevLossVal;
+            epoch++;
+            lossHistory.push(currentLossVal);
+            phaseForward.classList.add('active');
+            phaseBackward.classList.add('active');
+            phaseUpdate.classList.add('active');
+            activeConnections = []; activeNeurons = []; weightChanges = [];
+            updateDisplays(); drawLossChart();
+            // Erklärungsfeld direkt nach epoch++ und lossHistory.push befüllen
+            explanationEl.innerHTML =
+                '<div class="explanation-step">Epoche ' + epoch + ' abgeschlossen</div>' +
+                '<div class="explanation-text">Eine Trainingsrunde ist fertig. Sinkt der Loss, lernt das Netz. Δ zeigt die Veränderung zum letzten Schritt — je kleiner Δ wird, desto näher ist das Netz an einer guten Lösung.</div>' +
+                '<div class="formula">Loss: ' + currentLossVal.toFixed(4) +
+                ' | Δ: ' + (deltaVal>=0?'+':'') + deltaVal.toFixed(5) + '</div>';
+        }
+    }
+];
+
+function updateExplanation(stepIdx) {
+    const s = stepDefs[stepIdx];
+    const x1 = network.activations.input[0], x2 = network.activations.input[1];
+    const h1 = network.activations.hidden[0], h2 = network.activations.hidden[1], h3 = network.activations.hidden[2];
+    const h1z = network.activations.hiddenZ[0], h2z = network.activations.hiddenZ[1], h3z = network.activations.hiddenZ[2];
+    const wo0 = network.weights.output[0][0], wo1 = network.weights.output[0][1], wo2 = network.weights.output[0][2];
+    const wh00=network.weights.hidden[0][0], wh01=network.weights.hidden[0][1];
+    const wh10=network.weights.hidden[1][0], wh11=network.weights.hidden[1][1];
+    const wh20=network.weights.hidden[2][0], wh21=network.weights.hidden[2][1];
+    const bh0=network.biases.hidden[0], bh1=network.biases.hidden[1], bh2=network.biases.hidden[2];
+    const bo = network.biases.output[0];
+    const target = getTarget(), output = network.activations.output[0];
+    const grad_out = network.gradients.output[0];
+    const gh0=network.gradients.hidden[0], gh1=network.gradients.hidden[1], gh2=network.gradients.hidden[2];
+    var _e2=1e-15,_y2=Math.min(Math.max(output,_e2),1-_e2);
+    const loss = -(target*Math.log(_y2)+(1-target)*Math.log(1-_y2));
+    const prevLoss = lossHistory.length > 0 ? lossHistory[lossHistory.length-1] : loss;
+    const delta = loss - prevLoss;
+    // w(h1→ŷ) vor dem Update: Wert aus weightChanges falls Update-Schritt
+    var wo0_old = wo0;
+    var wc0 = weightChanges.find(function(w){return w.layer==='output'&&w.h===0;});
+    if (wc0) wo0_old = wc0.oldWeight;
+
+    function fmt(v,d){ return (v>=0?'':'')+parseFloat(v).toFixed(d||3); }
+    function fmts(v,d){ return (v>=0?'+':'')+parseFloat(v).toFixed(d||3); }
+    function reluMark(z){ return z>0?'1':'0'; }
+
+    function fillPlaceholders(str) {
+        return str
+            .replace(/{x1}/g,   x1.toFixed(2))
+            .replace(/{x2}/g,   x2.toFixed(2))
+            .replace(/{h1}/g,   h1.toFixed(3))
+            .replace(/{h2}/g,   h2.toFixed(3))
+            .replace(/{h3}/g,   h3.toFixed(3))
+            .replace(/{h1z}/g,  h1z.toFixed(3))
+            .replace(/{h2z}/g,  h2z.toFixed(3))
+            .replace(/{h3z}/g,  h3z.toFixed(3))
+            .replace(/{wh00}/g, wh00.toFixed(3))
+            .replace(/{wh01}/g, wh01.toFixed(3))
+            .replace(/{wh10}/g, wh10.toFixed(3))
+            .replace(/{wh11}/g, wh11.toFixed(3))
+            .replace(/{wh20}/g, wh20.toFixed(3))
+            .replace(/{wh21}/g, wh21.toFixed(3))
+            .replace(/{bh0}/g,  fmts(bh0))
+            .replace(/{bh1}/g,  fmts(bh1))
+            .replace(/{bh2}/g,  fmts(bh2))
+            .replace(/{wo0_old}/g, wo0_old.toFixed(3))
+            .replace(/{wo0}/g,  wo0.toFixed(3))
+            .replace(/{wo1}/g,  wo1.toFixed(3))
+            .replace(/{wo2}/g,  wo2.toFixed(3))
+            .replace(/{bo}/g,   fmts(bo))
+            .replace(/{z_out}/g,network.activations.outputZ[0].toFixed(3))
+            .replace(/{output}/g, output.toFixed(4))
+            .replace(/{target}/g, target.toFixed(4))
+            .replace(/{loss}/g, loss.toFixed(4))
+            .replace(/{delta}/g,(delta>=0?'+':'')+delta.toFixed(5))
+            .replace(/{epoch}/g, epoch+1)
+            .replace(/{grad_out}/g, grad_out.toFixed(4))
+            .replace(/{gh0}/g,  gh0.toFixed(4))
+            .replace(/{gh1}/g,  gh1.toFixed(4))
+            .replace(/{gh2}/g,  gh2.toFixed(4))
+            .replace(/{lr}/g,   learningRate.toFixed(1))
+            .replace(/ReLU\'\(/g, "ReLU'(");
+    }
+
+    const formula   = fillPlaceholders(s.formula);
+    const concrete  = s.concrete ? fillPlaceholders(s.concrete) : '';
+    const fc = s.type==='backward'?'backward':s.type==='update'?'update':'';
+    const title = s.title.replace('{epoch}', epoch);
+
+    // Zeilenumbrüche in concrete als <br> rendern
+    const concreteHtml = concrete
+        ? '<div class="formula-concrete">' + concrete.replace(/\n/g,'<br>') + '</div>'
+        : '';
+
+    explanationEl.innerHTML =
+        '<div class="explanation-step">' + title + '</div>' +
+        '<div class="explanation-text">' + s.text + '</div>' +
+        '<div class="formula ' + fc + '">' + formula + '</div>' +
+        concreteHtml;
+}
+
+// ─── Zustandsmaschine: ein Schritt ausführen ──────────────────────────────────
+// Führt stepDefs[stepIdx] aus und ruft onDone() wenn fertig (inkl. Animation).
+function runStep(stepIdx, onDone) {
+    if (stepIdx >= stepDefs.length) { if (onDone) onDone(); return; }
+    currentStep = stepIdx;
+    activeNeurons = []; activeConnections = [];
+    updateExplanation(stepIdx);
+
+    const s = stepDefs[stepIdx];
+    if (s.syncAction) s.syncAction();
+    renderNetwork();
+
+    if (s.animAction) {
+        s.animAction(function() { if (onDone) onDone(); });
+    } else {
+        if (onDone) onDone();
+    }
+}
+
+// ─── 1 Schritt (Schaltfläche) ─────────────────────────────────────────────────
+function doOneStep() {
+    if (isRunning) return;
+    isRunning = true;
+    setButtonsDisabled(true);
+    runStep(currentStep, function() {
+        currentStep = (currentStep + 1) % stepDefs.length;
+        isRunning = false;
+        setButtonsDisabled(false);
+    });
+}
+
+// ─── 10 Epochen schnell (kein Step-by-Step) ──────────────────────────────────
+let fastEpochsRemaining = 0;
+function doFastEpochTick() {
+    if (fastEpochsRemaining <= 0) {
+        phaseForward.classList.add('active');
+        phaseBackward.classList.add('active');
+        phaseUpdate.classList.add('active');
+        activeConnections = []; activeNeurons = []; weightChanges = [];
+        renderNetwork();
+        isRunning = false;
+        setButtonsDisabled(false);
+        return;
+    }
+    forwardPass();
+    backwardPass();
+    updateWeights();
+    epoch++;
+    var _fo=network.activations.output[0],_ft=getTarget(),_fe=1e-15;
+    var _fy=Math.min(Math.max(_fo,_fe),1-_fe);
+    const loss=-(_ft*Math.log(_fy)+(1-_ft)*Math.log(1-_fy));
+    lossHistory.push(loss);
+    updateDisplays(); drawLossChart();
+    fastEpochsRemaining--;
+    fastTimer = setTimeout(doFastEpochTick, 30);
+}
+
+function startFastTrain(count) {
+    if (isRunning) return;
+    isRunning = true;
+    setButtonsDisabled(true);
+    fastEpochsRemaining = count;
+    doFastEpochTick();
+}
+
+// ─── Hilfsfunktionen ─────────────────────────────────────────────────────────
+function setButtonsDisabled(disabled) {
+    [btnStep, btnTrain10, btnReset].forEach(function(b) { b.disabled = disabled; });
+}
+
+
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
+function resetNetwork() {
+    // Alle laufenden Timers und Animationen stoppen
+    if (animConnTimer) { cancelAnimationFrame(animConnTimer); animConnTimer = null; }
+    if (stepTimer)     { clearTimeout(stepTimer);             stepTimer = null; }
+    if (fastTimer)     { clearTimeout(fastTimer);             fastTimer = null; }
+
+    isRunning = false; currentStep = 0; epoch = 0;
+    lossHistory = []; hasConverged = false; weightChanges = [];
+
+    network.weights = JSON.parse(JSON.stringify(initialWeights));
+    network.biases  = JSON.parse(JSON.stringify(initialBiases));
+    network.activations = {
+        input: getInputs(), hiddenZ:[0,0,0], hidden:[0,0,0], outputZ:[0], output:[0]
+    };
+    network.gradients = { hidden:[0,0,0], output:[0] };
+
+    activeNeurons = []; activeConnections = [];
+    currentOutput.textContent = '—'; currentLoss.textContent = '—'; currentDiff.textContent = '—';
+    epochDisplay.textContent = '0'; lossDisplay.textContent = '—'; deltaDisplay.textContent = '—';
+    hiddenDisp.forEach(function(d){d.textContent='—';});
+    gradOutputDisp.textContent = '—'; gradHiddenDisp.textContent = '—';
+    phaseForward.classList.remove('active');
+    phaseBackward.classList.remove('active');
+    phaseUpdate.classList.remove('active');
+    convergenceBadge.classList.remove('show');
+
+    explanationEl.innerHTML = `
+        <div class="explanation-step">Bereit</div>
+        <div class="explanation-text">Starte das Training, um zu beobachten, wie das Netzwerk lernt. Mit jeder Iteration werden die Gewichte angepasst.</div>`;
+
+    setButtonsDisabled(false);
+    renderNetwork(); drawLossChart();
+}
+
+// ─── Event Listener ──────────────────────────────────────────────────────────
+btnStep.addEventListener('click', function() { doOneStep(); });
+
+btnTrain10.addEventListener('click', function() { startFastTrain(10); });
+btnReset.addEventListener('click', function() { resetNetwork(); });
+
+speedSlider.addEventListener('input', function(e) {
+    animationSpeed = parseFloat(e.target.value);
+    speedValue.textContent = animationSpeed + 'x';
+});
+
+lrSlider.addEventListener('input', function(e) {
+    learningRate = parseFloat(e.target.value);
+    lrValue.textContent = learningRate.toFixed(1);
+});
+
+[input1, input2, targetInput].forEach(function(inp) {
+    inp.addEventListener('change', function() {
+        network.activations.input = getInputs();
+        renderNetwork();
+    });
+});
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+})(); // Ende IIFE
+</script>
+</body>
+</html>

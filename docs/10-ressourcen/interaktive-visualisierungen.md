@@ -173,7 +173,7 @@ Eigenständige HTML-Visualisierungen, die direkt aus dem Kursverzeichnis `visual
 
 | Thema | Beschreibung | Link |
 |-------|--------------|------|
-| **RAG Chunking Explorer** | Chunking-Strategien für RAG im Vergleich: Wie unterschiedliche Splitter denselben Text in Chunks zerlegen | [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer.html' | relative_url }}) |
+| **RAG Chunking Explorer** | Chunking-Strategien für RAG im Vergleich: Wie unterschiedliche Splitter denselben Text in Chunks zerlegen | [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer.html' | relative_url }}){:target="_blank" rel="noopener"} |
 
 ---
 

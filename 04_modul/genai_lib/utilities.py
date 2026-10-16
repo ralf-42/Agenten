@@ -556,7 +556,7 @@ def extract_thinking(response: Any) -> Tuple[str, str]:
 # LANGSMITH TRACE UTILITIES
 # ============================================================================
 
-def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> None:
+def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days: int = 7) -> None:
     """
     Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Tabelle.
 
@@ -580,6 +580,14 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
     show_steps : bool, optional
         Wenn True, werden die Child-Runs (Tool-Calls, LLM-Calls) des letzten
         Runs aufgelistet — ideal für Pattern-Analyse (Standard: False)
+    days : int, optional
+        Zeitfenster in Tagen, in dem nach Runs gesucht wird (Standard: 7).
+        Die LangSmith-Abfrage begrenzt sonst auf die letzten 24 Stunden.
+
+    Hinweis:
+    --------
+    Nutzt ``client.runs.query()`` (langsmith >= 0.10.15). Der alte Aufruf
+    ``list_runs()`` (POST /runs/query) wird am 31.01.2027 abgeschaltet.
 
     Beispiel:
     ---------
@@ -593,22 +601,66 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
         mprint("> ❌ `langsmith` nicht installiert: `pip install langsmith`")
         return
 
-    try:
+    import asyncio
+    from collections import defaultdict
+    from concurrent.futures import ThreadPoolExecutor
+    from datetime import datetime, timedelta, timezone
+
+    felder = ["ID", "NAME", "RUN_TYPE", "STATUS", "START_TIME", "END_TIME", "TRACE_ID", "PARENT_RUN_IDS"]
+
+    async def abfragen():
+        # client.runs.query() ist async und liefert nur die mit selects angeforderten Felder
         client = Client()
-        runs = list(client.list_runs(
-            project_name=project_name,
-            run_type="chain",
-            is_root=True,
-            limit=limit,
-        ))
-        runs.sort(key=lambda r: r.start_time, reverse=True)
+        projekt = await client.aread_project(project_name=project_name)
+        seit = datetime.now(timezone.utc) - timedelta(days=days)
+
+        async def laden(max_anzahl=None, **filter_args):
+            ergebnis = []
+            async for run in client.runs.query(
+                project_ids=[str(projekt.id)], min_start_time=seit, selects=felder, **filter_args
+            ):
+                ergebnis.append(run)
+                if max_anzahl and len(ergebnis) >= max_anzahl:
+                    break
+            return ergebnis
+
+        wurzeln = await laden(limit, is_root=True, run_type="CHAIN", page_size=limit)
+        # Alle Runs einer Trace in einer Abfrage; direkte Kinder ergeben sich aus parent_run_ids[-1]
+        traces = [await laden(trace_id=w.trace_id) for w in wurzeln]
+        return wurzeln, traces
+
+    try:
+        # Eigener Thread, weil Colab/Jupyter bereits einen laufenden Event-Loop hat
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            runs, traces = pool.submit(lambda: asyncio.run(abfragen())).result()
     except Exception as e:
-        mprint(f"> ❌ LangSmith-Verbindung fehlgeschlagen: `{e}`")
+        mprint(f"> ❌ LangSmith-Verbindung fehlgeschlagen (benötigt `langsmith>=0.10.15`): `{e}`")
         return
 
     if not runs:
-        mprint(f"> Keine Runs gefunden für Projekt `{project_name}`")
+        mprint(f"> Keine Runs gefunden für Projekt `{project_name}` (letzte {days} Tage)")
         return
+
+    def start_zeit(run):
+        return run.start_time.timestamp() if run.start_time else 0.0
+
+    def dauer_text(run):
+        if run.end_time and run.start_time:
+            return f"{(run.end_time - run.start_time).total_seconds():.1f}s"
+        return "—"
+
+    def status_text(run):
+        return (run.status or "").lower()
+
+    kinder_von = defaultdict(list)
+    for trace in traces:
+        for run in trace:
+            if run.parent_run_ids:
+                kinder_von[run.parent_run_ids[-1]].append(run)
+    for kinder in kinder_von.values():
+        kinder.sort(key=start_zeit)  # chronologisch
+
+    runs.sort(key=start_zeit, reverse=True)
 
     # Haupttabelle
     zeilen = [
@@ -617,36 +669,18 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
         "|-----|--------|-------|------------|",
     ]
     for run in runs:
-        dauer = (
-            f"{(run.end_time - run.start_time).total_seconds():.1f}s"
-            if run.end_time and run.start_time else "—"
+        status = status_text(run)
+        icon = "✅" if status == "success" else ("⏳" if status == "pending" else "❌")
+        zeilen.append(
+            f"| `{run.name or '—'}` | {icon} {status} | {dauer_text(run)} | {len(kinder_von[run.id])} |"
         )
-        # child_run_ids ist in list_runs nicht enthalten (deprecated) → per parent_run_id zählen
-        try:
-            children = sum(1 for _ in client.list_runs(
-                project_name=project_name,
-                filter=f'eq(parent_run_id, "{str(run.id)}")',
-                select=["id"],
-            ))
-        except Exception:
-            children = "—"
-        status = "✅" if run.status == "success" else ("⏳" if run.status == "pending" else "❌")
-        zeilen.append(f"| `{run.name or '—'}` | {status} {run.status} | {dauer} | {children} |")
 
     mprint("\n".join(zeilen))
 
     # Step-Analyse des letzten Runs
     if show_steps:
         last_run = runs[0]
-        try:
-            children = list(client.list_runs(
-                project_name=project_name,
-                filter=f'eq(parent_run_id, "{str(last_run.id)}")',
-            ))
-            children.sort(key=lambda r: r.start_time)  # chronologisch (LangSmith liefert neueste zuerst)
-        except Exception as e:
-            mprint(f"> ❌ Child-Runs konnten nicht abgerufen werden: `{e}`")
-            return
+        children = kinder_von[last_run.id]
 
         if not children:
             mprint("> Keine Child-Runs gefunden.")
@@ -658,34 +692,21 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False) -> N
             "|---|-----|------|--------|-------|",
         ]
         for i, child in enumerate(children, 1):
-            dauer = (
-                f"{(child.end_time - child.start_time).total_seconds():.1f}s"
-                if child.end_time and child.start_time else "—"
-            )
-            status = "✅" if child.status == "success" else ("⏳" if child.status == "pending" else "❌")
+            status = status_text(child)
+            icon = "✅" if status == "success" else ("⏳" if status == "pending" else "❌")
             step_zeilen.append(
-                f"| {i} | `{child.run_type}` | `{child.name}` | {status} | {dauer} |"
+                f"| {i} | `{(child.run_type or '').lower()}` | `{child.name}` | {icon} | {dauer_text(child)} |"
             )
             # Bei tool-Nodes: eine Ebene tiefer für individuelle Tool-Namen
             if child.name == "tools":
-                try:
-                    tool_runs = list(client.list_runs(
-                        project_name=project_name,
-                        filter=f'eq(parent_run_id, "{str(child.id)}")',
-                    ))
-                    for tool_run in tool_runs:
-                        tool_dauer = (
-                            f"{(tool_run.end_time - tool_run.start_time).total_seconds():.1f}s"
-                            if tool_run.end_time and tool_run.start_time else "—"
-                        )
-                        tool_status = "✅" if tool_run.status == "success" else "❌"
-                        step_zeilen.append(
-                            f"| ↳ | `{tool_run.run_type}` | `{tool_run.name}` | {tool_status} | {tool_dauer} |"
-                        )
-                except Exception:
-                    pass
+                for tool_run in kinder_von[child.id]:
+                    tool_icon = "✅" if status_text(tool_run) == "success" else "❌"
+                    step_zeilen.append(
+                        f"| ↳ | `{(tool_run.run_type or '').lower()}` | `{tool_run.name}` | {tool_icon} | {dauer_text(tool_run)} |"
+                    )
 
         mprint("\n".join(step_zeilen))
+
 
 
 # ============================================================================

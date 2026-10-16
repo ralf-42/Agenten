@@ -17,7 +17,7 @@ langgraph-prebuilt>=1.1.0
 langgraph-sdk>=0.4.2
 
 # LangSmith
-langsmith>=0.8.0
+langsmith>=0.10.15
 
 # Agent Harness
 deepagents>=0.7.0

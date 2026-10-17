@@ -2,9 +2,9 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **38 Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen."
+Dieses Verzeichnis enthält aktuell **32 reguläre Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen.“
 
-Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule wurden in die laufende Modulnummerierung überführt.
+Die Modulkennungen reichen von **M01 bis M36**, sind aber nicht lückenlos: Frühere Module wurden teilweise zusammengelegt. M11 umfasst beispielsweise die früheren Module M12 und M13; M16 vereint die früheren Module M16 und M18. Die Übersicht unten bildet die Dateien ab, die aktuell in diesem Verzeichnis liegen.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md`
 
@@ -20,7 +20,7 @@ Die Nummerierung reicht lückenlos von **M01 bis M38**. Frühere a/b-Teilmodule 
 
 ---
 
-Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assistent** (Meeting-Vorbereitung, Dokumentenaufbereitung, Aufgabenverfolgung, quellengebundene Briefings und Statusübersichten). Die Module M01-M38 bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills, Deployment und Capstone auf dasselbe Zielsystem hin.
+Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assistent** (Meeting-Vorbereitung, Dokumentenaufbereitung, Aufgabenverfolgung, quellengebundene Briefings und Statusübersichten). Die vorhandenen Module bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills und Deployment auf dasselbe Zielsystem hin.
 
 ## Phase  1 – Konzepte & erste Agenten (M01–M02)
 
@@ -77,7 +77,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ---
 
-## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion (M22–M38)
+## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion (M22–M36)
 
 > Diese Module sind **nicht Teil des Grundlagenpfads**. Sie eignen sich als Aufbau- und Vertiefungsmaterial im Kurs oder als Follow-up nach dem Kurs.
 
@@ -97,6 +97,17 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | M34 | `M34_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
 | M35 | `M35_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
 | M36 | `M36_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🟣 Vertiefung |
+
+## Weitere Notebooks
+
+Diese Dateien ergänzen den Modulpfad und zählen nicht zu den 32 regulären Modulen.
+
+| Datei | Zweck |
+|---|---|
+| `M88_LangSmith_Project_loeschen.ipynb` | Hilfsnotebook zum Löschen eines LangSmith-Projekts |
+| `M99_PMO_Assistent_Referenzimplementierung.ipynb` | Referenzimplementierung des PMO-Assistenten |
+| `quick_template.ipynb` | Notebook-Vorlage |
+| `X99_kombi_chain_graph.ipynb` | Experimentelles Notebook zur Kombination von Chain und Graph |
 
 
 **Version:** 3.2    

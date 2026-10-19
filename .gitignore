@@ -76,3 +76,48 @@ _*.ipynb
 # ============================================================
 03_skript/Vita.pdf
 03_skript/A00 - Titel_Intro.png
+
+# ============================================================
+# Backups, Caches und System-/Editor-Dateien (nie nach GitHub)
+# ============================================================
+# Backups
+**/_backup/
+**/_backups/
+*.bak
+*.orig
+*.tmp
+*~
+
+# Python-Caches und Build-Artefakte
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtuelle Umgebungen und Secrets
+**/.venv/
+**/venv/
+.env
+.env.*
+!.env.example
+
+# Jupyter
+**/.ipynb_checkpoints/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+
+# Logs und OneDrive-Reste
+*.log
+.tmp.driveupload/
+.trash/

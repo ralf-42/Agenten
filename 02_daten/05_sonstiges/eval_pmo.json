@@ -43,6 +43,22 @@
       "R2",
       "Datenschutzfreigabe",
       "offen"
+    ],
+    "erwartete_begriffgruppen": [
+      [
+        "R2",
+        "Risiko R2",
+        "Datenschutzfreigabe",
+        "data protection approval",
+        "privacy approval"
+      ],
+      [
+        "offen",
+        "open",
+        "ausstehend",
+        "ungeklärt",
+        "noch nicht abgeschlossen"
+      ]
     ]
   },
   {

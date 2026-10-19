@@ -70,10 +70,14 @@ Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging 
 
 ## Leitplanken
 
-Der PMO-Assistent ist ein Assistenzsystem und kein vollständiges PMO-System oder autonomes Entscheidungssystem.
+Der PMO-Assistent ist ein Assistenzsystem und kein vollständiges PMO-System oder autonomes Entscheidungssystem. Verbindlich sind die [Leitplanken der Leitaufgabe]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#leitplanken). Für den Workshop gilt vor allem:
 
-| Leitplanke | Bedeutung |
-|---|---|
+- **Quellenpflicht und Out-of-Corpus-Regel:** Fachliche Antworten brauchen Quellenangaben oder den Hinweis „Nicht im Korpus“; fehlendes Wissen wird nicht erfunden.
+- **HITL bei Unsicherheit:** Niedrige Sicherheit oder folgenreiche Aussagen werden vor der finalen Ausgabe geprüft.
+- **Datenschutz und Logging:** Öffentliche Fachtexte oder synthetische Daten nutzen; sensible Inhalte nicht unbedacht protokollieren.
+- **Entscheidungsverantwortung:** Verbindliche Projektentscheidungen bleiben beim Menschen.
+
+---|---|
 | Quellenpflicht | Fachliche Antworten brauchen Quellenangaben oder den Hinweis "Nicht im Korpus". |
 | Out-of-Corpus-Regel | Fehlendes Wissen wird nicht frei erfunden. |
 | HITL bei Unsicherheit | Niedrige Sicherheit oder folgenreiche Aussagen werden vor der finalen Ausgabe geprüft. |
@@ -477,13 +481,7 @@ Sinnvolle Fragetypen:
 
 ### Option C: Multi-Agent-Ausbau
 
-```text
-Supervisor
-├── Tabellen-Worker   -> verarbeitet Tabellen, Werte und strukturierte Abschnitte
-└── Fließtext-Worker  -> verarbeitet Prosa, Argumentationen und Zusammenfassungen
-```
-
-Der Supervisor analysiert den Fragetyp und delegiert. Bei Unsicherheit geht die Antwort nach der Synthese in die menschliche Freigabe.
+Ein Supervisor analysiert den Fragetyp und delegiert an einen Tabellen-Worker (Werte, strukturierte Abschnitte) oder einen Fließtext-Worker (Prosa, Zusammenfassungen). Bei Unsicherheit geht die Antwort nach der Synthese in die menschliche Freigabe. Das Architekturbild steht in der Leitaufgabe unter [Vom Einzelagenten zum Multi-Agent-System]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}#vom-einzelagenten-zum-multi-agent-system).
 
 ---
 
@@ -567,5 +565,5 @@ Nein. Er unterstützt ausgewählte PMO-nahe Informationsaufgaben wie Meeting-Vor
 
 ---
 
-**Version:** 2.0<br>
-**Stand:** Juli 2026<br>
+**Version:** 2.1<br>
+**Stand:** Oktober 2026<br>

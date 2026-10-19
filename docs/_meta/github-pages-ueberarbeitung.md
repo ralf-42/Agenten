@@ -156,7 +156,7 @@ Stattdessen gilt:
   - `05-frameworks/langchain-best-practices.md`
   - `05-frameworks/langgraph-best-practices.md`
   - `05-frameworks/langsmith-best-practices.md`
-  - `07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.md`
+  - `07-qualitaet-sicherheit/evaluation-observability.md`
 
 Dadurch bleibt die Struktur flacher und Nutzer landen schneller beim konkreten Inhalt.
 

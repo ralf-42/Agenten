@@ -12,11 +12,10 @@ Diese Orientierungsseite bündelt die Entscheidungen rund um Modellrollen, Anbie
 
 | Frage | Dokument | Bezug |
 |---|---|---|
-| **Welches** Modell passt zur Aufgabe? | [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Kriterien für Qualität, Kosten, Latenz, Kontextfenster und Modellrollen. |
-| **Wie** werden Modellrollen auf Provider übertragen? | [Provider- & Modell-Mapping]({{ '/03-modelle-provider-anpassung/provider-modell-mapping.html' | relative_url }}) | Zuordnung auf OpenAI, Mistral, Azure, lokale Modelle und Alternativen. |
+| **Welches** Modell passt zur Aufgabe und wie werden Modellrollen auf Provider übertragen? | [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}) | Kriterien für Qualität, Kosten, Latenz, Kontextfenster, Modellrollen und Provider-Mapping (OpenAI, Mistral, Gemini, Anthropic). |
 | **Wann** lohnt sich Training? | [Fine-Tuning]({{ '/03-modelle-provider-anpassung/fine-tuning.html' | relative_url }}) | Modellanpassung als spätere Option nach Prompting, RAG, Tools und Evaluation. |
 | **Wie** wird Modellzugriff technisch bereitgestellt? | [API-Keys & Provider]({{ '/03-modelle-provider-anpassung/api-keys-und-provider.html' | relative_url }}) | API-Keys, Provider-Setup und Colab-Integration. |
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

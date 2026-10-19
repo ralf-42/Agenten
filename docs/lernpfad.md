@@ -26,7 +26,7 @@ Diese Seite bündelt deshalb drei Dinge:
 
 - einen kompakten Überblick über sinnvolle Einstiege
 - empfohlene Lernpfade je nach Ziel
-- eine kleine Auswahl von Dokumenten, mit denen fast immer begonnen werden kann
+- einen Verweis auf die Kurzfassung [Zuerst lesen]({{ '/zuerst-lesen.html' | relative_url }}) für den schnellsten Einstieg
 
 ## Kurspriorisierung
 
@@ -94,7 +94,7 @@ Empfohlener Einstieg:
 2. [Wann sollten Menschen in den Ablauf eingreifen?]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }})
 3. [Wie werden Agenten gegen Missbrauch und Fehlverhalten abgesichert?]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }})
 4. [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }})
-5. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
+5. [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }})
 6. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
 
 ### Produktion und Betrieb
@@ -108,7 +108,7 @@ Empfohlener Einstieg:
 3. [Aus Entwicklung ins Deployment]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }})
 4. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
 5. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
-6. [Agent Evaluation & Observability Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }})
+6. [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }})
 7. [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }})
 8. [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }})
 
@@ -123,15 +123,9 @@ Empfohlener Einstieg:
 3. [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
 4. [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
 
-## Drei Dokumente für fast jeden Start
+## Kürzester Start
 
-Wer nicht lange wählen will, kommt mit diesen drei Dokumenten meist am schnellsten ins Thema:
-
-1. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-2. [Welche Architektur passt zu diesem Agenten?]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
-3. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
-
-Diese Kombination klärt erst die Einsatzfrage, dann die Struktur und erst danach die Umsetzung. Genau diese Reihenfolge verhindert viele frühe Fehlstarts.
+Wer nicht lange wählen will, öffnet [Zuerst lesen]({{ '/zuerst-lesen.html' | relative_url }}). Die Reihenfolge klärt erst die Einsatzfrage, dann die Architektur und erst danach die Umsetzung – das verhindert viele frühe Fehlstarts.
 
 ## Wie die Bereiche zusammenhängen
 
@@ -173,6 +167,6 @@ Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

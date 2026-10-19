@@ -3,8 +3,10 @@ layout: default
 title: Evaluation & Observability
 parent: "Qualität & Sicherheit"
 nav_order: 1
-description: Bewertung, Qualitätssicherung und Observability von KI-Agenten
+description: Bewertung, Qualitätssicherung und Observability von KI-Agenten — Baselines, Traces, Regressionen und einfaches Harness
 has_toc: true
+redirect_from:
+  - /07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html
 ---
 
 # Evaluation & Observability
@@ -28,6 +30,8 @@ has_toc: true
 Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. In produktionsnahen Workflows ist Evaluation außerdem ein **Gate**: Ein Lauf darf nur weitergehen, wenn Antwortqualität, Tool-Wahl, Kosten, Latenz und Sicherheitsgrenzen passen. Observability beantwortet die Anschlussfrage, warum ein Ergebnis gut, schlecht, teuer oder instabil war. Beides gehört zusammen: Ohne Evaluation fehlt ein belastbarer Maßstab, ohne Observability bleibt unklar, an welcher Stelle der Fehler entstanden ist.
 
 Für Entwickler wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, Antworten und Metriken betrachtet werden. Der Unterschied liegt im Zweck. Evaluation vergleicht erwartetes Verhalten mit tatsächlichem Verhalten. Observability sammelt die Spuren, die diesen Vergleich erklärbar machen.
+
+Typischer Fehler: Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen und trotzdem das falsche Tool gewählt, eine unnötige Schleife gedreht oder eine riskante Aktion ohne ausreichende Kontrolle ausgelöst haben.
 
 Typischer Fehler: Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
 
@@ -79,7 +83,7 @@ Observability ergänzt dieses kleine Evaluationsset um die Spuren pro Anfrage: W
 
 ## Welche Beobachtungsdaten wirklich helfen
 
-Für einen Agenten reichen einige wenige Datentypen, um die meisten Fehler sichtbar zu machen. Am wichtigsten sind vollständige Prompt-Antwort-Paare, die Schrittfolge des Agenten, Kosten- und Tokenwerte pro Durchlauf sowie das Verhalten der Tool-Aufrufe. Diese vier Ebenen decken viele Probleme auf, die in klassischem Monitoring unsichtbar bleiben.
+Observability beginnt bei Agenten nicht mit Server-Uptime, sondern mit dem inhaltlichen Ablauf. Für einen Agenten reichen einige wenige Datentypen, um die meisten Fehler sichtbar zu machen. Am wichtigsten sind vollständige Prompt-Antwort-Paare, die Schrittfolge des Agenten, Kosten- und Tokenwerte pro Durchlauf sowie das Verhalten der Tool-Aufrufe. Diese vier Ebenen decken viele Probleme auf, die in klassischem Monitoring unsichtbar bleiben.
 
 ```mermaid
 flowchart TB
@@ -125,7 +129,11 @@ Für textuelle Antworten helfen häufig drei Bewertungsachsen: Relevanz, Vollst�
 | Latenz | Antwort kommt schnell genug | Wartezeit Nutzerfluss stört |
 | Kosten pro erfolgreicher Lösung | Effizienz pro gelöstem Fall | Varianten verglichen werden |
 | Erfolgsquote pro Aufgabe | Ziel wurde wirklich erreicht | Agent mehrere Schritte ausführt |
+| Tool Success | passendes Tool korrekt genutzt | Agenten scheitern oft hier statt in der Antwort |
+| Safety / Escalation | riskante Fälle richtig behandelt | stille Fehlentscheidungen verhindert werden sollen |
 | Security Events | Angriffs- oder Policy-Signale wurden erkannt | riskante Tools, RAG oder sensible Daten im Spiel sind |
+
+Ergänzend lohnt sich die Frage, ob bei riskanten Fällen korrekt eskaliert wurde und ob das Verhalten stabil bleibt, wenn Eingaben leicht verändert werden. Relevant wird das, wenn zwei Varianten ähnlich gut wirken, eine davon aber deutlich teurer, langsamer, unsicherer oder instabiler ist. Ein Gate sollte dann deterministisch stoppen, nachtesten oder eskalieren, statt den Lauf trotz verletzter Grenze fortzusetzen.
 
 Ein besonders nützlicher Wert ist nicht die Kostenhöhe pro Session, sondern die Kosten pro erfolgreicher Lösung. Zwei Varianten können ähnlich teuer erscheinen, obwohl eine davon deutlich öfter scheitert.
 
@@ -149,7 +157,9 @@ Dataset-Struktur:
 - Negative Tests: Out-of-Scope, ungültige Eingaben, adversariale Inputs
 ```
 
-Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Agenten gehören dazu zum Beispiel Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen.
+Schon ein kleines Set sollte pro Fall nicht nur die erwartete Antwort enthalten, sondern auch das erwartete Tool (`expected_tool`, z. B. `track_order`) und – bei riskanten Anfragen wie „Lösche alle Kundendaten.“ – die erwartete Eskalation (`expected_escalation`). Entscheidend ist nicht Vollständigkeit, sondern eine bewusste Auswahl.
+
+Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Agenten gehören dazu zum Beispiel Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen – bereits im kleinen Set.
 
 Wenn im Betrieb ein neuer Fehler auftaucht, gehört genau dieser Fall in das Evaluationsset. So wird Qualität mit jeder Iteration weniger zufällig und stärker reproduzierbar.
 
@@ -189,10 +199,31 @@ trace = {
     "latency_ms": 1640,
     "input_tokens": 820,
     "output_tokens": 146,
+    "cost_usd": 0.0014,
+    "security_events": [],
+    "task_completed": True,
+    "escalated": False,
 }
 ```
 
-Ein solcher Trace ersetzt keine Bewertung, aber er macht Fehler reproduzierbar. Genau deshalb gehören Evaluation und Observability zusammen: Die eine Seite zeigt Abweichungen, die andere macht sie erklärbar.
+Wer nur die Endantwort speichert, sieht meist nur das Symptom. Wer auch Tool-Wahl, Parameter und Verlauf speichert, erkennt deutlich schneller, ob ein Problem im Prompt, im Tool-Vertrag, im State oder im Retrieval liegt. Ein solcher Trace ersetzt keine Bewertung, aber er macht Fehler reproduzierbar. Genau deshalb gehören Evaluation und Observability zusammen: Die eine Seite zeigt Abweichungen, die andere macht sie erklärbar.
+
+## Fehler benennen statt nur "falsch" zu sagen
+
+Agenten verbessern sich schneller, wenn Fehler systematisch benannt werden. Eine kleine Fehlertaxonomie hilft oft mehr als ein zusätzlicher Gesamt-Score.
+
+```text
+Typische Fehlerklassen:
+- wrong_tool
+- bad_args
+- hallucination
+- empty_retrieval
+- looping
+- unsafe_action
+- format_error
+```
+
+Grenze: Nicht jede Antwort lässt sich eindeutig einer Klasse zuordnen. Trotzdem ist eine grobe Fehlertaxonomie fast immer hilfreicher als eine einzige Sammelkategorie.
 
 ## Regressionen früh erkennen
 
@@ -213,6 +244,8 @@ candidate_results = evaluate(
     experiment_prefix="candidate-v2"
 )
 ```
+
+Typische Auslöser sind Änderungen an Prompt, Modell, Tool-Beschreibung, Policy oder Retriever. Für Agenten genügt ein reiner `accuracy_evaluator` selten: Ein kombinierter Evaluator, der Tool-Wahl und Antwortinhalt gemeinsam prüft, macht Regressionen sichtbarer.
 
 Der didaktische Kern ist einfach: Erst messen, dann ändern, dann erneut messen. Ohne diesen Vergleich bleiben Verbesserungen oft Behauptungen.
 
@@ -315,27 +348,108 @@ In der Praxis relevant wenn: Der Agent eine Antwort erzeugt, die anschließend v
 
 Grenze: Entkopplung allein löst keine Qualitätsprobleme. Wenn Planer und Evaluator schlechte Kriterien definieren oder das Referenzset nicht repräsentativ ist, bleibt die Bewertung trotz struktureller Trennung unzuverlässig.
 
+## Ein einfaches Harness-Konzept
+
+Das Wort `Harness` klingt technisch, meint aber zunächst eine nützliche Infrastruktur-Hülle um den Agenten. Diese sorgt dafür, dass Durchläufe reproduzierbar, Tool-Aufrufe kontrollierbar und Vergleiche zwischen Varianten (Baselines) möglich werden.
+
+Die übergreifende Einordnung der Kontrollschicht steht in [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}). Dieser Abschnitt konzentriert sich auf die Mess- und Evaluationssicht.
+
+Es reicht ein einfaches Verständnis: Ein Harness kümmert sich um den **Run-Kontext**, die **Tool-Wrapper**, **Mocks** für Tests sowie **Policies** für riskante Aktionen. Gleichzeitig fungiert er als Messstation, die **Beobachtungsdaten (Traces)** sammelt, um Ergebnisse automatisiert mit einem **Eval-Set** vergleichen zu können.
+
+```mermaid
+flowchart TB
+    subgraph Runtime ["<b>Agentic Runtime</b>"]
+        A["Agent / Orchestrator"]
+        B["Tool Wrapper"]
+        C["Trace / Observability"]
+        D["Policy Check / Guardrails"]
+        
+        A <--> B
+        A --> C
+        A -.-> D
+    end
+
+    subgraph Evaluation ["<b>Quality Assurance</b>"]
+        E["Eval-Set (Golden Dataset)"]
+        F["Evaluation & Comparison"]
+        G["Baseline / Benchmarks"]
+    end
+
+    %% Datenflüsse zur Evaluation
+    B --> F
+    C --> F
+    E --> F
+    G --> F
+
+    %% Feedback-Loop (Optional)
+    F -.-> |Optimization| A
+    
+    style Runtime fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
+    style Evaluation fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+```
+
+Nicht geeignet, wenn: Der Begriff dazu verleitet, sofort ein großes Infrastrukturprojekt zu bauen. Für Einsteiger reicht oft ein kleiner, sauberer Test- und Beobachtungsrahmen.
+
+## Praktische Umsetzung mit LangGraph, LangChain und LangSmith
+
+LangGraph hilft vor allem bei der klaren Struktur von Zuständen, Übergängen und Abbruchregeln. LangChain hilft bei Tool-Verträgen, strukturierten Outputs und Evaluatoren. LangSmith macht Durchläufe, Datasets und Vergleiche sichtbar.
+
+Ein einfacher Mindeststandard im Kurs sieht so aus:
+
+1. Zustände im Graphen explizit modellieren
+2. Tool-Aufrufe strukturiert definieren und validieren
+3. Tracing aktivieren und Runs mit Kontext versehen
+4. Ein kleines Eval-Set mit Baseline pflegen
+5. Fehler aus dem Betrieb später in das Eval-Set aufnehmen
+
+```python
+config = {
+    "tags": ["support", "release-2026-04"],
+    "metadata": {
+        "dataset_version": "eval-v1",
+        "thread_id": "thread-4711",
+        "model_version": "gpt-5.6-luna",
+    },
+}
+```
+
+Typischer Fehler: LangSmith nur als Debug-Ansicht zu benutzen. Der eigentliche Mehrwert entsteht erst dann, wenn Datasets, Baselines und Vergleiche damit verbunden werden.
+
+## Sicherheits- und Freigabefälle gehören dazu
+
+Evaluation und Observability sollten nicht nur normale Nutzeranfragen abdecken. Gerade riskante Fälle zeigen, ob ein Agent wirklich kontrollierbar ist. Dazu gehören unerlaubte Schreibaktionen, Out-of-Scope-Anfragen, Prompt-Injection-nahe Eingaben und Freigabeprozesse.
+
+Ein Agent, der auf harmlose Anfragen gut reagiert, aber bei riskanten Fällen keine Eskalation kennt, ist nicht belastbar. Solche Fälle gehören deshalb in das Eval-Set und in die Beobachtung im Betrieb.
+
 ## Was in Entwicklerprojekten zuerst wichtig ist
 
 Für einen ersten Agenten ist keine vollständige Observability-Plattform nötig. Ein sauberes Minimum reicht: ein kleines Testset, klare Erfolgskriterien, gespeicherte Prompts und Antworten, sichtbare Tool-Aufrufe und ein Vergleich zwischen alter und neuer Version. Damit lassen sich viele typische Fehler bereits finden.
 
 Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen Formulierungsänderungen kippt. Genau deshalb sollte der Kurs nicht nur erfolgreiche Demos zeigen, sondern auch bewusst misslingende Fälle. Erst dort wird sichtbar, warum Evaluation und Observability keine Zusatzaufgabe, sondern Teil der Agentenentwicklung sind.
 
+## Mindest-Checkliste
+
+- [ ] Es gibt ein kleines Eval-Set mit Standardfällen, Randfällen und Negativfällen.
+- [ ] Task Success, Tool Success und Safety werden mitbewertet.
+- [ ] Tool-Aufrufe, Fehler und Latenzen sind pro Run sichtbar.
+- [ ] Eine Baseline existiert vor größeren Änderungen.
+- [ ] Riskante Fälle führen zu Eskalation oder Freigabe statt zu blindem Handeln.
+- [ ] Produktionsfehler können später als neue Testfälle übernommen werden.
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
+| [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}) | Wie werden State, Tools, Kontext, Sicherheit und Evaluation als Kontrollschicht verbunden? |
+| [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) | Wie werden Tracing, Datasets und Experimente konkret in LangSmith umgesetzt? |
+| [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | Wie werden State, Routing und Multi-Step-Flüsse robust aufgebaut? |
+| [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}) | Wie werden Tools, strukturierte Outputs und moderne LangChain-Patterns korrekt verwendet? |
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Wann lohnt sich ein Agentenprojekt, bevor gebaut wird? |
 | [RAG-Konzepte]({{ '/04-agenten-implementierung/kontext-wissen/rag-konzepte.html' | relative_url }}) | Wie funktioniert Retrieval Augmented Generation grundsätzlich? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche Sicherheitsrisiken und Schutzmaßnahmen sind bei Agenten relevant? |
 
 ---
 
-**Version:** 1.6<br>
-**Stand:** August 2026<br>
+**Version:** 1.7<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-
-
-
-
-

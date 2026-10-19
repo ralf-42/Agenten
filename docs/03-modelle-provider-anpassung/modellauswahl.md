@@ -3,8 +3,10 @@ layout: default
 title: Modellauswahl
 parent: "Modelle & Provider"
 nav_order: 1
-description: "Zentrale Modellauswahl für Agentensysteme: Rollen, Kurs-Defaults, Provider, Qualität, Kosten und Latenz"
+description: "Zentrale Modellauswahl für Agentensysteme: Rollen, Kurs-Defaults, Provider-Mapping, Qualität, Kosten und Latenz"
 has_toc: true
+redirect_from:
+  - /03-modelle-provider-anpassung/provider-modell-mapping.html
 ---
 
 # Modellauswahl
@@ -110,20 +112,114 @@ flowchart TD
 
 ## Provider-Mapping
 
-Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten. Der Providerwechsel ist dann eine Zuordnung von Rollen auf passende Modellfamilien.
+Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten: **Erst die Rolle definieren, dann den Provider und erst zuletzt den konkreten Modellnamen wählen.** Der Providerwechsel ist eine Zuordnung von Rollen auf passende Modellfamilien. Im Kurs gilt weiterhin der OpenAI-Default aus der Tabelle oben; die Zuordnung dient der Einordnung und Architekturplanung und ändert nicht automatisch die in den Modulen verwendeten Modelle.
 
-| Rolle | OpenAI | Mistral | Gemini | Anthropic |
-|---|---|---|---|---|
-| Baseline / Demo | `gpt-5.6-luna` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
-| Router / leichter Reasoner | `gpt-5.6-luna` | `mistral-small-latest` | `gemini-3-flash-preview` | `claude-haiku-4-5` |
-| Judge / starker Reasoner | `gpt-5.4` | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-7` |
-| Worker / Synthese | `gpt-5.4-mini` | `mistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
-| Coding-Worker | `gpt-5.4-mini` | `devstral-latest` oder `codestral-latest` | `gemini-3.1-pro-preview` | `claude-sonnet-4-6` |
-| Frontier / maximale Qualität | `gpt-5.6-sol` | `mistral-large-latest` | `gemini-3.1-pro-preview` | `claude-opus-4-7` |
-| Embeddings | `text-embedding-3-small` | `mistral-embed` | `gemini-embedding-2-preview` | externer Provider nötig |
+| Rolle                              | OpenAI                   | Mistral                                              | Gemini                        | Anthropic                       | Kommentar                                                           |
+| ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
+| **Baseline / Demo**                | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | schnell, günstig, gut für Grundlagen                                |
+| **Router / leichter Reasoner**     | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-7`               | für Supervisor, Security, Bewertung                                 |
+| **Worker / Synthese**              | `gpt-5.4-mini`           | `mistral-medium-latest` oder `mistral-large-latest`  | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
+| **Worker / Synthese (hochwertig)** | `gpt-5.6-terra`          | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | hohe Qualität: komplexe RAG, finale Reports                         |
+| **Frontier / maximale Qualität**   | `gpt-5.6-sol`            | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
+| **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
+| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier im Kurskontext keinen direkten Standardersatz |
 
 > [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>
-> Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter.
+> Das Mapping ist funktionsorientiert, nicht benchmark-orientiert. Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter. Chat-Modell und Embedding-Modell sind **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht den anderen nicht nach sich.
+
+### Wie die Provider im Kurskontext zu lesen sind
+
+#### OpenAI
+
+OpenAI ist im Projekt derzeit der **Kurs-Default**:
+
+- starkes Rollenmodell im bestehenden Kurs
+- konkrete Zuordnung in den Notebooks bereits umgesetzt
+- Agent Builder als OpenAI-spezifisches Zusatzmodul
+- Embeddings direkt im bestehenden RAG-Pfad verankert
+
+**Geeignet, wenn**
+- bestehende Kurslogik unverändert bleiben soll
+- Notebooks 1:1 weiterlaufen sollen
+- die Modellunterscheidung im Unterricht explizit gezeigt wird
+
+#### Mistral
+
+Mistral ist besonders interessant, wenn ein **breiter Single-Provider-Pfad** angestrebt wird:
+
+- Generalmodelle
+- Reasoning-Modelle (`magistral-*`)
+- Coding-Modelle (`devstral`, `codestral`)
+- Audio-Modelle
+- Embeddings
+
+**Geeignet, wenn**
+- ein stärker providerneutraler oder europäischer Stack gewünscht ist
+- Audio, Coding und Embeddings möglichst in einer Produktwelt liegen sollen
+- man OpenAI nicht als alleinigen Standard setzen möchte
+
+#### Gemini
+
+Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
+
+- Flash-Modelle für günstige, schnelle Läufe (`gemini-3-flash-preview`)
+- Pro-Modelle für starke Reasoning- und Synthese-Aufgaben (`gemini-3.1-pro-preview`)
+- Eigene Embedding-Modelle (`gemini-embedding-2-preview`)
+- Sehr langer Kontext (bis 2 Mio. Tokens) für Dokument-Handoffs
+
+**Geeignet, wenn**
+- multimodale Inhalte (Bild, Video, Audio) im Agenten-System verarbeitet werden
+- ein langer Kontextpfad für große Dokumente benötigt wird
+- Google Cloud / Vertex AI als Deployment-Plattform geplant ist
+
+**Einschränkung**
+- kein spezialisiertes Coding-Modell (Mistral `devstral` hat hier einen Vorteil)
+- Preview-Modelle können sich ohne Vorankündigung ändern
+
+#### Anthropic
+
+Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
+
+- Haiku als schnelle Baseline (`claude-haiku-4-5`)
+- Sonnet als starker Standard-Worker (`claude-sonnet-4-6`)
+- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-4-7`)
+
+**Geeignet, wenn**
+- die Modellrollen aus dem OpenAI-Setup möglichst klar nachgebildet werden sollen
+- Tool Use und Reasoning im Vordergrund stehen
+
+**Einschränkung**
+- kein gleichwertiger Kurs-Standardpfad für Embeddings im bestehenden Projekt
+
+### Minimalregel für providerneutrale Dokumentation
+
+Wenn Modultexte, Architekturtexte oder Deployment-Dokumente providerneutral formuliert werden sollen, ist dieses Muster robust:
+
+1. **Rolle benennen**
+2. **Anforderung beschreiben**
+3. **Provider-Mapping angeben**
+4. **Kurs-Default explizit nennen**
+
+**Beispiel**
+
+```md
+### Modellrolle: Judge / Evaluator
+
+Für diese Rolle wird ein starkes Reasoning-Modell benötigt.
+Es bewertet Antworten, prüft Regelkonformität oder entscheidet zwischen Alternativen.
+
+**Geeignete Modelle je Provider:**
+- OpenAI: `gpt-5.4`
+- Mistral: `magistral-medium-latest`
+- Gemini: `gemini-3.1-pro-preview`
+- Anthropic: `claude-opus-4-7`
+
+**Kurs-Default:**
+Im Kurs wird hierfür aktuell `gpt-5.4` verwendet.
+```
+
+Das erlaubt eine allgemeine Beschreibung, ohne die konkreten OpenAI-Implementierungen im Kurs umzuschreiben.
 
 ## Modellauswahlprozess: Schritt für Schritt
 Die Auswahl des optimalen KI-Modells erfordert einen strukturierten Prozess:
@@ -250,12 +346,6 @@ In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte n
 
 ---
 
-**Version:** 1.5<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.6<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
-
-
-
-
-
-

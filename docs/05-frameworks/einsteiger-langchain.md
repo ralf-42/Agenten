@@ -300,30 +300,9 @@ def search_database(query: str, limit: int = 10) -> str:
         limit: Maximale Anzahl Ergebnisse
     """
     return f"Gefunden: {limit} Ergebnisse für '{query}'"
-
-# Tool mit Anthropic programmatic tool calling
-@tool(extras={
-    "anthropic": {
-        "type": "computer_20241022",  # Anthropic Computer Use
-        "display_width_px": 1024,
-        "display_height_px": 768
-    }
-})
-def take_screenshot() -> str:
-    """Erstellt einen Screenshot des Bildschirms."""
-    return "screenshot.png"
 ```
 
-**Vorteile:**
-- ✅ **Provider-native Features** nutzen (Caching, Strict Mode, Computer Use)
-- ✅ **Built-in Client-Side Tools** für Anthropic, OpenAI
-- ✅ **Optimierte Performance** durch provider-spezifische Optimierungen
-- ✅ **Backwards-compatible**: Tools ohne `extras` funktionieren weiterhin
-
-**Use Cases:**
-- Anthropic Prompt Caching für häufig verwendete Tools
-- OpenAI Strict Mode für garantierte Schema-Konformität
-- Anthropic Computer Use für Browser-Automation
+Weitere Provider-Flags (z. B. Anthropic Computer Use) und die vollständige Parameterliste stehen in den [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}).
 
 > [!WARNING] Cache-Typ beachten<br>
 > `cache_control: {"type": "ephemeral"}` erzeugt einen kurzlebigen Cache innerhalb derselben Sitzung. Damit der Cache wiederverwendet werden kann, sollte die `extras`-Konfiguration eines Tools konsistent bleiben. Wird dasselbe Tool später mit einer anderen `extras`-Konfiguration registriert oder verwendet, entsteht ein Cache-Miss — die Anfrage wird erneut vollständig verarbeitet und verursacht erneut volle Kosten.
@@ -400,18 +379,7 @@ print(structured.reasoning)
 print(structured.confidence)
 ```
 
-**Vorteile:**
-- ✅ **Garantierte Schema-Konformität** für Agent-Outputs (keine JSON-Parsing-Fehler)
-- ✅ **Type-Safety** mit Pydantic-Validierung
-- ✅ **Bessere Fehlerbehandlung** durch strukturierte Responses
-- ✅ **Strikte Provider-Integration** (OpenAI Structured Output, Anthropic Tool Use)
-- ✅ **Predictable Agent-Behavior** für Production-Systeme
-
-**Use Cases:**
-- Production-Agents mit garantierten Output-Formaten
-- Multi-Step-Reasoning mit strukturierten Zwischenschritten
-- Agent-Monitoring mit standardisierten Response-Metriken
-- Integration in typsichere Workflows
+Damit erhalten Agent-Outputs ein prüfbares Pydantic-Schema (Type-Safety, weniger Parsing-Fehler) – sinnvoll für Production-Agents, strukturierte Zwischenschritte und Monitoring. Details und Varianten: [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}).
 
 
 ### Agent-Tool-Interaktion
@@ -845,7 +813,7 @@ LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, struktur
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 1.2<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

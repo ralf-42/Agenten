@@ -2,7 +2,7 @@
 layout: default
 title: Fine-Tuning
 parent: "Modelle & Provider"
-nav_order: 3
+nav_order: 2
 description: Fine-Tuning als Alternative oder Ergänzung zu Prompting, RAG, Tools und Agentenlogik
 has_toc: true
 ---

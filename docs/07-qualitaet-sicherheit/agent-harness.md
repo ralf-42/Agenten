@@ -116,7 +116,7 @@ Evaluation beantwortet eine andere Frage: Ob der Lauf unter definierten Bedingun
 
 Eine Baseline vor Änderungen, ein kleines Eval-Set mit Rand- und Negativfällen sowie Regressionstests machen Verbesserungen überprüfbar. Fehler aus dem Betrieb sollten als neue Testfälle, Policies oder Dokumentationsregeln in die nächste Version einfließen.
 
-Weiterführend: [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) und [Evaluation & Observability: Best Practices]({{ '/07-qualitaet-sicherheit/agent-evaluation-observability-best-practices.html' | relative_url }}).
+Weiterführend: [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) (Konzept, Baselines, Regressionen und einfaches Harness-Konzept).
 
 ## Ein Ablauf mit Kontrollpunkten
 
@@ -163,6 +163,6 @@ Nicht notwendig ist zu Beginn ein umfassendes Multi-Agent-System. Planning, Memo
 
 ---
 
-**Version:** 1.0<br>
-**Stand:** September 2026<br>
+**Version:** 1.1<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

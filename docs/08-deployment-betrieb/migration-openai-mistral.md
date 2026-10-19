@@ -298,13 +298,13 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 | Dokument | Frage |
 |---|---|
-| [Provider-Modell-Mapping]({{ '/03-modelle-provider-anpassung/provider-modell-mapping.html' | relative_url }}) | Wie werden Modellrollen providerübergreifend zugeordnet? |
+| [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html#provider-mapping' | relative_url }}) | Wie werden Modellrollen providerübergreifend zugeordnet? |
 | [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Provider-Migrationen? |
 
 ---
 
-**Version:** 4.1<br>
-**Stand:** Juli 2026<br>
+**Version:** 4.2<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

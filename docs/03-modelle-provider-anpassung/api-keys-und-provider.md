@@ -2,7 +2,7 @@
 layout: default
 title: "API-Keys & Provider"
 parent: "Modelle & Provider"
-nav_order: 4
+nav_order: 3
 description: Übersicht über LLM-Provider, API-Keys und Colab-Integration
 has_toc: true
 ---
@@ -130,10 +130,6 @@ Für erste Kursübungen sind Anbieter hilfreich, die ohne große Einrichtung sta
 **Together AI**
 - Credits oder Pay-as-you-go je nach aktuellem Angebot
 - interessant für Open-Weight-Modelle
-
----
-
-## Lokale Modelle ohne API-Keys
 
 ---
 

@@ -150,7 +150,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  M17  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
 |  M19  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
 |  M20  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
-|  M21  | Kontrollierte Zusammenarbeit      | Hierarchical Pattern                 | Teams, Rollen, Delegation                              |
+|  M21  | Kontrollierte Zusammenarbeit      | Reflection, Parallel, Hierarchie     | Prüfschleife, Fan-out, Teams                              |
 |  M22  | Aufbau: Qualität und Integration  | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
 |  M23  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
 |  M24  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |

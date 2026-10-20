@@ -49,7 +49,7 @@ response = agent.invoke({"messages": [...]})
 
 ### Die Lösung mit LangSmith
 ```python
-# ✅ MIT LangSmith: Vollständige Observability
+# ✅ MIT LangSmith: Vollständige Observability für Anwendungs- und Produktionsläufe
 import os
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_API_KEY"] = "your-api-key"
@@ -80,7 +80,7 @@ response = agent.invoke({"messages": [...]})
 
 **Best Practice:**
 ```python
-# Automatisches Tracing (empfohlen)
+# Automatisches Tracing für Debugging und Production
 os.environ["LANGSMITH_TRACING"] = "true"
 
 # Traces automatisch im LangSmith Dashboard sichtbar
@@ -369,7 +369,9 @@ client.push_prompt("owner/my-prompt", object=prompt)
 
 ---
 
-## Quick Start: LangSmith aktivieren
+## Quick Start: Globales LangSmith-Tracing aktivieren
+
+> Dieses Quick Start zeigt globales Tracing für Anwendungs- und Produktionsläufe. Für Kurs-Notebooks gilt standardmäßig `LANGSMITH_TRACING="false"`; dort nur ausgewählte Referenzläufe mit `tracing_context(enabled=True)` erfassen. Siehe [Selektives Tracing in Kurs-Notebooks](#selektives-tracing-in-kurs-notebooks).
 
 ### 1. API-Key generieren
 ```bash
@@ -408,21 +410,23 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 >
 > **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Für einzelne Referenzläufe bei deaktiviertem globalem Tracing den weiter unten beschriebenen expliziten Tracing-Kontext verwenden.
 
-**Empfohlenes Notebook-Pattern (Kurs):**
+**Notebook-Pattern (Kurs):**
 ```python
 # ── Setup-Cell: Modulname direkt setzen (vor allen Imports!) ─────────────
-os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_TRACING"] = "false"
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 os.environ["LANGSMITH_PROJECT"]    = "m04-structured-output"  # Modulname
+from langsmith import tracing_context
 
 # ── LangSmith-Abschnitt: nur noch anzeigen ───────────────────────────────
 import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
-# ── invoke() direkt – Projekt bereits korrekt gesetzt ────────────────────
+# ── Nur den ausgewählten Referenzlauf erfassen ────────────────────────────
 run_cfg = {"run_name": "m04_kap6_structuredtrace", "tags": ["m04", "structured-output"]}
 chain = llm.with_structured_output(MyModel).with_config(**run_cfg)
-result = chain.invoke("...")
+with tracing_context(enabled=True):
+    result = chain.invoke("...")
 ```
 
 **Projektname-Konvention:**
@@ -742,6 +746,10 @@ client = Client(
 ---
 
 ## Changelog
+
+### Version 2.6 (2026-10-20)
+- ✅ Kurs-Notebooks: `LANGSMITH_TRACING="false"` als Standard; ausgewählte Referenzläufe mit `tracing_context(enabled=True)`
+- ✅ Globale Aktivierung in Quick Start und Debugging-Beispiel ausdrücklich auf Anwendungs- und Produktionsläufe begrenzt
 
 ### Version 2.5 (2026-10-06)
 - ✅ Selektives Tracing in Kurs-Notebooks: `tracing_context(enabled=True)` (langsmith) ersetzt `tracing_v2_enabled(...)` als kanonisches Muster

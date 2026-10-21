@@ -40,9 +40,7 @@ Ein Agent wird erst greifbar, wenn Planung in kontrollierte Handlung übersetzt 
 
 Agenten müssen prüfbar bleiben. Quellen, Tool-Aufrufe, Zustandswechsel, Freigaben und Qualitätsmetriken gehören deshalb zum Systementwurf. Evaluation, Monitoring, Security, Human-in-the-Loop und Governance sorgen dafür, dass aus Prototypen verlässliche Produkte werden und kritische Entscheidungen nicht unsichtbar im Modell verschwinden.
 
-Die Entwicklung von Agentenprodukten erfordert mehr als einzelne Notebook-Demos: saubere Architektur, reproduzierbare Tests und kontinuierliche Verbesserung mit Tracing und Evaluation. Der Weg vom Experiment zum stabilen Agentensystem ist kürzer, wenn Struktur von Anfang an mitgedacht wird — Checkpointing, Evaluation und Monitoring sind keine Nacharbeiten, sondern Bestandteile des Entwurfs.
-
-Agenten scheitern häufiger an schlechten Prompts, unklarer Rollentrennung oder fehlendem Monitoring als an der Technologie selbst. Das ist die eigentliche Herausforderung — und der Kern dieses Kurses. 
+Der Weg vom Notebook zum stabilen Agentensystem verlangt klare Rollen, begrenzte Tools, reproduzierbare Tests und sichtbare Abläufe. Agenten scheitern oft an unklarem Kontext, fehlender Kontrolle oder ausbleibender Evaluation. Diese Punkte gehören deshalb von Anfang an zum Entwurf. 
 
 
 > [!Note] Hinweis zur Entstehung<br>

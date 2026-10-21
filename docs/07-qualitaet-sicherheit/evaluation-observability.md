@@ -348,49 +348,9 @@ In der Praxis relevant wenn: Der Agent eine Antwort erzeugt, die anschließend v
 
 Grenze: Entkopplung allein löst keine Qualitätsprobleme. Wenn Planer und Evaluator schlechte Kriterien definieren oder das Referenzset nicht repräsentativ ist, bleibt die Bewertung trotz struktureller Trennung unzuverlässig.
 
-## Ein einfaches Harness-Konzept
+## Harness aus Sicht der Evaluation
 
-Das Wort `Harness` klingt technisch, meint aber zunächst eine nützliche Infrastruktur-Hülle um den Agenten. Diese sorgt dafür, dass Durchläufe reproduzierbar, Tool-Aufrufe kontrollierbar und Vergleiche zwischen Varianten (Baselines) möglich werden.
-
-Die übergreifende Einordnung der Kontrollschicht steht in [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}). Dieser Abschnitt konzentriert sich auf die Mess- und Evaluationssicht.
-
-Es reicht ein einfaches Verständnis: Ein Harness kümmert sich um den **Run-Kontext**, die **Tool-Wrapper**, **Mocks** für Tests sowie **Policies** für riskante Aktionen. Gleichzeitig fungiert er als Messstation, die **Beobachtungsdaten (Traces)** sammelt, um Ergebnisse automatisiert mit einem **Eval-Set** vergleichen zu können.
-
-```mermaid
-flowchart TB
-    subgraph Runtime ["<b>Agentic Runtime</b>"]
-        A["Agent / Orchestrator"]
-        B["Tool Wrapper"]
-        C["Trace / Observability"]
-        D["Policy Check / Guardrails"]
-        
-        A <--> B
-        A --> C
-        A -.-> D
-    end
-
-    subgraph Evaluation ["<b>Quality Assurance</b>"]
-        E["Eval-Set (Golden Dataset)"]
-        F["Evaluation & Comparison"]
-        G["Baseline / Benchmarks"]
-    end
-
-    %% Datenflüsse zur Evaluation
-    B --> F
-    C --> F
-    E --> F
-    G --> F
-
-    %% Feedback-Loop (Optional)
-    F -.-> |Optimization| A
-    
-    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-
-    style Runtime fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
-    style Evaluation fill:#fef3c7,stroke:#d97706,stroke-width:2px
-```
-
-Nicht geeignet, wenn: Der Begriff dazu verleitet, sofort ein großes Infrastrukturprojekt zu bauen. Für Einsteiger reicht oft ein kleiner, sauberer Test- und Beobachtungsrahmen.
+Für Evaluation ist das Harness die reproduzierbare Laufzeitumgebung: Sie hält Eingaben, Konfiguration, Tool-Ergebnisse und Traces fest, damit ein Run mit einer Baseline verglichen werden kann. Die Kontrollschicht und ihre Bausteine erklärt [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}); diese Seite konzentriert sich auf Testfälle, Messgrößen und Ergebnisvergleiche.
 
 ## Praktische Umsetzung mit LangGraph, LangChain und LangSmith
 

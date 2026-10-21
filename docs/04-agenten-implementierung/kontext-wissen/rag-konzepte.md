@@ -91,112 +91,18 @@ flowchart LR
 
 ## Chunking: Dokumente sinnvoll zerlegen
 
-Chunking ist eine der Stellen, an denen RAG-Projekte am häufigsten an Präzision verlieren. Zu große Chunks verschwenden Kontextfenster und verwässern Treffer. Zu kleine Chunks verlieren fachlichen Zusammenhang. Beides führt dazu, dass das Retrieval formal funktioniert, inhaltlich aber an der falschen Stelle landet.
+Chunking teilt Dokumente in Einheiten, die sich indexieren und später abrufen lassen. Größe, Trennstellen und Überlappung beeinflussen, ob ein Treffer genug Zusammenhang für eine belastbare Antwort enthält.
 
-In Übungen zeigt sich oft ein typischer erster Fehler: Die Chunk-Größe wird einmal festgelegt und dann als technischer Parameter behandelt. Tatsächlich ist sie eine fachliche Entscheidung. Ein Handbuch, ein juristischer Text und API-Dokumentation brauchen nicht dieselbe Granularität.
-
-### Chunking-Strategien
-
-| Strategie | Beschreibung | Anwendungsfall |
-|-----------|--------------|----------------|
-| **Fixed-Size** | Feste Zeichenanzahl pro Chunk | Einfache Texte ohne Struktur |
-| **Recursive** | Hierarchische Trennung (Absatz → Satz → Wort) | Allgemeine Dokumente |
-| **Semantic** | Trennung nach Bedeutungseinheiten | Komplexe Fachtexte |
-| **Document-based** | Beibehaltung natürlicher Grenzen (Kapitel, Abschnitte) | Strukturierte Dokumente |
-
-### Der RecursiveCharacterTextSplitter
-
-Der am häufigsten verwendete Splitter arbeitet mit einer Hierarchie von Trennzeichen:
-
-```python
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,      # Maximale Chunk-Größe in Zeichen
-    chunk_overlap=100,   # Überlappung zwischen Chunks
-    separators=["\n\n", "\n", ". ", " ", ""]  # Trennzeichen-Hierarchie
-)
-```
-
-**Funktionsweise:**
-1. Versuche zuerst, an Doppel-Zeilenumbrüchen zu trennen (Absätze)
-2. Falls Chunk zu groß: Trenne an einfachen Zeilenumbrüchen
-3. Falls immer noch zu groß: Trenne an Satzenden
-4. Letzte Option: Trenne an Leerzeichen oder einzelnen Zeichen
-
-### Overlap: Kontext bewahren
-
-```
-Dokument: [AAAA|BBBB|CCCC|DDDD]
-
-Ohne Overlap:
-  Chunk 1: [AAAA]
-  Chunk 2: [BBBB]
-  → Information an Grenzen geht verloren
-
-Mit Overlap (25%):
-  Chunk 1: [AAAA|BB]
-  Chunk 2: [BB|CCCC]
-  → Zusammenhänge bleiben erhalten
-```
-
-### Empfehlungen nach Dokumenttyp
-
-| Dokumenttyp | chunk_size | chunk_overlap | Begründung |
-|-------------|------------|---------------|------------|
-| FAQ / Kurztexte | 200–300 | 50 | Präzise, eigenständige Antworten |
-| Handbücher | 500–800 | 100–150 | Kontext zwischen Abschnitten erhalten |
-| Rechtsdokumente | 800–1000 | 200 | Vollständige Paragraphen wichtig |
-| Code-Dokumentation | 300–500 | 100 | Funktionen zusammenhalten |
-
-Diese Werte sind keine feste Regel. Die Tabelle bildet einen sinnvollen Startpunkt. Entscheidend ist, ob die Treffer später tatsächlich die Antwort tragen. Wenn ein System zwar semantisch ähnliche Chunks findet, aber wiederholt am Absatzrand wichtige Informationen verliert, liegt das Problem oft nicht im Modell, sondern im Zuschnitt der Dokumente.
+Strategien, Tokenizer, Parameter und dokumenttypspezifische Beispiele stehen im Vertiefungskapitel [Tokenizing & Chunking](./tokenizing-chunking.html). Hier genügt die Einordnung: Chunking ist Teil der Indexierung und sollte anhand der späteren Retrieval-Qualität bewertet werden.
 
 ---
 
 ## Embeddings: Text als Vektor
 
-Embeddings machen semantische Suche überhaupt erst möglich. Das Verfahren übersetzt Text in Vektoren, sodass Ähnlichkeit nicht mehr über exakte Worttreffer, sondern über Bedeutungsnähe berechnet werden kann. Das klingt abstrakt, wird aber praktisch sehr schnell greifbar: Ein System kann "Fahrzeug" finden, obwohl in der Frage "Auto" steht.
+Ein Embedding bildet Text als Vektor ab. Dadurch kann semantische Suche auch inhaltlich ähnliche Begriffe finden, selbst wenn Frage und Dokument nicht dieselben Wörter verwenden.
 
-Gleichzeitig werden Embeddings oft überschätzt. Vektorrepräsentationen lösen nicht automatisch schlechte Dokumentstruktur, unpräzise Queries oder schwache Metadaten. In vielen RAG-Projekten sind sie notwendig, aber nicht hinreichend.
+Modelle, Vektordimensionen und Ähnlichkeitsmaße werden im Fachkapitel [Embeddings](./embeddings.html) erklärt. Für den RAG-Ablauf ist hier entscheidend: Dokumente und Anfragen müssen mit kompatiblen Embedding-Modellen repräsentiert werden.
 
-### Konzept
-
-```
-"Der Hund spielt im Park"     → [0.12, -0.45, 0.78, ..., 0.33]  (1536 Dim.)
-"Die Katze liegt im Garten"   → [0.15, -0.42, 0.71, ..., 0.29]  (ähnlich!)
-"Quantenmechanik ist komplex" → [-0.89, 0.23, -0.11, ..., 0.67] (anders!)
-```
-
-### Verfügbare Embedding-Modelle
-
-| Modell | Dimensionen | Kosten | Qualität |
-|--------|-------------|--------|----------|
-| `text-embedding-3-small` (OpenAI) | 1536 | ~$0.02/1M Tokens | ⭐⭐⭐⭐ |
-| `text-embedding-3-large` (OpenAI) | 3072 | ~$0.13/1M Tokens | ⭐⭐⭐⭐⭐ |
-| `all-MiniLM-L6-v2` (HuggingFace) | 384 | Kostenlos | ⭐⭐⭐ |
-| `multilingual-e5-large` (HuggingFace) | 1024 | Kostenlos | ⭐⭐⭐⭐ |
-
-### Ähnlichkeitsmaße
-
-Die Ähnlichkeit zwischen Vektoren wird mathematisch berechnet:
-
-| Maß | Beschreibung | Wertebereich |
-|-----|--------------|--------------|
-| **Cosine Similarity** | Winkel zwischen Vektoren | -1 bis 1 |
-| **Euclidean Distance** | Geometrischer Abstand | 0 bis ∞ |
-| **Dot Product** | Skalarprodukt | -∞ bis ∞ |
-
-**Cosine Similarity** ist der Standard, da sie unabhängig von der Vektorlänge nur die "Richtung" (= Bedeutung) vergleicht.
-
-### Beispiel: Embeddings erzeugen
-
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
 ---
 
 ## Retrieval: Die richtigen Dokumente finden
@@ -475,7 +381,7 @@ Häufige Probleme und deren Lösungen.
 ### Indexierung
 
 - **Konsistentes Embedding-Modell:** Dasselbe Modell für Indexierung und Queries verwenden
-- **Sinnvolles Chunking:** Dokumenttyp-spezifische Parameter wählen
+- **Sinnvolles Chunking:** Parameter anhand der [Dokumenttypen und Strategien](./tokenizing-chunking.html) wählen
 - **Metadaten anreichern:** Quelle, Datum, Kategorie für späteres Filtern
 - **Inkrementelle Updates:** Nur geänderte Dokumente neu indexieren
 
@@ -502,31 +408,16 @@ Häufige Probleme und deren Lösungen.
 
 ## Zusammenfassung
 
-RAG kombiniert die Stärken von Retrieval-Systemen mit generativen LLMs:
+Eine RAG-Pipeline lädt und indexiert Dokumente, sucht zur Anfrage passende Passagen und übergibt diese als Kontext an das Modell. Die Qualität hängt vom Zusammenspiel der Schritte ab: Indexierung und Chunking beeinflussen die Treffer, Retrieval bestimmt den Kontext, die Generierung muss sich an den gelieferten Quellen orientieren.
 
-| Komponente | Funktion | Typisches Tool |
-|------------|----------|----------------|
-| **Document Loader** | Daten einlesen | TextLoader, PyPDFLoader |
-| **Text Splitter** | Chunking | RecursiveCharacterTextSplitter |
-| **Embedding Model** | Text → Vektor | OpenAIEmbeddings |
-| **Vector Store** | Speicherung & Suche | ChromaDB, FAISS |
-| **Retriever** | Relevante Chunks finden | as_retriever() |
-| **LLM** | Antwort generieren | gpt-5.4-mini |
+| Schritt | Aufgabe | Vertiefung |
+|---|---|---|
+| Dokumente vorbereiten | Struktur erhalten und passende Chunks bilden | [Tokenizing & Chunking](./tokenizing-chunking.html) |
+| Vektoren erzeugen | Dokumente und Anfragen semantisch repräsentieren | [Embeddings](./embeddings.html) |
+| Treffer suchen und ordnen | Relevante Passagen auswählen und gegebenenfalls neu sortieren | Dieses Kapitel: Retrieval und Reranking |
+| Antwort erstellen und prüfen | Kontext gezielt einsetzen und Qualität messen | [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}) |
 
-**Der typische Workflow:**
-
-```python
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,      # Maximale Chunk-Größe in Zeichen
-    chunk_overlap=100,   # Überlappung zwischen Chunks
-    separators=["\n\n", "\n", ". ", " ", ""]  # Trennzeichen-Hierarchie
-)
-```
-RAG ermöglicht es, LLMs mit aktuellem, domänenspezifischem Wissen auszustatten – ohne teures Fine-Tuning und mit voller Kontrolle über die Wissensbasis.
-
----
+RAG ergänzt zur Laufzeit eine Wissensquelle. Es macht deren Qualität sichtbar, behebt aber keine Lücken, veralteten Inhalte oder misslungenen Suchanfragen automatisch.
 
 ## Abgrenzung zu verwandten Dokumenten
 

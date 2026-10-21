@@ -294,35 +294,9 @@ Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und der Lösungsweg erst 
 
 ## Multi-Agent: wenn Arbeitsteilung wirklich einen Mehrwert bringt
 
-In Multi-Agent-Architekturen arbeiten mehrere spezialisierte Agenten zusammen. Ein Supervisor kann Aufgaben verteilen, oder die Agenten tauschen Ergebnisse direkt untereinander aus. Dieses Muster klingt oft attraktiv, ist aber nur dann sinnvoll, wenn echte Spezialisierung einen erkennbaren Gewinn bringt.
+Mehrere Agenten lohnen sich, wenn klar getrennte Rollen einen fachlichen Gewinn bringen, der den zusätzlichen Koordinationsaufwand rechtfertigt. Prüfe zuerst, ob Tool-Calling, ein einzelner Agent oder ein expliziter Workflow genügt.
 
-Die Detailentscheidung zwischen Supervisor, Pipeline, Handoff, Skill-Loading oder kollaborativen Mustern gehört in das Vertiefungskapitel zu Multi-Agent-Systemen. An dieser Stelle reicht die Architekturentscheidung: Braucht das Problem wirklich mehrere spezialisierte Rollen, oder genügen Tool-Calling, Workflow oder ein einzelner Agent?
-
-Die wichtigsten Koordinationsmuster werden dort ausführlich behandelt:
-
-| Muster | Kurzentscheidung |
-|---|---|
-| Supervisor | Eine zentrale Rolle muss Aufgaben verteilen und Ergebnisse zusammenführen. |
-| Pipeline | Die Reihenfolge ist fachlich stabil und gut testbar. |
-| Handoff | Die Zuständigkeit wird erst während der Bearbeitung klar. |
-| Skill-Loading | Ein einzelner Agent bleibt verantwortlich, lädt aber zeitweise Spezialwissen. |
-| Review-Schleife | Qualität entsteht durch Gegenlesen, Kritik oder Freigabe. |
-
-```mermaid
-flowchart TD
-    A[Aufgabe] --> S[Supervisor]
-    S --> R[Quellen-Agent]
-    S --> W[Writer-Agent]
-    S --> C[Code-Agent]
-    R --> S
-    W --> S
-    C --> S
-    S --> E[Finale Antwort]
-```
-
-Ein Beispiel ist eine Statusbericht-Pipeline: Ein Quellen-Agent sammelt Quellen, ein Schreib-Agent formuliert, ein Prüf-Agent bewertet Qualität und Konsistenz. Solch eine Trennung kann sinnvoll sein, wenn die Teilaufgaben fachlich oder technisch wirklich unterschiedlich sind. Ohne klare Zuständigkeiten entsteht allerdings schnell mehr Koordinationsaufwand als Nutzen.
-
-Entwickler unterschätzen oft, wie viel zusätzlicher Abstimmungsbedarf mit jedem weiteren Agenten entsteht. Multi-Agent ist deshalb selten der beste Einstieg.
+Die Auswahl zwischen Supervisor, Pipeline, Handoff und kollaborativen Mustern gehört in [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}). Dieser Abschnitt beschränkt sich auf die Architekturentscheidung: Braucht die Aufgabe wirklich mehrere spezialisierte Rollen?
 
 ## Vertiefung: drei zusätzliche Perspektiven
 
@@ -336,42 +310,7 @@ Die vier Architekturstufen aus dem Überblick bleiben die wichtigste Entscheidun
 
 ### Harness Engineering: die Steuerungsschicht um das Modell
 
-Viele Agentenprobleme entstehen nicht, weil das Modell zu schwach ist, sondern weil die Steuerungsschicht um das Modell herum fehlt oder schlecht gestaltet ist. Dieses Konzept trägt den Namen **Harness Engineering**.
-
-Harness Engineering bezeichnet die Praxis, die Kontroll- und Steuerungsschicht rund um ein LLM zu gestalten — also alles, was zwischen der Rohmodellausgabe und einer realen Aktion liegt. Eine Dreiteilung hilft beim Einordnen:
-
-```mermaid
-flowchart TB
-    subgraph Harness ["<b>Harness Engineering</b>"]
-        direction TB
-        H_Info["Gesamte Steuerungsinfrastruktur"]
-        
-        subgraph Context ["<b>Context Engineering</b>"]
-            direction TB
-            C_Info["Kontextzusammenstellung & Retrieval"]
-            
-            subgraph Prompt ["<b>Prompt Engineering</b>"]
-                P_Info["Instruktionen an das Modell"]
-            end
-            
-            C_Info --> P_Info
-        end
-        
-        H_Info --> C_Info
-    end
-
-    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-```
-
-**Prompt Engineering** ist die innerste Schicht: Instruktionen, Rollenbeschreibungen, Beispiele — was dem Modell gesagt wird.
-
-**Context Engineering** bestimmt, was überhaupt in den Kontext fließt und wann: Retrieval, Kompression, Zusammensetzung.
-
-**Harness Engineering** umfasst alles darüber hinaus: Werkzeugorchestrierung, Speichersysteme, Berechtigungsgrenzen, Fehlerbehandlung und Wiederherstellungslogik.
-
-Die wichtigste Erkenntnis: Selbst das beste Modell scheitert ohne eine durchdachte Steuerungsschicht. Der häufige Fehler besteht darin, immer bessere Prompts zu schreiben, statt das System um das Modell herum zu verbessern. Instabilität, Halluzinationen oder Endlosschleifen werden dann dem Modell zugeschrieben — meistens liegt das Problem aber in einem unstrukturierten Kontext, inkonsistentem Speicher oder fehlender Fehlerbehandlung.
-
-Typischer Fehler: Eine besondere Gefahr in länger laufenden Agenten ist der sogenannte **Execution Drift** — ein stilles Versagen, das keinen Fehler wirft und deshalb schwer zu erkennen ist. Das Modell interpretiert ein Tool-Ergebnis geringfügig falsch, setzt aber selbstsicher auf dieser falschen Grundlage fort. Nach mehreren solchen Schritten ist der Agent weit vom ursprünglichen Ziel entfernt, ohne dass eine Ausnahme oder Fehlermeldung aufgetreten ist. Harness Engineering begegnet diesem Problem durch strukturierte Ausgaben, die maschinell überprüfbar sind, durch Validierungsschritte zwischen Werkzeugaufrufen und durch explizite Kontrollpunkte, an denen der Planstand gegen die ursprüngliche Aufgabe geprüft wird.
+Ein Harness ergänzt eine gewählte Architektur um kontrollierten Kontext, begrenzte Aktionen, Fehlerbehandlung und überprüfbare Läufe. Hier dient Harness Engineering als Prüfperspektive im Architekturreview; Aufbau, Bausteine und Review-Fragen stehen im Fachkapitel [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}).
 
 ### Entscheidungslogik: drei einfache Grundformen
 

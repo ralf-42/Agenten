@@ -9,7 +9,7 @@ has_toc: true
 
 # Checkliste: Erstellung eines Agentensystems
 
-Diese Checkliste bündelt die wichtigsten Prüfpunkte für ein Agentensystem: von Zielklärung und Architektur über Tools, Kontext, State und Multi-Agent-Erweiterungen bis zu Evaluation, Observability und Betrieb.
+Diese Checkliste bündelt die wichtigsten Prüfpunkte für ein Agentensystem: von Zielklärung und Architektur über Tools, Kontext, State und Multi-Agent-Erweiterungen bis zu Evaluation, Observability und Betrieb. Sie fasst Entscheidungen zur Prüfung zusammen; Begründungen, Umsetzungsmuster und technische Details stehen in den verlinkten Fachkapiteln.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }

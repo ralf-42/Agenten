@@ -214,47 +214,13 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 
 ---
 
-## 10. Grundregeln für den Betrieb
+## 10. Vom Überblick zur Umsetzung
 
-### 1. Einfach beginnen
-- mit LangChain-Chains starten
-- erst bei Bedarf zu Agenten erweitern
-- LangGraph nutzen, wenn Zustand, Routing oder Freigaben nötig werden
-
-### 2. Von Anfang an beobachten
-- LangSmith früh aktivieren
-- Traces regelmäßig prüfen
-- Kosten-Tracking einbauen
-
-### 3. Iterative Verbesserung
-- Dataset-basierte Evaluierung
-- A/B-Testing für Prompts
-- Feedback-Loops einbauen
-
-### 4. Checkliste für Betriebsreife
-- [ ] Error-Handling implementiert
-- [ ] Rate-Limiting konfiguriert
-- [ ] Monitoring aktiv
-- [ ] Kosten-Budget definiert
-- [ ] Fallback-Strategien vorhanden
-- [ ] Security-Review durchgeführt
+Diese Seite ordnet die Rollen von LangChain, LangGraph und LangSmith ein. Die technische Überführung eines Notebooks in eine deploybare Anwendung steht in [Aus Entwicklung ins Deployment](./aus-entwicklung-ins-deployment.html). Anforderungen an Infrastruktur und Schichten beschreibt der [Minimum Viable Agent Stack](./minimum-viable-agent-stack.html); Testsets und laufende Qualitätsmessung behandelt [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}).
 
 ---
 
-## 11. Vom Prototyp zum betreibbaren Agenten
-
-Der Weg von einem Sprachmodell zu einer betreibbaren Agentenanwendung erfordert mehr als gute Antworten. Wichtig sind:
-
-{: .highlight }
-- **Strukturierte Workflows** (LangChain)
-- **Transparente Steuerung** (LangGraph)
-- **Kontinuierliches Feedback** (LangSmith)
-
-LangChain, LangGraph und LangSmith bilden dafür einen pragmatischen Weg: Tools anbinden, Abläufe kontrollieren und Verhalten sichtbar machen. Andere Frameworks können ähnliche Ziele verfolgen; wichtig ist, dass diese drei Aufgaben überhaupt abgedeckt sind.
-
----
-
-## 12. Weiterführende Ressourcen
+## 11. Weiterführende Ressourcen
 
 ### Offizielle Dokumentation
 - [LangChain Docs](https://python.langchain.com/)

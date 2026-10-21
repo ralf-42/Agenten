@@ -18,14 +18,18 @@ Für den Kurs gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **La
 | **Empfohlen** | LangSmith, ChromaDB | Tracing, Evaluation und Retrieval im Leitprojekt |
 | **Optional** | Kursbibliothek, weitere Tools | Komfortfunktionen, Transfer und Nachschlagewerk |
 
-| Frage | Dokument | Bezug |
+## Welche Framework-Seite passt zu meinem Lernziel?
+
+| Lernziel | Maßgebliche Seite | Umfang |
 |---|---|---|
-| **Was** gehört zum LangChain-Ökosystem? | [LangChain-Ökosystem]({{ '/05-frameworks/langchain-oekosystem.html' | relative_url }}) | Überblick über LangChain, LangGraph, LangSmith und ihre Kursrollen. |
-| **Wie** arbeite ich mit LangChain? | [LangChain]({{ '/05-frameworks/langchain.html' | relative_url }}) | Einstieg und Best Practices für LangChain. |
-| **Wie** arbeite ich mit LangGraph? | [LangGraph]({{ '/05-frameworks/langgraph.html' | relative_url }}) | StateGraph, Routing und robuste Graph-Patterns. |
-| **Wie** nutze ich LangSmith? | [LangSmith]({{ '/05-frameworks/langsmith.html' | relative_url }}) | Tracing, Evaluation, Datasets und Monitoring. |
-| **Welche** Bausteine brauche ich schnell im Notebook? | [Cheatsheet]({{ '/05-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | Kompakte Referenz für LangChain, LangGraph, State, Memory und LangSmith. |
-| **Welche** weiteren Werkzeuge werden genutzt? | [Weitere Tools]({{ '/05-frameworks/weitere-tools.html' | relative_url }}) | ChromaDB und Kursbibliothek. |
+| LangChain, LangGraph und LangSmith einordnen | [LangChain-Ökosystem]({{ '/05-frameworks/langchain-oekosystem.html' | relative_url }}) | Zusammenspiel und Aufgaben der Kernkomponenten |
+| LangChain erstmals nutzen | [Einsteiger LangChain]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }}) | Lernweg und erste Chains, Tools und Agenten |
+| Verbindliche LangChain-Muster nachschlagen | [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}) | Projektstandards und robuste API-Muster |
+| LangGraph erstmals nutzen | [Einsteiger LangGraph]({{ '/05-frameworks/einsteiger-langgraph.html' | relative_url }}) | StateGraph-Grundlagen und erste Workflows |
+| Einen Graphen strukturiert aufbauen | [Graphen mit LangGraph aufbauen]({{ '/05-frameworks/graphen-aufbauen.html' | relative_url }}) | Kompakter Bauplan für Nodes, Edges und Routing |
+| Robuste Graph-Patterns nachschlagen | [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}) | State, Routing, Checkpointing und Freigaben |
+| Code-Bausteine schnell finden | [Cheatsheet]({{ '/05-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | Kurzreferenz; ersetzt keine Einführung oder Standards |
+| LangSmith und weitere Tools einordnen | [LangSmith]({{ '/05-frameworks/langsmith.html' | relative_url }}) und [Weitere Tools]({{ '/05-frameworks/weitere-tools.html' | relative_url }}) | Tracing, Evaluation, ChromaDB und Kursbibliothek |
 
 ---
 

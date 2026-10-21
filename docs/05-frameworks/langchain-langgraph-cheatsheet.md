@@ -13,6 +13,8 @@ has_toc: true
 
 ---
 
+Diese Seite ist eine kompakte Nachschlagehilfe für Notebooks. Erklärungen und Lernschritte stehen in den [Einsteiger-Guides]({{ '/05-frameworks/' | relative_url }}); verbindliche Muster stehen in [LangChain Best Practices](./langchain-best-practices.html) und [LangGraph Best Practices](./langgraph-best-practices.html).
+
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 

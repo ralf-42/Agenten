@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/LangChain-%3E%3D1.3.13-brightgreen" alt="LangChain &gt;=1.3.13"></a></td>
-    <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.4-brightgreen" alt="LangGraph &gt;=1.2.4"></a></td>
-    <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.8-blue" alt="LangSmith &gt;=0.8"></a></td>
-    <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.0-brightgreen" alt="DeepAgents optional &gt;=0.7.0"></a></td>
-    <td><a href="../_docs/LangChain_Audit_Report_2026-09-29.md"><img src="https://img.shields.io/badge/Last%20Audit-2026--09-blue" alt="Last Audit 2026-09"></a></td>
+    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/LangChain-%3E%3D1.4.6-brightgreen" alt="LangChain &gt;=1.4.6"></a></td>
+    <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.16-brightgreen" alt="LangGraph &gt;=1.2.16"></a></td>
+    <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.14.11-blue" alt="LangSmith &gt;=0.14.11"></a></td>
+    <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.29-brightgreen" alt="DeepAgents optional &gt;=0.7.29"></a></td>
+    <td><a href="../_docs/LangChain_Audit_Report_2026-10-21.md"><img src="https://img.shields.io/badge/Last%20Audit-2026--10-blue" alt="Last Audit 2026-10"></a></td>
     <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
   </tr>
 </table>
@@ -49,14 +49,14 @@ Agenten/
 ## 🛠️ Technologie-Stack
 
 ### Kernframeworks
-- **LangChain** (>=1.3.13) - Orchestrierung, Chains, Agents, RAG
-- **LangGraph** (>=1.2.4) - Zustandsbasierte Multi-Agent-Workflows, State Machines
-- **LangSmith** (>=0.8.0) - Tracing, Debugging, Evaluations
+- **LangChain** (>=1.4.6) - Orchestrierung, Chains, Agents, RAG
+- **LangGraph** (>=1.2.16) - Zustandsbasierte Multi-Agent-Workflows, State Machines
+- **LangSmith** (>=0.14.11) - Tracing, Debugging, Evaluations
 - **OpenAI API** (>=1.0.0) - gpt-5.6-luna, gpt-5.4-mini, gpt-5.4, gpt-5.6-terra, gpt-5.6-sol, Embeddings
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
-- **DeepAgents** (optional, >=0.7.0) - Harness für Planning, Filesystem und Sub-Agenten in M32-M35
+- **DeepAgents** (optional, >=0.7.29) - Harness für Planning, Filesystem und Sub-Agenten in M32-M35
 - **MCP / langchain-mcp-adapters** - lokale Tool-Server in M30
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
@@ -187,5 +187,5 @@ Die ausführliche Lizenzzuordnung für die Kurs-Website steht unter [Rechtliches
 
 ---
 
-**Stand:** September 2026     
-**Version:** 5.6     
+**Stand:** Oktober 2026     
+**Version:** 5.7     

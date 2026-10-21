@@ -189,7 +189,7 @@ Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum i
 | `subagents` | Liste von Sub-Agent-Dicts |
 | `interrupt_on` | HITL-Freigabe vor bestimmten Tool-Calls; seit 0.6.8 auch für Filesystem-Permissions |
 | `memory` | Kontext-Dateien (z.B. AGENTS.md) beim Start laden |
-| `skills` | SKILL.md-Dateien laden |
+| `skills` | SKILL.md-Dateien laden; `pinned_skills` fixiert Skills per Namen (ab 0.7.23), die Tools eines Skills werden erst beim Lesen des Skills geladen (ab 0.7.22) |
 | `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`, seit 0.5.2) |
 | `response_format` | Strukturierte Ausgabe — Pydantic-Modell oder `dict` (seit 0.5.1) |
 | `name` | Agent-Name für LangSmith-Tracing |
@@ -268,6 +268,9 @@ Seit 0.7.0 nutzen `FilesystemBackend` und `LocalShellBackend` standardmäßig `v
 
 Merksatz: **Wissen wird ausgelagert, statt nur im Nachrichtenverlauf mitgeschleppt zu werden.**
 
+> [!NOTE] Symlinks bei Permissions (ab 0.7.25)
+> Regeln und Freigaben (`interrupt_on`) prüfen jetzt sowohl den angefragten als auch den per Symlink aufgelösten Pfad. Ein Symlink kann eine Sperre also nicht mehr umgehen.
+
 ### Sub-Agenten
 
 Teilaufgaben können an spezialisierte Sub-Agenten delegiert werden.
@@ -280,6 +283,9 @@ Beispiele:
 - Analyse-Agent
 
 Merksatz: **Der Hauptagent koordiniert, Spezialisten bearbeiten Teilprobleme.**
+
+> [!NOTE] Async-Sub-Agenten (0.7.24–0.7.27)
+> Für asynchrone Sub-Agenten gibt es einen Fork-Modus (ab 0.7.24). Außerdem werden Status-Updates an den Hauptagenten gemeldet, Runs erscheinen im Trace des Parents, und der Sub-Agent kennt seinen eigenen Namen (ab 0.7.26/0.7.27).
 
 ---
 
@@ -412,6 +418,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 | `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
 | `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**; seit 0.7.x ohne festes Iterationslimit, Status `max_iterations_reached`) |
 | `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**seit 0.7.0 Opt-in**) |
+| `SummarizationMiddleware` | `langchain` | Verdichtet lange Konversationen; legt seit 0.7.26 ihren `summarizer` offen |
 | `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` (**seit 0.7.x**) |
 | `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle (**neu in 0.6.12**) |
 
@@ -590,7 +597,7 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
 - Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
-### Reifegrad (Stand 0.7.19)
+### Reifegrad (Stand 0.7.29)
 
 | Dimension | Bewertung | Begründung |
 |-----------|-----------|------------|

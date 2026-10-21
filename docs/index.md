@@ -13,8 +13,8 @@ permalink: /
 
 ---
 
-> [!TIP] Einstieg in die Dokumentation<br>
-> Für den kürzesten Start zuerst [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) und [Zuerst lesen](./zuerst-lesen.html) öffnen. Der ausführliche [Lernpfad]({{ '/lernpfad.html' | relative_url }}) hilft danach bei der gezielten Vertiefung.
+> [!TIP] Einstieg in die Kursbegleitung<br>
+> **Vor dem Kurs:** [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}). **Während des Kurses:** [Zuerst lesen](./zuerst-lesen.html) für den passenden Einstieg und [Lernpfad]({{ '/lernpfad.html' | relative_url }}) zum Nachschlagen. **Nach dem Kurs:** Im Lernpfad passende Themen zur Vertiefung auswählen.
 
 ---
 
@@ -23,6 +23,9 @@ KI-Agenten bezeichnen eine Klasse von Anwendungen, die nicht nur Inhalte erzeuge
 Im Zentrum dieser Entwicklung stehen **Large Language Models (LLMs)** als reasoning-nahe Kernkomponente sowie Frameworks wie **LangChain** und **LangGraph** für robuste Orchestrierung. Damit werden Agenten nicht als einzelne Prompts gebaut, sondern als zustandsbasierte Systeme mit klaren Schritten, Werkzeugen und Kontrollpunkten.
 
 Der Kurs bündelt diese Konzepte in einem durchgehenden Endprodukt: einem **PMO-Assistenten**. Die fiktive Projektleiterin Mara Vogt arbeitet mit einem kuratierten Projektkorpus aus Protokollen, Entscheidungen, Risiken und Aufgaben. Der Assistent unterstützt die Meeting-Vorbereitung, die Aufbereitung von Besprechungs- und Projektdokumenten, die Aufgabenverfolgung sowie die Erstellung quellengebundener Briefings und Statusübersichten. Er sucht semantisch, nennt Quellen, erkennt Out-of-Corpus-Fragen und pausiert bei kritischen oder unsicheren Ausgaben für menschliche Freigabe. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
+
+> [!NOTE] Roter Faden im Kurs<br>
+> Die Fachartikel erklären einzelne Bausteine; im [Zielbild des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) sieht man, wie sie zusammenspielen. Bei passenden Übungen führt der Abschnitt **Praxis-Transfer: PMO-Assistent** vom Konzept zurück zum Kursprojekt.
 
 **Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Anders als im GenAI-Kurs, wo einzelne KI-Features im Vordergrund stehen, geht es hier um ein durchgängiges System, das drei Dinge leisten muss: **Planen** (Routing, State, Tool-Auswahl, Supervisor), **Handeln** (Tools, RAG als Evidence Tool, Workflows) und **Prüfen** (Human-in-the-Loop, Security, Evaluation).
 

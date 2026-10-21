@@ -13,6 +13,9 @@ has_toc: true
 
 > **State Management hält zusammen, was ein mehrstufiger Workflow wissen muss.**
 
+> [!NOTE] Bezug zum Kursprojekt<br>
+> Beim [PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) hält der State zum Beispiel Anfrage, gefundene Quellen, Antwortentwurf und Prüfstatus zusammen. So lässt sich nachvollziehen, was der Agent bereits weiß und welcher Schritt als Nächstes ansteht.
+
 ---
 
 # Inhaltsverzeichnis

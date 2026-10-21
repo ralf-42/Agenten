@@ -13,6 +13,9 @@ has_toc: true
 
 > **Retrieval Augmented Generation im Detail – Architektur, Strategien und Best Practices**
 
+> [!NOTE] Bezug zum Kursprojekt<br>
+> Der [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) nutzt RAG, um Aussagen zu Projektständen mit Passagen aus Protokollen und Entscheidungsunterlagen zu belegen. Das Kursprojekt macht damit auch sichtbar, wann die Quellen keine belastbare Antwort liefern.
+
 ---
 
 # Inhaltsverzeichnis

@@ -13,6 +13,9 @@ has_toc: true
 
 > **Nicht jede Entscheidung eines Agenten sollte ohne menschliche Kontrolle erfolgen.**
 
+> [!NOTE] Bezug zum Kursprojekt<br>
+> Der [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) kann ein Briefing vorbereiten, soll unsichere oder folgenreiche Aussagen aber nicht ungeprüft als Entscheidung ausgeben. Human-in-the-Loop markiert die Stelle, an der ein Mensch prüft, freigibt oder den Fall übernimmt.
+
 ---
 
 # Inhaltsverzeichnis

@@ -8,7 +8,7 @@ has_toc: true
 
 # Zuerst lesen
 
-Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht den ausführlichen [Lernpfad]({{ '/lernpfad.html' | relative_url }}), sondern beantwortet die Frage, welche Dokumente vor den ersten eigenen Schritten am sinnvollsten sind.
+Diese Seite hilft beim Einstieg in die Kursbegleitung. Wähle den Abschnitt, der zu deiner Situation passt; die Fachartikel sind vor allem zum Mitdenken, Nachschlagen und Vertiefen während der Übungen gedacht.
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -16,24 +16,24 @@ Diese Seite ist der kürzeste Einstieg in die Dokumentation. Sie ersetzt nicht d
 1. TOC
 {:toc}
 
-## Der schnelle Einstieg
+## Vor dem Kurs
 
-Wer neu in das Kursmaterial einsteigt, beginnt mit diesen fünf Dokumenten:
+Für Ziel, Ablauf und Vorbereitung genügt zunächst der [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}). Das [Zielbild des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) zeigt den durchgehenden Anwendungsfall.
 
-1. [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }})
-2. [Lohnt es sich überhaupt?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }})
-3. [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
-4. [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }})
-5. [LangChain Guide]({{ '/05-frameworks/einsteiger-langchain.html' | relative_url }})
+## Während des Kurses
 
-Diese Reihenfolge zeigt zuerst den Kursverlauf, klärt dann, ob ein Agent überhaupt der richtige Lösungsweg ist. Danach folgt die Architekturentscheidung, anschließend die zentrale Fähigkeit zur Werkzeugnutzung und erst dann die konkrete Umsetzung mit LangChain.
+Bleib zunächst beim Notebook und öffne einen Fachartikel, wenn ein Begriff, ein Entwurfsschritt oder ein Framework unklar ist. Der [Lernpfad]({{ '/lernpfad.html' | relative_url }}) führt von typischen Fragen zu den passenden Artikeln. Die Beispiele zum PMO-Assistenten zeigen, wie das jeweilige Konzept im Kursprojekt eingesetzt wird.
 
-## Weiterführende Orientierung
+## Zum Nachschlagen
 
 | Seite | Wofür sie da ist |
 |---|---|
-| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Modulfolge, Tagesstruktur und Kursziele |
-| [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Thematische Wege für unterschiedliche Lernziele |
+| [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Passenden Artikel nach Frage oder Thema finden |
+| [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) | Kursbeispiele und Bausteine im Zusammenhang sehen |
+
+## Nach dem Kurs
+
+Nutze im [Lernpfad]({{ '/lernpfad.html' | relative_url }}) die Themenwege für Robustheit, Wissensarbeit, Produktion oder Governance. So kannst du gezielt vertiefen, ohne alle Dokumente der Reihe nach lesen zu müssen.
 
 ---
 

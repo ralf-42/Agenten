@@ -13,6 +13,9 @@ has_toc: true
 
 > **Ein Agent wird erst dann handlungsfähig, wenn er mehr kann als Text erzeugen.**
 
+> [!NOTE] Bezug zum Kursprojekt<br>
+> Der [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) braucht Werkzeuge, um Projektunterlagen zu durchsuchen und Ergebnisse kontrolliert vorzubereiten. Im passenden Notebook zeigt der **Praxis-Transfer: PMO-Assistent**, wie aus einer fachlichen Anfrage ein begrenzter Tool-Aufruf wird.
+
 ---
 
 # Inhaltsverzeichnis

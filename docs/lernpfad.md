@@ -18,6 +18,15 @@ Der durchgehende Anwendungsfall des Kurses ist ein **PMO-Assistent**. Die Modul-
 1. TOC
 {:toc}
 
+## Direktzugriff nach Kurssituation
+
+| Situation | Einstieg |
+|---|---|
+| **Vor dem Kurs** | [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html) für Ziele, Ablauf und Vorbereitung; [PMO-Assistent](./02-orientierung-entscheidung/pmo-assistent.html) für das gemeinsame Kursprojekt. |
+| **Während einer Übung** | Im Notebook weiterarbeiten und bei einer konkreten Frage den passenden Themenweg unten öffnen. Der Abschnitt **Praxis-Transfer: PMO-Assistent** verbindet viele Konzepte mit dem Leitprojekt. |
+| **Etwas nachschlagen** | Über die Themenwege wie „Erster Agent“, „RAG und Wissensarbeit“ oder „Robustheit und Kontrolle“ zum passenden Fachartikel springen. |
+| **Nach dem Kurs vertiefen** | Aufbau- und Vertiefungsthemen auswählen, etwa Evaluation, Security, Deployment oder Governance. |
+
 ## Wofür diese Seite da ist
 
 Die Dokumentation deckt mehrere Ebenen gleichzeitig ab: Grundbegriffe, Framework-Entscheidungen, Architekturfragen, Deployment, Governance und praktische Umsetzung. Ohne Einstiegspunkt wird daraus schnell eine Sammlung guter Einzeltexte ohne klare Leserführung.
@@ -42,9 +51,9 @@ Die Grundlagentexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt.
 
 Wichtig für die Lesart: Wenn der Kurs von Reasoning oder Planning spricht, sind damit **sichtbare Artefakte** gemeint, zum Beispiel Plan, Tool-Wahl, Quellenstatus, Gate-Entscheidung oder Prüfergebnis. Eine versteckte interne Gedankenkette des Modells ist kein Lernziel und wird nicht als Nachweis verlangt.
 
-## Typische Einstiege
+## Themenwege zum Nachschlagen und Vertiefen
 
-Nicht jede Person startet mit derselben Frage. In der Praxis tauchen meist fünf Ausgangslagen auf.
+Nicht jede Frage entsteht zur gleichen Zeit. Nutze diese Themenwege, wenn du während einer Übung etwas klären oder nach dem Kurs gezielt weiterarbeiten möchtest.
 
 ### Orientierung
 

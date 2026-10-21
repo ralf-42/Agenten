@@ -82,7 +82,7 @@ result2 = app.invoke(
 
 In diesem einfachen Beispiel bleibt der Gesprächskontext erhalten, weil beide Aufrufe dieselbe Thread-ID verwenden. Genau daran hängen in der Praxis Sitzungsfortsetzung, Zuordnung zu Nutzern und spätere Wiederaufnahme.
 
-In der Praxis relevant, wenn: Mehrere Nutzer gleichzeitig arbeiten, Sessions unterbrochen werden oder eine Konversation nicht nach einem einzigen Request endet.
+Ein Checkpointer lohnt sich bei parallelen Nutzern, unterbrochenen Sitzungen oder Gesprächen über mehrere Anfragen hinweg.
 
 ## Welche Checkpointer-Typen es gibt
 
@@ -301,10 +301,9 @@ with SqliteSaver.from_conn_string("db.sqlite") as checkpointer:
     result = app.invoke(inputs, config=config)
 ```
 
-In der Praxis relevant, wenn: Multi-Turn-Sitzungen wachsen, viele Nachrichten im State liegen oder mehrere Nutzer gleichzeitig mit demselben System arbeiten.
+Checkpointer sind nützlich, wenn Multi-Turn-Sitzungen wachsen, der State viele Nachrichten enthält oder mehrere Personen parallel arbeiten.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Checkpointing in der Praxis
 Für den Einstieg reicht meist schon ein klares mentales Modell: Ein Checkpointer macht aus einem flüchtigen Ablauf eine wiederaufnehmbare Sitzung. Wer Multi-Turn-Gespräche, HITL-Freigaben oder Fehlertoleranz bauen will, braucht diese Grundlage früh.
 
 Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produktionssysteme ist. Schon kleine Kursprojekte mit Unterbrechung, Freigabe oder Sitzungsfortsetzung profitieren sofort davon.

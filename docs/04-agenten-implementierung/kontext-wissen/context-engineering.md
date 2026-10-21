@@ -378,8 +378,7 @@ Kundenkontext:
 
 ---
 
-## Was für Entwickler zuerst wichtig ist
-
+## Kontextregeln für den ersten Agenten
 Für erste Agentenprojekte reicht meist ein komplexes Kontextframework nicht. Wichtiger ist eine klare Kontextregel: Welche Informationen sind Pflicht, welche sind optional und welche dürfen nie ungeprüft in den Modellkontext gelangen? Diese Entscheidung reduziert Fehlverhalten oft stärker als ein Modellwechsel.
 
 In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool-Ausgaben weiterverarbeitet oder Memory über längere Sitzungen nutzt. Dann wird Kontext nicht nur gelesen, sondern aktiv gestaltet.

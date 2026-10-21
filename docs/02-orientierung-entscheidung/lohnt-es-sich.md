@@ -57,7 +57,7 @@ Ein Vorhaben lohnt sich nicht, weil es nach moderner KI klingt. Es lohnt sich, w
 
 Wichtig ist der Vergleich mit dem Status quo. Wenn ein regelbasierter Prozess oder ein kleines Skript die Aufgabe bereits gut löst, ist KI oft nicht die beste Wahl. KI ist besonders dann naheliegend, wenn natürliche Sprache, unstrukturierte Informationen, unscharfe Entscheidungsräume oder ein hohes Volumen eine Rolle spielen.
 
-In der Praxis relevant, wenn: Die Aufgabe stark sprachlich geprägt ist, das Volumen hoch ist oder starrere Regeln die nötige Flexibilität nicht mehr liefern.
+KI lohnt sich eher bei sprachlastigen Aufgaben mit hohem Volumen oder wenn starre Regeln zu wenig Spielraum lassen.
 
 ## Kosten müssen früh mitgedacht werden
 
@@ -99,8 +99,7 @@ Kurzcheck:
 - Sind Risiken, Erwartungen und Verantwortung realistisch eingeordnet?
 ```
 
-## Was für Entwickler zuerst wichtig ist
-
+## Vorhaben nüchtern vorprüfen
 Für Entwickler reicht oft eine nüchterne Vorprüfung. Wenn ein Vorhaben vor allem auf Begeisterung für KI basiert, aber Problem, Daten und Erfolgskriterien unklar bleiben, ist Architekturarbeit zu früh. Der nächste Schritt ist dann Problemklärung.
 
 Außerdem unterschätzen viele, wie viel Wert ein klares No-Go haben kann. Ein nicht gestartetes Projekt, das sauber verworfen wurde, spart oft mehr Zeit und Geld als ein vorschnell gebauter Prototyp.

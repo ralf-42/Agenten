@@ -102,7 +102,7 @@ flowchart LR
     G --> I
 ```
 
-In der Praxis relevant, wenn: Ein Agent nicht nur ausführt, sondern auch erkennen soll, wann Unsicherheit, Risiko oder Regelverletzungen eine menschliche Entscheidung erfordern.
+HITL ist sinnvoll, wenn der Agent bei Unsicherheit, Risiken oder Regelverstößen an eine menschliche Entscheidung übergeben soll.
 
 ## HITL in Produktion ist etwas anderes als Debugging
 
@@ -137,8 +137,7 @@ Technisch wird HITL meist über Unterbrechung und Wiederaufnahme umgesetzt. Daf�
 
 Ein Agent pausiert also nicht einfach „in der Luft“, sondern auf Basis eines gespeicherten States. Erst dadurch werden Freigabe, Rückkehr und Nachvollziehbarkeit praktisch möglich.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Freigaben im Workflow verankern
 Für Entwickler reicht meist eine einfache Regel: Alles, was schwer reversibel ist oder Dritte direkt betrifft, sollte nicht ohne menschliche Freigabe laufen. Dazu gehören Versand, Löschung, Zahlungen, sensible Kommunikation und Regel- oder Compliance-Ausnahmen.
 
 Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. Es macht Automatisierung in vielen realen Projekten überhaupt erst akzeptabel.

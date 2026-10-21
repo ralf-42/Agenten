@@ -104,7 +104,7 @@ Für viele erste Projekte passt ein Tool-Calling-Agent gut. Wenn es um offene Re
 
 Beim Tool-Calling wählt das Modell aus einer definierten Liste von Werkzeugen und ruft sie mit konkreten Parametern auf. Das funktioniert gut, wenn deine „echten Aktionen“ klar in kontrollierten Tools landen, zum Beispiel Kalenderzugriff, CRM-Abfragen oder E-Mail-Versand. Das Modell kann dabei flexibel formulieren – die eigentliche Aktion bleibt kontrollierbar.
 
-In der Praxis relevant, wenn: Werkzeuge klar benannt sind, der Auftrag begrenzt bleibt und kein komplexer mehrstufiger Plan nötig ist.
+Tool-Calling ist ein guter Einstieg, wenn Werkzeuge klar benannt sind und der Auftrag begrenzt bleibt. Für mehrstufige Pläne braucht es ein anderes Muster.
 
 ## ReAct: wenn der Weg zur Lösung noch offen ist
 

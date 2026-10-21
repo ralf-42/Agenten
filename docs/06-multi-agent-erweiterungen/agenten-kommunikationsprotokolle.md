@@ -27,7 +27,7 @@ has_toc: true
 
 Ein einzelner Agent kann bereits Texte schreiben, Fragen beantworten oder ein Werkzeug aufrufen. In realen Systemen endet es aber selten bei einem einzigen Modell. Ein Agent holt Daten aus einer Quelle, delegiert Teilaufgaben an andere Agenten und zeigt dem Nutzer parallel den Bearbeitungsstand an. Spätestens dann stellt sich nicht mehr nur die Frage nach dem Prompt, sondern nach einer gemeinsamen Sprache.
 
-Ein Protokoll legt fest, wie Nachrichten aufgebaut sind, welche Bedeutung sie haben und in welcher Reihenfolge sie ausgetauscht werden. Ohne solche Regeln müsste jede Verbindung einzeln entwickelt und gewartet werden. Genau deshalb sind Kommunikationsprotokolle für Agentensysteme kein Spezialthema für fortgeschrittene Teams, sondern eine Grundlage für skalierbare Architektur.
+Ein Protokoll legt Nachrichtenformat, Bedeutung und Reihenfolge fest. Ohne gemeinsame Regeln müsste jede Verbindung einzeln entwickelt und gewartet werden. Für Agentensysteme sind Protokolle daher eine Grundvoraussetzung für den Austausch zwischen Komponenten.
 
 Ein Vergleich mit dem Web hilft: TCP/IP und HTTP haben nicht einzelne Anwendungen intelligent gemacht, sondern ihre Zusammenarbeit verlässlich organisiert. Agentenprotokolle übernehmen heute eine ähnliche Rolle für Systeme, die mit Tools, anderen Agenten und Benutzeroberflächen verbunden werden.
 
@@ -114,7 +114,7 @@ MCP ersetzt klassische APIs nicht. Viele MCP-Server kapseln intern sogar genau s
 
 Dadurch entsteht ein wichtiger Vorteil: Neue Fähigkeiten eines Servers können verfügbar werden, ohne dass auf Agentenseite sofort ein individueller Adapter geschrieben werden muss. Für Agentensysteme ist diese Discovery-Fähigkeit oft wertvoller als die reine Transporttechnik.
 
-In der Praxis relevant, wenn: Viele Tools angebunden werden sollen oder sich Fähigkeiten auf Serverseite ändern, ohne dass der Agent jedes Mal neu entwickelt werden soll.
+MCP spart Anpassungsarbeit, wenn viele Tools angebunden werden oder sich serverseitige Fähigkeiten ändern. Der Agent muss dafür nicht jedes Mal neu entwickelt werden.
 
 ## MCP und Function Calling sind nicht dasselbe
 
@@ -189,7 +189,7 @@ Nicht geeignet, wenn: Die Aufgabe so klein und synchron ist, dass eine einfache 
 
 ## Artifacts: warum Ergebnisse mehr sein müssen als Text
 
-Ein wichtiger Gedanke in A2A ist, dass das Ergebnis einer Aufgabe nicht nur ein Textstring sein sollte. Ein Ergebnis kann ein Dokument, strukturierte Daten oder ein Bild sein. Genau deshalb spricht A2A von Artifacts. Diese sind leichter weiterzuverarbeiten, etwa als Eingabe für den nächsten Agenten in einer Kette.
+A2A nennt übertragbare Arbeitsergebnisse Artifacts. Sie können Text, Dokumente, strukturierte Daten oder Bilder enthalten und lassen sich etwa an den nächsten Agenten in einer Kette übergeben.
 
 | Artifact-Typ | Beispiel |
 |---|---|
@@ -245,7 +245,7 @@ AG-UI arbeitet dafür mit Ereignissen. Text, Tool-Starts, Tool-Enden und Zustand
 | `TOOL_CALL_END` | das Werkzeug ist fertig |
 | `STATE_DELTA` | der sichtbare Zustand ändert sich |
 
-In der Praxis relevant, wenn: Agenten mehrere Sekunden oder Minuten arbeiten und Nutzer den Bearbeitungsfortschritt verstehen sollen.
+Bei längeren Aufgaben hilft AG-UI, Nutzern Fortschritt und aktuelle Agentenaktionen sichtbar zu machen.
 
 ## Frameworks lösen Kommunikation teils intern anders
 
@@ -321,8 +321,7 @@ stateDiagram-v2
 
 Für den Kurs genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Protokolle passend zum Projekt kombinieren
 Nicht jedes Projekt braucht sofort alle hier genannten Protokolle. Für viele erste Agentensysteme reicht eine einfache Kombination: MCP für Tools, gegebenenfalls A2A oder ACP für klar abgegrenzte Delegation und AG-UI nur dann, wenn ein eigenes Frontend längere Prozesse sichtbar machen soll.
 
 Entwickler unterschätzen oft, dass Protokolle vor allem dann wertvoll werden, wenn ein System wächst. Solange nur ein Agent lokal mit einem einzigen Tool arbeitet, kann vieles noch implizit bleiben. Sobald mehrere Agenten, externe Dienste und Nutzeroberflächen zusammenspielen, wird ohne klare Kommunikationsregeln jedes neue Element überproportional teuer.

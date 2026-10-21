@@ -277,8 +277,7 @@ Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
 ---
 
-## Was für Entwickler zuerst wichtig ist
-
+## Was den Providerwechsel handhabbar macht
 Der Wechsel von OpenAI zu Mistral wird im Projekt `Agenten` nicht deshalb handhabbar, weil Provider austauschbar wären, sondern weil LangChain und LangGraph die LLM-Schicht bereits stark standardisieren.
 
 Damit verschiebt sich die Arbeit weg von:

@@ -121,8 +121,7 @@ Ethische Bewertung bedeutet nicht, KI-Agenten zu blockieren. Gut gestaltete Syst
 
 Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterstützung: Ein Agent sollte Menschen befähigen, nicht Verantwortung verdecken.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Ethische Leitplanken in Anwendungen
 - Assistenz steht vor autonomer Entscheidung.
 - Datenquellen, Modellversionen, Prompts und Tool-Rechte werden dokumentiert.
 - Freigaben gehören an Stellen, an denen Ausgaben Wirkung auf Menschen haben können.

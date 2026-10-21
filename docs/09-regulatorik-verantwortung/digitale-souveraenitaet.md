@@ -31,7 +31,7 @@ Für Entwickler ist digitale Souveränität deshalb eine Architekturfrage. Es ge
 
 Bei GenAI kommt **Algorithmen-Souveränität** hinzu: Wer ein proprietäres Foundation Model nutzt, kennt Modellarchitektur, Trainingsdaten und Sicherheitsmechanismen nur begrenzt. Das ist nicht automatisch ein Ausschlusskriterium, muss aber bei sensiblen Daten, regulierten Entscheidungen und langfristiger Anbieterbindung berücksichtigt werden.
 
-**In der Praxis relevant, wenn:** Ein Agent personenbezogene Daten, Geschäftsgeheimnisse, regulierte Informationen oder organisationskritische Workflows verarbeitet und dafür externe Dienste nutzt.
+Digitale Souveränität wird besonders wichtig, wenn ein Agent sensible oder organisationskritische Daten an externe Dienste überträgt.
 
 ---
 
@@ -99,12 +99,11 @@ Wichtige technische Muster:
 - **Open Source an kritischen Stellen:** zentrale Infrastruktur bleibt auditierbar und im Notfall betreibbar.
 - **Minimaler Trace:** Observability speichert nur, was für Debugging, Evaluation und Audit wirklich nötig ist.
 
-**In der Praxis relevant, wenn:** Ein Prototyp später in produktive Nutzung übergehen soll. Dann werden aus zunächst bequemen Anbieterentscheidungen schnell langfristige Architekturbindungen.
+Prüfe Anbieterentscheidungen spätestens beim Übergang vom Prototyp in den Produktivbetrieb. Bequeme Anfangslösungen können langfristige Architekturbindungen schaffen.
 
 ---
 
-## Was für Entwickler zuerst wichtig ist
-
+## Mit einer Bestandsaufnahme beginnen
 Digitale Souveränität beginnt nicht mit einer Grundsatzentscheidung für oder gegen Cloud. Der erste Schritt ist eine Inventur:
 
 1. Welche Daten verarbeitet der Agent?

@@ -314,7 +314,7 @@ results = evaluate(
 )
 ```
 
-In der Praxis relevant, wenn: Varianten systematisch verglichen, Regressionen dokumentiert oder Nutzerfeedback später mit denselben Fällen verbunden werden soll.
+Nutze Feedback aus dem Betrieb, wenn du Varianten vergleichen, Regressionen dokumentieren oder Rückmeldungen denselben Testfällen zuordnen willst.
 
 ## Was bei RAG-Systemen zusätzlich geprüft wird
 
@@ -423,11 +423,10 @@ Evaluation und Observability sollten nicht nur normale Nutzeranfragen abdecken. 
 
 Ein Agent, der auf harmlose Anfragen gut reagiert, aber bei riskanten Fällen keine Eskalation kennt, ist nicht belastbar. Solche Fälle gehören deshalb in das Eval-Set und in die Beobachtung im Betrieb.
 
-## Was in Entwicklerprojekten zuerst wichtig ist
-
+## Mit einem kleinen Testset beginnen
 Für einen ersten Agenten ist keine vollständige Observability-Plattform nötig. Ein sauberes Minimum reicht: ein kleines Testset, klare Erfolgskriterien, gespeicherte Prompts und Antworten, sichtbare Tool-Aufrufe und ein Vergleich zwischen alter und neuer Version. Damit lassen sich viele typische Fehler bereits finden.
 
-Entwickler unterschätzen oft, wie schnell ein scheinbar guter Agent bei kleinen Formulierungsänderungen kippt. Genau deshalb sollte der Kurs nicht nur erfolgreiche Demos zeigen, sondern auch bewusst misslingende Fälle. Erst dort wird sichtbar, warum Evaluation und Observability keine Zusatzaufgabe, sondern Teil der Agentenentwicklung sind.
+Kleine Änderungen an einer Anfrage können einen scheinbar stabilen Agenten aus dem Tritt bringen. Der Kurs sollte deshalb erfolgreiche und misslingende Fälle zeigen. An ihnen wird sichtbar, wie Evaluation Abweichungen findet und Observability ihre Ursachen nachvollziehbar macht.
 
 ## Mindest-Checkliste
 

@@ -63,7 +63,7 @@ Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig ge�
 
 Ein brauchbarer PMO-Assistent lädt einen Projektkorpus reproduzierbar, konvertiert unterstützte Dokumentformate in Passagen und verarbeitet Fragen in natürlicher Sprache. Die Antwort kann ein Meeting-Briefing, einen Aufgabenstand oder eine Statusübersicht enthalten und weist Quellentitel, zitierte Textpassagen, eine Sicherheitseinschätzung und einen Hinweis aus, wenn die Frage nicht aus dem Korpus beantwortet werden kann.
 
-In der Praxis relevant, wenn: Projektunterlagen häufig durchsucht werden, Quellenpflicht besteht und plausibel klingende Antworten ohne Beleg ein Risiko wären. Nicht geeignet, wenn: die Aufgabe gar keinen stabilen Dokumentenkorpus hat oder wenn eine finale fachliche Entscheidung ohne menschliche Prüfung erwartet wird.
+RAG passt zum PMO-Assistenten, wenn er regelmäßig Projektunterlagen durchsucht und Aussagen belegen muss. Ohne stabilen Dokumentenkorpus oder bei finalen Entscheidungen ohne menschliche Prüfung passt der Ansatz nicht.
 
 Das Zielbild lässt sich in fünf Ausbaustufen lesen:
 

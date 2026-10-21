@@ -25,7 +25,7 @@ has_toc: true
 
 ## Überblick: Was ist RAG?
 
-Large Language Models stoßen in der Praxis an drei typische Grenzen: Wissen ist nicht aktuell genug, internes Fachwissen fehlt und längere Dokumentbestände lassen sich nicht vollständig in einen einzelnen Prompt legen. Genau an dieser Stelle beginnt RAG seinen Nutzen zu zeigen. Nicht als magische Lösung, sondern als technische Antwort auf ein klar umrissenes Problem: relevantes Wissen zur Laufzeit in den Antwortprozess einzuspeisen.
+Ein Sprachmodell kennt weder automatisch aktuelle Informationen noch internes Fachwissen. Auch lange Dokumentbestände passen nicht vollständig in einen Prompt. RAG ruft deshalb zur Laufzeit passende Inhalte aus einer Wissensbasis ab und stellt sie dem Modell für die Antwort bereit.
 
 Die folgende Tabelle bündelt diese Ausgangslage, ersetzt aber nicht die eigentliche Entscheidung. RAG lohnt sich nur dann, wenn fehlendes oder externes Wissen wirklich das Problem ist. Wenn die Aufgabe bereits mit vorhandenem Modellwissen sauber lösbar ist, macht Retrieval den Ablauf oft nur langsamer und fehleranfälliger.
 

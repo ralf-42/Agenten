@@ -241,7 +241,7 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 
 ---
 
-## 11. Was für Entwickler zuerst wichtig ist
+## 11. Vom Prototyp zum betreibbaren Agenten
 
 Der Weg von einem Sprachmodell zu einer betreibbaren Agentenanwendung erfordert mehr als gute Antworten. Wichtig sind:
 

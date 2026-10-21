@@ -107,8 +107,7 @@ Die praktische Umsetzung bleibt anspruchsvoll. Begriffe wie "KI-System", "system
 
 Besonders schwierig ist die Grenze zwischen Unterstützung und Entscheidung. Ein Agent, der Inhalte verdichtet, ist anders zu bewerten als ein Agent, dessen Ergebnis faktisch über Zugang zu Arbeit, Kredit, Bildung oder medizinischer Behandlung entscheidet. In der Praxis liegt die Gefahr oft nicht im Modell selbst, sondern in der organisatorischen Einbettung: Wer prüft das Ergebnis, wer trägt Verantwortung, und wie kann eine betroffene Person eine Entscheidung nachvollziehen oder anfechten?
 
-## Was für Entwickler zuerst wichtig ist
-
+## Pflichten aus dem Risikoprofil ableiten
 Vor dem Einsatz eines KI-Agenten sollte zuerst der konkrete Anwendungsfall beschrieben werden: Nutzergruppe, Datenarten, Entscheidungskontext, mögliche Betroffene und erwartete Handlung des Systems. Danach folgt die Risikoklassifizierung. Erst dann ist sinnvoll zu entscheiden, ob einfache Transparenzhinweise reichen oder ob Hochrisiko-Anforderungen wie Risikomanagement, technische Dokumentation, Logging, menschliche Aufsicht und Qualitätsmanagement benötigt werden.
 
 Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn der AI Act im konkreten Beispiel noch keine Hochrisiko-Pflichten auslöst: keine sensiblen Echtdaten, klare Kennzeichnung als Lernsystem, nachvollziehbare Quellen, reproduzierbare Tests und Freigaben vor kritischen Ausgaben. Diese Muster sind didaktisch wertvoll, weil sie später in regulierten Kontexten nicht neu erfunden werden müssen.

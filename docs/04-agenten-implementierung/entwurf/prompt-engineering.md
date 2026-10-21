@@ -496,8 +496,7 @@ few_shot_prompt = ChatPromptTemplate([
 ```
 ---
 
-## Was für Entwickler zuerst wichtig ist
-
+## Prompts als Verhaltensvertrag prüfen
 Prompt Engineering ist bei Agenten kein Schreibtrick, sondern ein Verhaltensvertrag zwischen Modell, Werkzeugen und Anwendungscode. Drei Aspekte tragen diesen Vertrag:
 
 | Säule | Kernaspekt |

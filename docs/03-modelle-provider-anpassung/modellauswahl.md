@@ -332,11 +332,10 @@ Die Modellevaluierung und -auswahl findet in verschiedenen Szenarien Anwendung:
 - Einsatz von `CODING`, `PLANNER` oder `JUDGE` für Programmierung, Planung und Fehlerbewertung
 - Bewertung nach Codequalität und Lösungsgeschwindigkeit
 
-## Was für Entwickler zuerst wichtig ist
-
+## Modellrollen nach Aufgabe besetzen
 Modellauswahl ist keine Rangliste, sondern eine Architekturentscheidung. Ein günstiges Modell kann für Routing, Klassifikation oder einfache Tool-Auswahl besser passen als ein großes Reasoning-Modell; ein stärkeres Modell lohnt sich vor allem dort, wo Fehler teuer sind oder mehrere Teilschritte wirklich verstanden werden müssen.
 
-In der Praxis relevant, wenn: Ein Agent mehrere Rollen kombiniert. Dann sollte nicht ein einziges Modell alles erledigen, sondern jede Rolle nach Qualitätsbedarf, Kosten und Latenz bewertet werden.
+Wenn ein Agent mehrere Rollen umfasst, sollte jede Rolle ein Modell erhalten, das zu Qualitätsbedarf, Kostenrahmen und Latenzbudget passt.
 
 ## Abgrenzung zu verwandten Dokumenten
 

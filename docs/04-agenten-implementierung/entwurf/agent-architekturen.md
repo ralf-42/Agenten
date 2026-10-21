@@ -248,7 +248,7 @@ flowchart LR
 
 Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
 
-In der Praxis relevant, wenn: Die Aufgabe offen ist, mehrere Zwischenschritte nötig sind und vorab nicht feststeht, welche Aktion als Nächstes sinnvoll ist.
+ReAct passt zu offenen Aufgaben mit mehreren Zwischenschritten, wenn der nächste sinnvolle Schritt erst während der Bearbeitung feststeht.
 
 ### Produktionsvariante: Explore → Plan → Act
 
@@ -269,7 +269,7 @@ Beispiel beim Bearbeiten von Code: Explore liest relevante Dateien und versteht 
 
 Diese Phasentrennung reduziert destruktive Fehler erheblich, weil ein Agent nicht im selben Schritt erkunden und gleichzeitig schreiben kann.
 
-In der Praxis relevant, wenn: Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betroffen sind oder der Lösungsweg vor der Ausführung abgesichert sein muss.
+Explore → Plan → Act passt, wenn Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betreffen oder vorher abgesichert werden müssen.
 
 ## Workflow-basierte Architektur: wenn der Ablauf kontrolliert sein muss
 
@@ -482,7 +482,7 @@ def compact_context(state: AgentState) -> AgentState:
     return state
 ```
 
-In der Praxis relevant, wenn: ReAct-Loops viele Iterationen durchlaufen, Sitzungen lange offen bleiben oder große RAG-Kontexte wiederholt eingebunden werden.
+Begrenze den Kontext, wenn ReAct viele Iterationen braucht, Sitzungen lange offen bleiben oder große RAG-Kontexte wiederholt einfließen.
 
 ### Caching und Tests sind Architekturthemen
 
@@ -509,8 +509,7 @@ Die vorgestellten Architekturen schließen sich nicht gegenseitig aus. Ein Workf
 
 Gerade deshalb ist die Architekturfrage keine Entweder-oder-Entscheidung, sondern eine Frage nach sinnvollen Grenzen. Nicht jede Flexibilität ist ein Gewinn. Oft entsteht die beste Lösung dort, wo freie Modellentscheidungen nur an den Stellen erlaubt werden, an denen sie echten Mehrwert bringen.
 
-## Was in Entwicklerprojekten zuerst wichtig ist
-
+## Mit wenigen Mustern starten
 Für einen ersten Kursagenten reicht meist eine begrenzte Kombination aus Tool-Calling, klaren Geschäftsregeln und einem kleinen Workflow für Sonderfälle. Diese Struktur ist einfacher zu erklären, leichter zu debuggen und robuster zu testen als ein frei planendes Multi-Agent-System.
 
 Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.

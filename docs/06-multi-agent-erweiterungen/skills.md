@@ -27,7 +27,7 @@ has_toc: true
 
 Ein Skill ist kein einzelner schöner Prompt, sondern ein wiederverwendbarer Ablaufbaustein. Er beschreibt, wann ein bestimmtes Vorgehen aktiviert werden soll, welche Schritte verpflichtend sind, welche Regeln gelten und welche Hilfsmittel oder Referenzen bei Bedarf nachgeladen werden dürfen.
 
-Damit wird Fachwissen nicht nur formuliert, sondern operationalisiert. Ein Skill sagt also nicht nur, `was` beantwortet werden soll, sondern auch `wie` dabei vorzugehen ist.
+Ein Skill macht aus Fachwissen konkrete Arbeitsanweisungen. Ein Skill sagt also nicht nur, `was` beantwortet werden soll, sondern auch `wie` dabei vorzugehen ist.
 
 Typischer Fehler: Einen langen Prompt automatisch als Skill zu betrachten. Ein Skill wird erst dort sinnvoll, wo Wiederholung, Guardrails und stabile Arbeitslogik nötig werden.
 
@@ -56,7 +56,7 @@ Skills lohnen sich vor allem dort, wo derselbe fachliche Ablauf wiederkehrt, wo 
 
 Weniger geeignet sind Skills für reine Einmalanfragen, hochkreative freie Aufgaben ohne feste Prüfkriterien oder sehr kleine Tätigkeiten, die ein normaler Prompt bereits zuverlässig löst.
 
-In der Praxis relevant, wenn: Eine Aufgabe nicht nur beantwortet, sondern nach festen Regeln und mit wiederkehrenden Teilschritten ausgeführt werden soll.
+Skills helfen, wenn Aufgaben nach festen Regeln und in wiederkehrenden Teilschritten ablaufen.
 
 ## Wie ein Skill typischerweise aufgebaut ist
 
@@ -155,8 +155,7 @@ Undertriggering und Overtriggering sind die häufigsten Probleme. Ein Skill läd
 
 Ein weiterer häufiger Fehler ist zu viel Fachlogik direkt im Body und zu wenig Trennung in Referenzen. Dann wächst der Skill in eine schwer pflegbare Anweisungssammlung hinein.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Skills gezielt einsetzen
 Für Entwickler sind Skills kein Pflichtstartpunkt. Zunächst wichtiger sind Tool Use, gute Prompts, State Management und Checkpointing. Skills werden dann interessant, wenn aus einem einzelnen Agenten ein wiederverwendbarer, regelgeleiteter Prozess werden soll.
 
 Entwickler unterschätzen oft, dass ein Skill nicht vor allem technische Komplexität, sondern organisatorische Klarheit bringt. Er macht sichtbar, welche Fachlogik immer wieder gleich laufen soll.

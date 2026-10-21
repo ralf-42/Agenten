@@ -26,7 +26,7 @@ has_toc: true
 
 Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell der Gedanke, die Arbeit auf mehrere spezialisierte Agenten zu verteilen. Das kann sinnvoll sein. Es kann aber auch unnötige Komplexität erzeugen. Multi-Agent-Systeme sind deshalb keine automatische Weiterentwicklung, sondern eine bewusste Architekturentscheidung.
 
-Der Mehrwert liegt in Arbeitsteilung, Spezialisierung und möglicher Parallelität. Der Preis liegt in Koordination, zusätzlichem State, mehr Kommunikationsaufwand und schwierigerem Debugging. Genau deshalb sollte zuerst gefragt werden, ob ein einzelner Workflow mit klaren Knoten nicht bereits ausreicht.
+Multi-Agent-Systeme teilen Arbeit auf und ermöglichen Spezialisierung oder Parallelität. Sie kosten zusätzliche Koordination, State und Debugging-Aufwand. Prüfe deshalb zuerst, ob ein einzelner Workflow mit klaren Knoten die Aufgabe schon abdeckt.
 
 Typischer Fehler: Multi-Agent zu wählen, weil es moderner oder „agentischer” klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
 
@@ -100,7 +100,7 @@ def supervisor_node(state: TeamState) -> Command:
     return Command(goto="writer_agent")
 ```
 
-In der Praxis relevant, wenn: Aufgaben vorab sauber klassifizierbar sind und Rollen klar voneinander getrennt bleiben.
+Ein Supervisor eignet sich, wenn Aufgaben vorab klar klassifiziert und getrennten Rollen zugewiesen werden können.
 
 **Entscheide so:** Nimm Supervisor, wenn eine zentrale Rolle den Überblick halten und mehrere Teilergebnisse zu einer Antwort zusammenführen muss.
 
@@ -139,7 +139,7 @@ Der Unterschied zum Supervisor: Es gibt keine zentrale Routing-Logik. Jeder Agen
 
 Ein zentrales Designproblem dabei ist Context Compression. Spätere Agenten erhalten nicht die vollständige Bearbeitungsgeschichte, sondern eine komprimierte Übergabe. Das spart Kontext, bringt aber einen Fidelity-Tradeoff mit sich: Details, die im Ursprungsmaterial stecken, können auf dem Weg verloren gehen. Diese Entscheidung sollte bewusst getroffen werden.
 
-In der Praxis relevant, wenn: die Verarbeitungsschritte klar definiert sind und keine dynamische Umverteilung nötig ist.
+Eine Pipeline passt zu fest definierten Schritten, deren Ergebnisse nacheinander weitergegeben werden. Für dynamische Umverteilung ist ein anderes Muster geeigneter.
 
 **Entscheide so:** Nimm Pipeline, wenn die fachliche Reihenfolge stabil ist und jede Stufe ein prüfbares Zwischenergebnis liefert.
 

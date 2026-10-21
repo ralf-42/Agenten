@@ -25,7 +25,7 @@ has_toc: true
 
 Die Textverarbeitung in LLM-Systemen steht und fällt oft mit drei Entscheidungen: Welcher Tokenizer wird verwendet, wie groß sind die Chunks und nach welcher Logik werden sie gebildet. Auf dem Papier wirken diese Parameter technisch und nachgeordnet. In RAG- oder Analyseaufgaben entscheiden sie jedoch oft darüber, ob relevante Informationen überhaupt wiedergefunden werden.
 
-In der Praxis zeigt sich ein typisches Muster: Wenn Antworten unpräzise, unvollständig oder instabil sind, wird zunächst das Modell verdächtigt. Häufig liegt das Problem jedoch früher in der Pipeline. Chunks sind zu klein, Grenzen fallen ungünstig, oder Überlappungen erzeugen unnötiges Rauschen. Genau deshalb lohnt es sich, Tokenizing und Chunking nicht als reine Vorverarbeitung zu behandeln.
+Wenn Antworten unpräzise, unvollständig oder instabil sind, wird oft zuerst das Modell verdächtigt. Die Ursache liegt häufig früher in der Pipeline: Chunks sind zu klein, Grenzen fallen ungünstig oder Überlappungen erzeugen Rauschen. Tokenizing und Chunking prägen deshalb die Qualität des Retrievals.
 
 # Tokenizer-, Chunking- & Strategieauswahl
 ## Dokumenttypen

@@ -156,8 +156,7 @@ Die beiden Ebenen greifen zusammen. Ein Memory Store kann Fakten, Workflows oder
 | Kontextstrategie | Was davon soll jetzt in den Modellkontext? |
 | Retrieval/Cache-Strategie | Wie wird es effizient und zuverlässig bereitgestellt? |
 
-## Was für Entwickler zuerst wichtig ist
-
+## CAG und Memory richtig abgrenzen
 Als erste Orientierung reicht eine knappe Faustregel:
 
 | Wenn ... | dann ... |

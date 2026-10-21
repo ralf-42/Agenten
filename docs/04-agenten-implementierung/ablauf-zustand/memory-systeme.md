@@ -27,7 +27,7 @@ has_toc: true
 
 Ein Sprachmodell bringt kein dauerhaftes Gedächtnis mit. Ohne zusätzliche Mechanismen beginnt jede Konversation praktisch von vorn. Nutzerpräferenzen gehen verloren, frühere Entscheidungen verschwinden, und wichtige Fakten müssen immer wieder neu genannt werden. Für einfache Einmalanfragen ist das oft egal. Für mehrstufige Agenten, persönliche Assistenten oder längere Sitzungen wird es schnell zum Problem.
 
-Memory-Systeme lösen genau diese Lücke. Sie speichern nicht nur Gesprächsverlauf, sondern je nach Bedarf auch verdichtete Zusammenfassungen, strukturierte Entitäten oder dauerhaftes Wissen über Sitzungen hinweg. Damit entsteht ein entscheidender Unterschied zwischen einem Modellaufruf und einem wiederverwendbaren Agentensystem.
+Memory-Systeme halten Informationen über einzelne Modellaufrufe hinaus verfügbar. Je nach Bedarf speichern sie den Gesprächsverlauf, Zusammenfassungen, strukturierte Entitäten oder Wissen für spätere Sitzungen. So kann ein Agent frühere Arbeitsschritte wieder aufgreifen.
 
 Typischer Fehler: Alles, was ein Agent behalten soll, einfach im Prompt zu wiederholen. Das skaliert schlecht, wird teuer und verliert bei langen Sitzungen schnell die Übersicht.
 
@@ -225,7 +225,7 @@ flowchart LR
     E --> F[Letzte Nachrichten bleiben voll erhalten]
 ```
 
-In der Praxis relevant, wenn: Sitzungen lang werden, aber der frühere Verlauf nicht vollständig verloren gehen darf.
+Ein Sliding Window hält bei langen Sitzungen die jüngsten Nachrichten im aktiven Kontext; ältere Einträge fallen heraus.
 
 ## Context Compaction: Kontext auslagern statt verdichten
 
@@ -250,7 +250,7 @@ def expand_context(summary_id: str, memory_manager) -> str:
     return memory_manager.get_compacted(summary_id)
 ```
 
-In der Praxis relevant, wenn: Der Kontext kritische Details enthält, die bei Summarization verloren gehen würden, oder wenn der vollständige Verlauf später für Debugging oder Audit benötigt wird.
+Context Compaction eignet sich, wenn kritische Details eine Zusammenfassung nicht überstehen würden oder der vollständige Verlauf für Debugging oder Audit verfügbar bleiben muss.
 
 ---
 
@@ -366,7 +366,7 @@ flowchart LR
 
 Typischer Fehler: Nur Konversationen zu speichern, aber ausgeführte Prozessschritte zu verwerfen. Gerade bei mehrstufigen Tool-Sequenzen ist genau dieser Ablauf das wertvollste wiederverwendbare Wissen.
 
-In der Praxis relevant, wenn: Aufgaben aus mehreren Tool-Aufrufen bestehen, ähnliche Aufgaben häufig wiederkehren oder ein Agent zuverlässig reproduzierbare Sequenzen liefern soll.
+Workflow Memory hilft bei wiederkehrenden Aufgaben mit mehreren Tool-Aufrufen, die verlässlich in derselben Reihenfolge ablaufen sollen.
 
 ## Per-User Memory: wenn mehrere Nutzer getrennt bleiben müssen
 
@@ -524,7 +524,7 @@ class LayeredMemory:
 
 Der entscheidende Vorteil: Statt 50.000 Token auf einmal zu laden, ruft der Agent gezielt das ab, was gerade relevant ist. Das verhindert Kontextüberlastung und hält die Kosten stabil.
 
-In der Praxis relevant, wenn: Sitzungen viele Iterationen umfassen, das System mit mehreren Projekten arbeitet oder Wissen über lange Zeiträume erhalten bleiben soll.
+Ein 3-Schicht-Speicher lohnt sich bei langen Sitzungen, mehreren Projekten oder Wissen, das länger verfügbar bleiben muss.
 
 ---
 
@@ -553,8 +553,7 @@ def sollte_gespeichert_werden(nachricht: str) -> bool:
 | Nutzerkontrolle anbieten | rechtliche und organisatorische Nachvollziehbarkeit |
 | Relevanz vor dem Speichern prüfen | sonst füllt sich das Memory mit Ballast |
 
-## Was für Entwickler zuerst wichtig ist
-
+## Ein einfaches Memory-Setup wählen
 Für einen ersten Agenten reicht meist ein einfaches Schema: Kurzzeit-Memory im State, bei längeren Gesprächen optional eine Zusammenfassung und nur dann persistentes Memory, wenn echte Personalisierung oder sitzungsübergreifendes Erinnern gebraucht wird. Damit bleibt die Architektur verständlich und trotzdem praxisnah.
 
 Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Ohne Gedächtnis werden viele scheinbar intelligente Agenten schon nach wenigen Nachrichten brüchig oder müssen dieselben Informationen immer wieder neu erfragen.

@@ -233,7 +233,7 @@ def route_by_type(state: RouterState) -> str:
     return "general_agent"
 ```
 
-In der Praxis relevant, wenn: Ein Graph nach Klassifikation, Freigabe, Risikostufe oder Tool-Ergebnis unterschiedliche Wege nehmen soll.
+Conditional Routing passt, wenn ein Graph nach Klassifikation, Freigabe, Risikostufe oder Tool-Ergebnis unterschiedliche Pfade nehmen muss.
 
 ## Was in der Praxis schnell schiefgeht
 
@@ -277,8 +277,7 @@ def debug_node(state: MyState) -> MyState:
     return result
 ```
 
-## Was für Entwickler zuerst wichtig ist
-
+## State und Nodes konsistent gestalten
 Für einen ersten LangGraph-Workflow reichen meist drei Regeln. Erstens: State explizit definieren, statt mit beliebigen Dictionaries zu arbeiten. Zweitens: `messages` fast immer mit `add_messages` absichern. Drittens: Knoten geben nur die Änderungen zurück, nicht den gesamten State.
 
 Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterungen erleichtern. Wer sie früh sauber anlegt, kann Routing, Checkpointing, Human-in-the-Loop und Memory wesentlich einfacher ergänzen.

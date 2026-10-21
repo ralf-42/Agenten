@@ -27,7 +27,7 @@ has_toc: true
 
 Ein Chatmodell, das nur Text beantwortet, kann falsche oder problematische Aussagen erzeugen. Ein Agent mit Tool-Zugriff kann deutlich mehr Schaden anrichten: Dateien lesen, E-Mails senden, Datenbanken anfragen oder APIs aufrufen. Genau dadurch verschiebt sich Sicherheit von einem reinen Modellthema zu einem Systemthema.
 
-Agenten-Sicherheit meint deshalb nicht nur Inhaltsfilter, sondern die Absicherung des gesamten Agentensystems. Welche Eingaben gelten als vertrauenswürdig? Welche Tools darf ein Agent überhaupt nutzen? Welche Daten dürfen in Prompts, Logs oder externe Dienste gelangen? Diese Fragen gehören nicht ans Ende eines Projekts, sondern an den Anfang.
+Agentensicherheit umfasst das gesamte System: Welche Eingaben gelten als vertrauenswürdig? Welche Tools darf der Agent nutzen? Welche Daten dürfen in Prompts, Logs oder externe Dienste gelangen? Diese Grenzen sollten vor der Implementierung feststehen.
 
 Typischer Fehler: Nur auf Modell-Sicherheit des Anbieters zu vertrauen. Inhaltsfilter und RLHF helfen, ersetzen aber keine sichere Systemarchitektur.
 
@@ -43,7 +43,7 @@ Prompt Injection ist der bekannteste Angriffsvektor. Dabei werden Anweisungen in
 
 Tool-Missbrauch ist die nächste Eskalationsstufe. Sobald ein Agent mächtige Werkzeuge besitzt, kann eine falsche Tool-Wahl oder ein manipuliertes Argument reale Folgen haben. Dazu kommen Daten-Exfiltration, bei der interne Informationen nach außen gelangen, und Jailbreaking, bei dem Sicherheitsgrenzen durch geschickte Umformulierungen umgangen werden sollen.
 
-Diese Ereignisse sollten nicht nur als Textproblem behandelt werden, sondern als **Security Events** im Trace erscheinen. Typische Kategorien sind `prompt_injection_detected`, `unsafe_tool_blocked`, `exfiltration_attempt`, `untrusted_source_rejected` oder `policy_escalation`. Erst dann kann Evaluation prüfen, ob der Agent Angriffe nicht nur sprachlich abwehrt, sondern messbar korrekt reagiert.
+Protokolliere diese Ereignisse als **Security Events** im Trace. Typische Kategorien sind `prompt_injection_detected`, `unsafe_tool_blocked`, `exfiltration_attempt`, `untrusted_source_rejected` oder `policy_escalation`. Erst dann kann Evaluation prüfen, ob der Agent Angriffe nicht nur sprachlich abwehrt, sondern messbar korrekt reagiert.
 
 ## Prompt Injection verstehen
 
@@ -86,7 +86,7 @@ def get_order_status(order_id: str) -> str:
     )
 ```
 
-In der Praxis relevant, wenn: Mehrere Rollen, verschiedene Datenquellen oder sensible Operationen getrennt behandelt werden müssen.
+Trenne Rollen, Datenquellen und sensible Operationen, sobald dafür unterschiedliche Berechtigungen gelten.
 
 ## Tool-Whitelisting statt impliziter Freiheit
 
@@ -191,8 +191,7 @@ Modell-Sicherheit betrifft das Verhalten des zugrunde liegenden LLMs, etwa Inhal
 
 Typischer Fehler: Sicherheitsprobleme als Modellproblem zu behandeln, obwohl sie durch zu breite Rechte oder zu schwache Tool-Grenzen entstehen.
 
-## Was für Entwickler zuerst wichtig ist
-
+## Sicherheitsregeln für den Einstieg
 Für einen ersten sicheren Agenten reichen wenige Grundregeln: nur nötige Tools freigeben, externe Inhalte nie als Instruktionen behandeln, sensible Daten vor Persistierung bereinigen und bei riskanten Aktionen eine menschliche Freigabe vorsehen.
 
 Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Systemen anfängt. Schon ein kleiner Agent mit Dateizugriff oder Mail-Versand braucht klare Grenzen, sonst wird aus einer guten Demo schnell ein riskanter Prozess.

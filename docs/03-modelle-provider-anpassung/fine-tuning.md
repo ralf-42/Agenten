@@ -28,7 +28,7 @@ Fine-Tuning passt ein vortrainiertes Modell an eine engere Aufgabe, eine bestimm
 
 Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres Retrieval oder eine klarere Systemarchitektur bringen oft schneller messbare Verbesserungen. Fine-Tuning wird interessant, wenn ein wiederkehrendes Fehlermuster trotz guter Prompts, passender Kontextdaten und nachvollziehbarer Tests bestehen bleibt.
 
-In der Praxis relevant, wenn: Das Modell soll kein neues Faktenwissen aufnehmen, sondern ein Verhalten zuverlässig wiederholen. Typische Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikationsentscheidungen oder wiederkehrende Extraktionsaufgaben. Für wechselndes Faktenwissen ist Retrieval robuster, weil Trainingsdaten nach dem Fine-Tuning nicht automatisch aktuell bleiben.
+Fine-Tuning passt, wenn das Modell ein Verhalten zuverlässig wiederholen soll, statt neues Faktenwissen aufzunehmen. Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikation und wiederkehrende Extraktion. Für wechselnde Fakten ist Retrieval robuster, denn Trainingsdaten bleiben nach dem Fine-Tuning nicht automatisch aktuell.
 
 # Einsatzkriterien
 

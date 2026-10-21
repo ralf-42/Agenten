@@ -256,7 +256,7 @@ graph_builder.add_conditional_edges(
 )
 ```
 
-In der Praxis relevant, wenn: Ein Workflow nicht nur erfolgreich oder fehlgeschlagen sein kann, sondern mehrere fachliche Zustände kennt. Beispiele sind Freigabe nötig, Daten fehlen, Tool fehlgeschlagen, Ergebnis ausreichend oder Eskalation erforderlich.
+Conditional Routing ist hilfreich, wenn ein Workflow mehrere fachliche Zustände kennt: Freigabe nötig, Daten fehlen, Tool fehlgeschlagen, Ergebnis ausreichend oder Eskalation erforderlich.
 
 ## Checkpointing Und Persistenz
 

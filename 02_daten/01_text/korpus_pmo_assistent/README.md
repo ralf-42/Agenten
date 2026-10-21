@@ -18,7 +18,7 @@ Die Nordlicht Software GmbH (fiktiv) führt "Projekt Kompass" durch: die Einfüh
 
 ## Korpusumfang
 
-Der Korpus enthält **18 kuratierte Wissensartefakte**: 13 PDFs sowie ergänzende Markdown- und CSV-Dateien zu Meeting- und Projektartefakten von "Projekt Kompass".
+Der Korpus enthält **22 kuratierte Wissensartefakte**: 13 PDFs, 7 Markdown-Dateien und 2 CSV-Dateien. Vier neue Dokumente erweitern ihn um zwei längere PMO-Texte sowie kontrollierte Quellen aus einem Fremdprojekt und einen überholten Entwurf.
 
 > [!NOTE]
 > Der Ordner heißt jetzt `korpus_pmo_assistent`. Damit stimmen Pfad, Use Case und Leitprojekt überein. Ältere Verweise auf `korpus_research` müssen auf diesen Pfad umgestellt werden.
@@ -32,6 +32,7 @@ Die Datei `metadata.json` beschreibt jedes Dokument mit stabilen Feldern für Re
 - `date`, `stakeholders`, `priority`
 - `has_decision`, `has_open_question`, `decision_ids`, `risk_ids`
 - `topics` und `recommended_modules`
+- `project_id`, `source_status` und `source_authority` für Projektfilter und Quellenprüfung
 
 Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle arbeiten und den Korpus erst danach vollständig verwenden.
 
@@ -57,6 +58,12 @@ Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle 
 | `meeting_notizen_raw_2026-05-19.md` | Rohnotizen | nein | ja (Rechte/Rollen) | Mara Vogt, Jonas Reiter, Dr. Thomas Brandt | mittel |
 | `change_request_cr02_cloud_vektordatenbank.md` | Änderungsantrag | ja (CR-02) | nein | Jonas Reiter | hoch |
 | `ressourcen_kapazitaetsmatrix_2026.csv` | Ressourcenplanung | nein | ja (Engpässe) | alle | mittel |
+| `anforderungskatalog_pmo_assistent_v1.md` | Langer Anforderungskatalog mit Abnahmekriterien | nein | ja (Zugriffsregeln, Anbieter) | Mara Vogt, Jonas Reiter, Dr. Thomas Brandt | hoch |
+| `statusbericht_projekt_kompass_2026-05-20.md` | Langer Projektstatusbericht mit Budget, Terminen und Abhängigkeiten | nein | ja (Pilotfreigabe) | alle | hoch |
+| `protokoll_fremdprojekt_nordstern_2026-05-14.md` | Ähnliches Protokoll eines anderen Projekts; gezielter Retrieval-Distraktor | ja (Nordstern) | ja (Support-Übergabe) | Nordstern-Team | mittel |
+| `entwurf_architekturentscheidung_pmo_2026-03-10_ueberholt.md` | Nicht freigegebener, überholter Architekturentwurf | nein | ja (damalige Prüfungen) | Jonas Reiter | niedrig |
+
+Die beiden Distraktoren sind absichtlich enthalten. `corpus_part`, `project_id`, `source_status` und `source_authority` unterscheiden Projektquellen, Fremdprojekt, Arbeitsnotizen und überholten Entwurf. Filter und Quellenprüfung sollen verhindern, dass ein ähnlicher Treffer als gültige Aussage zu Projekt Kompass verwendet wird.
 
 ## Empfohlene Nutzung im Kurs
 
@@ -77,6 +84,8 @@ Die passenden Eval-Dateien liegen unter `02_daten/05_sonstiges/`:
 | `eval_pmo.json` | reguläre Fragen | Enthält Fragen zum PMO-Korpus. |
 | `eval_pmo_edge.json` | Edge Cases | Enthält Negativ-, Konflikt-, Mehrdeutigkeits-, Prompt-Injection- und Versionierungsfälle. |
 
+Die reguläre Eval enthält zusätzlich Fragen zu den langen PMO-Dokumenten. Das Edge-Set prüft, ob Fremdprojekt-Angaben und der nicht freigegebene Entwurf korrekt eingeordnet werden.
+
 Die früheren `eval_research*`-Dateinamen wurden abgelöst; Notebooks und Dokumentation verweisen auf die neuen Dateien.
 
 ## Gute Eval-Fragetypen
@@ -94,4 +103,4 @@ Die früheren `eval_research*`-Dateinamen wurden abgelöst; Notebooks und Dokume
 
 ---
 
-**Stand:** Juli 2026
+**Stand:** Oktober 2026

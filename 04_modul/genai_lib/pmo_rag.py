@@ -119,6 +119,17 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
     directory = Path(directory_path)
     documents: list[Document] = []
 
+    metadata_by_file: dict[str, dict] = {}
+    metadata_path = directory / "metadata.json"
+    if metadata_path.is_file():
+        try:
+            metadata_by_file = {
+                entry["file"]: entry
+                for entry in json.loads(metadata_path.read_text(encoding="utf-8"))["documents"]
+            }
+        except (KeyError, TypeError, json.JSONDecodeError) as exc:
+            mprint(f"  ⚠ Korpus-Metadaten nicht lesbar: {exc}")
+
     for file_path in sorted(directory.rglob("*")):
         if (
             not file_path.is_file()
@@ -133,12 +144,19 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
             if not text:
                 mprint(f"  ⚠ {file_path.name} übersprungen (kein Text)")
                 continue
+            eintrag = metadata_by_file.get(file_path.name, {})
+            skalare_metadaten = {
+                key: value
+                for key, value in eintrag.items()
+                if isinstance(value, (str, int, float, bool))
+            }
             documents.append(
                 Document(
                     page_content=text,
                     metadata={
                         "source": str(file_path),
                         "file_type": file_path.suffix.lower().lstrip("."),
+                        **skalare_metadaten,
                     },
                 )
             )
@@ -209,12 +227,10 @@ def index_pmo_corpus(
 ) -> int:
     """Indexiert unterstützte Dokumente aus directory_path in die Collection.
 
-    Indexiert nur, wenn die Collection leer ist. Stammt eine vorhandene Collection
-    aus einem älteren Chunking (Kopfzeile oder ``chunk_version`` fehlen), wird sie
-    automatisch gelöscht und neu aufgebaut. Mit force=True werden vorhandene
-    Einträge immer zuerst gelöscht und die Collection neu aufgebaut — nötig,
-    falls sich der Korpus nach dem ersten Aufbau ändert oder ``chunk_size`` bzw.
-    ``chunk_overlap`` angepasst werden.
+    Indexiert eine leere Collection und aktualisiert eine vorhandene, wenn sich
+    Dateibestand oder relevante Metadaten geändert haben. Stammt sie aus einem
+    älteren Chunking, wird sie ebenfalls neu aufgebaut. Mit ``force=True`` wird
+    unabhängig vom erkannten Änderungsstand neu indexiert.
 
     Gibt die Anzahl neu indexierter Chunks zurück (0, wenn nichts zu tun war).
     """
@@ -226,13 +242,18 @@ def index_pmo_corpus(
             probe_text.startswith(CHUNK_HEADER_PREFIX)
             and probe_meta.get("chunk_version") == CHUNK_VERSION
         ):
-            mprint(
-                f"Collection hat bereits {vectorstore._collection.count()} Einträge "
-                "— kein erneutes Indexieren (force=True für Neuaufbau)"
-            )
-            return 0
-        mprint("Collection stammt aus einem älteren Chunking (ohne Kopfzeile oder Wortgrenzen) — wird neu aufgebaut")
-        force = True
+            abweichungen = check_corpus(vectorstore, directory_path)
+            if not any(abweichungen.values()):
+                mprint(
+                    f"Collection ist aktuell ({vectorstore._collection.count()} Einträge) "
+                    "— kein erneutes Indexieren"
+                )
+                return 0
+            mprint(f"Korpus oder Metadaten geändert: {abweichungen} — Collection wird aktualisiert")
+            force = True
+        else:
+            mprint("Collection stammt aus einem älteren Chunking (ohne Kopfzeile oder Wortgrenzen) — wird neu aufgebaut")
+            force = True
 
     if force:
         vorhandene_ids = vectorstore.get()["ids"]
@@ -262,10 +283,12 @@ def load_korpus_metadata(metadata_path: str | None = None) -> dict[str, dict]:
     Ohne metadata_path wird metadata.json aus dem Kurs-Repository (GitHub, main)
     geladen. Ist die Datei nicht erreichbar, wird ein leeres Dict zurückgegeben —
     die Suche funktioniert dann wie bisher, nur ohne Datum und Dokumenttyp.
-    Nur erfolgreiche Abrufe werden zwischengespeichert; nach einem Fehler wird
-    beim nächsten Aufruf erneut versucht (ein kurzer Netzausfall bleibt so folgenlos).
+    Nur der Repository-Abruf ohne lokalen Pfad wird zwischengespeichert. Lokale
+    Metadaten werden bei jedem Aufruf frisch gelesen, damit Änderungen im Drive-
+    oder Arbeitsverzeichnis sofort erkannt werden. Nach einem Abruffehler wird
+    erneut versucht (ein kurzer Netzausfall bleibt so folgenlos).
     """
-    if metadata_path in _KORPUS_METADATA_CACHE:
+    if metadata_path is None and None in _KORPUS_METADATA_CACHE:
         return _KORPUS_METADATA_CACHE[metadata_path]
     try:
         if metadata_path:
@@ -277,15 +300,27 @@ def load_korpus_metadata(metadata_path: str | None = None) -> dict[str, dict]:
     except Exception as exc:
         mprint(f"  ⚠ Korpus-Metadaten nicht geladen: {exc}")
         return {}
-    _KORPUS_METADATA_CACHE[metadata_path] = ergebnis
+    if metadata_path is None:
+        _KORPUS_METADATA_CACHE[None] = ergebnis
     return ergebnis
 
 
 def _format_metadaten(eintrag: dict | None) -> str:
-    """Formatiert Datum, Dokumenttyp sowie Entscheidungs- und Risiko-IDs als eine Zeile."""
+    """Formatiert Datum, Projekt, Quellenstatus und IDs als eine Zeile."""
     if not eintrag:
         return ""
-    teile = [f"Datum: {eintrag['date']}", f"Typ: {eintrag['document_type']}"]
+    bezeichnungen = {
+        "date": "Datum",
+        "document_type": "Typ",
+        "project_id": "Projekt",
+        "source_status": "Quellenstatus",
+        "source_authority": "Quellenautorität",
+    }
+    teile = [
+        f"{bezeichnung}: {eintrag[feld]}"
+        for feld, bezeichnung in bezeichnungen.items()
+        if eintrag.get(feld) is not None
+    ]
     if eintrag.get("decision_ids"):
         teile.append("Entscheidungen: " + ", ".join(eintrag["decision_ids"]))
     if eintrag.get("risk_ids"):
@@ -294,12 +329,13 @@ def _format_metadaten(eintrag: dict | None) -> str:
 
 
 def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str]]:
-    """Vergleicht die unterstützten Korpusdateien mit den Quellen in der Collection.
+    """Vergleicht Dateibestand und relevante Metadaten mit der Collection.
 
-    Gibt zurück: {"fehlt_im_index": [...], "veraltet_im_index": [...]}.
-    "veraltet_im_index" enthält Quellen, die im Ordner nicht mehr existieren
-    (z. B. gelöschte Dokumente) — dann die Collection neu aufbauen
-    (index_pmo_corpus mit force=True bzw. M14 neu ausführen).
+    Gibt zurück: {"fehlt_im_index": [...], "veraltet_im_index": [...],
+    "metadaten_veraltet": [...]}.
+    "veraltet_im_index" enthält Quellen, die im Ordner nicht mehr existieren.
+    "metadaten_veraltet" nennt Quellen, deren skalare Metadaten im Index fehlen
+    oder vom lokalen metadata.json-Eintrag abweichen.
     """
     im_ordner = {
         file_path.name
@@ -312,9 +348,31 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
     }
     metadaten = vectorstore.get(include=["metadatas"])["metadatas"]
     im_index = {Path((meta or {}).get("source", "")).name for meta in metadaten} - {""}
+    aktuelle_metadaten = load_korpus_metadata(str(Path(directory_path) / "metadata.json"))
+    relevante_felder = (
+        "project_id",
+        "corpus_part",
+        "document_type",
+        "date",
+        "priority",
+        "source_status",
+        "source_authority",
+    )
+    metadaten_veraltet = set()
+    for meta in metadaten:
+        meta = meta or {}
+        dateiname = Path(meta.get("source", "")).name
+        eintrag = aktuelle_metadaten.get(dateiname, {})
+        if dateiname and any(
+            meta.get(key) != eintrag.get(key)
+            for key in relevante_felder
+            if key in eintrag
+        ):
+            metadaten_veraltet.add(dateiname)
     ergebnis = {
         "fehlt_im_index": sorted(im_ordner - im_index),
         "veraltet_im_index": sorted(im_index - im_ordner),
+        "metadaten_veraltet": sorted(metadaten_veraltet),
     }
     if any(ergebnis.values()):
         mprint(f"⚠ Index und Korpusordner weichen ab: {ergebnis}")
@@ -329,7 +387,8 @@ def format_docs(docs: list[Document]) -> str:
     teile = []
     for doc in docs:
         quelle = doc.metadata.get("source", "?").split("/")[-1]
-        info = _format_metadaten(metadaten.get(quelle))
+        eintrag = {**metadaten.get(quelle, {}), **doc.metadata}
+        info = _format_metadaten(eintrag)
         teile.append(
             f"Quelle: {quelle}\n"
             + (f"Metadaten: {info}\n" if info else "")

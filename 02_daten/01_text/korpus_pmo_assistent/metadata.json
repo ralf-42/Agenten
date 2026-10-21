@@ -6,10 +6,20 @@
   "previous_path": "02_daten/01_text/korpus_research",
   "language": "de",
   "created_for_course": "KI-Agenten. Planen. Handeln. Prüfen.",
-  "stand": "Juli 2026",
+  "stand": "Oktober 2026",
   "usage": {
     "primary_use_case": "PMO-Assistent",
-    "main_modules": ["M11", "M12", "M13", "M14", "M15", "M17", "M23", "M24", "M36"],
+    "main_modules": [
+      "M11",
+      "M12",
+      "M13",
+      "M14",
+      "M15",
+      "M17",
+      "M23",
+      "M24",
+      "M36"
+    ],
     "recommended_default_filter": {
       "corpus_part": "project"
     },
@@ -27,14 +37,30 @@
       "document_type": "projektauftrag",
       "meeting_context": "Projektunterlage",
       "date": "2026-03-01",
-      "stakeholders": ["Sabine Holler", "Mara Vogt"],
+      "stakeholders": [
+        "Sabine Holler",
+        "Mara Vogt"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": false,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Projektziel", "Scope", "Rollen", "Wissensassistent"],
-      "recommended_modules": ["M11", "M13", "M14", "M15"]
+      "topics": [
+        "Projektziel",
+        "Scope",
+        "Rollen",
+        "Wissensassistent"
+      ],
+      "recommended_modules": [
+        "M11",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "stakeholder_rollenliste.pdf",
@@ -44,14 +70,31 @@
       "document_type": "rollenliste",
       "meeting_context": "Projektunterlage",
       "date": "2026-03-01",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Elif Kaya",
+        "Dr. Thomas Brandt",
+        "Sabine Holler"
+      ],
       "priority": "mittel",
       "has_decision": false,
       "has_open_question": false,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Stakeholder", "Rollen", "Verantwortung"],
-      "recommended_modules": ["M11", "M13", "M15"]
+      "topics": [
+        "Stakeholder",
+        "Rollen",
+        "Verantwortung"
+      ],
+      "recommended_modules": [
+        "M11",
+        "M13",
+        "M15"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "risikoliste_v1.pdf",
@@ -61,14 +104,35 @@
       "document_type": "risikoliste",
       "meeting_context": "Projektunterlage",
       "date": "2026-03-17",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Dr. Thomas Brandt"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Dr. Thomas Brandt"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
-      "risk_ids": ["R1", "R2", "R3", "R4"],
-      "topics": ["Risiken", "Datenschutzfreigabe", "Mitigation"],
-      "recommended_modules": ["M13", "M14", "M15", "M24"]
+      "risk_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      "topics": [
+        "Risiken",
+        "Datenschutzfreigabe",
+        "Mitigation"
+      ],
+      "recommended_modules": [
+        "M13",
+        "M14",
+        "M15",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "protokoll_kickoff_2026-03-03.pdf",
@@ -78,14 +142,31 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Kickoff",
       "date": "2026-03-03",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Elif Kaya",
+        "Dr. Thomas Brandt",
+        "Sabine Holler"
+      ],
       "priority": "mittel",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Kickoff", "Tool-Auswahl", "Vektordatenbank"],
-      "recommended_modules": ["M11", "M12", "M13"]
+      "topics": [
+        "Kickoff",
+        "Tool-Auswahl",
+        "Vektordatenbank"
+      ],
+      "recommended_modules": [
+        "M11",
+        "M12",
+        "M13"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_steuerkreis_2026-03-17.pdf",
@@ -95,14 +176,33 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Steuerkreis",
       "date": "2026-03-17",
-      "stakeholders": ["Jonas Reiter", "Mara Vogt"],
+      "stakeholders": [
+        "Jonas Reiter",
+        "Mara Vogt"
+      ],
       "priority": "hoch",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D1"],
-      "risk_ids": ["R2"],
-      "topics": ["ChromaDB", "Prototyp", "Entscheidung"],
-      "recommended_modules": ["M12", "M13", "M14", "M15"]
+      "decision_ids": [
+        "D1"
+      ],
+      "risk_ids": [
+        "R2"
+      ],
+      "topics": [
+        "ChromaDB",
+        "Prototyp",
+        "Entscheidung"
+      ],
+      "recommended_modules": [
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_steuerkreis_2026-03-31.pdf",
@@ -112,14 +212,30 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Steuerkreis",
       "date": "2026-03-31",
-      "stakeholders": ["Jonas Reiter", "Mara Vogt"],
+      "stakeholders": [
+        "Jonas Reiter",
+        "Mara Vogt"
+      ],
       "priority": "mittel",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D1"],
+      "decision_ids": [
+        "D1"
+      ],
       "risk_ids": [],
-      "topics": ["Mehrdeutigkeit", "bevorzugte Loesung", "Vektordatenbank"],
-      "recommended_modules": ["M14", "M15", "M24"]
+      "topics": [
+        "Mehrdeutigkeit",
+        "bevorzugte Loesung",
+        "Vektordatenbank"
+      ],
+      "recommended_modules": [
+        "M14",
+        "M15",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_steuerkreis_2026-04-14.pdf",
@@ -129,14 +245,31 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Steuerkreis",
       "date": "2026-04-14",
-      "stakeholders": ["Jonas Reiter", "Mara Vogt", "Sabine Holler"],
+      "stakeholders": [
+        "Jonas Reiter",
+        "Mara Vogt",
+        "Sabine Holler"
+      ],
       "priority": "hoch",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D2"],
+      "decision_ids": [
+        "D2"
+      ],
       "risk_ids": [],
-      "topics": ["Cloud-Vektordatenbank", "ChromaDB verworfen", "Konflikt"],
-      "recommended_modules": ["M14", "M15", "M24"]
+      "topics": [
+        "Cloud-Vektordatenbank",
+        "ChromaDB verworfen",
+        "Konflikt"
+      ],
+      "recommended_modules": [
+        "M14",
+        "M15",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_steuerkreis_2026-04-28.pdf",
@@ -146,14 +279,32 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Steuerkreis",
       "date": "2026-04-28",
-      "stakeholders": ["Dr. Thomas Brandt", "Mara Vogt"],
+      "stakeholders": [
+        "Dr. Thomas Brandt",
+        "Mara Vogt"
+      ],
       "priority": "mittel",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D3"],
-      "risk_ids": ["R2"],
-      "topics": ["Risikostatus", "Datenschutzfreigabe", "Versionierung"],
-      "recommended_modules": ["M14", "M15", "M24"]
+      "decision_ids": [
+        "D3"
+      ],
+      "risk_ids": [
+        "R2"
+      ],
+      "topics": [
+        "Risikostatus",
+        "Datenschutzfreigabe",
+        "Versionierung"
+      ],
+      "recommended_modules": [
+        "M14",
+        "M15",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_fachbereich_workshop_2026-05-05.pdf",
@@ -163,14 +314,29 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Workshop",
       "date": "2026-05-05",
-      "stakeholders": ["Elif Kaya", "Mara Vogt"],
+      "stakeholders": [
+        "Elif Kaya",
+        "Mara Vogt"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": false,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Vertrieb", "Anforderungen", "Prompt Injection"],
-      "recommended_modules": ["M13", "M17", "M23", "M24"]
+      "topics": [
+        "Vertrieb",
+        "Anforderungen",
+        "Prompt Injection"
+      ],
+      "recommended_modules": [
+        "M13",
+        "M17",
+        "M23",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "protokoll_steuerkreis_2026-05-19.pdf",
@@ -180,14 +346,28 @@
       "document_type": "meeting_protokoll",
       "meeting_context": "Steuerkreis",
       "date": "2026-05-19",
-      "stakeholders": ["Mara Vogt", "Dr. Thomas Brandt"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Dr. Thomas Brandt"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Rechte", "Rollensteuerung", "Vertagung"],
-      "recommended_modules": ["M14", "M15", "M17"]
+      "topics": [
+        "Rechte",
+        "Rollensteuerung",
+        "Vertagung"
+      ],
+      "recommended_modules": [
+        "M14",
+        "M15",
+        "M17"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_minutes"
     },
     {
       "file": "entscheidungsprotokoll_gesamt.pdf",
@@ -197,14 +377,36 @@
       "document_type": "decision_log",
       "meeting_context": "Decision Log",
       "date": "2026-05-20",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Sabine Holler"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Sabine Holler"
+      ],
       "priority": "hoch",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D1", "D2", "D3"],
-      "risk_ids": ["R2"],
-      "topics": ["Entscheidungen", "Aktueller Stand", "Konfliktaufloesung"],
-      "recommended_modules": ["M13", "M14", "M15", "M24"]
+      "decision_ids": [
+        "D1",
+        "D2",
+        "D3"
+      ],
+      "risk_ids": [
+        "R2"
+      ],
+      "topics": [
+        "Entscheidungen",
+        "Aktueller Stand",
+        "Konfliktaufloesung"
+      ],
+      "recommended_modules": [
+        "M13",
+        "M14",
+        "M15",
+        "M24"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "current_decision_log"
     },
     {
       "file": "follow_up_tracker.pdf",
@@ -214,14 +416,30 @@
       "document_type": "tracker",
       "meeting_context": "Tracker",
       "date": "2026-05-20",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Elif Kaya",
+        "Dr. Thomas Brandt"
+      ],
       "priority": "mittel",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Action Items", "Offene Punkte", "Nachverfolgung"],
-      "recommended_modules": ["M13", "M14", "M17"]
+      "topics": [
+        "Action Items",
+        "Offene Punkte",
+        "Nachverfolgung"
+      ],
+      "recommended_modules": [
+        "M13",
+        "M14",
+        "M17"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "agenda_vorlage_steuerkreis.pdf",
@@ -231,14 +449,27 @@
       "document_type": "template",
       "meeting_context": "Vorlage",
       "date": "2026-03-01",
-      "stakeholders": ["Mara Vogt"],
+      "stakeholders": [
+        "Mara Vogt"
+      ],
       "priority": "niedrig",
       "has_decision": false,
       "has_open_question": false,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Agenda", "Meeting-Vorbereitung", "Standardstruktur"],
-      "recommended_modules": ["M17", "M33", "M36"]
+      "topics": [
+        "Agenda",
+        "Meeting-Vorbereitung",
+        "Standardstruktur"
+      ],
+      "recommended_modules": [
+        "M17",
+        "M33",
+        "M36"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "template",
+      "source_authority": "template"
     },
     {
       "file": "meilensteinplan_phasen_kompass.md",
@@ -248,14 +479,39 @@
       "document_type": "milestone_plan",
       "meeting_context": "Projektplanung",
       "date": "2026-05-20",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Elif Kaya",
+        "Dr. Thomas Brandt",
+        "Sabine Holler"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": true,
-      "decision_ids": ["D1", "D2"],
-      "risk_ids": ["R2"],
-      "topics": ["Meilensteine", "Phasen", "Roadmap", "Gates", "Status"],
-      "recommended_modules": ["M14", "M17", "M19", "M20"]
+      "decision_ids": [
+        "D1",
+        "D2"
+      ],
+      "risk_ids": [
+        "R2"
+      ],
+      "topics": [
+        "Meilensteine",
+        "Phasen",
+        "Roadmap",
+        "Gates",
+        "Status"
+      ],
+      "recommended_modules": [
+        "M14",
+        "M17",
+        "M19",
+        "M20"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "projektbudget_kostenstatus_q2_2026.csv",
@@ -265,14 +521,32 @@
       "document_type": "budget_tracker",
       "meeting_context": "Controlling",
       "date": "2026-05-20",
-      "stakeholders": ["Sabine Holler", "Mara Vogt", "Jonas Reiter"],
+      "stakeholders": [
+        "Sabine Holler",
+        "Mara Vogt",
+        "Jonas Reiter"
+      ],
       "priority": "hoch",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
-      "risk_ids": ["R4"],
-      "topics": ["Budget", "Ist-Kosten", "Forecast", "Abweichung", "Ampel"],
-      "recommended_modules": ["M19", "M20"]
+      "risk_ids": [
+        "R4"
+      ],
+      "topics": [
+        "Budget",
+        "Ist-Kosten",
+        "Forecast",
+        "Abweichung",
+        "Ampel"
+      ],
+      "recommended_modules": [
+        "M19",
+        "M20"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "meeting_notizen_raw_2026-05-19.md",
@@ -282,14 +556,31 @@
       "document_type": "raw_meeting_notes",
       "meeting_context": "Steuerkreis",
       "date": "2026-05-19",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Dr. Thomas Brandt"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Dr. Thomas Brandt"
+      ],
       "priority": "mittel",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Rohnotizen", "Rechte", "Rollensteuerung", "Offene Fragen"],
-      "recommended_modules": ["M04", "M06", "M17", "M34"]
+      "topics": [
+        "Rohnotizen",
+        "Rechte",
+        "Rollensteuerung",
+        "Offene Fragen"
+      ],
+      "recommended_modules": [
+        "M04",
+        "M06",
+        "M17",
+        "M34"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "working_notes",
+      "source_authority": "working_notes"
     },
     {
       "file": "change_request_cr02_cloud_vektordatenbank.md",
@@ -299,14 +590,36 @@
       "document_type": "change_request",
       "meeting_context": "Änderungsantrag",
       "date": "2026-04-14",
-      "stakeholders": ["Jonas Reiter", "Mara Vogt", "Sabine Holler", "Dr. Thomas Brandt"],
+      "stakeholders": [
+        "Jonas Reiter",
+        "Mara Vogt",
+        "Sabine Holler",
+        "Dr. Thomas Brandt"
+      ],
       "priority": "hoch",
       "has_decision": true,
       "has_open_question": false,
-      "decision_ids": ["D1", "D2"],
-      "risk_ids": ["R2"],
-      "topics": ["Change Request", "Cloud-Vektordatenbank", "Architektur", "Auswirkungen"],
-      "recommended_modules": ["M17", "M19", "M20"]
+      "decision_ids": [
+        "D1",
+        "D2"
+      ],
+      "risk_ids": [
+        "R2"
+      ],
+      "topics": [
+        "Change Request",
+        "Cloud-Vektordatenbank",
+        "Architektur",
+        "Auswirkungen"
+      ],
+      "recommended_modules": [
+        "M17",
+        "M19",
+        "M20"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
     },
     {
       "file": "ressourcen_kapazitaetsmatrix_2026.csv",
@@ -316,27 +629,177 @@
       "document_type": "capacity_matrix",
       "meeting_context": "Ressourcenplanung",
       "date": "2026-05-20",
-      "stakeholders": ["Mara Vogt", "Jonas Reiter", "Elif Kaya", "Dr. Thomas Brandt", "Sabine Holler"],
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Elif Kaya",
+        "Dr. Thomas Brandt",
+        "Sabine Holler"
+      ],
       "priority": "mittel",
       "has_decision": false,
       "has_open_question": true,
       "decision_ids": [],
       "risk_ids": [],
-      "topics": ["Ressourcen", "Kapazität", "Auslastung", "Engpass"],
-      "recommended_modules": ["M19", "M20"]
+      "topics": [
+        "Ressourcen",
+        "Kapazität",
+        "Auslastung",
+        "Engpass"
+      ],
+      "recommended_modules": [
+        "M19",
+        "M20"
+      ],
+      "project_id": "projekt_kompass",
+      "source_status": "approved_record",
+      "source_authority": "approved_project_record"
+    },
+    {
+      "file": "anforderungskatalog_pmo_assistent_v1.md",
+      "document_id": "kompass_requirements_catalog_v1",
+      "title": "Anforderungskatalog PMO-Assistent v1.0",
+      "corpus_part": "project",
+      "project_id": "projekt_kompass",
+      "document_type": "requirements_catalog",
+      "meeting_context": "MVP-Anforderungen",
+      "date": "2026-05-20",
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Dr. Thomas Brandt"
+      ],
+      "priority": "hoch",
+      "source_status": "approved_current",
+      "source_authority": "requirements_baseline",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [
+        "D2"
+      ],
+      "risk_ids": [
+        "R2",
+        "R4"
+      ],
+      "topics": [
+        "Anforderungen",
+        "Abnahmekriterien",
+        "Chunking",
+        "Quellenautorität",
+        "Zugriffsregeln"
+      ],
+      "recommended_modules": []
+    },
+    {
+      "file": "statusbericht_projekt_kompass_2026-05-20.md",
+      "document_id": "kompass_status_report_2026_05_20",
+      "title": "Projektstatusbericht Projekt Kompass vom 20.05.2026",
+      "corpus_part": "project",
+      "project_id": "projekt_kompass",
+      "document_type": "project_status_report",
+      "meeting_context": "Projektstatus",
+      "date": "2026-05-20",
+      "stakeholders": [
+        "Mara Vogt",
+        "Jonas Reiter",
+        "Dr. Thomas Brandt",
+        "Sabine Holler"
+      ],
+      "priority": "hoch",
+      "source_status": "approved_current",
+      "source_authority": "project_status_report",
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [
+        "D2"
+      ],
+      "risk_ids": [
+        "R2",
+        "R4"
+      ],
+      "topics": [
+        "Projektstatus",
+        "Budget",
+        "Meilensteine",
+        "Cloud-Vektordatenbank",
+        "Pilotfreigabe"
+      ],
+      "recommended_modules": []
+    },
+    {
+      "file": "protokoll_fremdprojekt_nordstern_2026-05-14.md",
+      "document_id": "nordstern_steering_2026_05_14",
+      "title": "Steuerkreis-Protokoll Projekt Nordstern vom 14.05.2026",
+      "corpus_part": "distractor",
+      "project_id": "projekt_nordstern",
+      "document_type": "meeting_protokoll",
+      "meeting_context": "Steuerkreis Fremdprojekt",
+      "date": "2026-05-14",
+      "stakeholders": [
+        "Lea Winter",
+        "Karim Özdemir",
+        "Petra Lenz"
+      ],
+      "priority": "mittel",
+      "source_status": "approved_current",
+      "source_authority": "external_project_minutes",
+      "has_decision": true,
+      "has_open_question": true,
+      "decision_ids": [
+        "NS-1"
+      ],
+      "risk_ids": [],
+      "topics": [
+        "Vektordatenbank",
+        "Azure AI Search",
+        "Pilot",
+        "Support-Wissenssuche"
+      ],
+      "recommended_modules": []
+    },
+    {
+      "file": "entwurf_architekturentscheidung_pmo_2026-03-10_ueberholt.md",
+      "document_id": "kompass_architecture_draft_2026_03_10",
+      "title": "Überholter Architekturentwurf PMO-Assistent vom 10.03.2026",
+      "corpus_part": "project",
+      "project_id": "projekt_kompass",
+      "document_type": "decision_draft",
+      "meeting_context": "Architektur-Arbeitsentwurf",
+      "date": "2026-03-10",
+      "stakeholders": [
+        "Jonas Reiter"
+      ],
+      "priority": "niedrig",
+      "source_status": "superseded_draft",
+      "source_authority": "unapproved_working_draft",
+      "superseded_by": [
+        "protokoll_steuerkreis_2026-04-14.pdf",
+        "entscheidungsprotokoll_gesamt.pdf"
+      ],
+      "has_decision": false,
+      "has_open_question": true,
+      "decision_ids": [],
+      "risk_ids": [],
+      "topics": [
+        "ChromaDB",
+        "Produktivbetrieb",
+        "Architektur",
+        "Entwurf"
+      ],
+      "recommended_modules": []
     }
   ],
   "eval_sets": [
     {
       "file": "../../05_sonstiges/eval_pmo.json",
       "type": "regular",
-      "question_count": 33,
-      "note": "Enthält die 28 Ausgangsfragen und fünf Fragen zu den ergänzten PMO-Artefakten."
+      "question_count": 38,
+      "note": "Enthält die regulären PMO-Fragen einschließlich der langen Anforderungs- und Statusdokumente."
     },
     {
       "file": "../../05_sonstiges/eval_pmo_edge.json",
       "type": "edge_cases",
-      "question_count": 16,
+      "question_count": 20,
       "note": "Dateiname wurde auf den PMO-Use-Case umgestellt."
     }
   ]

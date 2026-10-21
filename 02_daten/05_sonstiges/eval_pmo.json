@@ -417,5 +417,64 @@
       "MVP-Abnahme",
       "Zugriffsregeln"
     ]
+  },
+  {
+    "id": "q39",
+    "typ": "quantitativ",
+    "frage": "Welche Last- und Antwortzeitgrenze nennt der Anforderungskatalog für den MVP-Test?",
+    "erwartete_antwort_kurz": "25 gleichzeitige Anfragen und eine Antwortzeit unter acht Sekunden im 95. Perzentil.",
+    "erwartete_quelle": "anforderungskatalog_pmo_assistent_v1.md",
+    "erwartete_begriffe": [
+      "25",
+      "acht Sekunden",
+      "95. Perzentil"
+    ]
+  },
+  {
+    "id": "q40",
+    "typ": "faktisch",
+    "frage": "Welche Mindestangabe zur Belegqualität gilt für belegbare Testfragen?",
+    "erwartete_antwort_kurz": "Mindestens 90 Prozent der Antworten sollen die richtige Quelldatei nennen.",
+    "erwartete_quelle": "anforderungskatalog_pmo_assistent_v1.md",
+    "erwartete_begriffe": [
+      "90 Prozent",
+      "richtige Quelldatei"
+    ]
+  },
+  {
+    "id": "q41",
+    "typ": "synthese",
+    "frage": "Welche Bedingungen müssen für den geplanten Pilotbetrieb noch erfüllt sein?",
+    "erwartete_antwort_kurz": "Der MVP muss abgenommen und die Zugriffsregeln müssen freigegeben sein; die Anbieterwahl und die Rollenentscheidung sind noch offen.",
+    "erwartete_quelle": "statusbericht_projekt_kompass_2026-05-20.md",
+    "erwartete_begriffe": [
+      "MVP-Abnahme",
+      "Zugriffsregeln",
+      "Anbieter"
+    ]
+  },
+  {
+    "id": "q42",
+    "typ": "grenze",
+    "frage": "Welche Daten darf der MVP laut Anforderungskatalog verarbeiten?",
+    "erwartete_antwort_kurz": "Ausschließlich den kuratierten, fiktiven Projektkorpus; produktive Kundendaten sind ausgeschlossen.",
+    "erwartete_quelle": "anforderungskatalog_pmo_assistent_v1.md",
+    "erwartete_begriffe": [
+      "kuratierten",
+      "fiktiven Projektkorpus",
+      "keine produktiven Kundendaten"
+    ]
+  },
+  {
+    "id": "q43",
+    "typ": "synthese",
+    "frage": "Welche drei Themen bleiben laut Schlussabschnitt des Anforderungskatalogs offen?",
+    "erwartete_antwort_kurz": "Die endgültige Rollen- und Rechtearchitektur, ein verbindlicher Betriebskostenrahmen und die Übergabe in einen Pilotbetrieb.",
+    "erwartete_quelle": "anforderungskatalog_pmo_assistent_v1.md",
+    "erwartete_begriffe": [
+      "Rollen- und Rechtearchitektur",
+      "Betriebskostenrahmen",
+      "Pilotbetrieb"
+    ]
   }
 ]

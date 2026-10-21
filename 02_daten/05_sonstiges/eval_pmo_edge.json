@@ -179,5 +179,55 @@
     "erwartete_begriffe": [
       "Nicht im Korpus"
     ]
+  },
+  {
+    "id": "e17",
+    "typ": "quellenautoritaet",
+    "frage": "Welchen Cloud-Anbieter hat Projekt Kompass für den Produktivbetrieb ausgewählt?",
+    "erwartete_antwort_kurz": "Nicht im Korpus; für Projekt Kompass ist eine verwaltete Cloud-Vektordatenbank vorgesehen, aber kein Anbieter ausgewählt. Azure AI Search steht im Protokoll des anderen Projekts Nordstern.",
+    "erwartete_quelle": null,
+    "erwartete_begriffe": [
+      "Nicht im Korpus",
+      "kein Anbieter",
+      "Nordstern"
+    ]
+  },
+  {
+    "id": "e18",
+    "typ": "konflikt",
+    "frage": "Ist ChromaDB für den Produktivbetrieb von Projekt Kompass freigegeben?",
+    "erwartete_antwort_kurz": "Nein. Der Entwurf vom 10.03.2026 war nicht freigegeben und wurde überholt; D2 vom 14.04.2026 sieht eine verwaltete Cloud-Vektordatenbank für den Produktivbetrieb vor.",
+    "erwartete_quelle": "protokoll_steuerkreis_2026-04-14.pdf",
+    "erwartete_begriffe": [
+      "nicht freigegeben",
+      "überholt",
+      "D2",
+      "verwaltete Cloud-Vektordatenbank"
+    ]
+  },
+  {
+    "id": "e19",
+    "typ": "quellenautoritaet",
+    "frage": "Welche Suchplattform und Lastgrenze wurden im Fremdprojekt Nordstern beschlossen?",
+    "erwartete_antwort_kurz": "Für Nordstern wurden Azure AI Search, 40 gleichzeitige Anfragen und weniger als sechs Sekunden im 95. Perzentil beschlossen. Diese Werte gelten nicht für Projekt Kompass.",
+    "erwartete_quelle": "protokoll_fremdprojekt_nordstern_2026-05-14.md",
+    "erwartete_begriffe": [
+      "Azure AI Search",
+      "40",
+      "sechs Sekunden",
+      "Nordstern"
+    ]
+  },
+  {
+    "id": "e20",
+    "typ": "quellenautoritaet",
+    "frage": "Was empfahl der nicht freigegebene Architekturentwurf vom 10.03.2026 zur Nutzung von ChromaDB?",
+    "erwartete_antwort_kurz": "Der Entwurf empfahl ChromaDB auch für den späteren Produktivbetrieb, war aber ausdrücklich nicht freigegeben und wurde durch spätere Beschlüsse überholt.",
+    "erwartete_quelle": "entwurf_architekturentscheidung_pmo_2026-03-10_ueberholt.md",
+    "erwartete_begriffe": [
+      "Produktivbetrieb",
+      "nicht freigegeben",
+      "überholt"
+    ]
   }
 ]

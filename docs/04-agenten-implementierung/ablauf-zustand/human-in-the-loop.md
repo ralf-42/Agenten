@@ -156,7 +156,7 @@ Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. E
 ---
 
 **Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

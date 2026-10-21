@@ -323,7 +323,7 @@ def test_agent_with_tools():
 ---
 
 **Version:** 2.0 (konsolidiert)<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

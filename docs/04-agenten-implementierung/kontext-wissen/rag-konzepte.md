@@ -434,7 +434,7 @@ RAG ergänzt zur Laufzeit eine Wissensquelle. Es macht deren Qualität sichtbar,
 ---
 
 **Version:**    1.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

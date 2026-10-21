@@ -114,4 +114,4 @@ Die praktische Faustregel:
 
 ---
 
-**Stand:** August 2026<br>
+**Stand:** Oktober 2026<br>

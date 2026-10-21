@@ -570,5 +570,5 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 ---
 
 **Version:** 1.4<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -522,7 +522,7 @@ Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agenten
 ---
 
 **Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -146,7 +146,7 @@ Vor Umsetzung eines sensiblen Agenten-Systems sollte eine Mindestprüfung dokume
 ---
 
 **Version:** 1.2<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

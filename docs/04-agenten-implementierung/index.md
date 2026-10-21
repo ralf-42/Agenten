@@ -19,4 +19,4 @@ Diese Orientierungsseite beschreibt die fachlichen und technischen Bausteine ein
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

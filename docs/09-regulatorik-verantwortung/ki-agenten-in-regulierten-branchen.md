@@ -143,7 +143,7 @@ Die Grenzen sind fließend, aber einige Faustregeln helfen:
 ---
 
 **Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

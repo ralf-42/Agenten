@@ -632,6 +632,6 @@ LangGraph wird dann sinnvoll, wenn ein LLM-Workflow echten Zustand, Routing oder
 ---
 
 **Version:** 2.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

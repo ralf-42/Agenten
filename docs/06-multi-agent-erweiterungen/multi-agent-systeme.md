@@ -358,7 +358,7 @@ Entwickler unterschätzen oft, dass Multi-Agent vor allem mehr Koordinationslogi
 ---
 
 **Version:** 1.4<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

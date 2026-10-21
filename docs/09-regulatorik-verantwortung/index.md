@@ -20,4 +20,4 @@ Diese Orientierungsseite behandelt die fachlichen Rahmenbedingungen für KI-Agen
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

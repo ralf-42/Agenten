@@ -19,4 +19,4 @@ Diese Orientierungsseite behandelt die Skalierung von einzelnen Agenten zu koope
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

@@ -234,7 +234,7 @@ Der Stack wird sich weiter konsolidieren. Provider-SDKs integrieren bereits Spei
 ---
 
 **Version:** 1.2<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

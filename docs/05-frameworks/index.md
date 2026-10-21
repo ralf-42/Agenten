@@ -33,4 +33,4 @@ Für den Kurs gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **La
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

@@ -116,5 +116,5 @@ Diese drei Begriffe stehen in engem Bezug zum Kursmotto **Planen, Handeln, Prüf
 ---
 
 **Version:** 1.2<br>
-**Stand:** September 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

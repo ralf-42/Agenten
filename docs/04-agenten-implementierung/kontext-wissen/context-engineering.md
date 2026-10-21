@@ -397,5 +397,5 @@ In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool
 ---
 
 **Version:** 1.3<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

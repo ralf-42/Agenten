@@ -319,7 +319,7 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 ---
 
 **Version:** 1.1<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

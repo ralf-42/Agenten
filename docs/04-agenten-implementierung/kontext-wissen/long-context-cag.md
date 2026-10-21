@@ -178,5 +178,5 @@ Nicht das richtige Schlagwort entscheidet. Die Architektur muss zur Änderungsra
 ---
 
 **Version:** 2.0<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

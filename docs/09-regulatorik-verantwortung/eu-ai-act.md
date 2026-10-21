@@ -125,7 +125,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 ---
 
 **Version:** 1.2<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

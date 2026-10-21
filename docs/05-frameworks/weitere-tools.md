@@ -18,4 +18,4 @@ Diese Orientierungsseite sammelt ergänzende Frameworks und Hilfsbibliotheken, d
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

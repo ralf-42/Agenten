@@ -189,7 +189,7 @@ Eigenständige HTML-Visualisierungen, die direkt aus dem Kursverzeichnis `visual
 ---
 
 **Version:** 1.3<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -19,4 +19,4 @@ Diese Orientierungsseite bündelt die LangChain-Dokumente: Einstieg, Grundmuster
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

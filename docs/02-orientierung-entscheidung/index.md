@@ -20,4 +20,4 @@ Bevor mit der technischen Umsetzung begonnen wird, hilft diese Seite dabei, das 
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

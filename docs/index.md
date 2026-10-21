@@ -52,5 +52,5 @@ Der Weg vom Notebook zum stabilen Agentensystem verlangt klare Rollen, begrenzte
 ---
 
 **Version:** 1.3<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

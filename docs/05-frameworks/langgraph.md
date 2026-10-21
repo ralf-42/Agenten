@@ -20,4 +20,4 @@ Diese Orientierungsseite bündelt die LangGraph-Dokumente: StateGraph-Grundlagen
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

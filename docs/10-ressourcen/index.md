@@ -21,4 +21,4 @@ Diese Orientierungsseite ist der inhaltliche Werkzeugkasten für die Arbeit mit 
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

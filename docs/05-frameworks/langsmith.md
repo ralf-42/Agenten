@@ -19,4 +19,4 @@ Diese Orientierungsseite bündelt die LangSmith-Dokumente. LangSmith ist hier al
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

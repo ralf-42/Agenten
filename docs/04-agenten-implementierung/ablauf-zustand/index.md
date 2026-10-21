@@ -21,4 +21,4 @@ Dieser Bereich behandelt, wie Agenten Zustände verwalten, Sitzungen persistent 
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

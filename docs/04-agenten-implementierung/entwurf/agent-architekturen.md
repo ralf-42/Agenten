@@ -482,5 +482,5 @@ Die Architekturfragen aus diesem Kapitel tauchen im Kurs immer wieder auf. Diese
 ---
 
 **Version:** 1.16<br>
-**Stand:** August 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -208,7 +208,7 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 ---
 
 **Version:** 1.5<br>
-**Stand:** August 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

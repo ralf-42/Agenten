@@ -20,4 +20,4 @@ Diese Orientierungsseite führt vom lauffähigen Prototyp zum betreibbaren Agent
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

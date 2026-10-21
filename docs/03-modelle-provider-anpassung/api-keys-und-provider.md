@@ -196,7 +196,7 @@ llm = init_chat_model("ollama:llama3")
 ---
 
 **Version:** 1.2<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

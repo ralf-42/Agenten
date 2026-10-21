@@ -567,3 +567,4 @@ Nein. Er unterstützt ausgewählte PMO-nahe Informationsaufgaben wie Meeting-Vor
 
 **Version:** 2.1<br>
 **Stand:** Oktober 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

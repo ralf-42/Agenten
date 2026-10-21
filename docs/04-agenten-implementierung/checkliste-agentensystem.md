@@ -202,5 +202,5 @@ Quellenbasis:
 ---
 
 **Version:** 1.0<br>
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

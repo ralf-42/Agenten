@@ -21,4 +21,4 @@ Dieser Bereich behandelt die konzeptionellen und technischen Grundlagen, die vor
 
 ---
 
-**Stand:** Juli 2026<br>
+**Stand:** Oktober 2026<br>

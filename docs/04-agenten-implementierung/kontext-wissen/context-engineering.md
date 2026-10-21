@@ -59,7 +59,7 @@ Ein häufiger Fehler: Mehr Kontext wird mit besserem Kontext verwechselt. In vie
 
 ### Abgrenzung
 
-**Prompt Engineering** hilft, einzelne Anfragen zu verbessern. **Context Engineering** wird wichtig, sobald Informationen ausgewählt, priorisiert, gespeichert oder über mehrere Schritte hinweg konsistent gehalten werden müssen. Robuste Anwendungen brauchen meistens beides.
+**Prompt Engineering** hilft, einzelne Anfragen zu verbessern. **Context Engineering** wird wichtig, sobald Informationen ausgewählt, priorisiert, gespeichert oder über mehrere Schritte hinweg konsistent gehalten werden müssen. Die meisten produktiven Anwendungen brauchen beides.
 
 ### Warum ist das wichtig?
 
@@ -87,7 +87,7 @@ Der Knowledge Layer gibt diesen Daten Struktur. Er löst Entitäten auf, verbind
 
 Precision Retrieval begrenzt den Kontext auf das, was für die Aufgabe zählt. Mehr Kontext ist nicht automatisch besser. Gute Systeme filtern nach Absicht, Rolle, Zeit, Quelle und Policy. Sie vermeiden, dass ein Modell mit langen, nur lose passenden Dokumenten arbeitet, während die entscheidende Information zwischen Nebensachen verschwindet.
 
-Runtime Governance macht die Kontextbereitstellung überprüfbar. Berechtigungen dürfen nicht nur beim Datenimport gelten, sondern auch beim Abruf und bei der Antworterzeugung. Ein Agent kann eine Quelle technisch erreichen und trotzdem nicht berechtigt sein, ihre Inhalte für diese Anfrage zu verwenden.
+Runtime Governance macht die Kontextbereitstellung überprüfbar. Berechtigungen gelten beim Datenimport, beim Abruf und bei der Antworterzeugung. Ein Agent kann eine Quelle technisch erreichen und trotzdem nicht berechtigt sein, ihre Inhalte für diese Anfrage zu verwenden.
 
 ### Precision Retrieval im Detail
 
@@ -97,7 +97,7 @@ Standard-RAG sucht meist semantisch ähnliche Chunks und fügt die besten Treffe
 
 **Graph RAG** nutzt Beziehungen zwischen Entitäten. Statt nur nach ähnlichen Textstellen zu suchen, fragt das System zum Beispiel: Welche Tickets, Verträge und Produktversionen hängen mit diesem Kunden zusammen? Die Vektorsuche liefert dann Details innerhalb eines engeren, fachlich begründeten Suchraums.
 
-**Context Compression** reduziert Rauschen vor dem Modellaufruf. Lange Dokumente werden zusammengefasst, Treffer neu gerankt oder auf die relevanten Abschnitte gekürzt. Das Ziel ist nicht maximale Kürze, sondern ein besseres Signal-Rausch-Verhältnis.
+**Context Compression** reduziert Rauschen vor dem Modellaufruf. Lange Dokumente werden zusammengefasst, Treffer neu gerankt oder auf die relevanten Abschnitte gekürzt. Ziel ist ein besseres Signal-Rausch-Verhältnis, nicht maximale Kürze.
 
 ## Die vier Grundstrategien
 ```mermaid
@@ -140,7 +140,7 @@ Kundenkontext:
 ### Kontext komprimieren (Context Compression)
 Nur die wichtigsten Informationen behalten.
 
-Kompression ist keine kosmetische Kürzung, sondern eine Qualitätsfrage. Wenn Nebensachen genauso ausführlich erscheinen wie entscheidende Fakten, sinkt die Trennschärfe. Zusammenfassungen müssen deshalb nicht nur kürzer sein, sondern auch priorisieren.
+Kompression ist eine Qualitätsfrage, keine kosmetische Kürzung. Wenn Nebensachen genauso ausführlich erscheinen wie entscheidende Fakten, sinkt die Trennschärfe. Zusammenfassungen müssen deshalb priorisieren und dürfen nicht bloß kürzen.
 
 **Beispiel:**
 ```
@@ -167,7 +167,7 @@ Kundeninteraktion 2: KI erinnert sich an Präferenz
 ### Kontext trennen (Context Isolation)
 Verschiedene Aufgaben mit separaten Kontexten bearbeiten.
 
-Isolation wird oft erst wichtig, wenn ein System komplexer wird. Spätestens bei Agenten, Werkzeugnutzung oder sensiblen Daten ist sie zentral. Nicht jede Komponente sollte denselben Kontext sehen. Klare Trennung reduziert Fehler, vereinfacht Debugging und hilft bei Compliance-Fragen.
+Isolation wird oft erst wichtig, wenn ein System komplexer wird. Spätestens bei Agenten, Werkzeugnutzung oder sensiblen Daten führt kein Weg an ihr vorbei. Nicht jede Komponente sollte denselben Kontext sehen. Klare Trennung reduziert Fehler, vereinfacht Debugging und hilft bei Compliance-Fragen.
 
 **Beispiel:**
 ```
@@ -183,7 +183,7 @@ Agent B: Kundenberatung (hat Zugang zu Produktdaten)
 **Problem:** Zu viele Informationen verwirren die KI
 **Lösung:** Nur relevante Informationen bereitstellen
 
-Overload entsteht nicht nur bei langen Dokumenten. Auch viele kleine, nur teilweise relevante Hinweise können den Fokus verschieben. Typisch ist dann eine Antwort, die formal plausibel wirkt, aber an der eigentlichen Aufgabe vorbeigeht.
+Overload entsteht bei langen Dokumenten ebenso wie bei vielen kleinen, nur teilweise relevanten Hinweisen, die den Fokus verschieben. Typisch ist dann eine Antwort, die formal plausibel wirkt, aber an der eigentlichen Aufgabe vorbeigeht.
 
 ### Context Conflict
 **Problem:** Widersprüchliche Informationen
@@ -200,7 +200,7 @@ Veralteter Kontext fällt in Tests oft nicht auf, weil die Datenbasis dort klein
 ## Praktische Anwendung
 ### Kontext analysieren
 
-Vor jeder Optimierung steht die Frage, welche Informationen wirklich nötig sind. Die entscheidende Unterscheidung lautet nicht "vorhanden oder nicht vorhanden", sondern "kritisch, wichtig oder nur ergänzend". Diese Priorisierung reduziert Ballast und macht spätere Entscheidungen nachvollziehbar.
+Vor jeder Optimierung steht die Frage, welche Informationen wirklich nötig sind. Hilfreicher als „vorhanden oder nicht vorhanden“ ist die Einteilung in „kritisch, wichtig oder nur ergänzend“. Diese Priorisierung reduziert Ballast und macht spätere Entscheidungen nachvollziehbar.
 
 ```
 Frage: "Welche Versicherung brauche ich?"
@@ -225,7 +225,7 @@ Benötigte Kontextinformationen (nach Priorität):
 
 ### Kontext strukturieren
 
-Struktur hilft nicht nur dem Modell, sondern auch der Entwicklung. Sobald klar benannte Abschnitte für Kundenkontext, Produktkontext und Beratungsziel existieren, lassen sich Fehler schneller finden. Unstrukturierte Kontextblöcke sind dagegen schwer zu pflegen und kaum testbar.
+Struktur hilft dem Modell und der Entwicklung. Sobald klar benannte Abschnitte für Kundenkontext, Produktkontext und Beratungsziel existieren, lassen sich Fehler schneller finden. Unstrukturierte Kontextblöcke sind dagegen schwer zu pflegen und kaum testbar.
 
 ```
 PROMPT-STRUKTUR:
@@ -381,7 +381,7 @@ Kundenkontext:
 ## Kontextregeln für den ersten Agenten
 Für erste Agentenprojekte reicht meist ein komplexes Kontextframework nicht. Wichtiger ist eine klare Kontextregel: Welche Informationen sind Pflicht, welche sind optional und welche dürfen nie ungeprüft in den Modellkontext gelangen? Diese Entscheidung reduziert Fehlverhalten oft stärker als ein Modellwechsel.
 
-In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool-Ausgaben weiterverarbeitet oder Memory über längere Sitzungen nutzt. Dann wird Kontext nicht nur gelesen, sondern aktiv gestaltet.
+In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool-Ausgaben weiterverarbeitet oder Memory über längere Sitzungen nutzt. Dann wird Kontext aktiv gestaltet, statt nur gelesen.
 
 > [!NOTE] Skalierungshinweis<br>
 > Context Engineering ist keine Spezialdisziplin nur für große Systeme. Schon einfache Techniken verbessern viele Anwendungen spürbar, sofern sie konsequent und messbar eingesetzt werden.

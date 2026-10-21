@@ -11,7 +11,7 @@ has_toc: true
 # Checkpointing & Persistenz
 {: .no_toc }
 
-> **Checkpointing speichert nicht nur Nachrichten, sondern den Arbeitszustand eines Agenten.**
+> **Ein Checkpoint hält den Arbeitszustand eines Agenten fest: Nachrichten, Zwischenergebnisse und den nächsten Schritt.**
 
 ---
 
@@ -33,13 +33,13 @@ Typischer Fehler: Checkpointing mit Logging zu verwechseln. Logs beschreiben, wa
 
 ## Ein einfaches Kursbeispiel
 
-Ein Agent beantwortet nicht nur Fragen, sondern soll bei einer kritischen Aktion auf Freigabe warten. Ohne Persistenz wäre der Zustand zwischen Anfrage und Freigabe verloren, sobald der Prozess endet oder neu startet. Mit Checkpointing bleibt der Graph an genau dieser Stelle erhalten.
+Vor einer kritischen Aktion soll ein Agent auf Freigabe warten. Ohne Persistenz wäre der Zustand zwischen Anfrage und Freigabe verloren, sobald der Prozess endet oder neu startet. Mit Checkpointing bleibt der Graph an genau dieser Stelle erhalten.
 
 Dasselbe gilt für längere Konversationen. Wenn ein Nutzer zuerst den eigenen Namen nennt und später danach fragt, muss dieser Zustand an eine Sitzung gebunden bleiben. In LangGraph geschieht das über Threads und Checkpoints.
 
 ## Was ein Checkpoint in LangGraph eigentlich ist
 
-LangGraph speichert nach Ausführung eines Knotens einen Snapshot des aktuellen States. Dieser Snapshot gehört zu einer bestimmten Sitzung und kann später wieder aufgerufen werden. Praktisch entsteht dadurch eine Folge gespeicherter Zustände, über die ein Workflow nicht nur vorwärts, sondern im Bedarfsfall auch rückwärts nachvollziehbar wird.
+LangGraph speichert nach Ausführung eines Knotens einen Snapshot des aktuellen States. Dieser Snapshot gehört zu einer bestimmten Sitzung und kann später wieder aufgerufen werden. Praktisch entsteht dadurch eine Folge gespeicherter Zustände, über die sich ein Workflow vorwärts und bei Bedarf auch rückwärts nachvollziehen lässt.
 
 ```mermaid
 flowchart LR
@@ -189,7 +189,7 @@ Dieses Beispiel ist didaktisch einfach, aber es zeigt den Kern: Der zweite Aufru
 
 ## Den aktuellen State und die Historie abrufen
 
-Checkpointing wird besonders nützlich, wenn der gespeicherte Zustand nicht nur implizit genutzt, sondern auch aktiv inspiziert wird. LangGraph erlaubt es, den aktuellen State eines Threads abzurufen und frühere Checkpoints durchzugehen.
+Checkpointing wird besonders nützlich, wenn der gespeicherte Zustand aktiv inspiziert wird, statt nur im Hintergrund zu laufen. LangGraph erlaubt es, den aktuellen State eines Threads abzurufen und frühere Checkpoints durchzugehen.
 
 ```python
 state = app.get_state(config)
@@ -241,7 +241,7 @@ flowchart LR
 
 ## Time Travel: warum frühere Zustände nützlich sind
 
-Ein gespeicherter Verlauf ist nicht nur für Fortsetzung interessant. Er ermöglicht auch, zu einem früheren Punkt zurückzugehen und von dort einen neuen Pfad zu testen. Genau deshalb wird in LangGraph oft von Time Travel gesprochen.
+Der gespeicherte Verlauf erlaubt außerdem, zu einem früheren Punkt zurückzugehen und von dort einen neuen Pfad zu testen. Genau deshalb wird in LangGraph oft von Time Travel gesprochen.
 
 ```python
 history = list(app.get_state_history(config))

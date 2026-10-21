@@ -24,11 +24,11 @@ has_toc: true
 
 # Einordnung
 
-Fine-Tuning passt ein vortrainiertes Modell an eine engere Aufgabe, eine bestimmte Domäne oder ein wiederkehrendes Antwortmuster an. Das Modell startet nicht bei null, sondern nutzt vorhandene Sprach- und Weltrepräsentationen weiter. Das senkt den Trainingsaufwand, ersetzt aber weder saubere Daten noch eine belastbare Evaluation.
+Fine-Tuning passt ein vortrainiertes Modell an eine engere Aufgabe, eine bestimmte Domäne oder ein wiederkehrendes Antwortmuster an. Das Modell baut auf vorhandenen Sprach- und Weltrepräsentationen auf. Das senkt den Trainingsaufwand, ersetzt aber weder saubere Daten noch eine belastbare Evaluation.
 
 Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres Retrieval oder eine klarere Systemarchitektur bringen oft schneller messbare Verbesserungen. Fine-Tuning wird interessant, wenn ein wiederkehrendes Fehlermuster trotz guter Prompts, passender Kontextdaten und nachvollziehbarer Tests bestehen bleibt.
 
-Fine-Tuning passt, wenn das Modell ein Verhalten zuverlässig wiederholen soll, statt neues Faktenwissen aufzunehmen. Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikation und wiederkehrende Extraktion. Für wechselnde Fakten ist Retrieval robuster, denn Trainingsdaten bleiben nach dem Fine-Tuning nicht automatisch aktuell.
+Fine-Tuning passt, wenn das Modell ein Verhalten zuverlässig wiederholen soll, statt neues Faktenwissen aufzunehmen. Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikation und wiederkehrende Extraktion. Für wechselnde Fakten ist Retrieval die bessere Wahl, denn Trainingsdaten bleiben nach dem Fine-Tuning nicht automatisch aktuell.
 
 # Einsatzkriterien
 
@@ -58,7 +58,7 @@ Grenze: PEFT reduziert Kosten, aber nicht automatisch Qualitätsrisiken. Schlech
 
 ## Instruction Fine-Tuning
 
-Instruction Fine-Tuning trainiert ein Modell darauf, natürlichsprachliche Anweisungen zuverlässig in passende Antworten umzusetzen. Die Trainingsdaten bestehen aus Paaren von Anweisung und gewünschter Ausgabe, häufig ergänzt durch Kontext oder Rolleninformationen. Der Ansatz passt, wenn ein Modell nicht nur Inhalte erzeugen, sondern Anweisungen konsistent befolgen soll.
+Instruction Fine-Tuning trainiert ein Modell darauf, natürlichsprachliche Anweisungen zuverlässig in passende Antworten umzusetzen. Die Trainingsdaten bestehen aus Paaren von Anweisung und gewünschter Ausgabe, häufig ergänzt durch Kontext oder Rolleninformationen. Der Ansatz passt, wenn ein Modell Anweisungen konsistent befolgen soll, statt nur Inhalte zu erzeugen.
 
 Ein vereinfachtes Trainingsbeispiel kann so aussehen:
 
@@ -76,7 +76,7 @@ Typischer Fehler: Die Beispiele beschreiben nur ideale Standardfälle. Dann lern
 
 Supervised Fine-Tuning arbeitet mit kuratierten Eingabe-Ausgabe-Beispielen. Es eignet sich für Aufgaben, bei denen Fachleute eine richtige oder zumindest bevorzugte Antwort festlegen können. Datenqualität zählt dabei stärker als Menge: Wenige konsistente Beispiele sind hilfreicher als viele widersprüchliche Demonstrationen.
 
-Für erste Experimente reichen oft kleine Datensätze, solange sie echte Zielaufgaben abbilden. Entscheidend ist, dass Trainings-, Validierungs- und Testfälle getrennt bleiben. Wenn Beispiele aus der Evaluation im Training landen, wirkt das Modell besser, ohne robuster geworden zu sein.
+Für erste Experimente reichen oft kleine Datensätze, solange sie echte Zielaufgaben abbilden. Entscheidend ist, dass Trainings-, Validierungs- und Testfälle getrennt bleiben. Wenn Beispiele aus der Evaluation im Training landen, wirkt das Modell besser, ohne tatsächlich besser geworden zu sein.
 
 ## Preference- und Reinforcement-Verfahren
 
@@ -86,7 +86,7 @@ Reinforcement Fine-Tuning bewertet Modellantworten über Grader oder andere Bewe
 
 ## Vision Fine-Tuning und Multimodale Aufgaben
 
-Vision Fine-Tuning erweitert die Anpassung auf Modelle, die Bilder oder andere visuelle Eingaben verarbeiten. Typische Aufgaben sind Bildklassifikation, visuelle Beschreibungen oder die Erkennung bestimmter Objektklassen. Die Trainingsdaten müssen dabei nicht nur sprachlich, sondern auch visuell konsistent sein.
+Vision Fine-Tuning erweitert die Anpassung auf Modelle, die Bilder oder andere visuelle Eingaben verarbeiten. Typische Aufgaben sind Bildklassifikation, visuelle Beschreibungen oder die Erkennung bestimmter Objektklassen. Die Trainingsdaten müssen dabei sprachlich und visuell konsistent sein.
 
 Bei multimodalen Daten entstehen zusätzliche Fehlerquellen. Bildqualität, Auflösung, Datenschutzanforderungen und die Beziehung zwischen Bild und Text beeinflussen das Ergebnis. Eine Textbeschreibung, die nicht eindeutig zum Bild passt, erzeugt schlechtere Trainingssignale als gar kein Beispiel.
 
@@ -94,7 +94,7 @@ Bei multimodalen Daten entstehen zusätzliche Fehlerquellen. Bildqualität, Aufl
 
 Modell-Distillation nutzt Ausgaben eines größeren Modells, um ein kleineres Modell für einen begrenzten Aufgabenbereich zu trainieren. Wenn die Aufgabe eng genug geschnitten ist, sinken Kosten und Latenz. Ein kleines Modell kann dann für wiederkehrende Standardfälle ausreichen.
 
-Grenze: Distillation übernimmt nicht nur Stärken, sondern auch Fehler und Verzerrungen des größeren Modells. Die erzeugten Trainingsdaten müssen deshalb wie echte Trainingsdaten geprüft werden. Ohne Kontrolle entsteht ein kleineres Modell, das Fehler schneller und günstiger reproduziert.
+Grenze: Distillation übernimmt neben den Stärken auch Fehler und Verzerrungen des größeren Modells. Die erzeugten Trainingsdaten müssen deshalb wie echte Trainingsdaten geprüft werden. Ohne Kontrolle entsteht ein kleineres Modell, das Fehler schneller und günstiger reproduziert.
 
 # Fine-Tuning-Pipeline
 
@@ -116,7 +116,7 @@ Die Pipeline beginnt nicht mit dem Trainingsjob, sondern mit einer Baseline. Zue
 
 Zur Datenvorbereitung gehören Auswahl, Bereinigung, Formatierung und Split in Training, Validierung und Test. Für API-basiertes Fine-Tuning ist häufig ein JSONL-Format erforderlich; bei lokalen Trainingsläufen hängen Format und Struktur vom Framework ab. Entscheidend ist nicht das Dateiformat an sich, sondern die Konsistenz zwischen Zielaufgabe, Beispielqualität und Evaluation.
 
-Als grobe Faustregel sollten etwa 10 bis 15 Prozent der Beispiele als Holdout-Set zurückgehalten werden. Diese Beispiele dürfen nicht in die Trainingsdaten zurückwandern, sonst misst die Evaluation eher Wiedererkennen als robuste Generalisierung.
+Als grobe Faustregel sollten etwa 10 bis 15 Prozent der Beispiele als Holdout-Set zurückgehalten werden. Diese Beispiele dürfen nicht in die Trainingsdaten zurückwandern, sonst misst die Evaluation eher Wiedererkennen als verlässliche Generalisierung.
 
 Nach dem Training reicht ein einzelner Durchschnittswert nicht aus. Relevanter sind Fehlerklassen: Welche Fälle wurden besser, welche schlechter, und welche Regressionen sind neu entstanden? Erst wenn die Verbesserung gegenüber der Baseline stabil bleibt, folgt Deployment mit Monitoring.
 
@@ -144,7 +144,7 @@ Embeddings übersetzen Tokens, Wörter oder Textstücke in numerische Vektoren. 
 
 Bei einem vollständigen Fine-Tuning können auch Embedding-Schichten verändert werden. Das hilft, wenn eine Domäne eigene Terminologie, Abkürzungen oder Bedeutungsverschiebungen nutzt. Bei LoRA, Adapter-Verfahren oder anderen PEFT-Methoden bleiben die ursprünglichen Embeddings dagegen häufig unverändert; zusätzliche Parameter übernehmen die Anpassung.
 
-Grenze: Embedding-Anpassung macht ein Modell nicht automatisch faktenreicher. Die Anpassung verändert eher die Verarbeitung bestimmter Muster, Schreibweisen oder Fachsprache. Für neues oder häufig wechselndes Wissen bleibt externer Kontext über Retrieval meist die robustere Lösung.
+Grenze: Embedding-Anpassung macht ein Modell nicht automatisch faktenreicher. Die Anpassung verändert eher die Verarbeitung bestimmter Muster, Schreibweisen oder Fachsprache. Für neues oder häufig wechselndes Wissen bleibt externer Kontext über Retrieval meist die tragfähigere Lösung.
 
 # Daten- und Trainingsstrategie
 

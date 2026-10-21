@@ -62,14 +62,14 @@ Die Tabelle zeigt den Stand vom 1. Mai 2026. Vor produktiven Projekten müssen V
 Verwende in Colab Secrets statt API-Keys direkt in Codezellen. So bleiben Notebooks teilbar, ohne dass Zugangsdaten versehentlich mitwandern.
 
 {: .warning }
-> **LangSmith (EU/US-Endpunkte):** Wenn Sie LangSmith nutzen, legen Sie Account und API-Key im **EU-Workspace** an (`https://eu.smith.langchain.com/`) und verwenden Sie als `LANGSMITH_ENDPOINT` den EU-API-Endpoint `https://eu.api.smith.langchain.com`.
+> **LangSmith (EU/US-Endpunkte):** Bei LangSmith werden Account und API-Key im **EU-Workspace** angelegt (`https://eu.smith.langchain.com/`), als `LANGSMITH_ENDPOINT` dient der EU-API-Endpoint `https://eu.api.smith.langchain.com`.
 
 ```python
 # Installiere benötigte Bibliothek
 !pip install langchain-{provider}
 ```
 
-So speicherst du Keys in Colab Secrets:
+So werden Keys in Colab Secrets gespeichert:
 
 1. Öffne in Colab die Secrets-Seitenleiste.
 2. Lege den Key mit dem passenden Namen an, zum Beispiel `OPENAI_API_KEY`.

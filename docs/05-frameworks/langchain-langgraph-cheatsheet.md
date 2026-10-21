@@ -475,10 +475,10 @@ antwort = chain.invoke({"frage": "Was ist Checkpointing?"})
 
 | Ebene | Sichtbar in LangSmith | Nutzen |
 |---|---|---|
-| Graph-Run | Input, Output, Laufzeit, Status | Gesamtablauf pruefen |
+| Graph-Run | Input, Output, Laufzeit, Status | Gesamtablauf prüfen |
 | Node-Run | ein Span pro Node | Routing und Gates nachvollziehen |
 | LLM-Run | Prompt, Response, Token, Modell | Prompt-Debugging |
-| Tool-Run | Tool-Name, Argumente, Ergebnis | Tool-Nutzung pruefen |
+| Tool-Run | Tool-Name, Argumente, Ergebnis | Tool-Nutzung prüfen |
 | HITL-Run | `interrupted` und Resume-Run | Freigabeprozesse nachvollziehen |
 | Evaluation | Dataset, Experiment, Scores | Regressionen erkennen |
 

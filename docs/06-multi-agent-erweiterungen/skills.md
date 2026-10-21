@@ -27,7 +27,7 @@ has_toc: true
 
 Ein Skill ist kein einzelner schöner Prompt, sondern ein wiederverwendbarer Ablaufbaustein. Er beschreibt, wann ein bestimmtes Vorgehen aktiviert werden soll, welche Schritte verpflichtend sind, welche Regeln gelten und welche Hilfsmittel oder Referenzen bei Bedarf nachgeladen werden dürfen.
 
-Ein Skill macht aus Fachwissen konkrete Arbeitsanweisungen. Ein Skill sagt also nicht nur, `was` beantwortet werden soll, sondern auch `wie` dabei vorzugehen ist.
+Ein Skill macht aus Fachwissen konkrete Arbeitsanweisungen. Ein Skill legt fest, `was` beantwortet werden soll und `wie` dabei vorzugehen ist.
 
 Typischer Fehler: Einen langen Prompt automatisch als Skill zu betrachten. Ein Skill wird erst dort sinnvoll, wo Wiederholung, Guardrails und stabile Arbeitslogik nötig werden.
 
@@ -48,7 +48,7 @@ Ein Agentensystem wird verständlicher, wenn diese Ebenen sauber getrennt bleibe
 | Tool | Welche konkrete Operation kann ausgeführt werden? | Funktion, API, Skript |
 | MCP | Womit kann verbunden oder worauf zugegriffen werden? | externe Datenquellen und Systeme |
 
-Gerade für Entwickler ist diese Trennung wichtig, weil sonst zu viel Fachlogik im falschen Baustein landet.
+Diese Trennung zählt besonders für Entwickler, weil sonst zu viel Fachlogik im falschen Baustein landet.
 
 ## Wann Skills überhaupt sinnvoll werden
 
@@ -82,7 +82,7 @@ Typischer Fehler: Alles in eine einzige riesige `SKILL.md` zu schreiben. Dadurch
 
 ## Warum die `description` wichtiger ist als viele glauben
 
-In Claude Code und ähnlichen Umgebungen entscheidet die `description` im Frontmatter oft darüber, ob ein Skill überhaupt automatisch aktiviert wird. Dieses Feld ist nicht nur Beschreibung für Menschen, sondern Trigger-Bedingung für das Routing.
+In Claude Code und ähnlichen Umgebungen entscheidet die `description` im Frontmatter oft darüber, ob ein Skill überhaupt automatisch aktiviert wird. Das Feld beschreibt den Skill für Menschen und dient zugleich als Trigger-Bedingung für das Routing.
 
 ```yaml
 ---
@@ -95,7 +95,7 @@ allowed-tools: Read, Grep, Glob
 ---
 ```
 
-Eine gute `description` sagt nicht nur, was der Skill tut, sondern auch, wann er ausgelöst werden soll. Ebenso wichtig ist oft eine negative Grenze: wofür er gerade nicht gedacht ist.
+Eine gute `description` nennt, was der Skill tut und wann er ausgelöst werden soll. Oft hilft zusätzlich eine negative Grenze: wofür er gerade nicht gedacht ist.
 
 ## Skills werden schrittweise geladen
 
@@ -114,7 +114,7 @@ Genau dieses progressive Laden macht Skills praktisch. Fachlogik kann umfangreic
 
 ## Rules und Skills sind nicht dasselbe
 
-Rules gelten dauerhaft im Hintergrund. Skills werden kontextbezogen aktiviert. Diese Unterscheidung ist für die Architektur wichtig.
+Rules gelten dauerhaft im Hintergrund. Skills werden kontextbezogen aktiviert. Diese Unterscheidung bestimmt, wo Fachlogik in der Architektur landet.
 
 | Aspekt | Rules | Skills |
 |---|---|---|

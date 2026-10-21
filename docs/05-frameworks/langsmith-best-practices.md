@@ -487,7 +487,7 @@ response = agent.invoke({"messages": [...]})
 
 ## Production-Checkliste
 
-Bevor du in Production gehst:
+Vor dem Wechsel in Production:
 
 ### MUST-HAVES
 - [ ] **LangSmith aktiviert** (`LANGSMITH_TRACING=true`)

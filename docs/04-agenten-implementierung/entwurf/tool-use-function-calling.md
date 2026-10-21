@@ -47,7 +47,7 @@ Genau dieses Muster skaliert später auf realere Fälle: Datenbankabfragen, Webs
 
 ## Was Function Calling eigentlich bedeutet
 
-Function Calling ist der Mechanismus, mit dem ein Modell strukturiert angibt, welches Tool mit welchen Parametern ausgeführt werden soll. Das Modell formuliert also nicht nur freien Text, sondern einen maschinenlesbaren Aufruf.
+Function Calling ist der Mechanismus, mit dem ein Modell strukturiert angibt, welches Tool mit welchen Parametern ausgeführt werden soll. Statt freien Texts erzeugt das Modell einen maschinenlesbaren Aufruf.
 
 ```mermaid
 sequenceDiagram
@@ -103,11 +103,11 @@ def multiply(a: int, b: int) -> int:
     return a * b
 ```
 
-Dieses Minimalbeispiel zeigt bereits zwei Grundregeln: Type Hints sind notwendig und der Docstring ist nicht bloß Dokumentation für Menschen, sondern Steuerungsinformation für das Modell.
+Dieses Minimalbeispiel zeigt bereits zwei Grundregeln: Type Hints sind notwendig und der Docstring steuert das Modell und dokumentiert nebenbei für Menschen.
 
 ## Warum gute Docstrings über die Tool-Auswahl entscheiden
 
-Das Modell wählt ein Tool nicht aufgrund des Python-Codes, sondern auf Basis von Name, Beschreibung und Parametern. Ein schlechter Docstring führt deshalb oft zu falscher oder ausbleibender Tool-Nutzung, selbst wenn die Implementierung technisch korrekt ist.
+Den Python-Code sieht das Modell nicht; die Wahl eines Tools beruht auf Name, Beschreibung und Parametern. Ein schlechter Docstring führt deshalb oft zu falscher oder ausbleibender Tool-Nutzung, selbst wenn die Implementierung technisch korrekt ist.
 
 ```python
 @tool
@@ -167,7 +167,7 @@ def search_customers(query: str) -> str:
     ...
 ```
 
-Gerade bei Agenten mit vielen Tools ist diese Negativabgrenzung kein Zusatz, sondern ein wichtiges Architekturmittel. Sie reduziert Fehlgriffe des Modells deutlich.
+Gerade bei Agenten mit vielen Tools gehört diese Negativabgrenzung zum Architekturentwurf. Sie reduziert Fehlgriffe des Modells deutlich.
 
 ## Type Hints sind Pflicht
 
@@ -217,7 +217,7 @@ Der Vorteil liegt darin, dass Schema und Validierung nicht auseinanderdriften. G
 
 ## Fehlerbehandlung gehört in jedes Tool
 
-Ein Tool kann fehlschlagen: Datei nicht gefunden, Datenbank nicht erreichbar, Eingabe ungültig. Gute Tools liefern deshalb nicht nur einen Absturz, sondern eine verständliche Rückmeldung, mit der der Agent weiterarbeiten kann.
+Ein Tool kann fehlschlagen: Datei nicht gefunden, Datenbank nicht erreichbar, Eingabe ungültig. Gute Tools liefern deshalb statt eines Absturzes eine verständliche Rückmeldung, mit der der Agent weiterarbeiten kann.
 
 ```python
 @tool
@@ -378,7 +378,7 @@ Tools lassen sich nach ihrer Wirkung einordnen. Diese Einordnung hilft bei Siche
 | Kommunizieren | E-Mail, Kalender, Chat-Nachricht | Außenwirkung, Datenschutz |
 | Ausführen | Skript, Deployment, Zahlung, Löschung | hoher Schaden bei Fehlentscheidung |
 
-Ein Tool ist also nicht nur nach seinem Namen zu bewerten, sondern danach, welche reale Wirkung es auslösen kann. Lesen, Schreiben und Ausführen brauchen unterschiedliche Schranken.
+Bewertet wird ein Tool nach der realen Wirkung, die es auslösen kann, nicht nach seinem Namen. Lesen, Schreiben und Ausführen brauchen unterschiedliche Schranken.
 
 ## Hochriskante Aktionen brauchen zusätzliche Schranken
 
@@ -426,7 +426,7 @@ if tool_result.get("action_required") == "escalate_to_human":
 Nicht geeignet, wenn: Tool-Auswahl generell durch Zwang gesteuert wird. Forced `tool_choice` ist für klare Sonderfälle gedacht, nicht als Dauerersatz für gutes Routing.
 
 ## Mit einem kleinen Toolset starten
-Für einen ersten Agenten reichen meist wenige, klar benannte Werkzeuge mit guten Docstrings und sauberer Fehlerbehandlung. Zu viele Tools auf einmal überfordern nicht nur das Modell, sondern auch das eigene Debugging. Ein kleines, klar abgegrenztes Toolset ist fast immer der bessere Start.
+Für einen ersten Agenten reichen meist wenige, klar benannte Werkzeuge mit guten Docstrings und sauberer Fehlerbehandlung. Zu viele Tools auf einmal überfordern das Modell und erschweren das eigene Debugging. Ein kleines, klar abgegrenztes Toolset ist fast immer der bessere Start.
 
 Entwickler unterschätzen oft, dass Tool Use nicht nur neue Fähigkeiten bringt, sondern auch neue Verantwortung. Sobald ein Agent lesen, suchen, schreiben oder externe Systeme verändern kann, wird Tool-Design zur Sicherheitsfrage.
 

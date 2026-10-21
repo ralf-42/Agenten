@@ -39,7 +39,7 @@ Dasselbe Muster taucht bei Zahlungen, Löschvorgängen, Vertragsänderungen oder
 
 ## Das Autonomie-Spektrum
 
-Agentensysteme lassen sich nicht nur in „manuell“ oder „autonom“ einteilen. Dazwischen liegt ein Spektrum.
+Agentensysteme lassen sich nicht auf „manuell“ oder „autonom“ reduzieren. Dazwischen liegt ein Spektrum.
 
 | Stufe | Charakteristik | Beispiel |
 |---|---|---|
@@ -52,7 +52,7 @@ Agentensysteme lassen sich nicht nur in „manuell“ oder „autonom“ einteil
 In der Praxis bewegen sich viele brauchbare Systeme in der Mitte dieses Spektrums. Nicht weil Technik fehlt, sondern weil volle Autonomie in realen Organisationen oft nicht sinnvoll ist.
 
 > [!NOTE] HITL ist eine Designentscheidung<br>
-> Die relevante Frage ist nicht nur, was automatisiert werden kann, sondern welche Form von Kontrolle fachlich, rechtlich und organisatorisch gewollt ist.
+> Neben der Frage, was automatisiert werden kann, steht die Frage, welche Form von Kontrolle fachlich, rechtlich und organisatorisch gewollt ist.
 
 ## Wann HITL besonders sinnvoll wird
 
@@ -87,7 +87,7 @@ flowchart LR
     H --> I
 ```
 
-Das zweite Muster ist das Eskalations-Pattern. Hier versucht der Agent nicht, eine kritische Entscheidung selbst zu treffen, sondern erkennt bewusst seine Grenze und übergibt den Fall.
+Das zweite Muster ist das Eskalations-Pattern. Hier erkennt der Agent bewusst seine Grenze und übergibt den Fall, statt eine kritische Entscheidung selbst zu treffen.
 
 ```mermaid
 flowchart LR
@@ -113,7 +113,7 @@ In LangGraph oder ähnlichen Frameworks werden Unterbrechungen technisch oft gle
 | Produktives HITL | Sicherheit, Compliance, Freigabe, Vertrauen |
 | Debugging-HITL | State inspizieren, Knoten prüfen, Entwicklungsfehler finden |
 
-Diese Unterscheidung ist didaktisch wichtig, weil dieselbe Technik völlig unterschiedliche Rollen spielen kann.
+Diese Unterscheidung hilft didaktisch, weil dieselbe Technik völlig unterschiedliche Rollen spielen kann.
 
 ## Gute HITL-Punkte müssen bewusst gewählt werden
 
@@ -125,7 +125,7 @@ Grenze: HITL ersetzt keine saubere Agentenarchitektur. Wenn ein System bei jeder
 
 ## Was bei Ablehnung oder Nichtreaktion passieren muss
 
-Ein HITL-System ist erst dann gut entworfen, wenn nicht nur die Freigabe, sondern auch die Ablehnung sauber behandelt wird. Der Agent sollte dann nicht abstürzen oder im Leerlauf hängen bleiben. Sinnvoll sind Alternativen, Rückfragen, Eskalation oder ein geordneter Abbruch.
+Ein HITL-System ist erst dann gut entworfen, wenn neben der Freigabe auch die Ablehnung sauber behandelt wird. Der Agent sollte dann nicht abstürzen oder im Leerlauf hängen bleiben. Sinnvoll sind Alternativen, Rückfragen, Eskalation oder ein geordneter Abbruch.
 
 Auch Timeouts gehören dazu. Ein Agent, der unbegrenzt auf menschliche Reaktion wartet, blockiert Prozesse. Deshalb brauchen produktive Systeme eine Timeout-Strategie: erinnern, eskalieren oder beenden.
 

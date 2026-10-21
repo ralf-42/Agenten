@@ -97,11 +97,11 @@ Im Kurs ist LangChain der Einstieg: Erst werden Modellaufrufe, Prompts, struktur
 
 Die praktische Faustregel:
 
-| Wenn du ... | Dann nutze ... |
+| Aufgabe | Passendes Werkzeug |
 |---|---|
-| ein Modell aufrufst, einen Prompt formatierst oder ein Tool definierst | **LangChain** |
-| mehrere Schritte mit State, Routing oder Schleifen kontrollierst | **LangGraph** |
-| nachvollziehen willst, was passiert ist und ob es besser wird | **LangSmith** |
+| Ein Modell aufrufen, einen Prompt formatieren oder ein Tool definieren | **LangChain** |
+| Mehrere Schritte mit State, Routing oder Schleifen steuern | **LangGraph** |
+| Nachvollziehen, was passiert ist und ob es besser wird | **LangSmith** |
 
 ---
 

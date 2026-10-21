@@ -168,7 +168,7 @@ Quellenbasis:
 - [ ] Externe Kommunikation oder Schreibaktionen haben Freigabe, Audit oder Rollback.
 - [ ] Logs und Traces enthalten keine unnötigen personenbezogenen oder vertraulichen Daten.
 - [ ] Rate Limits, Kostenlimits, Budget-Regeln und Timeouts sind definiert.
-- [ ] **Graceful Degradation:** Bei Teilausfällen (z. B. Tool-Fehler, leeres Retrieval, Budget-Limit) bricht das System nicht unkontrolliert ab, sondern liefert eine verständliche Fallback-Antwort oder eine strukturierte Degratisierung.
+- [ ] **Graceful Degradation:** Bei Teilausfällen (z. B. Tool-Fehler, leeres Retrieval, Budget-Limit) bricht das System nicht unkontrolliert ab, sondern liefert eine verständliche Fallback-Antwort oder eine strukturierte Degradierung.
 - [ ] Der Betrieb hat eine Strategie für Modellwechsel, Tool-Änderungen und Datenaktualisierung.
 - [ ] **Incident Retrospectives & Lernschleife:** Nach Fehlverhalten, Sicherheitsereignissen oder Produktionsausfällen werden Ursachen analysiert und systematisch als neue Guardrails, Testfälle oder Checklistenregeln nachgeführt.
 - [ ] Bekannte Fehler führen zu Regel-, Test- oder Dokumentationsupdates.

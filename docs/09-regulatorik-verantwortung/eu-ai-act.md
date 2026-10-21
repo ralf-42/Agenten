@@ -34,7 +34,7 @@ Der AI Act ersetzt weder DSGVO noch branchenspezifische Regulierung. In Medizin,
 
 ## Zeitplan und Anwendbarkeit
 
-Der AI Act trat am **1. August 2024** in Kraft. Die Pflichten gelten nicht alle gleichzeitig, sondern werden schrittweise anwendbar. Für Kursmaterialien ist wichtig, die Daten nicht als bloße Zukunftsplanung zu behandeln: Einige Pflichten gelten bereits.
+Der AI Act trat am **1. August 2024** in Kraft. Die Pflichten werden schrittweise anwendbar. Die Daten sind keine bloße Zukunftsplanung: Einige Pflichten gelten bereits.
 
 | Datum | Was gilt |
 |---|---|
@@ -50,7 +50,7 @@ Seit Ende 2025 werden im Rahmen des **Digital Omnibus** Vereinfachungen und mög
 
 ## Risikoklassen
 
-Der AI Act arbeitet risikobasiert. Entscheidend ist nicht, ob ein System modern, agentisch oder generativ ist, sondern wofür es eingesetzt wird und welche Auswirkungen es auf Menschen haben kann.
+Der AI Act arbeitet risikobasiert. Maßgeblich sind der Einsatzzweck und die möglichen Auswirkungen auf Menschen. Ob ein System modern, agentisch oder generativ ist, spielt keine Rolle.
 
 | Risikoklasse | Bedeutung | Beispiele |
 |---|---|---|
@@ -73,11 +73,11 @@ Für den Kurs sind Annex-III-Fälle besonders anschaulich: Bewerberauswahl, Leis
 
 General Purpose AI (GPAI) betrifft Modelle, die für viele unterschiedliche Zwecke eingesetzt werden können. Anbieter solcher Modelle unterliegen seit **2. August 2025** eigenen Pflichten. Bei Modellen mit systemischem Risiko kommen weitergehende Anforderungen hinzu, etwa Risikobewertung, Sicherheitsmaßnahmen und Dokumentation. Der freiwillige GPAI Code of Practice der Europäischen Kommission unterstützt Anbieter bei der Umsetzung; er ersetzt die gesetzlichen Pflichten nicht.
 
-Für Entwickler im Kurs ist der Unterschied wichtig: Wer ein externes Modell über eine API nutzt, ist nicht automatisch Anbieter dieses GPAI-Modells. Trotzdem entstehen eigene Pflichten, sobald daraus ein konkretes KI-System gebaut und in einem sensiblen Kontext eingesetzt wird. Der Betreiber eines Research- oder Entscheidungsassistenten kann also Pflichten haben, auch wenn das zugrunde liegende Basismodell von einem anderen Anbieter stammt.
+Für Entwickler im Kurs gilt ein Unterschied: Wer ein externes Modell über eine API nutzt, ist nicht automatisch Anbieter dieses GPAI-Modells. Trotzdem entstehen eigene Pflichten, sobald daraus ein konkretes KI-System gebaut und in einem sensiblen Kontext eingesetzt wird. Der Betreiber eines Research- oder Entscheidungsassistenten kann also Pflichten haben, auch wenn das zugrunde liegende Basismodell von einem anderen Anbieter stammt.
 
 ## Bedeutung für KI-Agenten
 
-KI-Agenten verschärfen einige Fragen des AI Act, weil sie nicht nur Text generieren, sondern Zwischenschritte ausführen können: Tools aufrufen, externe Daten abfragen, Dateien erzeugen, Workflows starten oder Vorschläge an andere Systeme übergeben. Je mehr Autonomie ein Agent erhält, desto wichtiger werden Begrenzung und Nachvollziehbarkeit.
+KI-Agenten verschärfen einige Fragen des AI Act, weil sie über die Textgenerierung hinaus Zwischenschritte ausführen können: Tools aufrufen, externe Daten abfragen, Dateien erzeugen, Workflows starten oder Vorschläge an andere Systeme übergeben. Je mehr Autonomie ein Agent erhält, desto wichtiger werden Begrenzung und Nachvollziehbarkeit.
 
 In Trainings zeigt sich häufig, dass Entwickler Agenten zuerst nach Funktionsumfang beurteilen: Kann das System suchen, zusammenfassen, entscheiden und handeln? Aus regulatorischer Sicht ist die bessere Frage: Welche Handlung darf der Agent ohne Freigabe ausführen, welche Daten darf er sehen, welche Zwischenergebnisse werden gespeichert, und wo ist eine menschliche Entscheidung zwingend?
 
@@ -95,7 +95,7 @@ Für technische Kursbeispiele ergeben sich daraus fünf Mindestmuster:
 
 ## Umsetzung im Kurskontext
 
-Für den Agenten-Kurs ist der AI Act kein isoliertes Rechtskapitel. Er berührt mehrere technische Module: Tool Use, RAG, Human-in-the-Loop, Evaluation, Security, Observability und Deployment. Die regulatorische Perspektive erklärt, warum diese Module nicht nur Architekturthemen sind, sondern Kontrollmechanismen.
+Für den Agenten-Kurs ist der AI Act kein isoliertes Rechtskapitel. Er berührt mehrere technische Module: Tool Use, RAG, Human-in-the-Loop, Evaluation, Security, Observability und Deployment. Die regulatorische Perspektive erklärt, warum diese Module zugleich Architekturthemen und Kontrollmechanismen sind.
 
 Ein PMO-Assistent ist in vielen Kurskontexten zunächst ein niedriges oder begrenztes Risiko: Er durchsucht bereitgestellte Dokumente, fasst Quellen zusammen und verweist auf Citations. Das ändert sich, wenn er in regulierten Branchen eingesetzt wird, etwa zur medizinischen Einschätzung, rechtlichen Bewertung, Kreditentscheidung oder Bewerberauswahl. Dann reicht der gleiche technische Bauplan nicht mehr aus. Es braucht zusätzliche Validierung, Rollenklärung, Freigaben und Dokumentation.
 

@@ -314,7 +314,7 @@ results = evaluate(
 )
 ```
 
-Nutze Feedback aus dem Betrieb, wenn du Varianten vergleichen, Regressionen dokumentieren oder Rückmeldungen denselben Testfällen zuordnen willst.
+Feedback aus dem Betrieb eignet sich, um Varianten zu vergleichen, Regressionen zu dokumentieren oder Rückmeldungen denselben Testfällen zuzuordnen.
 
 ## Was bei RAG-Systemen zusätzlich geprüft wird
 

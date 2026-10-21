@@ -24,7 +24,7 @@ has_toc: true
 
 ## Warum Multi-Agent nicht automatisch besser ist
 
-Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell der Gedanke, die Arbeit auf mehrere spezialisierte Agenten zu verteilen. Das kann sinnvoll sein. Es kann aber auch unnötige Komplexität erzeugen. Multi-Agent-Systeme sind deshalb keine automatische Weiterentwicklung, sondern eine bewusste Architekturentscheidung.
+Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell der Gedanke, die Arbeit auf mehrere spezialisierte Agenten zu verteilen. Das kann sinnvoll sein. Es kann aber auch unnötige Komplexität erzeugen. Multi-Agent-Systeme sind deshalb keine automatische Weiterentwicklung eines Einzelagenten. Sie sind eine Architekturentscheidung, die sich begründen lassen muss.
 
 Multi-Agent-Systeme teilen Arbeit auf und ermöglichen Spezialisierung oder Parallelität. Sie kosten zusätzliche Koordination, State und Debugging-Aufwand. Prüfe deshalb zuerst, ob ein einzelner Workflow mit klaren Knoten die Aufgabe schon abdeckt.
 
@@ -48,7 +48,7 @@ Dieses Beispiel zeigt den eigentlichen Nutzen: Nicht mehrere Agenten um ihrer se
 
 ## Welche Grundmuster es gibt
 
-Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Die folgenden Muster decken die wesentlichen Fälle ab:
+Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als durch ihre Koordination. Die folgenden Muster decken die gängigen Fälle ab:
 
 | Muster | Steuerungslogik | Stärke | Hauptrisiko |
 |---|---|---|---|
@@ -65,7 +65,7 @@ Multi-Agent-Systeme unterscheiden sich weniger durch die Zahl der Agenten als du
 | Debate / Critique | getrennte Lösungen werden gegeneinander geprüft | starke Qualitätsprüfung | hoher Overhead |
 | Parallel | unabhängige Teilaufgaben laufen gleichzeitig | schneller bei unabhängigen Paketen | Scheinparallelität |
 
-Die Leitfrage ist nicht, welches Muster moderner klingt. Entscheidend ist, wo Verantwortung, Übergabe und Prüfung am klarsten bleiben.
+Als Leitfrage dient, wo Verantwortung, Übergabe und Prüfung am klarsten bleiben. Wie modern ein Muster klingt, spielt keine Rolle.
 
 ## Supervisor: der naheliegende Einstieg
 
@@ -83,7 +83,7 @@ flowchart TD
     S --> E[Finale Antwort]
 ```
 
-Der Vorteil liegt in klaren Verantwortlichkeiten. Der Nachteil ist, dass der Supervisor schnell zum Engpass wird, wenn er nicht nur routet, sondern selbst beginnt, die eigentliche Facharbeit zu erledigen.
+Der Vorteil liegt in klaren Verantwortlichkeiten. Der Nachteil ist, dass der Supervisor schnell zum Engpass wird, wenn er neben dem Routing auch selbst die Facharbeit übernimmt.
 
 ```python
 class TeamState(TypedDict):
@@ -106,7 +106,7 @@ Ein Supervisor eignet sich, wenn Aufgaben vorab klar klassifiziert und getrennte
 
 ## Router: wenn die Kategorie am Anfang entscheidet
 
-Router sind sinnvoll, wenn Anfragen früh klassifiziert und dann an den passenden Spezialisten weitergeleitet werden können. Der Router bearbeitet die Aufgabe nicht selbst, sondern entscheidet nur, welcher Agent zuständig ist.
+Router sind sinnvoll, wenn Anfragen früh klassifiziert und dann an den passenden Spezialisten weitergeleitet werden können. Der Router entscheidet lediglich, welcher Agent zuständig ist, und bearbeitet die Aufgabe nicht selbst.
 
 ```mermaid
 flowchart TD
@@ -137,7 +137,7 @@ flowchart LR
 
 Der Unterschied zum Supervisor: Es gibt keine zentrale Routing-Logik. Jeder Agent gibt sein Ergebnis direkt weiter, ohne dass eine übergeordnete Stelle steuert.
 
-Ein zentrales Designproblem dabei ist Context Compression. Spätere Agenten erhalten nicht die vollständige Bearbeitungsgeschichte, sondern eine komprimierte Übergabe. Das spart Kontext, bringt aber einen Fidelity-Tradeoff mit sich: Details, die im Ursprungsmaterial stecken, können auf dem Weg verloren gehen. Diese Entscheidung sollte bewusst getroffen werden.
+Ein zentrales Designproblem dabei ist Context Compression. Spätere Agenten erhalten eine komprimierte Übergabe statt der vollständigen Bearbeitungsgeschichte. Das spart Kontext, bringt aber einen Fidelity-Tradeoff mit sich: Details, die im Ursprungsmaterial stecken, können auf dem Weg verloren gehen. Diese Entscheidung sollte bewusst getroffen werden.
 
 Eine Pipeline passt zu fest definierten Schritten, deren Ergebnisse nacheinander weitergegeben werden. Für dynamische Umverteilung ist ein anderes Muster geeigneter.
 
@@ -156,7 +156,7 @@ flowchart LR
     D --> E
 ```
 
-Hier entscheidet also nicht ein externer Router vorab, sondern der bearbeitende Agent selbst. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
+Hier entscheidet der bearbeitende Agent selbst, ein externer Router greift vorab nicht ein. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
 
 Typischer Fehler: Beim Handoff den bisherigen Kontext nicht vollständig zu übergeben. Dann beginnt der übernehmende Agent praktisch blind.
 
@@ -182,7 +182,7 @@ Grenze: Dieses Muster ist keine echte arbeitsteilige Mehragenten-Koordination, s
 
 ## Planner-Executor: wenn der Plan sichtbar sein soll
 
-Beim Planner-Executor-Muster erzeugt ein Planungsagent zuerst eine Aufgabenliste. Ein oder mehrere Executor-Agenten oder Tools arbeiten diese Schritte danach ab. Der Planner entscheidet also nicht jedes Detail der Ausführung, sondern macht den Lösungsweg sichtbar.
+Beim Planner-Executor-Muster erzeugt ein Planungsagent zuerst eine Aufgabenliste. Ein oder mehrere Executor-Agenten oder Tools arbeiten diese Schritte danach ab. Der Planner macht den Lösungsweg sichtbar, legt aber nicht jedes Ausführungsdetail fest.
 
 ```mermaid
 flowchart TD
@@ -267,7 +267,7 @@ Das Muster ist flexibel, aber schwerer zu kontrollieren als Supervisor, Pipeline
 
 ## Kollaboration und Review-Schleifen
 
-Ein anderes Muster entsteht, wenn Agenten sich nicht nur Aufträge zuschieben, sondern einander aktiv bewerten oder überarbeiten. Ein typischer Fall ist ein Autor-Kritiker-Zyklus.
+Ein anderes Muster entsteht, wenn Agenten einander aktiv bewerten oder überarbeiten, statt nur Aufträge weiterzureichen. Ein typischer Fall ist ein Autor-Kritiker-Zyklus.
 
 ```mermaid
 flowchart LR
@@ -311,7 +311,7 @@ Nicht geeignet, wenn: Schritt B inhaltlich vom Ergebnis aus Schritt A abhängt. 
 
 ## Kommunikation und gemeinsamer State
 
-In LangGraph erfolgt Zusammenarbeit meist über Shared State. Jeder Agent liest aus demselben oder aus kompatiblen State-Strukturen und gibt gezielt Änderungen zurück. Alternativ sind direkte Aufrufe oder asynchrone Nachrichten möglich, aber für den Kurskontext ist Shared State das zentrale Modell.
+In LangGraph erfolgt Zusammenarbeit meist über Shared State. Jeder Agent liest aus demselben oder aus kompatiblen State-Strukturen und gibt gezielt Änderungen zurück. Alternativ sind direkte Aufrufe oder asynchrone Nachrichten möglich, aber für den Kurskontext ist Shared State das Standardmodell.
 
 ```python
 class MultiAgentState(TypedDict):
@@ -344,7 +344,7 @@ Eine weitere Entscheidung, die oft zu spät gestellt wird: Was passiert, wenn ei
 
 Für Entwicklerprojekte ist ein einfacher Supervisor meist der beste Startpunkt, wenn echte Arbeitsteilung gebraucht wird. Handoff lohnt sich, wenn Zuständigkeiten erst im Verlauf sichtbar werden. Parallele oder kollaborative Muster sollten erst eingesetzt werden, wenn der Mehrwert dafür klar erkennbar ist.
 
-Entwickler unterschätzen oft, dass Multi-Agent nicht nur „mehr Agenten“, sondern vor allem mehr Koordinationslogik bedeutet. Genau deshalb ist die beste erste Frage nicht `Wie viele Rollen könnten existieren?`, sondern `Welche Rollen werden wirklich gebraucht?`
+Entwickler unterschätzen oft, dass Multi-Agent vor allem mehr Koordinationslogik bedeutet, nicht bloß mehr Agenten. Genau deshalb ist die beste erste Frage nicht `Wie viele Rollen könnten existieren?`, sondern `Welche Rollen werden wirklich gebraucht?`
 
 ## Abgrenzung zu verwandten Dokumenten
 

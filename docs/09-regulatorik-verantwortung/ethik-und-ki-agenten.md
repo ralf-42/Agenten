@@ -30,7 +30,7 @@ Generative KI erzeugt Texte, Bilder, Code oder andere Inhalte auf Basis gelernte
 ### Zentrale Prinzipien
 
 - **Verantwortung:** Zuständigkeiten müssen vor dem Einsatz geklärt sein. Ein Agent darf nicht zum Verantwortungsloch zwischen Entwickler, Betreiber, Fachabteilung und Modellanbieter werden.
-- **Fairness:** Agenten können Daten-Bias nicht nur reproduzieren, sondern durch Routing, Tool-Auswahl oder automatische Vorselektion verstärken.
+- **Fairness:** Agenten können Daten-Bias reproduzieren und durch Routing, Tool-Auswahl oder automatische Vorselektion zusätzlich verstärken.
 - **Transparenz:** Nutzer müssen erkennen können, wann sie mit KI interagieren, welche Grenzen das System hat und worauf eine Ausgabe basiert.
 - **Datenschutz:** Prompts, Tool-Aufrufe, Memory, RAG-Indizes und Traces können personenbezogene Daten enthalten. Datenschutz ist deshalb Architekturthema, nicht nur Datenschutzhinweis.
 - **Autonomie:** Menschen dürfen nicht faktisch entmündigt werden. Kritische Entscheidungen brauchen menschliche Prüfung, Eskalation oder Widerspruchsmöglichkeit.
@@ -80,7 +80,7 @@ KI-generiertes Bild
 
 ## Rahmenwerke und Regulierung
 
-Der **EU AI Act** liefert einen risikobasierten Rechtsrahmen. Für Ethik ist daran besonders wichtig: Nicht die technische Modernität entscheidet, sondern Einsatzkontext, Betroffene und mögliche Wirkung. Ein Agent für interne Recherche ist anders zu bewerten als ein Agent, der Bewerbungen vorsortiert, medizinische Hinweise gibt oder Kreditentscheidungen vorbereitet.
+Der **EU AI Act** liefert einen risikobasierten Rechtsrahmen. Für Ethik zählen daran besonders Einsatzkontext, Betroffene und mögliche Wirkung, nicht die technische Modernität. Ein Agent für interne Recherche ist anders zu bewerten als ein Agent, der Bewerbungen vorsortiert, medizinische Hinweise gibt oder Kreditentscheidungen vorbereitet.
 
 Die **DSGVO** ergänzt diese Perspektive durch Datenschutz, Zweckbindung, Datensparsamkeit, Betroffenenrechte und Datenschutz by Design. Für Agenten betrifft das besonders Prompts, Tool-Aufrufe, Memory, RAG-Indizes, Logs und Traces.
 
@@ -88,7 +88,7 @@ Weitere Rahmenwerke wie OECD-Prinzipien, UNESCO-Empfehlungen, NIST AI RMF oder I
 
 ## Ethics by Design im Agentenbau
 
-Ethics by Design bedeutet, ethische Anforderungen nicht nachträglich als Hinweistext anzuhängen, sondern in Architektur und Workflow einzubauen.
+Ethics by Design bedeutet, ethische Anforderungen in Architektur und Workflow einzubauen, statt sie nachträglich als Hinweistext anzuhängen.
 
 ### Technische Muster
 
@@ -125,7 +125,7 @@ Der Maßstab ist nicht maximale Automatisierung, sondern verantwortbare Unterst�
 - Assistenz steht vor autonomer Entscheidung.
 - Datenquellen, Modellversionen, Prompts und Tool-Rechte werden dokumentiert.
 - Freigaben gehören an Stellen, an denen Ausgaben Wirkung auf Menschen haben können.
-- Bias wird nicht nur im Modell geprüft, sondern auch in Routing, Retrieval und Tool-Ergebnissen.
+- Bias wird im Modell, im Routing, im Retrieval und in Tool-Ergebnissen geprüft.
 - Tracing dient der Nachvollziehbarkeit, aber mit datensparsamen Metadaten.
 - Experiment, Kursdemo und produktiver Einsatz bleiben klar getrennt.
 - Systemgrenzen werden sichtbar formuliert: erlaubte Fähigkeiten, ausgeschlossene Aktionen und Prüfinstanzen.

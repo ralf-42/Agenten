@@ -220,7 +220,7 @@ Gute Tool-Docstrings beschreiben Einsatzgrenzen: „nur bei Bestellnummer“, �
 
 ### Wichtige `@tool`-Parameter
 
-Für die meisten Einsteigerbeispiele reichen `@tool`, Type Hints und ein klarer Docstring. Zusätzliche Parameter setzt du nur, wenn du bewusst vom Standard abweichen willst:
+Für die meisten Einsteigerbeispiele reichen `@tool`, Type Hints und ein klarer Docstring. Zusätzliche Parameter sind nur nötig, wenn bewusst vom Standard abgewichen werden soll:
 
 | Parameter | Wann sinnvoll? |
 |---|---|
@@ -766,7 +766,7 @@ Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assist
 
 ### Import funktioniert nicht
 
-Prüfe, ob die benötigten Pakete installiert sind und ob du die aktuellen LangChain-Importpfade verwendest.
+Prüfe, ob die benötigten Pakete installiert sind und ob die aktuellen LangChain-Importpfade verwendet werden.
 
 ### Modell liefert Freitext statt Schema
 
@@ -782,7 +782,7 @@ Prüfe zuerst Chunk-Größe, Overlap, Embedding-Modell und Retriever-Parameter. 
 
 ### Ausblick auf Best Practices
 
-Diese Begriffe musst du für die ersten Beispiele nicht aktiv verwenden, sie erklären aber einige Muster aus den Best-Practice-Seiten:
+Diese Begriffe müssen für die ersten Beispiele nicht aktiv verwendet werden, sie erklären aber einige Muster aus den Best-Practice-Seiten:
 
 | Konzept | Kurz erklärt |
 |---|---|

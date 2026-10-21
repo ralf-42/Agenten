@@ -26,7 +26,7 @@ has_toc: true
 
 Viele Teams bauen schneller ein Agentensystem, als die Aufgabe es wirklich braucht. Das sieht dann zwar nach „modern“ aus, macht das Projekt aber oft unnötig kompliziert. In anderen Fällen passiert das Gegenteil: Man denkt das Problem zu klein und übersieht, dass mehrere Schritte, Werkzeugnutzung und Fehlerbehandlung eigentlich genau nach so einem System verlangen. Zwischen diesen beiden Extremen liegt der richtige Einstieg.
 
-Diese Entscheidung läuft in zwei Stufen. Zuerst klärst du, welcher Lösungsweg überhaupt sinnvoll ist. Nicht jede Aufgabe braucht einen Agenten. Wenn das geklärt ist, kommt erst die zweite Frage: Welche Agentenarchitektur passt dazu?
+Diese Entscheidung läuft in zwei Stufen. Zuerst wird geklärt, welcher Lösungsweg überhaupt sinnvoll ist. Nicht jede Aufgabe braucht einen Agenten. Wenn das geklärt ist, kommt erst die zweite Frage: Welche Agentenarchitektur passt dazu?
 
 Typischer Stolperstein: Erst über ReAct, Multi-Agent oder LangGraph reden, bevor klar ist, ob Chat, Workflow, RAG oder klassischer Code nicht schon reichen.
 
@@ -86,7 +86,7 @@ Grenze: Kahneman beschreibt selbst, dass System 2 die Vorschläge von System 1 o
 
 ## Die zweite Frage: Welche Agentenarchitektur passt dann?
 
-Wenn du in Stufe 1 sicher bist, dass ein Agent wirklich nötig ist, kommt die Architekturentscheidung. Auch hier gilt: Am Ende gewinnt meist die einfachste Struktur, die die Aufgabe zuverlässig löst.
+Steht nach Stufe 1 fest, dass ein Agent wirklich nötig ist, folgt die Architekturentscheidung. Auch hier gilt: Am Ende gewinnt meist die einfachste Struktur, die die Aufgabe zuverlässig löst.
 
 Für viele erste Projekte passt ein Tool-Calling-Agent gut. Wenn es um offene Recherche oder Problemlösung mit unbekanntem Weg geht, wird eher ReAct sinnvoll. Feste Schritte, Routing oder Qualitätsgates sprechen eher für einen Workflow. Mehrere Spezialrollen lohnen sich erst dann, wenn die Arbeitsteilung wirklich einen spürbaren Mehrwert bringt. Ein RAG-Agent ist im Kern ein Wissenszugriff mit zusätzlicher Agentenlogik und sollte nur gewählt werden, wenn Retrieval und eigenständige Weiterverarbeitung zusammen gebraucht werden.
 
@@ -102,7 +102,7 @@ Für viele erste Projekte passt ein Tool-Calling-Agent gut. Wenn es um offene Re
 
 ## Tool-Calling: oft der beste Einstieg
 
-Beim Tool-Calling wählt das Modell aus einer definierten Liste von Werkzeugen und ruft sie mit konkreten Parametern auf. Das funktioniert gut, wenn deine „echten Aktionen“ klar in kontrollierten Tools landen, zum Beispiel Kalenderzugriff, CRM-Abfragen oder E-Mail-Versand. Das Modell kann dabei flexibel formulieren – die eigentliche Aktion bleibt kontrollierbar.
+Beim Tool-Calling wählt das Modell aus einer definierten Liste von Werkzeugen und ruft sie mit konkreten Parametern auf. Das funktioniert gut, wenn die „echten Aktionen“ klar in kontrollierten Tools landen, zum Beispiel Kalenderzugriff, CRM-Abfragen oder E-Mail-Versand. Das Modell kann dabei flexibel formulieren – die eigentliche Aktion bleibt kontrollierbar.
 
 Tool-Calling ist ein guter Einstieg, wenn Werkzeuge klar benannt sind und der Auftrag begrenzt bleibt. Für mehrstufige Pläne braucht es ein anderes Muster.
 

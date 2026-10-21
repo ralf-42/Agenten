@@ -515,6 +515,8 @@ secure_agent = create_agent(
 
 Für produktionsnähere Human-in-the-Loop-Abläufe mit explizitem Pause/Resume ist LangGraph `interrupt()` meist besser nachvollziehbar. Die Middleware eignet sich für einfache Agenten, bei denen bestimmte Tools vor der Ausführung bestätigt werden sollen.
 
+> 💡 **Ab `langchain` 1.4.6:** Standardmäßig fragt die Middleware einmal pro Modell-Durchlauf für alle betroffenen Tools gemeinsam (`interrupt_mode="batched"`). Mit `interrupt_mode="per_call"` wird jeder Tool-Aufruf einzeln bestätigt. Dafür braucht der Agent einen Checkpointer.
+
 
 **Kontext-Management bei langen Konversationen**
 

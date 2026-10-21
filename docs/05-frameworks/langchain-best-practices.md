@@ -663,6 +663,12 @@ agent = create_agent(
 #### HumanInTheLoopMiddleware "respond()" — widerlegt, nicht verwenden
 
 > ⚠️ **Korrektur (2026-09-29):** War als "NEU in v1.2.17" dokumentiert. Verifiziert gegen die neueste verfügbare Version (`langchain==1.4.3`): Die Methode existiert nicht (`hasattr(..., "respond")` → `False`). Vermutlich fabriziert — bitte nicht verwenden, führt zu `AttributeError`.
+>
+> 🔄 **Aktualisierung (2026-10-21):** Gemeint ist die *Methode* `respond()`. Ab `langchain` 1.4.6 gibt es dagegen den *Decision-Typ* `"respond"` (neben `approve`/`edit`/`reject`): Das Tool läuft nicht, das Modell erhält eine synthetische `ToolMessage` mit der Antwort des Menschen.
+
+#### 🆕 `interrupt_mode="per_call"` (ab langchain 1.4.6)
+
+`HumanInTheLoopMiddleware(interrupt_on={...}, interrupt_mode="batched" | "per_call")`: Standard `"batched"` = ein Interrupt pro Modell-Turn für alle gated Tool-Calls. `"per_call"` = ein Interrupt pro Tool-Call (`ToolApprovalRequest`), beantwortet mit einer einzelnen `Decision`; LangGraph validiert die Antwort gegen das `response_schema`. Checkpointer ist Pflicht; die Middleware gehört **vor** Retry-/Error-Middleware. `interrupt_mode="all"|"first"`, `tool_names` und `when` existieren nicht.
 
 ---
 
@@ -1146,6 +1152,11 @@ Beim Refactoring von altem Code:
 
 ## Changelog
 
+### Version 1.10 (2026-10-21)
+- 🆕 `HumanInTheLoopMiddleware(interrupt_mode="per_call")` ergänzt (langchain 1.4.6, per Quelltext verifiziert)
+- 🐛 `respond()`-Hinweis präzisiert: Methode bleibt ungültig, `"respond"` ist gültiger Decision-Typ
+- ✅ Sync mit `_docs/LangChain_Best_Practices.md` v1.10
+
 ### Version 1.9 (2026-09-29)
 - 🐛 **KORREKTUR:** `HumanInTheLoopMiddleware`- und `SummarizationMiddleware`-Beispiele auf reale Signaturen umgestellt (`interrupt_on={tool: bool}`, `model=`+`trigger=`) — alte Parameter (`tool_names`, `max_tokens`, `trigger_strategy`) existieren nicht und führen zu `TypeError`
 - 🐛 **KORREKTUR:** `create_agent(..., provider_strategy=...)` entfernt — Parameter existiert bei `create_agent()` nicht (gehört zu `with_structured_output()`)
@@ -1214,6 +1225,6 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.9<br>
-**Stand:** September 2026<br>
+**Version:** 1.10<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -602,7 +602,7 @@ Diese Konzepte gehören nicht in den ersten Minimalgraph, erklären aber die pro
 
 | Konzept | Kurz erklärt |
 |---|---|
-| Persistenter Store und Löschkonzept | Checkpointing speichert Zustand. Sobald Daten dauerhaft gespeichert werden, muss klar sein, was nur zur Session gehört, was langfristig bleibt und wie sensible Daten gelöscht werden. |
+| Persistenter Store und Löschkonzept | Checkpointing speichert Zustand. Sobald Daten dauerhaft gespeichert werden, muss klar sein, was nur zur Session gehört, was langfristig bleibt und wie sensible Daten gelöscht werden. Beim `PostgresSaver` räumt `prune(thread_ids, strategy="keep_latest")` alte Checkpoints einer Session auf, `strategy="delete"` entfernt sie komplett. |
 | `ToolRuntime` | Tools können bei Bedarf Laufzeitkontext erhalten, etwa `thread_id`, Store, Stream Writer oder Konfiguration. Für einfache Tools bleibt ein normaler Funktionsparameter aber verständlicher. |
 | Robustheit für Production (v1.2.0) | Node-Timeouts (`timeout=` in `add_node()`), Node-Level Error-Handler (`error_handler=`) und Graceful Shutdown (`RunControl.request_drain()`) sorgen dafür, dass einzelne Nodes nicht den ganzen Graph blockieren oder abstürzen lassen. |
 

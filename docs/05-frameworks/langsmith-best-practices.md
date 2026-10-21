@@ -502,6 +502,7 @@ Bevor du in Production gehst:
 - [ ] **Budget-Limits** gesetzt
 - [ ] **Team-Zugriff** konfiguriert
 - [ ] **Prompt Hub** für kritische Prompts verwendet
+- [ ] **Rate-Limit-Verhalten (HTTP 429) geprüft** — das SDK (`langsmith` ≥ 0.14) wiederholt 429/5xx automatisch und beachtet `Retry-After`; eigene API-Aufrufe brauchen eigenes Backoff
 
 ### OPTIONAL
 - [ ] **Custom Evaluators** für domänen-spezifische Metriken
@@ -747,6 +748,9 @@ client = Client(
 
 ## Changelog
 
+### Version 2.7 (2026-10-21)
+- ✅ Production-Checkliste um HTTP-429-/`Retry-After`-Punkt ergänzt; Sync mit `_docs/LangSmith_Best_Practices.md` v2.5
+
 ### Version 2.6 (2026-10-20)
 - ✅ Kurs-Notebooks: `LANGSMITH_TRACING="false"` als Standard; ausgewählte Referenzläufe mit `tracing_context(enabled=True)`
 - ✅ Globale Aktivierung in Quick Start und Debugging-Beispiel ausdrücklich auf Anwendungs- und Produktionsläufe begrenzt
@@ -827,6 +831,6 @@ client = Client(
 
 ---
 
-**Version:** 2.5<br>
+**Version:** 2.7<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

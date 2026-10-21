@@ -80,12 +80,12 @@ Ergänzend geht es um Governance-Fragen. Wer den Kurs nur überblicken möchte, 
 %%{init: {
   'theme': 'base',
   'themeVariables': {
-    'timelineLineColor': '#2e7d32',
-    'sectionBkgColor': '#c8e6c9',
-    'sectionTextColor': '#1b5e20',
-    'containerBkgColor': '#f9f9f9',
-    'taskBkgColor': '#e8f5e9',
-    'taskTextColor': '#1b5e20'
+    'timelineLineColor': '#0284c7',
+    'sectionBkgColor': '#e0f2fe',
+    'sectionTextColor': '#0c4a6e',
+    'containerBkgColor': '#f8fafc',
+    'taskBkgColor': '#e0f2fe',
+    'taskTextColor': '#0c4a6e'
   }
 }}%%
 timeline

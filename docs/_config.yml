@@ -43,7 +43,7 @@ plugins:
 
 # Mermaid support
 mermaid:
-  src: 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js'
+  src: 'https://cdn.jsdelivr.net/npm/mermaid@11.13.0/dist/mermaid.min.js'
 
 # Jekyll Relative Links Configuration
 relative_links:

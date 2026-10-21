@@ -39,12 +39,11 @@ Für den PMO-Assistenten heißt das: LangChain liefert die Werkzeuge, LangGraph 
 ## Werkzeuglandkarte
 
 ```mermaid
-%%{init: {'theme':'forest'}}%%
 graph TD
     %% Definition der Stile für die einzelnen Boxen
-    classDef ecosystem fill:#1565c0,stroke:#0d47a1,stroke-width:2px,color:#ffffff;
-    classDef core fill:#0d47a1,stroke:#002171,stroke-width:2px,color:#ffffff;
-    classDef greyBox fill:#A9A9A9,stroke:#707070,stroke-width:2px,color:#000000;
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
 
     subgraph Development ["<b>Entwicklung & Logik</b>"]
         LC_Core["<b>LangChain</b><br/>Basis & LCEL"]
@@ -61,11 +60,6 @@ graph TD
         LGP["<b>LangSmith Deployment</b>"]
     end
 
-    %% Styling der Subgraphs (Hintergrund-Boxen)
-    style Development fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,stroke-dasharray: 5 5
-    style Observability fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,stroke-dasharray: 5 5
-    style Deployment fill:#f5f5f5,stroke:#9e9e9e,stroke-width:1px
-
     %% Verbindungen
     LC_Core --> LC_Comm
     LC_Core --> LC_Partner
@@ -78,9 +72,8 @@ graph TD
     LG --> LGP
 
     %% Klassen zuweisen
-    class LC_Core core
-    class LC_Comm,LC_Partner,LG,LS ecosystem
-    class LGP greyBox
+    class LC_Core input;
+    class LGP target;
 ```
 
 ---

@@ -125,9 +125,11 @@ flowchart LR
     START([START]) --> AGENT[agent_node]
     AGENT --> END([END])
 
-    style START fill:#90EE90
-    style END fill:#FFB6C1
-    style AGENT fill:#87CEEB
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class START input;
+    class END output;
 ```
 
 ### Ausführen
@@ -184,15 +186,11 @@ flowchart TD
     AGENT_NODE -->|Workflow beendet| END
     END --> RESULT([Finaler State])
 
-    %% Styling
-    style START fill:#90EE90,stroke:#333
-    style END fill:#FFB6C1,stroke:#333
-    style AGENT_NODE fill:#f9f9f9,stroke:#87CEEB,stroke-width:2px
-    style StateIn fill:#E1F5FE,stroke:#01579B
-    style LLM fill:#E1F5FE,stroke:#01579B
-    style Update fill:#E1F5FE,stroke:#01579B
-    style INVOKE fill:#eeeeee,stroke:#999,stroke-dasharray: 5 5
-    style RESULT fill:#eeeeee,stroke:#999,stroke-dasharray: 5 5
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class INVOKE,START input;
+    class END,RESULT output;
 ```
 
 Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
@@ -325,11 +323,15 @@ flowchart TB
     COND -->|No| END([END])
     TOOLS --> AGENT
 
-    style START fill:#90EE90
-    style END fill:#FFB6C1
-    style COND fill:#FFD700
-    style TOOLS fill:#FFA500
-    style AGENT fill:#87CEEB
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    class START input;
+    class END output;
+    class COND metric;
+    class TOOLS target;
 ```
 
 ### Typische Muster
@@ -489,12 +491,17 @@ flowchart TB
     EXECUTE --> END([END])
     REJECT --> END
 
-    style START fill:#90EE90
-    style END fill:#FFB6C1
-    style APPROVAL fill:#FFA500
-    style INTERRUPT fill:#FFD700
-    style EXECUTE fill:#87CEEB
-    style REJECT fill:#ff6b6b
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+    class START input;
+    class END output;
+    class APPROVAL target;
+    class INTERRUPT metric;
+    class REJECT stop;
 ```
 
 Einsatzmöglichkeiten:
@@ -546,11 +553,11 @@ graph TB
     ITERCHECK -->|No| SUPERVISOR
     ITERCHECK -->|Yes| END([END])
 
-    style SUPERVISOR fill:#10a37f
-    style RESEARCH fill:#87CEEB
-    style WRITER fill:#FFB6C1
-    style ANALYST fill:#FFA500
-    style REVIEW fill:#FFD700
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    class SUPERVISOR target;
+    class REVIEW metric;
 ```
 
 Mögliche Erweiterungen:

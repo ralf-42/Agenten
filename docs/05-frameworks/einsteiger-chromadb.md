@@ -308,8 +308,11 @@ flowchart TB
         OK1[✅ Kontext bleibt erhalten!]
     end
 
-    style WARN1 fill:#f8cecc
-    style OK1 fill:#d5e8d4
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+    class WARN1 stop;
+    class OK1 output;
 ```
 
 **ASCII-Darstellung:**
@@ -346,10 +349,13 @@ flowchart LR
     EMBED -->|vectors<br/>1536 dimensions| STORE
     STORE --> END
 
-    style LOAD fill:#e1f5ff
-    style SPLIT fill:#ffe6cc
-    style EMBED fill:#d5e8d4
-    style STORE fill:#dae8fc
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class LOAD input;
+    class SPLIT metric;
+    class EMBED output;
 ```
 
 ```python
@@ -858,13 +864,13 @@ flowchart TB
     RETRIEVE --> CHAIN
     CHAIN --> AGENT
 
-    style LOAD fill:#e1f5ff
-    style CHUNK fill:#ffe6cc
-    style EMBED fill:#d5e8d4
-    style STORE fill:#dae8fc
-    style RETRIEVE fill:#e1f5ff
-    style CHAIN fill:#ffe6cc
-    style AGENT fill:#d5e8d4
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class LOAD,RETRIEVE input;
+    class CHUNK,CHAIN metric;
+    class EMBED,AGENT output;
 ```
 
 **Text-Version:**

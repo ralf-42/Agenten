@@ -1,12 +1,25 @@
 <!-- Mermaid Diagramm Support -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.13.0/dist/mermaid.min.js"></script>
 <script>
+  // Projektstandard: _docs/Mermaid_Best_Practices.md (Abschnitt Farbschema)
   mermaid.initialize({
     startOnLoad: true,
-    theme: 'default',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#e0f2fe',
+      primaryBorderColor: '#0284c7',
+      primaryTextColor: '#1e293b',
+      lineColor: '#64748b',
+      clusterBkg: '#f8fafc',
+      clusterBorder: '#cbd5e1',
+      noteBkgColor: '#fef3c7',
+      noteBorderColor: '#d97706',
+      noteTextColor: '#78350f',
+      edgeLabelBackground: '#ffffff'
+    },
     securityLevel: 'loose',
+    htmlLabels: true,
     flowchart: {
-      htmlLabels: true,
       curve: 'basis'
     }
   });

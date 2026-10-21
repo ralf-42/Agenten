@@ -255,12 +255,23 @@ Pro Abschnitt höchstens ein Callout. Wenn jeder zweite Absatz hervorgehoben wir
 
 Mermaid wird nur eingesetzt, wenn ein Zusammenhang visuell klarer wird als im Fließtext oder in einer Tabelle. Geeignet sind Entscheidungslogik, Zustandswechsel, Sequenzen und Architekturübersichten. `sequenceDiagram` beginnt immer mit `autonumber`.
 
+Das Farbschema (`theme: base` mit `themeVariables`) ist global in `_includes/head_custom.html` gesetzt, ein Init-Block pro Diagramm entfällt. Flowcharts färben Knoten ausschließlich über `classDef` und `class` (`default`, `input`, `metric`, `output`, `target`, `stop`), nie über einzelne `style`-Zeilen. `sequenceDiagram`, `stateDiagram-v2` und `mindmap` kommen ohne `classDef` aus. Ausnahme: Ein Vergleich zweier Subgraphen darf `style` mit Palette-Hexwerten nutzen. Subgraph-Titel werden mit `<b>` gesetzt, z. B. `subgraph ID["<b>Titel</b>"]`. Palette und Begründung: `_docs/Mermaid_Best_Practices.md`.
+
 ````markdown
 ```mermaid
 flowchart TD
-    A[Sachverhalt] --> B{Visuell klarer?}
+    A([Sachverhalt]) --> B{Visuell klarer?}
     B -->|Ja| C[Diagramm einsetzen]
-    B -->|Nein| D[Fließtext behalten]
+    B -->|Nein| D([Fließtext behalten])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class B metric;
+    class D output;
 ```
 ````
 

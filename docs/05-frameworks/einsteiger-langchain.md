@@ -50,7 +50,7 @@ graph TB
     subgraph "LangChain Core Components"
         MODELS[Models<br/>init_chat_model]
         PROMPTS[Prompts<br/>ChatPromptTemplate]
-        TOOLS[Tools<br/>@tool decorator]
+        TOOLS["Tools<br/>@tool decorator"]
         CHAINS[Chains<br/>LCEL with pipe]
         AGENTS[Agents<br/>create_agent]
     end
@@ -69,11 +69,7 @@ graph TB
     CHAINS -->|RAG| VECTOR_DB
     TOOLS -->|integrate| APIS
 
-    style MODELS fill:#e1f5ff
-    style PROMPTS fill:#e1f5ff
-    style TOOLS fill:#e1f5ff
-    style CHAINS fill:#e1f5ff
-    style AGENTS fill:#e1f5ff
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
 ```
 
 ---
@@ -426,9 +422,11 @@ flowchart LR
     LLM -->|pipe operator| PARSER
     PARSER --> OUTPUT
 
-    style PROMPT fill:#ffe6cc
-    style LLM fill:#d5e8d4
-    style PARSER fill:#dae8fc
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class PROMPT metric;
+    class LLM output;
 ```
 
 ### Beispiel: Einfache LCEL-Chain für Textumformung
@@ -692,11 +690,13 @@ subgraph "<b>LCEL Chain (Kette)</b>"
     LLM
 end
 
-style EMBED fill:#ffe6cc
-style RETRIEVE fill:#f8cecc
-style FORMAT fill:#d5e8d4
-style PROMPT fill:#dae8fc
-style LLM fill:#d5e8d4
+classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+class EMBED metric;
+class RETRIEVE target;
+class FORMAT,LLM output;
 ```
 
 **Beispiel: Minimaler RAG-Workflow mit LCEL**

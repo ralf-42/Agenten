@@ -61,8 +61,9 @@ flowchart TB
         LANGSMITH
     end
 
-    style LANGSMITH fill:#d5e8d4
-    style UI fill:#dae8fc
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class LANGSMITH output;
 ```
 
 ---
@@ -184,13 +185,13 @@ flowchart TB
     RUN -.-> META
     RUN -.-> FEEDBACK
 
-    style PROJECT fill:#e1f5ff
-    style THREAD fill:#fff3cd
-    style TRACE fill:#dae8fc
-    style RUN fill:#d5e8d4
-    style TAGS fill:#f5f5f5
-    style META fill:#f5f5f5
-    style FEEDBACK fill:#f5f5f5
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class PROJECT input;
+    class THREAD metric;
+    class RUN output;
 ```
 
 | Konzept | Bedeutung |
@@ -251,10 +252,13 @@ graph TB
     CHAIN --> LLM
     CHAIN --> PARSER
 
-    style CHAIN fill:#e1f5ff
-    style PROMPT fill:#ffe6cc
-    style LLM fill:#d5e8d4
-    style PARSER fill:#dae8fc
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class CHAIN input;
+    class PROMPT metric;
+    class LLM output;
 ```
 
 **ASCII-Darstellung:**
@@ -659,9 +663,11 @@ flowchart LR
     SUCCESS -->|No| INSPECT
     SUCCESS -->|Yes| END([Done])
 
-    style FAIL fill:#f8cecc
-    style SUCCESS fill:#d5e8d4
-    style COMPARE fill:#dae8fc
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+    class FAIL stop;
+    class SUCCESS output;
 ```
 
 **Typischer Workflow:**

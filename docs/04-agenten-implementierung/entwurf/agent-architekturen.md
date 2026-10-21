@@ -360,9 +360,7 @@ flowchart TB
         H_Info --> C_Info
     end
 
-    style Harness fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style Context fill:#e1f5fe,stroke:#01579b
-    style Prompt fill:#fff9c4,stroke:#fbc02d
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
 ```
 
 **Prompt Engineering** ist die innerste Schicht: Instruktionen, Rollenbeschreibungen, Beispiele — was dem Modell gesagt wird.

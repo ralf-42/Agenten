@@ -229,12 +229,11 @@ flowchart TD
     START --> Q4{Ist es Code?}
     Q4 -->|JA| AGENT[Agentisches oder<br>AST-basiertes Chunking]
 
-    style START fill:#e3f2fd,stroke:#1976d2
-    style DOK fill:#c8e6c9,stroke:#388e3c
-    style ZEICHEN fill:#c8e6c9,stroke:#388e3c
-    style EMBED fill:#c8e6c9,stroke:#388e3c
-    style REKURSIV fill:#c8e6c9,stroke:#388e3c
-    style AGENT fill:#c8e6c9,stroke:#388e3c
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class START input;
+    class DOK,ZEICHEN,EMBED,REKURSIV,AGENT output;
 ```
 
 # Evaluation & Monitoring

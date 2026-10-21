@@ -387,8 +387,9 @@ flowchart TD
     F -->|Ja| G([Typ 1 + XML-Tags])
     F -->|Nein| H([Typ 1: System-only<br>variables: empty])
 
-    classDef solution fill:#bbf,stroke:#333,stroke-width:1px
-    class D,E,G,H solution
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class D,E,G,H output;
 ```
 
 ---

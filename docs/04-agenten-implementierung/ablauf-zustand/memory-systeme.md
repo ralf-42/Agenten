@@ -100,37 +100,35 @@ Nicht jeder Agent braucht alle vier Memory-Typen. Je einfacher und enger die Auf
 ```mermaid
 flowchart LR
 
-%% Speicher-Klassen (Einheitlich Olivgrün)
-classDef memType fill:#d4e6c3,stroke:#5a8a3d
-
-%% Kontrastreiche Agenten-Klassen
-classDef router fill:#ffe5d9,stroke:#e63946
-classDef support fill:#f4f1de,stroke:#3d405b
-classDef knowledge fill:#e0f2fe,stroke:#0284c7
-classDef coding fill:#fae8ff,stroke:#c084fc
+%% Agenten-Klassen (Palette: input/metric/default/output) und Speicher (target)
+classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
 
 %% Diagramm-Struktur
-R["Reflex-Agent / Router"]:::router --> WM
-SA["Schmaler Support-Agent"]:::support --> WM
+R["Reflex-Agent / Router"]:::input --> WM
+SA["Schmaler Support-Agent"]:::metric --> WM
 SA --> PM
-WA["Wissensassistent"]:::knowledge --> WM
+WA["Wissensassistent"]:::default --> WM
 WA --> SM
-CA["Coding / Quellen-Agent"]:::coding --> WM
+CA["Coding / Quellen-Agent"]:::output --> WM
 CA --> SM
 CA --> PM
 CA --> EM
 
 %% Speicher-Knoten
-WM["Working Memory"]:::memType
-SM["Semantic Memory"]:::memType
-PM["Procedural Memory"]:::memType
-EM["Episodic Memory"]:::memType
+WM["Working Memory"]:::target
+SM["Semantic Memory"]:::target
+PM["Procedural Memory"]:::target
+EM["Episodic Memory"]:::target
 
 %% Pfeil-Colorierung (Farblich exakt an die Agenten-Rahmen angepasst)
-linkStyle 0 stroke:#e63946,stroke-width:2.5px;
-linkStyle 1,2 stroke:#3d405b,stroke-width:2.5px;
+linkStyle 0 stroke:#6366f1,stroke-width:2.5px;
+linkStyle 1,2 stroke:#d97706,stroke-width:2.5px;
 linkStyle 3,4 stroke:#0284c7,stroke-width:2.5px;
-linkStyle 5,6,7,8 stroke:#c084fc,stroke-width:2.5px;
+linkStyle 5,6,7,8 stroke:#16a34a,stroke-width:2.5px;
 ```
 
 Typischer Fehler: Einen einfachen Agenten mit dauerhaftem Memory zu überfrachten. Memory erhöht nicht automatisch die Qualität. Es bringt nur dann Nutzen, wenn klar ist, welche Information später tatsächlich wiederverwendet werden soll.

@@ -40,12 +40,12 @@ flowchart TD
     A["<b>Evaluation</b><br>War das Ergebnis gut?"] --> B["<b>Observability</b><br>Warum kam es dazu?"]
     B --> C["<b>Verbesserung</b><br>Prompt, Tool, State<br>oder Policy anpassen"]
     C -- "Optimierter Re-Run" --> A
-    
-    %% Optisches Highlight für den Loop
-    
-    style A fill:#f9f9f9,stroke:#01579b,stroke-width:2px 
-    style B fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
-    style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    class A input;
+    class C metric;
 ```
 
 ## Das Silent-Failure-Problem
@@ -384,8 +384,10 @@ flowchart TB
     %% Feedback-Loop (Optional)
     F -.-> |Optimization| A
     
-    style Runtime fill:#e1f5fe,stroke:#01579b,stroke-width:2px 
-    style Evaluation fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+
+    style Runtime fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+    style Evaluation fill:#fef3c7,stroke:#d97706,stroke-width:2px
 ```
 
 Nicht geeignet, wenn: Der Begriff dazu verleitet, sofort ein großes Infrastrukturprojekt zu bauen. Für Einsteiger reicht oft ein kleiner, sauberer Test- und Beobachtungsrahmen.

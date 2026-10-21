@@ -182,15 +182,14 @@ flowchart TD
     T3 --> R3([Schwierigste Speicherfrage<br>Orchestrierung ist einfach])
     T4 --> R4([Höchste Komplexität<br>Eval zuerst bauen])
 
-    classDef question fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    classDef agenttype fill:#f0fdf4,stroke:#22c55e,stroke-width:1px
-    classDef stack fill:#fefce8,stroke:#eab308,stroke-width:1px
-    classDef result fill:#f3f4f6,stroke:#9ca3af,stroke-width:1px
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
 
-    class START question
-    class S1,S2,S3,S4 agenttype
-    class T1,T2,T3,T4 stack
-    class R1,R2,R3,R4 result
+    class START input;
+    class T1,T2,T3,T4 target;
+    class R1,R2,R3,R4 output;
 ```
 
 | Agententyp | Beispiele | Stack |

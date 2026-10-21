@@ -237,11 +237,13 @@ flowchart LR
     D1[Benchmarks<br>Tests] -.-> D
     E1[Integration<br>Deployment] -.-> E
 
-    style A fill:#e3f2fd,stroke:#1976d2
-    style B fill:#fff3e0,stroke:#ff9800
-    style C fill:#f3e5f5,stroke:#9c27b0
-    style D fill:#e0f7fa,stroke:#00bcd4
-    style E fill:#c8e6c9,stroke:#388e3c
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class A input;
+    class D metric;
+    class E output;
 ```
 
 ### Anforderungsanalyse

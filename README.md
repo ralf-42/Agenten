@@ -66,69 +66,69 @@ Agenten/
 ## 📚 Kursmodule
 
 ### Block 1: Agenten-Grundlagen
-| Modul | Thema                             | Beschreibung                                                    |
-| ----- | --------------------------------- | --------------------------------------------------------------- |
-| KI-Agenten und Tool Use   | Kurs-Intro, Was sind KI-Agenten? & Tool Use | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen, @tool Decorator, Research-Tools bauen |
-| LangChain Erste Agenten   | Erste Agenten mit LangChain       | create_agent(), Deprecated Patterns (EINMALIG)                  |
+| Nr. | Modul | Thema                             | Beschreibung                                                    |
+| ---: | ----- | --------------------------------- | --------------------------------------------------------------- |
+| 1 | KI-Agenten und Tool Use   | Kurs-Intro, Was sind KI-Agenten? & Tool Use | Setup, Agent-Definition, ReAct/TAO-Prinzip, Agent-Typen, @tool Decorator, Research-Tools bauen |
+| 2 | LangChain Erste Agenten   | Erste Agenten mit LangChain       | create_agent(), Deprecated Patterns (EINMALIG)                  |
 
 ### Block 2: Strukturierte Agenten
-| Modul | Thema                             | Beschreibung                                                    |
-| ----- | --------------------------------- | --------------------------------------------------------------- |
-| Prompt Engineering für Agenten   | Prompt Engineering                | ChatPromptTemplate, System/Human Messages                       |
-| Structured Output   | Structured Output                 | Pydantic, with_structured_output(), Paper-Signale               |
-| Multi-Tool-Agents   | Multi-Tool Agents                 | Agent mit 3-4 Tools, Error Handling, Debugging                  |
-| LCEL Chains   | LCEL Chains (Brücke → LangGraph)  | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
+| Nr. | Modul | Thema                             | Beschreibung                                                    |
+| ---: | ----- | --------------------------------- | --------------------------------------------------------------- |
+| 3 | Prompt Engineering für Agenten   | Prompt Engineering                | ChatPromptTemplate, System/Human Messages                       |
+| 4 | Structured Output   | Structured Output                 | Pydantic, with_structured_output(), Paper-Signale               |
+| 5 | Multi-Tool-Agents   | Multi-Tool Agents                 | Agent mit 3-4 Tools, Error Handling, Debugging                  |
+| 6 | LCEL Chains   | LCEL Chains (Brücke → LangGraph)  | Pipe-Operator, Runnable Interface, Wann reicht LCEL nicht mehr? |
 
 ### Block 3: Kontrollierte Workflows
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| Warum LangGraph | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
-| StateGraph Basics | StateGraph Basics | State, Nodes, Edges, compile() |
-| Conditional Routing | Conditional Routing & Qualitäts-Gate | Routing-Funktionen, Security-Basics integriert |
-| Tool Loop | Tool-Loop | Tool-Loop, Tool-Steuerung im Graph |
+| Nr. | Modul | Thema | Beschreibung |
+| ---: |-------|-------|-------------|
+| 7 | Warum LangGraph | Warum LangGraph? | Limitierungen von create_agent(), State Machines |
+| 8 | StateGraph Basics | StateGraph Basics | State, Nodes, Edges, compile() |
+| 9 | Conditional Routing | Conditional Routing & Qualitäts-Gate | Routing-Funktionen, Security-Basics integriert |
+| 10 | Tool Loop | Tool-Loop | Tool-Loop, Tool-Steuerung im Graph |
 
 ### Block 4: Wissensbasierte Agenten
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| RAG Grundlagen | RAG-Konzepte, ChromaDB & RAG-Chain | RAG-Architektur, Vektoren, Token-Limits, Chunking, Embedding, Vektordatenbank, Retriever, LCEL-Chain |
-| RAG-Agent | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
-| LangSmith Evaluations Basics | LangSmith Evaluations Basics | Eval-Dataset, Quellen-Treffer, Out-of-Corpus-Checks |
+| Nr. | Modul | Thema | Beschreibung |
+| ---: |-------|-------|-------------|
+| 11 | RAG Grundlagen | RAG-Konzepte, ChromaDB & RAG-Chain | RAG-Architektur, Vektoren, Token-Limits, Chunking, Embedding, Vektordatenbank, Retriever, LCEL-Chain |
+| 12 | RAG-Agent | RAG-Agent | RAG als Tool, Agent entscheidet wann RAG |
+| 13 | LangSmith Evaluations Basics | LangSmith Evaluations Basics | Eval-Dataset, Quellen-Treffer, Out-of-Corpus-Checks |
 
 ### Block 5: Kontrollierte Zusammenarbeit
 
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| Sessions, Checkpointing und Memory | Sessions, Checkpointing & Memory | Thread-ID, State, InMemorySaver/SQLite, Kurzzeit-, semantisches und Per-User-Memory |
-| Human in the Loop | Human-in-the-Loop | interrupt(), Review und Freigabe vor finaler Research-Antwort |
-| Multi-Agent Patterns | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
-| Supervisor Pattern | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
-| Reflection, Parallel, Hierarchy | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Tool-Delegation |
+| Nr. | Modul | Thema | Beschreibung |
+| ---: |-------|-------|-------------|
+| 14 | Sessions, Checkpointing und Memory | Sessions, Checkpointing & Memory | Thread-ID, State, InMemorySaver/SQLite, Kurzzeit-, semantisches und Per-User-Memory |
+| 15 | Human in the Loop | Human-in-the-Loop | interrupt(), Review und Freigabe vor finaler Research-Antwort |
+| 16 | Multi-Agent Patterns | Multi-Agent Patterns | Supervisor, Hierarchical, Collaborative |
+| 17 | Supervisor Pattern | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
+| 18 | Reflection, Parallel, Hierarchy | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Tool-Delegation |
 
 Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing & Sessions und Memory-Systeme. Die alten Notebooks liegen in `01_notebook/_backups/`.
 
 ### Block 6: Qualität und Betriebsvorbereitung
 
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| Agentic RAG | Agentic RAG | Retrieval-Budget, Grounding und Out-of-Corpus-Stopp |
-| Agent Security Best Practices | Agent Security & Best Practices | Prompt Injection, Tool-Gating, Audit-Log und PII-Redaktion |
-| Agent Evaluation und Testing | Agent Evaluation & Testing | Reproduzierbare Evaluation, Regression und RAGAS-Live-Lauf |
-| Model Routing und Cost Control | Model Routing & Cost Control | Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate |
+| Nr. | Modul | Thema | Beschreibung |
+| ---: |-------|-------|-------------|
+| 19 | Agentic RAG | Agentic RAG | Retrieval-Budget, Grounding und Out-of-Corpus-Stopp |
+| 20 | Agent Security Best Practices | Agent Security & Best Practices | Prompt Injection, Tool-Gating, Audit-Log und PII-Redaktion |
+| 21 | Agent Evaluation und Testing | Agent Evaluation & Testing | Reproduzierbare Evaluation, Regression und RAGAS-Live-Lauf |
+| 22 | Model Routing und Cost Control | Model Routing & Cost Control | Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate |
 
 ### Block 7: Integration und Produktion
 
-| Modul | Thema | Beschreibung |
-|-------|-------|-------------|
-| Optionales Integrationsbeispiel | `01_notebook/Integration_Pipeline_optional.ipynb` | PMO-Assistentensystem als End-to-End-Pipeline |
-| Advanced RAG Pipeline Patterns | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
-| Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
-| MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
-| Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
-| DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
-| DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
-| DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
-| Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
+| Nr. | Modul | Thema | Beschreibung |
+| ---: |-------|-------|-------------|
+| 23 | Optionales Integrationsbeispiel | `01_notebook/Integration_Pipeline_optional.ipynb` | PMO-Assistentensystem als End-to-End-Pipeline |
+| 24 | Advanced RAG Pipeline Patterns | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
+| 25 | Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
+| 26 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
+| 27 | Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
+| 28 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
+| 29 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+| 30 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
+| 31 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| 32 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
 
 ## 🔑 Voraussetzungen
 

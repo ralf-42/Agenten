@@ -119,7 +119,7 @@ Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing
 
 | Modul | Thema | Beschreibung |
 |-------|-------|-------------|
-| Integration Pipeline | Integration Pipeline | PMO-Assistentensystem als End-to-End-Pipeline |
+| Optionales Integrationsbeispiel | `01_notebook/Integration_Pipeline_optional.ipynb` | PMO-Assistentensystem als End-to-End-Pipeline |
 | Advanced RAG Pipeline Patterns | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
 | Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |

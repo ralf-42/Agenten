@@ -1,7 +1,7 @@
 """
 pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den PMO-Assistenten
 
-Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
+Extrahiert aus der in M12_RAG_Agent.ipynb final genutzten Implementierung
 (Dokumentladen, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
 damit LangSmith Evaluations Basics und die nachfolgenden Module (Integration Pipeline, Advanced RAG Pipeline Patterns, Gradio UI für Agenten, Production Deployment) dieselbe Kette wiederverwenden statt sie zu duplizieren.
 

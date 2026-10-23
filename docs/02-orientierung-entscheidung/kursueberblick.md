@@ -155,7 +155,7 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 |  Agent Security Best Practices  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
 |  Agent Evaluation und Testing  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
 |  Model Routing und Cost Control  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-|  Integration Pipeline  | Aufbau: Qualität und Integration  | Integration Pipeline                 | PMO-Assistentensystem als E2E-Pipeline   |
+|  Optionales Integrationsbeispiel  | Ergänzung außerhalb des nummerierten Kurswegs  | Integration Pipeline  | PMO-Assistentensystem als E2E-Pipeline   |
 |  Advanced RAG Pipeline Patterns  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
 |  Gradio UI für Agenten  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
 |  MCP Local  | Vertiefung: Skills und Produktion | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |

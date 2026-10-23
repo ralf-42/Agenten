@@ -378,7 +378,7 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 
 | Dokument | Frage |
 |---|---|
-| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegt `M30_MCP_Local.ipynb` in der Modulprogression? |
+| [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) | Wo liegt `M25_MCP_Local.ipynb` in der Modulprogression? |
 | [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | Wie ordnet sich MCP gegenüber A2A, ACP und AG-UI ein? |
 | [Code Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Welche LangChain- und Python-Konventionen gelten im Kurs? |
 

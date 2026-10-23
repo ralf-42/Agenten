@@ -58,125 +58,30 @@ Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Ziels
 
 ## Kursstruktur
 
-Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG und Multi-Agent-Patterns bis zu Evaluation, Betrieb und Capstone.
+Der fünftägige Kurs umfasst 26 reguläre Kursnotebooks. Der Grundlagenkern ist nach Kurstagen geordnet; optionale Aufbau- und Vertiefungsmodule sind derselben Tagesstruktur zugeordnet.
 
-| Bereich | Inhalte |
-|---|---|
-| **Agenten-Grundlagen** | Agentenbegriff, ReAct/TAO als sichtbarer Tool-Zyklus, Tool Use, erster LangChain-Agent |
-| **Strukturierte Agenten** | Prompt Engineering, Structured Output, Multi-Tool-Agenten, LCEL |
-| **Kontrollierte Workflows** | LangGraph, StateGraph, Conditional Routing, Planning-Patterns, Tool Loop |
-| **Wissensbasierte Agenten** | RAG, ChromaDB, Retrieval als Tool, LangSmith-Evaluation |
-| **Kontrollierte Zusammenarbeit** | Sessions, HITL, Memory, Multi-Agent-Patterns |
-| **Aufbau: Qualität und Integration** | Agentic RAG, Security, Evaluation, Routing, Kostenkontrolle, Pipeline, Projekt-Templates, Advanced RAG |
-| **Vertiefung: Skills und Produktion** | UI, MCP, Skill-Design, DeepAgents, Deployment, Capstone |
-
-Der Grundlagenpfad KI-Agenten und Tool Use bis Human in the Loop sowie Multi-Agent Patterns bis Reflection, Parallel, Hierarchy ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. Das frühere Memory-Modul ist in Sessions, Checkpointing und Memory integriert und liegt nur noch als Legacy-Backup vor. Die Aufbaumodule Agentic RAG bis Advanced RAG Pipeline Patterns und die Vertiefungsmodule Gradio UI für Agenten bis Production Deployment erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
-
-Ergänzend geht es um Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
-
-## Kursprogression
-
-```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'timelineLineColor': '#0284c7',
-    'sectionBkgColor': '#e0f2fe',
-    'sectionTextColor': '#0c4a6e',
-    'containerBkgColor': '#f8fafc',
-    'taskBkgColor': '#e0f2fe',
-    'taskTextColor': '#0c4a6e'
-  }
-}}%%
-timeline
-    title Agenten-Progression im Kursverlauf
-    section Agenten-Grundlagen
-        Erste handlungsfähige Agenten : Agentenbegriff, Tools, erster LangChain-Agent
-                                     : KI-Agenten und Tool Use bis LangChain Erste Agenten
-    section Strukturierte Agenten
-        Steuerbare Einzelschritte     : Prompts, Schemas, Multi-Tool, LCEL
-                                     : Prompt Engineering für Agenten bis LCEL Chains
-    section Kontrollierte Workflows
-        Agenten mit Zustand           : LangGraph, StateGraph, Routing, Tool Loop
-                                     : Warum LangGraph bis Tool Loop
-    section Wissensbasierte Agenten
-        RAG als Evidence Tool         : ChromaDB, Retrieval, RAG-Agent, Evaluation
-                                     : RAG Grundlagen bis LangSmith Evaluations Basics
-    section Kontrollierte Zusammenarbeit
-        Sessions, Freigabe und Teams  : Checkpointing, HITL, Memory, Multi-Agent-Patterns
-                                     : Sessions, Checkpointing und Memory bis Human in the Loop, Multi-Agent Patterns bis Reflection, Parallel, Hierarchy
-    section Aufbau
-        Belastbare Agentensysteme     : Agentic RAG, Security, Evaluation, Routing, Kosten, Pipeline, Advanced RAG
-                                     : Agentic RAG bis Advanced RAG Pipeline Patterns
-    section Vertiefung
-        Vom Kursprojekt zum System    : UI, MCP, Skills, DeepAgents, Deployment, Capstone
-                                     : Gradio UI für Agenten bis Production Deployment
-```
-
-## Maturity Model als Overlay
-
-Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zweite Kursstruktur und keine Rangliste. Es zeigt, welche Fähigkeiten hinzukommen und welche Kontrollpunkte dadurch nötig werden.
-
-| Reifegrad | Kurzbeschreibung | Kursbezug | Einordnung |
+| Kurstag | Schwerpunkt | Grundlagenkern | Optionale Aufbau- und Vertiefungsmodule |
 |---|---|---|---|
-| **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | KI-Agenten und Tool Use bis Multi-Tool-Agents, MCP Local | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
-| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | Prompt Engineering für Agenten bis Tool Loop, Sessions, Checkpointing und Memory bis Human in the Loop | Prompts, Schemas, Routing, Checkpointing, Memory und Human-in-the-Loop machen Verhalten kontrollierbarer. |
-| **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | LangSmith Evaluations Basics, Multi-Agent Patterns bis Agent Evaluation und Testing | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
-| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | Sessions, Checkpointing und Memory, Agentic RAG bis Production Deployment | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
-| **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | Agent Evaluation und Testing | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
+| **Tag 1** | Agentenbegriff, erste Tools und erster Agent | `M01_KI_Agenten_und_Tool_Use.ipynb`<br>`M02_LangChain_Erste_Agenten.ipynb` | — |
+| **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL | `M03_Prompt_Engineering_fuer_Agenten.ipynb`<br>`M04_Structured_Output.ipynb`<br>`M05_Multi_Tool_Agents.ipynb`<br>`M06_LCEL_Chains.ipynb` | — |
+| **Tag 3** | LangGraph, State, Routing und Tool-Schleifen | `M07_Warum_LangGraph.ipynb`<br>`M08_StateGraph_Basics.ipynb`<br>`M09_Conditional_Routing.ipynb`<br>`M10_Tool_Loop.ipynb` | `M20_Agent_Security_Best_Practices.ipynb` |
+| **Tag 4** | RAG, Retrieval als Tool und erste Evaluation | `M11_RAG_Grundlagen.ipynb`<br>`M12_RAG_Agent.ipynb`<br>`M13_LangSmith_Evaluations_Basics.ipynb` | `M19_Agentic_RAG.ipynb`<br>`M21_Agent_Evaluation_Testing.ipynb`<br>`M22_Model_Routing_Cost_Control.ipynb`<br>`M23_Advanced_RAG_Pipeline_Patterns.ipynb` |
+| **Tag 5** | Sessions, Freigaben und Multi-Agent-Zusammenarbeit | `M14_Sessions_Checkpointing_und_Memory.ipynb`<br>`M15_Human_in_the_Loop.ipynb`<br>`M16_Multi_Agent_Patterns.ipynb`<br>`M17_Supervisor_Pattern.ipynb`<br>`M18_Reflection_Parallel_Hierarchy.ipynb` | `M24_Gradio_UI_fuer_Agenten.ipynb`<br>`M25_MCP_Local.ipynb`<br>`M26_Agent_Skill_Compliance.ipynb` |
 
-Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Modell hilft beim Einordnen: Welche zusätzliche Freiheit bekommt der Agent, und welche Kontrolle muss dadurch sichtbar werden? Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
+Diese ergänzenden Notebooks werden nach Zeit, Vorkenntnissen und Kursziel ausgewählt. Sie sind keine Voraussetzung für den Grundlagenkern.
 
-## Modulübersicht
+### Weitere Zusatznotebooks
 
-| Nr. | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
-| ---: | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
-| 1 |  KI-Agenten und Tool Use  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
-| 2 |  LangChain Erste Agenten  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster PMO-Assistent  |
-| 3 |  Prompt Engineering für Agenten  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
-| 4 |  Structured Output  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
-| 5 |  Multi-Tool-Agents  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
-| 6 |  LCEL Chains  | Strukturierte Agenten             | LCEL Chains                          | Kontrollierte Teilketten und Übergang zu LangGraph     |
-| 7 |  Warum LangGraph  | Kontrollierte Workflows           | Warum LangGraph?                     | Grenzen einfacher Agents, expliziter State             |
-| 8 |  StateGraph Basics  | Kontrollierte Workflows           | StateGraph Basics                    | Nodes, Edges, State und Verbesserungsschleifen         |
-| 9 |  Conditional Routing  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics, Planning-Patterns |
-| 10 |  Tool Loop  | Kontrollierte Workflows           | Tool-Loop                            | Tool-Loop, Tool-Steuerung im Graph                     |
-| 11 |  RAG Grundlagen  | Wissensbasierte Agenten           | RAG-Konzepte & Embeddings            | Korpus, Embeddings, Chunking                           |
-| 12 |  RAG Grundlagen  | Wissensbasierte Agenten           | ChromaDB Indexing                    | Vektordatenbank, Indexierung, Abfrage                  |
-| 13 |  RAG Grundlagen  | Wissensbasierte Agenten           | RAG Chain mit LangChain              | Retriever, Quellenbindung, Antwortkette                |
-| 14 |  RAG-Agent  | Wissensbasierte Agenten           | RAG-Agent                            | Retrieval als Agenten-Tool                             |
-| 15 |  LangSmith Evaluations Basics  | Wissensbasierte Agenten           | LangSmith Evaluations Basics         | Eval-Set, Retrieval-Score, Regression                  |
-| 16 |  Sessions, Checkpointing und Memory  | Kontrollierte Zusammenarbeit      | Sessions, Checkpointing & Memory     | Thread-ID, Fortsetzen, Kurzzeit- und Langzeit-Memory   |
-| 17 |  Human in the Loop  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
-| 18 |  Multi-Agent Patterns  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
-| 19 |  Supervisor Pattern  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
-| 20 |  Reflection, Parallel, Hierarchy  | Kontrollierte Zusammenarbeit      | Reflection, Parallel, Hierarchie     | Prüfschleife, Fan-out, Teams                              |
-| 21 |  Agentic RAG  | Aufbau: Qualität und Integration  | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
-| 22 |  Agent Security Best Practices  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
-| 23 |  Agent Evaluation und Testing  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
-| 24 |  Model Routing und Cost Control  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-| 25 |  Optionales Integrationsbeispiel  | Ergänzung außerhalb des nummerierten Kurswegs  | Integration Pipeline  | PMO-Assistentensystem als E2E-Pipeline   |
-| 26 |  Advanced RAG Pipeline Patterns  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
-| 27 |  Gradio UI für Agenten  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
-| 28 |  MCP Local  | Vertiefung: Skills und Produktion | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
-| 29 |  Agent Skill Compliance  | Vertiefung: Skills und Produktion | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
-| 30 |  DeepAgents Harness  | Vertiefung: Skills und Produktion | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
-| 31 |  DeepAgents Vertiefung  | Vertiefung: Skills und Produktion | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
-| 32 |  DeepAgents Skill PMO-Assistent  | Vertiefung: Skills und Produktion | DeepAgents-Skill für PMO-Briefings  | PMO-Briefing als Skill für den PMO-Assistenten         |
-| 33 |  DeepAgent Multi-Skill  | Vertiefung: Skills und Produktion | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
-| 34 |  Production Deployment  | Vertiefung: Skills und Produktion | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
+Diese Materialien liegen außerhalb der regulären Kursnotebooks und können als Vergleich, Referenz oder weiterführende Vertiefung dienen.
 
-In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den PMO-Assistenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
+| Themenbereich | Notebooks | Einsatz |
+|---|---|---|
+| DeepAgents | `M50_DeepAgents_Harness.ipynb`, `M51_DeepAgents_Vertiefung.ipynb`, `M52_DeepAgents_Skill_PMO_Assistent.ipynb`, `M53_DeepAgent_Multi_Skill.ipynb`, `M54_Production_Deployment.ipynb` | Alternative Harness-Architektur, Skills und produktionsnahe Umsetzung kennenlernen. |
+| Referenz | `M40_PMO_Assistent_Referenzimplementierung.ipynb` | Eine ergänzende Lösung zum Nachschlagen und Vergleichen. |
 
-| Kursblock | Ausbau am PMO-Assistenten |
-|---|---|
-| **KI-Agenten und Tool Use bis LangChain Erste Agenten: Agenten-Grundlagen** | Der Agent bekommt ein Zielbild, erste Tools und einen einfachen LangChain-Harness. |
-| **Prompt Engineering für Agenten bis LCEL Chains: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
-| **Warum LangGraph bis Tool Loop: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
-| **RAG Grundlagen bis LangSmith Evaluations Basics: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
-| **Sessions, Checkpointing und Memory bis Human in the Loop, Multi-Agent Patterns bis Reflection, Parallel, Hierarchy: Kontrollierte Zusammenarbeit** | Sessions, Memory, Human-in-the-Loop und Multi-Agent-Muster machen längere Abläufe steuerbar. |
-| **Agentic RAG bis Advanced RAG Pipeline Patterns: Aufbau: Qualität und Integration** | Agentic RAG, Security, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab; Pipeline, Projekt-Templates und Advanced RAG führen die Bausteine zusammen. |
-| **Gradio UI für Agenten bis Production Deployment: Vertiefung: Skills und Produktion** | UI, MCP-Integration, Skills, DeepAgents, Deployment und Capstone bringen den Agenten in einen betriebsnahen Zustand. |
+## Kursblöcke am PMO-Assistenten
+
+Jeder Block ergänzt dasselbe Zielsystem: Tools und Prompts schaffen Handlungsmöglichkeiten, LangGraph macht Abläufe steuerbar, RAG liefert Quellen und HITL sowie Evaluation machen Ergebnisse prüfbar. Aufbau- und Vertiefungsnotebooks erweitern diese Fähigkeiten gezielt.
 
 Einige Begriffe sind bewusst knapp gehalten. **Evidence Tool** meint ein Retrieval-Werkzeug, das Antworten mit Quellenmaterial verbindet. **Out-of-Context-Stopp** bedeutet, dass der Agent anhält, wenn die vorhandenen Quellen keine belastbare Antwort tragen. **Circuit Breaker** bezeichnet eine Schutzschaltung, die Abläufe bei Fehlern, Kosten- oder Qualitätsgrenzen stoppt.
 
@@ -258,7 +163,7 @@ Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldu
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Fachstand:** Oktober 2026; Versionsnummern sind dokumentbezogen.<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

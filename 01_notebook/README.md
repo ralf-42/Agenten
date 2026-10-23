@@ -103,11 +103,8 @@ Diese Dateien ergänzen den Kursweg und zählen nicht zu den regulären Modulen.
 
 | Datei | Zweck |
 |---|---|
-| `Integration_Pipeline_optional.ipynb` | Optionales End-to-End-Beispiel zur Zusammensetzung des PMO-Assistenten |
 | `M90_LangSmith_Project_loeschen.ipynb` | Hilfsnotebook zum Löschen eines LangSmith-Projekts |
 | `M40_PMO_Assistent_Referenzimplementierung.ipynb` | Referenzimplementierung des PMO-Assistenten |
-| `quick_template.ipynb` | Notebook-Vorlage |
-| `X99_kombi_chain_graph.ipynb` | Experimentelles Notebook zur Kombination von Chain und Graph |
 
 
 **Version:** 3.2    

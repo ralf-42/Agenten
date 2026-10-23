@@ -101,10 +101,9 @@ result = chain.invoke({"variable1": "Wert"})
 | Conditional Routing | `pmo_routing_prompt.md` |
 | RAG Grundlagen | `query_rewrite_prompt.md`, `rag_prompt.md` |
 | RAG-Agent | `rag_agent_system_prompt.md` |
-| Integration Pipeline | `quality_judge_prompt.md`, `security_gate_prompt.md` |
 | MCP Local | `math_agent_prompt.md`, `multi_agent_prompt.md`, `notiz_agent_prompt.md` |
 
-`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-06: StateGraph Basics, LangSmith Evaluations Basics, Supervisor Pattern bis Agent Security Best Practices, `agent_system`, `research_few_shot`, `research_zero_shot`, `research_query`, `format_check`, `crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
+`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-23: `quality_judge_prompt`, `security_gate_prompt` (früher Integration Pipeline); Stand 2026-10-06: StateGraph Basics, LangSmith Evaluations Basics, Supervisor Pattern bis Agent Security Best Practices, `agent_system`, `research_few_shot`, `research_zero_shot`, `research_query`, `format_check`, `crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
 
 ## Weiterführend
 

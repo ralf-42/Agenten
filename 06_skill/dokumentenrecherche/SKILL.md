@@ -91,5 +91,4 @@ Nutzeranfrage
 ## Verwandte Module
 
 - Agentic RAG (Retrieval-gesteuerte Dokumentensuche)
-- Integration Pipeline (Recherche als Teilschritt)
 - Advanced RAG Pipeline Patterns (Self-RAG, Reranking)

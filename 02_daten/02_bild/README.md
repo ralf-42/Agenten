@@ -8,7 +8,7 @@ Bilddateien für multimodale Agenten-Übungen (PNG, JPG, WEBP).
 
 ## Geplante Verwendung
 
-Integration Pipeline Gradio UI, multimodale RAG-Demos
+Gradio UI, multimodale RAG-Demos
 
 ## Beispiele für Inhalte
 

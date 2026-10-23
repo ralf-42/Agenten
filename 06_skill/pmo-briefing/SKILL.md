@@ -174,5 +174,4 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 - Human in the Loop – Human-in-the-Loop (Briefing mit `interrupt()` vor Versand)
 - Supervisor Pattern (Briefing als Teilaufgabe im Supervisor-Workflow)
-- Integration Pipeline (Meeting-Briefing als Schritt in einer Prozesskette)
 - DeepAgents Skill PMO-Assistent – DeepAgents-Skill für PMO-Briefings (direkte Anwendung dieses Skills als Leitprojekt-Baustein)

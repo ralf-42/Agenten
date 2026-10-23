@@ -119,16 +119,15 @@ Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing
 
 | Nr. | Modul | Thema | Beschreibung |
 | ---: |-------|-------|-------------|
-| 23 | Optionales Integrationsbeispiel | `01_notebook/Integration_Pipeline_optional.ipynb` | PMO-Assistentensystem als End-to-End-Pipeline |
-| 24 | Advanced RAG Pipeline Patterns | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
-| 25 | Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
-| 26 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
-| 27 | Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
-| 28 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
-| 29 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| 30 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
-| 31 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
-| 32 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
+| 23 | Advanced RAG Pipeline Patterns | Advanced RAG – Pipeline-Patterns | Self-RAG, Reranking, Multi-Vector und CRAG |
+| 24 | Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
+| 25 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
+| 26 | Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
+| 27 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
+| 28 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+| 29 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
+| 30 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| 31 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
 
 ## 🔑 Voraussetzungen
 

@@ -4,7 +4,7 @@
 
 Dieses Verzeichnis enthält aktuell **26 reguläre Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen.“
 
-Der aktive Kursweg ist lückenlos von **M01 bis M26** nummeriert. Der Grundlagenpfad umfasst M01–M18, die Aufbaumodule M19–M23 und die Vertiefungsmodule M24–M26. M40 (Referenzimplementierung) und M90 (LangSmith-Hilfsnotebook) sind ergänzende Notebooks außerhalb des Kurswegs.
+Der aktive Kursweg ist lückenlos nummeriert und umfasst 26 Module. Er gliedert sich in Grundlagen, Aufbau und Vertiefung. Die Referenzimplementierung und das LangSmith-Hilfsnotebook ergänzen den Kursweg.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md`
 
@@ -77,7 +77,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ---
 
-## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion (M19–M26 sowie ergänzende M50–M54)
+## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion
 
 > Diese Module sind **nicht Teil des Grundlagenpfads**. Sie eignen sich als Aufbau- und Vertiefungsmaterial im Kurs oder als Follow-up nach dem Kurs.
 
@@ -100,7 +100,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ## Weitere Notebooks
 
-Diese Dateien ergänzen den lückenlosen Kursweg M01–M26 und zählen nicht zu den 26 regulären Modulen.
+Diese Dateien ergänzen den Kursweg und zählen nicht zu den regulären Modulen.
 
 | Datei | Zweck |
 |---|---|

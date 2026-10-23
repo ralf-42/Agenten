@@ -66,9 +66,11 @@ Der fünftägige Kurs umfasst 26 reguläre Kursnotebooks. Der Grundlagenkern ist
 | **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL | `M03_Prompt_Engineering_fuer_Agenten.ipynb`<br>`M04_Structured_Output.ipynb`<br>`M05_Multi_Tool_Agents.ipynb`<br>`M06_LCEL_Chains.ipynb` | — |
 | **Tag 3** | LangGraph, State, Routing und Tool-Schleifen | `M07_Warum_LangGraph.ipynb`<br>`M08_StateGraph_Basics.ipynb`<br>`M09_Conditional_Routing.ipynb`<br>`M10_Tool_Loop.ipynb` | `M20_Agent_Security_Best_Practices.ipynb` |
 | **Tag 4** | RAG, Retrieval als Tool und erste Evaluation | `M11_RAG_Grundlagen.ipynb`<br>`M12_RAG_Agent.ipynb`<br>`M13_LangSmith_Evaluations_Basics.ipynb` | `M19_Agentic_RAG.ipynb`<br>`M21_Agent_Evaluation_Testing.ipynb`<br>`M22_Model_Routing_Cost_Control.ipynb`<br>`M23_Advanced_RAG_Pipeline_Patterns.ipynb` |
-| **Tag 5** | Sessions, Freigaben und Multi-Agent-Zusammenarbeit | `M14_Sessions_Checkpointing_und_Memory.ipynb`<br>`M15_Human_in_the_Loop.ipynb`<br>`M16_Multi_Agent_Patterns.ipynb`<br>`M17_Supervisor_Pattern.ipynb`<br>`M18_Reflection_Parallel_Hierarchy.ipynb` | `M24_Gradio_UI_fuer_Agenten.ipynb`<br>`M25_MCP_Local.ipynb`<br>`M26_Agent_Skill_Compliance.ipynb` |
+| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | `M14_Sessions_Checkpointing_und_Memory.ipynb`<br>`M15_Human_in_the_Loop.ipynb`<br>`M16_Multi_Agent_Patterns.ipynb`<br>`M17_Supervisor_Pattern.ipynb`<br>`M18_Reflection_Parallel_Hierarchy.ipynb` | `M24_Gradio_UI_fuer_Agenten.ipynb`<br>`M25_MCP_Local.ipynb`<br>`M26_Agent_Skill_Compliance.ipynb` |
 
 Diese ergänzenden Notebooks werden nach Zeit, Vorkenntnissen und Kursziel ausgewählt. Sie sind keine Voraussetzung für den Grundlagenkern.
+
+Im Tag-5-Block spielen die Teilnehmenden nach Human-in-the-Loop eine 15- bis 20-minütige KI-Delegation-Poker-Runde. Am PMO-Assistenten entscheiden sie, welche Schritte autonom laufen dürfen und wo eine menschliche Freigabe nötig ist.
 
 ### Weitere Zusatznotebooks
 

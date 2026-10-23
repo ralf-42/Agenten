@@ -103,8 +103,8 @@ Diese Dateien ergänzen den Kursweg und zählen nicht zu den regulären Modulen.
 
 | Datei | Zweck |
 |---|---|
-| `M90_LangSmith_Project_loeschen.ipynb` | Hilfsnotebook zum Löschen eines LangSmith-Projekts |
-| `M91_API_Keys_einrichten_und_testen.ipynb` | Secrets in Colab anlegen und OpenAI-, Hugging-Face- und LangSmith-Zugang testen |
+| `M90_API_Keys_einrichten_und_testen.ipynb` | Secrets in Colab anlegen und OpenAI-, Hugging-Face- und LangSmith-Zugang testen |
+| `M91_LangSmith_Project_loeschen.ipynb` | Hilfsnotebook zum Löschen eines LangSmith-Projekts |
 | `M40_PMO_Assistent_Referenzimplementierung.ipynb` | Referenzimplementierung des PMO-Assistenten |
 
 

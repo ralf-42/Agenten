@@ -70,7 +70,7 @@ Die Module führen von ersten Agentenbegriffen über Tool Use, LangGraph, RAG un
 | **Aufbau: Qualität und Integration** | Agentic RAG, Security, Evaluation, Routing, Kostenkontrolle, Pipeline, Projekt-Templates, Advanced RAG |
 | **Vertiefung: Skills und Produktion** | UI, MCP, Skill-Design, DeepAgents, Deployment, Capstone |
 
-Der Grundlagenpfad M01–M17 sowie M19–M21 ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. M18 ist als früheres Memory-Modul in M16 integriert und liegt nur noch als Legacy-Backup vor. Die Aufbaumodule M22–M28 und die Vertiefungsmodule M29–M38 erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
+Der Grundlagenpfad KI-Agenten und Tool Use bis Human in the Loop sowie Multi-Agent Patterns bis Reflection, Parallel, Hierarchy ist auf fünf Kurstage mit je vier 90-Minuten-Blöcken (09:00–16:30 Uhr) verteilt. Das frühere Memory-Modul ist in Sessions, Checkpointing und Memory integriert und liegt nur noch als Legacy-Backup vor. Die Aufbaumodule Agentic RAG bis Advanced RAG Pipeline Patterns und die Vertiefungsmodule Gradio UI für Agenten bis Production Deployment erweitern einzelne Blöcke gezielt oder dienen als Material nach dem Kurs. Welche Zusatzmodule im Kurs eingesetzt werden, hängt von Tempo und Vorkenntnissen ab.
 
 Ergänzend geht es um Governance-Fragen. Wer den Kurs nur überblicken möchte, liest zuerst Kursprogression und Modulübersicht. Wer entscheiden möchte, ob der Kurs passt, beginnt mit Zielgruppe, Vorbereitung und den nächsten Schritten am Ende dieser Seite.
 
@@ -92,25 +92,25 @@ timeline
     title Agenten-Progression im Kursverlauf
     section Agenten-Grundlagen
         Erste handlungsfähige Agenten : Agentenbegriff, Tools, erster LangChain-Agent
-                                     : M01-M02
+                                     : KI-Agenten und Tool Use bis LangChain Erste Agenten
     section Strukturierte Agenten
         Steuerbare Einzelschritte     : Prompts, Schemas, Multi-Tool, LCEL
-                                     : M03-M06
+                                     : Prompt Engineering für Agenten bis LCEL Chains
     section Kontrollierte Workflows
         Agenten mit Zustand           : LangGraph, StateGraph, Routing, Tool Loop
-                                     : M07-M10
+                                     : Warum LangGraph bis Tool Loop
     section Wissensbasierte Agenten
         RAG als Evidence Tool         : ChromaDB, Retrieval, RAG-Agent, Evaluation
-                                     : M11-M15
+                                     : RAG Grundlagen bis LangSmith Evaluations Basics
     section Kontrollierte Zusammenarbeit
         Sessions, Freigabe und Teams  : Checkpointing, HITL, Memory, Multi-Agent-Patterns
-                                     : M16-M17, M19-M21
+                                     : Sessions, Checkpointing und Memory bis Human in the Loop, Multi-Agent Patterns bis Reflection, Parallel, Hierarchy
     section Aufbau
         Belastbare Agentensysteme     : Agentic RAG, Security, Evaluation, Routing, Kosten, Pipeline, Advanced RAG
-                                     : M22-M28
+                                     : Agentic RAG bis Advanced RAG Pipeline Patterns
     section Vertiefung
         Vom Kursprojekt zum System    : UI, MCP, Skills, DeepAgents, Deployment, Capstone
-                                     : M29-M38
+                                     : Gradio UI für Agenten bis Production Deployment
 ```
 
 ## Maturity Model als Overlay
@@ -119,11 +119,11 @@ Die Kursprogression lässt sich auch als Reifegradmodell lesen. Es ist keine zwe
 
 | Reifegrad | Kurzbeschreibung | Kursbezug | Einordnung |
 |---|---|---|---|
-| **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | M01-M05, M30 | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
-| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | M03-M10, M16-M17 | Prompts, Schemas, Routing, Checkpointing, Memory und Human-in-the-Loop machen Verhalten kontrollierbarer. |
-| **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | M15, M19-M24 | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
-| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | M16, M22-M36 | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
-| **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | M24 | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
+| **Level 1: Reactive** | Reagiert auf Eingaben und ruft kontrolliert Tools auf. | KI-Agenten und Tool Use bis Multi-Tool-Agents, MCP Local | Der Agent nutzt Werkzeuge und lernt standardisierte Schnittstellen wie MCP kennen. |
+| **Level 2: Assisted** | Wird durch Harness, State und menschliche Freigaben steuerbar. | Prompt Engineering für Agenten bis Tool Loop, Sessions, Checkpointing und Memory bis Human in the Loop | Prompts, Schemas, Routing, Checkpointing, Memory und Human-in-the-Loop machen Verhalten kontrollierbarer. |
+| **Level 3: Supervised** | Wird koordiniert, evaluiert und abgesichert. | LangSmith Evaluations Basics, Multi-Agent Patterns bis Agent Evaluation und Testing | Multi-Agent-Muster, Supervisor, Evaluation, Regression, Security und Guardrails machen Ergebnisse prüfbar. |
+| **Level 4: Autonomous** | Bearbeitet längere Aufgaben mit Memory, Betriebskontrolle und Kostenlimits. | Sessions, Checkpointing und Memory, Agentic RAG bis Production Deployment | Memory, Kostenkontrolle, Deployment, Monitoring und produktionsnahe Schleifen schaffen Betriebsfähigkeit. |
+| **Level 5: Self-Improving** | Nutzt Feedback und Evaluation zur Verbesserung, bleibt aber beaufsichtigt. | Agent Evaluation und Testing | Der Kurs zeigt Verbesserungszyklen, aber kein vollautomatisches selbstlernendes Agentensystem. |
 
 Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Modell hilft beim Einordnen: Welche zusätzliche Freiheit bekommt der Agent, und welche Kontrolle muss dadurch sichtbar werden? Bausteine wie Memory oder Evaluation erscheinen dort, wo sie didaktisch gebraucht werden. Level 5 bleibt bewusst als Grenze markiert: Reale Systeme können durch Feedback besser geprüft werden, verbessern sich aber nicht unbegrenzt und unbeaufsichtigt selbst.
 
@@ -131,52 +131,52 @@ Wichtig ist die Lesart: Die Module folgen keiner starren Level-Treppe. Das Model
 
 | Modul | Block                             | Inhalt                               | Schwerpunkt                                            |
 | :---: | --------------------------------- | ------------------------------------ | ------------------------------------------------------ |
-|  M01  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
-|  M02  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster PMO-Assistent  |
-|  M03  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
-|  M04  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
-|  M05  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
-|  M06  | Strukturierte Agenten             | LCEL Chains                          | Kontrollierte Teilketten und Übergang zu LangGraph     |
-|  M07  | Kontrollierte Workflows           | Warum LangGraph?                     | Grenzen einfacher Agents, expliziter State             |
-|  M08  | Kontrollierte Workflows           | StateGraph Basics                    | Nodes, Edges, State und Verbesserungsschleifen         |
-|  M09  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics, Planning-Patterns |
-|  M10  | Kontrollierte Workflows           | Tool-Loop                            | Tool-Loop, Tool-Steuerung im Graph                     |
-|  M11  | Wissensbasierte Agenten           | RAG-Konzepte & Embeddings            | Korpus, Embeddings, Chunking                           |
-|  M12  | Wissensbasierte Agenten           | ChromaDB Indexing                    | Vektordatenbank, Indexierung, Abfrage                  |
-|  M13  | Wissensbasierte Agenten           | RAG Chain mit LangChain              | Retriever, Quellenbindung, Antwortkette                |
-|  M14  | Wissensbasierte Agenten           | RAG-Agent                            | Retrieval als Agenten-Tool                             |
-|  M15  | Wissensbasierte Agenten           | LangSmith Evaluations Basics         | Eval-Set, Retrieval-Score, Regression                  |
-|  M16  | Kontrollierte Zusammenarbeit      | Sessions, Checkpointing & Memory     | Thread-ID, Fortsetzen, Kurzzeit- und Langzeit-Memory   |
-|  M17  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
-|  M19  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
-|  M20  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
-|  M21  | Kontrollierte Zusammenarbeit      | Reflection, Parallel, Hierarchie     | Prüfschleife, Fan-out, Teams                              |
-|  M22  | Aufbau: Qualität und Integration  | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
-|  M23  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
-|  M24  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
-|  M25  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
-|  M26  | Aufbau: Qualität und Integration  | Integration Pipeline                 | PMO-Assistentensystem als E2E-Pipeline   |
-|  M28  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
-|  M29  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
-|  M30  | Vertiefung: Skills und Produktion | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
-|  M31  | Vertiefung: Skills und Produktion | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
-|  M32  | Vertiefung: Skills und Produktion | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
-|  M33  | Vertiefung: Skills und Produktion | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
-|  M34  | Vertiefung: Skills und Produktion | DeepAgents-Skill für PMO-Briefings  | PMO-Briefing als Skill für den PMO-Assistenten         |
-|  M35  | Vertiefung: Skills und Produktion | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
-|  M36  | Vertiefung: Skills und Produktion | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
+|  KI-Agenten und Tool Use  | Agenten-Grundlagen                | KI-Agenten und Tool Use              | Agentenbegriff, ReAct/TAO, Kurszielbild, erste Werkzeuge |
+|  LangChain Erste Agenten  | Agenten-Grundlagen                | Erste Agenten mit LangChain          | `create_agent()`, Tool-Auswahl, erster PMO-Assistent  |
+|  Prompt Engineering für Agenten  | Strukturierte Agenten             | Prompt Engineering                   | Rollen, Grenzen, Tool-Regeln, sichtbare Reasoning-Artefakte |
+|  Structured Output  | Strukturierte Agenten             | Structured Output                    | Antwortschema, Quellenpflicht, Prüfbarkeit             |
+|  Multi-Tool-Agents  | Strukturierte Agenten             | Multi-Tool Agents                    | Mehrere Tools, Fehlerbehandlung, Auswahl               |
+|  LCEL Chains  | Strukturierte Agenten             | LCEL Chains                          | Kontrollierte Teilketten und Übergang zu LangGraph     |
+|  Warum LangGraph  | Kontrollierte Workflows           | Warum LangGraph?                     | Grenzen einfacher Agents, expliziter State             |
+|  StateGraph Basics  | Kontrollierte Workflows           | StateGraph Basics                    | Nodes, Edges, State und Verbesserungsschleifen         |
+|  Conditional Routing  | Kontrollierte Workflows           | Conditional Routing & Qualitäts-Gate | Routing, Qualitäts-Gate, Security-Basics, Planning-Patterns |
+|  Tool Loop  | Kontrollierte Workflows           | Tool-Loop                            | Tool-Loop, Tool-Steuerung im Graph                     |
+|  RAG Grundlagen  | Wissensbasierte Agenten           | RAG-Konzepte & Embeddings            | Korpus, Embeddings, Chunking                           |
+|  RAG Grundlagen  | Wissensbasierte Agenten           | ChromaDB Indexing                    | Vektordatenbank, Indexierung, Abfrage                  |
+|  RAG Grundlagen  | Wissensbasierte Agenten           | RAG Chain mit LangChain              | Retriever, Quellenbindung, Antwortkette                |
+|  RAG-Agent  | Wissensbasierte Agenten           | RAG-Agent                            | Retrieval als Agenten-Tool                             |
+|  LangSmith Evaluations Basics  | Wissensbasierte Agenten           | LangSmith Evaluations Basics         | Eval-Set, Retrieval-Score, Regression                  |
+|  Sessions, Checkpointing und Memory  | Kontrollierte Zusammenarbeit      | Sessions, Checkpointing & Memory     | Thread-ID, Fortsetzen, Kurzzeit- und Langzeit-Memory   |
+|  Human in the Loop  | Kontrollierte Zusammenarbeit      | Human-in-the-Loop                    | Review, Freigabe, Unterbrechung                        |
+|  Multi-Agent Patterns  | Kontrollierte Zusammenarbeit      | Multi-Agent Patterns                 | Supervisor, Hierarchie, Pipeline                       |
+|  Supervisor Pattern  | Kontrollierte Zusammenarbeit      | Supervisor Pattern                   | Worker, Supervisor, Guardrails                         |
+|  Reflection, Parallel, Hierarchy  | Kontrollierte Zusammenarbeit      | Reflection, Parallel, Hierarchie     | Prüfschleife, Fan-out, Teams                              |
+|  Agentic RAG  | Aufbau: Qualität und Integration  | Agentic RAG                          | Retrieval-Budget, Grounding, Out-of-Context-Stopp      |
+|  Agent Security Best Practices  | Aufbau: Qualität und Integration  | Agent Security Best Practices        | Prompt Injection, Tool-Gating, Audit                   |
+|  Agent Evaluation und Testing  | Aufbau: Qualität und Integration  | Agent Evaluation & Testing           | Tests, Regression, Tool-Choice-Scoring, Adversarial Benchmarks |
+|  Model Routing und Cost Control  | Aufbau: Qualität und Integration  | Model Routing & Cost Control         | Fallback, Circuit Breaker, Budget Gate                 |
+|  Integration Pipeline  | Aufbau: Qualität und Integration  | Integration Pipeline                 | PMO-Assistentensystem als E2E-Pipeline   |
+|  Advanced RAG Pipeline Patterns  | Aufbau: Qualität und Integration  | Advanced RAG Pipeline Patterns       | Self-RAG, Reranking, CRAG                              |
+|  Gradio UI für Agenten  | Vertiefung: Skills und Produktion | Gradio UI für Agenten                | Chat UI, Streaming, HITL-UI                            |
+|  MCP Local  | Vertiefung: Skills und Produktion | MCP Local                            | Lokale MCP-Server und standardisierte Tool-Integration |
+|  Agent Skill Compliance  | Vertiefung: Skills und Produktion | Agent Skill Compliance               | Skill-Struktur, Guardrails, Mixed Models               |
+|  DeepAgents Harness  | Vertiefung: Skills und Produktion | DeepAgents Harness                   | Planning, Tools, Sub-Agenten (Kern)                    |
+|  DeepAgents Vertiefung  | Vertiefung: Skills und Produktion | DeepAgents: Parameter & Einordnung   | Weitere Parameter, Sandbox, Vergleich zu LangGraph     |
+|  DeepAgents Skill PMO-Assistent  | Vertiefung: Skills und Produktion | DeepAgents-Skill für PMO-Briefings  | PMO-Briefing als Skill für den PMO-Assistenten         |
+|  DeepAgent Multi-Skill  | Vertiefung: Skills und Produktion | DeepAgent Multi-Skill                | Multi-Skill-Routing und Progressive Disclosure         |
+|  Production Deployment  | Vertiefung: Skills und Produktion | Production Deployment                | Notebook → Production, Modell-Konfig, Docker           |
 
 In der Modulübersicht steht der fachliche Schwerpunkt im Vordergrund. Der Beitrag zum Leitprojekt bleibt durchgehend derselbe: Jeder Block erweitert den PMO-Assistenten um eine neue Fähigkeit oder einen neuen Kontrollpunkt.
 
 | Kursblock | Ausbau am PMO-Assistenten |
 |---|---|
-| **M01-M02: Agenten-Grundlagen** | Der Agent bekommt ein Zielbild, erste Tools und einen einfachen LangChain-Harness. |
-| **M03-M06: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
-| **M07-M10: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
-| **M11-M15: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
-| **M16-M17, M19-M21: Kontrollierte Zusammenarbeit** | Sessions, Memory, Human-in-the-Loop und Multi-Agent-Muster machen längere Abläufe steuerbar. |
-| **M22-M28: Aufbau: Qualität und Integration** | Agentic RAG, Security, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab; Pipeline, Projekt-Templates und Advanced RAG führen die Bausteine zusammen. |
-| **M29-M38: Vertiefung: Skills und Produktion** | UI, MCP-Integration, Skills, DeepAgents, Deployment und Capstone bringen den Agenten in einen betriebsnahen Zustand. |
+| **KI-Agenten und Tool Use bis LangChain Erste Agenten: Agenten-Grundlagen** | Der Agent bekommt ein Zielbild, erste Tools und einen einfachen LangChain-Harness. |
+| **Prompt Engineering für Agenten bis LCEL Chains: Strukturierte Agenten** | Prompts, Schemas und Teilketten machen Aufgaben, Grenzen und Antwortformate kontrollierbar. |
+| **Warum LangGraph bis Tool Loop: Kontrollierte Workflows** | LangGraph ergänzt expliziten State, Routing, Qualitäts-Gates und Tool-Loops. |
+| **RAG Grundlagen bis LangSmith Evaluations Basics: Wissensbasierte Agenten** | Der Agent nutzt einen Projektkorpus, Retrieval, Quellenbindung und erste Evaluationen. |
+| **Sessions, Checkpointing und Memory bis Human in the Loop, Multi-Agent Patterns bis Reflection, Parallel, Hierarchy: Kontrollierte Zusammenarbeit** | Sessions, Memory, Human-in-the-Loop und Multi-Agent-Muster machen längere Abläufe steuerbar. |
+| **Agentic RAG bis Advanced RAG Pipeline Patterns: Aufbau: Qualität und Integration** | Agentic RAG, Security, Tests, Regression, Modellrouting und Kostenkontrolle sichern den Agenten ab; Pipeline, Projekt-Templates und Advanced RAG führen die Bausteine zusammen. |
+| **Gradio UI für Agenten bis Production Deployment: Vertiefung: Skills und Produktion** | UI, MCP-Integration, Skills, DeepAgents, Deployment und Capstone bringen den Agenten in einen betriebsnahen Zustand. |
 
 Einige Begriffe sind bewusst knapp gehalten. **Evidence Tool** meint ein Retrieval-Werkzeug, das Antworten mit Quellenmaterial verbindet. **Out-of-Context-Stopp** bedeutet, dass der Agent anhält, wenn die vorhandenen Quellen keine belastbare Antwort tragen. **Circuit Breaker** bezeichnet eine Schutzschaltung, die Abläufe bei Fehlern, Kosten- oder Qualitätsgrenzen stoppt.
 

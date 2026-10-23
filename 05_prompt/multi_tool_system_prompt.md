@@ -1,6 +1,6 @@
 ---
-name: m05_multi_tool_system_prompt
-description: System-Prompt für Multi-Tool-PMO-Assistent in M05
+name: multi_tool_system_prompt
+description: System-Prompt für Multi-Tool-PMO-Assistent in Multi-Tool-Agents
 variables: []
 ---
 

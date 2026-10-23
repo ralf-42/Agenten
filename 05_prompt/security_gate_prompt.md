@@ -1,6 +1,6 @@
 ---
-name: m26_security_gate_prompt
-description: System-Prompt für das Security Gate in M26 (Integration Pipeline) — prüft Prompt-Injection, schädliche Inhalte und Social Engineering
+name: security_gate_prompt
+description: System-Prompt für das Security Gate in Integration Pipeline (Integration Pipeline) — prüft Prompt-Injection, schädliche Inhalte und Social Engineering
 variables: []
 ---
 

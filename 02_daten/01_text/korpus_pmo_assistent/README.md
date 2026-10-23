@@ -34,7 +34,7 @@ Die Datei `metadata.json` beschreibt jedes Dokument mit stabilen Feldern für Re
 - `topics` und `recommended_modules`
 - `project_id`, `source_status` und `source_authority` für Projektfilter und Quellenprüfung
 
-Empfehlung für den Unterricht: In M10/M11 zuerst mit einem Teil der Protokolle arbeiten und den Korpus erst danach vollständig verwenden.
+Empfehlung für den Unterricht: In Tool Loop/RAG Grundlagen zuerst mit einem Teil der Protokolle arbeiten und den Korpus erst danach vollständig verwenden.
 
 ## Enthaltene Dokumente — Meeting- & Projektartefakte
 
@@ -67,13 +67,13 @@ Die beiden Distraktoren sind absichtlich enthalten. `corpus_part`, `project_id`,
 
 ## Empfohlene Nutzung im Kurs
 
-1. M10/M11: Keyword-Suche vs. semantische Suche auf den Meeting-Protokollen.
-2. M12/M13: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
-3. M14/M23: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
-4. M16/M22: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
-5. M19/M20: strukturierte CSV-Daten für Budget-, Status- und Kapazitätsfragen verwenden.
-6. M04/M06/M17/M34: Rohnotizen in ein strukturiertes Meeting-Ergebnis überführen.
-7. M35: Teilnehmer bauen eine Variante mit eigenem PMO-Korpus oder Zusatzdokumenten.
+1. Tool Loop/RAG Grundlagen: Keyword-Suche vs. semantische Suche auf den Meeting-Protokollen.
+2. RAG Grundlagen: RAG-Chain und RAG-Agent mit Quellenpflicht auf dem gesamten Korpus, inkl. Konflikt- und Versionierungsfällen.
+3. RAG-Agent/Agent Security Best Practices: Eval-Fragen gegen Retrieval- und Antwortqualität prüfen, insbesondere die Edge Cases.
+4. Sessions, Checkpointing und Memory/Agentic RAG: Unsicherheit, offene Punkte, Prompt Injection (Dokument 9) und HITL diskutieren.
+5. Multi-Agent Patterns/Supervisor Pattern: strukturierte CSV-Daten für Budget-, Status- und Kapazitätsfragen verwenden.
+6. Structured Output/LCEL Chains/Human in the Loop/DeepAgents Skill PMO-Assistent: Rohnotizen in ein strukturiertes Meeting-Ergebnis überführen.
+7. DeepAgent Multi-Skill: Teilnehmer bauen eine Variante mit eigenem PMO-Korpus oder Zusatzdokumenten.
 
 ## Eval-Sets
 

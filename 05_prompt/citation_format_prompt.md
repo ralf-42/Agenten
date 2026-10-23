@@ -1,5 +1,5 @@
 ---
-name: m04_citation_format_prompt
+name: citation_format_prompt
 description: Strukturierte Quellenkarte mit Citation-Hinweis für Briefing-Antworten
 variables: [text]
 ---

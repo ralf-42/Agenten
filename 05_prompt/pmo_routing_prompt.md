@@ -1,5 +1,5 @@
 ---
-name: m09_pmo_routing_prompt
+name: pmo_routing_prompt
 description: Klassifiziert Briefing-Fragen nach Bearbeitungspfad
 variables: [text]
 ---

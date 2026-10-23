@@ -3,12 +3,12 @@ pmo_rag.py — Wiederverwendbare Chroma-RAG-Kette für den PMO-Assistenten
 
 Extrahiert aus der in M14_RAG_Agent.ipynb final genutzten Implementierung
 (Dokumentladen, Zeichen-Chunking, Chroma-Erstellung/Indexierung, Retrieval-Tool),
-damit M15 und die nachfolgenden Module (M26, M28, M29, M36) dieselbe Kette wiederverwenden statt sie zu duplizieren.
+damit LangSmith Evaluations Basics und die nachfolgenden Module (Integration Pipeline, Advanced RAG Pipeline Patterns, Gradio UI für Agenten, Production Deployment) dieselbe Kette wiederverwenden statt sie zu duplizieren.
 
-M11 enthält die früheren M12/M13-Schritte und baut die Kette weiterhin
-Schritt für Schritt selbst als Inline-Code. M14 nutzt den Mehrformat-Lader
+RAG Grundlagen enthält die früheren Schritte zu Chroma-Indexing und RAG-Chain und baut die Kette weiterhin
+Schritt für Schritt selbst als Inline-Code. RAG-Agent nutzt den Mehrformat-Lader
 dieses Moduls, damit der PMO-Korpus einschließlich Markdown- und CSV-Artefakten
-indexiert werden kann. M22 nutzt
+indexiert werden kann. Agentic RAG nutzt
 bewusst einen synthetischen In-Memory-Datensatz.
 
 Nur für Google Colab: Die produktive Collection liegt auf Google Drive
@@ -50,7 +50,7 @@ from pypdf import PdfReader
 from genai_lib.model_config import EMBEDDINGS
 from genai_lib.utilities import mprint
 
-DEFAULT_COLLECTION_NAME = "pmo_korpus_m14"
+DEFAULT_COLLECTION_NAME = "pmo_korpus"
 DEFAULT_PERSIST_DIRECTORY = "/content/drive/MyDrive/Agenten/02_daten/05_sonstiges/chroma_pmo"
 KORPUS_METADATA_URL = (
     "https://raw.githubusercontent.com/ralf-42/Agenten/main/"

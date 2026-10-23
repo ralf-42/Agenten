@@ -1,6 +1,6 @@
 ---
-name: m30_notiz_agent_prompt
-description: System-Prompt für den Notiz-Agenten in M30 (MCP Local)
+name: notiz_agent_prompt
+description: System-Prompt für den Notiz-Agenten in MCP Local (MCP Local)
 variables: []
 ---
 

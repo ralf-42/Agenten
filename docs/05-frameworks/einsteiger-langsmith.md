@@ -116,7 +116,7 @@ import os
 
 # ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"]    = "m01-langsmith-setup"  # Konvention: "m##-thema"
+os.environ["LANGSMITH_PROJECT"]    = "langsmith-setup"  # Konvention: "m##-thema"
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
 # Erst danach: genai_lib und weitere Imports
@@ -131,7 +131,7 @@ get_ipinfo()
 
 **Wichtig:**
 - Env-Vars stehen **vor** dem `genai_lib`-Import – das ist Pflicht laut Best Practices
-- **Projektname-Konvention:** `"m##-thema"` (z.B. `"m04-structured-output"`) – Traces sind sofort dem Modul zuzuordnen
+- **Projektname-Konvention:** `"m##-thema"` (z.B. `"structured-output"`) – Traces sind sofort dem Modul zuzuordnen
 - `create_globals=False` verhindert globale Variablen (Best Practice)
 - Ab jetzt werden **alle** LangChain/LangGraph-Operationen automatisch getrackt
 
@@ -159,7 +159,7 @@ print(response.content)
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
 - URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects)
-- Projekt auswählen: `"m01-langsmith-setup"`
+- Projekt auswählen: `"langsmith-setup"`
 - Ersten Trace anklicken → vollständige Details sehen
 
 ---
@@ -170,7 +170,7 @@ LangSmith organisiert alle Daten in einer klaren Hierarchie:
 
 ```mermaid
 flowchart TB
-    PROJECT["Project<br>Container für alle Traces<br>z.B. 'M13-RAG-Chain'"]
+    PROJECT["Project<br>Container für alle Traces<br>z.B. 'RAG-Chain'"]
     THREAD["Thread<br>Gesprächs-Sequenz<br>session_id / conversation_id"]
     TRACE["Trace<br>Eine vollständige Anfrage<br>z.B. RAG-Ausführung"]
     RUN["Run<br>Einzelne Operation<br>llm · chain · tool · ..."]
@@ -572,7 +572,7 @@ result = compiled_graph.invoke(
 
 ```python
 # ✅ Modulname in der Setup-Cell – vor allen Imports!
-os.environ["LANGSMITH_PROJECT"] = "m04-structured-output"
+os.environ["LANGSMITH_PROJECT"] = "structured-output"
 ```
 
 **Wichtig:** `LANGSMITH_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
@@ -586,7 +586,7 @@ import os
 
 # ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"]    = "m04-structured-output"  # Modulname anpassen
+os.environ["LANGSMITH_PROJECT"]    = "structured-output"  # Modulname anpassen
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
 
 # Erst danach: genai_lib und weitere Imports
@@ -604,7 +604,7 @@ import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
-run_cfg = {"run_name": "m04_kap6_structuredtrace", "tags": ["m04", "structured-output"]}
+run_cfg = {"run_name": "kap6_structuredtrace", "tags": ["structured-output"]}
 result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("...")
 ```
 
@@ -612,7 +612,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 
 | Kontext    | Projektname                                  |
 | ---------- | -------------------------------------------- |
-| Notebook   | `"m##-thema"` z.B. `"m04-structured-output"` |
+| Notebook   | `"m##-thema"` z.B. `"structured-output"` |
 | Produktion | `"chatbot-production"`                       |
 | Experiment | `"rag-experiment-2026-03"`                   |
 
@@ -623,8 +623,8 @@ from langsmith import tracing_context
 
 with tracing_context(enabled=True):
     result = agent.with_config(
-        run_name="m02_kap5_agenttrace",
-        tags=["m02", "agent", "langsmith"],
+        run_name="kap5_agenttrace",
+        tags=["agent", "langsmith"],
     ).invoke({"messages": [...]})
 ```
 
@@ -704,8 +704,8 @@ Automatisches Tracing erfasst alle Runs – aber ohne explizite Namen sind sie i
 ```python
 # Config-Parameter in einer eigenen Variable definieren
 run_cfg = {
-    "run_name": "m06_kap3_lcel_grundchain",  # Konvention: m##_kap##_typ
-    "tags":     ["m06", "lcel", "chain"],     # Filterbar im LangSmith-Dashboard
+    "run_name": "kap3_lcel_grundchain",  # Konvention: m##_kap##_typ
+    "tags":     ["lcel", "chain"],     # Filterbar im LangSmith-Dashboard
 }
 
 chain = (
@@ -730,13 +730,13 @@ Beide Varianten setzen Tracing- und Laufzeitkonfiguration, wirken aber unterschi
 # Nur dieser eine Run bekommt Name und Tags.
 antwort = chain.invoke(
     {"topic": "Vektordatenbanken"},
-    config={"run_name": "m06_kap3_einzelrun", "tags": ["m06", "test"]},
+    config={"run_name": "kap3_einzelrun", "tags": ["test"]},
 )
 
 # Diese Chain-Variante trägt Name und Tags bei jedem späteren Aufruf.
 traced_chain = chain.with_config(
-    run_name="m06_kap3_grundchain",
-    tags=["m06", "lcel", "chain"],
+    run_name="kap3_grundchain",
+    tags=["lcel", "chain"],
 )
 antwort = traced_chain.invoke({"topic": "Embeddings"})
 ```
@@ -747,8 +747,8 @@ Für Lehr-Notebooks ist `invoke(..., config=...)` oft flexibler, wenn einzelne V
 
 ```python
 run_cfg = {
-    "run_name": "m02_kap1_llm_basis",
-    "tags":     ["m02", "llm"],
+    "run_name": "kap1_llm_basis",
+    "tags":     ["llm"],
 }
 
 named_llm = llm.with_config(**run_cfg)
@@ -765,8 +765,8 @@ class Person(BaseModel):
     alter: int = Field(description="Alter in Jahren")
 
 run_cfg = {
-    "run_name": "m04_kap3_personextraktion",
-    "tags":     ["m04", "structured-output"],
+    "run_name": "kap3_personextraktion",
+    "tags":     ["structured-output"],
 }
 
 structured_llm = llm.with_structured_output(Person).with_config(**run_cfg)
@@ -777,8 +777,8 @@ ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
 
 | Parameter | Konvention | Beispiel |
 |-----------|-----------|---------|
-| `run_name` | `"m##_kap##_typ"` (Modul, Kapitel, Kurzname) | `"m04_kap3_personextraktion"` |
-| `tags` | Liste: `["M##", "typ", ...]` | `["M04", "structured-output"]` |
+| `run_name` | `"m##_kap##_typ"` (Modul, Kapitel, Kurzname) | `"kap3_personextraktion"` |
+| `tags` | Liste: `["M##", "typ", ...]` | `["Structured Output", "structured-output"]` |
 
 > ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
 
@@ -844,10 +844,10 @@ Ohne LangSmith-Trace wäre der Grund für die erhöhte Latenz nicht erkennbar ge
 from genai_lib.utilities import show_trace
 
 # Letzte 3 Runs anzeigen
-show_trace("m13-rag-chain", limit=3)
+show_trace("rag-chain", limit=3)
 
 # Mit Step-Analyse des letzten Runs (zeigt alle Retrieval-Schritte)
-show_trace("m13-rag-chain", show_steps=True)
+show_trace("rag-chain", show_steps=True)
 ```
 
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um

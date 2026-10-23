@@ -233,10 +233,10 @@ liefern.
 
 ## Bezug zu den Kursnotebooks
 
-- [M08 – StateGraph Basics](../../01_notebook/M08_StateGraph_Basics.ipynb)
-- [M09 – Conditional Routing](../../01_notebook/M09_Conditional_Routing.ipynb)
-- [M19 – Multi-Agent Patterns](../../01_notebook/M19_Multi_Agent_Patterns.ipynb)
-- [M20 – Supervisor Pattern](../../01_notebook/M20_Supervisor_Pattern.ipynb)
+- [StateGraph Basics](../../01_notebook/M08_StateGraph_Basics.ipynb)
+- [Conditional Routing](../../01_notebook/M09_Conditional_Routing.ipynb)
+- [Multi-Agent Patterns](../../01_notebook/M19_Multi_Agent_Patterns.ipynb)
+- [Supervisor Pattern](../../01_notebook/M20_Supervisor_Pattern.ipynb)
 - [LangGraph Best Practices](./langgraph-best-practices.html)
 
 ---

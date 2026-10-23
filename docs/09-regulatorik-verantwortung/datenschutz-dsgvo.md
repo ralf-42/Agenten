@@ -99,10 +99,10 @@ Darüber hinaus lohnt es sich, vor dem Logging sensible Felder zu maskieren oder
 
 ```python
 run_cfg = {
-    "run_name": "m13_rag_query",
-    "tags": ["rag", "m13"],
+    "run_name": "rag_query",
+    "tags": ["rag"],
     "metadata": {
-        "modul": "m13",
+        "modul": "modul",
         "anfrage_typ": "fachfrage",
         # Kein echter Nutzername, keine E-Mail in Metadaten
     }

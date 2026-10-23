@@ -52,12 +52,12 @@ Ressourcen und Forschungsarbeiten von Anthropic zu KI-Agenten, Protokollen und g
 | [Measuring Agent Autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) | Methoden zur Messung und Bewertung von Agenten-Autonomie |
 | [Economic Index Primitives](https://www.anthropic.com/research/economic-index-primitives) | Grundlegende Konzepte für wirtschaftliche Indizes im KI-Kontext |
 | [Anthropic Economic Index: US Usage](https://www.anthropic.com/economic-index#us-usage) | Nutzungsmuster von KI in den USA als Teil des Anthropic Economic Index |
-| [Alignment Faking in Large Language Models](https://www.anthropic.com/research/alignment-faking) | Wie LLMs scheinbar kooperieren, aber eigene Ziele verfolgen – zentral für Agenten-Sicherheit (→ M23) |
-| [Tracing the Thoughts of a Large Language Model](https://www.anthropic.com/research/tracing-thoughts-language-model) | Interpretierbarkeit von LLM-Entscheidungen – Hintergrund zu LangSmith-Tracing (→ M15/M24) |
-| [Disempowerment Patterns in Real-World AI Usage](https://www.anthropic.com/research/disempowerment-patterns) | Reale Missbrauchsmuster bei KI-Nutzung – Grundlage für Security Best Practices (→ M23) |
-| [Constitutional Classifiers: Defending Against Universal Jailbreaks](https://www.anthropic.com/research/constitutional-classifiers) | Technische Abwehr von Jailbreaks durch regelbasierte Klassifikatoren (→ M23) |
-| [Project Vend: Phase Two](https://www.anthropic.com/research/project-vend-2) | Anthropics autonomes Einkaufs-Experiment – Praxisbeispiel für Multi-Agent-Systeme (→ M19–M20) |
-| [Claude's New Constitution](https://www.anthropic.com/news/claude-new-constitution) | Wie Agenten-Verhalten durch Constitutional AI gesteuert wird (→ M01/M23) |
+| [Alignment Faking in Large Language Models](https://www.anthropic.com/research/alignment-faking) | Wie LLMs scheinbar kooperieren, aber eigene Ziele verfolgen – zentral für Agenten-Sicherheit (→ Agent Security Best Practices) |
+| [Tracing the Thoughts of a Large Language Model](https://www.anthropic.com/research/tracing-thoughts-language-model) | Interpretierbarkeit von LLM-Entscheidungen – Hintergrund zu LangSmith-Tracing (→ LangSmith Evaluations Basics/Agent Evaluation und Testing) |
+| [Disempowerment Patterns in Real-World AI Usage](https://www.anthropic.com/research/disempowerment-patterns) | Reale Missbrauchsmuster bei KI-Nutzung – Grundlage für Security Best Practices (→ Agent Security Best Practices) |
+| [Constitutional Classifiers: Defending Against Universal Jailbreaks](https://www.anthropic.com/research/constitutional-classifiers) | Technische Abwehr von Jailbreaks durch regelbasierte Klassifikatoren (→ Agent Security Best Practices) |
+| [Project Vend: Phase Two](https://www.anthropic.com/research/project-vend-2) | Anthropics autonomes Einkaufs-Experiment – Praxisbeispiel für Multi-Agent-Systeme (→ Multi-Agent Patterns bis Supervisor Pattern) |
+| [Claude's New Constitution](https://www.anthropic.com/news/claude-new-constitution) | Wie Agenten-Verhalten durch Constitutional AI gesteuert wird (→ KI-Agenten und Tool Use/Agent Security Best Practices) |
 | [How AI Assistance Impacts the Formation of Coding Skills](https://www.anthropic.com/research/AI-assistance-coding-skills) | Studie zu KI-Unterstützung beim Coding-Lernen – relevant für Kurs-Kontext |
 
 ---
@@ -91,13 +91,13 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 
 | Ressource | Beschreibung |
 |-----------|--------------|
-| [LangChain Docs](https://python.langchain.com/) | Offizielle Dokumentation: Chains, Agents, Tools, RAG (→ M01–M06) |
-| [LangGraph Docs](https://langchain-ai.github.io/langgraph/) | Offizielle Dokumentation: StateGraph, Nodes, Edges, HITL, Multi-Agent (→ M07–M10, M16–M20) |
-| [LangSmith Docs](https://docs.smith.langchain.com/) | Offizielle Dokumentation: Tracing, Evaluation, Datasets (→ M15, M24) |
-| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ M01–M02) |
-| [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ M12) |
-| [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ M04, täglich) |
-| [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ M30) |
+| [LangChain Docs](https://python.langchain.com/) | Offizielle Dokumentation: Chains, Agents, Tools, RAG (→ KI-Agenten und Tool Use bis LCEL Chains) |
+| [LangGraph Docs](https://langchain-ai.github.io/langgraph/) | Offizielle Dokumentation: StateGraph, Nodes, Edges, HITL, Multi-Agent (→ Warum LangGraph bis Tool Loop, Sessions, Checkpointing und Memory bis Supervisor Pattern) |
+| [LangSmith Docs](https://docs.smith.langchain.com/) | Offizielle Dokumentation: Tracing, Evaluation, Datasets (→ LangSmith Evaluations Basics, Agent Evaluation und Testing) |
+| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ KI-Agenten und Tool Use bis LangChain Erste Agenten) |
+| [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ RAG Grundlagen) |
+| [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ Structured Output, täglich) |
+| [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ MCP Local) |
 | [Google Colab CLI](https://github.com/googlecolab/google-colab-cli) | Kommandozeilen-Tool für den Zugriff auf Google Colab-Notebooks vom Terminal aus |
 
 ---
@@ -136,11 +136,11 @@ Wissenschaftliche Arbeiten, die die theoretische Basis des Kurses bilden.
 
 | Ressource | Beschreibung |
 |-----------|--------------|
-| [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) | Grundlagenpaper zum TAO/ReAct-Prinzip – theoretisches Fundament aller Agenten im Kurs (→ M01) |
-| [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) | Grundlage für Tool Use & Function Calling (→ M01) |
-| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Originalpaper zur Transformer-Architektur – Basis aller verwendeten LLMs (→ M01) |
+| [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) | Grundlagenpaper zum TAO/ReAct-Prinzip – theoretisches Fundament aller Agenten im Kurs (→ KI-Agenten und Tool Use) |
+| [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) | Grundlage für Tool Use & Function Calling (→ KI-Agenten und Tool Use) |
+| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Originalpaper zur Transformer-Architektur – Basis aller verwendeten LLMs (→ KI-Agenten und Tool Use) |
 | [Learning to Summarize with Human Feedback (RLHF)](https://arxiv.org/abs/2009.01325) | Grundlage für RLHF – Hintergrund zu Alignment und Agenten-Verhalten |
-| [Self-RAG: Learning to Retrieve, Generate, and Critique](https://arxiv.org/abs/2310.11511) | Grundlage für Agentic RAG – Agent steuert Retrieval aktiv (→ M22/M28) |
+| [Self-RAG: Learning to Retrieve, Generate, and Critique](https://arxiv.org/abs/2310.11511) | Grundlage für Agentic RAG – Agent steuert Retrieval aktiv (→ Agentic RAG/Advanced RAG Pipeline Patterns) |
 
 ---
 
@@ -151,13 +151,13 @@ Orientierung im Ökosystem – für Vergleiche und weiterführende Projekte nach
 | Ressource | Beschreibung |
 |-----------|--------------|
 | [OpenCode](https://opencode.de/de) | Open-Source KI-Coding-Assistent für das Terminal – Alternative zu Claude Code |
-| [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ M19–M20) |
-| [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ M19) |
+| [Microsoft AutoGen](https://microsoft.github.io/autogen/) | Bekannteste Alternative zu LangGraph für Multi-Agent-Systeme (→ Multi-Agent Patterns bis Supervisor Pattern) |
+| [CrewAI](https://www.crewai.com/) | Populäres High-Level-Framework für rollenbasierte Multi-Agent-Teams (→ Multi-Agent Patterns) |
 | [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Offizielles OpenAI-Framework für Agenten (alternatives SDK) |
 | [OpenAI Skills Repository (GitHub)](https://github.com/openai/skills) | Offizielle Skill-Sammlung von OpenAI, kompatibel mit dem SKILL.md-Standard |
 | [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/) | Microsoft-Alternative mit Plugin-System und Enterprise-Fokus |
-| [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ M11–M14) |
-| [Awesome Agent Harness (GitHub)](https://github.com/RUCAIBox/awesome-agent-harness) | Kuratierte Liste zu Agent-Harness-Systemen (DeepAgents, Claude Code, Manus u. a.) – Ergänzung zu M32–M33 |
+| [Haystack](https://haystack.deepset.ai/) | RAG-orientiertes Framework von deepset – Vergleich zu LangChain RAG (→ RAG Grundlagen bis RAG-Agent) |
+| [Awesome Agent Harness (GitHub)](https://github.com/RUCAIBox/awesome-agent-harness) | Kuratierte Liste zu Agent-Harness-Systemen (DeepAgents, Claude Code, Manus u. a.) – Ergänzung zu DeepAgents Harness bis DeepAgents Vertiefung |
 
 ---
 
@@ -167,10 +167,10 @@ Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluati
 
 | Ressource | Beschreibung |
 |-----------|--------------|
-| [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ M15/M24) |
-| [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ M11) |
-| [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ M11–M14) |
-| [Agent-as-a-Judge: Evaluate Agents with Agents](https://arxiv.org/abs/2410.10934) | Grundlagenpaper zur State-Verification statt Text-Trust bei Agenten-Evaluation – Erweiterung von LLM-as-a-Judge auf Tool-Trajektorien (→ M23/M24) |
+| [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ LangSmith Evaluations Basics/Agent Evaluation und Testing) |
+| [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ RAG Grundlagen) |
+| [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ RAG Grundlagen bis RAG-Agent) |
+| [Agent-as-a-Judge: Evaluate Agents with Agents](https://arxiv.org/abs/2410.10934) | Grundlagenpaper zur State-Verification statt Text-Trust bei Agenten-Evaluation – Erweiterung von LLM-as-a-Judge auf Tool-Trajektorien (→ Agent Security Best Practices/Agent Evaluation und Testing) |
 
 ---
 
@@ -200,8 +200,8 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 | Ressource | Beschreibung |
 |-----------|--------------|
-| [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Standardreferenz für LLM-Sicherheitsrisiken: Prompt Injection, Insecure Output, Data Leakage (→ M23) |
-| [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | US-Standard für KI-Risikomanagement und Governance (→ M23) |
+| [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Standardreferenz für LLM-Sicherheitsrisiken: Prompt Injection, Insecure Output, Data Leakage (→ Agent Security Best Practices) |
+| [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | US-Standard für KI-Risikomanagement und Governance (→ Agent Security Best Practices) |
 | [EU AI Act – Übersicht](https://artificialintelligenceact.eu/) | Regulatorischer Rahmen der EU für KI-Systeme – relevant für Produktionsszenarien |
 
 ## Abgrenzung zu verwandten Dokumenten

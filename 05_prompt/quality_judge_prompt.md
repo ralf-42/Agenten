@@ -1,6 +1,6 @@
 ---
-name: m26_quality_judge_prompt
-description: System-Prompt für den Quality Judge in M26 (Integration Pipeline) — bewertet quellengebundene KI-Reports für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting
+name: quality_judge_prompt
+description: System-Prompt für den Quality Judge in Integration Pipeline (Integration Pipeline) — bewertet quellengebundene KI-Reports für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting
 variables: []
 ---
 

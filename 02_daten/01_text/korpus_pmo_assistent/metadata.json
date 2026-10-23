@@ -10,15 +10,13 @@
   "usage": {
     "primary_use_case": "PMO-Assistent",
     "main_modules": [
-      "M11",
-      "M12",
-      "M13",
-      "M14",
-      "M15",
-      "M17",
-      "M23",
-      "M24",
-      "M36"
+      "RAG Grundlagen",
+      "RAG-Agent",
+      "LangSmith Evaluations Basics",
+      "Human in the Loop",
+      "Agent Security Best Practices",
+      "Agent Evaluation und Testing",
+      "Production Deployment"
     ],
     "recommended_default_filter": {
       "corpus_part": "project"
@@ -53,10 +51,9 @@
         "Wissensassistent"
       ],
       "recommended_modules": [
-        "M11",
-        "M13",
-        "M14",
-        "M15"
+        "RAG Grundlagen",
+        "RAG-Agent",
+        "LangSmith Evaluations Basics"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -88,9 +85,8 @@
         "Verantwortung"
       ],
       "recommended_modules": [
-        "M11",
-        "M13",
-        "M15"
+        "RAG Grundlagen",
+        "LangSmith Evaluations Basics"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -125,10 +121,10 @@
         "Mitigation"
       ],
       "recommended_modules": [
-        "M13",
-        "M14",
-        "M15",
-        "M24"
+        "RAG Grundlagen",
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -160,9 +156,7 @@
         "Vektordatenbank"
       ],
       "recommended_modules": [
-        "M11",
-        "M12",
-        "M13"
+        "RAG Grundlagen"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -195,10 +189,9 @@
         "Entscheidung"
       ],
       "recommended_modules": [
-        "M12",
-        "M13",
-        "M14",
-        "M15"
+        "RAG Grundlagen",
+        "RAG-Agent",
+        "LangSmith Evaluations Basics"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -229,9 +222,9 @@
         "Vektordatenbank"
       ],
       "recommended_modules": [
-        "M14",
-        "M15",
-        "M24"
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -263,9 +256,9 @@
         "Konflikt"
       ],
       "recommended_modules": [
-        "M14",
-        "M15",
-        "M24"
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -298,9 +291,9 @@
         "Versionierung"
       ],
       "recommended_modules": [
-        "M14",
-        "M15",
-        "M24"
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -329,10 +322,10 @@
         "Prompt Injection"
       ],
       "recommended_modules": [
-        "M13",
-        "M17",
-        "M23",
-        "M24"
+        "RAG Grundlagen",
+        "Human in the Loop",
+        "Agent Security Best Practices",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -361,9 +354,9 @@
         "Vertagung"
       ],
       "recommended_modules": [
-        "M14",
-        "M15",
-        "M17"
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Human in the Loop"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -399,10 +392,10 @@
         "Konfliktaufloesung"
       ],
       "recommended_modules": [
-        "M13",
-        "M14",
-        "M15",
-        "M24"
+        "RAG Grundlagen",
+        "RAG-Agent",
+        "LangSmith Evaluations Basics",
+        "Agent Evaluation und Testing"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -433,9 +426,9 @@
         "Nachverfolgung"
       ],
       "recommended_modules": [
-        "M13",
-        "M14",
-        "M17"
+        "RAG Grundlagen",
+        "RAG-Agent",
+        "Human in the Loop"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -463,9 +456,9 @@
         "Standardstruktur"
       ],
       "recommended_modules": [
-        "M17",
-        "M33",
-        "M36"
+        "Human in the Loop",
+        "DeepAgents Vertiefung",
+        "Production Deployment"
       ],
       "project_id": "projekt_kompass",
       "source_status": "template",
@@ -504,10 +497,10 @@
         "Status"
       ],
       "recommended_modules": [
-        "M14",
-        "M17",
-        "M19",
-        "M20"
+        "RAG-Agent",
+        "Human in the Loop",
+        "Multi-Agent Patterns",
+        "Supervisor Pattern"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -541,8 +534,8 @@
         "Ampel"
       ],
       "recommended_modules": [
-        "M19",
-        "M20"
+        "Multi-Agent Patterns",
+        "Supervisor Pattern"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -573,10 +566,10 @@
         "Offene Fragen"
       ],
       "recommended_modules": [
-        "M04",
-        "M06",
-        "M17",
-        "M34"
+        "Structured Output",
+        "LCEL Chains",
+        "Human in the Loop",
+        "DeepAgents Skill PMO-Assistent"
       ],
       "project_id": "projekt_kompass",
       "source_status": "working_notes",
@@ -613,9 +606,9 @@
         "Auswirkungen"
       ],
       "recommended_modules": [
-        "M17",
-        "M19",
-        "M20"
+        "Human in the Loop",
+        "Multi-Agent Patterns",
+        "Supervisor Pattern"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",
@@ -648,8 +641,8 @@
         "Engpass"
       ],
       "recommended_modules": [
-        "M19",
-        "M20"
+        "Multi-Agent Patterns",
+        "Supervisor Pattern"
       ],
       "project_id": "projekt_kompass",
       "source_status": "approved_record",

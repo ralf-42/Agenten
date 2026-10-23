@@ -98,7 +98,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer]({{ '/visualisierungen/langgraph_explainer/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Trimming und Summary** | Context-Management-Strategien (Trimming, Summary) für LangGraph Memory | [Trimming und Summary]({{ '/visualisierungen/trimming_summary/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Context Engineering** | Kontextfenster eines Agenten und vier Kontextfehler (Poisoning, Distraction, Confusion, Clash) mit passender Gegenmaßnahme | [Context Engineering]({{ '/visualisierungen/context_engineering/' | relative_url }}){:target="_blank" rel="noopener"} |
-| **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (M17) | [DSPy]({{ '/visualisierungen/prompt_dspy/' | relative_url }}){:target="_blank" rel="noopener"} |
+| **DSPy** | Programmier- und Optimierungsmodell für LM-Aufgaben - optionale Vertiefung im GenAI-Kurs (Human in the Loop) | [DSPy]({{ '/visualisierungen/prompt_dspy/' | relative_url }}){:target="_blank" rel="noopener"} |
 
 ---
 

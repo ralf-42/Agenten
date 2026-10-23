@@ -49,13 +49,13 @@ Beispiele und Aufgaben im Kurs richten sich vor allem auf drei Kernfunktionen ei
 
 | Aufgabe | KI-Anwendungsfall | Potenzial | Schwerpunkt in Modulen |
 |---|---|---|---|
-| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | M03, M08, M34 |
-| Protokollerstellung | Strukturierte Zusammenfassung von Besprechungsnotizen | Sehr hoch | M04, M06, M34 |
-| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | M01, M04, M10, M34 |
-| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | M19–M21 |
-| Risikomanagement | Identifikation möglicher Risiken in Projektberichten | Hoch | M04, M09, M23 |
-| Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | M11, M14, M22, M28 |
-| Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | M03, M17, M25 |
+| Meeting-Vorbereitung | Briefing aus Projektstatus, offenen Punkten und bisherigen Entscheidungen | Sehr hoch | Prompt Engineering für Agenten, StateGraph Basics, DeepAgents Skill PMO-Assistent |
+| Protokollerstellung | Strukturierte Zusammenfassung von Besprechungsnotizen | Sehr hoch | Structured Output, LCEL Chains, DeepAgents Skill PMO-Assistent |
+| Aufgabenverfolgung | Extraktion von Aufgaben, Verantwortlichen und Terminen | Sehr hoch | KI-Agenten und Tool Use, Structured Output, Tool Loop, DeepAgents Skill PMO-Assistent |
+| Statusreporting | Erstellung eines Managementberichts aus Projektinformationen | Sehr hoch | Multi-Agent Patterns bis Reflection, Parallel, Hierarchy |
+| Risikomanagement | Identifikation möglicher Risiken in Projektberichten | Hoch | Structured Output, Conditional Routing, Agent Security Best Practices |
+| Dokumentenmanagement | Semantische Suche in Projektunterlagen mittels RAG | Hoch | RAG Grundlagen, RAG-Agent, Agentic RAG, Advanced RAG Pipeline Patterns |
+| Stakeholderkommunikation | Zielgruppenspezifische Formulierung von Projektinformationen | Hoch | Prompt Engineering für Agenten, Human in the Loop, Model Routing und Cost Control |
 
 Die Spalte „Schwerpunkt in Modulen" nennt, wo ein Anwendungsfall vorrangig geübt wird. Freigabe und Entscheidungsunterstützung ziehen sich als Querschnitt durch alle Fälle. Verbindliche Projektentscheidungen bleiben bei den verantwortlichen Personen.
 
@@ -124,9 +124,9 @@ Der PMO-Assistent liefert drei Produkte. Jedes hat ein eigenes Schema; die techn
 
 | Produkt | Schema | Notebook | Inhalt |
 |---|---|---|---|
-| Meeting-Briefing | `GateOutputResult` | M34 | Agenda, offene Fragen, Aufgaben, Risiken, Status (`ok`, `no_context`, `conflict`) |
-| Offene Aufgaben | `ActionItemResult` | M04, M34 | `task` (Aufgabe), `owner` (Verantwortlich), `due` (Termin) |
-| Risikoübersicht | `RiskReviewResult` | M04 | Risiken, Kritikalität, Maßnahmen |
+| Meeting-Briefing | `GateOutputResult` | DeepAgents Skill PMO-Assistent | Agenda, offene Fragen, Aufgaben, Risiken, Status (`ok`, `no_context`, `conflict`) |
+| Offene Aufgaben | `ActionItemResult` | Structured Output, DeepAgents Skill PMO-Assistent | `task` (Aufgabe), `owner` (Verantwortlich), `due` (Termin) |
+| Risikoübersicht | `RiskReviewResult` | Structured Output | Risiken, Kritikalität, Maßnahmen |
 
 ```python
 class ActionItemResult(BaseModel):
@@ -207,12 +207,12 @@ Der Kurs-Prototyp arbeitet bewusst mit einem kleinen, fiktiven und kuratierten K
 
 | Ausbaustufe | Im Kurs-Prototyp | Nächster Schritt | Kursbezug |
 |---|---|---|---|
-| Datenbasis | Ein fiktives Projekt mit PDF-, Markdown- und CSV-Dateien in einem Ordner | Anbindung der realen Ablagen, etwa Dokumentenablage, Aufgaben-Tracker und Wiki, mit regelmäßiger Aktualisierung des Index | M26 |
-| Zugriffsrechte | Alle sehen den gesamten Korpus; die Rechte- und Rollensteuerung ist im Projekt Kompass als offener Punkt dokumentiert | Berechtigungsfilter bereits beim Retrieval, ergänzt durch eine Quellenprüfung nach der Antwort | M23 |
-| Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | M23 |
-| Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | M24 |
-| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | M36 |
-| Aktionen | Der Assistent liest und schlägt vor | Kontrollierte Schreibaktionen wie das Anlegen einer Aufgabe, jeweils hinter einem Freigabe-Gate | M23, M26 |
+| Datenbasis | Ein fiktives Projekt mit PDF-, Markdown- und CSV-Dateien in einem Ordner | Anbindung der realen Ablagen, etwa Dokumentenablage, Aufgaben-Tracker und Wiki, mit regelmäßiger Aktualisierung des Index | Integration Pipeline |
+| Zugriffsrechte | Alle sehen den gesamten Korpus; die Rechte- und Rollensteuerung ist im Projekt Kompass als offener Punkt dokumentiert | Berechtigungsfilter bereits beim Retrieval, ergänzt durch eine Quellenprüfung nach der Antwort | Agent Security Best Practices |
+| Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | Agent Security Best Practices |
+| Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | Agent Evaluation und Testing |
+| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | Production Deployment |
+| Aktionen | Der Assistent liest und schlägt vor | Kontrollierte Schreibaktionen wie das Anlegen einer Aufgabe, jeweils hinter einem Freigabe-Gate | Agent Security Best Practices, Integration Pipeline |
 
 > [!TIP] Empfohlene Reihenfolge<br>
 > Zugriffsrechte und Datenschutz sollten vor der Anbindung echter Datenquellen geklärt sein. Danach liefert ein kleiner Pilot mit messbarem Nutzen die Grundlage für jede weitere Ausbaustufe.

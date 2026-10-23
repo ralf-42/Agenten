@@ -468,16 +468,16 @@ Die Architekturfragen aus diesem Kapitel tauchen im Kurs immer wieder auf. Diese
 
 | Modulphase | Architekturfrage |
 |---|---|
-| M01-M02 | Wie werden Tools so beschrieben, getestet und genutzt, dass ein einzelner Agent kontrolliert handeln kann? |
-| M03-M04 | Wie werden Eingaben und Ausgaben so strukturiert, dass ein Agent verlässlich damit arbeiten kann? |
-| M06 | Wann reicht eine lineare Chain nicht mehr, und wann wird ein Graph sinnvoll? |
-| M07-M10 | Wie werden State, Routing, Schleifen und Abbruchbedingungen kontrollierbar modelliert? |
-| M11-M14, M22, M28 | Wird Wissen als einfaches RAG-Tool, als Workflow-Schritt oder als agentische Recherchefähigkeit eingebunden? |
-| M15, M23-M25 | Wie werden Qualität, Sicherheit, Kosten und Risiko messbar statt nur gehofft? |
-| M16-M18 | Welche Informationen gehören in den kurzfristigen Zustand, welche in Memory und welche gar nicht in den Kontext? |
-| M19-M21 | Braucht das Problem wirklich mehrere spezialisierte Agenten, oder genügt ein einzelner Agent mit guten Tools? |
-| M31-M35 | Was ist fachliche Fähigkeit, was ist Skill-Paket, und was gehört in den Harness um das Modell? |
-| M36-M38 | Kann die gewählte Architektur betrieben, beobachtet und im Capstone begründet werden? |
+| KI-Agenten und Tool Use bis LangChain Erste Agenten | Wie werden Tools so beschrieben, getestet und genutzt, dass ein einzelner Agent kontrolliert handeln kann? |
+| Prompt Engineering für Agenten bis Structured Output | Wie werden Eingaben und Ausgaben so strukturiert, dass ein Agent verlässlich damit arbeiten kann? |
+| LCEL Chains | Wann reicht eine lineare Chain nicht mehr, und wann wird ein Graph sinnvoll? |
+| Warum LangGraph bis Tool Loop | Wie werden State, Routing, Schleifen und Abbruchbedingungen kontrollierbar modelliert? |
+| RAG Grundlagen bis RAG-Agent, Agentic RAG, Advanced RAG Pipeline Patterns | Wird Wissen als einfaches RAG-Tool, als Workflow-Schritt oder als agentische Recherchefähigkeit eingebunden? |
+| LangSmith Evaluations Basics, Agent Security Best Practices bis Model Routing und Cost Control | Wie werden Qualität, Sicherheit, Kosten und Risiko messbar statt nur gehofft? |
+| Sessions, Checkpointing und Memory | Welche Informationen gehören in den kurzfristigen Zustand, welche in Memory und welche gar nicht in den Kontext? |
+| Multi-Agent Patterns bis Reflection, Parallel, Hierarchy | Braucht das Problem wirklich mehrere spezialisierte Agenten, oder genügt ein einzelner Agent mit guten Tools? |
+| Agent Skill Compliance bis DeepAgent Multi-Skill | Was ist fachliche Fähigkeit, was ist Skill-Paket, und was gehört in den Harness um das Modell? |
+| Production Deployment | Kann die gewählte Architektur betrieben, beobachtet und im Capstone begründet werden? |
 
 ---
 

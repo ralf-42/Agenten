@@ -1,5 +1,5 @@
 ---
-name: m03_pmo_template_prompt
+name: pmo_template_prompt
 description: Template-Prompt für zielgruppengerechte Kurzfassungen des PMO-Assistenten
 variables: [thema, zielgruppe]
 ---

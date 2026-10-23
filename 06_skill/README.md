@@ -26,7 +26,7 @@ Freigabeprüfung für Briefings, Protokolle und Statusberichte (Datenschutzfreig
 | `references/writer-format.md` | Formatvorgaben für die Entscheidungsnotiz |
 | `scripts/assess_risk.py` | Deterministisches Scoring-Tool |
 
-Verwendet in: **M31** (Single-Skill), **M35** (Multi-Skill-Routing)
+Verwendet in: **Agent Skill Compliance** (Single-Skill), **DeepAgent Multi-Skill** (Multi-Skill-Routing)
 
 ---
 
@@ -42,7 +42,7 @@ Meeting-Vorbereitung und Nachbereitung mit festen Abschnitten, Quellenpflicht un
 | `references/examples.md` | Beispiel-Briefings (Steuerkreis-Vorbereitung und -Nachbereitung, Quellenkonflikt) |
 | `scripts/extract_actions.py` | Tool: Action Items aus Kontext-Dokumenten extrahieren |
 
-Verwendet in: **M34** (vollständiger Skill-Workflow mit Sub-Agent), **M35** (Multi-Skill-Routing)
+Verwendet in: **DeepAgents Skill PMO-Assistent** (vollständiger Skill-Workflow mit Sub-Agent), **DeepAgent Multi-Skill** (Multi-Skill-Routing)
 
 ---
 
@@ -58,7 +58,7 @@ Strukturierte Dokumentenrecherche in Projektunterlagen mit Relevanz-Bewertung, Q
 | `references/writer-format.md` | Formatvorgaben für den Recherchebericht |
 | `scripts/score_relevance.py` | Deterministisches Scoring-Tool für Quellen-Relevanz |
 
-Verwendet in: **M35** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
+Verwendet in: **DeepAgent Multi-Skill** (Multi-Skill-Routing, Demo 3: gemischte Anfrage)
 
 ---
 

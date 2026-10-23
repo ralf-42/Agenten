@@ -63,11 +63,11 @@ Das Eval-Set `eval_pmo.json` enthält 38 reguläre Fragen und deckt die fachlich
 
 ## Hinweise für den Unterricht
 
-- In M10/M11 zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
-- In M12/M13 den gesamten Korpus verwenden.
-- In M14/M23 mit `eval_pmo.json` starten und Edge-Cases aus `eval_pmo_edge.json` erst danach hinzunehmen.
+- In Tool Loop/RAG Grundlagen zuerst mit den Meeting-Protokollen (3-5 Dokumente) arbeiten, damit Chunking und Retrieval sichtbar bleiben.
+- In RAG Grundlagen den gesamten Korpus verwenden.
+- In RAG-Agent/Agent Security Best Practices mit `eval_pmo.json` starten und Edge-Cases aus `eval_pmo_edge.json` erst danach hinzunehmen.
 - Der Konflikt zwischen D1 (17.03.) und D2 (14.04.) sowie die Versionierung von Risiko R2 eignen sich besonders gut, um zu zeigen, warum ein Agent nicht unkritisch die erste gefundene Quelle zitieren darf, sondern Datum und Aktualität prüfen muss.
-- Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für M16/M22, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.
+- Das zitierte Prompt-Injection-Beispiel in `protokoll_fachbereich_workshop_2026-05-05.pdf` eignet sich für Sessions, Checkpointing und Memory/Agentic RAG, um zu zeigen, dass zitierte Inhalte in Quelldokumenten nicht automatisch als Systemanweisung gelten dürfen.
 - Die ergänzten Markdown- und CSV-Dateien eignen sich für Mehrformat-Laden, Tabellenfragen, Statussynthese und die Überführung von Rohnotizen in strukturierte Ergebnisse.
 - Die langen Dokumente enthalten prüfbare Details an unterschiedlichen Stellen. Für einen Chunking-Vergleich sollten dieselben Fragen mit mehreren Chunk-Größen und Overlap-Werten beantwortet und Trefferposition sowie Quellenbeleg protokolliert werden.
 - Das Nordstern-Protokoll ist ein kontrollierter Fremdprojekt-Treffer. Es soll bei Projekt-Kompass-Fragen durch `project_id`-Filter ausgeschlossen werden; ohne Filter muss die Antwort den Projektkontext zuverlässig prüfen.

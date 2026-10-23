@@ -1,6 +1,6 @@
 ---
-name: m30_multi_agent_prompt
-description: System-Prompt für den Multi-Server-Agenten in M30 (MCP Local, Termine + Notizen)
+name: multi_agent_prompt
+description: System-Prompt für den Multi-Server-Agenten in MCP Local (MCP Local, Termine + Notizen)
 variables: []
 ---
 

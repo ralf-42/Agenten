@@ -5,16 +5,16 @@ Wiederverwendbare Prompt-Dateien für alle Kursmodule.
 ## Namenskonvention
 
 ```
-m##_beschreibung.md
+beschreibung_prompt.md
 ```
 
-- Präfix `m##` entspricht dem Modul, das den Prompt zuerst verwendet (z.B. `m03_` → M03)
+- Keine Modul-IDs im Dateinamen: Der Name beschreibt den Inhalt (z.B. `rag_agent_system_prompt.md`), damit eine Neunummerierung der Notebooks keine Umbenennung erzwingt
 - Kleinbuchstaben, Unterstriche statt Leerzeichen
-- Kein `M##` (Großbuchstaben) — das ist die Notebook-Konvention
+- Kein `M##`/`m##`: Die Nummer gehört nur in die Notebook-Dateinamen
 
 ### Hinweis zu `pmo_*`
 
-Prompt-Dateien, die den PMO-Assistenten betreffen, tragen `pmo` im Dateinamen (`m03_pmo_*`, `m04_pmo_*`, `m05_robust_pmo_system_prompt.md`, `m09_pmo_routing_prompt.md`). Der Name `research` wird nicht mehr verwendet.
+Prompt-Dateien, die den PMO-Assistenten betreffen, tragen `pmo` im Dateinamen (`pmo_*`, `robust_pmo_system_prompt.md`, `pmo_routing_prompt.md`). Der Name `research` wird nicht mehr verwendet.
 
 Dateinamen werden nur geändert, wenn alle Notebook-Referenzen im selben Schritt mitgezogen werden. Inhaltlich müssen die Prompts auf Projekt Kompass, Quellenpflicht, offene Fragen, Risiken, Entscheidungen und Eskalation ausgerichtet sein.
 
@@ -24,7 +24,7 @@ Jede Prompt-Datei besteht aus YAML-Frontmatter und optionalen Sections:
 
 ```markdown
 ---
-name: m03_mein_prompt
+name: mein_prompt
 description: Kurze Beschreibung des Zwecks
 variables: [variable1, variable2]   # [] wenn keine Variablen
 ---
@@ -79,10 +79,10 @@ Regeln:
 from genai_lib.utilities import load_prompt
 
 # System-only → mode="S"
-system_prompt = load_prompt("05_prompt/m03_pmo_system_prompt.md", mode="S")
+system_prompt = load_prompt("05_prompt/pmo_system_prompt.md", mode="S")
 
 # Template mit ## system / ## human Sections → mode="T"
-prompt = load_prompt("05_prompt/m03_pmo_template_prompt.md", mode="T")
+prompt = load_prompt("05_prompt/pmo_template_prompt.md", mode="T")
 
 # Mit Variablen befüllen
 chain = prompt | llm
@@ -95,16 +95,16 @@ result = chain.invoke({"variable1": "Wert"})
 
 | Modul | Dateien |
 |-------|---------|
-| M03 | `m03_pmo_template_prompt.md`, `m03_pmo_system_prompt.md` |
-| M04 | `m04_protokollnotiz_prompt.md`, `m04_pmo_signal_classification_prompt.md`, `m04_citation_format_prompt.md`, `m04_pmo_review_prompt.md` |
-| M05 | `m05_multi_tool_system_prompt.md`, `m05_robust_pmo_system_prompt.md` |
-| M09 | `m09_pmo_routing_prompt.md` |
-| M11 | `m11_query_rewrite_prompt.md`, `m11_rag_prompt.md` |
-| M14 | `m14_rag_agent_system_prompt.md` |
-| M26 | `m26_quality_judge_prompt.md`, `m26_security_gate_prompt.md` |
-| M30 | `m30_math_agent_prompt.md`, `m30_multi_agent_prompt.md`, `m30_notiz_agent_prompt.md` |
+| Prompt Engineering für Agenten | `pmo_template_prompt.md`, `pmo_system_prompt.md` |
+| Structured Output | `protokollnotiz_prompt.md`, `pmo_signal_classification_prompt.md`, `citation_format_prompt.md`, `pmo_review_prompt.md` |
+| Multi-Tool-Agents | `multi_tool_system_prompt.md`, `robust_pmo_system_prompt.md` |
+| Conditional Routing | `pmo_routing_prompt.md` |
+| RAG Grundlagen | `query_rewrite_prompt.md`, `rag_prompt.md` |
+| RAG-Agent | `rag_agent_system_prompt.md` |
+| Integration Pipeline | `quality_judge_prompt.md`, `security_gate_prompt.md` |
+| MCP Local | `math_agent_prompt.md`, `multi_agent_prompt.md`, `notiz_agent_prompt.md` |
 
-`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-06: M08, M15, M20–M23, `m02_agent_system`, `m03_research_few_shot`, `m03_research_zero_shot`, `m03_research_query`, `m05_format_check`, `m30_crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
+`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-06: StateGraph Basics, LangSmith Evaluations Basics, Supervisor Pattern bis Agent Security Best Practices, `agent_system`, `research_few_shot`, `research_zero_shot`, `research_query`, `format_check`, `crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
 
 ## Weiterführend
 

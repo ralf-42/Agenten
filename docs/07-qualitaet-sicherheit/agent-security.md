@@ -64,7 +64,7 @@ Der zweite Fall ist besonders heikel, weil der Agent externe Inhalte oft gerade 
 > [!DANGER] Externe Inhalte sind keine Anweisungen<br>
 > Webseiten, Uploads, API-Antworten und E-Mails müssen im Prompt und in der Verarbeitung ausdrücklich als untrusted data behandelt werden.
 
-Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Security gehören dazu direkte und indirekte Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen. M24 nutzt solche Fälle als Regressionstest.
+Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Security gehören dazu direkte und indirekte Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen. Agent Evaluation und Testing nutzt solche Fälle als Regressionstest.
 
 ## Principle of Least Privilege
 

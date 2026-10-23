@@ -4,7 +4,7 @@
 
 Dieses Verzeichnis enthält aktuell **32 reguläre Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen.“
 
-Die Modulkennungen reichen von **M01 bis M36**, sind aber nicht lückenlos: Frühere Module wurden teilweise zusammengelegt. M11 umfasst beispielsweise die früheren Module M12 und M13; M16 vereint die früheren Module M16 und M18. Die Übersicht unten bildet die Dateien ab, die aktuell in diesem Verzeichnis liegen.
+Die Notebooks reichen von **KI-Agenten und Tool Use bis Production Deployment**, die Nummern im Dateinamen sind aber nicht lückenlos: Frühere Module wurden teilweise zusammengelegt. RAG Grundlagen umfasst beispielsweise die früheren Notebooks zu ChromaDB-Indexing und RAG-Chain; Sessions, Checkpointing und Memory vereint die früheren Notebooks zu Checkpointing & Sessions und Memory-Systemen. Die Übersicht unten bildet die Dateien ab, die aktuell in diesem Verzeichnis liegen.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md`
 
@@ -22,81 +22,81 @@ Die Modulkennungen reichen von **M01 bis M36**, sind aber nicht lückenlos: Frü
 
 Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assistent** (Meeting-Vorbereitung, Dokumentenaufbereitung, Aufgabenverfolgung, quellengebundene Briefings und Statusübersichten). Die vorhandenen Module bauen vom ersten Agentenverständnis bis zu RAG, Sessions, Memory, Multi-Agent-Patterns, Security, Evaluation, Routing, Kostenkontrolle, Integration, Skills und Deployment auf dasselbe Zielsystem hin.
 
-## Phase  1 – Konzepte & erste Agenten (M01–M02)
+## Phase  1 – Konzepte & erste Agenten
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M01 | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, PMO-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
-| M02 | `M02_LangChain_Erste_Agenten.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
+| KI-Agenten und Tool Use | `M01_KI_Agenten_und_Tool_Use.ipynb` | Agentenbegriff, PMO-Zielbild, ReAct/TAO-Prinzip, erste Tools mit `@tool`, Type Hints, Docstrings und Fehlerbehandlung | 🟢 Grundlagen |
+| LangChain Erste Agenten | `M02_LangChain_Erste_Agenten.ipynb` | Erster PMO-Assistent mit `create_agent()` | 🟢 Grundlagen |
 
 ---
 
-## Phase  2 – Prompt Engineering, Structured Output, LCEL (M03–M06)
+## Phase  2 – Prompt Engineering, Structured Output, LCEL
 
 | Modul | Datei                                       | Inhalt                                                     | Prio       |
 | ----- | ------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| M03   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den PMO-Assistenten | 🟢 Grundlagen |
-| M04   | `M04_Structured_Output.ipynb`               | Antwortschema, Quellenpflicht und strukturierte Prüfbarkeit mit Pydantic und `with_structured_output()` | 🟢 Grundlagen |
-| M05   | `M05_Multi_Tool_Agents.ipynb`               | Mehrere Projekt- und Recherche-Tools, Tool-Auswahl, robuste Fehlerbehandlung | 🟢 Grundlagen |
-| M06   | `M06_LCEL_Chains.ipynb`                     | Kontrollierte Teilketten für Antwort, Prüfung und Übergang zu LangGraph | 🟢 Grundlagen |
+| Prompt Engineering für Agenten   | `M03_Prompt_Engineering_fuer_Agenten.ipynb` | Rollen, Tool-Regeln, Few-Shot-Klassifikation und sichtbare Reasoning-Artefakte für den PMO-Assistenten | 🟢 Grundlagen |
+| Structured Output   | `M04_Structured_Output.ipynb`               | Antwortschema, Quellenpflicht und strukturierte Prüfbarkeit mit Pydantic und `with_structured_output()` | 🟢 Grundlagen |
+| Multi-Tool-Agents   | `M05_Multi_Tool_Agents.ipynb`               | Mehrere Projekt- und Recherche-Tools, Tool-Auswahl, robuste Fehlerbehandlung | 🟢 Grundlagen |
+| LCEL Chains   | `M06_LCEL_Chains.ipynb`                     | Kontrollierte Teilketten für Antwort, Prüfung und Übergang zu LangGraph | 🟢 Grundlagen |
 
 ---
 
-## Phase  3 – LangGraph: Agenten-Kontrolle (M07–M10)
+## Phase  3 – LangGraph: Agenten-Kontrolle
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M07 | `M07_Warum_LangGraph.ipynb` | Warum der PMO-Assistent kontrollierten State braucht | 🟢 Grundlagen |
-| M08 | `M08_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Grundlagen |
-| M09 | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics und Planning-Patterns | 🟢 Grundlagen |
-| M10 | `M10_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Grundlagen |
+| Warum LangGraph | `M07_Warum_LangGraph.ipynb` | Warum der PMO-Assistent kontrollierten State braucht | 🟢 Grundlagen |
+| StateGraph Basics | `M08_StateGraph_Basics.ipynb` | StateGraph, Nodes, Edges und Briefing-State | 🟢 Grundlagen |
+| Conditional Routing | `M09_Conditional_Routing.ipynb` | Briefing-Routing, Qualitäts-Gate, Security-Basics und Planning-Patterns | 🟢 Grundlagen |
+| Tool Loop | `M10_Tool_Loop.ipynb` | Tool-Loop, Tool-Steuerung im Graph | 🟢 Grundlagen |
 
 ---
 
-## Phase  4 – Agenten mit Wissen / RAG (M11–M15)
+## Phase  4 – Agenten mit Wissen / RAG
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M11 | `M11_RAG_Grundlagen.ipynb` | PMO-Korpus, RAG-Architektur, Embeddings, Chunking, ChromaDB-Indexierung und RAG-Chain (enthält die früheren Module M12 und M13) | 🟢 Grundlagen |
-| M14 | `M14_RAG_Agent.ipynb` | Retrieval als Tool, Quellenpflicht und Out-of-Corpus-Grenze | 🟢 Grundlagen |
-| M15 | `M15_LangSmith_Evaluations_Basics.ipynb` | Eval-Set, Retrieval-Score, Antwortqualität, Regression | 🟢 Grundlagen |
+| RAG Grundlagen | `M11_RAG_Grundlagen.ipynb` | PMO-Korpus, RAG-Architektur, Embeddings, Chunking, ChromaDB-Indexierung und RAG-Chain (enthält die früheren Notebooks zu ChromaDB-Indexing und RAG-Chain) | 🟢 Grundlagen |
+| RAG-Agent | `M14_RAG_Agent.ipynb` | Retrieval als Tool, Quellenpflicht und Out-of-Corpus-Grenze | 🟢 Grundlagen |
+| LangSmith Evaluations Basics | `M15_LangSmith_Evaluations_Basics.ipynb` | Eval-Set, Retrieval-Score, Antwortqualität, Regression | 🟢 Grundlagen |
 
 ---
 
-## Phase  5 – Sessions, Memory, HITL & Multi-Agent (M16–M17, M19–M21)
+## Phase  5 – Sessions, Memory, HITL & Multi-Agent
 
 | Modul | Datei | Inhalt | Prio |
 |-------|-------|--------|------|
-| M16 | `M16_Sessions_Checkpointing_und_Memory.ipynb` | Sessions, Checkpointing, Kurzzeit-Memory, semantisches Memory und Per-User-Memory | 🟢 Grundlagen |
-| M17 | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Grundlagen |
-| M19 | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Reflection und Pipeline für Briefing- und Rechercheaufgaben | 🟢 Grundlagen |
-| M20 | `M20_Supervisor_Pattern.ipynb` | Briefing-Supervisor mit Quellen-, Kritik- und Guardrail-Gates | 🟢 Grundlagen |
-| M21 | `M21_Reflection_Parallel_Hierarchy.ipynb` | Reflection-Schleife, Parallelisierung mit `Send` und Teams als Hierarchie | 🟢 Grundlagen |
+| Sessions, Checkpointing und Memory | `M16_Sessions_Checkpointing_und_Memory.ipynb` | Sessions, Checkpointing, Kurzzeit-Memory, semantisches Memory und Per-User-Memory | 🟢 Grundlagen |
+| Human in the Loop | `M17_Human_in_the_Loop.ipynb` | `interrupt()`, Approve/Reject, HITL-Patterns | 🟢 Grundlagen |
+| Multi-Agent Patterns | `M19_Multi_Agent_Patterns.ipynb` | Supervisor, Reflection und Pipeline für Briefing- und Rechercheaufgaben | 🟢 Grundlagen |
+| Supervisor Pattern | `M20_Supervisor_Pattern.ipynb` | Briefing-Supervisor mit Quellen-, Kritik- und Guardrail-Gates | 🟢 Grundlagen |
+| Reflection, Parallel, Hierarchy | `M21_Reflection_Parallel_Hierarchy.ipynb` | Reflection-Schleife, Parallelisierung mit `Send` und Teams als Hierarchie | 🟢 Grundlagen |
 
-> M16 vereint die früheren Module M16 Checkpointing & Sessions und M18 Memory-Systeme. Die ursprünglichen Notebooks liegen zur Nachvollziehbarkeit unter `01_notebook/_backups/`.
+> Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing & Sessions und Memory-Systeme. Die ursprünglichen Notebooks liegen zur Nachvollziehbarkeit unter `01_notebook/_backups/`.
 
 ---
 
-## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion (M22–M36)
+## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion
 
 > Diese Module sind **nicht Teil des Grundlagenpfads**. Sie eignen sich als Aufbau- und Vertiefungsmaterial im Kurs oder als Follow-up nach dem Kurs.
 
 | Modul | Datei | Inhalt | Priorität |
 |-------|-------|--------|-----------|
-| M22 | `M22_Agentic_RAG.ipynb` | Agentic RAG mit Retrieval-Budget, Grounding und OOC-Stopp | 🔵 Aufbau |
-| M23 | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🔵 Aufbau |
-| M24 | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark, RAGAS-Live-Lauf | 🔵 Aufbau |
-| M25 | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🔵 Aufbau |
-| M26 | `M26_Integration_Pipeline.ipynb` | Integration: PMO-Assistent als End-to-End-Pipeline | 🔵 Aufbau |
-| M28 | `M28_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Aufbau |
-| M29 | `M29_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🟣 Vertiefung |
-| M30 | `M30_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🟣 Vertiefung |
-| M31 | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🟣 Vertiefung |
-| M32 | `M32_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🟣 Vertiefung |
-| M33 | `M33_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
-| M34 | `M34_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
-| M35 | `M35_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
-| M36 | `M36_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🟣 Vertiefung |
+| Agentic RAG | `M22_Agentic_RAG.ipynb` | Agentic RAG mit Retrieval-Budget, Grounding und OOC-Stopp | 🔵 Aufbau |
+| Agent Security Best Practices | `M23_Agent_Security_Best_Practices.ipynb` | Prompt Injection, Tool-Gating, Audit-Log, PII-Redaktion | 🔵 Aufbau |
+| Agent Evaluation und Testing | `M24_Agent_Evaluation_Testing.ipynb` | Reproduzierbare Evaluation, Regression, Tool-Choice-Scoring, Mara-Vogt- und Adversarial Benchmark, RAGAS-Live-Lauf | 🔵 Aufbau |
+| Model Routing und Cost Control | `M25_Model_Routing_Cost_Control.ipynb` | Model Routing, Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate | 🔵 Aufbau |
+| Integration Pipeline | `M26_Integration_Pipeline.ipynb` | Integration: PMO-Assistent als End-to-End-Pipeline | 🔵 Aufbau |
+| Advanced RAG Pipeline Patterns | `M28_Advanced_RAG_Pipeline_Patterns.ipynb` | Self-RAG, Reranking, Multi-Vector, CRAG | 🔵 Aufbau |
+| Gradio UI für Agenten | `M29_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🟣 Vertiefung |
+| MCP Local | `M30_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🟣 Vertiefung |
+| Agent Skill Compliance | `M31_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🟣 Vertiefung |
+| DeepAgents Harness | `M32_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🟣 Vertiefung |
+| DeepAgents Vertiefung | `M33_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
+| DeepAgents Skill PMO-Assistent | `M34_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
+| DeepAgent Multi-Skill | `M35_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
+| Production Deployment | `M36_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🟣 Vertiefung |
 
 ## Weitere Notebooks
 

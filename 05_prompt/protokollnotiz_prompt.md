@@ -1,5 +1,5 @@
 ---
-name: m04_protokollnotiz_prompt
+name: protokollnotiz_prompt
 description: Extraktion einer strukturierten Protokollnotiz für den PMO-Assistenten
 variables: [text]
 ---

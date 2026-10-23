@@ -226,7 +226,7 @@ text = load_prompt('05_prompt/sql_prompt.md', mode="S")
 
 # Von GitHub (tree oder blob URLs werden automatisch konvertiert)
 prompt = load_prompt(
-    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/m03_pmo_system_prompt.md'
+    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/pmo_system_prompt.md'
 )
 ```
 
@@ -453,14 +453,14 @@ Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle
 from genai_lib.utilities import show_trace
 
 # Letzte 5 Runs als Tabelle
-show_trace("M13-RAG-Chain")
+show_trace("RAG-Chain")
 
 # Mit Step-Analyse des letzten Runs
-show_trace("M13-RAG-Chain", limit=3, show_steps=True)
+show_trace("RAG-Chain", limit=3, show_steps=True)
 ```
 
 **Parameter:**
-- `project_name` (str): Name des LangSmith-Projekts (z.B. `"M13-RAG-Chain"`)
+- `project_name` (str): Name des LangSmith-Projekts (z.B. `"RAG-Chain"`)
 - `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
 - `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
@@ -492,7 +492,7 @@ show_trace("M13-RAG-Chain", limit=3, show_steps=True)
 
 ### Überblick
 
-Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie M14, M15, M26, M28, M29 und M36 verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. M11 baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
+Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie RAG-Agent, LangSmith Evaluations Basics, Integration Pipeline, Advanced RAG Pipeline Patterns, Gradio UI für Agenten und Production Deployment verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. RAG Grundlagen baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
 
 ### Architektur
 
@@ -509,7 +509,7 @@ pmo_rag
 
 | Funktion | Zweck |
 |---|---|
-| `get_pmo_vectorstore(persist_directory, collection_name)` | Erstellt oder lädt die Chroma-Collection `pmo_korpus_m14` mit `EMBEDDINGS` |
+| `get_pmo_vectorstore(persist_directory, collection_name)` | Erstellt oder lädt die Chroma-Collection `pmo_korpus` mit `EMBEDDINGS` |
 | `index_pmo_corpus(vectorstore, directory_path, chunk_size=300, chunk_overlap=30, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; überspringt eine gefüllte Collection |
 | `load_documents_from_directory(directory_path)` | Mehrformat-Lader für PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word |
 | `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Chunking mit Zeichenlängen an Wortgrenzen (`RecursiveCharacterTextSplitter`); `chunk_index` und `chunk_version` in den Metadaten |
@@ -617,10 +617,10 @@ setup_api_keys(["OPENAI_API_KEY"])
 from genai_lib.utilities import show_trace
 
 # Letzte Runs prüfen
-show_trace("M13-RAG-Chain")
+show_trace("RAG-Chain")
 
 # Step-Analyse für Debugging
-show_trace("M13-RAG-Chain", show_steps=True)
+show_trace("RAG-Chain", show_steps=True)
 ```
 
 ### . PMO-RAG-Kette

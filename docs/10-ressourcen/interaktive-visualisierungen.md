@@ -145,7 +145,7 @@ Tools für KI-gestützte Prozessoptimierung und Entscheidungshilfen
 | Thema                          | Beschreibung                                          | Link                                                                                |
 | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | **Checkliste Automatisierung** | Checkliste als  Entscheidungshilfe                    | [Checkliste_Automatisierung]({{ '/visualisierungen/checkliste_automatisierung/' | relative_url }}){:target="_blank" rel="noopener"} |
-| **KI-Delegation-Poker**        | Entscheidungshilfe: Welche Aufgaben eignen sich für KI-Delegation? | [KI-Delegation-Poker](https://ki-delegation-poker.ralf42-2025.chatgpt.site/teilnehmen) |
+| **KI-Delegation-Poker**        | Entscheidungshilfe für die Delegation von Aufgaben an KI | [Teilnehmendenlink zum KI-Delegation-Poker](https://ki-delegation-poker.ralf42-2025.chatgpt.site/teilnehmen) |
 | **KI-Prozessoptimierung**      | KI-Prozessoptimierung - Schritt für Schritt Anleitung | [KI-Prozessoptimierung]({{ '/visualisierungen/ki_prozessoptimierung/' | relative_url }}){:target="_blank" rel="noopener"}      |
 
 ---

@@ -2,11 +2,9 @@
 
 <table>
   <tr>
-    <td><a href="./.claude/config/langchain-patterns.yaml"><img src="https://img.shields.io/badge/LangChain-%3E%3D1.4.6-brightgreen" alt="LangChain &gt;=1.4.6"></a></td>
     <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.16-brightgreen" alt="LangGraph &gt;=1.2.16"></a></td>
     <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.14.11-blue" alt="LangSmith &gt;=0.14.11"></a></td>
     <td><a href="./docs/06-multi-agent-erweiterungen/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.29-brightgreen" alt="DeepAgents optional &gt;=0.7.29"></a></td>
-    <td><a href="../_docs/LangChain_Audit_Report_2026-10-21.md"><img src="https://img.shields.io/badge/Last%20Audit-2026--10-blue" alt="Last Audit 2026-10"></a></td>
     <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
   </tr>
 </table>
@@ -43,6 +41,7 @@ Agenten/
 ├── 04_modul/       # Python-Module (genai_lib)
 ├── 05_prompt/      # Prompt-Templates (Markdown-Format)
 ├── 06_skill/       # Agent Skills (compliance, pmo-briefing, research)
+├── 07_image/       # Bilder und Visualisierungen
 └── docs/           # GitHub-Pages-Dokumentation, Lernpfad, Ressourcen
 ```
 
@@ -75,7 +74,7 @@ Der Kurs unterscheidet die Notebook-Stufe vom Anspruch einzelner Aufgaben. In de
 | **Aufbau** | M19–M23 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
 | **Vertiefung** | M24–M26 und M50–M54 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
 
-Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md) beschrieben.
+Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./docs/02-orientierung-entscheidung/kursueberblick.md) beschrieben.
 
 ### Block 1: Agenten-Grundlagen
 | Nr. | Modul | Thema                             | Beschreibung                                                    |
@@ -116,7 +115,7 @@ Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Noteboo
 | 17 | Supervisor Pattern | Supervisor Pattern | Worker-Agents, Supervisor-Logik, Graph |
 | 18 | Reflection, Parallel, Hierarchy | Hierarchical Agent Teams | Team-Lead Patterns, 3-Ebenen-Hierarchie, Tool-Delegation |
 
-Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing & Sessions und Memory-Systeme. Die alten Notebooks liegen in `01_notebook/_backups/`.
+Sessions, Checkpointing und Memory sind in einem gemeinsamen Notebook zusammengeführt.
 
 ### Block 6: Qualität und Betriebsvorbereitung
 
@@ -135,11 +134,11 @@ Sessions, Checkpointing und Memory vereint die früheren Notebooks Checkpointing
 | 24 | Gradio UI für Agenten | Gradio UI für Agenten | ChatInterface, Blocks, Streaming und HITL-UI |
 | 25 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
 | 26 | Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
-| 27 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
-| 28 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| 29 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
-| 30 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
-| 31 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
+| 50 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
+| 51 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+| 52 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
+| 53 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| 54 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
 
 ## 🔑 Voraussetzungen
 

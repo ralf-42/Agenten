@@ -175,6 +175,8 @@ llm = init_chat_model("ollama:llama3")
 - API-Keys regelmäßig rotieren
 - Nutzungslimits überwachen
 
+> **Grenze:** Colab Secrets verhindern, dass ein Key im Notebook steht. Sie schützen nicht davor, dass er in einer Zellenausgabe oder einem Log erscheint, und sie gelten für alle, die das Notebook in derselben Sitzung ausführen. Kostenlose Kontingente der Provider haben Ratenlimits (HTTP 429) und Quoten, die Läufe mitten im Notebook stoppen können. Limits und Preise ändern sich; vor dem Einsatz gilt die aktuelle Provider-Dokumentation.
+
 ---
 
 ## Weiterführende Links

@@ -110,13 +110,22 @@ Es gibt verschiedene Einbettungsmodelle wie Word2Vec, GloVe und FastText für Wo
 | FastText                          | 100-300 Dimensionen                            | OOV-Wortbehandlung, NLP                  |
 | BERT (Basisversion)               | 768 Dimensionen                                | Kontextuelle Textverarbeitung, NLP       |
 | BERT (Large-Version)              | 1024 Dimensionen                               | Fortgeschrittene NLP-Anwendungen         |
-| text-embedding-ada-002 (OpenAI)   | 1536 Dimensionen                               | Hochqualitative semantische Suche, RAG   |
+| text-embedding-3-small (OpenAI)   | 1536 Dimensionen (Standard, verkürzbar)        | Semantische Suche, RAG                   |
+| text-embedding-ada-002 (OpenAI)   | 1536 Dimensionen (älteres Modell)              | Semantische Suche, RAG                   |
 | sentence-transformers             | 384-768 Dimensionen (modellabhängig)           | Semantische Ähnlichkeit, Clustering, RAG |
 | Benutzer- und Produkteinbettungen | 50-200 Dimensionen                             | Empfehlungssysteme, Personalisierung     |
 | Einbettungen aus CNNs (VGG16)     | 4096 Dimensionen (für FC-Schichten)            | Bildverarbeitung, Objekterkennung        |
 | Einbettungen aus CNNs (ResNet)    | Variiert (tiefer mit unterschiedlichen Größen) | Bildanalyse, Feature-Extraktion          |
 | Node2Vec                          | 64-256 Dimensionen                             | Graphenanalysen, soziale Netzwerke       |
 | LSTM-basierte Sequenzeinbettungen | 50-500 Dimensionen                             | Zeitreihen, Sprachmodellierung, NLP      |
+
+# Grenzen und typische Fehler
+
+**Typischer Fehler:** Index und Anfrage mit unterschiedlichen Embedding-Modellen erzeugen. Die Vektoren verschiedener Modelle liegen in unterschiedlichen Räumen und sind nicht vergleichbar. Nach einem Modellwechsel muss der gesamte Bestand neu indexiert werden.
+
+**Grenze:** Embeddings bilden thematische Nähe ab, keine Richtigkeit. Eine Aussage und ihre Verneinung liegen oft nah beieinander. Kennungen wie `R2` oder `D1` werden schlecht getroffen, weil sie semantisch kaum Gewicht tragen; dafür eignet sich eine zusätzliche Stichwortsuche (Hybrid-Suche).
+
+**Praxis:** Jedes Embedding-Modell hat eine maximale Eingabelänge (bei den OpenAI-Modellen 8.191 Tokens); längere Texte werden abgeschnitten oder abgelehnt und gehören vorher in Chunks zerlegt.
 
 # Training von Embedding-Modellen
 Das Training von Embedding-Modellen wie Word2Vec basiert auf der Idee, dass Wörter, die in ähnlichen Kontexten vorkommen, ähnliche Bedeutungen haben. Hier wird detaillierter beschrieben, wie dieses Prinzip im Training umgesetzt wird:

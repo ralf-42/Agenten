@@ -143,7 +143,7 @@ Diese Analogie verdeutlicht die Rollen der einzelnen Komponenten im Gesamtsystem
 | **Multi-Agent-System** | LangGraph (StateGraph) |
 | **Bedingte Workflows** | LangGraph (conditional edges) |
 | **Human-Approval nötig** | LangGraph (interrupt) |
-| **Production-Monitoring** | LangSmith (obligatorisch) |
+| **Production-Monitoring** | LangSmith (ab mehrstufigen Läufen empfohlen) |
 | **Debugging komplexer Flows** | LangSmith (Traces) |
 | **A/B-Testing von Prompts** | LangSmith (Datasets) |
 
@@ -194,6 +194,8 @@ agent = workflow.compile()
 - automatisches Logging
 - nachvollziehbare Traces
 - Latenz- und Kostenmessung
+
+> **Grenze:** Die drei Frameworks lohnen sich, wenn Zustand, Werkzeuge und Nachvollziehbarkeit gebraucht werden. Ein einzelner Modellaufruf ohne Werkzeuge kommt ohne sie aus und profitiert nicht von der zusätzlichen Abstraktion. Zwischen Hauptversionen ändern sich APIs (etwa beim Wechsel auf LangChain 1.0); Code und Beispiele müssen dann nachgezogen werden.
 
 ---
 

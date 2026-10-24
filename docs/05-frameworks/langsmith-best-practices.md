@@ -10,6 +10,8 @@ has_toc: true
 
 # LangSmith Best Practices
 
+> **Modulbezogene Namen in Kurs-Notebooks:** Prefixe LangSmith-Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen mit der Modul-ID im Muster `m##_Bezeichnung` (z. B. `m05_multi-tool-agents`, `m05_kap4_multitooltrace`). `show_trace(...)` verwendet denselben Projektnamen. Ersetze `m05` jeweils durch die ID des aktuellen Notebooks. Tags und Metadaten bleiben fachliche Labels.
+
 **Projekt:** KI-Agenten mit LangChain 1.1+
 
 ---
@@ -100,7 +102,7 @@ Mit `.with_config()` lassen sich einzelne Chains und Aufrufe in LangSmith klar i
 ```python
 # 1. Tracing-Konfiguration vorab festlegen
 run_cfg = {
-    "run_name": "kap6_basicchain",  # Anzeigename im Trace-Tree
+    "run_name": "m05_kap6_basicchain",  # Anzeigename im Trace-Tree
     "tags":     ["lcel", "chain"] # Filterbar im Dashboard
 }
 
@@ -121,7 +123,7 @@ result = chain.invoke({"input": "..."})
 result = chain.invoke(
     {"input": "..."},
     config={
-        "run_name": "kap6_einzelrun",
+        "run_name": "m05_kap6_einzelrun",
         "tags": ["experiment"],
         "metadata": {"variante": "a"},
     },
@@ -129,7 +131,7 @@ result = chain.invoke(
 
 # Runnable-Konfiguration: diese Chain-Variante bleibt benannt.
 traced_chain = chain.with_config(
-    run_name="kap6_basicchain",
+    run_name="m05_kap6_basicchain",
     tags=["lcel", "chain"],
     metadata={"komponente": "prompt-llm-parser"},
 )
@@ -148,13 +150,13 @@ Beide Wege sind komplementär: `.with_config(...)` setzt die Basis-Konfiguration
 **Namenskonvention (Empfehlung):**
 ```python
 # Kurs-Notebooks: Modul_Kapitel_ChainTyp
-run_name="kap3_basicchain"
-run_name="kap5_parallelchain"
-run_name="kap7_stream"
+run_name="m05_kap3_basicchain"
+run_name="m05_kap5_parallelchain"
+run_name="m05_kap7_stream"
 
 # Produktion: Anwendung_Funktion
-run_name="chatbot_retrieval"
-run_name="classifier_intent"
+run_name="m05_chatbot_retrieval"
+run_name="m05_classifier_intent"
 ```
 
 **Tags-Konvention (Empfehlung):**
@@ -216,7 +218,7 @@ ergebnis = tage_bis_termin.invoke({"tage_bis_stichtag": 21, "vorlauf": 7})
 ```python
 # LangSmith in Production aktivieren
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "production"  # Projekt-Name
+os.environ["LANGSMITH_PROJECT"] = "m05_production"  # Projekt-Name
 
 # Automatisches Monitoring aller Requests
 ```
@@ -305,7 +307,7 @@ from langsmith.evaluation import evaluate
 
 results = evaluate(
     lambda inputs: agent.invoke(inputs),
-    data="customer-support-qa",
+    data="m05_customer-support-qa",
     evaluators=[accuracy_evaluator],
 )
 ```
@@ -325,9 +327,9 @@ Seit Februar 2026 kann ein beliebiges Experiment als **Baseline** fixiert werden
 # Automatischer Vergleich aller nachfolgenden evaluate()-Runs
 results_v2 = evaluate(
     lambda inputs: agent_v2.invoke(inputs),
-    data="customer-support-qa",
+    data="m05_customer-support-qa",
     evaluators=[accuracy_evaluator],
-    experiment_prefix="v2-test",  # Automatisch gegen fixierte Baseline verglichen
+    experiment_prefix="m05_v2-test",  # Automatisch gegen fixierte Baseline verglichen
 )
 ```
 
@@ -386,7 +388,7 @@ import os
 # LangSmith aktivieren – MUSS vor allen LangChain-Imports stehen!
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_API_KEY"] = "lsv2_pt_..."  # Dein API-Key
-os.environ["LANGSMITH_PROJECT"] = "my-project"   # Optional: Projekt-Name
+os.environ["LANGSMITH_PROJECT"] = "m05_my-project"   # Optional: Projekt-Name
 
 # EU-Account: Endpoint explizit setzen (ebenfalls vor Imports!)
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
@@ -415,7 +417,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 # ── Setup-Cell: Modulname direkt setzen (vor allen Imports!) ─────────────
 os.environ["LANGSMITH_TRACING"] = "false"
 os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
-os.environ["LANGSMITH_PROJECT"]    = "structured-output"  # Modulname
+os.environ["LANGSMITH_PROJECT"]    = "m04_structured-output"  # Modul-ID + Modulname
 from langsmith import tracing_context
 
 # ── LangSmith-Abschnitt: nur noch anzeigen ───────────────────────────────
@@ -423,7 +425,7 @@ import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # ── Nur den ausgewählten Referenzlauf erfassen ────────────────────────────
-run_cfg = {"run_name": "kap6_structuredtrace", "tags": ["structured-output"]}
+run_cfg = {"run_name": "m04_kap6_structuredtrace", "tags": ["structured-output"]}
 chain = llm.with_structured_output(MyModel).with_config(**run_cfg)
 with tracing_context(enabled=True):
     result = chain.invoke("...")
@@ -450,11 +452,11 @@ from langsmith import tracing_context
 
 # In der Setup-Cell, vor den LangChain-Imports:
 os.environ["LANGSMITH_TRACING"] = "false"
-os.environ["LANGSMITH_PROJECT"] = "erste-agenten"
+os.environ["LANGSMITH_PROJECT"] = "m02_erste-agenten"
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 run_cfg = {
-    "run_name": "kap5_agenttrace",
+    "run_name": "m02_kap5_agenttrace",
     "tags": ["agent", "langsmith"],
 }
 
@@ -630,15 +632,15 @@ def chatbot_with_feedback(message: str, session_id: str):
 
 **Ursache:** `LANGSMITH_PROJECT` wurde in der Setup-Cell auf `"default"` gesetzt (oder gar nicht), und später im Notebook per `os.environ` überschrieben. Das funktioniert nicht – der Projektnamen wird beim ersten Trace via `lru_cache` eingefroren.
 
-**Symptom:** `os.environ["LANGSMITH_PROJECT"] = "structured-output"` gibt den richtigen Wert aus, aber Traces landen trotzdem in `default`.
+**Symptom:** `os.environ["LANGSMITH_PROJECT"] = "m04_structured-output"` gibt den richtigen Wert aus, aber Traces landen trotzdem in `default`.
 
 **Lösung:** Modulnamen direkt in der Setup-Cell setzen – **vor** allen LangChain-Imports:
 ```python
 # ✅ Einmal korrekt in der Setup-Cell – funktioniert zuverlässig
-os.environ["LANGSMITH_PROJECT"] = "structured-output"
+os.environ["LANGSMITH_PROJECT"] = "m04_structured-output"
 
 # ❌ Nach dem ersten Trace überschreiben – wird ignoriert
-os.environ["LANGSMITH_PROJECT"] = "structured-output"  # zu spät
+os.environ["LANGSMITH_PROJECT"] = "m04_structured-output"  # zu spät
 ```
 
 **Alternative** (wenn der Projektname für einen einzelnen Lauf gesetzt werden soll): `ls.tracing_context(project_name=...)`:

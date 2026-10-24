@@ -574,7 +574,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days
     Parameter:
     ----------
     project_name : str
-        Name des LangSmith-Projekts (z.B. "DeepAgents-Harness")
+        Name des LangSmith-Projekts (identisch zu LANGSMITH_PROJECT)
     limit : int, optional
         Anzahl der anzuzeigenden Runs (Standard: 5)
     show_steps : bool, optional
@@ -592,8 +592,8 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days
     Beispiel:
     ---------
     >>> from genai_lib.utilities import show_trace
-    >>> show_trace("DeepAgents-Harness", limit=3)
-    >>> show_trace("DeepAgents-Harness", show_steps=True)
+    >>> show_trace("m50_deepagents_harness", limit=3)
+    >>> show_trace("m50_deepagents_harness", show_steps=True)
     """
     try:
         from langsmith import Client

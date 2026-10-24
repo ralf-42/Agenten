@@ -817,7 +817,7 @@ def load_prompt(path, mode="T"):
         Bitte fasse folgenden Text zusammen: {text}
 
     Unterstützt:
-      - lokale Pfade (z. B. '05_prompt/sql_prompt.md')
+      - lokale Pfade (z. B. '05_prompt/mXX_sql_prompt.md')
       - GitHub-Tree-Links (automatische Umwandlung in Raw-Link)
       - GitHub-Blob-Links (automatische Umwandlung in Raw-Link)
       - direkte Raw-Links

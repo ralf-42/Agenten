@@ -77,7 +77,7 @@ setup_api_keys(["OPENAI_API_KEY"])               # API-Keys aus Colab userdata l
 ```python
 from genai_lib.utilities import show_trace
 
-show_trace("Agent-Evaluation", limit=5, show_steps=True)
+show_trace("m##_agent_evaluation", limit=5, show_steps=True)
 ```
 
 - `show_trace(project_name, limit=5, show_steps=False)` - Analysiert LangSmith-Traces des angegebenen Projekts und zeigt Laufzeiten, Token-Nutzung und optional Einzelschritte
@@ -108,11 +108,11 @@ thinking, answer = extract_thinking(response)
 from genai_lib.utilities import load_prompt
 
 # ChatPromptTemplate aus Markdown-Datei laden
-template = load_prompt("05_prompt/mein_prompt.md")           # lokal
+template = load_prompt("05_prompt/mXX_mein_prompt.md")           # lokal
 template = load_prompt("https://github.com/.../prompt.md")  # GitHub-URL
 
 # Als reinen String laden
-text = load_prompt("05_prompt/mein_prompt.md", mode="S")
+text = load_prompt("05_prompt/mXX_mein_prompt.md", mode="S")
 ```
 
 - `load_prompt(path, mode="T")` - Lädt Markdown-Prompt-Templates (lokal oder GitHub-URL)
@@ -160,7 +160,7 @@ def my_tool(query: str) -> str:
 # 4. Ergebnis anzeigen und Trace analysieren
 from genai_lib.utilities import mprint, show_trace
 mprint(result)
-show_trace("Agent-Evaluation", show_steps=True)
+show_trace("m##_agent_evaluation", show_steps=True)
 ```
 
 ## 6. Entwicklung

@@ -604,7 +604,7 @@ import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
-run_cfg = {"run_name": "m04_kap6_structuredtrace", "tags": ["structured-output"]}
+run_cfg = {"run_name": "m04_kap6_structured_trace", "tags": ["structured_output"]}
 result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("...")
 ```
 
@@ -613,7 +613,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | LangSmith-Feld | Kontext | Beispiel |
 | --- | --- | --- |
 | `LANGSMITH_PROJECT` | Kurs-Notebook | `"m04_structured_output"` |
-| `run_name` | Kurs-Notebook | `"m04_kap6_structuredtrace"` |
+| `run_name` | Kurs-Notebook | `"m04_kap6_structured_trace"` |
 | `LANGSMITH_PROJECT` | Produktion im Kursbeispiel | `"m24_chatbot_production"` |
 | `experiment_prefix` | RAG-Evaluation im Kursbeispiel | `"m11_rag_experiment_2026_03"` |
 
@@ -767,7 +767,7 @@ class Person(BaseModel):
 
 run_cfg = {
     "run_name": "m04_kap3_personextraktion",
-    "tags":     ["structured-output"],
+    "tags":     ["structured_output"],
 }
 
 structured_llm = llm.with_structured_output(Person).with_config(**run_cfg)
@@ -779,7 +779,7 @@ ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
 | Parameter | Konvention | Beispiel |
 |-----------|-----------|---------|
 | `run_name` | `m##_kap##_typ` (Modul, Kapitel, Kurzname) | `m04_kap3_personextraktion` |
-| `tags` | Fachliche Labels ohne Modul-ID | `["structured-output", "person"]` |
+| `tags` | Fachliche Labels ohne Modul-ID | `["structured_output", "person"]` |
 
 > ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
 

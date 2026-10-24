@@ -102,7 +102,7 @@ Mit `.with_config()` lassen sich einzelne Chains und Aufrufe in LangSmith klar i
 ```python
 # 1. Tracing-Konfiguration vorab festlegen
 run_cfg = {
-    "run_name": "m05_kap6_basicchain",  # Anzeigename im Trace-Tree
+    "run_name": "m05_kap6_basic_chain",  # Anzeigename im Trace-Tree
     "tags":     ["lcel", "chain"] # Filterbar im Dashboard
 }
 
@@ -131,7 +131,7 @@ result = chain.invoke(
 
 # Runnable-Konfiguration: diese Chain-Variante bleibt benannt.
 traced_chain = chain.with_config(
-    run_name="m05_kap6_basicchain",
+    run_name="m05_kap6_basic_chain",
     tags=["lcel", "chain"],
     metadata={"komponente": "prompt-llm-parser"},
 )
@@ -354,7 +354,7 @@ from langsmith import Client
 client = Client()
 
 # Prompt aus Hub laden
-prompt = client.pull_prompt("owner/my-prompt")
+prompt = client.pull_prompt("owner/m##_my_prompt")
 
 # Mit Agent verwenden
 agent = create_agent(
@@ -364,7 +364,7 @@ agent = create_agent(
 )
 
 # Prompt im Hub aktualisieren
-client.push_prompt("owner/my-prompt", object=prompt)
+client.push_prompt("owner/m##_my_prompt", object=prompt)
 ```
 
 > ⚠️ **Korrektur:** `from langchain import hub` schlägt unter LangChain 1.0+ mit `ImportError` fehl. Immer `Client().pull_prompt()` / `Client().push_prompt()` verwenden.
@@ -425,7 +425,7 @@ import os
 print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
 
 # ── Nur den ausgewählten Referenzlauf erfassen ────────────────────────────
-run_cfg = {"run_name": "m04_kap6_structuredtrace", "tags": ["structured-output"]}
+run_cfg = {"run_name": "m04_kap6_structured_trace", "tags": ["structured_output"]}
 chain = llm.with_structured_output(MyModel).with_config(**run_cfg)
 with tracing_context(enabled=True):
     result = chain.invoke("...")

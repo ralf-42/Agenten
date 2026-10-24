@@ -219,14 +219,14 @@ Lädt Prompt-Templates aus Markdown-Dateien (.md) als ChatPromptTemplate oder St
 from genai_lib.utilities import load_prompt
 
 # ChatPromptTemplate (default, mode="T")
-prompt = load_prompt('05_prompt/sql_prompt.md')
+prompt = load_prompt('05_prompt/mXX_sql_prompt.md')
 
 # Nur als String ohne Frontmatter (mode="S")
-text = load_prompt('05_prompt/sql_prompt.md', mode="S")
+text = load_prompt('05_prompt/mXX_sql_prompt.md', mode="S")
 
 # Von GitHub (tree oder blob URLs werden automatisch konvertiert)
 prompt = load_prompt(
-    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/pmo_system_prompt.md'
+    'https://github.com/ralf-42/Agenten/blob/main/05_prompt/m03_pmo_system_prompt.md'
 )
 ```
 

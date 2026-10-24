@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Evaluation & Observability
 parent: "Qualität & Sicherheit"
@@ -232,14 +232,14 @@ Sobald ein Agent produktiv weiterentwickelt wird, reicht eine Einmalbewertung ni
 ```python
 baseline_results = evaluate(
     my_agent_v1,
-    data="m21_Agent_Evaluation_v1",
+    data="m21_agent_evaluation_v1",
     evaluators=[accuracy_evaluator],
     experiment_prefix="m21_baseline_v1"
 )
 
 candidate_results = evaluate(
     my_agent_v2,
-    data="m21_Agent_Evaluation_v1",
+    data="m21_agent_evaluation_v1",
     evaluators=[accuracy_evaluator],
     experiment_prefix="m21_candidate_v2"
 )
@@ -283,7 +283,7 @@ from langsmith import Client
 client = Client()
 
 dataset = client.create_dataset(
-    dataset_name="m21_Agent_Evaluation_v1",
+    dataset_name="m21_agent_evaluation_v1",
     description="Testfälle für den Support-Agenten"
 )
 
@@ -308,7 +308,7 @@ def accuracy_evaluator(inputs: dict, outputs: dict, reference_outputs: dict) -> 
 
 results = evaluate(
     my_agent,
-    data="m21_Agent_Evaluation_v1",
+    data="m21_agent_evaluation_v1",
     evaluators=[accuracy_evaluator],
     experiment_prefix="m21_v1_course_demo"
 )

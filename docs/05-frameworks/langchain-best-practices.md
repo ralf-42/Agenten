@@ -621,7 +621,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import (
     HumanInTheLoopMiddleware,
     SummarizationMiddleware,
-    PIIMiddleware
+    PIIMiddleware,
 )
 
 middleware = [
@@ -1066,7 +1066,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import (
     HumanInTheLoopMiddleware,
     SummarizationMiddleware,
-    PIIMiddleware
+    PIIMiddleware,
 )
 
 # Chains (LCEL)

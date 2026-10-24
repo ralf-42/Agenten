@@ -74,13 +74,25 @@ Jedes Notebook enthält eine erste Zelle mit Colab-spezifischem Code. Diese drei
 # ❌ Colab (original)
 #@title 🔧 Umgebung einrichten{ display-mode: "form" }
 !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
-from genai_lib.utilities import check_environment, setup_api_keys, mprint, mermaid, show_trace
+from genai_lib.utilities import (
+    check_environment,
+    setup_api_keys,
+    mprint,
+    mermaid,
+    show_trace,
+)
 setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'])
 check_environment()
 get_ipinfo()
 
 # ✅ Lokal (angepasst)
-from genai_lib.utilities import check_environment, setup_api_keys, mprint, mermaid, show_trace
+from genai_lib.utilities import (
+    check_environment,
+    setup_api_keys,
+    mprint,
+    mermaid,
+    show_trace,
+)
 setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'])
 check_environment()
 ```

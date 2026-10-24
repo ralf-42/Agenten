@@ -17,7 +17,13 @@ pip install git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 Nach der Installation:
 
 ```python
-from genai_lib.utilities import mprint, mermaid, setup_api_keys, check_environment, show_trace
+from genai_lib.utilities import (
+    mprint,
+    mermaid,
+    setup_api_keys,
+    check_environment,
+    show_trace,
+)
 ```
 
 ## 2. Architektur und Module

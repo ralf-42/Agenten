@@ -10,7 +10,7 @@ has_toc: true
 
 # LangSmith Best Practices
 
-> **Modulbezogene Namen in Kurs-Notebooks:** Prefixe LangSmith-Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen mit der Modul-ID im Muster `m##_Bezeichnung` (z. B. `m05_multi-tool-agents`, `m05_kap4_multitooltrace`). `show_trace(...)` verwendet denselben Projektnamen. Ersetze `m05` jeweils durch die ID des aktuellen Notebooks. Tags und Metadaten bleiben fachliche Labels.
+> **Modulbezogene Namen in Kurs-Notebooks:** LangSmith-Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen erhalten die Modul-ID als Prefix nach dem Muster `m##_Bezeichnung` (z. B. `m05_multi-tool-agents`, `m05_kap4_multitooltrace`). `show_trace(...)` verwendet denselben Projektnamen. Ersetze `m05` jeweils durch die ID des aktuellen Notebooks. Tags und Metadaten bleiben fachliche Labels.
 
 **Projekt:** KI-Agenten mit LangChain 1.1+
 

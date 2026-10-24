@@ -453,14 +453,14 @@ Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle
 from genai_lib.utilities import show_trace
 
 # Letzte 5 Runs als Tabelle
-show_trace("RAG-Chain")
+show_trace("m11_rag_chain")
 
 # Mit Step-Analyse des letzten Runs
-show_trace("RAG-Chain", limit=3, show_steps=True)
+show_trace("m11_rag_chain", limit=3, show_steps=True)
 ```
 
 **Parameter:**
-- `project_name` (str): Name des LangSmith-Projekts (z.B. `"RAG-Chain"`)
+- `project_name` (str): Name des LangSmith-Projekts (z.B. `LANGSMITH_PROJECT="m11_rag_chain"`)
 - `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
 - `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
@@ -552,7 +552,7 @@ kontext_text = format_docs(retrieved)
 # 3. Reine Chain mit dem fertigen Dictionary aufrufen
 antwort = rag_chain.invoke(
     {"context": kontext_text, "question": frage},
-    config={"run_name": "rag_chain_antwort"},
+    config={"run_name": "m11_rag_chain_antwort"},
 )
 ```
 
@@ -617,10 +617,10 @@ setup_api_keys(["OPENAI_API_KEY"])
 from genai_lib.utilities import show_trace
 
 # Letzte Runs prüfen
-show_trace("RAG-Chain")
+show_trace("m11_rag_chain")
 
 # Step-Analyse für Debugging
-show_trace("RAG-Chain", show_steps=True)
+show_trace("m11_rag_chain", show_steps=True)
 ```
 
 ### . PMO-RAG-Kette

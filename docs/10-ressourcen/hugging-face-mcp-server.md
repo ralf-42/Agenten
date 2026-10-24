@@ -244,7 +244,7 @@ async def main() -> None:
                 )
             ]
         },
-        config={"run_name": "hf-mcp-caesar-demo", "tags": ["crypto", "caesar"]},
+        config={"run_name": "m25_hf_mcp_caesar_demo", "tags": ["crypto", "caesar"]},
     )
 
     print(result["messages"][-1].content)

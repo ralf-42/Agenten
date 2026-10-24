@@ -422,7 +422,7 @@ import os
 
 # Vor dem ersten LangChain-/LangGraph-Import setzen.
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "agenten-cheatsheet"
+os.environ["LANGSMITH_PROJECT"] = "m05_agenten_cheatsheet"
 os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```
 
@@ -432,7 +432,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 
 ```python
 run_cfg = {
-    "run_name": "pmo_assistent_demo",
+    "run_name": "m05_pmo_assistent_demo",
     "tags": ["cheatsheet", "langgraph", "pmo-assistent"],
     "metadata": {
         "kurs": "agenten",
@@ -448,7 +448,7 @@ Bei Sessions wird `thread_id` zusaetzlich in `configurable` gesetzt:
 
 ```python
 run_cfg = {
-    "run_name": "pmo_assistent_demo",
+    "run_name": "m05_pmo_assistent_demo",
     "tags": ["cheatsheet", "checkpointing"],
     "metadata": {"kurs": "agenten", "workflow": "session"},
 }
@@ -463,7 +463,7 @@ result = graph.invoke(start_state, config={
 
 ```python
 chain = (prompt | llm | StrOutputParser()).with_config({
-    "run_name": "kurzantwort_chain",
+    "run_name": "m05_kurzantwort_chain",
     "tags": ["langchain", "snippet"],
     "metadata": {"baustein": "prompt-llm-parser"},
 })
@@ -491,7 +491,7 @@ from langsmith import Client
 
 client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
 
-dataset_name = "a00 briefing agent smoke test"
+dataset_name = "m05_a00_briefing_agent_smoke_test"
 dataset = client.create_dataset(
     dataset_name=dataset_name,
     description="Kleine Regressionstests für Research-Antworten.",

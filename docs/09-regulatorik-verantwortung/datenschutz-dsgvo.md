@@ -99,7 +99,7 @@ Darüber hinaus lohnt es sich, vor dem Logging sensible Felder zu maskieren oder
 
 ```python
 run_cfg = {
-    "run_name": "rag_query",
+    "run_name": "m20_rag_query",
     "tags": ["rag"],
     "metadata": {
         "modul": "modul",

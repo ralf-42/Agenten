@@ -198,186 +198,36 @@ Konflikte sind tückisch, weil sie von außen oft wie zufällige Modellschwankun
 Veralteter Kontext fällt in Tests oft nicht auf, weil die Datenbasis dort klein und überschaubar bleibt. Im laufenden Betrieb wird genau das schnell zum Problem: Eine formal saubere Antwort kann fachlich falsch sein, wenn sie auf einem alten Stand beruht.
 
 ## Praktische Anwendung
-### Kontext analysieren
 
-Vor jeder Optimierung steht die Frage, welche Informationen wirklich nötig sind. Hilfreicher als „vorhanden oder nicht vorhanden“ ist die Einteilung in „kritisch, wichtig oder nur ergänzend“. Diese Priorisierung reduziert Ballast und macht spätere Entscheidungen nachvollziehbar.
+### Beispiel: PMO-Assistent
 
-```
-Frage: "Welche Versicherung brauche ich?"
+Bei der Frage „Welche Risiken sind offen und welche Aufgaben überfällig?“ sollte der Agent nur die dafür benötigten Einträge erhalten. Dazu gehören offene Risiken, relevante Beschlüsse und Aufgaben mit Frist und Status. Jeder Eintrag braucht einen Verweis auf seine Quelle und deren Stand.
 
-Benötigte Kontextinformationen (nach Priorität):
-✓ KRITISCH:
-  - Alter: 32 Jahre
-  - Familienstand: verheiratet, 2 Kinder (3, 7 Jahre)
-  - Beruf: Software-Entwickler
-  - Einkommen: 65.000€ brutto/Jahr
+```text
+ANFRAGE
+Welche Risiken sind offen und welche Aufgaben überfällig?
 
-✓ WICHTIG:
-  - Bestehende Absicherungen: KFZ-Haftpflicht, Hausratversicherung
-  - Immobilienstatus: Eigenheim (Restschuld 180.000€)
-  - Gesundheitsstatus: keine Vorerkrankungen
-
-✓ ERGÄNZEND:
-  - Risikobereitschaft: konservativ
-  - Finanzielle Ziele: Familienabsicherung, Altersvorsorge
-  - Verfügbares Budget: 200€/Monat für Versicherungen
+KONTEXT
+Risiken: [relevante Einträge mit Status und Quelle]
+Beschlüsse: [relevante Entscheidungen mit Datum]
+Aufgaben: [offene Aufgaben mit Frist und Status]
+Quellenstand: [Datum der verwendeten Dokumente]
 ```
 
-### Kontext strukturieren
+Der Agent sollte fehlende Angaben kennzeichnen, widersprüchliche Quellen offenlegen und keine Werte ergänzen, die im Korpus nicht stehen.
 
-Struktur hilft dem Modell und der Entwicklung. Sobald klar benannte Abschnitte für Kundenkontext, Produktkontext und Beratungsziel existieren, lassen sich Fehler schneller finden. Unstrukturierte Kontextblöcke sind dagegen schwer zu pflegen und kaum testbar.
+### Kontext vor dem Modellaufruf prüfen
 
-```
-PROMPT-STRUKTUR:
+- Nur Quellen laden, die zur konkreten Frage beitragen.
+- Quelle und Aktualitätsstand an den Einträgen erhalten.
+- Widersprüche markieren, statt sie still zusammenzuführen.
+- Bei fehlenden Angaben nachfragen oder die Lücke benennen.
 
-=== KUNDENKONTEXT ===
-Demografisch:
-- Person: 32 Jahre, männlich, verheiratet
-- Familie: 2 Kinder (3, 7 Jahre), Hausfrau-Ehefrau
-- Wohnort: Eigenheim, Restschuld 180.000€
+### Wirkung messen
 
-Finanziell:
-- Einkommen: 65.000€ brutto/Jahr (alleinverdienend)
-- Budget Versicherungen: 200€/Monat
-- Risikobereitschaft: konservativ
-
-=== PRODUKTKONTEXT ===
-Bestehende Absicherung:
-- KFZ-Haftpflicht: vollständig
-- Hausratversicherung: 50.000€ Versicherungssumme
-- Keine weitere Absicherung vorhanden
-
-Relevante Produktkategorien:
-- Risikolebensversicherung (Familienabsicherung)
-- Berufsunfähigkeitsversicherung (Einkommensschutz)
-- Private Unfallversicherung
-- Rechtsschutzversicherung
-
-=== BERATUNGSKONTEXT ===
-Anfrage: "Welche Versicherung brauche ich?"
-Beratungsziel: Bedarfsanalyse und Produktempfehlung
-Compliance: Versicherungsberatung nach §34d GewO
-```
-
-### Kontext optimieren
-
-Optimierung heißt hier nicht, einen Prompt möglichst stark zu kürzen. Ziel ist ein gutes Verhältnis aus Kürze, Klarheit und fachlicher Relevanz. Guter Kontext spart Tokens, ohne die entscheidenden Signale zu verlieren.
-
-```
-OPTIMIERUNGSREGELN für KI-Verarbeitung:
-
-1. TOKEN-EFFIZIENZ (Max. 500 Token für Kontext):
-   ❌ "Der Kunde ist 32 Jahre alt und arbeitet als Software-Entwickler..."
-   ✅ "Kunde: 32J, Software-Dev, 65k€, verheiratet, 2 Kinder"
-
-2. RELEVANZ-FILTERING:
-   Für Versicherungsberatung IMMER relevant:
-   - Alter, Familienstand, Beruf, Einkommen
-   - Bestehende Policen
-   - Gesundheitsstatus (wenn abgefragt)
-   
-   SITUATIV relevant:
-   - Hobbys (nur bei Unfallversicherung)
-   - Immobilien (nur bei Sachversicherungen)
-
-3. STRUKTURIERUNG für LLM:
-```
-
-AUFTRAG: Versicherungsbedarfsanalyse KUNDE: 32J, Soft-Dev, 65k€, verheiratet, 2Ki(3,7J), Eigenheim(180k€ Schuld) BESTAND: KFZ-Haft, Hausrat(50k€) BUDGET: 200€/Monat PRÄFERENZ: konservativ ZIEL: Familien-/Einkommensabsicherung
-
-AUFGABE: Identifiziere Versicherungslücken und empfehle passende Produkte mit Begründung.
-
-### Konsistenz-Checkliste:
-
-> [!SUCCESS] Qualitätsgate<br>
-> Diese Checkliste eignet sich als "Definition of Done" vor jedem produktiven Prompt-Update.
-
-```
-- [ ] Gleiche Kategorien in allen Abschnitten verwendet
-- [ ] Konkrete Beispiele statt Platzhalter
-- [ ] Token-Limits definiert und eingehalten  
-- [ ] Relevanz-Kriterien spezifiziert
-- [ ] Optimierung messbar (Token-Reduktion, Strukturierung)
-```
-
-Die Checkliste ist bewusst schlicht. In realen Projekten reicht oft schon eine kleine, konsequent genutzte Qualitätsroutine, um die häufigsten Kontextfehler zu vermeiden. Erst danach lohnt sich feinere Optimierung.
-
-## Einfache Tools und Techniken
-### Tool 1: Context-Checkliste
-```
-☐ Sind alle notwendigen Informationen vorhanden?
-☐ Sind die Informationen aktuell?
-☐ Gibt es Widersprüche?
-☐ Ist der Kontext nicht zu lang?
-☐ Ist der Kontext relevant für die Aufgabe?
-```
-
-### Tool 2: Kontext-Templates
-```
-Kundenkontext:
-- Alter: 35 Jahre
-- Familie: 2 Kinder
-- Beruf: Selbständig
-- Ziel: Familienabsicherung
-
-→ KI wählt passende Produktinformationen aus
-```
-### Tool 3: Einfache Kontextregeln
-```
-Kundenkontext:
-- Alter: 35 Jahre
-- Familie: 2 Kinder
-- Beruf: Selbständig
-- Ziel: Familienabsicherung
-
-→ KI wählt passende Produktinformationen aus
-```
-## Messbare Verbesserungen
-### Vorher vs. Nachher
-
-**Ohne Context Engineering:**
-- ❌ 45% Fehlerrate bei Empfehlungen
-- ❌ 3+ Nachfragen pro Beratung
-- ❌ 15 Min. Bearbeitungszeit
-
-**Mit Context Engineering:**
-- ✅ 12% Fehlerrate bei Empfehlungen
-- ✅ 1 Nachfrage pro Beratung
-- ✅ 8 Min. Bearbeitungszeit
-
-### Erfolgs-Metriken
-
-> [!TIP] Wirkung sichtbar machen<br>
-> Sinnvoll sind pro Use Case zwei bis drei Metriken, etwa Fehlerrate, Nachfragen oder Bearbeitungszeit. Erst der Vorher-Nachher-Vergleich zeigt, ob eine Kontextänderung tatsächlich wirkt.
-```
-Kundenkontext:
-- Alter: 35 Jahre
-- Familie: 2 Kinder
-- Beruf: Selbständig
-- Ziel: Familienabsicherung
-
-→ KI wählt passende Produktinformationen aus
-```
-## Sofort umsetzbare Tipps
-### Do's
-- Mit einfachen Context-Checklisten beginnen
-- Feedback systematisch sammeln
-- Erfolgreiche Kontextmuster dokumentieren
-- Mit den häufigsten Anwendungsfällen starten
-- Verbesserungen regelmäßig messen
-
-### Don'ts
-- Nicht zu kompliziert beginnen
-- Nicht alle Kontextquellen auf einmal ändern
-- Nicht ohne Messungen optimieren
-- Nicht vergessen, das Team zu schulen
-- Nicht auf Feedback verzichten
-
-> [!WARNING] Häufiger Rollout-Fehler<br>
-> Unmessbare Änderungen am Kontext erschweren die Ursachenanalyse und führen zu schwer reproduzierbaren Ergebnissen.
+Kontextänderungen lassen sich mit denselben Testfragen vor und nach der Änderung vergleichen. Geeignete Messwerte hängen vom Anwendungsfall ab, etwa gefundene Belege, unbelegte Aussagen oder nötige Rückfragen. Zahlen zu Verbesserungen sollten nur aus einem dokumentierten Testlauf stammen.
 
 ---
-
 ## Kontextregeln für den ersten Agenten
 Für erste Agentenprojekte reicht meist ein komplexes Kontextframework nicht. Wichtiger ist eine klare Kontextregel: Welche Informationen sind Pflicht, welche sind optional und welche dürfen nie ungeprüft in den Modellkontext gelangen? Diese Entscheidung reduziert Fehlverhalten oft stärker als ein Modellwechsel.
 

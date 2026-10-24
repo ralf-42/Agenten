@@ -32,13 +32,13 @@ LangChain und LangGraph ermöglichen den Bau komplexer KI-Anwendungen. Doch bei 
 - **Wie gut** funktioniert das System mit echten Nutzerfragen?
 
 LangSmith beantwortet diese Fragen durch:
-- **Vollständiges Tracing** aller LLM-Calls, Tool-Aufrufe und Chain-Schritte
+- Traces für unterstützte LLM-, Tool- und Chain-Aufrufe, wenn Tracing aktiviert ist
 - **Visuelle Darstellung** komplexer Workflows
 - **Dataset-Management** für systematische Evaluierung  
 - **Performance-Monitoring** in Produktion
 - **Feedback-Collection** von Nutzern
 
-Kernprinzip: **Jede Ausführung wird automatisch protokolliert und kann nachvollzogen werden** – ohne zusätzlichen Code im Workflow selbst.
+Bei aktivem Tracing zeichnen unterstützte LangChain- und LangGraph-Integrationen Runs auf. Eigene Funktionen und nicht integrierte Aufrufe benötigen zusätzliche Instrumentierung; Umfang und Inhalt hängen von der Konfiguration ab.
 
 ### LangSmith im Entwicklungs-Workflow
 
@@ -133,13 +133,13 @@ get_ipinfo()
 - Env-Vars stehen **vor** dem `genai_lib`-Import – das ist Pflicht laut Best Practices
 - **LangSmith-Namenskonvention:** Modulbezogene Projekt-, Run-, Experiment- und Dataset-Namen tragen das Modul-ID-Prefix `m##_`; `show_trace(...)` verwendet denselben Projektnamen. Tags und Metadaten bleiben sprechende Labels ohne Modul-ID. Beispiel: `LANGSMITH_PROJECT="m04_structured_output"`.
 - `create_globals=False` verhindert globale Variablen (Best Practice)
-- Ab jetzt werden **alle** LangChain/LangGraph-Operationen automatisch getrackt
+- Unterstützte LangChain-/LangGraph-Aufrufe werden bei aktivem Tracing erfasst. Eigene Funktionen können gezielt instrumentiert werden.
 
 ---
 
 ## Grundaufbau: Das kleinstmögliche funktionierende Beispiel
 
-Der schnellste Weg zum Verständnis: Ein einfacher LLM-Call mit automatischem Tracing.
+Ein einfacher LLM-Call zeigt das Tracing, sofern die LangSmith-Variablen gesetzt und die Integration aktiv ist.
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -147,15 +147,15 @@ from langchain.chat_models import init_chat_model
 # Normaler LLM-Setup (wie gewohnt)
 llm = init_chat_model("openai:gpt-5.6-luna")
 
-# Einfacher Call - wird automatisch getrackt!
+# Einfacher Aufruf: Bei aktiviertem Tracing erscheint ein Trace.
 response = llm.invoke("Erkläre LangSmith in einem Satz.")
 print(response.content)
 ```
 
 **Was passiert im Hintergrund:**
-1. LangSmith empfängt automatisch alle Daten (Input, Output, Latenz, Token)
-2. Ein "Trace" wird erstellt und in der Web-UI angezeigt
-3. Kein zusätzlicher Code nötig – funktioniert "out of the box"
+1. Die Integration übermittelt die für diesen Run verfügbaren Daten.
+2. LangSmith ordnet den Run einem Trace zu, der in der Web-UI angezeigt werden kann.
+3. Eigene Funktionen benötigen gegebenenfalls zusätzliche Instrumentierung.
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
 - URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects)
@@ -423,7 +423,7 @@ results = evaluate(
 
 **Ergebnis:**
 - Jeder Test-Case wird einzeln ausgeführt
-- Traces für alle Runs werden automatisch gespeichert
+- Runs, die vom aktiven Tracing erfasst werden, lassen sich in LangSmith vergleichen
 - Vergleich über UI: Welche Fragen wurden korrekt beantwortet?
 
 ---
@@ -514,7 +514,7 @@ results = evaluate(
 ```
 
 **Vorteile:**
-- Skalierbar: 100+ Beispiele automatisch testen
+- Auch größere Datasets lassen sich automatisiert auswerten; Laufzeit und Kosten hängen vom Dataset und den Evaluatoren ab
 - Konsistent: Gleiche Bewertungskriterien
 - Nachvollziehbar: LLM-Begründungen werden gespeichert
 
@@ -522,7 +522,7 @@ results = evaluate(
 
 ## Integration in LangGraph-Workflows
 
-LangSmith trackt auch komplexe LangGraph-State-Machines automatisch.
+Bei aktiviertem Tracing werden unterstützte LangGraph-Runs ebenfalls erfasst.
 
 ```python
 from langgraph.graph import StateGraph, START, END
@@ -547,7 +547,7 @@ graph.add_edge("agent", END)
 checkpointer = InMemorySaver()
 compiled_graph = graph.compile(checkpointer=checkpointer)
 
-# Ausführen - wird automatisch getrackt!
+# Ausführen: Bei aktiviertem Tracing erscheint ein Trace.
 config = {"configurable": {"thread_id": "demo-session"}}
 result = compiled_graph.invoke(
     {"messages": [{"role": "human", "content": "Hallo!"}]},
@@ -698,7 +698,7 @@ def process_query(query: str):
 
 ### Einzelne Chains und Runs benennen mit `.with_config()`
 
-Automatisches Tracing erfasst alle Runs – aber ohne explizite Namen sind sie im Dashboard schwer zu unterscheiden. `.with_config()` gibt einzelnen Chains, LLM-Aufrufen und Structured-Output-Chains einen eindeutigen Namen und Tags.
+Bei aktiviertem Tracing werden unterstützte Runs erfasst. Ohne explizite Namen sind sie im Dashboard schwer zu unterscheiden. `.with_config()` versieht einzelne Chains, LLM-Aufrufe und Structured-Output-Chains mit einem Namen und Tags.
 
 **Prinzip: Config-Parameter vorab in einer separaten Variable festlegen**
 
@@ -956,12 +956,12 @@ Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig gen
 
 ### "Wie lange werden Traces gespeichert?"
 
-Traces werden maximal **400 Tage** aufbewahrt. Danach werden sie automatisch gelöscht.
+Die geltende Aufbewahrungsfrist ist im jeweiligen LangSmith-Workspace und den aktuellen Planbedingungen zu prüfen.
 
-**Längerfristige Speicherung:** Wichtige Runs als **Dataset** exportieren — Datasets unterliegen keiner automatischen Löschfrist.
+Ein Dataset kann ausgewählte Runs für wiederholbare Evaluationen enthalten. Es ersetzt keine geprüfte Archivierungs- oder Aufbewahrungslösung.
 
 ```python
-# Run dauerhaft in ein Dataset überführen
+# Run für wiederholbare Evaluation in ein Dataset übernehmen
 client.create_example_from_run(run_id=run_id, dataset_name="m05_wichtige_runs")
 ```
 
@@ -1004,13 +1004,11 @@ setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
 **Best Practice:** Alle benötigten Keys zu Beginn im Setup-Block definieren.
 
 
-> 💡 **Tipp:** LangSmith-UI immer im zweiten Browser-Tab öffnen – so können Traces direkt während der Entwicklung inspiziert werden!
-
 > 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!
 
 ## Zusammenfassung
 
-LangSmith macht Agenten nachvollziehbar: Traces zeigen einzelne Schritte, Datasets ermöglichen systematische Tests und Feedback verbindet Entwicklung mit Qualitätssicherung. Für den Agenten-Kurs ist LangSmith vor allem das Werkzeug, um Tool-Aufrufe, Routing-Entscheidungen und Fehlerpfade sichtbar zu machen.
+LangSmith macht Agentenläufe nachvollziehbar. Traces zeigen einzelne Schritte, Datasets ermöglichen wiederholbare Tests und Feedback ergänzt die Qualitätssicherung. So lassen sich Tool-Aufrufe, Routing-Entscheidungen und Fehlerpfade untersuchen.
 
 
 ## Abgrenzung zu verwandten Dokumenten

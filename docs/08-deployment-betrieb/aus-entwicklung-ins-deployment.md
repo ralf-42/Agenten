@@ -43,24 +43,24 @@ Bevor die Umsetzung startet, sollte das Ziel-Betriebsmodell festgelegt werden. S
 
 ### Übersicht Deploymentvarianten für Python (2026)
 
-Die folgende Marktübersicht hilft bei der Einordnung, welche Betriebsmodelle in der Praxis dominieren:
+Die passende Betriebsform hängt von Infrastruktur, Betriebsverantwortung und Skalierungsbedarf ab. Die Tabelle nennt typische Optionen, keine Rangfolge.
 
-| Variante                         | Beschreibung                          | Geschätzter Nutzungsanteil | Typische Tools                              |
-| -------------------------------- | ------------------------------------- | -------------------------- | ------------------------------------------- |
-| **Containerisiert (Docker/K8s)** | Images mit Python + App, orchestriert | ~65-75% (wachsend)         | Docker, Podman, Kubernetes, Helm            |
-| **PaaS/Cloud (managed)**         | Provider-managed Runtime              | ~15-20%                    | Heroku, Render, Railway, Vercel, AWS Lambda |
-| **Virtuelle Umgebung (venv)**    | Server + venv + Process Manager       | ~10-15%                    | systemd, Supervisor, Gunicorn, NGINX        |
-| **Standalone-Pakete**            | PyInstaller/shiv für EXEs/Archive     | ~3-5%                      | PyInstaller, cx_Freeze, Nuitka              |
-| **Bare-Metal/System**            | System-Python + pip                   | ~2-5% (Legacy)             | apt/yum + cron/systemd                      |
+| Variante | Beschreibung | Typische Werkzeuge |
+|---|---|---|
+| **Container** | Anwendung und Abhängigkeiten als Image bereitstellen | Docker, Podman, Kubernetes, Helm |
+| **Verwaltete Plattform** | Laufzeit und Teile des Betriebs an einen Plattformanbieter abgeben | Heroku, Render, Railway, Vercel, AWS Lambda |
+| **Virtuelle Umgebung** | Anwendung auf einem selbst verwalteten Server betreiben | `venv`, systemd, Supervisor, Gunicorn, NGINX |
+| **Standalone-Paket** | Anwendung als ausführbares Paket verteilen | PyInstaller, cx_Freeze, Nuitka |
+| **Systeminstallation** | Anwendung mit den Paketwerkzeugen des Zielsystems einrichten | `apt`, `yum`, cron, systemd |
 
 **Praktische Einordnung:**
-- Container sind heute der Standard für Team-Setups, reproduzierbare Builds und CI/CD.
-- Managed Plattformen sind stark für schnelle Time-to-Market bei kleinen bis mittleren Anwendungen.
-- venv-Deployments bleiben relevant für bestehende Serverlandschaften und interne Tools.
-- Standalone- und Bare-Metal-Varianten sind eher Spezial- oder Legacy-Szenarien.
+- Container sind hilfreich, wenn Entwicklungs- und Laufzeitumgebung reproduzierbar sein müssen.
+- Eine verwaltete Plattform reduziert den eigenen Betriebsaufwand; dafür gelten ihre Vorgaben und Kostenmodelle.
+- Eine virtuelle Umgebung passt zu Servern, deren Betrieb bereits organisiert ist.
+- Standalone-Pakete und Systeminstallationen eignen sich für Umgebungen mit entsprechenden Verteilungs- oder Betriebsanforderungen.
 
 > [!TIP] Für Entwickler<br>
-> Für den ersten produktiven Rollout ist meist "managed" schneller. Container lohnen sich besonders bei Team-Betrieb und Portabilität.
+> Vor der Auswahl sollten Bereitstellung, Secret-Verwaltung, Protokollierung, Kosten und Zuständigkeit für den Betrieb geklärt sein.
 
 ---
 
@@ -325,7 +325,7 @@ Je nach Anforderung gibt es verschiedene Wege ins Deployment:
 | **AWS Lambda** | Event-basierte Apps | ⭐⭐⭐ Fortgeschritten |
 | **Kubernetes** | Enterprise, Multi-Service | ⭐⭐⭐⭐ Komplex |
 
-**Für Entwickler empfohlen:** Hugging Face Spaces oder Railway bieten einfache Git-basierte Deployments.
+Vor der Auswahl sind die benötigten Laufzeiten, Secrets, Logs, Skalierung und Kosten für die konkrete Anwendung zu prüfen.
 
 ---
 

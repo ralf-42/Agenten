@@ -10,7 +10,7 @@ has_toc: true
 # DeepAgents
 {: .no_toc }
 
-> **Harness-Ansatz für Planning, Filesystem und Sub-Agenten — provider-agnostisch, MIT-lizenziert**
+> **Harness für Planning, Dateizugriff und Sub-Agenten**
 
 ---
 
@@ -27,13 +27,9 @@ has_toc: true
 DeepAgents ist eine zusätzliche Abstraktionsschicht im LangChain-Ökosystem.
 Während LangGraph Workflows explizit über **State**, **Nodes** und **Edges** modelliert, liefert DeepAgents ein bereits vorbereitetes **Harness** für typische agentische Langläufer-Aufgaben.
 
-### Herkunft
+### Einordnung
 
-LangChain hat DeepAgents explizit als Open-Source-Umsetzung der Claude-Code-Architektur veröffentlicht — aus dem README:
-
-> *"This project was primarily inspired by Claude Code, and initially was largely an attempt to see what made Claude Code general purpose, and make it even more so."*
-
-Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehen, zu verallgemeinern und provider-agnostisch zugänglich zu machen. MIT-Lizenz. Kostenlos.
+DeepAgents bündelt Planung, Dateizugriff und Delegation in einem vorgefertigten Harness. Für die Auswahl zählen die verfügbaren APIs, Backends und Sicherheitsgrenzen; die Herkunft des Projekts sagt darüber wenig aus.
 
 ### Kernbausteine
 
@@ -43,9 +39,9 @@ Ziel war nicht, Claude Code zu kopieren, sondern die Kernarchitektur zu verstehe
 - **Tool-Integration** für Recherche, APIs oder Code
 - **Persistentes Gedächtnis** über LangGraph Memory Store
 
-Für den Einstieg reicht zuerst ein kleiner Kern: ein Modell, ein oder zwei klare Tools und ein präziser `system_prompt`. Planning, Dateien, Sub-Agenten, Skills und Permissions kommen danach. Sonst wirkt DeepAgents schnell größer, als es für die erste Übung sein muss.
+Ein Minimalaufbau besteht aus einem Modell, klar begrenzten Tools und einem präzisen `system_prompt`. Weitere Funktionen wie Planung, Dateizugriff und Sub-Agenten sollten erst hinzukommen, wenn eine konkrete Anforderung sie braucht.
 
-DeepAgents passt zum Motto „Planen. Handeln. Prüfen.“:
+Die drei Schritte lassen sich so auf DeepAgents beziehen:
 
 | Motto | DeepAgents-Bezug |
 |---|---|
@@ -490,9 +486,7 @@ Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können
 
 ## Provider-Agnostik: was austauschbar ist
 
-Der wichtigste Unterschied zu Claude Code oder Codex: **DeepAgents ist modellunabhängig.**
-
-Dieselbe Harness-Architektur läuft mit jedem der 100+ LangChain-kompatiblen Modellanbieter.
+Das Modell wird über die LangChain-Modellschnittstelle eingebunden. Welche Anbieter verfügbar sind, hängt von den installierten Integrationen und ihren APIs ab.
 
 ```python
 # OpenAI
@@ -513,25 +507,9 @@ Das ist besonders relevant, wenn:
 - Organisationsrichtlinien Multi-Provider-Unterstützung erfordern
 - Kosten zwischen Anbietern optimiert werden sollen
 
-### Einordnung: DeepAgents, Claude Agent SDK und Codex SDK
+### Ansätze vergleichen
 
-Die folgende Tabelle ist keine Rangliste. Sie zeigt, welche Steuerungsschicht in welchem Kontext naheliegt.
-
-| Kriterium | DeepAgents | Claude Agent SDK | Codex SDK |
-|---|---|---|---|
-| Modellanbieter | 100+ (provider-agnostisch) | Anthropic (Claude) | OpenAI (GPT/Codex) |
-| Lizenz | MIT | — | — |
-| Planning / Filesystem | Eingebaut | Teils | Teils |
-| Produktionsreife | Neu (2026) | Erprobt (>1 Jahr) | Erprobt |
-| LangGraph-Integration | Nativ | — | — |
-| MCP-Support | Ja | Ja | Nein |
-| Human-in-the-Loop | Ja (CLI) | Ja | Nein |
-
-**Wo Claude Agent SDK überlegen bleibt:**
-Straffere Claude-Integration, native Permission-Modelle, Session-Management, und über ein Jahr Produktionsreife mit Millionen realer Interaktionen. Für exklusive Claude-Projekte ist der Agent SDK die erste Wahl.
-
-**Wo DeepAgents gewinnt:**
-Modellfreiheit, pluggable Backends, Unabhängigkeit von einem einzelnen Anbieter.
+Eine belastbare Auswahl hängt von der konkreten Aufgabe und den geprüften Versionen ab. Zu vergleichen sind Modellzugang, Tool-Berechtigungen, Sandbox, Sitzungsverwaltung, Wiederaufnahme und Auswertung. Eine allgemeine Rangliste sagt wenig darüber aus, welches Framework in einer konkreten Anwendung passt.
 
 ---
 
@@ -595,20 +573,10 @@ DeepAgents spart Code, versteckt aber auch mehr Logik.
 - Interne Abläufe sind nicht so transparent wie ein selbst definierter Graph
 - Frühe API-Versionen können sich schneller ändern
 - Debugging setzt weiterhin LangGraph-Grundverständnis voraus
-- Noch keine Produktionsreife wie Claude Code (kein Jahr Praxiserfahrung)
 
-### Reifegrad (Stand 0.7.29)
+### Versionsabhängige Einordnung
 
-| Dimension | Bewertung | Begründung |
-|-----------|-----------|------------|
-| API-Stabilität | mittel | `subagents=`-Interface hatte Breaking Change ohne Migration-Guide |
-| Versionsstabilität | mittel | 0.5.x → 0.6.x ohne Breaking Changes, 0.7.0 mit mehreren (siehe Migration 0.6 → 0.7) |
-| Features | solide | Planning, Filesystem, Sub-Agenten, Profiles, Middleware vollständig |
-| Dokumentation | lückenhaft | Parameter wie `backend`, `context_schema` kaum dokumentiert |
-| Produktionsreife | nicht empfohlen | < 1 Jahr Praxiserfahrung, kein 1.0, kein SLA |
-| Ökosystem | gut | LangGraph-nativ — Checkpointer, Streaming, LangSmith out-of-the-box |
-
-**Gesamturteil:** Für Experimente und Prototypen gut geeignet. Für Production-Einsatz LangGraph direkt bevorzugen — bis v1.0 sich das ändert.
+APIs, Voreinstellungen und Backends können sich zwischen Versionen ändern. Vor einem Einsatz sind die installierte Version, die dazugehörige Dokumentation und die benötigten Sicherheitsfunktionen zu prüfen. Ob DeepAgents geeignet ist, hängt von diesen Anforderungen und den eigenen Tests ab; eine pauschale Reifegradbewertung ersetzt diese Prüfung nicht.
 
 ### Das "Trust the LLM"-Modell und Security
 
@@ -622,7 +590,7 @@ Das bedeutet:
 - Grenzen entstehen durch **Tool-Konfiguration** und **Sandbox-Wahl**
 - Ein Agent mit breitem Filesystem-Zugriff und ohne Sandbox kann alles, was Tools erlauben
 
-Das ist eine Designentscheidung, keine Schwäche — aber wer DeepAgents produktiv einsetzt, trägt die Verantwortung für saubere Tool-Grenzen.
+Die Sicherheitsgrenze entsteht durch die tatsächlich erlaubten Tools, Backends und Berechtigungen. Ein Prompt allein verhindert keinen unzulässigen Zugriff.
 
 ### Praktische Hinweise
 
@@ -670,15 +638,14 @@ DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 - Dateibasiertem Arbeiten mit austauschbaren Backends
 - Sub-Agenten für parallele Delegation
 - Integrierter Tool-Nutzung
-- Provider-Agnostik (100+ Anbieter)
+- Unterstützung mehrerer Modellanbieter; die verfügbaren Integrationen hängen von der eingesetzten Version ab
 - Profiles API — modell-spezifische Optimierung, eingebaute OpenAI/Anthropic-Profile
 - Middleware — Tool-Call-Wrapping, `CodeInterpreterMiddleware` (experimentell, ab 0.6.0)
 - CLI mit Web-Suche, HITL, MCP und persistentem Gedächtnis
 
-Die Stärke liegt in schneller Umsetzung komplexerer, langlaufender Aufgaben — ohne Provider-Bindung.
-Die Kehrseite ist geringere Transparenz gegenüber einem manuell modellierten LangGraph sowie noch fehlende Produktionsreife (kein v1.0, kein SLA).
+DeepAgents kann wiederkehrende Bausteine für längere Aufgaben bereitstellen. Ein explizit modellierter LangGraph-Workflow macht den Steuerfluss direkter sichtbar. Die Wahl hängt davon ab, welche Kontrolle und welche eingebauten Funktionen benötigt werden.
 
-**Reifegrad auf einen Blick:** Gut für Experimente und Prototypen — für Production-Einsatz bis v1.0 warten.
+Vor einem produktiven Einsatz müssen Version, Tool-Berechtigungen, Backend, Sandbox und Wiederaufnahme für den konkreten Anwendungsfall geprüft werden.
 
 Für den Einstieg empfiehlt sich daher folgende Reihenfolge:
 

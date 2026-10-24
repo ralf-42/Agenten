@@ -55,7 +55,7 @@ Faustregel: Komplexität wird hinzugefügt, wenn etwas Bestimmtes kaputtgeht —
 
 Bei der Werkzeugauswahl auf jeder Schicht helfen drei Fragen:
 
-**Wie viel Zustand muss verwaltet werden?** Ein stateless Tool Caller und ein Multi-Session-Agent, der im Laufe der Zeit lernt, sind unterschiedliche technische Probleme. Die Schichten, in denen das Zustandsmanagement am schwierigsten ist — Speicher und Frameworks —, sind die Bereiche, an denen die meisten Teams hängen bleiben.
+**Wie viel Zustand muss verwaltet werden?** Ein zustandsloser Tool-Aufruf und ein Agent mit mehreren Sitzungen stellen unterschiedliche technische Anforderungen. Speicher und Frameworks verdienen besondere Aufmerksamkeit, wenn Zustand über mehrere Schritte oder Sitzungen erhalten bleiben soll.
 
 **Wie viel Vendor-Lock-in ist tolerierbar?** MCP ist ein offener Standard, Provider-SDKs sind es nicht. Jede Werkzeugwahl erhöht oder verringert, wie schmerzhaft die nächste Migration sein wird.
 
@@ -84,17 +84,17 @@ Diese Schicht wird zur Ware gemacht. Modellunterschiede sind jedes Quartal wenig
 
 Wie der Agent externe Tools und APIs aufruft — über MCP-Server, Browser-Automatisierung oder Agent-zu-Agent-Protokolle.
 
-| Protokoll / Tool | Key Players | Besonderheit |
+| Protokoll / Tool | Einsatz | Einordnung |
 |---|---|---|
-| **MCP** | Agent-to-tool connectivity (universal standard) | 97M+ monatliche SDK-Downloads. Linux Foundation. |
-| **Function Calling** | Provider-spezifische Tool-Nutzung | Weiterhin notwendig für manche Patterns. Nicht die Richtung. |
-| **Browser Use** | Web-Automatisierungs-Agenten | 78K GitHub-Sterne. Breakout-Kategorie 2025–2026. |
-| **ACP / A2A** | Agent-zu-Agent-Kommunikation | IBM (ACP) und Google (A2A). Entstehend, noch kein Standard. |
+| **MCP** | Agenten mit externen Tools verbinden | Einheitliche Schnittstelle; Server und Berechtigungen müssen geprüft werden. |
+| **Function Calling** | Tools über die jeweilige Modell-API aufrufen | Abhängig von Modell und Provider. |
+| **Browser Use** | Webseiten über einen Browser bedienen | Nur mit klar begrenzten Aktionen und Berechtigungen einsetzen. |
+| **ACP / A2A** | Agenten über definierte Nachrichten kommunizieren lassen | Implementierungen und Kompatibilität vor der Nutzung prüfen. |
 
-MCP hat sich als wichtigster offener Standard für Agent-Tool-Kommunikation etabliert. Für den Kurs ist deshalb weniger die Protokollauswahl interessant, sondern die Absicherung der angebundenen Server. Zustandsverwaltung ist auf dieser Schicht begrenzt: Der Agent ruft ein Tool auf und erhält eine Antwort. Das Lock-in-Risiko ist geringer als bei proprietären Integrationen. Die Demo-Produktions-Lücke bleibt trotzdem spürbar, weil ein Demo-MCP-Server problemlos funktioniert, bis jemand eine bösartige Werkzeugbeschreibung oder unerwartete Parameter liefert.
+MCP standardisiert die Verbindung zwischen Agent und Tool. Die Protokollwahl löst jedoch keine Sicherheitsfragen: Server, Tool-Beschreibungen, Eingaben und Berechtigungen bleiben Teil der Anwendung und müssen geprüft werden. Die Zustandsverwaltung liegt meist in einer übergeordneten Framework- oder Anwendungsschicht.
 
 > [!TIP] Protokollschicht<br>
-> MCP hat standardisiert, wie Agenten Werkzeuge nutzen. Für Agent-zu-Agent-Kommunikation (ACP, A2A) hat noch keiner die kritische Masse erreicht. Wer heute Multi-Agenten-Koordination braucht, baut sie auf der Framework-Ebene selbst.
+> MCP beschreibt die Verbindung zu Werkzeugen. Für Agent-zu-Agent-Kommunikation unterscheiden sich Protokolle und Implementierungen; die benötigte Koordination muss zur Anwendung passen.
 
 ---
 
@@ -108,7 +108,7 @@ Wie der Agent speichert und abruft, was er weiß — In-Context-Zustand, Vektors
 | **External recall** | pgvector, Pinecone, Qdrant, Neo4j GraphRAG | Relevanten Kontext auf Abruf abrufen (RAG) |
 | **Persistent learned state** | Mem0, Zep, Letta | Agenten, die Nutzer und Aufgaben über Sitzungen hinweg erinnern |
 
-Die meisten Teams verkomplizieren das Gedächtnis zu früh. Der Einstieg gelingt mit dem Gesprächsverlauf in Postgres und einem strukturierten Systemprompt — Vektorsuche kommt hinzu, wenn die Historie die Kontextgrenzen überschreitet, agentisches Speichermanagement erst dann, wenn sitzungsübergreifendes Lernen gefordert ist. Diese Schicht hat die höchste Zustandskomplexität im gesamten Stack. Das Lock-in-Risiko ist mittel: pgvector ist portabel (es ist im Kern nur Postgres), spezialisierte Tools wie Mem0 oder Zep sind schwerer zu verlassen. Die Demo-Produktions-Lücke ist groß — Demo-Speicher funktioniert, weil die Kontextfenster groß genug sind; in der Produktion bricht das Gedächtnis, wenn Gespräche lang werden.
+Für einen ersten Agenten reicht oft der Gesprächsverlauf. Eine Vektorsuche wird sinnvoll, wenn der relevante Bestand nicht mehr in den verfügbaren Kontext passt. Sitzungsübergreifendes Gedächtnis braucht zusätzlich Regeln für Aktualität, Zugriff und Löschung. Vor der Wahl eines spezialisierten Speichers sollten Datenmodell, Exportmöglichkeiten und spätere Wechselkosten geprüft werden.
 
 > [!TIP] Speicherschicht<br>
 > Dedizierte Speicherinfrastruktur (Letta, Zep, Mem0) verdient sich dort, wo Agenten Speicher zwischen Instanzen teilen oder den Zustand zwischen Modellanbieter-Wechseln aufrechterhalten müssen.
@@ -121,19 +121,19 @@ Wie Modellaufrufe, Werkzeugnutzung und Steuerfluss miteinander verbunden werden 
 
 | Ansatz | Key Players | Am besten für |
 |---|---|---|
-| **Provider SDKs** (neu 2025–26) | OpenAI Agents SDK, Google ADK | Niedrigste Einstiegshürde, auf einen Provider festgelegt |
-| **Graph-based orchestration** | LangGraph (90M monatl. Downloads, v1.0 Okt. 2025) | Stateful Production-Workflows, komplexes Branching |
+| **Provider SDKs** | OpenAI Agents SDK, Google ADK | Binden die Anwendung an die jeweilige Anbieter-Schnittstelle. |
+| **Graph-based orchestration** | LangGraph | Für zustandsbehaftete Abläufe und explizite Verzweigungen. |
 | **Multi-agent frameworks** | CrewAI, AutoGen/AG2, Smolagents | Rollenbasierte Kollaboration, Multi-Agenten-Systeme |
 | **Memory-first** | Letta | Agenten, die über Sitzungen hinweg lernen |
 | **Build-it-yourself** | Provider API + MCP + thin wrapper | Einfache Agenten, maximale Kontrolle |
 
 > [!WARNING] LangChain ≠ LangGraph<br>
-> LangChain ist die Integrationsschicht (Modellkonnektoren, Werkzeugaufrufe, Prompt-Vorlagen). LangGraph ist die Orchestrierungs-Engine (Zustand, Steuerfluss, Graphen). Die meisten Produktionsteams verwenden beides zusammen — die Agentenlogik liegt dabei in LangGraph.
+> LangChain stellt unter anderem Modell-, Prompt- und Tool-Integrationen bereit. LangGraph bildet Zustand und Steuerfluss ab. Beide lassen sich kombinieren; ob das sinnvoll ist, hängt vom Ablauf und den benötigten Integrationen ab.
 
-Die meisten Teams wählen zu viel Framework. Wenn der Agent ein Modell und einige Tools aufruft, wird kein LangGraph benötigt — ein Provider-SDK und ein paar Tool-Calls führen schneller in die Produktion als jeder Graph. Das Framework-Lock-in-Risiko ist das höchste im Stack: Orchestrierungscode portiert nicht, ein für CrewAI umgeschriebener LangGraph-Agent ist eine neue Codebasis. Die Demo-Produktions-Lücke ist groß, weil in der Demo nichts schiefgeht — Produktion bedeutet Werkzeugausfälle, Wiederholungen und Auszeiten.
+Ein einfacher Agent mit wenigen Tools benötigt nicht automatisch ein Graph-Framework. LangGraph wird interessant, wenn Zustand, Verzweigungen, Wiederaufnahme oder menschliche Freigaben explizit gesteuert werden sollen. Frameworks unterscheiden sich in ihren APIs; ein Wechsel kann deshalb Anpassungen am Orchestrierungscode erfordern. Für den Betrieb sind außerdem Fehlerbehandlung, Wiederholungen und Ausfallpfade einzuplanen.
 
 > [!TIP] Framework-Schicht<br>
-> Das gewählte Framework bestimmt die Migrationskosten. MCP ist die eine Schicht, die über alle Framework-Lager hinweg übertragen wird.
+> Die Wahl des Frameworks beeinflusst spätere Wechselkosten. Für jede Integration ist zu prüfen, welche Teile sich unverändert übertragen lassen.
 
 ---
 
@@ -216,9 +216,9 @@ flowchart TD
 
 ## Das große Ganze
 
-Teams, die produktionsreife Agenten erfolgreich ausliefern, haben drei Dinge gemeinsam: Evaluation läuft regelmäßig und nicht nur vor einer Demo. Leitplanken sitzen auf der Werkzeugaufruf-Ebene, nicht erst auf der finalen Ausgabe. Die Speicherarchitektur wurde bewusst entworfen und nicht ungeprüft aus dem Framework-Default übernommen.
+Für den Betrieb braucht es wiederholbare Evaluation, Kontrollen an den Werkzeugaufrufen und eine bewusst gewählte Speicherstrategie. Einzelne gelungene Demos reichen nicht aus, um diese Punkte zu beurteilen.
 
-Der Stack wird sich weiter konsolidieren. Provider-SDKs integrieren bereits Speicher, Tool-Calling und grundlegende Evaluation in eine API. Trotzdem bleibt wichtig zu wissen, welche Schicht betroffen ist, wenn ein Agent im Betrieb falsche Entscheidungen trifft, zu teuer wird oder seine Grenzen überschreitet.
+Anbieter und Frameworks verändern ihre Schnittstellen laufend. Bei einer Störung hilft die Schichtentrennung, die Ursache einzugrenzen: Modell, Tool, Speicher, Orchestrierung oder Evaluation.
 
 ---
 

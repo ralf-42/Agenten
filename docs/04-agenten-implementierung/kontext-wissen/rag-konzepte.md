@@ -114,13 +114,8 @@ Der Retriever ist die eigentliche Arbeitsstelle des Systems. Hier entscheidet si
 
 ### Basis-Retrieval: Similarity Search
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
+Similarity Search ordnet Dokumente nach ihrer Vektorähnlichkeit zur Anfrage. Die Rangfolge zeigt Ähnlichkeit, aber nicht automatisch fachliche Relevanz; deshalb sollten Treffer und Grenzfälle mit passenden Fragen geprüft werden.
+
 ### Retrieval-Strategien im Vergleich
 
 | Strategie | Beschreibung | Vorteil | Nachteil |
@@ -137,31 +132,14 @@ flowchart LR
 
 MMR balanciert Relevanz und Diversität. Statt nur die ähnlichsten Dokumente zurückzugeben, werden auch unterschiedliche Perspektiven berücksichtigt.
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
 ### Score-basiertes Filtering
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
+Ein Score-Schwellenwert verwirft Treffer, die den festgelegten Mindestwert nicht erreichen. Bleibt danach kein Treffer übrig, muss der Ablauf den leeren Kontext ausdrücklich behandeln.
+
 ### Metadaten-Filter
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
+Metadaten-Filter schränken die Suche auf passende Dokumente ein, etwa nach Quelle, Dokumenttyp oder Datum. Die Filterwerte stammen aus den gespeicherten Metadaten.
+
 ---
 
 ## Reranking: Ergebnisse optimieren
@@ -172,13 +150,6 @@ Reranking verbessert die Qualität der gefundenen Dokumente durch einen zweiten 
 
 Die initiale Vektorsuche ist schnell, aber nicht perfekt. Reranking verwendet ein präziseres (aber langsameres) Modell, um die Top-Ergebnisse neu zu ordnen.
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
 ### Reranking-Ansätze
 
 | Ansatz | Beschreibung | Performance |
@@ -187,15 +158,6 @@ flowchart LR
 | **LLM-based** | LLM bewertet Relevanz | Flexibel, teuer |
 | **Lightweight** | Schnelle Heuristiken | Schnell, moderate Qualität |
 
-### Beispiel: Cohere Reranker
-
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
 ---
 
 ## Advanced RAG-Techniken
@@ -206,24 +168,10 @@ flowchart LR
 
 Die ursprüngliche Frage wird umformuliert oder erweitert, um bessere Treffer zu erzielen.
 
-**Multi-Query:** Eine Frage wird in mehrere Varianten umgewandelt:
+**Multi-Query:** Eine Frage wird in mehrere Varianten umgewandelt. Die Ergebnisse werden zusammengeführt und anschließend auf Duplikate oder widersprüchliche Treffer geprüft.
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
-**HyDE (Hypothetical Document Embedding):** Das LLM generiert eine hypothetische Antwort, die dann für die Suche verwendet wird:
+**HyDE (Hypothetical Document Embedding):** Das LLM erzeugt einen hypothetischen Antworttext, dessen Vektor für die Suche genutzt wird. Der Text ist ein Suchhilfsmittel und kein Beleg für eine tatsächliche Antwort.
 
-```mermaid
-flowchart LR
-    A[Dokumente] --> B[Laden]
-    B --> C[Chunking]
-    C --> D[Embedding]
-    D --> E[Vektordatenbank]
-```
 ### Self-Query
 
 Das LLM extrahiert strukturierte Filter aus natürlichsprachlichen Fragen:

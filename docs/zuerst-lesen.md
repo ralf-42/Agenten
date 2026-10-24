@@ -8,7 +8,7 @@ has_toc: true
 
 # Zuerst lesen
 
-Diese Seite hilft beim Einstieg in die Kursbegleitung. Wähle den Abschnitt, der zu deiner Situation passt; die Fachartikel sind vor allem zum Mitdenken, Nachschlagen und Vertiefen während der Übungen gedacht.
+Der Einstieg lässt sich auf drei Fragen begrenzen: Was ist das Ziel? Wie sieht der Anwendungsfall aus? Wo steht die Erklärung zu einem konkreten Thema?
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -16,24 +16,17 @@ Diese Seite hilft beim Einstieg in die Kursbegleitung. Wähle den Abschnitt, der
 1. TOC
 {:toc}
 
-## Vor dem Kurs
+## Ziel und Ablauf
 
-Für Ziel, Ablauf und Vorbereitung genügt zunächst der [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}). Das [Zielbild des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) zeigt den durchgehenden Anwendungsfall.
+Der [Kursüberblick]({{ '/02-orientierung-entscheidung/kursueberblick.html' | relative_url }}) beschreibt Ziele, Aufbau und Modulfolge.
 
-## Während des Kurses
+## Anwendungsfall
 
-Bleib zunächst beim Notebook und öffne einen Fachartikel, wenn ein Begriff, ein Entwurfsschritt oder ein Framework unklar ist. Der [Lernpfad]({{ '/lernpfad.html' | relative_url }}) führt von typischen Fragen zu den passenden Artikeln. Die Beispiele zum PMO-Assistenten zeigen, wie das jeweilige Konzept im Kursprojekt eingesetzt wird.
+Das [Zielbild des PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) zeigt den gemeinsamen Projektkorpus, die Aufgaben des Agenten und seine Grenzen.
 
-## Zum Nachschlagen
+## Fachliche Frage
 
-| Seite | Wofür sie da ist |
-|---|---|
-| [Lernpfad]({{ '/lernpfad.html' | relative_url }}) | Passenden Artikel nach Frage oder Thema finden |
-| [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) | Kursbeispiele und Bausteine im Zusammenhang sehen |
-
-## Nach dem Kurs
-
-Nutze im [Lernpfad]({{ '/lernpfad.html' | relative_url }}) die Themenwege für Robustheit, Wissensarbeit, Produktion oder Governance. So kannst du gezielt vertiefen, ohne alle Dokumente der Reihe nach lesen zu müssen.
+Der [Lernpfad]({{ '/lernpfad.html' | relative_url }}) führt von einer konkreten Frage zu den passenden Fachartikeln. Er enthält die ausführlichen Themenwege und Vertiefungslinks.
 
 ---
 

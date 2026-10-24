@@ -112,32 +112,12 @@ few_shot_prompt = ChatPromptTemplate([
 
 ### Chain-of-Thought (CoT)
 
-Das Modell wird angewiesen, seinen Denkprozess schrittweise darzulegen.
+Beim Chain-of-Thought-Prompting wird das Modell zu Zwischenschritten aufgefordert. Das kann bei mehrstufigen Aufgaben helfen, garantiert aber keine korrekte Lösung. Für Agenten sind prüfbare Ergebnisse meist hilfreicher als eine ausführliche Wiedergabe des Denkprozesses: etwa Quellen, strukturierte Zwischenergebnisse oder klar benannte Entscheidungskriterien.
 
 > [!WARNING] Sorgfältig einsetzen<br>
-> Chain-of-Thought verbessert komplexe Aufgaben oft deutlich, erhöht aber Token-Verbrauch und Latenz. Für einfache Aufgaben ist Zero-/Few-Shot meist effizienter.
+> Eine Aufforderung, den vollständigen Denkprozess auszugeben, ist weder eine Korrektheitsprüfung noch ein Sicherheitsmechanismus. Benötigte Zwischenschritte sollten als konkrete, überprüfbare Ergebnisse definiert werden.
 
-```python
-cot_prompt = ChatPromptTemplate.from_template(
-    """Löse die folgende Aufgabe Schritt für Schritt.
-    
-Aufgabe: {aufgabe}
-
-Denke laut nach:
-1. Was ist gegeben?
-2. Was wird gesucht?
-3. Welche Schritte sind nötig?
-4. Führe jeden Schritt aus.
-5. Formuliere die Antwort.
-
-Lösung:"""
-)
-```
-
-**Geeignet für:**
-- Mathematische Probleme
-- Logische Schlussfolgerungen
-- Mehrstufige Analysen
+**Möglicher Einsatz:** mehrstufige Aufgaben, wenn klar definierte Zwischenergebnisse anschließend geprüft werden.
 
 ---
 
@@ -405,95 +385,38 @@ few_shot_prompt = ChatPromptTemplate([
 
 ### Prompt-Versionierung
 
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+Prompt-Version, Beispieldaten und Testfälle sollten gemeinsam dokumentiert werden. So lässt sich eine Änderung mit denselben Anfragen gegen die vorherige Version vergleichen. Festgehalten werden Zweck der Änderung, erwartetes Verhalten und das Ergebnis der Prüfung.
+
 ---
 
 ## Häufige Fehler und Lösungen
 
 > [!WARNING] Häufigster Praxisfehler<br>
-> Ambige Anweisungen sind eine Hauptursache für instabile Ergebnisse. Erst Präzision im Prompt, dann Modellwechsel.
+> Unklare oder widersprüchliche Anweisungen erschweren die Fehlersuche. Erst die Aufgabenbeschreibung prüfen, bevor das Modell gewechselt wird.
 
 ### Fehler: Ambige Anweisungen
 
 **Problem:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+„Fasse das Dokument gut zusammen.“ lässt offen, wie lang die Zusammenfassung sein und welche Informationen sie enthalten soll.
+
 **Lösung:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+„Fasse die Entscheidung, ihre Begründung und offene Punkte in je einem Abschnitt zusammen. Verwende nur Angaben aus dem Dokument und nenne die Fundstelle.“
+
 ### Fehler: Fehlende Beispiele bei komplexen Formaten
 
 **Problem:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+Die Anweisung „Gib die Ergebnisse als Tabelle aus“ legt weder Spalten noch den Umgang mit fehlenden Werten fest.
+
 **Lösung:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+Ein kurzes Muster mit den gewünschten Spalten und einem Platzhalter zeigt das erwartete Format. Für maschinelle Weiterverarbeitung sollte stattdessen ein strukturiertes Schema verwendet werden.
+
 ### Fehler: Widersprüchliche Anweisungen
 
 **Problem:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+„Antworte in einem Satz“ und „Belege jede Aussage ausführlich“ setzen unterschiedliche Erwartungen an die Antwortlänge.
+
 **Lösung:**
-```python
-few_shot_prompt = ChatPromptTemplate([
-    ("system", "Klassifiziere E-Mails nach Dringlichkeit."),
-    ("human", "Betreff: Server ausgefallen"),
-    ("assistant", "dringend"),
-    ("human", "Betreff: Quartalsbericht verfügbar"),
-    ("assistant", "normal"),
-    ("human", "Betreff: {email_subject}")
-])
-```
+Prioritäten festlegen, zum Beispiel: kurze Antwort mit höchstens zwei Belegen. Widersprüchliche Vorgaben nicht an mehreren Stellen des Prompts wiederholen.
 ---
 
 ## Prompts als Verhaltensvertrag prüfen

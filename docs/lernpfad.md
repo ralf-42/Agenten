@@ -8,9 +8,9 @@ has_toc: true
 
 # Lernpfad
 
-Diese Dokumentation ist nicht als lineares Handbuch aufgebaut. Für den kürzesten Einstieg eignet sich zuerst [Zuerst lesen](./zuerst-lesen.html). Danach hilft der Lernpfad dabei, je nach Ziel gezielt zu vertiefen.
+Die Dokumentation ist thematisch gegliedert. [Zuerst lesen](./zuerst-lesen.html) bietet eine kurze Orientierung; dieser Lernpfad führt von einer Frage zu passenden Fachartikeln.
 
-Der durchgehende Anwendungsfall des Kurses ist ein **PMO-Assistent**. Die Modul- und Tagesstruktur des fünftägigen Grundlagenpfads mit vier 90-Minuten-Blöcken pro Tag ist im [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html) beschrieben.
+Der **PMO-Assistent** dient als durchgehendes Beispiel. Ziele, Tagesstruktur und Module stehen im [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html).
 
 ## Inhaltsverzeichnis
 {: .no_toc .text-delta }
@@ -18,42 +18,20 @@ Der durchgehende Anwendungsfall des Kurses ist ein **PMO-Assistent**. Die Modul-
 1. TOC
 {:toc}
 
-## Direktzugriff nach Kurssituation
+## Umfang und Priorisierung
 
-| Situation | Einstieg |
-|---|---|
-| **Vor dem Kurs** | [Kursüberblick](./02-orientierung-entscheidung/kursueberblick.html) für Ziele, Ablauf und Vorbereitung; [PMO-Assistent](./02-orientierung-entscheidung/pmo-assistent.html) für das gemeinsame Kursprojekt. |
-| **Während einer Übung** | Im Notebook weiterarbeiten und bei einer konkreten Frage den passenden Themenweg unten öffnen. Der Abschnitt **Praxis-Transfer: PMO-Assistent** verbindet viele Konzepte mit dem Leitprojekt. |
-| **Etwas nachschlagen** | Über die Themenwege wie „Erster Agent“, „RAG und Wissensarbeit“ oder „Robustheit und Kontrolle“ zum passenden Fachartikel springen. |
-| **Nach dem Kurs vertiefen** | Aufbau- und Vertiefungsthemen auswählen, etwa Evaluation, Security, Deployment oder Governance. |
-
-## Wofür diese Seite da ist
-
-Die Dokumentation deckt mehrere Ebenen gleichzeitig ab: Grundbegriffe, Framework-Entscheidungen, Architekturfragen, Deployment, Governance und praktische Umsetzung. Ohne Einstiegspunkt wird daraus schnell eine Sammlung guter Einzeltexte ohne klare Leserführung.
-
-Diese Seite bündelt deshalb drei Dinge:
-
-- einen kompakten Überblick über sinnvolle Einstiege
-- empfohlene Lernpfade je nach Ziel
-- einen Verweis auf die Kurzfassung [Zuerst lesen]({{ '/zuerst-lesen.html' | relative_url }}) für den schnellsten Einstieg
-
-## Kurspriorisierung
-
-Für den 5-Tage-Kurs ist die Dokumentation bewusst breiter als der Grundlagenpfad. Die folgende Einteilung hilft, den Umfang zu steuern:
+Die Dokumentation enthält mehr Inhalte als der Grundlagenpfad. Die folgende Einteilung zeigt, welche Texte das gemeinsame Ziel stützen und welche zur Erweiterung oder Vertiefung dienen.
 
 | Einordnung | Bedeutung | Typische Dokumente |
 |---|---|---|
-| **Grundlagen** | Wird im Grundlagenpfad aktiv benötigt oder erklärt den Kern des Leitprojekts. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, Sessions, Memory, HITL, Evaluation |
-| **Aufbau** | Erweitert das Kursprojekt um Qualitätssicherung, Integration und belastbare Betriebsgrenzen. | Agentic RAG, Security, Evaluation & Testing, Routing, Kostenkontrolle, Integration, Projekt-Templates, Advanced RAG |
-| **Vertiefung** | Dient als Transfer, Spezialisierung oder produktionsnaher Fortgeschrittenenpfad. | UI, MCP, Skills, DeepAgents, Deployment, Monitoring, Capstone, weitere Tools |
+| **Grundlagen / Kern** | Gemeinsame fachliche Basis und zentrale Bausteine des PMO-Assistenten. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, Sessions, Memory, HITL, Evaluation |
+| **Aufbau** | Optionale Erweiterungen, wenn die Grundlagen stehen und weitere Zeit oder ein passendes Lernziel vorhanden ist. | Agentic RAG, Security, Evaluation & Testing, Routing, Kostenkontrolle, Integration, Advanced RAG |
+| **Vertiefung** | Weiterführende Themen, die nach Bedarf ausgewählt werden. | UI, MCP, Skills, DeepAgents, Deployment, Monitoring, Capstone |
 
-Die Grundlagentexte tragen den roten Faden **Planen. Handeln. Prüfen.** direkt. Aufbau- und Vertiefungstexte erweitern diesen Faden, ohne dass jede Seite im Kurs vollständig behandelt werden muss.
-
-Wichtig für die Lesart: Wenn der Kurs von Reasoning oder Planning spricht, sind damit **sichtbare Artefakte** gemeint, zum Beispiel Plan, Tool-Wahl, Quellenstatus, Gate-Entscheidung oder Prüfergebnis. Eine versteckte interne Gedankenkette des Modells ist kein Lernziel und wird nicht als Nachweis verlangt.
-
+Planning bezeichnet hier sichtbare Arbeitsschritte wie Aufgabenplan, Tool-Auswahl, Quellenstatus oder Freigabeentscheidung. Eine verborgene Gedankenkette des Modells ist weder Lernziel noch Nachweis.
 ## Themenwege zum Nachschlagen und Vertiefen
 
-Nicht jede Frage entsteht zur gleichen Zeit. Nutze diese Themenwege, wenn du während einer Übung etwas klären oder nach dem Kurs gezielt weiterarbeiten möchtest.
+Die Themenwege ordnen die Fachartikel nach typischen Fragen und Aufgaben.
 
 ### Orientierung
 
@@ -131,37 +109,6 @@ Empfohlener Einstieg:
 2. [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-ki-agenten.html' | relative_url }})
 3. [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }})
 4. [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }})
-
-## Kürzester Start
-
-Wer nicht lange wählen will, öffnet [Zuerst lesen]({{ '/zuerst-lesen.html' | relative_url }}). Die Reihenfolge klärt erst die Einsatzfrage, dann die Architektur und erst danach die Umsetzung – das verhindert viele frühe Fehlstarts.
-
-## Wie die Bereiche zusammenhängen
-
-Die Dokumentation ist in Bereiche gegliedert, die unterschiedliche Funktionen haben.
-
-| Bereich | Rolle in der Navigation | Typische Frage | Beitrag |
-|---|---|---|---|
-| Orientierung und Agentenverständnis | Begriffe, Einsatzentscheidung, Modellwahl | Ist ein Agent hier sinnvoll? | Planen |
-| Tool Use, Prompting und erste Agenten | Architektur, Tools, Prompts, sichtbare Planungsartefakte, LangChain | Wie entsteht ein erster Agent? | Planen, Handeln |
-| Orchestrierung, State und LangGraph | Zustandsführung und mehrstufige Abläufe | Wie wird ein Agent steuerbar? | Planen, Prüfen |
-| Kontext, Grounding und RAG | Kontextstrategie, Retrieval, Embeddings | Wie wird Wissen zuverlässig eingebunden? | Handeln, Prüfen |
-| Sessions, Memory und HITL | Persistenz, Erinnerung, menschliche Freigaben | Wie bleibt ein Ablauf kontrollierbar? | Planen, Prüfen |
-| Multi-Agent, Skills und Protokolle | Arbeitsteilung, Skills, Schnittstellen | Wie arbeiten Agenten zusammen? | Planen, Handeln |
-| Evaluation, Security und Reliability | Qualität, Sicherheit, Beobachtbarkeit, Kosten- und Risikokontrolle | Wie wird ein Agent belastbar? | Prüfen |
-| Deployment und Betrieb | Betrieb, Produktisierung, Projektarbeit | Wie wird aus einer Demo ein System? | Handeln, Prüfen |
-| Regulatorik, Datenschutz und Verantwortung | EU AI Act, DSGVO, Ethik, Souveränität | Welche Rahmenbedingungen prägen den Einsatz? | Prüfen |
-| Ressourcen | Setup, Standards, Troubleshooting, Links | Was hilft bei der praktischen Arbeit? | Unterstützung |
-
-## Leselogik statt Vollständigkeit
-
-Die Dokumentation muss nicht vollständig von oben nach unten gelesen werden. Sinnvoller ist ein selektiver Ablauf:
-
-1. mit einer Leitfrage beginnen
-2. einen passenden Pfad aus dieser Seite wählen
-3. nur dann in angrenzende Themen springen, wenn die eigene Aufgabe das verlangt
-
-Gerade bei Agentensystemen führt Vollständigkeit schnell in Sackgassen. Ein zu früher Sprung in Deployment, Multi-Agent-Patterns oder Governance erzeugt oft mehr Komplexität als Erkenntnis.
 
 ## Abgrenzung zu verwandten Dokumenten
 

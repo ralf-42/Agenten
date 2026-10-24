@@ -58,27 +58,70 @@ Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Ziels
 
 ## Kursstruktur
 
-Der fünftägige Kurs umfasst 26 reguläre Kursnotebooks. Der Grundlagenkern ist nach Kurstagen geordnet; optionale Aufbau- und Vertiefungsmodule sind derselben Tagesstruktur zugeordnet.
+Der Kurs umfasst 31 reguläre Kursmodule: M01–M26 und die optionale Vertiefungsreihe M50–M54. Der gemeinsame Kernpfad umfasst M01–M18. In diesen Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. Ab Tag 3 wird nach Checkpoints differenziert.
 
-| Kurstag | Schwerpunkt | Grundlagenkern | Optionale Aufbau- und Vertiefungsmodule |
-|---|---|---|---|
-| **Tag 1** | Agentenbegriff, erste Tools und erster Agent | `M01_KI_Agenten_und_Tool_Use.ipynb`<br>`M02_LangChain_Erste_Agenten.ipynb` | — |
-| **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL | `M03_Prompt_Engineering_fuer_Agenten.ipynb`<br>`M04_Structured_Output.ipynb`<br>`M05_Multi_Tool_Agents.ipynb`<br>`M06_LCEL_Chains.ipynb` | — |
-| **Tag 3** | LangGraph, State, Routing und Tool-Schleifen | `M07_Warum_LangGraph.ipynb`<br>`M08_StateGraph_Basics.ipynb`<br>`M09_Conditional_Routing.ipynb`<br>`M10_Tool_Loop.ipynb` | `M20_Agent_Security_Best_Practices.ipynb` |
-| **Tag 4** | RAG, Retrieval als Tool und erste Evaluation | `M11_RAG_Grundlagen.ipynb`<br>`M12_RAG_Agent.ipynb`<br>`M13_LangSmith_Evaluations_Basics.ipynb` | `M19_Agentic_RAG.ipynb`<br>`M21_Agent_Evaluation_Testing.ipynb`<br>`M22_Model_Routing_Cost_Control.ipynb`<br>`M23_Advanced_RAG_Pipeline_Patterns.ipynb` |
-| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | `M14_Sessions_Checkpointing_und_Memory.ipynb`<br>`M15_Human_in_the_Loop.ipynb`<br>`M16_Multi_Agent_Patterns.ipynb`<br>`M17_Supervisor_Pattern.ipynb`<br>`M18_Reflection_Parallel_Hierarchy.ipynb` | `M24_Gradio_UI_fuer_Agenten.ipynb`<br>`M25_MCP_Local.ipynb`<br>`M26_Agent_Skill_Compliance.ipynb` |
+| Kurstag   | Schwerpunkt                                                    | Grundlagen / Kern | Aufbau im Kurs (optional)                               | Vertiefung an Tag 5 (optional)                                                             |
+| --------- | -------------------------------------------------------------- | ----------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Tag 1** | Agentenbegriff, erste Tools und erster Agent                   | M01–M02           | —                                                       | —                                                                                          |
+| **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL        | M03–M06           | —                                                       | —                                                                                          |
+| **Tag 3** | LangGraph, State, Routing und Tool-Schleifen                   | M07–M10           | M20 Agent Security Best Practices                       | —                                                                                          |
+| **Tag 4** | RAG, Retrieval als Tool und erste Evaluation                   | M11–M13           | M19 Agentic RAG, M21 Agent Evaluation, M23 Advanced RAG | —                                                                                          |
+| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | —                                                       | M24 Gradio UI, M26 Agent Skill Compliance, M52 DeepAgents Skill, M54 Production Deployment |
 
-Diese ergänzenden Notebooks werden nach Zeit, Vorkenntnissen und Kursziel ausgewählt. Sie sind keine Voraussetzung für den Grundlagenkern.
+Die optionalen Module sind keine Voraussetzung für die gemeinsamen Kursziele. M22 wird nach Zeit und Kursziel als Aufbau ausgewählt; M25 sowie M50, M51 und M53 sind weiterführendes Material. M50 ist der Einstieg in das Vertiefungsthema DeepAgents, nicht Teil des gemeinsamen Grundlagenkerns.
+
+### Kursprogression auf einen Blick
+
+Die Timeline zeigt den Grundlagenpfad nach Themenblöcken. Anschließend folgen die optionalen Module für Aufbau und Vertiefung; die Modul-IDs entsprechen der Kurstabelle und der Zusatzübersicht.
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'timelineLineColor': '#2e7d32',
+    'sectionBkgColor': '#c8e6c9',
+    'sectionTextColor': '#1b5e20',
+    'containerBkgColor': '#f9f9f9',
+    'taskBkgColor': '#e8f5e9',
+    'taskTextColor': '#1b5e20'
+  }
+}}%%
+timeline
+    title Agenten-Progression im Kursverlauf
+    section Agenten-Grundlagen
+        Erste handlungsfähige Agenten : Agentenbegriff, Tools, erster LangChain-Agent
+                                     : M01–M02
+    section Strukturierte Agenten
+        Steuerbare Einzelschritte     : Prompts, strukturierte Ausgaben, mehrere Tools, LCEL
+                                     : M03–M06
+    section Kontrollierte Workflows
+        Agenten mit Zustand           : LangGraph, StateGraph, Routing, Tool-Schleifen
+                                     : M07–M10
+    section Wissensbasierte Agenten
+        RAG als Evidence Tool         : ChromaDB, Retrieval, RAG-Agent, erste Evaluation
+                                     : M11–M13
+    section Kontrollierte Zusammenarbeit
+        Sessions, Freigabe und Teams  : Checkpointing, Human-in-the-Loop, Memory, Multi-Agent-Patterns
+                                     : M14–M18
+    section Aufbau
+        Agentensysteme erweitern      : Agentic RAG, Security, Evaluation, Routing, Kosten, Advanced RAG
+                                     : M19–M23
+    section Vertiefung
+        Vom Agenten zum produktiven System : UI, MCP, Skills, DeepAgents, Deployment
+                                           : M24–M26, M50–M54
+```
 
 Im Tag-5-Block spielen die Teilnehmenden nach Human-in-the-Loop eine 15- bis 20-minütige KI-Delegation-Poker-Runde. Am PMO-Assistenten entscheiden sie, welche Schritte autonom laufen dürfen und wo eine menschliche Freigabe nötig ist.
 
-### Weitere Zusatznotebooks
+### Weitere Zusatznotebooks außerhalb der Tagesübersicht
 
-Diese Materialien liegen außerhalb der regulären Kursnotebooks und können als Vergleich, Referenz oder weiterführende Vertiefung dienen.
+Diese optionalen Materialien sind nicht fest in die fünf Kurstage eingeplant.
 
-| Themenbereich | Notebooks | Einsatz |
+| Stufe | Notebook | Einsatz |
 |---|---|---|
-| DeepAgents | `M50_DeepAgents_Harness.ipynb`, `M51_DeepAgents_Vertiefung.ipynb`, `M52_DeepAgents_Skill_PMO_Assistent.ipynb`, `M53_DeepAgent_Multi_Skill.ipynb`, `M54_Production_Deployment.ipynb` | Alternative Harness-Architektur, Skills und produktionsnahe Umsetzung kennenlernen. |
+| Aufbau | `M22_Model_Routing_Cost_Control.ipynb` | Routing, Fallbacks und Kostenkontrolle ergänzen. |
+| Vertiefung | `M25_MCP_Local.ipynb` | Lokale MCP-Server als weiterführende Tool-Integration nutzen. |
+| Vertiefung | `M50_DeepAgents_Harness.ipynb`, `M51_DeepAgents_Vertiefung.ipynb`, `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents kennenlernen und nach Interesse ausbauen. M50 ist der Einstieg in dieses Vertiefungsthema. |
 | Referenz | `M40_PMO_Assistent_Referenzimplementierung.ipynb` | Eine ergänzende Lösung zum Nachschlagen und Vergleichen. |
 
 ## Kursblöcke am PMO-Assistenten

@@ -65,6 +65,18 @@ Agenten/
 
 ## 📚 Kursmodule
 
+### Kursweg und Verbindlichkeit
+
+Der Kurs unterscheidet die Notebook-Stufe vom Anspruch einzelner Aufgaben. In den Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel. Aufbau- und Vertiefungsaufgaben sind Wahlangebote; ab Tag 3 wird nach Checkpoints differenziert. Die vollständige Bearbeitung aller Notebook-Zellen ist keine Voraussetzung für die gemeinsamen Kursziele.
+
+| Stufe | Modul-IDs | Einsatz |
+| --- | --- | --- |
+| **Grundlagen / Kern** | M01–M18 | Gemeinsame Mindestlernziele für alle Teilnehmenden. |
+| **Aufbau** | M19–M23 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
+| **Vertiefung** | M24–M26 und M50–M54 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
+
+Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md) beschrieben.
+
 ### Block 1: Agenten-Grundlagen
 | Nr. | Modul | Thema                             | Beschreibung                                                    |
 | ---: | ----- | --------------------------------- | --------------------------------------------------------------- |

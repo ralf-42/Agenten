@@ -2,9 +2,11 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **26 reguläre Modul-Notebooks** für den Kurs „KI-Agenten. Planen. Handeln. Prüfen.“
+Dieses Verzeichnis enthält aktuell **31 reguläre Kursmodule**: M01–M26 und M50–M54. Dazu kommen eine Referenzimplementierung und zwei Hilfsnotebooks.
 
-Der aktive Kursweg ist lückenlos nummeriert und umfasst 26 Module. Er gliedert sich in Grundlagen, Aufbau und Vertiefung. Die Referenzimplementierung und das LangSmith-Hilfsnotebook ergänzen den Kursweg.
+Der Kursweg gliedert sich in Grundlagen/Kern (M01–M18), Aufbau (M19–M23) und Vertiefung (M24–M26 sowie M50–M54). Die Datei-IDs M50–M54 kennzeichnen eine optionale Vertiefungsreihe und setzen die Nummerierung M01–M26 nicht fort.
+
+**Verbindlichkeit:** Alle Teilnehmenden arbeiten auf die gemeinsamen Mindestlernziele der Kernmodule hin. In den Kern-Notebooks sind die Grundlagenaufgaben verbindlich; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. Ab Tag 3 wird nach Checkpoints differenziert. Die vollständige Bearbeitung aller Notebook-Zellen ist nicht Voraussetzung für das Kernziel.
 
 > **Kursplan-Referenz:** Kursplan v5.0 – `../00_admin/Kursplan_KI-Agenten_5-Tage_v5.0.md`
 
@@ -77,9 +79,9 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ---
 
-## Aufbau- und Vertiefungsmodule – Spezialisierung & Produktion
+## Optionale Module — Aufbau und Vertiefung
 
-> Diese Module sind **nicht Teil des Grundlagenpfads**. Sie eignen sich als Aufbau- und Vertiefungsmaterial im Kurs oder als Follow-up nach dem Kurs.
+> M19–M23 sind **Aufbaumodule** und können nach Erreichen der Grundlagenziele im Kurs eingesetzt werden. M24–M26 und M50–M54 sind **Vertiefungsmodule** für optionale Impulse, Wahlaufgaben oder die Nachbereitung.
 
 | Nr. | Modul | Datei | Inhalt | Priorität |
 | ---: |-------|-------|--------|-----------|
@@ -96,6 +98,8 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | 29 | DeepAgents Skill PMO-Assistent | `M52_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
 | 30 | DeepAgent Multi-Skill | `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
 | 31 | Production Deployment | `M54_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🟣 Vertiefung |
+
+> **Einordnung von M50:** Das Notebook führt in DeepAgents ein. Es ist der Einstieg in ein Vertiefungsthema und gehört nicht zum gemeinsamen Grundlagenkern des Kurses.
 
 ## Weitere Notebooks
 

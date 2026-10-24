@@ -437,8 +437,8 @@ with tracing_context(enabled=True):
 |---------|-----------|---------|
 | `LANGSMITH_PROJECT` | Kurs-Notebook (Setup) | `"m04_default"` |
 | `LANGSMITH_PROJECT` | Kurs-Notebook (LangSmith-Abschnitt) | `"m04_structured_output"` |
-| `LANGSMITH_PROJECT` | Produktion im Kursbeispiel | `"m24_chatbot_production"` |
-| `experiment_prefix` | RAG-Evaluation im Kursbeispiel | `"m11_rag_experiment_2026_03"` |
+| `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
+| `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
 
 ❌ **Nicht empfohlen:** Ein gemeinsames Projekt für mehrere Module (z. B. `"KI_Agenten_Kurs"`) – Traces aus verschiedenen Modulen vermischen sich, die Filterung wird aufwändiger.
 

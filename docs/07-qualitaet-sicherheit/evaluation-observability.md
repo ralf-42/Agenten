@@ -56,7 +56,7 @@ Genau hier beginnt Observability für Agenten. Nicht die Frage, ob das System l�
 
 In Trainings zeigt sich oft derselbe erste Irrtum: Wenn keine Exception auftritt, wird ein Durchlauf als erfolgreich gewertet. Für Agenten ist diese Gleichsetzung zu grob.
 
-## Ein einfaches Kursbeispiel
+## Ein einfaches Beispiel
 
 Ein Support-Agent soll drei häufige Aufgaben lösen: Lieferstatus nennen, Rechnung erneut senden und Öffnungszeiten beantworten. Für einen Einsteigerkurs reicht dieses kleine Szenario, um Evaluation und Observability konkret zu machen.
 
@@ -181,7 +181,7 @@ def contains_answer(predicted: str, expected_keywords: list[str]) -> float:
     return matches / len(expected_keywords)
 ```
 
-Nicht geeignet, wenn: Das Bewertungsverfahren selbst intransparent bleibt und dadurch nur eine weitere Blackbox erzeugt. Gerade im Kurs sollte immer klar sein, warum eine Antwort als gut oder schlecht zählt.
+Nicht geeignet, wenn: Das Bewertungsverfahren selbst intransparent bleibt und dadurch nur eine weitere Blackbox erzeugt. Gerade bei Prototypen sollte immer klar sein, warum eine Antwort als gut oder schlecht zählt.
 
 ## Observability erklärt Fehlerursachen
 
@@ -356,7 +356,7 @@ Für Evaluation ist das Harness die reproduzierbare Laufzeitumgebung: Sie hält 
 
 LangGraph hilft vor allem bei der klaren Struktur von Zuständen, Übergängen und Abbruchregeln. LangChain hilft bei Tool-Verträgen, strukturierten Outputs und Evaluatoren. LangSmith macht Durchläufe, Datasets und Vergleiche sichtbar.
 
-Ein einfacher Mindeststandard im Kurs sieht so aus:
+Ein einfacher Mindeststandard sieht so aus:
 
 1. Zustände im Graphen explizit modellieren
 2. Tool-Aufrufe strukturiert definieren und validieren

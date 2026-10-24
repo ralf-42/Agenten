@@ -147,10 +147,10 @@ Der einfachste Ansatz besteht darin, alle Nachrichten im State zu behalten. In L
 from typing import TypedDict, Annotated
 from langgraph.graph.message import add_messages
 
-class ChatState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
 
-def chat_node(state: ChatState) -> ChatState:
+def chat_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 ```
@@ -164,7 +164,7 @@ Beim Sliding Window werden nur die letzten Nachrichten im aktiven Kontext behalt
 ```python
 from langchain_core.messages import trim_messages
 
-def chat_node(state: ChatState) -> ChatState:
+def chat_node(state: BriefingState) -> BriefingState:
     trimmed = trim_messages(
         state["messages"],
         max_tokens=4000,
@@ -444,7 +444,7 @@ def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
     memory_context = "\n".join(d.page_content for d in long_term)
 
     system_msg = (
-        "Du bist ein hilfreicher Assistent.\n\n"
+        "Du bist der PMO-Assistent für Projekt Kompass.\n\n"
         f"Gespeicherte Fakten:\n{memory_context}\n\n"
         f"Bekannte Entitäten: {state.get('entity_memory', {})}\n\n"
         f"Bisheriger Verlauf (komprimiert): {state.get('summary', 'Kein Verlauf')}"

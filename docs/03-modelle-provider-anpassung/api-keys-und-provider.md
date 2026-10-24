@@ -23,9 +23,9 @@ has_toc: true
 
 ---
 
-## Provider im Kurskontext
+## Provider im Überblick
 
-Für den Kurs zählt zuerst, ob ein Provider zuverlässig im Notebook funktioniert, wie API-Keys verwaltet werden und ob vor der Nutzung Kosten entstehen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig. Sie sind deshalb kein stabiles Kurskriterium.
+Zuerst zählt, ob ein Provider zuverlässig im Notebook funktioniert, wie API-Keys verwaltet werden und ob vor der Nutzung Kosten entstehen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig. Sie sind deshalb kein stabiles Auswahlkriterium.
 
 Die Tabelle zeigt den Stand vom 1. Mai 2026. Vor produktiven Projekten müssen Verfügbarkeit, Preise und Datenschutzbedingungen beim Anbieter geprüft werden.
 
@@ -124,7 +124,7 @@ Für erste Kursübungen sind Anbieter hilfreich, die ohne große Einrichtung sta
 
 **OpenAI API**
 - Prepaid API-Credits mit Mindestaufladung typischerweise 5 USD
-- im Kurs als Standardpfad für viele Beispiele verwendet
+- als Standardpfad für viele Beispiele verwendet
 - breite LangChain-Unterstützung
 
 **Together AI**

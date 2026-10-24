@@ -125,13 +125,13 @@ Ein deutlich besserer Docstring grenzt den Zweck, die typischen Anwendungsfälle
 
 ```python
 @tool
-def search_company_documents(query: str) -> str:
-    """🔍 FIRMEN-DOKUMENTENSUCHE – Durchsucht interne Dokumente.
+def search_project_documents(query: str) -> str:
+    """🔍 PROJEKTDOKUMENTE – Durchsucht Protokolle, Entscheidungen und Risikolisten.
 
     Verwende dieses Tool für Fragen zu:
-    - Unternehmensrichtlinien und Prozessen
-    - Produktinformationen und Handbüchern
-    - internen Regelwerken und Compliance
+    - Entscheidungen und Beschlüssen des Steuerkreises
+    - Risiken, Maßnahmen und offenen Punkten
+    - Aufgaben und Verantwortlichkeiten
 
     NICHT geeignet für: Allgemeinwissen, aktuelle Nachrichten, Berechnungen.
 
@@ -139,7 +139,7 @@ def search_company_documents(query: str) -> str:
         query: Suchbegriff oder Frage in natürlicher Sprache
 
     Returns:
-        Relevante Textpassagen aus den Firmendokumenten
+        Relevante Textpassagen aus den Projektdokumenten
     """
     return document_retriever.search(query)
 ```
@@ -152,19 +152,19 @@ Sobald ein Agent mehrere ähnliche Werkzeuge verwaltet, entsteht leicht Tool-Ove
 
 ```python
 @tool
-def search_products(query: str) -> str:
-    """🛒 PRODUKTSUCHE – Durchsucht den Produktkatalog.
+def search_decisions(query: str) -> str:
+    """📋 ENTSCHEIDUNGSSUCHE – Durchsucht die Entscheidungsprotokolle.
 
-    NICHT geeignet für: Kundendaten, Bestellungen, Rechnungen.
+    NICHT geeignet für: Risiken, offene Aufgaben, Termine.
     Verändert KEINE Daten.
     """
     ...
 
 @tool
-def search_customers(query: str) -> str:
-    """👤 KUNDENSUCHE – Durchsucht die Kundendatenbank.
+def search_risks(query: str) -> str:
+    """⚠️ RISIKOSUCHE – Durchsucht die Risikoliste.
 
-    NICHT geeignet für: Produktinfos, Lagerbestand, Preise.
+    NICHT geeignet für: Entscheidungen, Aufgaben, Termine.
     Sendet KEINE E-Mails.
     """
     ...
@@ -201,19 +201,19 @@ Bei produktionsnäheren Tools reicht ein Docstring oft nicht aus. Dann wird ein 
 from pydantic import BaseModel, Field
 from langchain_core.tools import tool
 
-class RefundRequest(BaseModel):
-    customer_id: str = Field(description="Eindeutige Kunden-ID")
-    amount: float = Field(ge=0, description="Erstattungsbetrag in EUR")
-    reason: str = Field(description="Begründung der Erstattung")
+class TaskUpdateRequest(BaseModel):
+    task_id: str = Field(description="Eindeutige Aufgaben-ID, z. B. T-014")
+    priority: int = Field(ge=1, le=5, description="Neue Priorität von 1 (hoch) bis 5 (niedrig)")
+    reason: str = Field(description="Begründung der Änderung")
 
-@tool(args_schema=RefundRequest)
-def process_refund(customer_id: str, amount: float, reason: str) -> dict:
-    """💰 ERSTATTUNG – Verarbeitet eine geprüfte Rückerstattung.
+@tool(args_schema=TaskUpdateRequest)
+def update_task_priority(task_id: str, priority: int, reason: str) -> dict:
+    """✏️ PRIORITÄT ÄNDERN – Setzt die Priorität einer bereits geprüften Aufgabenänderung.
 
-    NICHT geeignet für: Kontosperrungen, Kundendaten-Änderungen.
-    Prüft KEINE Berechtigung – dafür zuerst Policy prüfen.
+    NICHT geeignet für: Löschen von Aufgaben, Änderungen an Entscheidungen.
+    Prüft KEINE Berechtigung – dafür zuerst die Freigaberegel prüfen.
     """
-    return {"status": "processed", "amount": amount}
+    return {"status": "processed", "priority": priority}
 ```
 
 Der Vorteil liegt darin, dass Schema und Validierung nicht auseinanderdriften. Genau deshalb ist Pydantic für höherwertige Tool-Schnittstellen oft sinnvoll.
@@ -263,12 +263,12 @@ Typischer Fehler: Die Rückgabe eines API-Aufrufs wird direkt als Tool-Ergebnis 
 
 ```python
 @tool
-def search_products(query: str) -> str:
-    """Sucht nach Produkten und gibt eine kompakte Liste zurück."""
-    raw = product_api.search(query)
+def search_tasks(query: str) -> str:
+    """Sucht nach Aufgaben und gibt eine kompakte Liste zurück."""
+    raw = task_api.search(query)
     results = [
-        {"id": p["id"], "name": p["name"], "price": p["price_eur"]}
-        for p in raw.get("items", [])[:5]
+        {"id": task["id"], "title": task["title"], "owner": task["owner"]}
+        for task in raw.get("items", [])[:5]
     ]
     return json.dumps(results, ensure_ascii=False)
 ```
@@ -385,29 +385,29 @@ Bewertet wird ein Tool nach der realen Wirkung, die es auslösen kann, nicht nac
 
 ## Hochriskante Aktionen brauchen zusätzliche Schranken
 
-Bei Operationen mit realen Folgen, etwa Rückerstattung, Löschung oder Zahlung, reicht ein einzelnes Tool oft nicht aus. Ein sinnvolles Muster ist Two-Step Veto: Zuerst wird geprüft, danach erst ausgeführt.
+Bei Operationen mit realen Folgen, etwa Änderung einer Entscheidung, Löschung oder Zahlung, reicht ein einzelnes Tool oft nicht aus. Ein sinnvolles Muster ist Two-Step Veto: Zuerst wird geprüft, danach erst ausgeführt.
 
 ```python
 @tool
-def propose_refund(customer_id: str, amount: float) -> dict:
-    """💡 ERSTATTUNGSVORSCHLAG – Prüft, führt aber NICHT aus."""
-    return PolicyEngine().check_policy(customer_id, amount)
+def propose_task_change(task_id: str, priority: int) -> dict:
+    """💡 ÄNDERUNGSVORSCHLAG – Prüft, führt aber NICHT aus."""
+    return ApprovalRules().check(task_id, priority)
 
 @tool
-def commit_refund(customer_id: str, amount: float) -> dict:
-    """✅ ERSTATTUNG DURCHFÜHREN – Führt eine bereits geprüfte Erstattung aus."""
-    return financial_system.process(customer_id, amount)
+def commit_task_change(task_id: str, priority: int) -> dict:
+    """✅ ÄNDERUNG DURCHFÜHREN – Führt eine bereits geprüfte Änderung aus."""
+    return task_system.update(task_id, priority)
 ```
 
 ```mermaid
 flowchart LR
-    A[Agent] --> B[propose_refund]
+    A[Agent] --> B[propose_task_change]
     B --> C{approved?}
-    C -->|Ja| D[commit_refund]
+    C -->|Ja| D[commit_task_change]
     C -->|Nein| E[escalate_to_human]
 ```
 
-Wenn nach einer Policy-Prüfung deterministisch feststeht, welches Tool als Nächstes aufgerufen werden muss, kann ein System den nächsten Tool-Schritt auch erzwingen.
+Wenn nach einer Freigabeprüfung deterministisch feststeht, welches Tool als Nächstes aufgerufen werden muss, kann ein System den nächsten Tool-Schritt auch erzwingen.
 
 ```python
 if tool_result.get("action_required") == "escalate_to_human":
@@ -424,7 +424,7 @@ if tool_result.get("action_required") == "escalate_to_human":
 | niedrig | Risikostatus abrufen | keine besondere Freigabe |
 | mittel | Datei zusammenfassen | Pfadbegrenzung und Leserechte |
 | hoch | E-Mail senden | Vorschau und Nutzerfreigabe |
-| kritisch | Daten löschen, Zahlung auslösen | Policy-Prüfung, Freigabe, Audit-Log |
+| kritisch | Daten löschen, Zahlung auslösen | Freigabeprüfung, Freigabe, Audit-Log |
 
 Nicht geeignet, wenn: Tool-Auswahl generell durch Zwang gesteuert wird. Forced `tool_choice` ist für klare Sonderfälle gedacht, nicht als Dauerersatz für gutes Routing.
 

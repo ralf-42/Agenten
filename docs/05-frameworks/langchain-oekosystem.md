@@ -3,7 +3,7 @@ layout: default
 title: LangChain-Oekosystem
 parent: Frameworks
 nav_order: 0
-description: "Überblick über LangChain, LangGraph und LangSmith im Kurskontext"
+description: "Überblick über LangChain, LangGraph und LangSmith"
 has_toc: true
 ---
 
@@ -24,9 +24,9 @@ has_toc: true
 
 ## Kurzüberblick
 
-Die Frameworks sind hier zunächst eine Werkzeuglandkarte, damit die spätere Progression im Kurs einordbar bleibt.
+Die Frameworks sind hier zunächst eine Werkzeuglandkarte, damit die spätere Progression einordbar bleibt.
 
-Für den Kurs reicht als erste Unterscheidung:
+Als erste Unterscheidung reicht:
 
 - **LangChain** baut Bausteine: Modellaufrufe, Prompts, Tools, Retriever und einfache Agenten.
 - **LangGraph** kontrolliert Abläufe: State, Routing, Schleifen, Unterbrechungen und Wiederaufnahme.
@@ -93,7 +93,7 @@ graph TD
 
 ## Kurslogik
 
-Im Kurs ist LangChain der Einstieg: Erst werden Modellaufrufe, Prompts, strukturierte Ausgaben und Tools verständlich. Danach kommt LangGraph hinzu, sobald ein Agent nicht mehr nur linear reagieren soll, sondern Entscheidungen, Wiederholungen, Memory oder menschliche Freigaben braucht. LangSmith begleitet beide Ebenen, weil Agentenverhalten ohne Traces und Evaluation schwer prüfbar bleibt.
+LangChain ist der Einstieg: Erst werden Modellaufrufe, Prompts, strukturierte Ausgaben und Tools verständlich. Danach kommt LangGraph hinzu, sobald ein Agent nicht mehr nur linear reagieren soll, sondern Entscheidungen, Wiederholungen, Memory oder menschliche Freigaben braucht. LangSmith begleitet beide Ebenen, weil Agentenverhalten ohne Traces und Evaluation schwer prüfbar bleibt.
 
 Die praktische Faustregel:
 

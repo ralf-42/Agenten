@@ -23,7 +23,7 @@ has_toc: true
 
 ## Ziel und Geltungsbereich
 
-Diese Datei übersetzt den verbindlichen Standard aus [`_docs/Dokument_Standard.md`](#) in eine praktische Arbeitsvorlage für `Agenten/docs/`. Maßgeblich bleibt immer der Standard selbst. Diese Guide-Datei konkretisiert ihn für Jekyll, just-the-docs und die vorhandene Projektstruktur.
+Diese Datei übersetzt den gemeinsamen Dokumentstandard (`_docs/Dokument_Standard.md` im Workspace-Stammverzeichnis) in eine Arbeitsvorlage für `Agenten/docs/`. Maßgeblich bleibt der gemeinsame Standard. Diese Anleitung ergänzt ihn um die Jekyll-, Just-the-Docs- und Mermaid-Konventionen dieses Projekts.
 
 ---
 
@@ -33,7 +33,7 @@ Für alle Dokumente in `docs/` gilt: **Substanz vor Struktur**. Formatierung hil
 
 Aufzählungen werden nur eingesetzt, wenn echte Parallelstruktur vorliegt. Abschnitte mit zusammenhängender Argumentation bleiben Fließtext. Aussagen wie "praxisorientiert", "ganzheitlich" oder "state of the art" werden vermieden, wenn sie nicht durch ein Beispiel oder einen überprüfbaren Beleg gedeckt sind.
 
-Personalpronomen werden vermieden. Statt "Sie prüfen" oder "du findest" werden unpersönliche Formulierungen verwendet, etwa "Vor dem Start wird geprüft" oder "Die Checkliste findet sich weiter unten".
+In Sachtexten sind unpersönliche Formulierungen der Regelfall. Bei Anleitungen ist eine direkte Ansprache zulässig, wenn sie den nächsten Schritt klarer macht. Innerhalb eines Dokuments bleibt die gewählte Ansprache konsistent.
 
 **Ausnahme Legal-Seiten:** In `rechtliches.md`, `impressum.md`, `datenschutz.md` und `haftungsausschluss.md` bleibt die "Sie"-Form erhalten. Gesetzliche Texte folgen der Rechtssprache; navigationsbezogene Sätze in `rechtliches.md` (z. B. "finden Sie im Footer") sind Teil dieser Konvention.
 
@@ -79,6 +79,14 @@ Hier folgt der eigentliche Inhalt.
 
 ---
 
+## Drittes Kapitel
+
+Ein Inhaltsverzeichnis wird eingesetzt, wenn die Seitenlänge und Gliederung es sinnvoll machen.
+
+---
+
+<!-- Nur ergänzen, wenn verwandte Fachseiten sinnvoll voneinander abgegrenzt werden. -->
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
@@ -87,9 +95,9 @@ Hier folgt der eigentliche Inhalt.
 
 ---
 
-**Version:**    1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
+**Version:** [Versionsnummer]<br>
+**Stand:** [Monat Jahr]<br>
+**Kurs:** [Kursbezeichnung]
 ````
 
 Die Vorlage ist ein Ausgangspunkt, kein Zwang zur Textaufblähung. Wenn ein Sachverhalt mit zwei starken Absätzen erklärt ist, bleibt es bei zwei starken Absätzen.
@@ -100,19 +108,21 @@ Die Vorlage ist ein Ausgangspunkt, kein Zwang zur Textaufblähung. Wenn ein Sach
 
 ### Frontmatter
 
-Jede Inhaltsseite in `docs/` beginnt mit Frontmatter. Pflichtfelder:
+Jede Inhaltsseite in `docs/` beginnt mit dem Frontmatter, das der Seitentyp und die Site-Konfiguration erfordern. Für eine verschachtelte Fachseite ist dies ein typisches Muster:
 
 ```yaml
 ---
 layout: default
 title: Titel des Dokuments
 parent: Ressourcen
+grand_parent: Konzepte
+nav_order: [Zahl]
 description: Prägnanter Beschreibungstext für Navigation und SEO
 has_toc: true
 ---
 ```
 
-`nav_order` muss zur Reihenfolge im jeweiligen Index-Dokument passen. `description` bleibt knapp; sie ist kein Teaser-Absatz.
+`parent` und `grand_parent` müssen zur Navigation passen. `nav_order` zählt innerhalb der Elternseite und muss mit der vorgesehenen Reihenfolge übereinstimmen. `has_toc: true` wird gesetzt, wenn ein Inhaltsverzeichnis verwendet wird; bei kurzen Seiten gilt die Seitentypregel aus dem gemeinsamen Standard. `description` bleibt knapp und ist kein Teaser-Absatz.
 
 ### Titel
 
@@ -120,7 +130,7 @@ Einstiegs- und Orientierungsdokumente verwenden nach Möglichkeit ein W-Frage-Fo
 
 ### Inhaltsverzeichnis
 
-Ein automatisches Inhaltsverzeichnis ist Pflicht, sobald ein Dokument mehr als drei Hauptabschnitte besitzt.
+Ein automatisches Inhaltsverzeichnis wird bei mehr als drei inhaltlichen Überschriften der Ebene `##` verwendet. Bei kürzeren Seiten entscheidet der tatsächliche Orientierungsbedarf. Frontmatter und reine Metadaten zählen nicht mit.
 
 ```markdown
 # Inhaltsverzeichnis
@@ -130,11 +140,11 @@ Ein automatisches Inhaltsverzeichnis ist Pflicht, sobald ein Dokument mehr als d
 {:toc}
 ```
 
-Kurze Seiten mit bis zu drei Hauptabschnitten benötigen kein TOC.
+Kurze Seiten mit bis zu drei inhaltlichen Überschriften der Ebene `##` benötigen in der Regel kein TOC.
 
-### Abgrenzungstabelle für Konzeptdokumente
+### Abgrenzung verwandter Dokumente
 
-Jedes inhaltliche Dokument endet vor dem Versionsblock mit einer Abgrenzungstabelle.
+Eine Abgrenzungstabelle steht vor dem Versionsblock, wenn sie die Orientierung zu verwandten Fachseiten verbessert. Für kurze Erklärungen oder Seiten ohne sinnvolle Abgrenzung wird sie weggelassen.
 
 ```markdown
 ## Abgrenzung zu verwandten Dokumenten
@@ -144,14 +154,14 @@ Jedes inhaltliche Dokument endet vor dem Versionsblock mit einer Abgrenzungstabe
 | [Titel](#) | Worum geht es dort? |
 ```
 
-### Versionierungsblock
+### Versionsblock
 
-Jede Seite endet mit genau diesem Block. Der `Stand` wird über alle sichtbaren Kursseiten hinweg einheitlich geführt.
+Gepflegte Fachseiten verwenden den Versionsblock, sofern die Projektregeln ihn vorsehen. Kategorie-, Index-, Rechts- und Übersichtsseiten folgen den Ausnahmen des gemeinsamen Standards. Der `Stand` wird bei einer inhaltlichen Aktualisierung angepasst.
 
 ```markdown
-**Version:**    1.0<br>
-**Stand:** Mai 2026<br>
-**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
+**Version:** [Versionsnummer]<br>
+**Stand:** [Monat Jahr]<br>
+**Kurs:** [Kursbezeichnung]
 ```
 
 ---
@@ -177,15 +187,23 @@ Gute Doku beschreibt nicht nur, was funktioniert, sondern auch, wo ein Ansatz sc
 
 ### Satzvarianz
 
-Gleich lange Sätze hintereinander wirken maschinell. Unterschiedliche Satzlängen, klare Kontraste und gelegentliche Leitfragen machen Texte lesbarer, solange sie echte Orientierung geben.
+Satzlänge und Satzbau dürfen variieren, wenn es dem Lesefluss hilft. Leitfragen eignen sich, wenn sie eine echte Entscheidung oder Orientierung eröffnen.
+
+### Codebeispiele
+
+Fenced Codeblöcke erhalten einen passenden Sprach-Tag, zum Beispiel `python`, `bash`, `yaml`, `markdown` oder `mermaid`. Konsolenausgaben und Klartext werden als Text gekennzeichnet.
+
+Codebeispiele entsprechen den technischen Regeln in `Agenten/CLAUDE.md` und den einschlägigen Best-Practice-Dokumenten. APIs und Beispiele müssen zur angegebenen Version passen. Ausführbare Beispiele werden geprüft; Ausschnitte und Pseudocode werden als solche kenntlich gemacht. Notebook-spezifische Einrichtungszellen oder Importkonventionen werden nur übernommen, wenn sie für das Beispiel erforderlich sind.
 
 ---
 
 ## Strukturregeln
 
-### Keine manuell nummerierten Überschriften
+### Überschriftenhierarchie und Nummerierung
 
-Nummern werden nicht in Überschriften geschrieben.
+In Inhaltsseiten steht eine H1 (`#`) für den Seitentitel; Kapitel beginnen mit H2 (`##`). Unterebenen werden der Reihe nach verwendet, ohne Ebenen zu überspringen. Das Inhaltsverzeichnis darf als zusätzliche H1 stehen, wenn es mit `{: .no_toc }` aus der Seitenübersicht ausgeblendet wird.
+
+Überschriften in Fachseiten werden nicht manuell nummeriert. Nummerierte Abschnitte sind in Governance- und Regelwerken zulässig, wenn sie das Referenzieren erleichtern.
 
 **Falsch:**
 
@@ -249,11 +267,11 @@ Im Projekt wird GitHub-Alert-Syntax verwendet. Der Titel nach dem Alert-Typ ist 
 > Bekannte Fehlerquelle oder wichtige Grenze.
 ```
 
-Pro Abschnitt höchstens ein Callout. Wenn jeder zweite Absatz hervorgehoben wird, verliert die Hervorhebung ihren Zweck.
+Callouts heben einzelne Hinweise hervor, die sich sinnvoll vom Lesefluss absetzen. Eine feste Höchstzahl pro Abschnitt gibt es nicht; entscheidend ist, dass die Hervorhebungen Orientierung schaffen.
 
 ### Mermaid
 
-Mermaid wird nur eingesetzt, wenn ein Zusammenhang visuell klarer wird als im Fließtext oder in einer Tabelle. Geeignet sind Entscheidungslogik, Zustandswechsel, Sequenzen und Architekturübersichten. `sequenceDiagram` beginnt immer mit `autonumber`.
+Mermaid wird nur eingesetzt, wenn ein Zusammenhang visuell klarer wird als im Fließtext oder in einer Tabelle. Geeignet sind Entscheidungslogik, Zustandswechsel, Sequenzen und Architekturübersichten. `sequenceDiagram` kann mit `autonumber` nummeriert werden, wenn die Nummern den Ablauf leichter referenzierbar machen.
 
 Das Farbschema (`theme: base` mit `themeVariables`) ist global in `_includes/head_custom.html` gesetzt, ein Init-Block pro Diagramm entfällt. Flowcharts färben Knoten ausschließlich über `classDef` und `class` (`default`, `input`, `metric`, `output`, `target`, `stop`), nie über einzelne `style`-Zeilen. `sequenceDiagram`, `stateDiagram-v2` und `mindmap` kommen ohne `classDef` aus. Ausnahme: Ein Vergleich zweier Subgraphen darf `style` mit Palette-Hexwerten nutzen. Subgraph-Titel werden mit `<b>` gesetzt, z. B. `subgraph ID["<b>Titel</b>"]`. Palette und Begründung: `_docs/Mermaid_Best_Practices.md`.
 
@@ -307,11 +325,11 @@ Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung 
 
 Querschnittsseiten wie Checklisten, Review-Hilfen oder Freigabeübersichten verbinden mehrere Themenbereiche. Sie brauchen deshalb eine stärkere Navigationsfunktion als normale Konzeptseiten.
 
-- `has_toc: true` wird gesetzt, wenn mehr als drei Hauptabschnitte vorhanden sind.
+- `has_toc: true` wird bei mehr als drei inhaltlichen Überschriften der Ebene `##` gesetzt; bei kürzeren Seiten nach Bedarf.
 - Die Seite wird im zuständigen Bereichs-`index.md` verlinkt.
 - Berührt die Seite Qualität, Evaluation, Observability, Sicherheit oder Betrieb, wird sie zusätzlich aus dem passenden Qualitäts- oder Betriebsbereich querverlinkt.
-- Am Ende steht eine kurze Tabelle mit weiterführenden Seiten.
-- Der Footer folgt dem Standardformat mit Version, Stand und Kurs.
+- Weiterführende Seiten werden verlinkt, wenn sie für die Orientierung oder Umsetzung hilfreich sind.
+- Versionsangaben richten sich nach Seitentyp und Projektregeln; ein Kurs-Versionsblock wird nicht pauschal erzwungen.
 
 ---
 
@@ -321,9 +339,9 @@ Querschnittsseiten wie Checklisten, Review-Hilfen oder Freigabeübersichten verb
 
 Wenn diese Guide-Datei und `_docs/Dokument_Standard.md` voneinander abweichen, gilt der Standard. Die Guide-Datei wird dann angepasst.
 
-### Zu viele Bullet Points
+### Aufzählungen ohne klare Funktion
 
-Wenn mehr als die Hälfte eines Abschnitts aus Aufzählungen besteht, ist fast immer ein Absatz oder eine Tabelle die bessere Form.
+Aufzählungen eignen sich für gleichrangige Punkte und nummerierte Listen für Abläufe. Zusammenhängende Begründungen und Gedankengänge bleiben Fließtext; eine feste Quote gilt nicht.
 
 ### Falsche Linkziele
 
@@ -331,11 +349,11 @@ Interne Links auf `.md` sind im Projekt falsch. Verwendet werden `.html`-Ziele.
 
 ### Fehlender Abschluss
 
-Viele Seiten wirken fertig, brechen aber ohne Abgrenzungstabelle oder Versionsblock ab. Beides gehört zum formalen Abschluss.
+Abgrenzungstabellen und Versionsblöcke richten sich nach Seitentyp und Projektregeln. Bausteine ohne inhaltlichen Nutzen werden nicht ergänzt, nur um eine Vorlage zu vervollständigen.
 
 ### Direkte Ansprache
 
-Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neutrale Formulierungen überführt.
+Sachtexte bleiben in der Regel unpersönlich. Bei Anleitungen ist direkte Ansprache zulässig, wenn sie den nächsten Schritt klarer macht; innerhalb eines Dokuments bleibt die Ansprache konsistent.
 
 ---
 
@@ -344,19 +362,21 @@ Formulierungen wie "Sie prüfen", "du findest" oder "Ihr Projekt" werden in neut
 - Frontmatter vollständig und korrekt
 - `nav_order` stimmt mit dem Index-Dokument überein
 - Titel passt zum Dokumenttyp
-- TOC nur dann, wenn mehr als drei Hauptabschnitte vorhanden sind
-- Keine manuell nummerierten Überschriften
+- TOC bei mehr als drei inhaltlichen H2-Überschriften; bei kürzeren Seiten nach Bedarf
+- Inhaltsseiten verwenden eine H1 für den Titel und überspringen keine Überschriftenebene
+- Keine manuell nummerierten Überschriften in Fachseiten; Governance-Dokumente dürfen Abschnitte bei Bedarf nummerieren
+- Fenced Codeblöcke haben einen Sprach-Tag; Codebeispiele entsprechen den Projektstandards und sind geprüft oder als Ausschnitt gekennzeichnet
 - Aufzählungen nur dort, wo echte Parallelstruktur vorliegt
 - Interne Links zeigen auf `.html`
-- Konzeptdokument enthält Abgrenzungstabelle
-- Querschnittsseite enthält weiterführende Links und ist aus den passenden Index-Seiten erreichbar
+- Abgrenzungstabelle nur, wenn sie die Orientierung zu verwandten Seiten verbessert
+- Querschnittsseite ist im passenden Bereich verlinkt; weitere Querverweise werden nach Nutzen gesetzt
 - Callouts haben einen Titel
-- Versionsblock steht am Ende im vorgeschriebenen Format
+- Versionsblock steht bei gepflegten Fachseiten am Ende, wenn die Projektregeln ihn vorsehen
 
 ---
 
-**Version:**    1.0<br>
-**Stand:** Mai 2026<br>
+**Version:** 2.0<br>
+**Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

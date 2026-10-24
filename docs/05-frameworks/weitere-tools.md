@@ -9,7 +9,7 @@ description: "ChromaDB und GenAI_Lib"
 
 # Weitere Tools
 
-Diese Orientierungsseite sammelt ergänzende Frameworks und Hilfsbibliotheken, die im Kurs praktisch genutzt werden.
+Diese Orientierungsseite sammelt ergänzende Frameworks und Hilfsbibliotheken, die in den Notebooks praktisch genutzt werden.
 
 | Frage | Dokument | Bezug |
 |---|---|---|

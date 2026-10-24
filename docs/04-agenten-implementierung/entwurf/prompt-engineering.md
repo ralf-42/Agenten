@@ -80,7 +80,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # Zero-Shot: Keine Beispiele, direkte Aufgabe
 prompt = ChatPromptTemplate([
-    ("system", "Du bist ein hilfreicher Assistent."),
+    ("system", "Du bist der PMO-Assistent für Projekt Kompass."),
     ("human", "Klassifiziere die folgende E-Mail als 'dringend' oder 'normal': {email}")
 ])
 ```
@@ -142,28 +142,28 @@ Ein guter System-Prompt beantwortet vier Fragen:
 ### Beispiel: Vollständiger Agent-System-Prompt
 
 ```python
-system_prompt = """Du bist ein technischer Support-Agent für ein Software-Unternehmen.
+system_prompt = """Du bist der PMO-Assistent für Projekt Kompass.
 
 ROLLE:
-- Experte für die Produkte X, Y und Z
-- Erste Anlaufstelle für technische Fragen
-- Eskalation an Menschen bei komplexen Fällen
+- Unterstützt die Projektleitung bei Briefings, Entscheidungen und Risiken
+- Erste Anlaufstelle für Fragen zum Projektstand
+- Eskalation an die Projektleitung bei kritischen Fällen
 
 FÄHIGKEITEN:
-- Zugriff auf die Wissensdatenbank (Tool: search_knowledge)
-- Ticket-Erstellung im Helpdesk (Tool: create_ticket)
-- Prüfung des Kundenstatus (Tool: check_customer)
+- Zugriff auf die Projektdokumente (Tool: search_project_documents)
+- Aufgaben-Erstellung im Projektboard (Tool: create_task)
+- Prüfung des Risikostatus (Tool: check_risk_status)
 
 VERHALTENSREGELN:
-- Antworte präzise und lösungsorientiert
+- Antworte präzise und belege jede Aussage mit einer Quelle
 - Frage nach, wenn Informationen fehlen
-- Bestätige Verständnis bei komplexen Problemen
-- Verwende technische Begriffe nur mit Erklärung
+- Mache Unsicherheit sichtbar, statt zu raten
+- Verwende Fachbegriffe nur mit Erklärung
 
 EINSCHRÄNKUNGEN:
-- Keine Preisauskünfte oder Vertragsänderungen
-- Keine Zusagen ohne Rücksprache mit dem Vertrieb
-- Bei Sicherheitsfragen immer an Security-Team eskalieren
+- Keine Budgetzusagen oder Vertragsänderungen
+- Keine Entscheidungen ohne Freigabe der Projektleitung
+- Bei Datenschutzfragen immer an die Datenschutzbeauftragten eskalieren
 """
 ```
 
@@ -188,25 +188,25 @@ Die Beschreibung eines Tools bestimmt, ob und wann ein Agent es korrekt einsetzt
 from langchain_core.tools import tool
 
 @tool
-def search_knowledge(query: str, max_results: int = 5) -> str:
-    """Durchsucht die interne Wissensdatenbank nach relevanten Artikeln.
+def search_project_documents(query: str, max_results: int = 5) -> str:
+    """Durchsucht die Projektdokumente nach relevanten Passagen.
     
     WANN VERWENDEN:
-    - Bei Fragen zu Produktfunktionen
-    - Bei Fehlermeldungen und deren Lösungen
-    - Bei How-To-Anfragen
+    - Bei Fragen zu Entscheidungen des Steuerkreises
+    - Bei Fragen zu Risiken und Maßnahmen
+    - Bei Fragen zu Aufgaben und Verantwortlichkeiten
     
     WANN NICHT VERWENDEN:
-    - Bei Fragen zu Preisen oder Verträgen
-    - Bei persönlichen Kundendaten
+    - Bei Fragen zu Budgets oder Verträgen
+    - Bei personenbezogenen Daten
     - Wenn die Antwort bereits bekannt ist
     
     Args:
         query: Suchbegriff oder Frage in natürlicher Sprache
-        max_results: Maximale Anzahl zurückgegebener Artikel (1-10)
+        max_results: Maximale Anzahl zurückgegebener Passagen (1-10)
     
     Returns:
-        Formatierte Liste relevanter Wissensartikel mit Titel und Zusammenfassung
+        Formatierte Liste relevanter Passagen mit Quelle und Zusammenfassung
     """
     # Implementation...
 ```

@@ -15,7 +15,7 @@ has_toc: true
 
 Diese Seite ist keine erste Einführung in LangGraph. Sie richtet sich an Entwickler, die bereits verstanden haben, warum ein Graph nötig ist und nun stabilere Muster für State, Routing, Checkpointing oder Multi-Agent-Flüsse suchen. Für den ersten Zugang empfiehlt sich zuerst [LangGraph Einsteiger](./einsteiger-langgraph.html).
 
-Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerseiten. Im Kurs bedeutet das nicht, dass jede Funktion sofort verwendet werden muss. Wichtiger ist zu verstehen, wann ein Pattern wirklich nötig ist und wann es für den aktuellen Schritt noch überdimensioniert wäre.
+Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerseiten. Das bedeutet nicht, dass jede Funktion sofort verwendet werden muss. Wichtiger ist zu verstehen, wann ein Pattern wirklich nötig ist und wann es für den aktuellen Schritt noch überdimensioniert wäre.
 
 ---
 
@@ -29,7 +29,7 @@ Der Ton dieser Seite ist bewusst normativer als in den Konzept- und Einsteigerse
 
 ## Überblick / Zweck
 
-LangGraph ist die Standardebene für zustandsbehaftete, verzweigte und wiederaufnehmbare Agenten-Workflows. Dieses Dokument sammelt die Patterns, die im Kurs und in produktionsnahen Beispielen als robuste Grundlage gelten.
+LangGraph ist die Standardebene für zustandsbehaftete, verzweigte und wiederaufnehmbare Agenten-Workflows. Dieses Dokument sammelt die Patterns, die in Beispielen und in produktionsnahen Szenarien als robuste Grundlage gelten.
 
 Ziel ist ein expliziter Kontrollfluss: State, Nodes, Edges, Routing, Checkpointing und Freigaben sollen im Graph sichtbar sein, statt in Prompts oder großen Python-Funktionen versteckt zu werden.
 
@@ -71,17 +71,17 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 
-class AgentState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
     task_status: str
 
 
-def agent_node(state: AgentState) -> dict:
+def agent_node(state: BriefingState) -> dict:
     response = llm.invoke(state["messages"])
     return {"messages": [response], "task_status": "answered"}
 
 
-builder = StateGraph(AgentState)
+builder = StateGraph(BriefingState)
 builder.add_node("agent", agent_node)
 builder.add_edge(START, "agent")
 builder.add_edge("agent", END)
@@ -103,14 +103,14 @@ from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 
 
-class AgentState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
     user_id: str
     task_status: str
     retry_count: int
 
 
-graph_builder = StateGraph(AgentState)
+graph_builder = StateGraph(BriefingState)
 ```
 
 `TypedDict` ist für internen LangGraph-State meist die richtige Wahl, weil es wenig Overhead erzeugt und den State für Editor, Tests und Code-Review sichtbar macht. Pydantic eignet sich besser an Systemgrenzen: Eingaben aus APIs, Formulare, strukturierte Modellantworten oder Daten, die zur Laufzeit validiert werden müssen.
@@ -129,12 +129,12 @@ Grenze: Ein großer State wirkt bequem, macht Graphen aber schwer testbar. Wenn 
 Nodes sind normale Funktionen, die State lesen und Teil-State zurückgeben. Eine Node sollte eine fachliche Verantwortung haben: Modell aufrufen, Tool ausführen, Entscheidung vorbereiten, Ergebnis validieren oder Fehler behandeln.
 
 ```python
-def agent_node(state: AgentState) -> dict:
+def agent_node(state: BriefingState) -> dict:
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
 
-def tool_node(state: AgentState) -> dict:
+def tool_node(state: BriefingState) -> dict:
     result = execute_tool(state["messages"][-1])
     return {"messages": [result]}
 ```
@@ -235,7 +235,7 @@ Conditional Routing macht Entscheidungen explizit. Statt in einer großen Node m
 from typing import Literal
 
 
-def route_after_agent(state: AgentState) -> Literal["tools", "review", "__end__"]:
+def router(state: BriefingState) -> Literal["tools", "review", "__end__"]:
     last_message = state["messages"][-1]
 
     if has_tool_calls(last_message):
@@ -247,7 +247,7 @@ def route_after_agent(state: AgentState) -> Literal["tools", "review", "__end__"
 
 graph_builder.add_conditional_edges(
     "agent",
-    route_after_agent,
+    router,
     {
         "tools": "tools",
         "review": "human_review",
@@ -260,7 +260,7 @@ Conditional Routing ist hilfreich, wenn ein Workflow mehrere fachliche Zustände
 
 ## Checkpointing Und Persistenz
 
-Checkpointing speichert Graph-Zustand zwischen Ausführungsschritten. Das ist nicht nur ein Produktionsfeature. Schon im Kurs ist es hilfreich, wenn ein Workflow unterbrochen, inspiziert oder mit derselben `thread_id` fortgesetzt werden soll.
+Checkpointing speichert Graph-Zustand zwischen Ausführungsschritten. Das ist nicht nur ein Produktionsfeature. Schon früh ist es hilfreich, wenn ein Workflow unterbrochen, inspiziert oder mit derselben `thread_id` fortgesetzt werden soll.
 
 ```python
 from langgraph.checkpoint.memory import InMemorySaver
@@ -295,7 +295,7 @@ Human-in-the-Loop wird nötig, wenn ein Agent schwer reversible Aktionen vorbere
 from langgraph.types import Command, interrupt
 
 
-def approval_node(state: AgentState) -> dict:
+def approval_node(state: BriefingState) -> dict:
     decision = interrupt(
         {
             "action": "send_email",

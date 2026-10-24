@@ -155,12 +155,12 @@ In LangGraph empfängt jeder Knoten den aktuellen State und gibt danach nur die 
 ```python
 from langgraph.graph import StateGraph, START, END
 
-class AgentState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
     current_task: str
     completed: bool
 
-def process_node(state: AgentState) -> AgentState:
+def process_node(state: BriefingState) -> BriefingState:
     task = state["current_task"]
     result = do_something(task)
     return {
@@ -168,7 +168,7 @@ def process_node(state: AgentState) -> AgentState:
         "completed": True
     }
 
-graph = StateGraph(AgentState)
+graph = StateGraph(BriefingState)
 graph.add_node("process", process_node)
 graph.add_edge(START, "process")
 graph.add_edge("process", END)
@@ -180,7 +180,7 @@ Typischer Fehler: Den gesamten State zurückzugeben oder ihn direkt zu mutieren,
 
 ## Ein mehrstufiger Analyse-Workflow
 
-Ein gutes Kursbeispiel ist ein Workflow, der ein Dokument zusammenfasst, danach ein Sentiment bestimmt und am Ende Schlüsselwörter extrahiert. Hier zeigt sich, dass verschiedene Knoten nacheinander auf unterschiedliche Felder desselben States aufbauen.
+Ein gutes Beispiel ist ein Workflow, der ein Dokument zusammenfasst, danach ein Sentiment bestimmt und am Ende Schlüsselwörter extrahiert. Hier zeigt sich, dass verschiedene Knoten nacheinander auf unterschiedliche Felder desselben States aufbauen.
 
 ```python
 from typing import TypedDict, Annotated
@@ -228,7 +228,7 @@ def classify_node(state: RouterState) -> RouterState:
     query = state["messages"][-1].content
     return {"query_type": "technical"}
 
-def route_by_type(state: RouterState) -> str:
+def router(state: RouterState) -> str:
     if state["query_type"] == "technical":
         return "tech_agent"
     elif state["query_type"] == "billing":

@@ -164,7 +164,7 @@ Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
 | Agenten-Prompts mit Hard Limits | XML-Tags Pflicht |
 | Few-Shot-Prompts mit Beispielen | Meist `## human` / `## ai`, nur bei sehr komplexen Beispielen zusätzliche Tags |
 
-### Häufig verwendete Tags im Kurs
+### Häufig verwendete Tags
 
 | Tag | Zweck | Beispiel für den Inhalt |
 |---|---|---|
@@ -191,7 +191,7 @@ Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
 | `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen festlegen | Maximal drei Suchaufrufe; stoppe, sobald die Anfrage beantwortbar ist. |
 | `<OutputRules>` | Gewünschtes Format und die Struktur der Antwort festlegen | Mindestens drei Kernfakten als Stichpunkte, maximal 200 Wörter. |
 
-Tag-Namen enthalten keine Leerzeichen. Deshalb wird im Kurs `<HardLimits>` verwendet, nicht `<Hard Limits>`.
+Tag-Namen enthalten keine Leerzeichen. Deshalb wird `<HardLimits>` verwendet, nicht `<Hard Limits>`.
 
 ---
 
@@ -409,7 +409,7 @@ flowchart TD
 
 ---
 
-## Referenz-Dateien im Kurs
+## Referenz-Dateien
 
 | Typ | Datei | Modul |
 |---|---|---|

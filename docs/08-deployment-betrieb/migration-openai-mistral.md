@@ -236,7 +236,7 @@ Für jede Migration auf Mistral bleiben dieselben Kernfragen relevant:
 
 | Kriterium | Prüffrage |
 |----------|-----------|
-| **Qualität** | Ist die Ausgabe im Kurskontext brauchbar? |
+| **Qualität** | Ist die Ausgabe für den Anwendungsfall brauchbar? |
 | **Tool Use** | Werden Tools sinnvoll gewählt und korrekt aufgerufen? |
 | **Structured Output** | Bleibt das Schema stabil gültig? |
 | **Routing** | Bleibt die Rollenlogik nachvollziehbar? |

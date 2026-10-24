@@ -81,7 +81,7 @@ Ein Workflow besteht aus:
 from typing import TypedDict, Annotated
 from langgraph.graph.message import add_messages
 
-class ChatState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
     step: int
 ```
@@ -92,7 +92,7 @@ class ChatState(TypedDict):
 from langchain.chat_models import init_chat_model
 llm = init_chat_model("openai:gpt-5.6-luna")
 
-def agent_node(state: ChatState) -> ChatState:
+def agent_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
     return {"messages": [response], "step": state["step"] + 1}
 ```
@@ -102,7 +102,7 @@ def agent_node(state: ChatState) -> ChatState:
 ```python
 from langgraph.graph import StateGraph, START, END
 
-g = StateGraph(ChatState)
+g = StateGraph(BriefingState)
 g.add_node("agent", agent_node)
 g.add_edge(START, "agent")
 g.add_edge("agent", END)
@@ -200,7 +200,7 @@ Kurz: **Nodes sind Funktionen – Edges sind der Ablauf.**
 ## State sauber definieren (vertieft)
 
 ```python
-class ChatState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
     step: int
     # erweiterbar: approved: bool, analysis: str
@@ -228,7 +228,7 @@ Nodes sollen klein, fokussiert und deterministisch sein.
 ### Typ 1: LLM-Node
 
 ```python
-def summarize_node(state: ChatState) -> ChatState:
+def summarize_node(state: BriefingState) -> BriefingState:
     text = "\n".join([m.content for m in state["messages"]])
     summary = llm.invoke([{"role": "human", "content": f"Fasse zusammen: {text}"}])
     return {"messages": [summary]}
@@ -242,10 +242,10 @@ from langchain_core.messages import AIMessage
 
 @tool
 def suche(query: str) -> str:
-    """Führt eine Websuche durch."""
+    """Durchsucht die Projektdokumente."""
     return f"Ergebnis für: {query}"
 
-def tool_node(state: ChatState) -> ChatState:
+def tool_node(state: BriefingState) -> BriefingState:
     result = suche.invoke({"query": state["messages"][-1].content})
     return {"messages": [AIMessage(content=result)]}
 ```
@@ -260,10 +260,10 @@ from langchain.agents import create_agent
 research_agent = create_agent(
     model=llm,
     tools=[suche],
-    system_prompt="Du bist ein Research-Spezialist. Recherchiere gründlich.",
+    system_prompt="Du bist ein Spezialist für Projektrecherche. Belege jede Aussage mit einer Quelle.",
 )
 
-def research_node(state: ChatState) -> ChatState:
+def research_node(state: BriefingState) -> BriefingState:
     result = research_agent.invoke({"messages": state["messages"]})
     return {"messages": result["messages"]}
 ```
@@ -292,11 +292,11 @@ g.add_edge("agent", END)
 ### Bedingtes Routing
 
 ```python
-def tool_node(state: ChatState):
+def tool_node(state: BriefingState):
     result_message = ...  # echtes Tool
     return {"messages": [result_message]}
 
-def routing_after_agent(state: ChatState) -> str:
+def router(state: BriefingState) -> str:
     last_msg = state["messages"][-1]
     if getattr(last_msg, "tool_calls", None):
         return "tools"
@@ -307,7 +307,7 @@ def routing_after_agent(state: ChatState) -> str:
 g.add_node("tools", tool_node)
 g.add_conditional_edges(
     "agent",
-    routing_after_agent,
+    router,
     {"tools": "tools", END: END},
 )
 g.add_edge("tools", "agent")
@@ -348,7 +348,7 @@ Wenn ein Schritt den State aktualisieren soll und gleichzeitig bestimmt, wohin a
 from typing import Literal
 from langgraph.types import Command
 
-def classify_node(state: ChatState) -> Command[Literal["tools", "answer"]]:
+def classify_node(state: BriefingState) -> Command[Literal["tools", "answer"]]:
     if "suche" in state["messages"][-1].content.lower():
         return Command(update={"step": state["step"] + 1}, goto="tools")
     return Command(update={"step": state["step"] + 1}, goto="answer")
@@ -466,7 +466,7 @@ Human-in-the-Loop ist ein wichtiges Konzept – aber erst an dieser Stelle sinnv
 ```python
 from langgraph.types import interrupt
 
-def approval_node(state: ChatState) -> ChatState:
+def approval_node(state: BriefingState) -> BriefingState:
     decision = interrupt("Aktion ausführen? yes/no")
     return {"approved": decision == "yes"}
 ```
@@ -529,7 +529,7 @@ writer_agent   = create_agent(model=llm, tools=[...], system_prompt="Writer")
 ```python
 from langgraph.types import Command
 
-def supervisor(state: ChatState) -> Command:
+def supervisor(state: BriefingState) -> Command:
     task = state.get("task_type", "research")
     return Command(goto=f"{task}_agent")
 ```

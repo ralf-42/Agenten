@@ -158,7 +158,7 @@ msgs = rag_prompt.format_messages(
 
 Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sprachmodells bildet die Basis jeder Agentenarchitektur. `init_chat_model()` stellt sicher, dass verschiedene Modellanbieter konsistent angesprochen werden können, ohne die restliche Codebasis anpassen zu müssen.
 
-**Beispiel: Standard-Setup für den Kurs**
+**Beispiel: Standard-Setup**
 
 ```python
 from langchain.chat_models import init_chat_model
@@ -605,7 +605,7 @@ print(len(chunks))
 print(chunks[0][:200])
 ```
 
-Im Kurs lässt sich hier gut mit unterschiedlichen Chunk‑Größen und Overlaps experimentieren, um deren Einfluss auf Retrieval und Antwortqualität zu zeigen.
+Hier lässt sich gut mit unterschiedlichen Chunk‑Größen und Overlaps experimentieren, um deren Einfluss auf Retrieval und Antwortqualität zu zeigen.
 
 ---
 
@@ -747,7 +747,7 @@ antwort = rag_chain.invoke(frage)
 print(antwort)
 ```
 
-Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assistenten oder interne Suchsysteme im Kurs und kann schrittweise um Evaluierung, Feedback‑Schleifen oder LangGraph‑Workflows erweitert werden.
+Dieses Pattern bildet die Grundlage für Wissens‑Chatbots, Dokumenten‑Assistenten oder interne Suchsysteme und kann schrittweise um Evaluierung, Feedback‑Schleifen oder LangGraph‑Workflows erweitert werden.
 
 ---
 

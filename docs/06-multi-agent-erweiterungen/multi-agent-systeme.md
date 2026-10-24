@@ -311,7 +311,7 @@ Nicht geeignet, wenn: Schritt B inhaltlich vom Ergebnis aus Schritt A abhängt. 
 
 ## Kommunikation und gemeinsamer State
 
-In LangGraph erfolgt Zusammenarbeit meist über Shared State. Jeder Agent liest aus demselben oder aus kompatiblen State-Strukturen und gibt gezielt Änderungen zurück. Alternativ sind direkte Aufrufe oder asynchrone Nachrichten möglich, aber für den Kurskontext ist Shared State das Standardmodell.
+In LangGraph erfolgt Zusammenarbeit meist über Shared State. Jeder Agent liest aus demselben oder aus kompatiblen State-Strukturen und gibt gezielt Änderungen zurück. Alternativ sind direkte Aufrufe oder asynchrone Nachrichten möglich, aber als Standardmodell dient Shared State.
 
 ```python
 class MultiAgentState(TypedDict):
@@ -330,7 +330,7 @@ Ohne sauberen gemeinsamen Zustand zerfällt die Koordination schnell.
 Deadlocks, Endlosschleifen, falsches Routing und unnötig komplizierte Übergaben gehören zu den häufigsten Problemen. Ebenso kritisch ist fehlende Fehlerbehandlung: Wenn ein Worker scheitert und es keinen Fallback gibt, wird aus modularer Architektur schnell ein fragiles System.
 
 ```python
-def should_continue(state: TeamState) -> str:
+def supervisor_router(state: TeamState) -> str:
     if state["iteration_count"] >= 10:
         return "timeout_handler"
     return "next_agent"

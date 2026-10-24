@@ -614,8 +614,8 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | --- | --- | --- |
 | `LANGSMITH_PROJECT` | Kurs-Notebook | `"m04_structured_output"` |
 | `run_name` | Kurs-Notebook | `"m04_kap6_structured_trace"` |
-| `LANGSMITH_PROJECT` | Produktion im Kursbeispiel | `"m24_chatbot_production"` |
-| `experiment_prefix` | RAG-Evaluation im Kursbeispiel | `"m11_rag_experiment_2026_03"` |
+| `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
+| `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
 
 > 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing-in-kurs-notebooks). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
 
@@ -863,7 +863,7 @@ Wenn eine Chain "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt A
 3. **Einen Fix pro Pattern** umsetzen (Prompt, Retrieval-Konfiguration, Routing)
 4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
 
-**Im Kurs** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
+**Für den Einstieg** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
 (p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind für Production-Deployments relevant.
 
 ### Web-UI Filter: Traces gezielt finden
@@ -871,7 +871,7 @@ Wenn eine Chain "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt A
 Die LangSmith-Oberfläche unter [eu.smith.langchain.com](https://eu.smith.langchain.com/) bietet
 leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enthält.
 
-**Nützlichste Filter-Kombinationen für den Kurs:**
+**Nützlichste Filter-Kombinationen für den Einstieg:**
 
 | Szenario | Filter | Wert |
 |----------|--------|-------|
@@ -882,7 +882,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 | Experiment A vs. B | `Tags` | `experiment-A` / `experiment-B` |
 | Zeitraum eingrenzen | `Start Time` | `Last 1 hour` / `Last 24 hours` |
 
-**Drei Kern-Views für den Kurs:**
+**Drei Kern-Views für den Einstieg:**
 
 ```
 1. Debugging:    Status = Error  +  Project = M##-...
@@ -926,7 +926,7 @@ Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig gen
 | **Team-Kollaboration** | URL-Sharing | Screenshots | Nicht verfügbar |
 | **Produktion** | Monitoring | Nicht skalierbar | Nur Development |
 
-**Fazit für den Kurs:**
+**Fazit für den Einstieg:**
 - **Woche 1:** LangSmith parallel zu Print-Debugging einführen
 - **Woche 2:** LangSmith als primäres Debug-Tool etablieren
 - **Ab Woche 3:** LangSmith für RAG-Evaluation und Chain-Optimierung nutzen

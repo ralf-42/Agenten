@@ -319,7 +319,7 @@ stateDiagram-v2
     Terminated --> [*]
 ```
 
-Für den Kurs genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
+Zunächst genügt die Grundidee: Offene Kommunikation braucht immer auch Grenzen. Sonst entstehen Endlosschleifen, unklare Verantwortlichkeiten oder ausufernde Kosten.
 
 ## Protokolle passend zum Projekt kombinieren
 Nicht jedes Projekt braucht sofort alle hier genannten Protokolle. Für viele erste Agentensysteme reicht eine einfache Kombination: MCP für Tools, gegebenenfalls A2A oder ACP für klar abgegrenzte Delegation und AG-UI nur dann, wenn ein eigenes Frontend längere Prozesse sichtbar machen soll.

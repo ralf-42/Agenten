@@ -11,7 +11,7 @@ has_toc: true
 # GenAI_Lib - Projektspezifische Bibliothek
 {: .no_toc }
 
-> **Projektspezifische Bibliothek für den Kurs KI-Agenten**
+> **Projektspezifische Bibliothek für KI-Agenten**
 
 ---
 
@@ -780,7 +780,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 | Dokument | Frage |
 |---|---|
 | [Standards](../10-ressourcen/standards.html) | Welche projektweiten Code- und Notebook-Regeln gelten? |
-| [Modell-Auswahl Guide](../03-modelle-provider-anpassung/modellauswahl.html) | Welche Modellrolle passt zu welchem Kursbeispiel? |
+| [Modell-Auswahl Guide](../03-modelle-provider-anpassung/modellauswahl.html) | Welche Modellrolle passt zu welchem Beispiel? |
 
 ---
 

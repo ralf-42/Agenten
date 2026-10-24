@@ -31,7 +31,7 @@ Checkpointing speichert den Zustand eines Graphen nach einzelnen Ausführungssch
 
 Typischer Fehler: Checkpointing mit Logging zu verwechseln. Logs beschreiben, was passiert ist. Checkpoints speichern, von wo aus ein Workflow exakt weiterlaufen kann.
 
-## Ein einfaches Kursbeispiel
+## Ein einfaches Beispiel
 
 Vor einer kritischen Aktion soll ein Agent auf Freigabe warten. Ohne Persistenz wäre der Zustand zwischen Anfrage und Freigabe verloren, sobald der Prozess endet oder neu startet. Mit Checkpointing bleibt der Graph an genau dieser Stelle erhalten.
 
@@ -70,7 +70,7 @@ Die `thread_id` entscheidet, ob ein neuer Aufruf als Fortsetzung oder als neue S
 config = {"configurable": {"thread_id": "nutzer-123-session-1"}}
 
 result1 = app.invoke(
-    {"messages": [{"role": "human", "content": "Mein Name ist Anna."}]},
+    {"messages": [{"role": "human", "content": "Mein Name ist Mara Vogt."}]},
     config=config
 )
 
@@ -155,16 +155,16 @@ from langgraph.graph.message import add_messages
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.chat_models import init_chat_model
 
-class ConversationState(TypedDict):
+class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
 
 llm = init_chat_model("openai:gpt-5.6-luna")
 
-def chat_node(state: ConversationState) -> ConversationState:
+def chat_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
-graph = StateGraph(ConversationState)
+graph = StateGraph(BriefingState)
 graph.add_node("chat", chat_node)
 graph.add_edge(START, "chat")
 graph.add_edge("chat", END)
@@ -175,7 +175,7 @@ app = graph.compile(checkpointer=checkpointer)
 config = {"configurable": {"thread_id": "user-42"}}
 
 app.invoke(
-    {"messages": [{"role": "human", "content": "Mein Name ist Anna."}]},
+    {"messages": [{"role": "human", "content": "Mein Name ist Mara Vogt."}]},
     config=config
 )
 
@@ -212,15 +212,15 @@ Sobald ein Agent an einer kritischen Stelle pausieren und auf eine menschliche E
 ```python
 from langgraph.types import interrupt, Command
 
-def kritische_aktion(state: ConversationState) -> ConversationState:
+def kritische_aktion(state: BriefingState) -> BriefingState:
     entscheidung = interrupt({
-        "frage": "Soll ich die E-Mail wirklich senden?",
-        "empfaenger": "team@firma.de"
+        "frage": "Soll ich das Briefing wirklich an den Steuerkreis senden?",
+        "empfaenger": "steuerkreis@example.org"
     })
 
     if entscheidung == "ja":
-        return {"messages": [{"role": "assistant", "content": "E-Mail gesendet."}]}
-    return {"messages": [{"role": "assistant", "content": "E-Mail abgebrochen."}]}
+        return {"messages": [{"role": "assistant", "content": "Briefing gesendet."}]}
+    return {"messages": [{"role": "assistant", "content": "Briefing abgebrochen."}]}
 
 app.invoke(inputs, config=config)
 app.invoke(Command(resume="ja"), config=config)
@@ -285,7 +285,7 @@ Thread-IDs sollten eindeutig und nachvollziehbar sein. Der State sollte nicht un
 ```python
 from langchain_core.messages import trim_messages
 
-def trim_node(state: ConversationState) -> ConversationState:
+def trim_node(state: BriefingState) -> BriefingState:
     trimmed = trim_messages(
         state["messages"],
         max_tokens=4000,

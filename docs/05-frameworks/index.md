@@ -10,7 +10,7 @@ description: "LangChain, LangGraph und LangSmith als Kernframeworks; ChromaDB un
 
 Diese Orientierungsseite sammelt die konkreten Werkzeug- und Framework-Guides. Die konzeptionellen Grundlagen stehen im Bereich Agenten-Implementierung; hier geht es um die praktische Nutzung einzelner Bibliotheken und Plattformbausteine.
 
-Für den Kurs gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **LangSmith** bilden den Kern. **ChromaDB** ist wichtig für RAG-Übungen. Die Kursbibliothek und weitere Tools sind Hilfen, aber kein eigenes Lernziel.
+Es gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **LangSmith** bilden den Kern. **ChromaDB** ist wichtig für RAG-Übungen. Die Projektbibliothek und weitere Tools sind Hilfen, aber kein eigenes Lernziel.
 
 | Priorität | Frameworks und Tools | Kursrolle |
 |---|---|---|

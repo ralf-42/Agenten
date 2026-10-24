@@ -288,7 +288,7 @@ flowchart TD
     F --> END((Ende))
 ```
 
-Ein Kursbeispiel wäre ein Beschwerdeprozess. Zuerst wird die Anfrage kategorisiert, dann folgt je nach Kategorie eine passende Bearbeitung, anschließend eine Qualitätsprüfung und schließlich entweder eine Antwort oder eine menschliche Freigabe. Diese Struktur ist weniger flexibel als ReAct, dafür aber meist robuster und erklärbarer.
+Ein Beispiel wäre ein Beschwerdeprozess. Zuerst wird die Anfrage kategorisiert, dann folgt je nach Kategorie eine passende Bearbeitung, anschließend eine Qualitätsprüfung und schließlich entweder eine Antwort oder eine menschliche Freigabe. Diese Struktur ist weniger flexibel als ReAct, dafür aber meist robuster und erklärbarer.
 
 Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und der Lösungsweg erst während der Bearbeitung entsteht.
 
@@ -464,7 +464,7 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 
 ## Kurs-Navigation
 
-Die Architekturfragen aus diesem Kapitel tauchen im Kurs immer wieder auf. Diese Tabelle ist als Orientierung gedacht, nicht als Ersatz für den Kursüberblick.
+Die Architekturfragen aus diesem Kapitel tauchen in der Praxis immer wieder auf. Diese Tabelle ist als Orientierung gedacht, nicht als Ersatz für den Kursüberblick.
 
 | Modulphase | Architekturfrage |
 |---|---|

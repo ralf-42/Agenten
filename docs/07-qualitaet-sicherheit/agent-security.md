@@ -80,9 +80,9 @@ def database_query(sql: str) -> str:
 ```python
 # Besser: klar begrenzter Lesezugriff
 @tool
-def get_order_status(order_id: str) -> str:
+def get_task_status(task_id: str) -> str:
     return db.execute(
-        "SELECT status FROM orders WHERE id = ?", [order_id]
+        "SELECT status FROM tasks WHERE id = ?", [task_id]
     )
 ```
 

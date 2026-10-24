@@ -26,7 +26,7 @@ Dieses Dokument fasst die 8 verpflichtenden bzw. empfohlenen Features für LangC
 
 LangChain ist die Standardbibliothek für Modellinitialisierung, strukturierte Ausgaben, Tools, Agents, LCEL-Chains und robuste Runnable-Kompositionen im Agenten-Projekt. Dieses Dokument legt fest, welche APIs in neuen Notebooks und Code-Modulen als Standard gelten.
 
-Ziel ist nicht, jede LangChain-Funktion vollständig zu erklären, sondern verlässliche Muster für Kursmaterial, Beispiele und produktionsnahe Prototypen festzuhalten.
+Ziel ist nicht, jede LangChain-Funktion vollständig zu erklären, sondern verlässliche Muster für Beispiele und produktionsnahe Prototypen festzuhalten.
 
 ---
 
@@ -98,12 +98,12 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 
 ## 1 `init_chat_model()` - Unified Model Initialization
 
-### ALT (nicht Kursstandard)
+### ALT (nicht mehr Standard)
 ```python
 from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model="gpt-5.6-luna")
 
-# Nicht bevorzugt im Kurs: Langnotation mit separaten Variablen
+# Nicht bevorzugt: Langnotation mit separaten Variablen
 model_provider = "openai"
 model_name = "gpt-5.6-luna"
 llm = init_chat_model(model_name, model_provider=model_provider)
@@ -321,7 +321,7 @@ def multiply(a: int, b: int) -> int:
 
 ### Parameter des `@tool`-Decorators
 
-Die aktuelle Kurs-Signatur orientiert sich an `langchain_core.tools.tool`. Für Kursbeispiele gilt: erst Type Hints und Docstring sauber setzen, dann nur die Parameter ergänzen, die wirklich gebraucht werden.
+Die aktuelle Signatur orientiert sich an `langchain_core.tools.tool`. Für Beispiele und Prototypen gilt: erst Type Hints und Docstring sauber setzen, dann nur die Parameter ergänzen, die wirklich gebraucht werden.
 
 | Parameter | Zweck | Kurs-Hinweis |
 |---|---|---|
@@ -350,7 +350,7 @@ def risikostatus_lookup(risiko_id: str) -> str:
 ```
 
 > [!WARNING] Versionsabhängige Parameter<br>
-> `handle_tool_error` taucht in älteren oder abweichenden Quellen auf, ist aber nicht Teil der aktuellen `@tool`-Decorator-Signatur im Kursstandard. Für Fehlerbehandlung im Kurs: Eingaben im Tool validieren und verständliche Fehlerstrings zurückgeben.
+> `handle_tool_error` taucht in älteren oder abweichenden Quellen auf, ist aber nicht Teil der aktuellen `@tool`-Decorator-Signatur. Für Fehlerbehandlung empfiehlt sich: Eingaben im Tool validieren und verständliche Fehlerstrings zurückgeben.
 
 ### NEU in v1.2.0: Tool Extras für Provider-spezifische Features
 

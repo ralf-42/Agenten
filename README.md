@@ -59,7 +59,7 @@ Agenten/
 - **MCP / langchain-mcp-adapters** - lokale Tool-Server in MCP Local
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
-  - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`, ...)
+  - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`, `IMAGE_GENERATION`, `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS`)
 
 ### Modell-Auswahl
 
@@ -76,6 +76,9 @@ Die Modellwahl richtet sich nach der Rolle im Workflow. Die Tabelle dient als Or
 | Worker Premium (`WORKER_PREMIUM`) | `gpt-5.6-terra` | komplexe RAG, finale Reports |
 | Frontier (`FRONTIER`) | `gpt-5.6-sol` | maximale Qualität, kritische Demos, Benchmark-Vergleiche |
 | Embeddings (`EMBEDDINGS`) | `text-embedding-3-small` | RAG, ChromaDB, Vektorindizes |
+| Bildgenerierung (`IMAGE_GENERATION`) | `gpt-image-2` | direkte OpenAI Images API, ohne Provider-Präfix |
+| Transkription (`TRANSCRIPTION`) | `gpt-4o-mini-transcribe` | Standard-Audiotranskription |
+| Transkription mit Segmenten (`TRANSCRIPTION_SEGMENTS`) | `whisper-1` | Zeitstempel/Segmente über `verbose_json` |
 
 
 ## 📚 Kursmodule
@@ -158,7 +161,7 @@ Sessions, Checkpointing und Memory sind in einem gemeinsamen Notebook zusammenge
 
 ## 🔑 Voraussetzungen
 
-- Python 3.10+ (Klassen, Decorators, Type Hints sicher beherrschen)
+- Python 3.11+ (Klassen, Decorators, Type Hints sicher beherrschen)
 - Google Colab Account (primär) oder lokale Jupyter-Installation
 - OpenAI API Key (ca. 5 EUR für gesamten Kurs)
 - LangSmith Account (kostenlos, für Tracing/Debugging)
@@ -194,8 +197,6 @@ Am Ende steht ein eigener **PMO-Assistent** als Capstone-Variante. Der Bauplan b
 ## 📖 Dokumentation
 
 - **Kurs-Website:** [https://ralf-42.github.io/Agenten/](https://ralf-42.github.io/Agenten/)
-
-
 
 ## ⚖️ Lizenzen
 

@@ -1,5 +1,5 @@
 ---
-name: multi_agent_prompt
+name: m25_multi_agent_prompt
 description: System-Prompt für den Multi-Server-Agenten in MCP Local (MCP Local, Termine + Notizen)
 variables: []
 ---

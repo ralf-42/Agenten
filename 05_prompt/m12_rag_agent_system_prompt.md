@@ -1,5 +1,5 @@
 ---
-name: rag_agent_system_prompt
+name: m12_rag_agent_system_prompt
 description: System-Prompt für den RAG-Agenten in RAG-Agent
 variables: []
 ---

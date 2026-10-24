@@ -1,5 +1,5 @@
 ---
-name: robust_pmo_system_prompt
+name: m05_robust_pmo_system_prompt
 description: Robuster PMO-Assistent mit Fehlerbehandlung
 variables: []
 ---

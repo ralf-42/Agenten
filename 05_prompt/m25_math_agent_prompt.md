@@ -1,5 +1,5 @@
 ---
-name: math_agent_prompt
+name: m25_math_agent_prompt
 description: System-Prompt für den Termin-Agenten in MCP Local (MCP Local)
 variables: []
 ---

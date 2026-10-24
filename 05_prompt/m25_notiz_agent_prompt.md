@@ -1,5 +1,5 @@
 ---
-name: notiz_agent_prompt
+name: m25_notiz_agent_prompt
 description: System-Prompt für den Notiz-Agenten in MCP Local (MCP Local)
 variables: []
 ---

@@ -1,5 +1,5 @@
 ---
-name: pmo_system_prompt
+name: m03_pmo_system_prompt
 description: System-Prompt für einen toolbasierten PMO-Assistent
 variables: []
 ---

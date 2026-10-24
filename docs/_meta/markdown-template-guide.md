@@ -116,7 +116,7 @@ layout: default
 title: Titel des Dokuments
 parent: Ressourcen
 grand_parent: Konzepte
-nav_order: [Zahl]
+nav_order: 2
 description: Prägnanter Beschreibungstext für Navigation und SEO
 has_toc: true
 ---

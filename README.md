@@ -61,6 +61,22 @@ Agenten/
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
   - `model_config.py` - Rollenbasierte Modell-Konstanten (`BASELINE`, `ROUTER`, `WORKER`, `CODING`, `JUDGE`, `PLANNER`, `WORKER_PREMIUM`, `FRONTIER`, `EMBEDDINGS`, ...)
 
+### Modell-Auswahl
+
+Die Modellwahl richtet sich nach der Rolle im Workflow. Die Tabelle dient als Orientierung; maßgeblich ist die Konfiguration in [`model_config.py`](./04_modul/genai_lib/model_config.py).
+
+| Rolle (Konstante in `model_config.py`) | Modell | Einsatz |
+|-------|----------------|---------|
+| Baseline / Demo (`BASELINE`) | `gpt-5.6-luna` | kein `temperature`; Konzept vor Ausgabequalität |
+| Router (`ROUTER`) | `gpt-5.6-luna` | `reasoning.effort="low"` bei einfachen Routing-Entscheidungen |
+| Worker / Synthese (`WORKER`) | `gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben; `reasoning.effort` low–medium |
+| Coding-Worker (`CODING`) | `gpt-5.4-mini` | Code-Generierung, Refactoring; `reasoning.effort` medium–high |
+| Judge / starker Reasoner (`JUDGE`) | `gpt-5.4` | Supervisor, Security, Evaluation; `reasoning.effort="high"` |
+| Planner (`PLANNER`) | `gpt-5.4` | Aufgabenzerlegung, Schritt-Planung, Agentic RAG |
+| Worker Premium (`WORKER_PREMIUM`) | `gpt-5.6-terra` | komplexe RAG, finale Reports |
+| Frontier (`FRONTIER`) | `gpt-5.6-sol` | maximale Qualität, kritische Demos, Benchmark-Vergleiche |
+| Embeddings (`EMBEDDINGS`) | `text-embedding-3-small` | RAG, ChromaDB, Vektorindizes |
+
 
 ## 📚 Kursmodule
 

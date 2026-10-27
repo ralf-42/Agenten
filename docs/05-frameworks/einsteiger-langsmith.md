@@ -145,7 +145,7 @@ Ein einfacher LLM-Call zeigt das Tracing, sofern die LangSmith-Variablen gesetzt
 from langchain.chat_models import init_chat_model
 
 # Normaler LLM-Setup (wie gewohnt)
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 # Einfacher Aufruf: Bei aktiviertem Tracing erscheint ein Trace.
 response = llm.invoke("Erkläre LangSmith in einem Satz.")
@@ -245,7 +245,7 @@ result = chain.invoke({"topic": "Vektordatenbanken"})
 graph TB
     CHAIN[Chain Run - Gesamt<br/>Latenz: 1.5s]
     PROMPT[Prompt Run<br/>Template-Formatierung<br/>0.1s]
-    LLM[LLM Run - gpt-5.4-mini<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
+    LLM[LLM Run - gpt-6.1-terra<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
     PARSER[Parser Run<br/>String-Extraktion<br/>0.2s]
 
     CHAIN --> PROMPT
@@ -265,7 +265,7 @@ graph TB
 ```
 Chain Run (Gesamt)
 ├─ Prompt Run (Template-Formatierung)
-├─ LLM Run (gpt-5.4-mini Call)
+├─ LLM Run (gpt-6.1-terra Call)
 │  ├─ Input: "Erkläre Vektordatenbanken für Einsteiger."
 │  ├─ Output: "Vektordatenbanken speichern..."
 │  ├─ Tokens: 245 (Input: 12, Output: 233)
@@ -1020,6 +1020,6 @@ LangSmith macht Agentenläufe nachvollziehbar. Traces zeigen einzelne Schritte, 
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

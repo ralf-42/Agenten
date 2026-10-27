@@ -95,7 +95,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 prompt = ChatPromptTemplate.from_template("Erkläre {thema} in drei Sätzen.")
 chain = prompt | llm | StrOutputParser()
 
@@ -164,12 +164,12 @@ Eine stabile und provider-unabhängige Initialisierung des zugrunde liegenden Sp
 from langchain.chat_models import init_chat_model
 
 # Kurznotation "provider:model"
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 # Weitere Beispiele:
-# llm = init_chat_model("anthropic:claude-sonnet-4-5", temperature=0.3)
+# llm = init_chat_model("anthropic:claude-sonnet-5-5")
 # llm = init_chat_model("groq:llama-3.3-70b-versatile", temperature=0.7)
-# llm = init_chat_model("google_genai:gemini-2.5-flash", temperature=0.5)
+# llm = init_chat_model("google_genai:gemini-3.8-flash")
 
 # Testaufruf
 response = llm.invoke("Nenne drei typische Einsatzgebiete von KI-Agenten.")
@@ -540,7 +540,7 @@ agent_summarize = create_agent(
 
 # Ansatz 2: OpenAI Server-Side Compaction (nur OpenAI, wenn vom Modell unterstützt)
 llm_compact = init_chat_model(
-    "openai:gpt-5.6-luna",
+    "openai:gpt-6-luna",
     context_management=[{"type": "compaction", "compact_threshold": 10_000}]
 )
 agent_compact = create_agent(model=llm_compact, tools=tools)
@@ -815,7 +815,7 @@ LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, struktur
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

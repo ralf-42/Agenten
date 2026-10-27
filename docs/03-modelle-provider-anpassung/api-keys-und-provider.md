@@ -27,7 +27,7 @@ has_toc: true
 
 Zuerst zählt, ob ein Provider zuverlässig im Notebook funktioniert, wie API-Keys verwaltet werden und ob vor der Nutzung Kosten entstehen. Zahlungsarten wie Kreditkarte, Rechnung, Guthaben oder regionale Wallets ändern sich häufig. Sie sind deshalb kein stabiles Auswahlkriterium.
 
-Die Tabelle zeigt den Stand vom 1. Mai 2026. Vor produktiven Projekten müssen Verfügbarkeit, Preise und Datenschutzbedingungen beim Anbieter geprüft werden.
+Die Tabelle zeigt den Stand vom Oktober 2026 für OpenAI, Gemini und Mistral; die übrigen Anbieter wurden zuletzt im Mai 2026 geprüft. Vor produktiven Projekten müssen Verfügbarkeit, Preise und Datenschutzbedingungen beim Anbieter geprüft werden.
 
 | Model Provider | Integration Package | Kostenmodell | Kostenlos nutzbar? | Hinweise / Besonderheiten |
 |---|---|---|---|---|
@@ -36,13 +36,13 @@ Die Tabelle zeigt den Stand vom 1. Mai 2026. Vor produktiven Projekten müssen V
 | azure_openai | `langchain-openai` | Azure Pay-as-you-go, Azure-Abrechnung oder Enterprise-Vertrag | Nein, ggf. Azure-Guthaben | OpenAI-Modelle über Azure-Ressourcen, häufig relevant für Unternehmen mit bestehender Azure-Umgebung. |
 | azure_ai | `langchain-azure-ai` | Azure Pay-as-you-go, Azure-Abrechnung oder Enterprise-Vertrag | Modell- und Dienstabhängig | Breiter Azure-AI-Zugang; konkrete Kosten hängen vom Dienst und Modell ab. |
 | google_vertexai | `langchain-google-vertexai` | Google-Cloud-Billing, Pay-as-you-go | Nein, ggf. Google-Cloud-Guthaben | Enterprise- und Cloud-Variante für Gemini und weitere Modelle; nicht mit dem kostenlosen Gemini-API-Tier in AI Studio gleichsetzen. |
-| google_genai | `langchain-google-genai` | Gemini API Free Tier oder Paid Tier über Google Cloud Billing | Ja, modell- und regionabhängig | Für Kurse besonders geeignet: API-Key über Google AI Studio, Free Tier mit Rate Limits; im Free Tier können Daten zur Produktverbesserung verwendet werden. |
+| google_genai | `langchain-google-genai` | Gemini API Free Tier oder Paid Tier über Google Cloud Billing | Ja, modell- und regionabhängig (nach Drittquellen nur Flash- und Flash-Lite-Modelle, nicht die Pro- und Flaggschiff-Modelle) | Für Kurse besonders geeignet: API-Key über Google AI Studio, Free Tier mit Rate Limits; im Free Tier können Daten zur Produktverbesserung verwendet werden. Aktuelle Modelle und Limits stehen in Google AI Studio. |
 | bedrock | `langchain-aws` | AWS Pay-as-you-go, On-Demand, Batch oder Provisioned Throughput | Nein, ggf. AWS-Guthaben | Zugriff auf Modelle verschiedener Anbieter über AWS Bedrock; Kosten entstehen pro Modellnutzung und Token. |
 | bedrock_converse | `langchain-aws` | AWS Pay-as-you-go | Nein, ggf. AWS-Guthaben | Converse-API für einheitlichere Chat-/Conversation-Aufrufe in Bedrock. |
 | cohere | `langchain-cohere` | Trial Key oder Production Key | Ja, Trial Key mit Limits | Trial Keys sind kostenlos, aber begrenzt; Production Keys sind für produktive Nutzung vorgesehen. |
 | fireworks | `langchain-fireworks` | Pay-as-you-go; freie Startcredits für neue Nutzer möglich | Ja, als Startcredits abhängig vom Account | Serverless Inference, Deployments und Fine-Tuning werden nutzungsabhängig abgerechnet. |
 | together | `langchain-together` | Pay-as-you-go / Credits | Ja, abhängig von aktuellen Startcredits | Viele Open-Weight-Modelle und schnelle Inferenz; genaue Free-Credit-Regeln regelmäßig prüfen. |
-| mistralai | `langchain-mistralai` | Experiment Plan oder Scale Plan | Ja, Experiment Plan mit restriktiven Limits | Der kostenlose Experiment Plan dient Evaluation und Prototyping; für produktive Nutzung ist Scale vorgesehen. |
+| mistralai | `langchain-mistralai` | Experiment Plan oder Scale Plan | Ja, Experiment Plan mit restriktiven Limits | Der kostenlose Experiment Plan dient Evaluation und Prototyping; er erfordert eine verifizierte Telefonnummer, und API-Anfragen können zum Training der Modelle genutzt werden. Für produktive Nutzung ist Scale vorgesehen. |
 | huggingface | `langchain-huggingface` | Hub-Zugang, Inference Provider, eigene Tokens oder lokale Modelle | Ja, abhängig vom Modell und Inference-Anbieter | Sehr große Modellvielfalt; Kosten und Limits hängen stark davon ab, ob Hub, Serverless Inference, Dedicated Endpoint oder lokale Ausführung genutzt wird. |
 | groq | `langchain-groq` | Free Tier oder Developer/Production Tier | Ja, Free Tier mit Rate Limits | Sehr schnelle Inferenz für unterstützte Modelle; Free Tier ohne Kreditkarte, aber nicht unbegrenzt. |
 | ollama | `langchain-ollama` | Lokalinstallation | Ja | Keine Cloud-API-Kosten; benötigt lokale oder Colab-Ressourcen und passende Modellgröße. |
@@ -64,31 +64,54 @@ Verwende in Colab Secrets statt API-Keys direkt in Codezellen. So bleiben Notebo
 {: .warning }
 > **LangSmith (EU/US-Endpunkte):** Bei LangSmith werden Account und API-Key im **EU-Workspace** angelegt (`https://eu.smith.langchain.com/`), als `LANGSMITH_ENDPOINT` dient der EU-API-Endpoint `https://eu.api.smith.langchain.com`.
 
-```python
-# Installiere benötigte Bibliothek
-!pip install langchain-{provider}
-```
-
 So werden Keys in Colab Secrets gespeichert:
 
 1. Öffne in Colab die Secrets-Seitenleiste.
 2. Lege den Key mit dem passenden Namen an, zum Beispiel `OPENAI_API_KEY`.
 3. Gib den Key nur für das Notebook frei, das ihn wirklich braucht.
 
+Die üblichen Namen der Umgebungsvariablen:
+
+| Provider | Variable | Integration Package |
+|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `langchain-openai` |
+| Anthropic | `ANTHROPIC_API_KEY` | `langchain-anthropic` |
+| Google Gemini | `GOOGLE_API_KEY` | `langchain-google-genai` |
+| Mistral | `MISTRAL_API_KEY` | `langchain-mistralai` |
+| Groq | `GROQ_API_KEY` | `langchain-groq` |
+
 ### Provider-spezifische Installation
+
+Das Präfix vor dem Doppelpunkt ist der Providername von `init_chat_model`, also `google_genai` und nicht `google`. Die Modellnamen entsprechen den Rollen aus [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }}).
 
 **OpenAI:**
 ```python
-!pip install langchain-openai
+!pip install "langchain-openai>=1.7.2"
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
+```
+
+GPT-6-Modelle mit Tool-Aufrufen werden erst ab `langchain-openai` 1.7.2 über die Responses API geroutet.
+
+**Anthropic:**
+```python
+!pip install langchain-anthropic
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("anthropic:claude-haiku-5-5")
 ```
 
 **Google Gemini:**
 ```python
 !pip install langchain-google-genai
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("google:gemini-3-flash-preview")
+llm = init_chat_model("google_genai:gemini-3.8-flash")
+```
+
+**Mistral:**
+```python
+!pip install langchain-mistralai
+from langchain.chat_models import init_chat_model
+llm = init_chat_model("mistralai:mistral-small-2603")
 ```
 
 **Groq:**
@@ -143,12 +166,14 @@ Lokale Modelle sind sinnvoll, wenn keine Cloud-API genutzt werden soll oder Date
 # Ollama in Colab installieren (mit GPU-Unterstützung)
 !curl -fsSL https://ollama.com/install.sh | sh
 !ollama serve &
-!ollama pull llama3
+!ollama pull llama3.2
 
 # Mit LangChain verwenden
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("ollama:llama3")
+llm = init_chat_model("ollama:llama3.2")
 ```
+
+`llama3.2` ist ein kleines Beispielmodell, das auf Colab-GPUs läuft. Welche Modelle aktuell verfügbar sind, zeigt die [Ollama-Bibliothek](https://ollama.com/library).
 
 **Vorteile:**
 - keine API-Kosten
@@ -182,7 +207,9 @@ llm = init_chat_model("ollama:llama3")
 ## Weiterführende Links
 
 - [OpenAI Platform](https://platform.openai.com/)
+- [Anthropic Console](https://platform.claude.com/)
 - [Google AI Studio](https://aistudio.google.com/)
+- [Mistral Console](https://console.mistral.ai/)
 - [Groq Cloud](https://console.groq.com/)
 - [Together AI](https://www.together.ai/)
 - [Ollama](https://ollama.com/)
@@ -197,7 +224,7 @@ llm = init_chat_model("ollama:llama3")
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

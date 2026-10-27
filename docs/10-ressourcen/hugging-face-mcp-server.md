@@ -229,7 +229,7 @@ async def main() -> None:
     tools = await client.get_tools()
     print("Geladene Tools:", [tool.name for tool in tools])
 
-    model = init_chat_model("openai:gpt-5.6-luna")
+    model = init_chat_model("openai:gpt-6-luna")
     agent = create_agent(model, tools)
 
     result = await agent.ainvoke(
@@ -384,6 +384,6 @@ Wenn der Inspector Tools wie `caesar`, `vigenere` und `scytale` anzeigt, ist der
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

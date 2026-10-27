@@ -69,7 +69,7 @@ from langgraph.types import Command, interrupt
 ## Minimaler LangChain-Baustein
 
 ```python
-llm = init_chat_model("openai:gpt-5.4-mini")
+llm = init_chat_model("openai:gpt-6.1-terra")
 
 prompt = ChatPromptTemplate([
     ("system", "Antworte kurz, konkret und auf Deutsch."),
@@ -110,7 +110,7 @@ def quellen_check(thema: str) -> str:
 
 
 agent = create_agent(
-    model=init_chat_model("openai:gpt-5.4-mini"),
+    model=init_chat_model("openai:gpt-6.1-terra"),
     tools=[quellen_check],
     system_prompt="Du bist ein PMO-Assistent. Nutze Tools für Korpusfragen.",
 )
@@ -562,7 +562,7 @@ def contains_expected(outputs: dict, reference_outputs: dict) -> bool:
 
 ---
 
-**Version:** 1.0<br>
+**Version:** 1.1<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

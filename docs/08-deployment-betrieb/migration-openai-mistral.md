@@ -112,7 +112,7 @@ Das Projekt nutzt faktisch ein Rollenmodell:
 - **Worker**
 - **Embeddings**
 
-Die Migration besteht deshalb nicht nur darin, `"openai:..."` durch `"mistral:..."` zu ersetzen, sondern die Rollen sinnvoll auf Mistral-Modelle zu verteilen.
+Die Migration besteht deshalb nicht nur darin, `"openai:..."` durch `"mistralai:..."` zu ersetzen, sondern die Rollen sinnvoll auf Mistral-Modelle zu verteilen.
 
 ### Embeddings sind ein eigenes Migrationsthema
 
@@ -162,10 +162,10 @@ MODEL_CONFIG = {
         "worker": WORKER,
     },
     "mistral": {
-        "baseline": "mistral:mistral-small-latest",
-        "router": "mistral:magistral-medium-latest",
-        "judge": "mistral:magistral-medium-latest",
-        "worker": "mistral:mistral-medium-latest",
+        "baseline": "mistralai:mistral-small-2603",
+        "router": "mistralai:mistral-small-2603",
+        "judge": "mistralai:mistral-medium-3-5",
+        "worker": "mistralai:mistral-medium-3-5",
     },
 }
 
@@ -302,7 +302,7 @@ Genau darin liegt der architektonische Vorteil des bestehenden Ökosystems.
 
 ---
 
-**Version:** 4.2<br>
+**Version:** 4.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

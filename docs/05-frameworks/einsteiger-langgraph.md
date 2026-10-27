@@ -90,7 +90,7 @@ class BriefingState(TypedDict):
 
 ```python
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 def agent_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
@@ -631,7 +631,7 @@ LangGraph wird dann sinnvoll, wenn ein LLM-Workflow echten Zustand, Routing oder
 
 ---
 
-**Version:** 2.1<br>
+**Version:** 2.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

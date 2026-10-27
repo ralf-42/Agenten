@@ -101,11 +101,11 @@ LangChain v1.2.0 erweitert **3 von 7 Must-Haves** mit production-ready Features:
 ### ALT (nicht mehr Standard)
 ```python
 from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-5.6-luna")
+llm = ChatOpenAI(model="gpt-6-luna")
 
 # Nicht bevorzugt: Langnotation mit separaten Variablen
 model_provider = "openai"
-model_name = "gpt-5.6-luna"
+model_name = "gpt-6-luna"
 llm = init_chat_model(model_name, model_provider=model_provider)
 ```
 
@@ -114,15 +114,15 @@ llm = init_chat_model(model_name, model_provider=model_provider)
 from langchain.chat_models import init_chat_model
 
 # ✨ Kurznotation: "provider:model" (STANDARD seit Dezember 2025)
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 # Weitere Beispiele:
-llm = init_chat_model("anthropic:claude-3-sonnet", temperature=0.3)
-llm = init_chat_model("groq:llama-3.1-70b", temperature=0.7)
-llm = init_chat_model("google:gemini-pro", temperature=0.5)
+llm = init_chat_model("anthropic:claude-sonnet-5-5")
+llm = init_chat_model("groq:llama-3.3-70b-versatile", temperature=0.7)
+llm = init_chat_model("google_genai:gemini-3.8-flash")
 
 # Mit zusätzlichen Parametern:
-llm = init_chat_model("openai:gpt-5.6-luna", max_tokens=1000)
+llm = init_chat_model("openai:gpt-6-luna", max_tokens=1000)
 ```
 
 ### Vorteile
@@ -139,7 +139,7 @@ Chat-Modelle exposieren jetzt ihre Capabilities über das `.profile` Attribut:
 from langchain.chat_models import init_chat_model
 
 # Kurznotation verwenden
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 # ✨ NEU: Model Profiles (sourced from models.dev)
 print(llm.profile.supports_structured_output)  # True (deprecated: use 'structured_output')
@@ -170,10 +170,10 @@ Für einfachere Nutzung gibt es in `genai_lib.utilities` eine Hilfsfunktion:
 from genai_lib.utilities import get_model_profile
 
 # Formatierte Ausgabe aller wichtigen Capabilities
-profile = get_model_profile("openai:gpt-5.6-luna")
+profile = get_model_profile("openai:gpt-6-luna")
 
 # Output:
-# 🔍 Model Profile: openai:gpt-5.6-luna
+# 🔍 Model Profile: openai:gpt-6-luna
 # ============================================================
 #
 # 📋 Core Capabilities:
@@ -200,10 +200,10 @@ profile = get_model_profile("openai:gpt-5.6-luna")
 # ============================================================
 
 # Ohne Ausgabe (nur Profile-Dict zurückgeben)
-profile = get_model_profile("anthropic:claude-3-sonnet", print_profile=False)
+profile = get_model_profile("anthropic:claude-sonnet-5-5", print_profile=False)
 
 # Verschiedene Models vergleichen (mit Fehlerbehandlung)
-for model in ["openai:gpt-5.6-luna", "anthropic:claude-3-sonnet", "google:gemini-pro"]:
+for model in ["openai:gpt-6-luna", "anthropic:claude-sonnet-5-5", "google_genai:gemini-3.8-flash"]:
     print(f"\n{model}:")
     profile = get_model_profile(model, print_profile=False)
 
@@ -424,7 +424,7 @@ agent = initialize_agent(
 from langchain.agents import create_agent
 
 agent = create_agent(
-    model=llm,  # oder "openai:gpt-5.6-luna"
+    model=llm,  # oder "openai:gpt-6-luna"
     tools=[tool1, tool2],
     system_prompt="You are a helpful assistant",
     debug=True  # Zeigt Denkprozess (= verbose=True)
@@ -726,7 +726,7 @@ from langchain.chat_models import init_chat_model
 
 # OpenAI komprimiert automatisch bei langen Konversationen
 llm = init_chat_model(
-    "openai:gpt-5.6-luna",
+    "openai:gpt-6-luna",
     context_management=[{"type": "compaction", "compact_threshold": 10_000}]
     # compact_threshold: Token-Schwellenwert, ab dem komprimiert wird
 )
@@ -921,10 +921,10 @@ Schaltet automatisch auf ein Fallback-LLM oder eine alternative Chain um, wenn d
 ```python
 from langchain.chat_models import init_chat_model
 
-primary_llm   = init_chat_model("openai:gpt-5.4")
-fallback_llm  = init_chat_model("openai:gpt-5.6-luna")
+primary_llm   = init_chat_model("openai:gpt-6.1-sol")
+fallback_llm  = init_chat_model("openai:gpt-6-luna")
 
-# Bei Fehler des primären LLMs → automatisch gpt-5.6-luna
+# Bei Fehler des primären LLMs → automatisch gpt-6-luna
 safe_llm = primary_llm.with_fallbacks([fallback_llm])
 
 result = safe_llm.invoke("Erkläre Transformer-Modelle.")
@@ -932,11 +932,11 @@ result = safe_llm.invoke("Erkläre Transformer-Modelle.")
 
 #### Mehrere Fallbacks (Kaskade)
 ```python
-llm_gpt4        = init_chat_model("openai:gpt-5.4")
-llm_gpt4_mini   = init_chat_model("openai:gpt-5.6-luna")
-llm_anthropic   = init_chat_model("anthropic:claude-3-haiku")
+llm_gpt4        = init_chat_model("openai:gpt-6.1-sol")
+llm_gpt4_mini   = init_chat_model("openai:gpt-6-luna")
+llm_anthropic   = init_chat_model("anthropic:claude-haiku-5-5")
 
-# Kaskade: gpt-5.4 → gpt-5.6-luna → claude-3-haiku
+# Kaskade: gpt-6.1-sol → gpt-6-luna → claude-haiku-5-5
 resilient_llm = llm_gpt4.with_fallbacks([llm_gpt4_mini, llm_anthropic])
 ```
 
@@ -979,7 +979,7 @@ result = safe_structured.invoke("Anna Müller ist 32 Jahre alt.")
 # 1. Model Initialization
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 # 2. Structured Output
 from pydantic import BaseModel, Field
@@ -1225,6 +1225,6 @@ Beim Refactoring von altem Code:
 
 ---
 
-**Version:** 1.10<br>
+**Version:** 1.11<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -577,7 +577,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.chat_models import init_chat_model
 
 # Komponenten vorbereiten
-llm = init_chat_model("openai:gpt-5.4-mini")
+llm = init_chat_model("openai:gpt-6.1-terra")
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
 # Hilfsfunktion: Dokumente formatieren
@@ -933,7 +933,7 @@ results = retriever.invoke("Meine Frage")
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

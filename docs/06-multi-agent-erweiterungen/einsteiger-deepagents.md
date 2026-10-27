@@ -144,7 +144,7 @@ from deepagents import create_deep_agent
 from langchain.chat_models import init_chat_model
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     tools=[begriff_erklaeren],
     system_prompt=(
         "Ein kompakter Kurs-Assistent für agentische Systeme. "
@@ -214,7 +214,7 @@ DeepAgents wird leichter verständlich, wenn die drei Kernideen getrennt betrach
 from langchain.agents.middleware import TodoListMiddleware
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     middleware=[TodoListMiddleware()],   # Planning aktivieren
 )
 ```
@@ -307,7 +307,7 @@ Anschließend wird das Tool einfach beim Agenten registriert:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     tools=[begriff_erklaeren, kurs_thema_info],
     system_prompt="Ein deutschsprachiger Kurs-Assistent.",
 )
@@ -335,7 +335,7 @@ quellen_subagent = {
         "Knappe, saubere Zusammenfassungen belegter Projektfakten auf Deutsch liefern."
     ),
     "tools": [begriff_erklaeren, kurs_thema_info],
-    # "model": "openai:gpt-5.6-luna",  # Optional: eigenes Modell seit 0.4.11
+    # "model": "openai:gpt-6-luna",  # Optional: eigenes Modell seit 0.4.11
 }
 ```
 
@@ -359,7 +359,7 @@ Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
 
 ```python
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     tools=[],
     subagents=[quellen_subagent],
     system_prompt=(
@@ -391,7 +391,7 @@ register_harness_profile(my_profile)
 
 # Agent nutzt automatisch das registrierte Profil
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     tools=[mein_tool],
 )
 ```
@@ -422,7 +422,7 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
 
 agent = create_deep_agent(
-    model=init_chat_model("openai:gpt-5.6-luna"),
+    model=init_chat_model("openai:gpt-6-luna"),
     tools=[mein_tool],
     middleware=[LoggingMiddleware(), RetryMiddleware(max_retries=3)],
 )
@@ -490,13 +490,13 @@ Das Modell wird über die LangChain-Modellschnittstelle eingebunden. Welche Anbi
 
 ```python
 # OpenAI
-agent = create_deep_agent(model=init_chat_model("openai:gpt-5.6-luna"), ...)
+agent = create_deep_agent(model=init_chat_model("openai:gpt-6-luna"), ...)
 
 # Anthropic
-agent = create_deep_agent(model=init_chat_model("anthropic:claude-sonnet-4-6"), ...)
+agent = create_deep_agent(model=init_chat_model("anthropic:claude-sonnet-5-5"), ...)
 
 # Google
-agent = create_deep_agent(model=init_chat_model("google:gemini-3-flash-preview"), ...)
+agent = create_deep_agent(model=init_chat_model("google_genai:gemini-3.8-flash"), ...)
 ```
 
 Der Wechsel erfordert nur eine Zeile — Planning, Tools, Sub-Agenten und Filesystem bleiben unverändert.
@@ -665,7 +665,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.8<br>
+**Version:** 1.9<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

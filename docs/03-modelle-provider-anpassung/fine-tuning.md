@@ -185,7 +185,7 @@ Neue Einsatzfelder wie Edge Computing, IoT-Analysen oder verteiltes Training erw
 
 ---
 
-## Abgrenzung zu verwandten Dokumenten
+# Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|

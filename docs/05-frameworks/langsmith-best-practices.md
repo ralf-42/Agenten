@@ -473,7 +473,7 @@ Das Muster eignet sich für Lehr- und Debugging-Notebooks: Setup, Credentials un
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 agent = create_agent(model=llm, tools=[...])
 
 # Automatisch geloggt in LangSmith!
@@ -833,6 +833,6 @@ client = Client(
 
 ---
 
-**Version:** 2.7<br>
+**Version:** 2.8<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

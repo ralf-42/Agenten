@@ -370,7 +370,7 @@ config = {
     "metadata": {
         "dataset_version": "eval-v1",
         "thread_id": "thread-4711",
-        "model_version": "gpt-5.6-luna",
+        "model_version": "gpt-6-luna",
     },
 }
 ```
@@ -411,6 +411,6 @@ Kleine Änderungen an einer Anfrage können einen scheinbar stabilen Agenten aus
 
 ---
 
-**Version:** 1.7<br>
+**Version:** 1.8<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -196,7 +196,7 @@ class AnalysisState(TypedDict):
     keywords: list[str]
     analysis_complete: bool
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 def summarize_node(state: AnalysisState) -> AnalysisState:
     response = llm.invoke(f"Fasse zusammen: {state['document']}")
@@ -295,7 +295,7 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

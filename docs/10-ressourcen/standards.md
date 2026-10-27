@@ -201,7 +201,7 @@ middleware = [HumanInTheLoopMiddleware(tool_names=["delete_file"])]
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 
-llm = ChatOpenAI(model="gpt-5.6-luna")
+llm = ChatOpenAI(model="gpt-6-luna")
 agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
 ```
 
@@ -210,7 +210,7 @@ agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 agent = create_agent(model=llm, tools=tools, debug=True)
 ```
 
@@ -285,7 +285,7 @@ def test_calculator_tool():
 
 ```python
 def test_agent_with_tools():
-    llm = init_chat_model("openai:gpt-5.6-luna")
+    llm = init_chat_model("openai:gpt-6-luna")
 
     @tool
     def get_risk_status(risk_id: str) -> str:
@@ -322,7 +322,7 @@ def test_agent_with_tools():
 
 ---
 
-**Version:** 2.0 (konsolidiert)<br>
+**Version:** 2.1 (konsolidiert)<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

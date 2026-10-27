@@ -158,7 +158,7 @@ from langchain.chat_models import init_chat_model
 class BriefingState(TypedDict):
     messages: Annotated[list, add_messages]
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 
 def chat_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
@@ -318,7 +318,7 @@ Entwickler unterschätzen oft, dass Checkpointing kein Luxus für große Produkt
 
 ---
 
-**Version:** 1.1<br>
+**Version:** 1.2<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

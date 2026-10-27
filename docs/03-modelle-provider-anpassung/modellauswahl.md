@@ -55,14 +55,14 @@ Diese Rollen machen die Modellwahl überprüfbar. Entwickler vergleichen nicht b
 > In Notebooks werden nach Möglichkeit Rollen aus `model_config.py` verwendet. Harte Modellnamen stehen nur dort direkt im Notebook, wo ein bestimmter Endpunkt oder ein bewusstes Vergleichsexperiment gezeigt wird.
 
 
-## Modelsteckbrief - Beispiel
+## Historischer Modellsteckbrief - Beispiel
 
 <br>
 
 
-<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/modellsteckbrief_gpt_5.4_mini.png" class="logo" width="750"/>
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/modellsteckbrief_gpt_5.4_mini.png" class="logo" width="750" alt="Modellsteckbrief GPT-5.4 mini"/>
 <p><font color='black' size="2">
-KI-generiertes Bild
+Historisches, KI-generiertes Beispiel für einen Modellsteckbrief (GPT-5.4 mini); es ist kein aktueller Kurs-Default.
 </font></p>
 
 **Modellübersichten:**      
@@ -73,17 +73,7 @@ KI-generiertes Bild
 
 ## OpenAI-Default und Designregeln
 
-Der Kurs nutzt konkrete OpenAI-Modelle, aber die Entscheidung dahinter bleibt rollenbasiert. Wichtig ist nicht zuerst der Produktname, sondern die Aufgabe des Knotens.
-
-| Situation | Kurs-Default | Begründung |
-|---|---|---|
-| Grundlagen, Demos, einfache Klassifikation | `gpt-6-luna` | schnell, günstig, ausreichend für klare Aufgaben |
-| einfaches Routing | `gpt-6-luna` | gute Kosten-/Latenz-Balance bei wenigen Routen |
-| Worker, Synthese, strukturierte Ausgabe | `gpt-6.1-terra` | effizientes Modell für Standardarbeitsschritte |
-| Coding-Worker | `gpt-6.1-terra` | begrenzte Code- und Refactoring-Aufgaben |
-| Supervisor, Judge, Planner | `gpt-6.1-sol` | starkes Reasoning mit Kostenfokus |
-| hochwertige Synthese oder finale Reports | `gpt-6.1-sol` | Premium-Worker bei hohem Qualitätsanspruch |
-| schwierigste Agenten-, Coding- oder Judge-Aufgaben | `gpt-6-astra` | Frontier-Option für maximale Qualität |
+Der Kurs nutzt die in **Modellrollen** aufgeführten OpenAI-Modelle als Defaults. Diese Tabelle ist die maßgebliche Zuordnung; die folgenden Regeln erklären, wie sie auf konkrete Aufgaben angewendet wird.
 
 ### Entscheidungsregeln
 
@@ -114,19 +104,21 @@ flowchart TD
 
 Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten: **Erst die Rolle definieren, dann den Provider und erst zuletzt den konkreten Modellnamen wählen.** Der Providerwechsel ist eine Zuordnung von Rollen auf passende Modellfamilien. Weiterhin gilt der OpenAI-Default aus der Tabelle oben; die Zuordnung dient der Einordnung und Architekturplanung und ändert nicht automatisch die in den Modulen verwendeten Modelle.
 
-| Rolle                              | OpenAI                   | Mistral                                              | Gemini                        | Anthropic                       | Kommentar                                                           |
+| Rolle                              | [OpenAI](https://platform.openai.com/docs/models) | [Mistral](https://docs.mistral.ai/models/) | [Gemini](https://ai.google.dev/gemini-api/docs/models) | [Anthropic](https://docs.anthropic.com/en/docs/about-claude/models-overview) | Kommentar                                                           |
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
-| **Baseline / Demo**                | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | schnell, günstig, gut für Grundlagen                                |
-| **Router / leichter Reasoner**     | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | für Routing und einfache Auswahlentscheidungen                      |
-| **Judge / starker Reasoner**       | `gpt-6.1-sol`            | `mistral-medium-3-5` (hohes `reasoning_effort`)      | `gemini-4-argon`              | `claude-opus-5-5`               | für Supervisor, Security, Bewertung                                 |
-| **Worker / Synthese**              | `gpt-6.1-terra`          | `mistral-medium-3-5`                                 | `gemini-3.8-flash`            | `claude-sonnet-5-5`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
-| **Worker / Synthese (hochwertig)** | `gpt-6.1-sol`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-opus-5-5`               | hohe Qualität: komplexe RAG, finale Reports                         |
-| **Frontier / maximale Qualität**   | `gpt-6-astra`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-fable-5-1`              | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
-| **Coding-Worker**                  | `gpt-6.1-terra`          | `mistral-medium-3-5` oder `codestral-2508`           | `gemini-3.8-flash`            | `claude-sonnet-5-5`             | Codestral für Code-Vervollständigung, Medium 3.5 für Coding-Agenten |
-| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                      | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier keinen direkten Standardersatz |
+| **Baseline / Demo**                | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-4-5`              | schnell, günstig, gut für Grundlagen                                |
+| **Router / leichter Reasoner**     | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Judge / starker Reasoner**       | `gpt-6.1-sol`            | `mistral-medium-3-5` (hohes `reasoning_effort`)      | `gemini-4-argon`              | `claude-opus-5`                 | für Supervisor, Security, Bewertung                                 |
+| **Worker / Synthese**              | `gpt-6.1-terra`          | `mistral-medium-3-5`                                 | `gemini-3.8-flash`            | `claude-sonnet-5`               | Standard-Worker: starke Ausgabe, kostensensitiv                     |
+| **Worker / Synthese (hochwertig)** | `gpt-6.1-sol`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-opus-5`                 | hohe Qualität: komplexe RAG, finale Reports                         |
+| **Frontier / maximale Qualität**   | `gpt-6-astra`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-fable-5`                | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
+| **Coding-Worker**                  | `gpt-6.1-terra`          | `mistral-medium-3-5` oder `codestral-2508`           | `gemini-3.8-flash`            | `claude-sonnet-5`               | Codestral für Code-Vervollständigung, Medium 3.5 für Coding-Agenten |
+| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                      | `gemini-embedding-2`          | externer Provider nötig         | Anthropic bietet hier keinen direkten Standardersatz |
 
 > [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>
 > Das Mapping ist funktionsorientiert, nicht benchmark-orientiert. Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter. Chat-Modell und Embedding-Modell sind **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht den anderen nicht nach sich.
+
+Die Modell-IDs und Lifecycle-Angaben sind Momentaufnahmen, geprüft am 27. Oktober 2026. Anthropic führt `claude-haiku-4-5`, `claude-sonnet-5`, `claude-opus-5` und `claude-fable-5` als aktive Modelle. Google hat `gemini-embedding-2-preview` am 10. August 2026 abgeschaltet; verwende das stabile `gemini-embedding-2`. Prüfe vor einer Integration die verlinkten offiziellen Modellübersichten und Deprecation-Seiten erneut.
 
 ### Wie die Provider zu lesen sind
 
@@ -160,7 +152,7 @@ Mistral ist besonders interessant, wenn ein **breiter Single-Provider-Pfad** ang
 - man OpenAI nicht als alleinigen Standard setzen möchte
 
 **Einschränkung**
-- `mistral-large-4` ist aktuell Public Preview
+- `mistral-large-4` ist aktuell Public Preview; Lifecycle-Angaben stehen in der [Mistral Model Lifecycle Policy](https://docs.mistral.ai/inference/model-lifecycle)
 - `-latest`-Aliase können auf wechselnde Versionen zeigen; für stabile Läufe die konkrete Versions-ID wie `mistral-medium-3-5` verwenden
 
 #### Gemini
@@ -169,7 +161,7 @@ Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
 
 - Flaggschiff für komplexe Reasoning- und Agenten-Aufgaben (`gemini-4-argon`)
 - Flash-Modelle für günstige, schnelle Läufe (`gemini-3.8-flash`, `gemini-3.5-flash-lite`)
-- Eigene Embedding-Modelle (`gemini-embedding-2-preview`)
+- Eigene Embedding-Modelle (`gemini-embedding-2`)
 - Langer Kontext (1 Mio. Tokens bei `gemini-4-argon`) für Dokument-Handoffs
 - Eingabe von Text, Bild, Video, Audio und PDF
 
@@ -180,17 +172,19 @@ Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
 
 **Einschränkung**
 - kein spezialisiertes Coding-Modell (Mistral `codestral-2508` hat hier einen Vorteil)
-- Preview-Modelle wie `gemini-embedding-2-preview` können sich ohne Vorankündigung ändern
+- Preview-Modelle können sich ändern; `gemini-embedding-2` ist die stabile Version. Die [Gemini Deprecations-Seite](https://ai.google.dev/gemini-api/docs/deprecations) führt Abschaltungen und Ersatzmodelle auf.
 - ältere Modelle wie `gemini-3-pro-preview` und `gemini-2.0-flash` sind bereits abgeschaltet
 
 #### Anthropic
 
 Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
-- Haiku als schnelle Baseline (`claude-haiku-5-5`)
-- Sonnet als starker Standard-Worker (`claude-sonnet-5-5`)
-- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-5-5`)
-- Fable als Frontier-Modell für anspruchsvolles Reasoning (`claude-fable-5-1`)
+- Haiku als schnelle Baseline (`claude-haiku-4-5`)
+- Sonnet als starker Standard-Worker (`claude-sonnet-5`)
+- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-5`)
+- Fable als Frontier-Modell für anspruchsvolles Reasoning (`claude-fable-5`)
+
+Anthropic veröffentlicht Status und Retirement-Termine auf der [Model Deprecations-Seite](https://docs.anthropic.com/en/docs/about-claude/model-deprecations); die hier genannten IDs sind dort als aktiv aufgeführt.
 
 **Geeignet, wenn**
 - die Modellrollen aus dem OpenAI-Setup möglichst klar nachgebildet werden sollen
@@ -216,11 +210,7 @@ Wenn Modultexte, Architekturtexte oder Deployment-Dokumente providerneutral form
 Für diese Rolle wird ein starkes Reasoning-Modell benötigt.
 Es bewertet Antworten, prüft Regelkonformität oder entscheidet zwischen Alternativen.
 
-**Geeignete Modelle je Provider:**
-- OpenAI: `gpt-6.1-sol`
-- Mistral: `mistral-medium-3-5`
-- Gemini: `gemini-4-argon`
-- Anthropic: `claude-opus-5-5`
+Die passenden Provider-Modelle stehen in der Mapping-Tabelle oben. Für den Judge sind Reasoning-Stärke, zuverlässige Bewertung und das Fehlerrisiko der Entscheidung ausschlaggebend.
 
 **Kurs-Default:**
 Im Kurs wird hierfür aktuell `gpt-6.1-sol` verwendet.

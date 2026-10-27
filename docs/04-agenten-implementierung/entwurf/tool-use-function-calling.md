@@ -297,7 +297,7 @@ Sobald Werkzeuge definiert sind, können sie an ein Modell gebunden werden. Das 
 ```python
 from langchain.chat_models import init_chat_model
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model("openai:gpt-6-luna")
 llm_with_tools = llm.bind_tools([multiply, safe_divide])
 
 response = llm_with_tools.invoke("Was ist 15 mal 23?")
@@ -412,7 +412,7 @@ Wenn nach einer Freigabeprüfung deterministisch feststeht, welches Tool als Nä
 ```python
 if tool_result.get("action_required") == "escalate_to_human":
     client.messages.create(
-        model="claude-opus-4-7",
+        model="claude-opus-5-5",
         messages=messages,
         tools=tools,
         tool_choice={"type": "tool", "name": "escalate_to_human"}
@@ -445,7 +445,7 @@ Progressive Disclosure eignet sich, wenn ein Agent viele Werkzeuge nutzen kann, 
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

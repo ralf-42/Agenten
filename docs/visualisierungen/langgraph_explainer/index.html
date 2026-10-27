@@ -770,7 +770,7 @@ const CODES = {
   ],
 
   2: [
-    { t: '<span class="kw">from</span> langchain_openai <span class="kw">import</span> <span class="cl2">ChatOpenAI</span>' },
+    { t: '<span class="kw">from</span> langchain.chat_models <span class="kw">import</span> <span class="fn">init_chat_model</span>' },
     { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> <span class="cl2">MessagesState</span>' },
     { t: '<span class="kw">from</span> langgraph.prebuilt <span class="kw">import</span> <span class="cl2">ToolNode</span>' },
     { t: '' },
@@ -780,7 +780,7 @@ const CODES = {
     { t: '' },
     { t: '<span class="cm"># ② Modell mit Tools binden – erst dann kann das Modell Tool-Calls auslösen!</span>', c: 'hl-purple' },
     { t: 'werkzeuge = [wetter_abfragen]', c: 'hl-purple' },
-    { t: 'ki_modell = <span class="cl2">ChatOpenAI</span>(model=<span class="st">"gpt-4o-mini"</span>).<span class="fn">bind_tools</span>(werkzeuge)  <span class="cm"># bind_tools ist Pflicht!</span>', c: 'hl-purple' },
+    { t: 'ki_modell = <span class="fn">init_chat_model</span>(<span class="st">"openai:gpt-6-luna"</span>).<span class="fn">bind_tools</span>(werkzeuge)  <span class="cm"># bind_tools ist Pflicht!</span>', c: 'hl-purple' },
     { t: '' },
     { t: '<span class="cm"># ③ LLM-Node: Sendet Nachrichten ans Modell, schreibt Antwort zurück</span>', c: 'hl-purple' },
     { t: '<span class="kw">def</span> <span class="fn">chatbot_node</span>(state: <span class="cl2">MessagesState</span>) -> dict:', c: 'hl-purple' },
@@ -830,13 +830,13 @@ const CODES = {
     { t: '<span class="kw">from</span> langgraph.checkpoint.memory <span class="kw">import</span> <span class="cl2">InMemorySaver</span>', id: 'b0' },
     { t: '<span class="kw">from</span> langgraph.graph <span class="kw">import</span> START, END, <span class="cl2">MessagesState</span>, <span class="cl2">StateGraph</span>', id: 'b0_2' },
     { t: '<span class="kw">from</span> langgraph.prebuilt <span class="kw">import</span> <span class="cl2">ToolNode</span>', id: 'b0_3' },
-    { t: '<span class="kw">from</span> langchain_openai <span class="kw">import</span> <span class="cl2">ChatOpenAI</span>', id: 'b0_4' },
+    { t: '<span class="kw">from</span> langchain.chat_models <span class="kw">import</span> <span class="fn">init_chat_model</span>', id: 'b0_4' },
     { t: '' },
     { t: '<span class="cm"># ① Werkzeug + Modell mit bind_tools vorbereiten</span>', id: 'b1' },
     { t: '<span class="kw">def</span> <span class="fn">wetter_abfragen</span>(stadt: str) -> str:', id: 'b1_2' },
     { t: '    <span class="kw">return</span> <span class="fn">f</span><span class="st">"In {stadt} sind es aktuell 21°C und sonnig."</span>', id: 'b1_3' },
     { t: 'werkzeuge = [wetter_abfragen]', id: 'b1_4' },
-    { t: 'ki_modell = <span class="cl2">ChatOpenAI</span>(model=<span class="st">"gpt-4o-mini"</span>).<span class="fn">bind_tools</span>(werkzeuge)', id: 'b1_5' },
+    { t: 'ki_modell = <span class="fn">init_chat_model</span>(<span class="st">"openai:gpt-6-luna"</span>).<span class="fn">bind_tools</span>(werkzeuge)', id: 'b1_5' },
     { t: '<span class="kw">def</span> <span class="fn">chatbot</span>(state): <span class="kw">return</span> {<span class="st">"messages"</span>: [ki_modell.<span class="fn">invoke</span>(state[<span class="st">"messages"</span>])]}', id: 'b1_6' },
     { t: 'werkzeug_node = <span class="cl2">ToolNode</span>(werkzeuge)', id: 'b1_7' },
     { t: '' },
@@ -877,7 +877,7 @@ const BUILD_STEP_COLOR_CLASSES = [
 ];
 
 const BUILD_MSGS = [
-  '✅ Schritt 1: Imports geladen – MessagesState, StateGraph, ToolNode und ChatOpenAI bereit.',
+  '✅ Schritt 1: Imports geladen – MessagesState, StateGraph, ToolNode und init_chat_model bereit.',
   '✅ Schritt 2: Werkzeug definiert, Modell mit bind_tools verknüpft, LLM-Node und Tool-Node eingerichtet.',
   '✅ Schritt 3: Graph aufgebaut – Nodes registriert, statische Kante (START→chatbot), Rückkante (werkzeuge→chatbot) und konditionale Weiche gesetzt.',
   '✅ Schritt 4: compile() hat Struktur validiert und InMemorySaver aktiviert.',

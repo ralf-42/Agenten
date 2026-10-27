@@ -55,15 +55,28 @@ Diese Rollen machen die Modellwahl überprüfbar. Entwickler vergleichen nicht b
 > In Notebooks werden nach Möglichkeit Rollen aus `model_config.py` verwendet. Harte Modellnamen stehen nur dort direkt im Notebook, wo ein bestimmter Endpunkt oder ein bewusstes Vergleichsexperiment gezeigt wird.
 
 
-## Historischer Modellsteckbrief - Beispiel
+## Aktueller Modellsteckbrief: GPT-6.1 Terra
 
-<br>
+`gpt-6.1-terra` ist im Kurs das Standardmodell für Worker- und Coding-Aufgaben. OpenAI beschreibt es als schnelles, effizientes Modell für visuelles Reasoning, präzise Computerbedienung und klare, natürliche Texte.
 
+| Merkmal | Angabe |
+|---|---|
+| Modell-ID | [`gpt-6.1-terra`](https://developers.openai.com/api/docs/models/gpt-6.1-terra) |
+| Veröffentlichung | 26. Oktober 2026 |
+| Kursrollen | `WORKER`, `CODING` |
+| Eingabe und Ausgabe | Text und Bilder als Eingabe; Text als Ausgabe; kein Audio oder Video |
+| Kontextfenster / maximale Ausgabe | 1.050.000 / 128.000 Tokens |
+| Wissensstand | 1. Juni 2026 |
+| Reasoning-Stufen | `none`, `low`, `medium` (Standard), `high`, `xhigh`, `max` |
+| Prompt Caching | Unterstützt |
+| Funktionen | Function Calling, strukturierte Ausgaben, Web- und File Search, Code Interpreter, Computer Use und MCP |
+| API für Tool-Aufrufe | Responses API erforderlich |
+| Fine-Tuning | Nicht unterstützt |
+| Standardpreis pro 1 Mio. Tokens (27. Oktober 2026) | Input 1 USD; gecachter Input 0,05 USD; Output 5 USD |
 
-<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/modellsteckbrief_gpt_5.4_mini.png" class="logo" width="750" alt="Modellsteckbrief GPT-5.4 mini"/>
-<p><font color='black' size="2">
-Historisches, KI-generiertes Beispiel für einen Modellsteckbrief (GPT-5.4 mini); es ist kein aktueller Kurs-Default.
-</font></p>
+**Stärken und passende Aufgaben:** visuelle Analyse, klar umrissene Computerbedienung, Textentwürfe und -überarbeitung sowie häufige Alltags-Workflows. Im Kurs dient es außerdem als Standard-Worker und Coding-Worker. Für besonders komplexe Coding-Aufgaben empfiehlt OpenAI GPT-6.1 Sol oder GPT-6 Astra.
+
+**Grenzen:** keine Audio- oder Videoverarbeitung und kein Fine-Tuning. Bei Anfragen mit mehr als 272.000 Input-Tokens gelten höhere Tokenpreise. Die Preise und Modellfunktionen sind eine Momentaufnahme vom 27. Oktober 2026; prüfe vor einer produktiven Nutzung die [aktuelle Modellkarte](https://developers.openai.com/api/docs/models/gpt-6.1-terra) und [Preise](https://platform.openai.com/pricing).
 
 **Modellübersichten:**      
 + [Models.dev — Open-Source-Datenbank für AI-Modelle](https://models.dev/)
@@ -104,21 +117,21 @@ flowchart TD
 
 Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten: **Erst die Rolle definieren, dann den Provider und erst zuletzt den konkreten Modellnamen wählen.** Der Providerwechsel ist eine Zuordnung von Rollen auf passende Modellfamilien. Weiterhin gilt der OpenAI-Default aus der Tabelle oben; die Zuordnung dient der Einordnung und Architekturplanung und ändert nicht automatisch die in den Modulen verwendeten Modelle.
 
-| Rolle                              | [OpenAI](https://platform.openai.com/docs/models) | [Mistral](https://docs.mistral.ai/models/) | [Gemini](https://ai.google.dev/gemini-api/docs/models) | [Anthropic](https://docs.anthropic.com/en/docs/about-claude/models-overview) | Kommentar                                                           |
+| Rolle                              | [OpenAI](https://platform.openai.com/docs/models) | [Mistral](https://docs.mistral.ai/models/) | [Gemini](https://ai.google.dev/gemini-api/docs/models) | [Anthropic](https://platform.claude.com/docs/en/about-claude/models/overview) | Kommentar                                                           |
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
-| **Baseline / Demo**                | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-4-5`              | schnell, günstig, gut für Grundlagen                                |
-| **Router / leichter Reasoner**     | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
-| **Judge / starker Reasoner**       | `gpt-6.1-sol`            | `mistral-medium-3-5` (hohes `reasoning_effort`)      | `gemini-4-argon`              | `claude-opus-5`                 | für Supervisor, Security, Bewertung                                 |
-| **Worker / Synthese**              | `gpt-6.1-terra`          | `mistral-medium-3-5`                                 | `gemini-3.8-flash`            | `claude-sonnet-5`               | Standard-Worker: starke Ausgabe, kostensensitiv                     |
-| **Worker / Synthese (hochwertig)** | `gpt-6.1-sol`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-opus-5`                 | hohe Qualität: komplexe RAG, finale Reports                         |
-| **Frontier / maximale Qualität**   | `gpt-6-astra`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-fable-5`                | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
-| **Coding-Worker**                  | `gpt-6.1-terra`          | `mistral-medium-3-5` oder `codestral-2508`           | `gemini-3.8-flash`            | `claude-sonnet-5`               | Codestral für Code-Vervollständigung, Medium 3.5 für Coding-Agenten |
+| **Baseline / Demo**                | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | schnell, günstig, gut für Grundlagen                                |
+| **Router / leichter Reasoner**     | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Judge / starker Reasoner**       | `gpt-6.1-sol`            | `mistral-medium-3-5` (hohes `reasoning_effort`)      | `gemini-4-argon`              | `claude-opus-5-5`                 | für Supervisor, Security, Bewertung                                 |
+| **Worker / Synthese**              | `gpt-6.1-terra`          | `mistral-medium-3-5`                                 | `gemini-3.8-flash`            | `claude-sonnet-5-5`               | Standard-Worker: starke Ausgabe, kostensensitiv                     |
+| **Worker / Synthese (hochwertig)** | `gpt-6.1-sol`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-opus-5-5`                 | hohe Qualität: komplexe RAG, finale Reports                         |
+| **Frontier / maximale Qualität**   | `gpt-6-astra`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-fable-5-1`                | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
+| **Coding-Worker**                  | `gpt-6.1-terra`          | `mistral-medium-3-5` oder `codestral-2508`           | `gemini-3.8-flash`            | `claude-sonnet-5-5`               | Codestral für Code-Vervollständigung, Medium 3.5 für Coding-Agenten |
 | **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                      | `gemini-embedding-2`          | externer Provider nötig         | Anthropic bietet hier keinen direkten Standardersatz |
 
 > [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>
 > Das Mapping ist funktionsorientiert, nicht benchmark-orientiert. Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter. Chat-Modell und Embedding-Modell sind **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht den anderen nicht nach sich.
 
-Die Modell-IDs und Lifecycle-Angaben sind Momentaufnahmen, geprüft am 27. Oktober 2026. Anthropic führt `claude-haiku-4-5`, `claude-sonnet-5`, `claude-opus-5` und `claude-fable-5` als aktive Modelle. Google hat `gemini-embedding-2-preview` am 10. August 2026 abgeschaltet; verwende das stabile `gemini-embedding-2`. Prüfe vor einer Integration die verlinkten offiziellen Modellübersichten und Deprecation-Seiten erneut.
+
 
 ### Wie die Provider zu lesen sind
 
@@ -179,12 +192,12 @@ Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
 
 Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
-- Haiku als schnelle Baseline (`claude-haiku-4-5`)
-- Sonnet als starker Standard-Worker (`claude-sonnet-5`)
-- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-5`)
-- Fable als Frontier-Modell für anspruchsvolles Reasoning (`claude-fable-5`)
+- Haiku als schnelle Baseline (`claude-haiku-5-5`)
+- Sonnet als starker Standard-Worker (`claude-sonnet-5-5`)
+- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-5-5`)
+- Fable als Frontier-Modell für anspruchsvolles Reasoning (`claude-fable-5-1`)
 
-Anthropic veröffentlicht Status und Retirement-Termine auf der [Model Deprecations-Seite](https://docs.anthropic.com/en/docs/about-claude/model-deprecations); die hier genannten IDs sind dort als aktiv aufgeführt.
+Anthropic veröffentlicht Status und Retirement-Termine auf der [Model Deprecations-Seite](https://platform.claude.com/docs/en/about-claude/model-deprecations); für die hier genannten IDs nennt die Modellübersicht Retirement-Termine frühestens ab dem 1. September 2027.
 
 **Geeignet, wenn**
 - die Modellrollen aus dem OpenAI-Setup möglichst klar nachgebildet werden sollen
@@ -330,6 +343,6 @@ Wenn ein Agent mehrere Rollen umfasst, sollte jede Rolle ein Modell erhalten, da
 
 ---
 
-**Version:** 1.7<br>
+**Version:** 1.8<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

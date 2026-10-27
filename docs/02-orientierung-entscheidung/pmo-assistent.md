@@ -118,7 +118,7 @@ class BriefingAntwort(BaseModel):
 
 Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das klingt plausibel, erzwingt aber keine prüfbare Struktur. Erst ein Schema macht sichtbar, ob eine Antwort ohne Quelle, mit niedriger Sicherheit oder außerhalb des Korpus entstanden ist.
 
-### Ergebnisformate des PMO-Assistenten
+## Ergebnisformate des PMO-Assistenten
 
 Der PMO-Assistent liefert drei Produkte. Jedes hat ein eigenes Schema; die technischen Feldnamen sind in den Notebooks und Skripten gleich. Die Erläuterungen bleiben deutsch.
 

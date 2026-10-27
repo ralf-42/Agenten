@@ -34,7 +34,7 @@ Der Fokus liegt auf praktischer Umsetzung mit Python, LangChain, LangGraph, Lang
 
 Der Kurs passt besonders für:
 
-- Entwicklerinnen und Entwickler mit Python-Grundlagen,
+- Entwicklerinnen und Entwickler mit guten Python-Grundlagen,
 - IT-Fachkräfte, die KI-Agenten in Arbeitsprozesse einordnen möchten,
 - fortgeschrittene GenAI-Anwenderinnen und -Anwender, die von Prompts und Chains zu kontrollierten Workflows wechseln wollen.
 
@@ -54,11 +54,11 @@ Nach dem Kurs ist es möglich:
 - Human-in-the-Loop im Grundlagenpfad umzusetzen und Evaluation, Security und Budgetkontrolle über die Aufbaumodule einzuplanen,
 - einen PMO-Assistenten für Meeting-Vorbereitung, Dokumentenaufbereitung, Aufgabenverfolgung sowie quellengebundene Briefings und Statusübersichten weiterzuentwickeln.
 
-Das praktische Ergebnis ist kein loses Beispielset, sondern ein wachsendes Zielsystem: ein Agent, der Projektmaterial durchsucht, Meeting-Briefings und Statusübersichten erstellt, offene Aufgaben strukturiert erfasst, relevante Evidenz sammelt, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
+Das praktische Ergebnis ist kein loses Beispielset, sondern ein **wachsendes Zielsystem**: ein Agent, der Projektmaterial durchsucht, Meeting-Briefings und Statusübersichten erstellt, offene Aufgaben strukturiert erfasst, relevante Evidenz sammelt, menschliche Freigaben einbezieht und am Ende als überprüfbarer Prototyp weitergeführt werden kann.
 
 ## Kursstruktur
 
-Der Kurs umfasst 31 reguläre Kursmodule: M01–M26 und die optionale Vertiefungsreihe M50–M54. Der gemeinsame Kernpfad umfasst M01–M18. In diesen Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. Ab Tag 3 wird nach Checkpoints differenziert.
+Der Kurs umfasst die Kursmodule: M01–M26 (Grundlagen, Aufbau, Vertiefung) und die optionale Vertiefungsreihe M50–M54. Der gemeinsame Kernpfad umfasst M01–M18. In diesen Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. 
 
 | Kurstag   | Schwerpunkt                                                    | Grundlagen / Kern | Aufbau im Kurs (optional)                               | Vertiefung an Tag 5 (optional)                                                             |
 | --------- | -------------------------------------------------------------- | ----------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -68,7 +68,7 @@ Der Kurs umfasst 31 reguläre Kursmodule: M01–M26 und die optionale Vertiefung
 | **Tag 4** | RAG, Retrieval als Tool und erste Evaluation                   | M11–M13           | M19 Agentic RAG, M21 Agent Evaluation, M23 Advanced RAG | —                                                                                          |
 | **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | —                                                       | M24 Gradio UI, M26 Agent Skill Compliance, M52 DeepAgents Skill, M54 Production Deployment |
 
-Die optionalen Module sind keine Voraussetzung für die gemeinsamen Kursziele. M22 wird nach Zeit und Kursziel als Aufbau ausgewählt; M25 sowie M50, M51 und M53 sind weiterführendes Material. M50 ist der Einstieg in das Vertiefungsthema DeepAgents, nicht Teil des gemeinsamen Grundlagenkerns.
+Die optionalen Module sind keine Voraussetzung für die gemeinsamen Kursziele. 
 
 ### Kursprogression auf einen Blick
 
@@ -111,24 +111,13 @@ timeline
                                            : M24–M26, M50–M54
 ```
 
-Im Tag-5-Block spielen die Teilnehmenden nach Human-in-the-Loop eine 15- bis 20-minütige KI-Delegation-Poker-Runde. Am PMO-Assistenten entscheiden sie, welche Schritte autonom laufen dürfen und wo eine menschliche Freigabe nötig ist.
+Im Tag-5-Block spielen die Teilnehmenden nach Human-in-the-Loop eine KI-Delegation-Poker-Runde. Am Anwendungsfall **PMO-Assistenten** entscheiden sie, welche Schritte autonom laufen dürfen und wo eine menschliche Freigabe nötig ist.
 
-### Weitere Zusatznotebooks außerhalb der Tagesübersicht
-
-Diese optionalen Materialien sind nicht fest in die fünf Kurstage eingeplant.
-
-| Stufe | Notebook | Einsatz |
-|---|---|---|
-| Aufbau | `M22_Model_Routing_Cost_Control.ipynb` | Routing, Fallbacks und Kostenkontrolle ergänzen. |
-| Vertiefung | `M25_MCP_Local.ipynb` | Lokale MCP-Server als weiterführende Tool-Integration nutzen. |
-| Vertiefung | `M50_DeepAgents_Harness.ipynb`, `M51_DeepAgents_Vertiefung.ipynb`, `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents kennenlernen und nach Interesse ausbauen. M50 ist der Einstieg in dieses Vertiefungsthema. |
-| Referenz | `M40_PMO_Assistent_Referenzimplementierung.ipynb` | Eine ergänzende Lösung zum Nachschlagen und Vergleichen. |
 
 ## Kursblöcke am PMO-Assistenten
 
 Jeder Block ergänzt dasselbe Zielsystem: Tools und Prompts schaffen Handlungsmöglichkeiten, LangGraph macht Abläufe steuerbar, RAG liefert Quellen und HITL sowie Evaluation machen Ergebnisse prüfbar. Aufbau- und Vertiefungsnotebooks erweitern diese Fähigkeiten gezielt.
 
-Einige Begriffe sind bewusst knapp gehalten. **Evidence Tool** meint ein Retrieval-Werkzeug, das Antworten mit Quellenmaterial verbindet. **Out-of-Context-Stopp** bedeutet, dass der Agent anhält, wenn die vorhandenen Quellen keine belastbare Antwort tragen. **Circuit Breaker** bezeichnet eine Schutzschaltung, die Abläufe bei Fehlern, Kosten- oder Qualitätsgrenzen stoppt.
 
 ## Vorbereitung
 
@@ -138,7 +127,7 @@ Für die praktischen Übungen werden typischerweise benötigt:
 - ein OpenAI-Account mit API-Key und kleinem API-Guthaben,
 - ein LangSmith-Account für Tracing, Debugging und Evaluation,
 - ein Gerät, auf dem Browser, Notebook-Umgebung und Kursmaterial zuverlässig funktionieren,
-- Grundverständnis von Python-Funktionen, Decorators, Type Hints, Dictionaries und Fehlerbehandlung.
+- Solides Grundverständnis von Python-Funktionen, Decorators, Type Hints, Dictionaries und Fehlerbehandlung.
 
 Google Colab und Google Drive sind vor allem für den gemeinsamen Kursbetrieb praktisch. Wer lokal arbeitet, braucht stattdessen eine funktionierende Python-Umgebung mit Zugriff auf die Kursnotebooks. LangSmith wird für Beobachtung und Evaluation empfohlen; einzelne Grundlagen lassen sich auch ohne LangSmith nachvollziehen, verlieren dann aber den Trace- und Bewertungsblick.
 
@@ -152,7 +141,7 @@ Nützliche Einstiege:
 
 ## Arbeitsweise
 
-Der Kurs ist als Werkstatt aufgebaut. Die Notebooks sind nicht nur Lesematerial, sondern sollen ausgeführt, verändert und kritisch geprüft werden. Jede größere Technik wird am PMO-Assistenten eingeordnet: Was plant der Agent, welche Handlung führt er aus, und wie wird das Ergebnis geprüft?
+Der Kurs ist als **Werkstatt** aufgebaut. Die Notebooks sind nicht nur Lesematerial, sondern sollen ausgeführt, verändert und kritisch geprüft werden. Jede größere Technik wird am PMO-Assistenten eingeordnet: Was plant der Agent, welche Handlung führt er aus, und wie wird das Ergebnis geprüft?
 
 Sinnvoll ist es, eigene Fragen oder kleine Prozessideen mitzubringen. Dadurch wird schneller sichtbar, wann ein Agent wirklich hilft und wann ein klassischer Workflow, eine einfache Chain oder ein RAG-System ohne Agent ausreicht.
 
@@ -164,30 +153,29 @@ Die Grenze bleibt wichtig: KI ersetzt nicht das eigene Verständnis. Der Schwerp
 
 ## Kompetenzillusion vermeiden
 
-Agenten-Demos können überzeugend wirken, obwohl wichtige Kontrollpunkte fehlen. Gerade bei mehrstufigen Systemen entsteht leicht der Eindruck, der Agent habe verstanden, geplant und geprüft, obwohl er nur plausibel formuliert.
+Beim Lernen mit KI kann bei Teilnehmenden eine *Kompetenzillusion* entstehen: Eine überzeugende Agenten-Demo oder eine plausible Erklärung des Sprachmodells fühlt sich schnell wie eigenes Verständnis an. Auch wenn ein Beispiel mit KI-Hilfe funktioniert, heißt das noch nicht, dass die zugrunde liegenden Schritte verstanden oder auf neue Aufgaben übertragbar sind.
 
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/kompetenzillusion.png" alt="Kompetenzillusion beim Lernen mit KI" width="700">
 <p><small>KI-generiertes Bild</small></p>
 
 
-Deshalb gehören im Kurs immer drei Prüfbewegungen dazu:
+Deshalb prüfen die Teilnehmenden ihr eigenes Verständnis im Kurs aktiv:
 
-- Tool-Aufrufe und Zwischenschritte sichtbar machen,
-- Quellen, State und Entscheidungen nachvollziehen,
-- Ergebnisse mit Tests, Human-in-the-Loop oder Evaluation prüfen.
+- vor einer Ausführung erklären, was das System voraussichtlich tun wird, und die tatsächlichen Schritte anschließend mit der Erwartung vergleichen,
+- Tool-Aufrufe, Quellen, State und Entscheidungen nachvollziehen und in eigenen Worten erläutern,
+- Beispiele selbst verändern, Ergebnisse mit Tests oder Evaluation prüfen und erklären, was bei einem Fehler angepasst werden muss.
 
 ## Aufgaben nach Vorkenntnissen und Lerntempo bearbeiten
 
 Die Aufgaben je Modul sind in **Grundlagen**, **Aufbau** und **Vertiefung** unterteilt. Die Auswahl richtet sich nach **Vorkenntnissen** und **Lerntempo**: Grundlagen sichern das zentrale Verständnis, Aufbau-Aufgaben vertiefen die Anwendung, und Vertiefungsaufgaben bieten zusätzliche Übung, Varianten oder Transferfragen.
 
-Einige Module enthalten außerdem den Unterabschnitt **Praxis-Transfer: PMO-Assistent**. Diesen Abschnitt sollten sich möglichst alle ansehen, weil er die jeweilige Technik mit dem durchgehenden Kursprojekt verbindet.
 
 ## Zeitfenster für Aufgaben
 
-Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Minuten Bearbeitungszeit**, ein kurzer **Zwischenstopp** und anschließend weitere **10 Minuten oder mehr**. Die erste Phase ist lang genug für den Einstieg und kurz genug, damit Blockaden früh sichtbar werden.
+Für Übungsaufgaben hat sich ein kurzer Arbeitsrhythmus bewährt: etwa **10 Minuten Bearbeitungszeit**, ein kurzer **Zwischenstopp** und anschließend weitere **10 Minuten oder mehr**. Die erste Phase ist lang genug für den *Einstieg* und kurz genug, damit *Blockaden* früh sichtbar werden.
 
-Der Zwischenstopp sollte niedrigschwellig sein. Statt nur zu fragen „Gibt es Fragen?“, hilft ein aktiver Check: zum Beispiel Daumen hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
+Der Zwischenstopp sollte niedrigschwellig sein. Es erfolgt ein aktiver Check: zum Beispiel Daumen hoch/seitlich/runter oder eine kurze Zahl im Chat für den eigenen Fortschritt.
 
 Der Check ist keine harte Pflicht-Unterbrechung für alle. Wer gut im Flow ist, kann weiterarbeiten; wer festhängt, bekommt früh Gelegenheit zur Klärung. Bei unterschiedlichem Tempo bleibt der Takt flexibel: Schnellere bearbeiten Aufbau- oder Vertiefungsaufgaben, langsamere sichern zunächst die Grundlagen.
 
@@ -195,7 +183,7 @@ Auch während der Übungszeit stehen Fragen jederzeit offen. Wer lieber ungestö
 
 Statt der gestellten Aufgaben lässt sich bei Bedarf auch eine **eigene** Problemstellung bearbeiten. Unterstützung dafür gibt es, soweit es der Rahmen zulässt.
 
-Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldung zeigt oft genauer, wie ein System tatsächlich funktioniert, als ein Durchlauf ohne Probleme, und trägt damit direkt zum Lernerfolg bei.
+**Fehler gehören zum Lernprozess** dazu und sind kein Rückschlag: Eine Fehlermeldung zeigt oft genauer, wie ein System tatsächlich funktioniert, als ein Durchlauf ohne Probleme, und trägt damit direkt zum Lernerfolg bei.
 
 ## Nächste Schritte
 
@@ -210,5 +198,4 @@ Fehler gehören zum Lernprozess dazu und sind kein Rückschlag: Eine Fehlermeldu
 
 **Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
-**Fachstand:** Oktober 2026; Versionsnummern sind dokumentbezogen.<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

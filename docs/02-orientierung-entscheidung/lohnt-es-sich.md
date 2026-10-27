@@ -49,7 +49,7 @@ KI funktioniert nicht im luftleeren Raum. Ein System braucht Daten: Texte, Dokum
 | sensible oder personenbezogene Daten | Cloud-Nutzung kann eingeschränkt oder ausgeschlossen sein |
 | zu wenig Daten für Tests und Evaluation | Qualität lässt sich später kaum belastbar nachweisen |
 
-Grenze: Eine gute Modellauswahl kann keine schlechte oder unzugängliche Datengrundlage ausgleichen.
+**Grenze**: Eine gute Modellauswahl kann keine schlechte oder unzugängliche Datengrundlage ausgleichen.
 
 ## Der Nutzen muss konkret sein
 

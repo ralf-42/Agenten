@@ -301,10 +301,10 @@ Ruft Model-Profile von models.dev ab und zeigt die wichtigsten Capabilities eine
 from genai_lib.utilities import get_model_profile
 
 # Formatierte Ausgabe aller wichtigen Capabilities
-profile = get_model_profile("openai:gpt-5.6-luna")
+profile = get_model_profile("openai:gpt-6-luna")
 
 # Output:
-# 🔍 Model Profile: openai:gpt-5.6-luna
+# 🔍 Model Profile: openai:gpt-6-luna
 # ============================================================
 #
 # 📋 Core Capabilities:
@@ -331,10 +331,10 @@ profile = get_model_profile("openai:gpt-5.6-luna")
 # ============================================================
 
 # Ohne Ausgabe (nur Profile-Dict zurückgeben)
-profile = get_model_profile("openai:gpt-5.4-mini", print_profile=False)
+profile = get_model_profile("openai:gpt-6.1-terra", print_profile=False)
 
 # Verschiedene Models vergleichen (mit Fehlerbehandlung)
-for model in ["openai:gpt-5.6-luna", "openai:gpt-5.4-mini", "openai:gpt-5.4", "openai:gpt-5.6-terra", "openai:gpt-5.6-sol"]:
+for model in ["openai:gpt-6-luna", "openai:gpt-6.1-terra", "openai:gpt-6.1-sol", "openai:gpt-6-astra"]:
     print(f"\n{model}:")
     profile = get_model_profile(model, print_profile=False)
 
@@ -723,18 +723,20 @@ from genai_lib.model_config import BASELINE, WORKER, JUDGE, FRONTIER
 
 | Konstante | Modell | Typischer Einsatz |
 |-----------|--------|------------------|
-| `BASELINE` | `gpt-5.6-luna` | Grundlagen, günstige Demos, kurze Modellaufrufe |
-| `ROUTER` | `gpt-5.6-luna` | Einfache Routing- und Auswahlentscheidungen |
-| `WORKER` | `gpt-5.4-mini` | RAG-Synthese, strukturierte Ausgaben, Tool-Agenten |
-| `CODING` | `gpt-5.4-mini` | Code-Generierung, Refactoring, technische Agenten |
-| `JUDGE` | `gpt-5.4` | Evaluation, Bewertung, LLM-as-Judge |
-| `PLANNER` | `gpt-5.4` | Aufgabenzerlegung, Supervisor-Logik, Agentic RAG |
-| `WORKER_PREMIUM` | `gpt-5.6-terra` | Komplexe RAG, finale Reports |
-| `FRONTIER` | `gpt-5.6-sol` | Schwierige Coding-, Judge- und Agenten-Aufgaben |
+| `BASELINE` | `gpt-6-luna` | Grundlagen, günstige Demos, kurze Modellaufrufe |
+| `ROUTER` | `gpt-6-luna` | Einfache Routing- und Auswahlentscheidungen |
+| `WORKER` | `gpt-6.1-terra` | RAG-Synthese, strukturierte Ausgaben, Tool-Agenten |
+| `CODING` | `gpt-6.1-terra` | Begrenzte Code-Generierung und Refactorings |
+| `JUDGE` | `gpt-6.1-sol` | Evaluation, Bewertung, LLM-as-Judge |
+| `PLANNER` | `gpt-6.1-sol` | Aufgabenzerlegung, Supervisor-Logik, Agentic RAG |
+| `WORKER_PREMIUM` | `gpt-6.1-sol` | Komplexe RAG, finale Reports |
+| `FRONTIER` | `gpt-6-astra` | Schwierigste Coding-, Judge- und Agenten-Aufgaben |
 | `IMAGE_GENERATION` | `gpt-image-2` | Bildgenerierung |
-| `TRANSCRIPTION` | `gpt-4o-mini-transcribe` | Audio-Transkription |
-| `TRANSCRIPTION_SEGMENTS` | `whisper-1` | Audio-Transkription mit `verbose_json` und Segment-Zeitstempeln |
+| `TRANSCRIPTION` | `gpt-transcribe` | Datei-Audiotranskription |
+| `TRANSCRIPTION_SEGMENTS` | `whisper-1` | Legacy: Segment-Zeitstempel; Migration bis 26.02.2027 nötig |
 | `EMBEDDINGS` | `text-embedding-3-small` | Retrieval, Chunk-Suche, Vektorindizes |
+
+GPT-6-Modelle mit Tool-Aufrufen werden mit `langchain-openai` ab Version 1.7.2 über die Responses API geroutet. `whisper-1` wird am 26. Februar 2027 abgeschaltet; für Segment-Zeitstempel ist eine gesonderte Migration nötig.
 
 
 ### Verwendung

@@ -10,7 +10,7 @@ has_toc: true
 # Fine-Tuning
 {: .no_toc }
 
-> [!NOTE] Kernfrage<br>`r`n> Wann lohnt sich Training gegenüber besserem Prompting, Retrieval oder Tool-Design?
+> [!NOTE] Kernfrage<br> Wann lohnt sich Training gegenüber besserem Prompting, Retrieval oder Tool-Design?
 
 ---
 
@@ -24,7 +24,7 @@ has_toc: true
 
 # Einordnung
 
-Fine-Tuning passt ein vortrainiertes Modell an eine engere Aufgabe, eine bestimmte Domäne oder ein wiederkehrendes Antwortmuster an. Das Modell baut auf vorhandenen Sprach- und Weltrepräsentationen auf. Das senkt den Trainingsaufwand, ersetzt aber weder saubere Daten noch eine belastbare Evaluation.
+Fine-Tuning passt ein **vortrainiertes** Modell an eine engere Aufgabe, eine bestimmte Domäne oder ein wiederkehrendes Antwortmuster an. Das Modell baut auf vorhandenen Sprach- und Weltrepräsentationen auf. Das senkt den Trainingsaufwand, ersetzt aber weder saubere Daten noch eine belastbare Evaluation.
 
 Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres Retrieval oder eine klarere Systemarchitektur bringen oft schneller messbare Verbesserungen. Fine-Tuning wird interessant, wenn ein wiederkehrendes Fehlermuster trotz guter Prompts, passender Kontextdaten und nachvollziehbarer Tests bestehen bleibt.
 
@@ -49,6 +49,8 @@ Grenze: Transfer Learning hilft nur, wenn Ausgangsmodell und Zielaufgabe nah gen
 ## Parameter-Effizientes Fine-Tuning
 
 Parameter-effizientes Fine-Tuning verändert nicht alle Gewichte des Basismodells. Verfahren wie LoRA, QLoRA, DoRA, Adapter oder Prompt Tuning ergänzen oder verändern nur kleine Teile der Modellparameter. Trainingsläufe werden dadurch günstiger, Varianten lassen sich getrennt verwalten und ein Basismodell kann mehrere Spezialisierungen tragen.
+
+Die Auswahl eines passenden Basismodells & Parametriesierung zeigt die [interaktive Modellauswahl]({{ '/visualisierungen/llm_selector/' | relative_url }}){:target="_blank" rel="noopener"}.
 
 LoRA fügt kompakte Low-Rank-Matrizen ein, die Gewichtsänderungen approximieren. QLoRA kombiniert diesen Ansatz mit Quantisierung, um Speicherbedarf weiter zu senken. Adapter platzieren zusätzliche Module zwischen vorhandenen Schichten; Prompt Tuning arbeitet mit trainierbaren Prompt-Repräsentationen statt mit vollständig angepassten Modellgewichten.
 
@@ -152,13 +154,13 @@ Datenqualität schlägt Datenmenge. Ein guter Trainingsdatensatz enthält realis
 
 Die Trainingsstrategie sollte klein beginnen. Ein begrenzter, gut kontrollierter Datensatz zeigt, ob das Verfahren überhaupt Wirkung hat. Danach können mehr Beispiele, andere Lernraten, zusätzliche Epochen oder PEFT-Varianten getestet werden. Checkpoints und Modellversionierung sind dabei keine Formalität, sondern Voraussetzung für nachvollziehbare Regressionstests.
 
-In der Praxis entsteht ein guter Fine-Tuning-Datensatz häufig iterativ. Nach einem Trainingslauf werden Fehlermuster analysiert, unklare oder widersprüchliche Beispiele korrigiert und gezielt neue Beispiele ergänzt. Erst das trainierte Modell zeigt, welche Formulierungen es zu allgemein interpretiert, welche Pflichtdetails es auslässt und welche Randfälle fehlen.
+In der Praxis entsteht ein guter Fine-Tuning-Datensatz häufig **iterativ**. Nach einem Trainingslauf werden Fehlermuster analysiert, unklare oder widersprüchliche Beispiele korrigiert und gezielt neue Beispiele ergänzt. Erst das trainierte Modell zeigt, welche Formulierungen es zu allgemein interpretiert, welche Pflichtdetails es auslässt und welche Randfälle fehlen.
 
-Diese Iteration braucht eine Kontrollinstanz. Wer nur die zuletzt auffälligen Beispiele ergänzt, kann das Modell auf einzelne Testfragen optimieren, ohne die allgemeine Qualität zu verbessern. Deshalb sollten neben zufällig gezogenen Plausibilitätschecks auch feste Testfragen oder ein getrenntes Holdout-Set verwendet werden. So bleibt sichtbar, ob neue Trainingsdaten ein Fehlermuster wirklich reduzieren oder nur die nächste Antwort verbessern.
+Diese **Iteration** braucht eine Kontrollinstanz. Wer nur die zuletzt auffälligen Beispiele ergänzt, kann das Modell auf einzelne Testfragen optimieren, ohne die allgemeine Qualität zu verbessern. Deshalb sollten neben zufällig gezogenen Plausibilitätschecks auch feste Testfragen oder ein getrenntes Holdout-Set verwendet werden. So bleibt sichtbar, ob neue Trainingsdaten ein Fehlermuster wirklich reduzieren oder nur die nächste Antwort verbessern.
 
 Bei Hyperparametern sind Lernrate, Batch-Größe und Epochenzahl besonders einflussreich. Zu aggressives Training kann Overfitting erzeugen; zu vorsichtiges Training bleibt wirkungslos. Wichtiger als die perfekte Einzelkonfiguration ist ein sauber dokumentierter Vergleich mehrerer Läufe.
 
-Ein weiteres Risiko ist Catastrophic Forgetting: Das Modell wird auf der Zielaufgabe besser, verliert aber außerhalb dieser engen Verteilung allgemeine Fähigkeiten. Deshalb sollten vor und nach dem Fine-Tuning einige einfache, domänenfremde Kontrollfragen geprüft werden. Bei engen Spezialdatensätzen kann ein kleiner Replay-Anteil mit allgemeinen Beispielen helfen, typischerweise ungefähr zehn Prozent der Trainingsdaten.
+Ein weiteres Risiko ist **Catastrophic Forgetting**: Das Modell wird auf der Zielaufgabe besser, verliert aber außerhalb dieser engen Verteilung allgemeine Fähigkeiten. Deshalb sollten vor und nach dem Fine-Tuning einige einfache, domänenfremde Kontrollfragen geprüft werden. Bei engen Spezialdatensätzen kann ein kleiner Replay-Anteil mit allgemeinen Beispielen helfen, typischerweise ungefähr zehn Prozent der Trainingsdaten.
 
 # Sicherheit, Datenschutz und Kosten
 

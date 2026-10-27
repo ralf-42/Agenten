@@ -38,15 +38,15 @@ Ein einmaliger persönlicher Textentwurf ist in der Regel eine Chat-Aufgabe. Ein
 
 ## Eine grobe Schnellentscheidung
 
-| Wenn die Aufgabe so aussieht | Naheliegender Startpunkt |
-|---|---|
-| Einmalig, ad hoc, persönlich | Chat-Anwendung |
-| Wiederkehrender Prozess mit Triggern | Workflow-Automation |
-| Fragen über eigene Dokumente oder Wissensbasis | RAG-System |
-| Sehr viele Daten oder komplexe Berechnungen | Python und APIs |
-| Werkzeug für andere Nutzer mit UI | KI-App-Builder oder Anwendung |
-| Wiederkehrende persönliche Unterstützung | Custom GPT oder Skill |
-| Vorgehen unklar, mehrstufig, toolgestützt | Agentensystem |
+| Wenn die Aufgabe so aussieht                          | Naheliegender Startpunkt      |
+| ----------------------------------------------------- | ----------------------------- |
+| Einmalig, ad hoc, persönlich                          | Chat-Anwendung                |
+| Wiederkehrender Prozess mit Triggern                  | Workflow-Automation           |
+| Fragen über eigene Dokumente oder Wissensbasis        | RAG-System                    |
+| Sehr viele Daten oder komplexe Berechnungen           | Python und APIs               |
+| Werkzeug für andere Nutzer mit UI                     | KI-App-Builder oder Anwendung |
+| Wiederkehrende persönliche Unterstützung              | Custom GPT oder Skill         |
+| Vorgehen (teilweise) unklar, mehrstufig, toolgestützt | Agentensystem                 |
 
 ## Woran sich ein echter Agentenfall erkennen lässt
 
@@ -58,6 +58,9 @@ Ein guter Praxistest: Würde ein fester Ablauf mit klaren Regeln dieselbe Aufgab
 
 Grenze: Auch eine offene Formulierung in natürlicher Sprache bedeutet nicht automatisch „Agent“. Viele Anfragen, die sich so anfühlen, lassen sich am Ende trotzdem mit klaren Pipelines lösen.
 
+
+<img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/agentisch_2.png" class="logo" width="900"/>
+
 ## Warnsignale gegen Agentensysteme
 
 Wenn eine Aufgabe immer denselben festen Ablauf hat, ist Workflow-Automation meist die bessere Wahl. Wenn nur eigene Dokumente durchsucht und zusammengefasst werden sollen, reicht oft ein RAG-System. Wenn es keine echten Entscheidungspunkte gibt, genügt meist ein Skript oder eine API-Anwendung.
@@ -68,7 +71,7 @@ Viele unterschätzen, was ein Agent zusätzlich kostet: Testaufwand, Fehlerdiagn
 
 Daniel Kahneman unterscheidet in „Schnelles Denken, langsames Denken“ zwei Arten des menschlichen Denkens: System 1 arbeitet schnell, automatisch und intuitiv, System 2 langsam, bewusst und anstrengend. Die Übertragung auf LLMs ist nur eine Analogie: LLMs besitzen keine zwei menschlichen Denksysteme und kein Bewusstsein im psychologischen Sinn.
 
-Ein Standard-LLM arbeitet eher System-1-artig, denn es erzeugt die Antwort autoregressiv, also Schritt für Schritt Token für Token auf Grundlage des bisher erzeugten Textes, meist ohne eine ausdrücklich getrennte Planungs- oder Prüfphase. Nachrechnen, Abwägen und Gegenprüfen entstehen erst durch Zusatzmaßnahmen. Je nach Aufgabe kommen dafür ein Reasoning-Modell, ein Tool, ein Workflow oder – bei offenem Lösungsweg und mehreren Entscheidungspunkten – ein Agentensystem infrage.
+Ein Standard-LLM arbeitet eher System-1-artig, denn es erzeugt die Antwort autoregressiv, also Schritt für Schritt Token für Token auf Grundlage des bisher erzeugten Textes, meist ohne eine ausdrücklich getrennte Planungs- oder Prüfphase. Nachrechnen, Abwägen und Gegenprüfen entstehen erst durch Zusatzmaßnahmen (System-2-artig). Je nach Aufgabe kommen dafür ein Reasoning-Modell, ein Tool, ein Workflow oder – bei offenem Lösungsweg und mehreren Entscheidungspunkten – ein Agentensystem infrage.
 
 Das klassische Beispiel zeigt den Unterschied: Ein Buch und ein Stift kosten zusammen 11 Euro, das Buch kostet 10 Euro mehr als der Stift. Die spontane Antwort lautet 1 Euro für den Stift. Erst die Rechnung ergibt 0,50 Euro für den Stift und 10,50 Euro für das Buch. Genau diese Aufgabe kennen aktuelle Modelle meist aus dem Training. Der Effekt zeigt sich deutlicher bei unbekannten Varianten mit ähnlicher Struktur, in denen die naheliegende Antwort falsch ist.
 
@@ -82,7 +85,7 @@ Das klassische Beispiel zeigt den Unterschied: Ein Buch und ein Stift kosten zus
 
 Für die Entscheidung heißt das: Reicht eine schnelle Antwort, genügt ein einzelner Aufruf. Braucht die Aufgabe Herleitung oder Überprüfung, kommt zuerst ein Reasoning-Modell oder Tool-Calling infrage. Ein Workflow passt, wenn die Schritte bekannt und kontrollierbar sind. Ein Agentensystem wird erst interessant, wenn der Lösungsweg offen ist, mehrere Entscheidungspunkte bestehen oder Werkzeuge situationsabhängig eingesetzt werden müssen. Zusätzliche Verarbeitung kostet Tokens und Latenz; jede Stufe muss sich also an der Aufgabe messen lassen.
 
-Grenze: Kahneman beschreibt selbst, dass System 2 die Vorschläge von System 1 oft nur durchwinkt. Das gilt auch für Reflection-Schritte. Die Aufforderung „prüfe deine Antwort“ ändert wenig, solange die Prüfung nur auf demselben Modellwissen beruht. Wirksam wird sie mit externen Anhaltspunkten wie einem Testlauf, einem Tool-Ergebnis oder einem Beleg aus RAG.
+**Grenze**: Kahneman beschreibt selbst, dass System 2 die Vorschläge von System 1 oft nur durchwinkt. Das gilt auch für Reflection-Schritte. Die Aufforderung „prüfe deine Antwort“ ändert wenig, solange die Prüfung nur auf demselben Modellwissen beruht. Wirksam wird sie mit externen Anhaltspunkten wie einem Testlauf, einem Tool-Ergebnis oder einem Beleg aus RAG.
 
 ## Die zweite Frage: Welche Agentenarchitektur passt dann?
 
@@ -159,11 +162,11 @@ flowchart TD
     AG3 -->|Nein| TC([Tool-Calling])
 ```
 
-## Praxisbeispiele für Ebene 1
+## Praxisbeispiele zur ersten Frage: Lösungsweg
 
 Eine E-Mail besser formulieren ist meistens eine Chat-Aufgabe. Rechnungen automatisch zu erfassen spricht für Workflow-Automation. Fragen über interne Handbücher passen häufig zu RAG. Eine Auswertung von 50.000 Kundenbewertungen gehört meist eher in Python und APIs als in einen frei laufenden Agenten. Ein interner HR-Assistent mit Oberfläche deutet eher auf eine Anwendung mit UI hin. Ein persönlicher Schreibassistent mit festem Stil kann dagegen gut als Custom GPT oder Skill funktionieren.
 
-## Praxisbeispiele für Ebene 2
+## Praxisbeispiele zur zweiten Frage: Agentenarchitektur
 
 | Aufgabe | Warum diese Wahl plausibel ist | Architektur |
 |---|---|---|

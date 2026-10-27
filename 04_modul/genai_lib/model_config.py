@@ -26,21 +26,21 @@ Verwendung:
     # Qualitätssteuerung über reasoning.effort (nicht temperature):
     llm = init_chat_model(JUDGE, model_kwargs={"reasoning": {"effort": "high"}})
 
-Rollen (Luna → Mini → Standard → Frontier):
-    BASELINE           — Baseline / Demo              (gpt-5.6-luna)
-    ROUTER             — Router / leichter Reasoner   (gpt-5.6-luna)
-    WORKER             — Worker / Synthese             (gpt-5.4-mini)
-    CODING             — Coding-Worker                 (gpt-5.4-mini)
-    JUDGE              — Judge / starker Reasoner      (gpt-5.4)
-    PLANNER            — Planner / Aufgabenzerlegung   (gpt-5.4)
-    WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-5.6-terra)
-    FRONTIER           — Frontier / maximale Qualität  (gpt-5.6-sol)
+Rollen (Luna → Terra → Sol → Astra):
+    BASELINE           — Baseline / Demo              (gpt-6-luna)
+    ROUTER             — Router / leichter Reasoner   (gpt-6-luna)
+    WORKER             — Worker / Synthese             (gpt-6.1-terra)
+    CODING             — Coding-Worker                 (gpt-6.1-terra)
+    JUDGE              — Judge / starker Reasoner      (gpt-6.1-sol)
+    PLANNER            — Planner / Aufgabenzerlegung   (gpt-6.1-sol)
+    WORKER_PREMIUM     — Worker / Synthese hochwertig  (gpt-6.1-sol)
+    FRONTIER           — Frontier / maximale Qualität  (gpt-6-astra)
     IMAGE_GENERATION   — Bildgenerierung               (gpt-image-2)
-    TRANSCRIPTION      — Audio-Transkription           (gpt-4o-mini-transcribe)
-    TRANSCRIPTION_SEGMENTS — Zeitstempel/Segmente      (whisper-1)
+    TRANSCRIPTION      — Audio-Transkription           (gpt-transcribe)
+    TRANSCRIPTION_SEGMENTS — Zeitstempel/Segmente      (whisper-1, veraltet)
     EMBEDDINGS         — Embeddings                    (text-embedding-3-small)
 
-Hinweis: GPT-5.x-Reasoning-Modelle nicht pauschal mit temperature konfigurieren.
+Hinweis: GPT-6-Reasoning-Modelle nicht pauschal mit temperature konfigurieren.
 Stattdessen reasoning.effort und text.verbosity verwenden.
 temperature ist nur in bestimmten Konfigurationen mit reasoning.effort="none" erlaubt.
 
@@ -52,41 +52,42 @@ die OpenAI-API angesprochen, weil LangChain nicht alle Medien-Endpunkte abbildet
 
 # --- Luna-Tier: günstig, schnell, einfache Aufgaben ---
 
-# Baseline / Demo — günstiges GPT-5.6-Modell für einfache Beispiele und Demos.
+# Baseline / Demo — günstiges GPT-6-Modell für einfache Beispiele und Demos.
 # reasoning.effort="none" oder "low". Deterministik über Prompts, nicht temperature.
-BASELINE = "openai:gpt-5.6-luna"
+BASELINE = "openai:gpt-6-luna"
 
 # Router / leichter Reasoner — einfache Routing- und Auswahlentscheidungen (2-3 Wege).
 # reasoning.effort="low" reicht für klare Routing-Entscheidungen.
-ROUTER = "openai:gpt-5.6-luna"
+ROUTER = "openai:gpt-6-luna"
 
-# --- Mini-Tier: ausgewogen, Standard-Workhorse ---
+# --- Terra-Tier: effizientes Workhorse für Standardaufgaben ---
 
 # Worker / Synthese — RAG-Synthese, strukturierte Ausgaben, Code.
 # reasoning.effort="low" bis "medium" je nach Ausgabe-Komplexität.
-WORKER = "openai:gpt-5.4-mini"
+WORKER = "openai:gpt-6.1-terra"
 
 # Coding-Worker — Code-Generierung, Refactoring, technische Agenten.
 # reasoning.effort="medium" bis "high" je nach Aufgabe.
-CODING = "openai:gpt-5.4-mini"
+CODING = "openai:gpt-6.1-terra"
 
-# --- Standard-Tier: starke Reasoning-Qualität ---
+# --- Sol-Tier: komplexe Aufgaben mit hohem Qualitätsanspruch ---
 
 # Judge / starker Reasoner — Supervisor, Security, Evaluation, Compliance.
 # reasoning.effort="high".
-JUDGE = "openai:gpt-5.4"
+JUDGE = "openai:gpt-6.1-sol"
 
 # Planner — Aufgabenzerlegung, Schritt-Planung, Agentic RAG.
 # reasoning.effort="medium" bis "high".
-PLANNER = "openai:gpt-5.4"
+PLANNER = "openai:gpt-6.1-sol"
 
 # Worker / Synthese (hochwertig) — komplexe RAG, finale Reports.
 # reasoning.effort="medium" bis "high".
-WORKER_PREMIUM = "openai:gpt-5.6-terra"
+WORKER_PREMIUM = "openai:gpt-6.1-sol"
 
-# Frontier / maximale Qualität — schwierige Coding-, Judge- und Agenten-Aufgaben.
+# --- Astra-Tier: maximale Qualität für die schwierigsten Aufgaben ---
+# Frontier — schwierige Coding-, Judge- und Agenten-Aufgaben.
 # reasoning.effort="high" bis "max" bewusst einsetzen.
-FRONTIER = "openai:gpt-5.6-sol"
+FRONTIER = "openai:gpt-6-astra"
 
 # --- Multimodal / Medien-Endpunkte ---
 
@@ -95,10 +96,10 @@ IMAGE_GENERATION = "gpt-image-2"
 
 # Audio-Transkription — direkte OpenAI Audio API.
 # Für normale Transkription aktueller und genauer als whisper-1.
-TRANSCRIPTION = "gpt-4o-mini-transcribe"
+TRANSCRIPTION = "gpt-transcribe"
 
-# Audio-Transkription mit Segmenten/Zeitstempeln.
-# whisper-1 unterstützt response_format="verbose_json" mit segments.
+# Legacy: Audio-Transkription mit Segmenten/Zeitstempeln.
+# whisper-1 ist bis 2027-02-26 abgekündigt; Zeitstempel brauchen eine Migration.
 TRANSCRIPTION_SEGMENTS = "whisper-1"
 
 # --- Embeddings ---

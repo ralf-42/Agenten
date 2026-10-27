@@ -22,18 +22,15 @@ Der **PMO-Assistent** dient als durchgehendes Beispiel. Ziele, Tagesstruktur und
 
 Die Dokumentation enthält mehr Inhalte als der Grundlagenpfad. Die folgende Einteilung zeigt, welche Texte das gemeinsame Ziel stützen und welche zur Erweiterung oder Vertiefung dienen.
 
-| Einordnung | Bedeutung | Typische Dokumente |
-|---|---|---|
-| **Grundlagen / Kern** | Gemeinsame fachliche Basis und zentrale Bausteine des PMO-Assistenten. | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, Sessions, Memory, HITL, Evaluation |
-| **Aufbau** | Optionale Erweiterungen, wenn die Grundlagen stehen und weitere Zeit oder ein passendes Lernziel vorhanden ist. | Agentic RAG, Security, Evaluation & Testing, Routing, Kostenkontrolle, Integration, Advanced RAG |
-| **Vertiefung** | Weiterführende Themen, die nach Bedarf ausgewählt werden. | UI, MCP, Skills, DeepAgents, Deployment, Monitoring, Capstone |
+| Einordnung            | Bedeutung                                                                                                         | Typische Dokumente                                                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Grundlagen / Kern** | Gemeinsame fachliche Basis und zentrale Bausteine des PMO-Assistenten.                                            | Orientierung, Agenten-Architekturen, Tool Use, State Management, LangChain, LangGraph, RAG, Sessions, Memory, HITL, Evaluation |
+| **Aufbau**            | *Optionale* Erweiterungen, wenn die Grundlagen stehen und weitere Zeit oder ein passendes Lernziel vorhanden ist. | Agentic RAG, Security, Evaluation & Testing, Routing, Kostenkontrolle, Integration, Advanced RAG                               |
+| **Vertiefung**        | Weiterführende Themen, die nach Bedarf ausgewählt werden.                                                         | UI, MCP, Skills, DeepAgents, Deployment, Monitoring, Capstone                                                                  |
 
-Planning bezeichnet hier sichtbare Arbeitsschritte wie Aufgabenplan, Tool-Auswahl, Quellenstatus oder Freigabeentscheidung. Eine verborgene Gedankenkette des Modells ist weder Lernziel noch Nachweis.
-## Themenwege zum Nachschlagen und Vertiefen
 
-Die Themenwege ordnen die Fachartikel nach typischen Fragen und Aufgaben.
 
-### Orientierung
+### Erste Orientierung
 
 Ein Gesamtbild fehlt noch, die Grundbegriffe sind unscharf oder Agenten werden noch stark mit Chatbots verwechselt.
 

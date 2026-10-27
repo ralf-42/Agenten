@@ -34,25 +34,25 @@ Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. F
 
 | Rolle                        | Konstante                                 | Modell                                | Einsatz                                               |
 | ---------------------------- | ----------------------------------------- | ------------------------------------- | ----------------------------------------------------- |
-| Baseline / Demo              | `BASELINE`                                | `openai:gpt-5.6-luna`                 | einfache Beispiele, erste Läufe, Kostenkontrolle      |
-| Router / leichter Reasoner   | `ROUTER`                                  | `openai:gpt-5.6-luna`                 | klare Auswahlentscheidungen mit wenigen Wegen         |
-| Worker / Synthese            | `WORKER`                                  | `openai:gpt-5.4-mini`                 | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
-| Coding-Worker                | `CODING`                                  | `openai:gpt-5.4-mini`                 | Codegenerierung, Refactoring, technische Agenten      |
-| Judge / starker Reasoner     | `JUDGE`                                   | `openai:gpt-5.4`                      | Bewertung, Evaluation, Supervisor, Compliance         |
-| Planner                      | `PLANNER`                                 | `openai:gpt-5.4`                      | Aufgabenzerlegung, Schrittplanung, Agentic RAG        |
-| Hochwertiger Worker          | `WORKER_PREMIUM`                          | `openai:gpt-5.6-terra`                | komplexe Synthese, finale Reports                     |
-| Frontier / maximale Qualität | `FRONTIER`                                | `openai:gpt-5.6-sol`                  | schwierige Coding-, Judge- und Agenten-Aufgaben       |
+| Baseline / Demo              | `BASELINE`                                | `openai:gpt-6-luna`                   | einfache Beispiele, erste Läufe, Kostenkontrolle      |
+| Router / leichter Reasoner   | `ROUTER`                                  | `openai:gpt-6-luna`                   | klare Auswahlentscheidungen mit wenigen Wegen         |
+| Worker / Synthese            | `WORKER`                                  | `openai:gpt-6.1-terra`                | RAG-Synthese, strukturierte Ausgaben, Standard-Worker |
+| Coding-Worker                | `CODING`                                  | `openai:gpt-6.1-terra`                | begrenzte Codegenerierung, Refactoring, technische Agenten |
+| Judge / starker Reasoner     | `JUDGE`                                   | `openai:gpt-6.1-sol`                  | Bewertung, Evaluation, Supervisor, Compliance         |
+| Planner                      | `PLANNER`                                 | `openai:gpt-6.1-sol`                  | Aufgabenzerlegung, Schrittplanung, Agentic RAG        |
+| Hochwertiger Worker          | `WORKER_PREMIUM`                          | `openai:gpt-6.1-sol`                  | komplexe Synthese, finale Reports                     |
+| Frontier / maximale Qualität | `FRONTIER`                                | `openai:gpt-6-astra`                  | schwierigste Coding-, Judge- und Agenten-Aufgaben     |
 | Bildgenerierung              | `IMAGE_GENERATION`                        | `gpt-image-2`                         | Bildgenerierung über die OpenAI Images API            |
-| Audio-Transkription          | `TRANSCRIPTION`, `TRANSCRIPTION_SEGMENTS` | `gpt-4o-mini-transcribe`, `whisper-1` | Transkription, mit Segmenten bei Bedarf Zeitstempel   |
+| Audio-Transkription          | `TRANSCRIPTION`                           | `gpt-transcribe`                      | Datei-Audiotranskription                              |
+| Audio-Transkription (Legacy) | `TRANSCRIPTION_SEGMENTS`                  | `whisper-1`                           | Segment-Zeitstempel; Migration bis 26.02.2027 nötig  |
 | Embeddings                   | `EMBEDDINGS`                              | `text-embedding-3-small`              | Retrieval, Chunk-Suche, Vektorindizes                 |
+
+GPT-6-Modelle mit Tool-Aufrufen werden mit `langchain-openai` ab Version 1.7.2 über die Responses API geroutet. Bei einer eigenen `ChatOpenAI`-Konfiguration kann `use_responses_api=True` explizit gesetzt werden. `whisper-1` wird am 26. Februar 2027 abgeschaltet; die Segment-Zeitstempel benötigen eine gesonderte Migration.
 
 Diese Rollen machen die Modellwahl überprüfbar. Entwickler vergleichen nicht beliebige Modellnamen, sondern entscheiden, ob ein Schritt Baseline, Router, Worker, Planner oder Judge ist. Die konkreten Modell-IDs sind Projektkonfiguration, nicht allgemeine Marktberatung. Vor produktiven Projekten muss die aktuelle Provider-Dokumentation geprüft werden, weil Modellverfügbarkeit, Preise und API-Parameter regelmäßig wechseln.
 
 > [!IMPORTANT] Standard vor Produktname<br>
 > In Notebooks werden nach Möglichkeit Rollen aus `model_config.py` verwendet. Harte Modellnamen stehen nur dort direkt im Notebook, wo ein bestimmter Endpunkt oder ein bewusstes Vergleichsexperiment gezeigt wird.
-
-> [!IMPORTANT] GPT-5.x-Konfiguration<br>
-> Modelle der GPT-5.x-Serie werden hier nicht pauschal mit `temperature` konfiguriert. Qualitätssteuerung erfolgt über präzise Prompts sowie bei Bedarf über `reasoning.effort` und `text.verbosity`.
 
 
 ## Modelsteckbrief - Beispiel
@@ -77,13 +77,13 @@ Der Kurs nutzt konkrete OpenAI-Modelle, aber die Entscheidung dahinter bleibt ro
 
 | Situation | Kurs-Default | Begründung |
 |---|---|---|
-| Grundlagen, Demos, einfache Klassifikation | `gpt-5.6-luna` | schnell, günstig, ausreichend für klare Aufgaben |
-| einfaches Routing | `gpt-5.6-luna` | gute Kosten-/Latenz-Balance bei wenigen Routen |
-| Worker, Synthese, strukturierte Ausgabe | `gpt-5.4-mini` | Standardmodell für produktivere Arbeitsschritte |
-| Coding-Worker | `gpt-5.4-mini` | geeignet für Code, Refactoring und technische Aufgaben |
-| Supervisor, Judge, Planner | `gpt-5.4` | stärkeres Reasoning für Entscheidungen mit Folgewirkung |
-| hochwertige Synthese oder finale Reports | `gpt-5.6-terra` | Premium-Worker bei hohem Qualitätsanspruch |
-| schwierige Agenten-, Coding- oder Judge-Aufgaben | `gpt-5.6-sol` | Frontier-Option bei hohen Qualitäts- oder Sicherheitsanforderungen |
+| Grundlagen, Demos, einfache Klassifikation | `gpt-6-luna` | schnell, günstig, ausreichend für klare Aufgaben |
+| einfaches Routing | `gpt-6-luna` | gute Kosten-/Latenz-Balance bei wenigen Routen |
+| Worker, Synthese, strukturierte Ausgabe | `gpt-6.1-terra` | effizientes Modell für Standardarbeitsschritte |
+| Coding-Worker | `gpt-6.1-terra` | begrenzte Code- und Refactoring-Aufgaben |
+| Supervisor, Judge, Planner | `gpt-6.1-sol` | starkes Reasoning mit Kostenfokus |
+| hochwertige Synthese oder finale Reports | `gpt-6.1-sol` | Premium-Worker bei hohem Qualitätsanspruch |
+| schwierigste Agenten-, Coding- oder Judge-Aufgaben | `gpt-6-astra` | Frontier-Option für maximale Qualität |
 
 ### Entscheidungsregeln
 
@@ -103,11 +103,11 @@ flowchart TD
     START --> W{"Worker, Code oder Synthese?"}
     START --> D{"Demo oder Grundlagen?"}
 
-    R -->|einfach| ROUTER["gpt-5.6-luna"]
-    R -->|kritisch| SUP["gpt-5.4"]
-    J --> JUDGE["gpt-5.4 oder gpt-5.6-sol"]
-    W --> WORKER["gpt-5.4-mini"]
-    D --> BASE["gpt-5.6-luna"]
+    R -->|einfach| ROUTER["gpt-6-luna"]
+    R -->|kritisch| SUP["gpt-6.1-sol"]
+    J --> JUDGE["gpt-6.1-sol oder gpt-6-astra"]
+    W --> WORKER["gpt-6.1-terra"]
+    D --> BASE["gpt-6-luna"]
 ```
 
 ## Provider-Mapping
@@ -116,14 +116,14 @@ Für providerneutrale Architekturentscheidungen bleibt die Rollenlogik erhalten:
 
 | Rolle                              | OpenAI                   | Mistral                                              | Gemini                        | Anthropic                       | Kommentar                                                           |
 | ---------------------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------- | ------------------------------- | ------------------------------------------------------------------- |
-| **Baseline / Demo**                | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | schnell, günstig, gut für Grundlagen                                |
-| **Router / leichter Reasoner**     | `gpt-5.6-luna`           | `mistral-small-latest`                               | `gemini-3-flash-preview`      | `claude-haiku-4-5`              | für Routing und einfache Auswahlentscheidungen                      |
-| **Judge / starker Reasoner**       | `gpt-5.4`                     | `magistral-medium-latest` oder `mistral-large-latest` | `gemini-3.1-pro-preview`     | `claude-opus-4-7`               | für Supervisor, Security, Bewertung                                 |
-| **Worker / Synthese**              | `gpt-5.4-mini`           | `mistral-medium-latest` oder `mistral-large-latest`  | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
-| **Worker / Synthese (hochwertig)** | `gpt-5.6-terra`          | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | hohe Qualität: komplexe RAG, finale Reports                         |
-| **Frontier / maximale Qualität**   | `gpt-5.6-sol`            | `mistral-large-latest`                               | `gemini-3.1-pro-preview`      | `claude-opus-4-7`               | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
-| **Coding-Worker**                  | `gpt-5.4-mini`           | `devstral-latest` oder `codestral-latest`            | `gemini-3.1-pro-preview`      | `claude-sonnet-4-6`             | Mistral mit spezialisierten Coding-Modellen im Vorteil              |
-| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                   | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier keinen direkten Standardersatz |
+| **Baseline / Demo**                | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | schnell, günstig, gut für Grundlagen                                |
+| **Router / leichter Reasoner**     | `gpt-6-luna`             | `mistral-small-2603`                                 | `gemini-3.5-flash-lite`       | `claude-haiku-5-5`              | für Routing und einfache Auswahlentscheidungen                      |
+| **Judge / starker Reasoner**       | `gpt-6.1-sol`            | `mistral-medium-3-5` (hohes `reasoning_effort`)      | `gemini-4-argon`              | `claude-opus-5-5`               | für Supervisor, Security, Bewertung                                 |
+| **Worker / Synthese**              | `gpt-6.1-terra`          | `mistral-medium-3-5`                                 | `gemini-3.8-flash`            | `claude-sonnet-5-5`             | Standard-Worker: starke Ausgabe, kostensensitiv                     |
+| **Worker / Synthese (hochwertig)** | `gpt-6.1-sol`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-opus-5-5`               | hohe Qualität: komplexe RAG, finale Reports                         |
+| **Frontier / maximale Qualität**   | `gpt-6-astra`            | `mistral-large-4` (Preview)                          | `gemini-4-argon`              | `claude-fable-5-1`              | maximale Qualität für schwierige Coding-, Judge- und Agenten-Aufgaben |
+| **Coding-Worker**                  | `gpt-6.1-terra`          | `mistral-medium-3-5` oder `codestral-2508`           | `gemini-3.8-flash`            | `claude-sonnet-5-5`             | Codestral für Code-Vervollständigung, Medium 3.5 für Coding-Agenten |
+| **Embeddings**                     | `text-embedding-3-small` | `mistral-embed`                                      | `gemini-embedding-2-preview`  | externer Provider nötig         | Anthropic bietet hier keinen direkten Standardersatz |
 
 > [!NOTE] Provider-Mapping ist Planung, keine automatische Migration<br>
 > Das Mapping ist funktionsorientiert, nicht benchmark-orientiert. Ein anderes Chat-Modell ersetzt nicht automatisch Embeddings, Logging, Kostenmodell oder API-spezifische Parameter. Chat-Modell und Embedding-Modell sind **zwei getrennte Entscheidungen** — ein Wechsel des einen zieht den anderen nicht nach sich.
@@ -148,25 +148,30 @@ OpenAI ist im Projekt derzeit der **Kurs-Default**:
 
 Mistral ist besonders interessant, wenn ein **breiter Single-Provider-Pfad** angestrebt wird:
 
-- Generalmodelle
-- Reasoning-Modelle (`magistral-*`)
-- Coding-Modelle (`devstral`, `codestral`)
+- Generalmodelle (`mistral-small-2603`, `mistral-medium-3-5`, `mistral-large-4`)
+- einstellbares Reasoning über `reasoning_effort` bei `mistral-medium-3-5`; `mistral-small-2603` vereint Instruct, Reasoning und Coding; die früheren `magistral-*`-Modelle sind abgekündigt
+- Coding-Modelle (`codestral-2508` für Code-Vervollständigung), `devstral-2512` ist abgekündigt und wird durch Medium 3.5 ersetzt
 - Audio-Modelle
-- Embeddings
+- Embeddings (`mistral-embed`)
 
 **Geeignet, wenn**
 - ein stärker providerneutraler oder europäischer Stack gewünscht ist
 - Audio, Coding und Embeddings möglichst in einer Produktwelt liegen sollen
 - man OpenAI nicht als alleinigen Standard setzen möchte
 
+**Einschränkung**
+- `mistral-large-4` ist aktuell Public Preview
+- `-latest`-Aliase können auf wechselnde Versionen zeigen; für stabile Läufe die konkrete Versions-ID wie `mistral-medium-3-5` verwenden
+
 #### Gemini
 
 Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
 
-- Flash-Modelle für günstige, schnelle Läufe (`gemini-3-flash-preview`)
-- Pro-Modelle für starke Reasoning- und Synthese-Aufgaben (`gemini-3.1-pro-preview`)
+- Flaggschiff für komplexe Reasoning- und Agenten-Aufgaben (`gemini-4-argon`)
+- Flash-Modelle für günstige, schnelle Läufe (`gemini-3.8-flash`, `gemini-3.5-flash-lite`)
 - Eigene Embedding-Modelle (`gemini-embedding-2-preview`)
-- Sehr langer Kontext (bis 2 Mio. Tokens) für Dokument-Handoffs
+- Langer Kontext (1 Mio. Tokens bei `gemini-4-argon`) für Dokument-Handoffs
+- Eingabe von Text, Bild, Video, Audio und PDF
 
 **Geeignet, wenn**
 - multimodale Inhalte (Bild, Video, Audio) im Agenten-System verarbeitet werden
@@ -174,16 +179,18 @@ Google Gemini eignet sich gut für **multimodale und skalierbare Workloads**:
 - Google Cloud / Vertex AI als Deployment-Plattform geplant ist
 
 **Einschränkung**
-- kein spezialisiertes Coding-Modell (Mistral `devstral` hat hier einen Vorteil)
-- Preview-Modelle können sich ohne Vorankündigung ändern
+- kein spezialisiertes Coding-Modell (Mistral `codestral-2508` hat hier einen Vorteil)
+- Preview-Modelle wie `gemini-embedding-2-preview` können sich ohne Vorankündigung ändern
+- ältere Modelle wie `gemini-3-pro-preview` und `gemini-2.0-flash` sind bereits abgeschaltet
 
 #### Anthropic
 
 Anthropic passt oft sehr gut auf die **Rollenlogik** des Kurses:
 
-- Haiku als schnelle Baseline (`claude-haiku-4-5`)
-- Sonnet als starker Standard-Worker (`claude-sonnet-4-6`)
-- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-4-7`)
+- Haiku als schnelle Baseline (`claude-haiku-5-5`)
+- Sonnet als starker Standard-Worker (`claude-sonnet-5-5`)
+- Opus als Judge / Supervisor / hochwertiger Worker (`claude-opus-5-5`)
+- Fable als Frontier-Modell für anspruchsvolles Reasoning (`claude-fable-5-1`)
 
 **Geeignet, wenn**
 - die Modellrollen aus dem OpenAI-Setup möglichst klar nachgebildet werden sollen
@@ -210,13 +217,13 @@ Für diese Rolle wird ein starkes Reasoning-Modell benötigt.
 Es bewertet Antworten, prüft Regelkonformität oder entscheidet zwischen Alternativen.
 
 **Geeignete Modelle je Provider:**
-- OpenAI: `gpt-5.4`
-- Mistral: `magistral-medium-latest`
-- Gemini: `gemini-3.1-pro-preview`
-- Anthropic: `claude-opus-4-7`
+- OpenAI: `gpt-6.1-sol`
+- Mistral: `mistral-medium-3-5`
+- Gemini: `gemini-4-argon`
+- Anthropic: `claude-opus-5-5`
 
 **Kurs-Default:**
-Im Kurs wird hierfür aktuell `gpt-5.4` verwendet.
+Im Kurs wird hierfür aktuell `gpt-6.1-sol` verwendet.
 ```
 
 Das erlaubt eine allgemeine Beschreibung, ohne die konkreten OpenAI-Implementierungen umzuschreiben.
@@ -317,20 +324,6 @@ Die Bewertung von KI-Modellen umfasst verschiedene Aspekte:
 - Einsatz von `JUDGE` zur Bewertung anderer Modellrollen
 - Automatische Erkennung von Fehlinformationen in KI-Antworten
 
-## Praktische Anwendungsbereiche
-Die Modellevaluierung und -auswahl findet in verschiedenen Szenarien Anwendung:
-
-### Kundenservice-Chatbots
-- Auswahl einer schnellen Baseline- oder Worker-Rolle mit guter Verständlichkeit und Mehrsprachigkeit
-- Bewertung nach Kundenzufriedenheit und Lösungsrate
-
-### Content-Erstellung
-- Nutzung einer passenden Worker-Rolle für Marketing, Social Media und Blogbeiträge
-- Bewertung nach Originalität, Engagement und Konversionsraten
-
-### Technische Assistenz
-- Einsatz von `CODING`, `PLANNER` oder `JUDGE` für Programmierung, Planung und Fehlerbewertung
-- Bewertung nach Codequalität und Lösungsgeschwindigkeit
 
 ## Modellrollen nach Aufgabe besetzen
 Modellauswahl ist keine Rangliste, sondern eine Architekturentscheidung. Ein günstiges Modell kann für Routing, Klassifikation oder einfache Tool-Auswahl besser passen als ein großes Reasoning-Modell; ein stärkeres Modell lohnt sich vor allem dort, wo Fehler teuer sind oder mehrere Teilschritte wirklich verstanden werden müssen.
@@ -347,6 +340,6 @@ Wenn ein Agent mehrere Rollen umfasst, sollte jede Rolle ein Modell erhalten, da
 
 ---
 
-**Version:** 1.6<br>
+**Version:** 1.7<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

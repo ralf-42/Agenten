@@ -20,6 +20,7 @@
             --openai: #10a37f;
             --google: #4285f4;
             --anthropic: #d4a574;
+            --mistral: #fa520f;
             --border: rgba(255,255,255,0.08);
             --glow: rgba(99, 102, 241, 0.3);
         }
@@ -447,10 +448,12 @@
         .provider-openai .provider-dot { background: var(--openai); }
         .provider-google .provider-dot { background: var(--google); }
         .provider-anthropic .provider-dot { background: var(--anthropic); }
+        .provider-mistral .provider-dot { background: var(--mistral); }
 
         .provider-openai { color: var(--openai); }
         .provider-google { color: var(--google); }
         .provider-anthropic { color: var(--anthropic); }
+        .provider-mistral { color: var(--mistral); }
 
         .result-name {
             font-family: 'Space Grotesk', sans-serif;
@@ -622,7 +625,7 @@
                 <h1 class="welcome-title">Welches KI-Modell passt zu dir?</h1>
                 <p class="welcome-desc">
                     Beantworte 5 einfache Fragen und erhalte eine personalisierte Empfehlung 
-                    der Top 3 KI-Modelle von OpenAI, Google und Anthropic.
+                    der Top 3 KI-Modelle von OpenAI, Anthropic, Google und Mistral.
                 </p>
                 <button class="btn btn-start" onclick="startQuiz()">
                     Los geht's! →
@@ -662,97 +665,144 @@
     </div>
 
     <script>
-        // Model Database with scoring weights
+        // Modelldatenbank mit Bewertungsgewichten (Stand Oktober 2026)
+        // Modell-IDs: OpenAI laut genai_lib.model_config, übrige Provider laut offizieller Dokumentation.
+        // Die Scores (0–10) sind eine redaktionelle Einschätzung für die Orientierung, keine Benchmark-Messung.
         const models = [
             {
-                id: 'gpt-4o',
-                name: 'GPT-4o',
+                id: 'gpt-6-luna',
+                name: 'GPT-6 Luna',
                 provider: 'openai',
                 providerName: 'OpenAI',
-                desc: 'Das vielseitigste Modell von OpenAI. Schnell, intelligent und multimodal – versteht Text, Bilder und Audio.',
-                tags: ['Allrounder', 'Multimodal', 'Schnell'],
-                scores: { creative: 8, code: 9, analysis: 9, simple: 7, complex: 9, speed: 8, quality: 9, budget: 6, vision: 10 }
+                desc: 'Günstigstes und schnellstes GPT-6-Modell. Passt zu Demos, Klassifikation und einfachem Routing.',
+                tags: ['Kursrolle: Baseline / Router', 'Günstig', 'Schnell'],
+                scores: { creative: 5, code: 6, analysis: 5, simple: 9, complex: 4, speed: 10, quality: 5, budget: 10, vision: 7 }
             },
             {
-                id: 'gpt-4o-mini',
-                name: 'GPT-4o mini',
+                id: 'gpt-6.1-terra',
+                name: 'GPT-6.1 Terra',
                 provider: 'openai',
                 providerName: 'OpenAI',
-                desc: 'Die kostengünstige Variante von GPT-4o. Ideal für einfachere Aufgaben mit gutem Preis-Leistungs-Verhältnis.',
-                tags: ['Günstig', 'Schnell', 'Einsteiger'],
-                scores: { creative: 6, code: 7, analysis: 6, simple: 9, complex: 5, speed: 10, quality: 6, budget: 10, vision: 8 }
+                desc: 'Effizientes Standardmodell für RAG-Synthese, strukturierte Ausgaben und Code.',
+                tags: ['Kursrolle: Worker / Coding', 'Ausgewogen', 'Strukturierte Ausgabe'],
+                scores: { creative: 7, code: 8, analysis: 7, simple: 8, complex: 6, speed: 8, quality: 7, budget: 8, vision: 8 }
             },
             {
-                id: 'o1',
-                name: 'o1',
+                id: 'gpt-6.1-sol',
+                name: 'GPT-6.1 Sol',
                 provider: 'openai',
                 providerName: 'OpenAI',
-                desc: 'OpenAIs Reasoning-Modell für komplexe Logik und wissenschaftliche Aufgaben. Denkt Schritt für Schritt.',
-                tags: ['Reasoning', 'Wissenschaft', 'Mathematik'],
-                scores: { creative: 5, code: 10, analysis: 10, simple: 4, complex: 10, speed: 3, quality: 10, budget: 2, vision: 0 }
+                desc: 'Starkes Reasoning für Bewertung, Planung und hochwertige Synthese. Gute Wahl, wenn Fehlentscheidungen teuer sind.',
+                tags: ['Kursrolle: Judge / Planner', 'Reasoning', 'Agenten'],
+                scores: { creative: 8, code: 9, analysis: 9, simple: 6, complex: 9, speed: 6, quality: 9, budget: 6, vision: 9 }
             },
             {
-                id: 'o3-mini',
-                name: 'o3-mini',
+                id: 'gpt-6-astra',
+                name: 'GPT-6 Astra',
                 provider: 'openai',
                 providerName: 'OpenAI',
-                desc: 'Kompaktes Reasoning-Modell mit gutem Kosten-Nutzen-Verhältnis für logische Aufgaben.',
-                tags: ['Reasoning', 'Günstig', 'Logik'],
-                scores: { creative: 4, code: 8, analysis: 8, simple: 5, complex: 8, speed: 6, quality: 8, budget: 7, vision: 0 }
+                desc: 'Das OpenAI-Flaggschiff für die schwierigsten Coding-, Judge- und Agenten-Aufgaben. Bewusst einsetzen, da teuer.',
+                tags: ['Kursrolle: Frontier', 'Maximale Qualität', 'Premium'],
+                scores: { creative: 9, code: 10, analysis: 10, simple: 4, complex: 10, speed: 3, quality: 10, budget: 2, vision: 9 }
             },
             {
-                id: 'claude-opus',
-                name: 'Claude Opus 4.5',
+                id: 'claude-haiku-5-5',
+                name: 'Claude Haiku 5.5',
                 provider: 'anthropic',
                 providerName: 'Anthropic',
-                desc: 'Das leistungsstärkste Claude-Modell. Exzellent bei komplexen Analysen und nuanciertem Schreiben.',
-                tags: ['Premium', 'Analyse', 'Schreiben'],
-                scores: { creative: 10, code: 9, analysis: 10, simple: 6, complex: 10, speed: 5, quality: 10, budget: 2, vision: 9 }
+                desc: 'Schnell und günstig für hohe Volumen: Klassifikation, Extraktion und Routing.',
+                tags: ['Schnell', 'Günstig', '1M Kontext'],
+                scores: { creative: 6, code: 7, analysis: 6, simple: 10, complex: 5, speed: 10, quality: 6, budget: 10, vision: 7 }
             },
             {
-                id: 'claude-sonnet',
-                name: 'Claude Sonnet 4.5',
+                id: 'claude-sonnet-5-5',
+                name: 'Claude Sonnet 5.5',
                 provider: 'anthropic',
                 providerName: 'Anthropic',
-                desc: 'Die ausgewogene Wahl: Hohe Qualität bei moderaten Kosten. Stark bei Texten und Code.',
+                desc: 'Die beste Kombination aus Tempo und Intelligenz. Stark bei Texten, Code und Tool Use.',
                 tags: ['Ausgewogen', 'Vielseitig', 'Code'],
                 scores: { creative: 9, code: 9, analysis: 8, simple: 7, complex: 8, speed: 7, quality: 9, budget: 6, vision: 9 }
             },
             {
-                id: 'claude-haiku',
-                name: 'Claude Haiku 4.5',
+                id: 'claude-opus-5-5',
+                name: 'Claude Opus 5.5',
                 provider: 'anthropic',
                 providerName: 'Anthropic',
-                desc: 'Schnell und kostengünstig. Perfekt für einfache Aufgaben und hohe Volumen.',
-                tags: ['Schnell', 'Günstig', 'Effizient'],
-                scores: { creative: 6, code: 6, analysis: 5, simple: 10, complex: 4, speed: 10, quality: 6, budget: 10, vision: 7 }
+                desc: 'Für lang laufende Agenten im Coding und in der Wissensarbeit. Der Standardstart für anspruchsvolle Workloads.',
+                tags: ['Agentisches Coding', 'Analyse', 'Schreiben'],
+                scores: { creative: 10, code: 10, analysis: 9, simple: 5, complex: 9, speed: 5, quality: 10, budget: 4, vision: 9 }
             },
             {
-                id: 'gemini-2-flash',
-                name: 'Gemini 2.0 Flash',
+                id: 'claude-fable-5-1',
+                name: 'Claude Fable 5.1',
+                provider: 'anthropic',
+                providerName: 'Anthropic',
+                desc: 'Das leistungsstärkste Claude-Modell für anspruchsvolles Reasoning und Aufgaben über viele Schritte.',
+                tags: ['Premium', 'Reasoning', 'Langzeit-Agenten'],
+                scores: { creative: 10, code: 10, analysis: 10, simple: 4, complex: 10, speed: 3, quality: 10, budget: 2, vision: 9 }
+            },
+            {
+                id: 'gemini-3.5-flash-lite',
+                name: 'Gemini 3.5 Flash-Lite',
                 provider: 'google',
                 providerName: 'Google',
-                desc: 'Googles schnellstes Modell mit hervorragender Performance und günstigem Preis.',
+                desc: 'Sehr schnelles und günstiges Gemini-Modell für einfache Aufgaben mit hohem Durchsatz.',
                 tags: ['Schnell', 'Multimodal', 'Günstig'],
-                scores: { creative: 7, code: 8, analysis: 7, simple: 9, complex: 7, speed: 10, quality: 7, budget: 9, vision: 9 }
+                scores: { creative: 5, code: 6, analysis: 5, simple: 9, complex: 4, speed: 10, quality: 5, budget: 10, vision: 8 }
             },
             {
-                id: 'gemini-1.5-pro',
-                name: 'Gemini 1.5 Pro',
+                id: 'gemini-3.8-flash',
+                name: 'Gemini 3.8 Flash',
                 provider: 'google',
                 providerName: 'Google',
-                desc: 'Extrem großes Kontextfenster (1M+ Tokens). Ideal für lange Dokumente und Code-Analyse.',
-                tags: ['Großer Kontext', 'Dokumente', 'Video'],
-                scores: { creative: 8, code: 8, analysis: 9, simple: 6, complex: 9, speed: 6, quality: 8, budget: 5, vision: 10 }
+                desc: 'Aktuelles Flash-Modell: schnell, multimodal und für viele Alltagsaufgaben leistungsfähig genug.',
+                tags: ['Schnell', 'Multimodal', 'Ausgewogen'],
+                scores: { creative: 7, code: 8, analysis: 7, simple: 8, complex: 7, speed: 9, quality: 7, budget: 8, vision: 10 }
             },
             {
-                id: 'gemini-1.5-flash',
-                name: 'Gemini 1.5 Flash',
+                id: 'gemini-4-argon',
+                name: 'Gemini 4 Argon',
                 provider: 'google',
                 providerName: 'Google',
-                desc: 'Schnelle und günstige Alternative mit großem Kontextfenster.',
-                tags: ['Schnell', 'Großer Kontext', 'Budget'],
-                scores: { creative: 6, code: 7, analysis: 6, simple: 8, complex: 6, speed: 9, quality: 6, budget: 9, vision: 8 }
+                desc: 'Googles Flaggschiff für komplexes Software Engineering, Mathematik, Wissenschaft und autonome Agenten. 1M Kontext, Text, Bild, Video und Audio als Eingabe.',
+                tags: ['Flaggschiff', 'Großer Kontext', 'Video & Audio'],
+                scores: { creative: 9, code: 10, analysis: 10, simple: 4, complex: 10, speed: 4, quality: 10, budget: 3, vision: 10 }
+            },
+            {
+                id: 'mistral-small-4',
+                name: 'Mistral Small 4',
+                provider: 'mistral',
+                providerName: 'Mistral',
+                desc: 'Hybridmodell, das Instruct, Reasoning und Coding vereint. Effizient und multimodal, mit europäischem Hintergrund.',
+                tags: ['Günstig', 'Schnell', 'Europäisch'],
+                scores: { creative: 6, code: 7, analysis: 6, simple: 9, complex: 5, speed: 9, quality: 6, budget: 9, vision: 7 }
+            },
+            {
+                id: 'mistral-medium-3-5',
+                name: 'Mistral Medium 3.5',
+                provider: 'mistral',
+                providerName: 'Mistral',
+                desc: 'Multimodales Modell für Agenten und Coding mit einstellbarem Reasoning über den Parameter reasoning_effort.',
+                tags: ['Agenten', 'Coding', 'Einstellbares Reasoning'],
+                scores: { creative: 7, code: 9, analysis: 8, simple: 7, complex: 8, speed: 7, quality: 8, budget: 7, vision: 8 }
+            },
+            {
+                id: 'mistral-large-4',
+                name: 'Mistral Large 4 (Preview)',
+                provider: 'mistral',
+                providerName: 'Mistral',
+                desc: 'Allzweckmodell mit offenen Gewichten für anspruchsvolle Aufgaben. Aktuell in Public Preview.',
+                tags: ['Open Weights', 'Allrounder', 'Preview'],
+                scores: { creative: 8, code: 8, analysis: 8, simple: 6, complex: 8, speed: 6, quality: 8, budget: 6, vision: 8 }
+            },
+            {
+                id: 'codestral',
+                name: 'Codestral',
+                provider: 'mistral',
+                providerName: 'Mistral',
+                desc: 'Spezialist für Code-Vervollständigung, Fill-in-the-Middle, Korrekturen und Testgenerierung.',
+                tags: ['Code-Spezialist', 'Schnell', 'Nur Text'],
+                scores: { creative: 3, code: 9, analysis: 5, simple: 7, complex: 4, speed: 9, quality: 6, budget: 8, vision: 0 }
             }
         ];
 

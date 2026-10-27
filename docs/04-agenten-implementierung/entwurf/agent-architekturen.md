@@ -462,22 +462,6 @@ Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als v
 | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html'                  | relative_url }}) | Wie arbeiten mehrere Agenten koordiniert zusammen?                             |
 | [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html'                     | relative_url }}) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet?            |
 
-## Kurs-Navigation
-
-Die Architekturfragen aus diesem Kapitel tauchen in der Praxis immer wieder auf. Diese Tabelle ist als Orientierung gedacht, nicht als Ersatz für den Kursüberblick.
-
-| Modulphase | Architekturfrage |
-|---|---|
-| KI-Agenten und Tool Use bis LangChain Erste Agenten | Wie werden Tools so beschrieben, getestet und genutzt, dass ein einzelner Agent kontrolliert handeln kann? |
-| Prompt Engineering für Agenten bis Structured Output | Wie werden Eingaben und Ausgaben so strukturiert, dass ein Agent verlässlich damit arbeiten kann? |
-| LCEL Chains | Wann reicht eine lineare Chain nicht mehr, und wann wird ein Graph sinnvoll? |
-| Warum LangGraph bis Tool Loop | Wie werden State, Routing, Schleifen und Abbruchbedingungen kontrollierbar modelliert? |
-| RAG Grundlagen bis RAG-Agent, Agentic RAG, Advanced RAG Pipeline Patterns | Wird Wissen als einfaches RAG-Tool, als Workflow-Schritt oder als agentische Recherchefähigkeit eingebunden? |
-| LangSmith Evaluations Basics, Agent Security Best Practices bis Model Routing und Cost Control | Wie werden Qualität, Sicherheit, Kosten und Risiko messbar statt nur gehofft? |
-| Sessions, Checkpointing und Memory | Welche Informationen gehören in den kurzfristigen Zustand, welche in Memory und welche gar nicht in den Kontext? |
-| Multi-Agent Patterns bis Reflection, Parallel, Hierarchy | Braucht das Problem wirklich mehrere spezialisierte Agenten, oder genügt ein einzelner Agent mit guten Tools? |
-| Agent Skill Compliance bis DeepAgent Multi-Skill | Was ist fachliche Fähigkeit, was ist Skill-Paket, und was gehört in den Harness um das Modell? |
-| Production Deployment | Kann die gewählte Architektur betrieben, beobachtet und im Capstone begründet werden? |
 
 ---
 

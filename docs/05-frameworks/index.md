@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frameworks
-nav_order: 11
+nav_order: 10
 has_children: true
 description: "LangChain, LangGraph und LangSmith als Kernframeworks; DeepAgents, ChromaDB und Kursbibliothek als optionale Ergänzungen"
 ---

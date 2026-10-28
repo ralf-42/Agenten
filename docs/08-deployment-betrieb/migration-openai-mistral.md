@@ -11,10 +11,8 @@ has_toc: true
 {: .no_toc }
 
 > [!NOTE] Kernfrage<br>
-> Welche Teile einer Agenten-Anwendung ändern sich beim Provider-Wechsel, und welche bleiben durch LangChain stabil?
+> Welche Teile einer Agenten-Anwendung ändern sich beim Provider-Wechsel, und welche bleiben durch LangChain stabil? Dargestellt am Beispiel ```01_notebook/```.
 
-> [!NOTE] Hinweis zu den Notebooks<br>
-> Die in `01_notebook/` genannten Module dienen hier nur als **anfassbare Beispiele**. Relevant ist nicht das einzelne Notebook, sondern **welche Art von Änderung** durch die bestehende LangChain-Struktur vereinfacht wird.
 
 ---
 

@@ -101,9 +101,9 @@ Drei Begriffe sind keine Übersetzungen etablierter Fachbegriffe, sondern kursin
 
 **Gate** ist ein Kontrollpunkt vor einer kritischen oder folgenreichen Ausgabe. Human-in-the-Loop ist eine mögliche Umsetzung eines Gates, aber nicht die einzige — ein Gate kann auch automatisiert prüfen (etwa ein Score-Schwellenwert) und nur bei Unterschreitung eskalieren.
 
-**Agenten-Vertrag** meint das feste Input/Output-Schema zwischen Agent und Tool oder zwischen Agent und Ausgabe — etwa ein Tool-Schema (`@tool`) oder ein Pydantic-Schema bei Structured Output. Der Begriff macht sichtbar, dass sich Agent und Schnittstelle aufeinander verlassen, ähnlich einem Vertrag zwischen zwei Parteien.
+**Agenten-Spezifikation** meint das feste Input/Output-Schema zwischen Agent und Tool oder zwischen Agent und Ausgabe — etwa ein Tool-Schema (`@tool`) oder ein Pydantic-Schema bei Structured Output. Der Begriff macht sichtbar, dass sich Agent und Schnittstelle aufeinander verlassen, weil beide Seiten die festgelegte Form einhalten müssen.
 
-Diese drei Begriffe stehen in engem Bezug zum Kursmotto **Planen, Handeln, Prüfen**: Ein Evidence Tool liefert die Grundlage für Planung und Tool-Wahl, ein Agenten-Vertrag macht Ausgaben und Zustände verlässlich greifbar, und ein Gate ist die konkrete Umsetzung von Prüfung vor der nächsten Aktion oder finalen Ausgabe.
+Diese drei Begriffe stehen in engem Bezug zum Kursmotto **Planen, Handeln, Prüfen**: Ein Evidence Tool liefert die Grundlage für Planung und Tool-Wahl, eine Agenten-Spezifikation macht Ausgaben und Zustände verlässlich greifbar, und ein Gate ist die konkrete Umsetzung von Prüfung vor der nächsten Aktion oder finalen Ausgabe.
 
 ## Abgrenzung zu verwandten Dokumenten
 

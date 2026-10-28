@@ -41,17 +41,21 @@ Bevor die Umsetzung startet, sollte das Ziel-Betriebsmodell festgelegt werden. S
 > [!NOTE] Architektur-Entscheidung<br>
 > Die gewählte Deployment-Variante beeinflusst frühzeitig Projektstruktur, CI/CD und Betriebsverantwortung.
 
-### Übersicht Deploymentvarianten für Python (2026)
+### Übersicht häufige Deploymentvarianten für Python
 
 Die passende Betriebsform hängt von Infrastruktur, Betriebsverantwortung und Skalierungsbedarf ab. Die Tabelle nennt typische Optionen, keine Rangfolge.
 
-| Variante | Beschreibung | Typische Werkzeuge |
-|---|---|---|
-| **Container** | Anwendung und Abhängigkeiten als Image bereitstellen | Docker, Podman, Kubernetes, Helm |
-| **Verwaltete Plattform** | Laufzeit und Teile des Betriebs an einen Plattformanbieter abgeben | Heroku, Render, Railway, Vercel, AWS Lambda |
-| **Virtuelle Umgebung** | Anwendung auf einem selbst verwalteten Server betreiben | `venv`, systemd, Supervisor, Gunicorn, NGINX |
-| **Standalone-Paket** | Anwendung als ausführbares Paket verteilen | PyInstaller, cx_Freeze, Nuitka |
-| **Systeminstallation** | Anwendung mit den Paketwerkzeugen des Zielsystems einrichten | `apt`, `yum`, cron, systemd |
+| Variante                 | Beschreibung                                                       | Typische Werkzeuge                           |
+| ------------------------ | ------------------------------------------------------------------ | -------------------------------------------- |
+| **Container**            | Anwendung und Abhängigkeiten als Image bereitstellen               | Docker, Podman, Kubernetes, Helm             |
+| **Verwaltete Plattform** | Laufzeit und Teile des Betriebs an einen Plattformanbieter abgeben | Heroku, Render, Railway, Vercel, AWS Lambda  |
+| **Virtuelle Umgebung**   | Anwendung auf einem selbst verwalteten Server betreiben            | `venv`, systemd, Supervisor, Gunicorn, NGINX |
+| **Standalone-Paket**     | Anwendung als ausführbares Paket verteilen                         | PyInstaller, cx_Freeze, Nuitka               |
+| **Systeminstallation**   | Anwendung mit den Paketwerkzeugen des Zielsystems einrichten       | `apt`, `yum`, cron, systemd                  |
+
+> [!NOTE] Image<br>
+>Ein **Image** (oft „Container-Image“ genannt) ist eine **vorgefertigte, unveränderbare Datei**, die den gesamten Code, die Laufzeitumgebung, Systemwerkzeuge, Bibliotheken und Einstellungen einer Anwendung enthält.
+
 
 **Praktische Einordnung:**
 - Container sind hilfreich, wenn Entwicklungs- und Laufzeitumgebung reproduzierbar sein müssen.

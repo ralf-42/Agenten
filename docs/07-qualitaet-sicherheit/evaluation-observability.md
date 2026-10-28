@@ -375,7 +375,7 @@ Für Evaluation ist das Harness die reproduzierbare Laufzeitumgebung: Sie hält 
 
 ## Praktische Umsetzung mit LangGraph, LangChain und LangSmith
 
-LangGraph hilft vor allem bei der klaren Struktur von Zuständen, Übergängen und Abbruchregeln. LangChain hilft bei Tool-Verträgen, strukturierten Outputs und Evaluatoren. LangSmith macht Durchläufe, Datasets und Vergleiche sichtbar.
+LangGraph hilft vor allem bei der klaren Struktur von Zuständen, Übergängen und Abbruchregeln. LangChain hilft bei Tool-Spezifikationen, strukturierten Outputs und Evaluatoren. LangSmith macht Durchläufe, Datasets und Vergleiche sichtbar.
 
 Ein einfacher Mindeststandard sieht so aus:
 

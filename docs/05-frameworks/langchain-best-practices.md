@@ -329,7 +329,7 @@ Die aktuelle Signatur orientiert sich an `langchain_core.tools.tool`. Für Beisp
 | `runnable` | Wandelt ein Runnable in ein Tool um. | Fortgeschritten; in Einsteigerbeispielen vermeiden. |
 | `description` | Explizite Tool-Beschreibung. | Überschreibt Docstring-Beschreibung; präzise Einsatzgrenzen formulieren. |
 | `return_direct` | Tool-Ergebnis direkt zurückgeben statt Agent-Loop fortsetzen. | Nur nutzen, wenn das Tool bereits die finale Antwort liefert. |
-| `args_schema` | Explizites Pydantic- oder JSON-Schema für Eingaben. | Für robuste Tool-Verträge und komplexere Eingaben. |
+| `args_schema` | Explizites Pydantic- oder JSON-Schema für Eingaben. | Für robuste Tool-Spezifikationen und komplexere Eingaben. |
 | `infer_schema` | Schema automatisch aus Funktionssignatur ableiten. | Standard ist `True`; nur bewusst deaktivieren. |
 | `response_format` | `"content"` oder `"content_and_artifact"`. | `content_and_artifact` nur nutzen, wenn zusätzlich ein Artefakt zurückgegeben wird. |
 | `parse_docstring` | Docstring für Parameterbeschreibung parsen. | Nur bei konsequent gepflegten Google-Style-Docstrings. |

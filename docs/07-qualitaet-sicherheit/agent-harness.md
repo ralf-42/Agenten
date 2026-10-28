@@ -95,7 +95,7 @@ Weiterführend: [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/
 
 ### Tools und Schnittstellen: Was kann der Agent tun?
 
-Tools geben dem Agenten Zugriff auf Daten, APIs, Dateien, Browser oder Rechenumgebungen. Das Harness kontrolliert diesen Zugriff über klare Tool-Verträge, Parameterprüfung, Whitelists, Berechtigungen und Fehlerbehandlung.
+Tools geben dem Agenten Zugriff auf Daten, APIs, Dateien, Browser oder Rechenumgebungen. Das Harness kontrolliert diesen Zugriff über klare Tool-Spezifikationen, Parameterprüfung, Whitelists, Berechtigungen und Fehlerbehandlung.
 
 Besonders wichtig ist die Unterscheidung zwischen lesenden und schreibenden Aktionen. Schreibaktionen, externe Kommunikation und irreversible Vorgänge brauchen eine stärkere Kontrollstufe als eine reine Recherche. Idempotenz, Transaktions-IDs, Dry-Run-Modi und Rollback reduzieren Schäden bei Wiederholungen oder Teilfehlern.
 

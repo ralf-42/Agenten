@@ -2,7 +2,7 @@
 layout: default
 title: Produktionsreife Agentenanwendung
 parent: "Deployment & Betrieb"
-nav_order: 2
+nav_order: 3
 description: Praktische Anleitung für den Weg vom Jupyter Notebook zur produktionsreifen Agentenanwendung
 has_toc: true
 ---

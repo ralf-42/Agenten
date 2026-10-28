@@ -2,7 +2,7 @@
 layout: default
 title: PMO-Assistent
 parent: "Deployment & Betrieb"
-nav_order: 5
+nav_order: 4
 description: "Praxisprojekt: PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true
 ---

@@ -134,8 +134,6 @@ prompt = ChatPromptTemplate([
     ("human", "Beantworte die folgende Frage in 3-5 Sätzen: {frage}")
 ])
 
-# ❌ Anti-Pattern (veraltet): ChatPromptTemplate.from_messages([...])
-
 # Später in einer Chain oder direkt:
 rendered_messages = prompt.format_messages(frage="Was ist ein LLM?")
 rendered_messages

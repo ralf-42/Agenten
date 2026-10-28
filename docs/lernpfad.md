@@ -88,8 +88,8 @@ Ein System soll nicht nur funktionieren, sondern auch unter realen Bedingungen b
 Empfohlener Einstieg:
 
 1. [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }})
-2. [Vom Modell zum Produkt: LangChain-Ökosystem]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
-3. [Aus Entwicklung ins Deployment]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }})
+2. [Vom Modell zur Anwendung]({{ '/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html' | relative_url }})
+3. [Produktionsreife Agentenanwendung]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }})
 4. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
 5. [Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
 6. [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }})

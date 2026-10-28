@@ -2,7 +2,7 @@
 layout: default
 title: Vom Modell zur Anwendung
 parent: "Deployment & Betrieb"
-nav_order: 4
+nav_order: 2
 description: Wie LangChain, LangGraph und LangSmith aus einem Modell eine betreibbare Agentenanwendung machen
 has_toc: true
 ---
@@ -218,7 +218,7 @@ Das LangChain-Ökosystem ist nicht die einzige Lösung. Alternativen mit ähnlic
 
 ## 10. Vom Überblick zur Umsetzung
 
-Diese Seite ordnet die Rollen von LangChain, LangGraph und LangSmith ein. Die technische Überführung eines Notebooks in eine deploybare Anwendung steht in [Aus Entwicklung ins Deployment](./aus-entwicklung-ins-deployment.html). Anforderungen an Infrastruktur und Schichten beschreibt der [Minimum Viable Agent Stack](./minimum-viable-agent-stack.html); Testsets und laufende Qualitätsmessung behandelt [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}).
+Diese Seite ordnet die Rollen von LangChain, LangGraph und LangSmith ein. Die technische Überführung eines Notebooks in eine deploybare Anwendung steht in [Produktionsreife Agentenanwendung](./aus-entwicklung-ins-deployment.html). Anforderungen an Infrastruktur und Schichten beschreibt der [Minimum Viable Agent Stack](./minimum-viable-agent-stack.html); Testsets und laufende Qualitätsmessung behandelt [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}).
 
 ---
 

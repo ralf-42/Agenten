@@ -4,15 +4,13 @@ title: LangSmith Best Practices
 parent: LangSmith
 grand_parent: Frameworks
 nav_order: 2
-description: "Tracing, Evaluation und Monitoring mit LangSmith: LANGSMITH_* Variablen, selektives Tracing, with_config und Troubleshooting"
+description: "Tracing, Evaluation und Prompt-Verwaltung mit LangSmith"
 has_toc: true
 ---
 
 # LangSmith Best Practices
 
-> **Modulbezogene Namen in Kurs-Notebooks:** LangSmith-Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen erhalten die Modul-ID als Prefix nach dem Muster `m##_snake_case` (z. B. `LANGSMITH_PROJECT="m05_multi_tool_agents"`, `run_name="m05_kap4_multitooltrace"`). `show_trace(...)` verwendet denselben Projektnamen. Setze jeweils die Modul-ID des aktuellen Notebooks ein. Tags und Metadaten bleiben fachliche Labels.
-
-**Projekt:** KI-Agenten mit LangChain 1.1+
+LangSmith macht Ausführungen von LangChain- und LangGraph-Anwendungen nachvollziehbar. Traces zeigen einzelne Modell- und Tool-Schritte; Datasets und Evaluatoren helfen, Änderungen systematisch zu beurteilen.
 
 ---
 
@@ -22,817 +20,98 @@ has_toc: true
 1. TOC
 {:toc}
 
-## Überblick / Zweck
-
-**LangSmith** ist die **Observability-Plattform** für LangChain/LangGraph-Anwendungen und bildet die **dritte Säule** des LangChain-Ökosystems:
-
-- **LangChain** - Struktur (Chains, Tools, Prompts)
-- **LangGraph** - Kontrolle (Workflows, State Machines, Multi-Agent)
-- **LangSmith** - Observability (Monitoring, Debugging, Evaluation)
-
-> **📘 Referenz:** Siehe `docs/08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.md` für das Zusammenspiel aller drei Komponenten.
-
 ---
 
-## Wann nutzen?
+## Tracing einrichten
 
-### Das Problem ohne LangSmith
-```python
-# ❌ OHNE LangSmith: Keine Transparenz
-agent = create_agent(model=llm, tools=tools)
-response = agent.invoke({"messages": [...]})
+Aktiviere Tracing über Umgebungsvariablen. Lege API-Schlüssel im Secret Store oder in der lokalen Umgebung ab und schreibe sie nicht in Notebooks oder Quellcode.
 
-# Was ist passiert? Wir wissen nicht:
-# - Welche Tools wurden aufgerufen?
-# - Wie viele Tokens wurden verbraucht?
-# - Wie lange hat jeder Schritt gedauert?
-# - Gab es Fehler im Tool-Aufruf?
-```
-
-### Die Lösung mit LangSmith
-```python
-# ✅ MIT LangSmith: Vollständige Observability für Anwendungs- und Produktionsläufe
+~~~python
 import os
+
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_API_KEY"] = "your-api-key"
+os.environ["LANGSMITH_PROJECT"] = "m05_agent_tracing"
+# LANGSMITH_API_KEY aus einer sicheren Umgebungsvariable laden
+~~~
 
-agent = create_agent(model=llm, tools=tools)
-response = agent.invoke({"messages": [...]})
+Für Accounts außerhalb der US-Region wird zusätzlich der passende LANGSMITH_ENDPOINT gesetzt. Für EU-Accounts lautet er https://eu.api.smith.langchain.com. Die Konfiguration sollte vor den ersten Modell- oder Agent-Aufrufen verfügbar sein.
 
-# Automatisch geloggt in LangSmith:
-# - Kompletter Trace mit allen Schritten
-# - Token-Nutzung pro Call
-# - Latenz pro Komponente
-# - Fehler-Details mit Stack-Trace
-```
+Nach der Einrichtung werden LangChain- und LangGraph-Aufrufe im angegebenen Projekt erfasst. Im Trace lassen sich Eingaben, Ausgaben, verschachtelte Runs, Laufzeiten und Fehlermeldungen untersuchen.
 
-## Standards / Kern-Features
+## Namen und Run-Konfiguration
 
-### 1. Tracing & Debugging
+Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen folgen im Kurs dem Muster m##_snake_case. Verwende die Modul-ID des jeweiligen Notebooks. Tags und Metadaten ergänzen fachliche Filter.
 
-**Was es macht:**
-- Erfasst jeden Schritt einer LLM-Interaktion
-- Visualisiert den kompletten Ablauf (Tree-View)
-- Zeigt Input/Output jeder Komponente
-
-**Wann nutzen:**
-- ✅ Debugging komplexer Agent-Workflows
-- ✅ Verstehen, warum ein Agent falsch reagiert
-- ✅ Performance-Bottlenecks identifizieren
-
-**Best Practice:**
-```python
-# Automatisches Tracing für Debugging und Production
-os.environ["LANGSMITH_TRACING"] = "true"
-
-# Traces automatisch im LangSmith Dashboard sichtbar
-```
-
-**Trace-Filter:**
-- Filter nach User-ID, Session-ID
-- Suche nach Fehlern
-- Zeitbasierte Filterung
-
-**`.with_config()` – Traces benennen und taggen:**
-
-Mit `.with_config()` lassen sich einzelne Chains und Aufrufe in LangSmith klar identifizieren.
-
-**Pattern: Konfiguration vorab in Variable – dann `.with_config(**run_cfg)` anwenden:**
-
-```python
-# 1. Tracing-Konfiguration vorab festlegen
-run_cfg = {
-    "run_name": "m05_kap6_basic_chain",  # Anzeigename im Trace-Tree
-    "tags":     ["lcel", "chain"] # Filterbar im Dashboard
+~~~python
+run_config = {
+    "run_name": "m05_support_agent",
+    "tags": ["support", "demo"],
+    "metadata": {"module": "m05"},
 }
 
-# 2. with_config() anwenden
-chain = (prompt | llm | parser).with_config(**run_cfg)
-result = chain.invoke({"input": "..."})
-```
-
-**`invoke(..., config=...)` vs. `.with_config(...)`:**
-
-| Variante | Scope | Best Practice |
-|---|---|---|
-| `chain.invoke(input, config=run_cfg)` | Nur dieser eine Run. Das Runnable bleibt unverändert. | Für Experimente, Einzeltests, Ad-hoc-Metadaten und Vergleichsläufe. |
-| `chain.with_config(**run_cfg)` | Neue konfigurierte Runnable-Instanz. Spätere Aufrufe übernehmen diese Basis-Konfiguration. | Für wiederverwendbare Chains, feste Pipeline-Namen und stabile Tags. |
-
-```python
-# Runtime-Konfiguration: nur dieser Invoke-Aufruf.
-result = chain.invoke(
-    {"input": "..."},
-    config={
-        "run_name": "m05_kap6_einzelrun",
-        "tags": ["experiment"],
-        "metadata": {"variante": "a"},
-    },
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "Wie ist der Status meiner Anfrage?"}]},
+    config=run_config,
 )
+~~~
 
-# Runnable-Konfiguration: diese Chain-Variante bleibt benannt.
-traced_chain = chain.with_config(
-    run_name="m05_kap6_basic_chain",
-    tags=["lcel", "chain"],
-    metadata={"komponente": "prompt-llm-parser"},
-)
-result = traced_chain.invoke({"input": "..."})
-```
+Der Wert von LANGSMITH_PROJECT benennt das Zielprojekt, zum Beispiel m05_agent_tracing. Verwende denselben Namen auch dann, wenn ein Notebook mit show_trace(...) auf das Projekt verweist.
 
-Beide Wege sind komplementär: `.with_config(...)` setzt die Basis-Konfiguration einer Chain-Variante, `invoke(..., config=...)` eignet sich für laufzeitspezifische Angaben pro Aufruf.
+## Traces verantwortungsvoll nutzen
 
-**Wann `.with_config()` einsetzen:**
-- ✅ Mehrere Chains im selben Projekt – damit Traces unterscheidbar sind
-- ✅ Parallele Chains (`RunnableParallel`) – jede Teilkette separat benennen
-- ✅ Streaming-Aufrufe – auch `stream()` wird getraced
-- ❌ Reine Python-Funktionen ohne LLM-Aufruf (`RunnableLambda` ohne LLM)
-- ❌ Einführungsbeispiele, die LCEL-Syntax lehren – Codeklarheit geht vor
+Prüfe im Trace den Ablauf vom Eingang bis zur Antwort: Prompt, Modellaufrufe, Tool-Eingaben und -Ergebnisse sowie Laufzeit. Das macht Fehlerfälle nachvollziehbar und zeigt, an welcher Stelle eine Änderung die Qualität oder Geschwindigkeit beeinflusst.
 
-**Namenskonvention (Empfehlung):**
-```python
-# Kurs-Notebooks: Modul_Kapitel_ChainTyp
-run_name="m05_kap3_basicchain"
-run_name="m05_kap5_parallelchain"
-run_name="m05_kap7_stream"
+Vor dem Erfassen produktiver Daten sind Datenschutz und Zugriffsrechte festzulegen. Entferne oder maskiere personenbezogene und vertrauliche Inhalte, wenn sie für die Analyse nicht benötigt werden. Tags und Metadaten sollten keine sensiblen Werte enthalten.
 
-# Produktion: Anwendung_Funktion
-run_name="m05_chatbot_retrieval"
-run_name="m05_classifier_intent"
-```
+## Evaluation mit Datasets
 
-**Tags-Konvention (Empfehlung):**
-```python
-# Kurs-Notebooks
-tags=["lcel", "parallel"]
+Ein Dataset hält repräsentative Eingaben und, wenn verfügbar, Referenzantworten oder erwartete Aktionen fest. Offline-Evaluationen vergleichen Änderungen vor einer Bereitstellung; Online-Evaluationen beobachten ausgewählte Produktionsläufe.
 
-# Produktion
-tags=["production", "rag", "v2"]
-```
+Ein schlanker Ablauf:
 
-> ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* –
-> nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig
-> demonstrieren (z. B. in einem eigenen „LangSmith"-Kapitel), in den
-> vorherigen LCEL-Beispielen weglassen.
+1. Typische und wichtige Grenzfälle als Dataset-Beispiele sammeln.
+2. Passende Kriterien festlegen, etwa Korrektheit, Quellenbezug oder erwartete Tool-Aufrufe.
+3. Eine Baseline ausführen und Ergebnisse speichern.
+4. Änderungen mit denselben Beispielen und Kriterien vergleichen.
+5. Aus Produktionsbeobachtungen neue, geprüfte Beispiele ergänzen.
 
-**`.func()` – Tool-Tests ohne Tracing:**
+Der Evaluator richtet sich nach der Aufgabe: Regeln eignen sich für überprüfbare Formate und Aktionen; ein LLM-as-judge kann semantische Qualität beurteilen. Ergebnisse sollten zusammen mit dem Dataset und der verwendeten Experimentbezeichnung nachvollziehbar bleiben.
 
-Für isolierte Funktionstests (`@tool`-dekorierte Funktionen) die Python-Funktion direkt über `.func()` aufrufen – vollständig am Runnable-Framework vorbei, kein Trace entsteht.
+## Prompts verwalten
 
-```python
-from langchain_core.tools import tool
+LangSmith kann Prompts versionieren und über Umgebungen wie Staging und Production bereitstellen. Benenne Prompts nach dem Kursmuster m##_snake_case, prüfe Änderungen mit repräsentativen Beispielen und ordne eine geprüfte Version der passenden Umgebung zu.
 
-@tool
-def tage_bis_termin(tage_bis_stichtag: int, vorlauf: int) -> int:
-    """Berechnet die verbleibenden Tage nach Abzug des Vorlaufs."""
-    return tage_bis_stichtag - vorlauf
+## Praxischeck
 
-# ✅ Kein Tracing – direkte Python-Funktion
-ergebnis = tage_bis_termin.func(tage_bis_stichtag=21, vorlauf=7)
+- Projekt-, Run- und Dataset-Namen folgen m##_snake_case.
+- API-Schlüssel kommen aus einer sicheren Umgebung.
+- Projekte trennen Module und unterschiedliche Auswertungszwecke.
+- Traces enthalten nur Daten, die für Beobachtung und Fehlersuche erforderlich sind.
+- Datasets decken typische Eingaben und relevante Grenzfälle ab.
+- Vergleiche verwenden dieselben Beispiele und klar beschriebene Kriterien.
+- Prompt-Versionen werden geprüft und einer Umgebung zugeordnet.
 
-# ⚠️ Mit Tracing – geht durch das Runnable-Framework
-ergebnis = tage_bis_termin.invoke({"tage_bis_stichtag": 21, "vorlauf": 7})
-```
+## Weiterführende Ressourcen
 
-**Wann `.func()` einsetzen:**
-- ✅ Isolierte Unit-Tests von Tool-Funktionen (Kapitel vor der LangSmith-Demo)
-- ✅ Wenn Tracing-Unterdrückung via Context Manager nicht zuverlässig funktioniert
-- ❌ Nicht verwenden, wenn das Runnable-Verhalten (Schema-Validierung, Callbacks) getestet werden soll
-
-> 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
-
----
-
-
-### 2. Monitoring & Observability
-
-**Was es macht:**
-- Production-Monitoring in Echtzeit
-- Dashboards für Metriken (Latenz, Fehlerrate, Token-Nutzung)
-- Alerts bei Anomalien
-
-**Wann nutzen:**
-- ✅ **Obligatorisch** für alle Production-Deployments
-- ✅ Monitoring von SLAs (Response-Zeit, Fehlerrate)
-- ✅ Frühwarnung bei Problemen
-
-**Best Practice:**
-```python
-# LangSmith in Production aktivieren
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "m05_production"  # Projekt-Name
-
-# Automatisches Monitoring aller Requests
-```
-
-**Key Metrics:**
-- **Latency** - P50, P95, P99 Response-Zeiten
-- **Error Rate** - Fehlerrate pro Endpoint
-- **Token Usage** - Kosten pro Request
-- **Throughput** - Requests/Minute
-
----
-
-### 3. Cost Tracking & Budget Management
-
-**Was es macht:**
-- Token-Nutzung pro Request tracken
-- Budget-Limits setzen
-- Kosten-Alerts konfigurieren
-
-**Wann nutzen:**
-- ✅ Budget-Kontrolle für Production-Apps
-- ✅ Kosten-Optimierung identifizieren
-- ✅ Abrechnungs-Transparenz
-
-**Best Practice:**
-```python
-# Automatisches Token-Tracking (keine Konfiguration nötig)
-# LangSmith erfasst Token-Nutzung aller unterstützten Provider
-
-# Im Dashboard:
-# - Token-Nutzung pro Tag/Woche/Monat
-# - Kosten-Breakdown nach Modell
-# - Budget-Alerts konfigurieren
-```
-
-**Unterstützte Provider:**
-- OpenAI, Anthropic, Google, Cohere, etc.
-- Automatische Kosten-Berechnung basierend auf Pricing
-
-**Kosten über gesamten Agent-Stack tracken** *(neu: Feb 2026)*
-
-Seit Februar 2026 bietet LangSmith eine **unified Cost View** über den gesamten Agent-Workflow – nicht nur LLM-Calls, sondern alle Komponenten (Tools, externe APIs etc.):
-
-```python
-# Custom Cost Metadata für nicht-LLM-Komponenten
-from langsmith import Client
-client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
-
-# Kosten für externe API-Calls, Tools etc. manuell loggen
-client.update_run(
-    run_id=run_id,
-    extra={"cost": {"total_cost": 0.005, "currency": "USD"}}
-)
-```
-
-
-
-### 4. Datasets & Evaluation
-
-**Was es macht:**
-- Test-Datasets für LLM-Anwendungen erstellen
-- Automatisierte Evaluierung vor Deployment
-- Benchmark-Vergleiche über Zeit
-
-**Wann nutzen:**
-- ✅ Regression-Tests nach Code-Änderungen
-- ✅ A/B-Testing von Prompts
-- ✅ Qualitätssicherung vor Production
-
-**Best Practice:**
-```python
-from langsmith import Client
-
-client = Client()
-
-# Dataset erstellen
-dataset = client.create_dataset("customer-support-qa")
-client.create_examples(
-    inputs=[{"question": "Wie kann ich meine Bestellung stornieren?"}],
-    outputs=[{"answer": "Sie können..."}],
-    dataset_id=dataset.id
-)
-
-# Evaluation ausführen
-from langsmith.evaluation import evaluate
-
-results = evaluate(
-    lambda inputs: agent.invoke(inputs),
-    data="m05_customer_support_qa",
-    evaluators=[accuracy_evaluator],
-)
-```
-
-**Evaluator-Typen:**
-- **Accuracy** - Korrektheit der Antwort
-- **Relevance** - Relevanz zum Kontext
-- **Hallucination** - Erfundene Fakten erkennen
-- **Custom** - Eigene Evaluierungs-Logik
-
-**Baseline-Experiment fixieren** *(neu: Feb 2026)*
-
-Seit Februar 2026 kann ein beliebiges Experiment als **Baseline** fixiert werden. Alle nachfolgenden Runs werden automatisch dagegen verglichen – kein manuelles Auswählen mehr nötig:
-
-```python
-# Im LangSmith Dashboard: Experiments → Run auswählen → "Pin as Baseline"
-# Automatischer Vergleich aller nachfolgenden evaluate()-Runs
-results_v2 = evaluate(
-    lambda inputs: agent_v2.invoke(inputs),
-    data="m05_customer_support_qa",
-    evaluators=[accuracy_evaluator],
-    experiment_prefix="m05_v2_test",  # Automatisch gegen fixierte Baseline verglichen
-)
-```
-
----
-
-### 5. Prompt Hub
-
-**Was es macht:**
-- Zentrale Verwaltung von Prompts
-- Versionierung von Prompts
-- Prompt-Sharing im Team
-
-**Wann nutzen:**
-- ✅ Prompt-Iterationen versionieren
-- ✅ Prompt-Wiederverwendung über Projekte
-- ✅ Team-Kollaboration
-
-**Best Practice:**
-```python
-from langsmith import Client
-
-client = Client()
-
-# Prompt aus Hub laden
-prompt = client.pull_prompt("owner/m##_my_prompt")
-
-# Mit Agent verwenden
-agent = create_agent(
-    model=llm,
-    tools=tools,
-    system_prompt=prompt
-)
-
-# Prompt im Hub aktualisieren
-client.push_prompt("owner/m##_my_prompt", object=prompt)
-```
-
-> ⚠️ **Korrektur:** `from langchain import hub` schlägt unter LangChain 1.0+ mit `ImportError` fehl. Immer `Client().pull_prompt()` / `Client().push_prompt()` verwenden.
-
----
-
-## Quick Start: Globales LangSmith-Tracing aktivieren
-
-> Dieses Quick Start zeigt globales Tracing für Anwendungs- und Produktionsläufe. Für Kurs-Notebooks gilt standardmäßig `LANGSMITH_TRACING="false"`; dort nur ausgewählte Referenzläufe mit `tracing_context(enabled=True)` erfassen. Siehe [Selektives Tracing in Kurs-Notebooks](#selektives-tracing-in-kurs-notebooks).
-
-### 1. API-Key generieren
-```bash
-# https://smith.langchain.com/settings
-# → API Keys → Create API Key
-```
-
-### 2. Environment-Variablen setzen
-```python
-import os
-
-# LangSmith aktivieren – MUSS vor allen LangChain-Imports stehen!
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_API_KEY"] = "lsv2_pt_..."  # Dein API-Key
-os.environ["LANGSMITH_PROJECT"] = "m05_my_project"   # Optional: Projekt-Name
-
-# EU-Account: Endpoint explizit setzen (ebenfalls vor Imports!)
-os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
-# APAC-Account (Asia-Pacific):
-# os.environ["LANGSMITH_ENDPOINT"] = "https://ap.api.smith.langchain.com"
-```
-
-> ⚠️ **Reihenfolge-Regel:** `LANGSMITH_ENDPOINT` und `LANGSMITH_TRACING` müssen gesetzt sein, **bevor** `langchain`, `langsmith` oder `genai_lib` importiert werden. Der LangChain-Tracer liest die Env-Vars beim ersten Import – späteres Setzen wird ignoriert.
->
-> **In Notebooks:** Env-Vars in die Setup-Cell (ganz oben), vor alle anderen Imports.
-
-**Unterschiedliche Gültigkeit der Env-Vars:**
-
-| Variable | Wann gelesen | Dynamisch änderbar? |
-|---|---|---|
-| `LANGSMITH_ENDPOINT` | Einmalig beim **ersten LangChain-Import** | ❌ Nein – muss vor Imports stehen |
-| `LANGSMITH_TRACING` | Einmalig beim **ersten LangChain-Import** | ❌ Nein – muss vor Imports stehen |
-| `LANGSMITH_PROJECT` | Beim **ersten Trace** – dann gecacht via `lru_cache` | ⚠️ Nur wenn **vor dem ersten Trace** gesetzt |
-
-> ⚠️ **LangSmith-SDK Verhalten:** `get_tracer_project()` in `langsmith/utils.py` ist mit `@functools.lru_cache(maxsize=1)` dekoriert. Der Projektnamen wird beim ersten Trace eingefroren. `os.environ`-Änderungen **nach** dem ersten Trace werden ignoriert.
->
-> **Empfehlung:** `LANGSMITH_PROJECT` in der **Setup-Cell** korrekt setzen – dann funktioniert es zuverlässig. Für einzelne Referenzläufe bei deaktiviertem globalem Tracing den weiter unten beschriebenen expliziten Tracing-Kontext verwenden.
-
-**Notebook-Pattern (Kurs):**
-```python
-# ── Setup-Cell: Modulname direkt setzen (vor allen Imports!) ─────────────
-os.environ["LANGSMITH_TRACING"] = "false"
-os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
-os.environ["LANGSMITH_PROJECT"]    = "m04_structured_output"  # Modul-ID + Modulname
-from langsmith import tracing_context
-
-# ── LangSmith-Abschnitt: nur noch anzeigen ───────────────────────────────
-import os
-print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
-
-# ── Nur den ausgewählten Referenzlauf erfassen ────────────────────────────
-run_cfg = {"run_name": "m04_kap6_structured_trace", "tags": ["structured_output"]}
-chain = llm.with_structured_output(MyModel).with_config(**run_cfg)
-with tracing_context(enabled=True):
-    result = chain.invoke("...")
-```
-
-**Projektname-Konvention:**
-
-| LangSmith-Feld | Kontext / Empfehlung | Beispiel |
-|---------|-----------|---------|
-| `LANGSMITH_PROJECT` | Kurs-Notebook (Setup) | `"m04_default"` |
-| `LANGSMITH_PROJECT` | Kurs-Notebook (LangSmith-Abschnitt) | `"m04_structured_output"` |
-| `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
-| `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
-
-❌ **Nicht empfohlen:** Ein gemeinsames Projekt für mehrere Module (z. B. `"KI_Agenten_Kurs"`) – Traces aus verschiedenen Modulen vermischen sich, die Filterung wird aufwändiger.
-
-### Selektives Tracing in Kurs-Notebooks
-
-In frühen Kurs-Notebooks erzeugen mehrere `invoke()`-Aufrufe schnell unübersichtliche Traces. Für solche Fälle bleibt das globale Tracing zunächst deaktiviert; nur der ausgewählte Referenzlauf wird explizit erfasst. Dafür den LangSmith-Kontext `tracing_context` verwenden (offiziell empfohlene Variante für selektives Tracing) – nicht `LANGSMITH_TRACING` nach der Agent-Erstellung umschalten.
-
-```python
-import os
-from langsmith import tracing_context
-
-# In der Setup-Cell, vor den LangChain-Imports:
-os.environ["LANGSMITH_TRACING"] = "false"
-os.environ["LANGSMITH_PROJECT"] = "m02_erste_agenten"
-os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
-
-run_cfg = {
-    "run_name": "m02_kap5_agenttrace",
-    "tags": ["agent", "langsmith"],
-}
-
-# Nur dieser Lauf erscheint im LangSmith-Projekt (Projekt, run_name und tags
-# kommen aus der Setup-Cell bzw. aus run_cfg):
-with tracing_context(enabled=True):
-    result = agent.with_config(**run_cfg).invoke({"messages": [...]})
-```
-
-Das Muster eignet sich für Lehr- und Debugging-Notebooks: Setup, Credentials und Endpoint stehen weiterhin am Anfang; der Kontext wird erst unmittelbar um den gewünschten Lauf geöffnet. Für Produktionsbetrieb bleibt das automatische globale Tracing mit `LANGSMITH_TRACING="true"` die passende Voreinstellung.
-
-### 3. Code ausführen (keine Änderungen nötig!)
-```python
-from langchain.chat_models import init_chat_model
-from langchain.agents import create_agent
-
-llm = init_chat_model("openai:gpt-6-luna")
-agent = create_agent(model=llm, tools=[...])
-
-# Automatisch geloggt in LangSmith!
-response = agent.invoke({"messages": [...]})
-```
-
-### 4. Im Dashboard anschauen
-- https://smith.langchain.com/
-- → Projects → "my-project"
-- → Traces anschauen
-
----
-
-## Production-Checkliste
-
-Vor dem Wechsel in Production:
-
-### MUST-HAVES
-- [ ] **LangSmith aktiviert** (`LANGSMITH_TRACING=true`)
-- [ ] **Project Name gesetzt** (`LANGSMITH_PROJECT=m24_production`)
-- [ ] **API-Key konfiguriert** (Environment Variable oder Secret Manager)
-- [ ] **Monitoring-Dashboard** für Production-Projekt erstellt
-- [ ] **Alerts konfiguriert** (Fehlerrate, Latenz, Budget)
-
-### EMPFOHLEN
-- [ ] **Dataset für Regression-Tests** erstellt
-- [ ] **Baseline-Evaluation** durchgeführt (vor Deployment)
-- [ ] **Budget-Limits** gesetzt
-- [ ] **Team-Zugriff** konfiguriert
-- [ ] **Prompt Hub** für kritische Prompts verwendet
-- [ ] **Rate-Limit-Verhalten (HTTP 429) geprüft** — das SDK (`langsmith` ≥ 0.14) wiederholt 429/5xx automatisch und beachtet `Retry-After`; eigene API-Aufrufe brauchen eigenes Backoff
-
-### OPTIONAL
-- [ ] **Custom Evaluators** für domänen-spezifische Metriken
-- [ ] **Automated Testing** im CI/CD-Pipeline integriert
-- [ ] **Weekly Review** der Traces und Metrics
-
----
-
-## Integration mit LangChain/LangGraph
-
-### LangChain Chains
-```python
-# Automatisches Tracing für LCEL Chains
-chain = prompt | llm | parser
-
-# Jeder Schritt wird automatisch geloggt:
-# 1. Prompt-Formatierung
-# 2. LLM-Call
-# 3. Output-Parsing
-response = chain.invoke({"input": "..."})
-```
-
-### LangGraph Workflows
-```python
-from langgraph.graph import StateGraph
-
-workflow = StateGraph(State)
-workflow.add_node("classify", classify_node)
-workflow.add_node("respond", respond_node)
-# ... weitere Nodes
-
-agent = workflow.compile()
-
-# LangSmith zeigt kompletten Graph-Ablauf:
-# - Welche Nodes wurden besucht
-# - Conditional Edge Decisions
-# - State-Übergänge
-response = agent.invoke({"messages": [...]})
-```
-
-### Multi-Agent Systems
-```python
-# Supervisor-Agent Pattern
-supervisor = create_agent(model=llm, tools=[...])
-worker1 = create_agent(model=llm, tools=[...])
-worker2 = create_agent(model=llm, tools=[...])
-
-# LangSmith zeigt Hierarchie:
-# - Supervisor-Entscheidungen
-# - Worker-Aufrufe
-# - Inter-Agent-Kommunikation
-```
-
----
-
-## Best Practices für verschiedene Use Cases
-
-### RAG-Systeme
-**LangSmith-Features nutzen:**
-- ✅ **Tracing** - Retrieval-Qualität analysieren (Welche Dokumente wurden abgerufen?)
-- ✅ **Evaluation** - Dataset mit Ground-Truth-Antworten
-- ✅ **Monitoring** - Retrieval-Latenz, LLM-Latenz separat tracken
-
-```python
-# RAG mit LangSmith
-retriever = vectorstore.as_retriever()
-rag_chain = (
-    {"context": retriever, "question": RunnablePassthrough()}
-    | prompt
-    | llm
-    | parser
-)
-
-# Im Trace sichtbar:
-# - Welche Dokumente retrieved wurden
-# - Relevanz-Scores
-# - LLM-Antwort basierend auf Kontext
-```
-
-### Multi-Tool Agents
-**LangSmith-Features nutzen:**
-- ✅ **Tracing** - Tool-Auswahl-Entscheidungen verstehen
-- ✅ **Debugging** - Fehlerhafte Tool-Calls identifizieren
-- ✅ **Cost Tracking** - Kosten pro Tool-Call
-
-```python
-@tool
-def expensive_api_call(query: str) -> str:
-    """Teurer API-Call (trackt Kosten automatisch)."""
-    return api.call(query)
-
-agent = create_agent(model=llm, tools=[expensive_api_call, ...])
-
-# Im Trace:
-# - Anzahl Tool-Calls
-# - Erfolgsrate pro Tool
-# - Kosten pro Tool
-```
-
-### Production-Chatbots
-**LangSmith-Features nutzen:**
-- ✅ **Monitoring** - User-Zufriedenheit (via Custom-Feedback)
-- ✅ **Alerts** - Fehlerrate > 5%
-- ✅ **Budget** - Kosten-Limit pro User/Session
-
-```python
-# Feedback-Integration
-from langsmith import Client
-client = Client()
-
-def chatbot_with_feedback(message: str, session_id: str):
-    response = agent.invoke({"messages": [message]})
-
-    # User-Feedback erfassen (optional)
-    # client.create_feedback(run_id=..., score=1.0)
-
-    return response
-```
-
----
-
-## Troubleshooting
-
-### Problem: Traces landen in falschem Projekt (`default` statt Modulname)
-
-**Ursache:** `LANGSMITH_PROJECT="m04_default"` wurde in der Setup-Cell gesetzt (oder gar nicht), und spaeter im Notebook per `os.environ` ueberschrieben.
-
-**Symptom:** `os.environ["LANGSMITH_PROJECT"] = "m04_structured_output"` gibt den richtigen Wert aus, aber Traces landen trotzdem in `default`.
-
-**Lösung:** Modulnamen direkt in der Setup-Cell setzen – **vor** allen LangChain-Imports:
-```python
-# ✅ Einmal korrekt in der Setup-Cell – funktioniert zuverlässig
-os.environ["LANGSMITH_PROJECT"] = "m04_structured_output"
-
-# ❌ Nach dem ersten Trace überschreiben – wird ignoriert
-os.environ["LANGSMITH_PROJECT"] = "m04_structured_output"  # zu spät
-```
-
-**Alternative** (wenn der Projektname für einen einzelnen Lauf gesetzt werden soll): `ls.tracing_context(project_name=...)`:
-```python
-import langsmith as ls
-with ls.tracing_context(project_name="m04_structured_output"):
-    result = chain.invoke("...")
-```
-
-> ⚠️ **SDK 0.8.3 Breaking Change:** `ttl_seconds` wurde entfernt. Neu: `idle_ttl_seconds` (Inaktivitäts-TTL) und `delete_after_stop_seconds` (TTL nach Stop).
-
----
-
-### Problem: Traces erscheinen nicht
-**Lösung:**
-```python
-# 1. Prüfe Environment-Variablen
-print(os.getenv("LANGSMITH_TRACING"))  # Sollte "true" sein
-print(os.getenv("LANGSMITH_API_KEY"))     # Sollte gesetzt sein
-
-# 2. Prüfe Internet-Verbindung zu LangSmith
-# 3. Prüfe API-Key Gültigkeit (https://smith.langchain.com/settings)
-```
-
----
-
-### Problem: 403 Forbidden beim Tracing (EU-Account)
-
-**Ursache:** Ein EU-API-Key wird gegen den US-Default-Endpoint `api.smith.langchain.com` verwendet, weil `LANGSMITH_ENDPOINT` fehlt oder **nach** dem ersten LangChain-Import gesetzt wird.
-
-**Symptom:**
-```
-WARNING:langsmith.client:Failed to multipart ingest runs:
-HTTPError('403 Client Error: Forbidden for url: https://api.smith.langchain.com/runs/multipart')
-```
-
-**Lösung:**
-```python
-import os
-
-# ✅ Env-Vars ZUERST – vor allen Imports
-os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_API_KEY"] = "lsv2_eu_pt_..."
-
-# ✅ Client immer mit explizitem api_url
-from langsmith import Client
-client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
-
-# ✅ Erst dann LangChain importieren
-from langchain.chat_models import init_chat_model
-```
-
-**Anti-Patterns:**
-```python
-# ❌ Client ohne URL → greift auf US-Default zurück
-client = Client()
-
-# ❌ Env-Var nach LangChain-Import setzen → wird ignoriert
-from langchain.chat_models import init_chat_model   # Tracer bereits init!
-os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"  # Zu spät
-```
-
-### Problem: Zu viele Traces (Kosten-Kontrolle)
-**Lösung:**
-```python
-# Sampling aktivieren (nur 10% der Requests tracken)
-os.environ["LANGSMITH_SAMPLING_RATE"] = "0.1"
-
-# Oder: Nur für Development tracken
-if os.getenv("ENVIRONMENT") == "development":
-    os.environ["LANGSMITH_TRACING"] = "true"
-```
-
-### Problem: Sensible Daten in Traces
-**Lösung:**
-```python
-# Anonymisierung aktivieren – direkt am LangSmith-Client
-from langsmith import Client
-
-client = Client(
-    hide_inputs=True,  # Input verstecken
-    hide_outputs=True  # Output verstecken
-)
-
-# Oder: Custom Redaction-Logik
-```
-
----
-
-## Weitere Ressourcen
-
-### Offizielle Dokumentation
-- [LangSmith Docs](https://docs.smith.langchain.com/)
+- [LangSmith: Tracing mit LangChain](https://docs.langchain.com/langsmith/trace-with-langchain)
+- [LangSmith: Evaluationstypen](https://docs.langchain.com/langsmith/evaluation-types)
+- [LangSmith: Prompts verwalten](https://docs.langchain.com/langsmith/manage-prompts)
 - [LangSmith Python SDK](https://github.com/langchain-ai/langsmith-sdk)
-- [Release Notes](https://docs.smith.langchain.com/release-notes)
-
-### Interne Dokumentation
-- [Vom Modell zum Produkt: LangChain-Ökosystem](../08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html)
-- [LangChain 1.0 Must-Haves](./langchain-best-practices.html)
-
-### Related Commands
-- `/check-langsmith-changelog` - Prüft neue LangSmith-Features
-- `/sync-must-haves` - Synchronisiert alle Dokumentationen
+- [LangChain Best Practices](./langchain-best-practices.html)
+- [LangGraph Best Practices](./langgraph-best-practices.html)
+- [Vom Modell zur Anwendung](../08-deployment-betrieb/vom-modell-zum-produkt-langchain-oekosystem.html)
 
 ---
-
-## Changelog
-
-### Version 2.7 (2026-10-21)
-- ✅ Production-Checkliste um HTTP-429-/`Retry-After`-Punkt ergänzt; Sync mit `_docs/LangSmith_Best_Practices.md` v2.5
-
-### Version 2.6 (2026-10-20)
-- ✅ Kurs-Notebooks: `LANGSMITH_TRACING="false"` als Standard; ausgewählte Referenzläufe mit `tracing_context(enabled=True)`
-- ✅ Globale Aktivierung in Quick Start und Debugging-Beispiel ausdrücklich auf Anwendungs- und Produktionsläufe begrenzt
-
-### Version 2.5 (2026-10-06)
-- ✅ Selektives Tracing in Kurs-Notebooks: `tracing_context(enabled=True)` (langsmith) ersetzt `tracing_v2_enabled(...)` als kanonisches Muster
-- ✅ Projektname und Tags kommen aus Setup-Cell bzw. `run_cfg`, nicht mehr aus dem Kontext
-
-### Version 2.4 (2026-10-03)
-- ✅ Selektives Tracing für Kurs-Notebooks mit `tracing_v2_enabled(...)` als kanonisches Muster ergänzt
-- ✅ Älteren `ls.tracing_context()`-Workaround als Kompatibilitätslösung gekennzeichnet
-- ✅ Empfehlung in Richtung Einsteiger-Dokumentation verlinkt
-
-### Version 2.3 (2026-09-29)
-- 🐛 **KORREKTUR:** Prompt-Hub-Beispiel (`from langchain import hub`) korrigiert auf `Client().pull_prompt()`/`push_prompt()` — alter Import schlägt unter LangChain 1.0+ mit `ImportError` fehl
-- ✅ Sync mit `_docs/LangSmith_Best_Practices.md` v2.3
-
-### Version 2.1 (2026-05-13)
-- 🆕 **APAC Region** — Endpoint `https://ap.api.smith.langchain.com` für Asia-Pacific-Accounts dokumentiert
-- 🆕 **SDK 0.8.3 Breaking Change**: `ttl_seconds` → `idle_ttl_seconds` + `delete_after_stop_seconds`
-- 🆕 **Strands OTel Exporter** (SDK 0.7.38) — OpenTelemetry-Integration im Python SDK
-- 🆕 **Profile-Loading** (SDK 0.8.1) — Profile-basiertes Laden von Credentials
-
-### Version 1.9 (2026-03-04)
-- ✅ BREAKING: Alle `LANGCHAIN_*` Env-Vars → `LANGSMITH_*` (LANGSMITH_TRACING, LANGSMITH_API_KEY, LANGSMITH_PROJECT, LANGSMITH_ENDPOINT, LANGSMITH_SAMPLING_RATE)
-- ✅ NEU: Baseline-Experiment fixieren (Feb 2026) in Datasets & Evaluation
-- ✅ NEU: Track Costs Across Agent Stack (Feb 2026) in Cost Tracking
-
-### Version 1.8 (2026-03-03)
-- ✅ VEREINFACHT: Modulnamen direkt in Setup-Cell setzen – kein `tracing_context` nötig
-- ✅ Tabelle korrigiert: `LANGSMITH_PROJECT` nur zuverlässig wenn vor erstem Trace gesetzt
-- ✅ Troubleshooting: älteren `tracing_context`-Workaround für Edge Cases dokumentiert (kein Kernel-Neustart)
-
-### Version 1.7 (2026-03-03)
-- ✅ KORREKTUR: `LANGSMITH_PROJECT` ist **nicht** dynamisch – `get_tracer_project()` wird via `lru_cache` gecacht
-- ✅ Historisches Notebook-Pattern: `ls.tracing_context(project_name=...)` als Workaround dokumentiert
-- ✅ Troubleshooting: Neuer Eintrag "Projektnamen-Wechsel wird ignoriert" mit Workaround via `cache_clear()`
-
-### Version 2.0 (2026-05-01)
-- ✅ Aktualisierung der produktionsnahen LangSmith-Hinweise
-
-### Version 1.6 (2026-03-03)
-- ✅ Tracing & Debugging: `.with_config()` – Zwei-Schritt-Pattern dokumentiert (`run_cfg = {...}` → `.with_config(**run_cfg)`)
-
-### Version 1.5 (2026-03-03)
-- ✅ Quick Start: Unterschiedliche Gültigkeit der Env-Vars dokumentiert (`LANGSMITH_PROJECT` dynamisch änderbar, `ENDPOINT`/`TRACING_V2` nicht)
-- Empfohlenes Notebook-Pattern: `LANGSMITH_PROJECT="m04_default"` in der Setup-Cell, Modulname vor LangSmith-Abschnitt
-- ✅ Projektname-Konvention um Kurs-Setup-Zeile erweitert
-
-### Version 1.4 (2026-03-02)
-- ✅ Tracing & Debugging: `.func()` – Tool-Tests ohne Tracing ergänzt (inkl. Abgrenzung zu `.invoke()`)
-
-### Version 1.3 (2026-03-02)
-- ✅ Quick Start: Projektname-Konvention (modulspezifisch statt generisch) ergänzt
-
-### Version 1.2 (2026-03-02)
-- ✅ Tracing & Debugging: `.with_config()` – Best Practice mit Namens- und Tags-Konvention ergänzt
-
-### Version 1.1 (2026-03-02)
-- ✅ Quick Start: EU-Endpoint (`LANGSMITH_ENDPOINT`) und Reihenfolge-Regel ergänzt
-- ✅ Troubleshooting: Neuer Eintrag "403 Forbidden / EU-Account-Konflikt"
-
-### Version 1.0 (2026-01-02)
-- ✅ Initiale Dokumentation
-- ✅ 5 Kern-Features dokumentiert (Tracing, Datasets, Monitoring, Cost Tracking, Prompt Hub)
-- ✅ Quick Start Guide
-- ✅ Production-Deployment Checklist
-- ✅ Integration mit LangChain/LangGraph
-- ✅ Best Practices für RAG, Agents, Chatbots
-- ✅ Troubleshooting-Sektion
 
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
-| [LangChain Best Practices](langchain-best-practices.html) | Welche LangChain-Patterns erzeugen sinnvolle LangSmith-Traces? |
-| [LangGraph Best Practices](langgraph-best-practices.html) | Wie instrumentiere ich LangGraph-Graphen für LangSmith-Monitoring? |
+| [LangChain Best Practices](langchain-best-practices.html) | Wie werden Modelle, Tools und Agenten aufgebaut? |
+| [LangGraph Best Practices](langgraph-best-practices.html) | Wie wird der Kontrollfluss eines zustandsbehafteten Workflows definiert? |
 
 ---
 
-**Version:** 2.8<br>
+**Version:** 2.0<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

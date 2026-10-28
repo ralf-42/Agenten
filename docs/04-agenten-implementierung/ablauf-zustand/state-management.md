@@ -32,7 +32,7 @@ Ein einfacher Chat mit einer einzelnen Anfrage braucht kaum mehr als die letzte 
 
 Genau das leistet State Management. Es bündelt die relevanten Daten eines Workflows in einer zentralen Struktur, die von Schritt zu Schritt mitgeführt wird. Ohne diese Struktur gehen Informationen verloren, werden versehentlich überschrieben oder lassen sich später kaum noch debuggen.
 
-Typischer Fehler: State nur als technische Nebensache zu behandeln. In der Praxis entscheidet die Qualität des State-Designs oft darüber, ob ein LangGraph-Workflow nachvollziehbar oder fragil wird.
+**Typischer Fehler:** State nur als technische Nebensache zu behandeln. In der Praxis entscheidet die Qualität des State-Designs oft darüber, ob ein LangGraph-Workflow nachvollziehbar oder fragil wird.
 
 ## Ein einfaches Beispiel
 
@@ -176,7 +176,7 @@ graph.add_edge("process", END)
 app = graph.compile()
 ```
 
-Typischer Fehler: Den gesamten State zurückzugeben oder ihn direkt zu mutieren, obwohl sich nur ein Feld geändert hat. Dadurch wird der Code unnötig unübersichtlich und kann spätere Checkpoints oder Reducer-Mechanismen stören.
+**Typischer Fehler:** Den gesamten State zurückzugeben oder ihn direkt zu mutieren, obwohl sich nur ein Feld geändert hat. Dadurch wird der Code unnötig unübersichtlich und kann spätere Checkpoints oder Reducer-Mechanismen stören.
 
 ## Ein mehrstufiger Analyse-Workflow
 
@@ -264,7 +264,7 @@ class GoodState(TypedDict):
     messages: Annotated[list, add_messages]
 ```
 
-Grenze: Auch ein sauberer State ersetzt keine gute Workflow-Logik. Er sorgt nur dafür, dass die Logik nachvollziehbar und stabil mit Daten arbeiten kann.
+**Grenze:** Auch ein sauberer State ersetzt keine gute Workflow-Logik. Er sorgt nur dafür, dass die Logik nachvollziehbar und stabil mit Daten arbeiten kann.
 
 ## Best Practices für Entwicklerprojekte
 

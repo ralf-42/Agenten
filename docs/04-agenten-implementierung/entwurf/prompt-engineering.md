@@ -139,31 +139,36 @@ Ein guter System-Prompt beantwortet vier Fragen:
 | **Wie?** | Verhaltensregeln und Tonalität |
 | **Was nicht?** | Explizite Einschränkungen |
 
+Bei längeren System-Prompts helfen XML-ähnliche Tags, diese Bereiche sichtbar voneinander zu trennen. Verwende einheitliche, aussagekräftige Namen wie `<role>`, `<instructions>`, `<tools>`, `<examples>` oder `<constraints>`. Die Tags markieren die Funktion eines Abschnitts; sie sind keine besondere Syntax und machen eine Anweisung nicht automatisch verbindlicher. Kurze Prompts brauchen diese zusätzliche Gliederung meist nicht.
+
 ### Beispiel: Vollständiger Agent-System-Prompt
 
 ```python
-system_prompt = """Du bist der PMO-Assistent für Projekt Kompass.
-
-ROLLE:
+system_prompt = """<role>
+Du bist der PMO-Assistent für Projekt Kompass.
 - Unterstützt die Projektleitung bei Briefings, Entscheidungen und Risiken
 - Erste Anlaufstelle für Fragen zum Projektstand
 - Eskalation an die Projektleitung bei kritischen Fällen
+</role>
 
-FÄHIGKEITEN:
+<capabilities>
 - Zugriff auf die Projektdokumente (Tool: search_project_documents)
 - Aufgaben-Erstellung im Projektboard (Tool: create_task)
 - Prüfung des Risikostatus (Tool: check_risk_status)
+</capabilities>
 
-VERHALTENSREGELN:
+<behavior_rules>
 - Antworte präzise und belege jede Aussage mit einer Quelle
 - Frage nach, wenn Informationen fehlen
 - Mache Unsicherheit sichtbar, statt zu raten
 - Verwende Fachbegriffe nur mit Erklärung
+</behavior_rules>
 
-EINSCHRÄNKUNGEN:
+<constraints>
 - Keine Budgetzusagen oder Vertragsänderungen
 - Keine Entscheidungen ohne Freigabe der Projektleitung
 - Bei Datenschutzfragen immer an die Datenschutzbeauftragten eskalieren
+</constraints>
 """
 ```
 
@@ -430,7 +435,7 @@ Prompt Engineering ist bei Agenten kein Schreibtrick, sondern ein Verhaltensvert
 
 Für KI-Agenten besonders wichtig sind System-Prompts, Tool-Beschreibungen, strukturierte Ausgaben und iteratives Testen. System-Prompts definieren das Gesamtverhalten, Tool-Beschreibungen steuern die Werkzeugnutzung, strukturierte Ausgaben ermöglichen Weiterverarbeitung, und Tests zeigen, ob das gewünschte Verhalten auch bei Grenzfällen stabil bleibt.
 
-Typischer Fehler: Prompts werden wie reine Textanweisungen behandelt. In Agentensystemen sind sie Teil der Architektur. Was zuverlässig gelten muss, gehört entweder in strukturierte Ausgaben, Tool-Schemas, Validierung oder Code — nicht nur in eine gut klingende Formulierung.
+**Typischer Fehler:** Prompts werden wie reine Textanweisungen behandelt. In Agentensystemen sind sie Teil der Architektur. Was zuverlässig gelten muss, gehört entweder in strukturierte Ausgaben, Tool-Schemas, Validierung oder Code — nicht nur in eine gut klingende Formulierung.
 
 ---
 

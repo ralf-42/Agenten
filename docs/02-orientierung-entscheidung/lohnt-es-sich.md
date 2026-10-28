@@ -28,7 +28,7 @@ Viele KI-Diskussionen starten mit Modellen, Frameworks oder direkt mit Agenten. 
 
 Diese Seite beantwortet deshalb nicht, welches Werkzeug gebaut werden soll. Sie prüft, ob das Vorhaben als Projektgrundlage tragfähig ist. Danach hilft die Entscheidungsseite [Aufgaben & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) bei der Architekturwahl.
 
-Typischer Fehler: `Wir wollen KI einsetzen` als Problemformulierung zu behandeln. Das ist noch kein Ziel, sondern eher eine Idee.
+**Typischer Fehler:** `Wir wollen KI einsetzen` als Problemformulierung zu behandeln. Das ist noch kein Ziel, sondern eher eine Idee.
 
 ## Problemklärung zuerst
 
@@ -83,7 +83,7 @@ Viele Projekte scheitern nicht zuerst an der Technik, sondern an falschen Erwart
 
 Gute Kommunikation klärt deshalb früh, was das System leisten kann – und was nicht. Weniger Fehler zu machen ist nicht dasselbe wie fehlerfrei zu sein. Unterstützung ist nicht dasselbe wie vollständiger Ersatz.
 
-Typischer Fehler: Den ersten funktionierenden Demo-Flow als ausreichende Grundlage für den produktiven Betrieb zu interpretieren.
+**Typischer Fehler:** Den ersten funktionierenden Demo-Flow als ausreichende Grundlage für den produktiven Betrieb zu interpretieren.
 
 ## Eine einfache Go- oder No-Go-Logik
 

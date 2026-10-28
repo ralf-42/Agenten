@@ -28,7 +28,7 @@ Sobald ein einzelner Agent komplexe Aufgaben bearbeiten soll, entsteht schnell d
 
 Multi-Agent-Systeme teilen Arbeit auf und ermöglichen Spezialisierung oder Parallelität. Sie kosten zusätzliche Koordination, State und Debugging-Aufwand. Prüfe deshalb zuerst, ob ein einzelner Workflow mit klaren Knoten die Aufgabe schon abdeckt.
 
-Typischer Fehler: Multi-Agent zu wählen, weil es moderner oder „agentischer” klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
+**Typischer Fehler:** Multi-Agent zu wählen, weil es moderner oder „agentischer” klingt, obwohl ein sauberer Workflow denselben Fall einfacher lösen würde.
 
 Konkret scheitert ein einzelner Agent typischerweise an einer von drei strukturellen Grenzen:
 
@@ -158,7 +158,7 @@ flowchart LR
 
 Hier entscheidet der bearbeitende Agent selbst, ein externer Router greift vorab nicht ein. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
 
-Typischer Fehler: Beim Handoff den bisherigen Kontext nicht vollständig zu übergeben. Dann beginnt der übernehmende Agent praktisch blind.
+**Typischer Fehler:** Beim Handoff den bisherigen Kontext nicht vollständig zu übergeben. Dann beginnt der übernehmende Agent praktisch blind.
 
 Eine strukturierte Übergabe trennt das Arbeitsergebnis vom Denkweg: Das Ergebnis (`result_summary`, `artifacts`) geht immer weiter, der vollständige Reasoning Trace (`reasoning_trace`) nur dann, wenn der übernehmende Agent ihn tatsächlich braucht. Diese Trennung hält den Kontext des nächsten Agents schlank.
 
@@ -176,7 +176,7 @@ SKILL_REGISTRY = {
 }
 ```
 
-Grenze: Dieses Muster ist keine echte arbeitsteilige Mehragenten-Koordination, sondern eher ein fokussierter Hauptagent mit temporären Capability-Sets.
+**Grenze:** Dieses Muster ist keine echte arbeitsteilige Mehragenten-Koordination, sondern eher ein fokussierter Hauptagent mit temporären Capability-Sets.
 
 **Entscheide so:** Nimm Skills, wenn ein einzelner Agent verantwortlich bleiben soll, aber zeitweise anderes Fachwissen oder andere Werkzeuge braucht.
 
@@ -336,7 +336,7 @@ def supervisor_router(state: TeamState) -> str:
     return "next_agent"
 ```
 
-Typischer Fehler: Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
+**Typischer Fehler:** Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
 
 Eine weitere Entscheidung, die oft zu spät gestellt wird: Was passiert, wenn einzelne Worker scheitern? Partial Results (das System liefert, was fertig ist) und Fail Fast (sofortiger Abbruch bei erstem Fehler) sind zwei legitime Strategien mit unterschiedlichen Konsequenzen für Nutzende und nachgelagerte Systeme. Diese Wahl sollte bewusst getroffen werden — nicht durch fehlende Fehlerbehandlung von selbst entstehen.
 

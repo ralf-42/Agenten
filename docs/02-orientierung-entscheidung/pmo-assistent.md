@@ -12,7 +12,7 @@ has_toc: true
 
 Der PMO-Assistent unterstützt die Meeting-Vorbereitung, die Aufbereitung von Besprechungs- und Projektdokumenten, die Aufgabenverfolgung sowie die Erstellung quellengebundener Briefings und Statusübersichten. Er hilft, wenn ein Team viele Projektunterlagen durchsuchen muss: Protokolle, Entscheidungen, Risiken, Aufgaben und offene Fragen. Er findet relevante Passagen, fasst sie zusammen und zeigt, worauf sich seine Aussagen stützen.
 
-Wichtig ist die Grenze: Der Agent entscheidet nicht selbst über das Projekt und ersetzt kein vollständiges PMO-System. Er bereitet Meetings, Aufgabenstände und Statusinformationen auf. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
+Wichtig ist die **Grenze:** Der Agent entscheidet nicht selbst über das Projekt und ersetzt kein vollständiges PMO-System. Er bereitet Meetings, Aufgabenstände und Statusinformationen auf. Retrieval liefert Belege über ein Evidence Tool, Structured Output macht die Antwort prüfbar, Human-in-the-Loop stoppt unsichere Ausgaben. So wird aus einem Chatbot mit Werkzeugen ein kontrolliertes Arbeitssystem.
 
 Drei Fähigkeiten ziehen sich durch den Bauplan: Der Agent muss **planen** (welches Tool, welche Route, welcher Zustand gilt gerade), **handeln** (Tools ausführen, Evidenz abrufen, einen Workflow durchlaufen) und **prüfen** (Freigabe, Security, Evaluation vor jeder folgenreichen Ausgabe). RAG ist dabei kein Selbstzweck. Es ist ein **Evidence Tool**: eine kontrollierte Fähigkeit, die der Agent gezielt nutzt.
 
@@ -116,7 +116,7 @@ class BriefingAntwort(BaseModel):
     hinweis: str = Field(description="'Nicht im Korpus' wenn out-of-scope")
 ```
 
-Typischer Fehler: Das Modell wird nur gebeten, „mit Quellen zu antworten". Das klingt plausibel, erzwingt aber keine prüfbare Struktur. Erst ein Schema macht sichtbar, ob eine Antwort ohne Quelle, mit niedriger Sicherheit oder außerhalb des Korpus entstanden ist.
+**Typischer Fehler:** Das Modell wird nur gebeten, „mit Quellen zu antworten". Das klingt plausibel, erzwingt aber keine prüfbare Struktur. Erst ein Schema macht sichtbar, ob eine Antwort ohne Quelle, mit niedriger Sicherheit oder außerhalb des Korpus entstanden ist.
 
 ## Ergebnisformate des PMO-Assistenten
 

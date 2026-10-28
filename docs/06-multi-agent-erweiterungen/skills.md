@@ -29,7 +29,7 @@ Ein Skill ist kein einzelner schöner Prompt, sondern ein wiederverwendbarer Abl
 
 Ein Skill macht aus Fachwissen konkrete Arbeitsanweisungen. Ein Skill legt fest, `was` beantwortet werden soll und `wie` dabei vorzugehen ist.
 
-Typischer Fehler: Einen langen Prompt automatisch als Skill zu betrachten. Ein Skill wird erst dort sinnvoll, wo Wiederholung, Guardrails und stabile Arbeitslogik nötig werden.
+**Typischer Fehler:** Einen langen Prompt automatisch als Skill zu betrachten. Ein Skill wird erst dort sinnvoll, wo Wiederholung, Guardrails und stabile Arbeitslogik nötig werden.
 
 ## Ein einfaches Beispiel
 
@@ -78,7 +78,7 @@ skill-name/
 
 `SKILL.md` enthält den eigentlichen Einstiegspunkt. `references/` hält längere Regeln, Checklisten oder Beispiele außerhalb des Kernkontexts. `scripts/` übernimmt deterministische Teilaufgaben. `assets/` speichert Vorlagen und statische Ressourcen.
 
-Typischer Fehler: Alles in eine einzige riesige `SKILL.md` zu schreiben. Dadurch wird der Skill schwerer zu pflegen und verliert den Vorteil gezielter Nachladung.
+**Typischer Fehler:** Alles in eine einzige riesige `SKILL.md` zu schreiben. Dadurch wird der Skill schwerer zu pflegen und verliert den Vorteil gezielter Nachladung.
 
 ## Warum die `description` wichtiger ist als viele glauben
 
@@ -95,7 +95,7 @@ allowed-tools: Read, Grep, Glob
 ---
 ```
 
-Eine gute `description` nennt, was der Skill tut und wann er ausgelöst werden soll. Oft hilft zusätzlich eine negative Grenze: wofür er gerade nicht gedacht ist.
+Eine gute `description` nennt, was der Skill tut und wann er ausgelöst werden soll. Oft hilft zusätzlich eine negative **Grenze:** wofür er gerade nicht gedacht ist.
 
 ## Skills werden schrittweise geladen
 
@@ -128,7 +128,7 @@ Wenn etwas in jeder Session gelten soll, gehört es eher in Rules. Wenn es nur b
 
 Ein Skill kann in einem eigenen Kontextfenster laufen, wenn die Aufgabe isoliert bearbeitet werden soll. Das ist besonders nützlich bei Recherche, Analyse oder komplexen Teilaufträgen. Für reine Richtlinien-Skills ist diese Trennung oft unnötig.
 
-Grenze: Ein Skill wird nicht automatisch besser, nur weil er einen Subagenten verwendet. Isolation lohnt sich nur, wenn sie die eigentliche Aufgabe klarer oder sicherer macht.
+**Grenze:** Ein Skill wird nicht automatisch besser, nur weil er einen Subagenten verwendet. Isolation lohnt sich nur, wenn sie die eigentliche Aufgabe klarer oder sicherer macht.
 
 ## Wie ein Agent einen Skill tatsächlich nutzt
 

@@ -29,7 +29,7 @@ Ein Sprachmodell bringt kein dauerhaftes Gedächtnis mit. Ohne zusätzliche Mech
 
 Memory-Systeme halten Informationen über einzelne Modellaufrufe hinaus verfügbar. Je nach Bedarf speichern sie den Gesprächsverlauf, Zusammenfassungen, strukturierte Entitäten oder Wissen für spätere Sitzungen. So kann ein Agent frühere Arbeitsschritte wieder aufgreifen.
 
-Typischer Fehler: Alles, was ein Agent behalten soll, einfach im Prompt zu wiederholen. Das skaliert schlecht, wird teuer und verliert bei langen Sitzungen schnell die Übersicht.
+**Typischer Fehler:** Alles, was ein Agent behalten soll, einfach im Prompt zu wiederholen. Das skaliert schlecht, wird teuer und verliert bei langen Sitzungen schnell die Übersicht.
 
 ## Beispiel: Kurzzeit- vs. persistentes Memory
 
@@ -51,7 +51,7 @@ Ein **Memory-Augmented Agent** ergänzt diese Fähigkeiten um eine externe Speic
 | Operationskosten | hoch (immer vollständiger Kontext nötig) | niedriger (nur relevanter Kontext) |
 | Zuverlässigkeit bei mehrstufigen Abläufen | gering | hoch |
 
-Typischer Fehler: Stateless-Verhalten wird als Modellschwäche fehlgedeutet. Das Modell ist nicht "vergesslich" — es fehlt die persistente Speicherschicht.
+**Typischer Fehler:** Stateless-Verhalten wird als Modellschwäche fehlgedeutet. Das Modell ist nicht "vergesslich" — es fehlt die persistente Speicherschicht.
 
 ## Zwei Grundformen von Memory
 
@@ -131,7 +131,7 @@ linkStyle 3,4 stroke:#0284c7,stroke-width:2.5px;
 linkStyle 5,6,7,8 stroke:#16a34a,stroke-width:2.5px;
 ```
 
-Typischer Fehler: Einen einfachen Agenten mit dauerhaftem Memory zu überfrachten. Memory erhöht nicht automatisch die Qualität. Es bringt nur dann Nutzen, wenn klar ist, welche Information später tatsächlich wiederverwendet werden soll.
+**Typischer Fehler:** Einen einfachen Agenten mit dauerhaftem Memory zu überfrachten. Memory erhöht nicht automatisch die Qualität. Es bringt nur dann Nutzen, wenn klar ist, welche Information später tatsächlich wiederverwendet werden soll.
 
 ---
 
@@ -155,7 +155,7 @@ def chat_node(state: BriefingState) -> BriefingState:
     return {"messages": [response]}
 ```
 
-Grenze: Der Verlauf wächst mit jeder Nachricht. Dadurch steigen Tokenverbrauch, Kosten und die Gefahr, dass das Kontextfenster überschritten wird.
+**Grenze:** Der Verlauf wächst mit jeder Nachricht. Dadurch steigen Tokenverbrauch, Kosten und die Gefahr, dass das Kontextfenster überschritten wird.
 
 ## Sliding Window: wenn nur das Jüngste wichtig ist
 
@@ -331,7 +331,7 @@ def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
     return {"entity_memory": updated}
 ```
 
-Typischer Fehler: Alle Fakten unstrukturiert in eine Vektordatenbank zu schreiben, obwohl bestimmte Informationen besser als klar benannte Entitäten gepflegt würden.
+**Typischer Fehler:** Alle Fakten unstrukturiert in eine Vektordatenbank zu schreiben, obwohl bestimmte Informationen besser als klar benannte Entitäten gepflegt würden.
 
 ## Workflow Memory: wenn Abläufe wiederverwendet werden sollen
 
@@ -364,7 +364,7 @@ flowchart LR
     NEW --> DONE
 ```
 
-Typischer Fehler: Nur Konversationen zu speichern, aber ausgeführte Prozessschritte zu verwerfen. Gerade bei mehrstufigen Tool-Sequenzen ist genau dieser Ablauf das wertvollste wiederverwendbare Wissen.
+**Typischer Fehler:** Nur Konversationen zu speichern, aber ausgeführte Prozessschritte zu verwerfen. Gerade bei mehrstufigen Tool-Sequenzen ist genau dieser Ablauf das wertvollste wiederverwendbare Wissen.
 
 Workflow Memory hilft bei wiederkehrenden Aufgaben mit mehreren Tool-Aufrufen, die verlässlich in derselben Reihenfolge ablaufen sollen.
 
@@ -485,7 +485,7 @@ class MemoryManager:
 
 Die Vorteile dieser Abstraktion: Der Agent kennt keine Datenbanktabellen, nur Operationstypen. Das Speicher-Backend kann ausgetauscht werden, ohne den Agenten zu ändern. Alle Zugriffe sind an einer Stelle testbar und überwachbar.
 
-Typischer Fehler: Den Memory Manager als Abstraktionsschicht einzuführen, bevor klar ist, welche Memory-Typen tatsächlich gebraucht werden. Wer alle fünf Tabellen anlegt, obwohl der Agent nur Konversationshistorie braucht, schafft unnötige Infrastruktur — und verdeckt dabei, wo die eigentlichen Engpässe liegen.
+**Typischer Fehler:** Den Memory Manager als Abstraktionsschicht einzuführen, bevor klar ist, welche Memory-Typen tatsächlich gebraucht werden. Wer alle fünf Tabellen anlegt, obwohl der Agent nur Konversationshistorie braucht, schafft unnötige Infrastruktur — und verdeckt dabei, wo die eigentlichen Engpässe liegen.
 
 ## 3-Schicht-Speicher: Memory für Produktionssysteme
 
@@ -536,7 +536,7 @@ Ein 3-Schicht-Speicher lohnt sich bei langen Sitzungen, mehreren Projekten oder 
 
 Viele Systeme speichern zu viel, zu wahllos oder zu unsauber getrennt. Kurze Floskeln wie `ok` oder `danke` gehören selten in ein dauerhaftes Gedächtnis. Sensible personenbezogene Daten sollten nicht unreflektiert in Vektordatenbanken landen. Ebenso problematisch ist es, Memory ohne Löschstrategie aufzubauen.
 
-Typischer Fehler: Aktiver Aufgabenstatus und Gesprächsverlauf werden im selben Kontext gemischt. Wenn der laufende Arbeitsstand eines mehrstufigen Prozesses und die bisherigen Nutzer-Nachrichten im selben Speicher landen, beginnt das Modell beides gleichwertig zu behandeln. Ältere Gesprächsinhalte können dann die aktuelle Aufgabenlogik überlagern. Die Gegenmaßnahme ist eine strikte Trennung: Aufgabenstatus gehört in einen eigenen State-Container, der unabhängig vom Nachrichtenverlauf gelesen und überschrieben werden kann.
+**Typischer Fehler:** Aktiver Aufgabenstatus und Gesprächsverlauf werden im selben Kontext gemischt. Wenn der laufende Arbeitsstand eines mehrstufigen Prozesses und die bisherigen Nutzer-Nachrichten im selben Speicher landen, beginnt das Modell beides gleichwertig zu behandeln. Ältere Gesprächsinhalte können dann die aktuelle Aufgabenlogik überlagern. Die Gegenmaßnahme ist eine strikte Trennung: Aufgabenstatus gehört in einen eigenen State-Container, der unabhängig vom Nachrichtenverlauf gelesen und überschrieben werden kann.
 
 ```python
 def sollte_gespeichert_werden(nachricht: str) -> bool:

@@ -29,7 +29,7 @@ Ein einfacher Workflow im Arbeitsspeicher funktioniert nur so lange, wie der Pro
 
 Checkpointing speichert den Zustand eines Graphen nach einzelnen Ausführungsschritten, sodass dieser Zustand später wieder geladen werden kann. Damit werden längere Gespräche, Human-in-the-Loop, Fehlertoleranz und das Zurückspringen zu früheren Punkten erst praktikabel.
 
-Typischer Fehler: Checkpointing mit Logging zu verwechseln. Logs beschreiben, was passiert ist. Checkpoints speichern, von wo aus ein Workflow exakt weiterlaufen kann.
+**Typischer Fehler:** Checkpointing mit Logging zu verwechseln. Logs beschreiben, was passiert ist. Checkpoints speichern, von wo aus ein Workflow exakt weiterlaufen kann.
 
 ## Ein einfaches Beispiel
 

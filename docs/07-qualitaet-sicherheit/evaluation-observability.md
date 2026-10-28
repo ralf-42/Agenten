@@ -31,9 +31,9 @@ Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gut
 
 Für Entwickler wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, Antworten und Metriken betrachtet werden. Der Unterschied liegt im Zweck. Evaluation vergleicht erwartetes Verhalten mit tatsächlichem Verhalten. Observability sammelt die Spuren, die diesen Vergleich erklärbar machen.
 
-Typischer Fehler: Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen und trotzdem das falsche Tool gewählt, eine unnötige Schleife gedreht oder eine riskante Aktion ohne ausreichende Kontrolle ausgelöst haben.
+**Typischer Fehler:** Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen und trotzdem das falsche Tool gewählt, eine unnötige Schleife gedreht oder eine riskante Aktion ohne ausreichende Kontrolle ausgelöst haben.
 
-Typischer Fehler: Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
+**Typischer Fehler:** Nur auf Uptime, Antwortzeit und Statuscodes zu schauen. Ein Agent kann technisch gesund wirken und fachlich seit Tagen falsche Antworten geben.
 
 ```mermaid
 flowchart TD
@@ -106,7 +106,7 @@ Evaluation braucht einen klaren Soll-Ist-Vergleich. Bei Agenten betrifft dieser 
 
 Sinnvoll ist deshalb eine Staffelung in drei Ebenen. Auf Komponentenebene wird geprüft, ob einzelne Bausteine sauber arbeiten, etwa Tool-Auswahl, Tool-Parameter, strukturierte Ausgaben oder ein Retriever. Auf Workflow-Ebene zählt, ob die Aufgabe End-to-End gelöst wird. Auf Nutzerebene wird sichtbar, ob das Ergebnis im echten Einsatz tatsächlich hilft.
 
-Grenze: Nicht jede gute Agentenantwort lässt sich mit einer einzigen Kennzahl bewerten. Gerade bei offenen Formulierungen braucht Evaluation mehrere Kriterien gleichzeitig.
+**Grenze:** Nicht jede gute Agentenantwort lässt sich mit einer einzigen Kennzahl bewerten. Gerade bei offenen Formulierungen braucht Evaluation mehrere Kriterien gleichzeitig.
 
 ## Welche Metriken für Entwickler zuerst genügen
 
@@ -223,7 +223,7 @@ Typische Fehlerklassen:
 - format_error
 ```
 
-Grenze: Nicht jede Antwort lässt sich eindeutig einer Klasse zuordnen. Trotzdem ist eine grobe Fehlertaxonomie fast immer hilfreicher als eine einzige Sammelkategorie.
+**Grenze:** Nicht jede Antwort lässt sich eindeutig einer Klasse zuordnen. Trotzdem ist eine grobe Fehlertaxonomie fast immer hilfreicher als eine einzige Sammelkategorie.
 
 ## Regressionen früh erkennen
 
@@ -334,7 +334,7 @@ def evaluate_retrieval(query: str, relevant_doc_ids: list[str], k: int = 5):
     return {"precision": precision, "recall": recall}
 ```
 
-Grenze: Gute Retrieval-Werte garantieren noch keine gute Antwort. Auch mit passenden Dokumenten kann die Generierung halluzinieren, auslassen oder falsch zitieren.
+**Grenze:** Gute Retrieval-Werte garantieren noch keine gute Antwort. Auch mit passenden Dokumenten kann die Generierung halluzinieren, auslassen oder falsch zitieren.
 
 ## Generierung und Bewertung entkoppeln
 
@@ -346,7 +346,7 @@ Die Gegenmaßnahme ist eine saubere Entkopplung: Der **Planer** zerlegt die Aufg
 
 In der Praxis relevant wenn: Der Agent eine Antwort erzeugt, die anschließend von einem weiteren LLM-Aufruf bewertet wird. Eine technische Trennung zwischen Generator- und Evaluator-Aufruf — unterschiedliche Prompts, getrennte Ketten, kein geteilter Zustand — ist dafür ausreichend. Eine physisch separate Modellinstanz ist erst in hochkritischen Systemen notwendig.
 
-Grenze: Entkopplung allein löst keine Qualitätsprobleme. Wenn Planer und Evaluator schlechte Kriterien definieren oder das Referenzset nicht repräsentativ ist, bleibt die Bewertung trotz struktureller Trennung unzuverlässig.
+**Grenze:** Entkopplung allein löst keine Qualitätsprobleme. Wenn Planer und Evaluator schlechte Kriterien definieren oder das Referenzset nicht repräsentativ ist, bleibt die Bewertung trotz struktureller Trennung unzuverlässig.
 
 ## Harness aus Sicht der Evaluation
 
@@ -375,7 +375,7 @@ config = {
 }
 ```
 
-Typischer Fehler: LangSmith nur als Debug-Ansicht zu benutzen. Der eigentliche Mehrwert entsteht erst dann, wenn Datasets, Baselines und Vergleiche damit verbunden werden.
+**Typischer Fehler:** LangSmith nur als Debug-Ansicht zu benutzen. Der eigentliche Mehrwert entsteht erst dann, wenn Datasets, Baselines und Vergleiche damit verbunden werden.
 
 ## Sicherheits- und Freigabefälle gehören dazu
 

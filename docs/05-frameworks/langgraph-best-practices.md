@@ -48,7 +48,7 @@ LangGraph lohnt sich, wenn ein Agent nicht mehr linear arbeitet. Sobald Routing,
 | Human-in-the-Loop | Nur einfache Fälle | Gut geeignet |
 | State über Tage oder Wochen | Nicht ausreichend | Kernfall |
 
-Typischer Fehler: LangGraph wird zu früh eingesetzt, nur weil es flexibler klingt. Ein einfacher Agent mit zwei Tools braucht meistens noch keinen Graph. Umgekehrt wird es teuer, eine gewachsene Tool-Kette ohne Graph weiter zu pflegen, sobald Bedingungen, Wiederaufnahme und Fehlerpfade dazukommen.
+**Typischer Fehler:** LangGraph wird zu früh eingesetzt, nur weil es flexibler klingt. Ein einfacher Agent mit zwei Tools braucht meistens noch keinen Graph. Umgekehrt wird es teuer, eine gewachsene Tool-Kette ohne Graph weiter zu pflegen, sobald Bedingungen, Wiederaufnahme und Fehlerpfade dazukommen.
 
 ## Standards / Kern-Features
 
@@ -122,7 +122,7 @@ graph_builder = StateGraph(BriefingState)
 | Modellantwort mit Schema | Pydantic oder `with_structured_output()` |
 | Message-Historie | `Annotated[list, add_messages]` |
 
-Grenze: Ein großer State wirkt bequem, macht Graphen aber schwer testbar. Wenn jede Node auf dieselbe breite Datenstruktur zugreift, entstehen verdeckte Abhängigkeiten.
+**Grenze:** Ein großer State wirkt bequem, macht Graphen aber schwer testbar. Wenn jede Node auf dieselbe breite Datenstruktur zugreift, entstehen verdeckte Abhängigkeiten.
 
 ## Nodes Und Edges
 
@@ -160,7 +160,7 @@ except Exception as exc:
     print(f"Graph-Visualisierung nicht verfügbar: {exc}")
 ```
 
-Typischer Fehler: In einer Node wird zu viel Logik gesammelt. Wenn eine Funktion Modellaufruf, Tool-Auswahl, Validierung und Fehlerbehandlung gleichzeitig übernimmt, ist der Graph nur noch optisch modular.
+**Typischer Fehler:** In einer Node wird zu viel Logik gesammelt. Wenn eine Funktion Modellaufruf, Tool-Auswahl, Validierung und Fehlerbehandlung gleichzeitig übernimmt, ist der Graph nur noch optisch modular.
 
 **Robustheit (ab v1.2.0):** `add_node()` akzeptiert `timeout=` (mit `NodeTimeoutError` bei Überschreitung) und `error_handler=` (erhält ein typisiertes `NodeError`, kann per `Command` zu einem Kompensations-Node routen). Damit lassen sich hängende Tool-Calls absichern und Saga-Muster ohne globales Exception-Handling umsetzen.
 
@@ -318,7 +318,7 @@ resume_command = Command(resume={"approved": True})
 result = graph.invoke(resume_command, config=config)
 ```
 
-Typischer Fehler: Freigaben werden nur als Text im Prompt formuliert. Das Modell "weiß" dann zwar, dass es fragen soll, aber der Workflow erzwingt die Freigabe technisch nicht.
+**Typischer Fehler:** Freigaben werden nur als Text im Prompt formuliert. Das Modell "weiß" dann zwar, dass es fragen soll, aber der Workflow erzwingt die Freigabe technisch nicht.
 
 ## Subgraphs Und Multi-Agent-Muster
 
@@ -341,7 +341,7 @@ Multi-Agent-Systeme brauchen mehr als mehrere Modellaufrufe. Entscheidend ist di
 | Hierarchie | Teams oder Teilgraphen eigene Verantwortung haben |
 | Parallele Bearbeitung | unabhängige Teilaufgaben gleichzeitig laufen können |
 
-Grenze: Multi-Agent ist selten der beste Einstieg. Erst wenn Rollen wirklich unterschiedliche Werkzeuge, Daten oder Bewertungskriterien haben, lohnt sich die zusätzliche Koordination.
+**Grenze:** Multi-Agent ist selten der beste Einstieg. Erst wenn Rollen wirklich unterschiedliche Werkzeuge, Daten oder Bewertungskriterien haben, lohnt sich die zusätzliche Koordination.
 
 ## ToolRuntime
 

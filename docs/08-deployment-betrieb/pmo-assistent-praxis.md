@@ -288,7 +288,7 @@ Jedes Dokument braucht mindestens:
 
 Für eine Basisversion reicht Retrieval-Light mit einfacher Chunk-Suche. Die bessere Variante nutzt Embeddings, ChromaDB und Score-Thresholds. Der Aufbau von Vectorstore und Suchtool steht mit `genai_lib.pmo_rag` (`get_pmo_vectorstore`, `index_pmo_corpus`, `make_suche_wissensdatenbank_tool`) als fertiger Baustein bereit.
 
-Typischer Fehler: zwei Skalen vermischen. Chroma liefert bei `similarity_search_with_score` eine **Distanz** (kleiner = ähnlicher). Ein `score_threshold` im Retriever arbeitet mit einem **Relevanz-Score** (höher = besser).
+**Typischer Fehler:** zwei Skalen vermischen. Chroma liefert bei `similarity_search_with_score` eine **Distanz** (kleiner = ähnlicher). Ein `score_threshold` im Retriever arbeitet mit einem **Relevanz-Score** (höher = besser).
 
 ```python
 def retrieve_context(state: BriefingState) -> BriefingState:

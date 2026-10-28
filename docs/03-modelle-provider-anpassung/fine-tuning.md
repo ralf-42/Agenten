@@ -44,7 +44,7 @@ Eine belastbare Entscheidung braucht eine Baseline. Vor dem Training sollte klar
 
 Transfer Learning nutzt ein vortrainiertes Modell als Ausgangspunkt und passt es an eine neue Aufgabe an. Die unteren Schichten enthalten bereits allgemeine Muster, während spätere Schichten stärker auf die Zielaufgabe ausgerichtet werden können. Im ML-Workflow reduziert das Daten- und Rechenbedarf gegenüber einem vollständigen Pre-Training.
 
-Grenze: Transfer Learning hilft nur, wenn Ausgangsmodell und Zielaufgabe nah genug beieinanderliegen. Weichen Domäne, Datenformat oder Zielverhalten stark ab, reicht eine kleine Anpassung nicht aus. Typischer Fehler: Das Verfahren wird als Abkürzung verstanden, obwohl die Zielaufgabe noch nicht stabil beschrieben ist.
+**Grenze:** Transfer Learning hilft nur, wenn Ausgangsmodell und Zielaufgabe nah genug beieinanderliegen. Weichen Domäne, Datenformat oder Zielverhalten stark ab, reicht eine kleine Anpassung nicht aus. **Typischer Fehler:** Das Verfahren wird als Abkürzung verstanden, obwohl die Zielaufgabe noch nicht stabil beschrieben ist.
 
 ## Parameter-Effizientes Fine-Tuning
 
@@ -56,7 +56,7 @@ LoRA fügt kompakte Low-Rank-Matrizen ein, die Gewichtsänderungen approximieren
 
 Für lokale Experimente ist der übliche Startpfad: kleines Instruct-Modell, Supervised Fine-Tuning und LoRA oder QLoRA. LoRA erzeugt zunächst einen kleinen Adapter, der das Basismodell nicht ersetzt. Für manche Deployment-Ziele, etwa GGUF oder Ollama, wird dieser Adapter später mit dem Basismodell zusammengeführt und anschließend quantisiert.
 
-Grenze: PEFT reduziert Kosten, aber nicht automatisch Qualitätsrisiken. Schlechte Trainingsdaten, unklare Labels oder ein schwacher Eval-Satz bleiben dieselben Probleme. Außerdem kann eine zu enge Spezialisierung das Modell außerhalb der Trainingsverteilung spröder machen.
+**Grenze:** PEFT reduziert Kosten, aber nicht automatisch Qualitätsrisiken. Schlechte Trainingsdaten, unklare Labels oder ein schwacher Eval-Satz bleiben dieselben Probleme. Außerdem kann eine zu enge Spezialisierung das Modell außerhalb der Trainingsverteilung spröder machen.
 
 ## Instruction Fine-Tuning
 
@@ -72,7 +72,7 @@ Fasse die folgende Kundenanfrage in einer internen Support-Kategorie zusammen.
 Kategorie: Rechnungskorrektur
 ```
 
-Typischer Fehler: Die Beispiele beschreiben nur ideale Standardfälle. Dann lernt das Modell zwar ein Format, scheitert aber bei unvollständigen Eingaben, widersprüchlichem Kontext oder Randfällen. Gute Instruction-Daten enthalten deshalb auch schwierige Beispiele mit erwarteter Behandlung.
+**Typischer Fehler:** Die Beispiele beschreiben nur ideale Standardfälle. Dann lernt das Modell zwar ein Format, scheitert aber bei unvollständigen Eingaben, widersprüchlichem Kontext oder Randfällen. Gute Instruction-Daten enthalten deshalb auch schwierige Beispiele mit erwarteter Behandlung.
 
 ## Supervised Fine-Tuning
 
@@ -96,7 +96,7 @@ Bei multimodalen Daten entstehen zusätzliche Fehlerquellen. Bildqualität, Aufl
 
 Modell-Distillation nutzt Ausgaben eines größeren Modells, um ein kleineres Modell für einen begrenzten Aufgabenbereich zu trainieren. Wenn die Aufgabe eng genug geschnitten ist, sinken Kosten und Latenz. Ein kleines Modell kann dann für wiederkehrende Standardfälle ausreichen.
 
-Grenze: Distillation übernimmt neben den Stärken auch Fehler und Verzerrungen des größeren Modells. Die erzeugten Trainingsdaten müssen deshalb wie echte Trainingsdaten geprüft werden. Ohne Kontrolle entsteht ein kleineres Modell, das Fehler schneller und günstiger reproduziert.
+**Grenze:** Distillation übernimmt neben den Stärken auch Fehler und Verzerrungen des größeren Modells. Die erzeugten Trainingsdaten müssen deshalb wie echte Trainingsdaten geprüft werden. Ohne Kontrolle entsteht ein kleineres Modell, das Fehler schneller und günstiger reproduziert.
 
 # Fine-Tuning-Pipeline
 
@@ -136,7 +136,7 @@ Ein belastbarer Vergleich nutzt dieselben Holdout-Beispiele für mehrere Variant
 
 Prompt Engineering bleibt auch nach einem Fine-Tuning relevant. Ein feinabgestimmtes Modell braucht weiterhin klare Instruktionen, passenden Kontext und sinnvolle Ausgabeformate. Häufig zeigt ein guter Few-Shot-Prompt bereits, ob sich ein Verhalten zuverlässig aus Beispielen ableiten lässt.
 
-Typischer Fehler: Fine-Tuning wird gestartet, bevor Prompting und Retrieval sauber getestet wurden. Das erzeugt zusätzliche Komplexität, aber keine bessere Architektur. Ein guter Test ist: Wenn ein Verhalten mit drei bis fünf sorgfältigen Few-Shot-Beispielen im Prompt nicht stabiler wird, lösen zusätzliche Trainingsbeispiele das Problem oft ebenfalls nicht.
+**Typischer Fehler:** Fine-Tuning wird gestartet, bevor Prompting und Retrieval sauber getestet wurden. Das erzeugt zusätzliche Komplexität, aber keine bessere Architektur. Ein guter Test ist: Wenn ein Verhalten mit drei bis fünf sorgfältigen Few-Shot-Beispielen im Prompt nicht stabiler wird, lösen zusätzliche Trainingsbeispiele das Problem oft ebenfalls nicht.
 
 Zwei Fehlerbilder treten bei lokalen Fine-Tuning-Workflows besonders häufig auf. Erstens muss das Chat-Template beim Training und beim späteren Serving identisch sein; sonst können trotz erfolgreichem Training wirre, abgeschnittene oder endlos wiederholte Ausgaben entstehen. Zweitens müssen LoRA-Adapter für GGUF- oder Ollama-Exporte zuerst mit dem Basismodell zusammengeführt werden, bevor quantisiert wird.
 
@@ -146,7 +146,7 @@ Embeddings übersetzen Tokens, Wörter oder Textstücke in numerische Vektoren. 
 
 Bei einem vollständigen Fine-Tuning können auch Embedding-Schichten verändert werden. Das hilft, wenn eine Domäne eigene Terminologie, Abkürzungen oder Bedeutungsverschiebungen nutzt. Bei LoRA, Adapter-Verfahren oder anderen PEFT-Methoden bleiben die ursprünglichen Embeddings dagegen häufig unverändert; zusätzliche Parameter übernehmen die Anpassung.
 
-Grenze: Embedding-Anpassung macht ein Modell nicht automatisch faktenreicher. Die Anpassung verändert eher die Verarbeitung bestimmter Muster, Schreibweisen oder Fachsprache. Für neues oder häufig wechselndes Wissen bleibt externer Kontext über Retrieval meist die tragfähigere Lösung.
+**Grenze:** Embedding-Anpassung macht ein Modell nicht automatisch faktenreicher. Die Anpassung verändert eher die Verarbeitung bestimmter Muster, Schreibweisen oder Fachsprache. Für neues oder häufig wechselndes Wissen bleibt externer Kontext über Retrieval meist die tragfähigere Lösung.
 
 # Daten- und Trainingsstrategie
 

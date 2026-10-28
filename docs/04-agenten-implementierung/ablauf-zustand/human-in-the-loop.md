@@ -32,7 +32,7 @@ Ein Agent kann viele Aufgaben eigenständig vorbereiten oder ausführen. Das bed
 
 HITL ist kein Zeichen dafür, dass ein System „noch nicht gut genug“ ist. In vielen produktiven Umgebungen ist die menschliche Kontrolle gerade Teil der gewünschten Architektur. Sobald Entscheidungen teuer, rechtlich heikel, schwer reversibel oder erklärungsbedürftig werden, ist HITL oft die vernünftigere Lösung.
 
-Typischer Fehler: Nur zu fragen, ob ein Agent etwas technisch alleine könnte. Die wichtigere Frage lautet meist, ob er es alleine entscheiden dürfen sollte.
+**Typischer Fehler:** Nur zu fragen, ob ein Agent etwas technisch alleine könnte. Die wichtigere Frage lautet meist, ob er es alleine entscheiden dürfen sollte.
 
 ## Ein einfaches Beispiel
 
@@ -124,7 +124,7 @@ Nicht jeder Schritt sollte unterbrochen werden. Zu viele Interrupts zerstören d
 
 Der Mensch braucht an diesem Punkt genug Kontext. Eine gute HITL-Oberfläche zeigt, was der Agent bisher getan hat, welche Entscheidung jetzt ansteht und welche Folgen eine Freigabe oder Ablehnung hätte. Ohne diesen Kontext wird aus HITL schnell nur ein formaler Klickprozess ohne echte Kontrollfunktion.
 
-Grenze: HITL ersetzt keine saubere Agentenarchitektur. Wenn ein System bei jeder zweiten Aktion nachfragt, ist oft nicht der Mensch zu selten eingebunden, sondern die Automatisierung zu unscharf gestaltet.
+**Grenze:** HITL ersetzt keine saubere Agentenarchitektur. Wenn ein System bei jeder zweiten Aktion nachfragt, ist oft nicht der Mensch zu selten eingebunden, sondern die Automatisierung zu unscharf gestaltet.
 
 ## Was bei Ablehnung oder Nichtreaktion passieren muss
 
@@ -132,7 +132,7 @@ Ein HITL-System ist erst dann gut entworfen, wenn neben der Freigabe auch die Ab
 
 Auch Timeouts gehören dazu. Ein Agent, der unbegrenzt auf menschliche Reaktion wartet, blockiert Prozesse. Deshalb brauchen produktive Systeme eine Timeout-Strategie: erinnern, eskalieren oder beenden.
 
-Typischer Fehler: Nur den Happy Path der Freigabe zu gestalten und Ablehnung oder Schweigen organisatorisch zu vergessen.
+**Typischer Fehler:** Nur den Happy Path der Freigabe zu gestalten und Ablehnung oder Schweigen organisatorisch zu vergessen.
 
 ## Zusammenhang mit Checkpointing
 

@@ -1115,7 +1115,7 @@ Beim Refactoring von altem Code:
 - [ ] Hooks → Middleware ersetzen
 - [ ] Provider-spezifische Content → `content_blocks` ersetzen
 - [ ] Python 3.10+ erforderlich (3.9 wird nicht mehr unterstützt)
-- [ ] Custom State muss `TypedDict` verwenden (keine Pydantic Models)
+- [ ] Custom State von `create_agent` muss `TypedDict` verwenden (keine Pydantic Models); Pydantic bleibt für Ein-/Ausgaben und `with_structured_output()` richtig
 
 ---
 

@@ -57,7 +57,7 @@ Große Kontexte kosten bei API-Modellen mehr, erhöhen die Latenz und können di
 
 Hinzu kommt der **Rereading Tax**: Ein 250.000-Token-Handbuch muss das Modell bei jeder Anfrage neu verarbeiten. Prompt Caching reduziert das für stabile Präfixe. Ohne Cache oder bei häufig geänderten Inhalten bleibt Long Context teuer.
 
-Typischer Fehler: Long Context als Ersatz für jede Wissensanbindung zu behandeln. Nur weil etwas technisch in das Kontextfenster passt, heißt das nicht, dass es billig, schnell oder zuverlässig verarbeitet wird.
+**Typischer Fehler:** Long Context als Ersatz für jede Wissensanbindung zu behandeln. Nur weil etwas technisch in das Kontextfenster passt, heißt das nicht, dass es billig, schnell oder zuverlässig verarbeitet wird.
 
 ## RAG: relevantes Wissen suchen
 
@@ -116,7 +116,7 @@ Entwickler müssen den KV-Cache meist nicht selbst verwalten. Viele Modellanbiet
 
 Das ist besonders nützlich für stabile Systemprompts, Richtlinien oder Produktdokumentation, die in vielen Anfragen gleich bleiben.
 
-Typischer Fehler: Prompt Caching mit dauerhaftem Agenten-Memory zu verwechseln. Prompt Caching merkt sich keinen neuen Nutzerfakt und keine Erfahrung aus einer Sitzung. Es beschleunigt nur die Wiederverwendung eines gleichen oder sehr ähnlichen Kontextpräfixes.
+**Typischer Fehler:** Prompt Caching mit dauerhaftem Agenten-Memory zu verwechseln. Prompt Caching merkt sich keinen neuen Nutzerfakt und keine Erfahrung aus einer Sitzung. Es beschleunigt nur die Wiederverwendung eines gleichen oder sehr ähnlichen Kontextpräfixes.
 
 ## Entscheidungshilfe
 

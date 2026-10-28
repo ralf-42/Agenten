@@ -30,7 +30,7 @@ Modellauswahl ist keine Rangliste. Ein Modell ist passend, wenn Qualität, Laten
 
 Diese Rollen stehen in `genai_lib.model_config.py`. Die Datei ist die technische Referenz. Wer ein Notebook liest, soll nicht zuerst konkrete Produktnamen interpretieren müssen, sondern erkennen, welche Aufgabe ein Modell im Agentensystem übernimmt.
 
-Typischer Fehler: Das stärkste verfügbare Modell wird als Standard gewählt. Für viele Agentenschritte sind Kosten, Latenz, Tool-Zuverlässigkeit oder strukturierte Ausgabe wichtiger als maximale Benchmark-Leistung.
+**Typischer Fehler:** Das stärkste verfügbare Modell wird als Standard gewählt. Für viele Agentenschritte sind Kosten, Latenz, Tool-Zuverlässigkeit oder strukturierte Ausgabe wichtiger als maximale Benchmark-Leistung.
 
 | Rolle                        | Konstante                                 | Modell                                | Einsatz                                               |
 | ---------------------------- | ----------------------------------------- | ------------------------------------- | ----------------------------------------------------- |
@@ -301,7 +301,7 @@ Die Modellkaskade kombiniert mehrere KI-Modelle, um ihre jeweiligen Stärken zu 
 
 Öffentliche Benchmarks wie MMLU können eine erste Orientierung geben, ersetzen aber keine Kursevaluation. Für Agentensysteme ist entscheidend, ob ein Modell die konkrete Rolle zuverlässig erfüllt: Routing, Tool-Aufruf, Planung, Synthese oder Bewertung. Ein hoher allgemeiner Benchmark-Wert hilft wenig, wenn strukturierte Ausgabe instabil ist oder ein Router zu teuer und zu langsam wird.
 
-Grenze: Statische Benchmark-Tabellen altern schnell. Deshalb werden hier keine konkreten Ranglisten gepflegt; die praktische Bewertung erfolgt anhand der Rollen aus `model_config.py`.
+**Grenze:** Statische Benchmark-Tabellen altern schnell. Deshalb werden hier keine konkreten Ranglisten gepflegt; die praktische Bewertung erfolgt anhand der Rollen aus `model_config.py`.
 
 ### Bewertungsdimensionen
 

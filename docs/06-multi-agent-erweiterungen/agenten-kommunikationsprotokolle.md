@@ -63,7 +63,7 @@ flowchart TD
 | Agenten-Kooperation | Agent mit Agent | A2A, ACP |
 | Nutzer-Interaktion | Agent mit Frontend oder Mensch | AG-UI |
 
-Typischer Fehler: Protokolle als konkurrierende Alternativen zu betrachten. In der Praxis laufen sie meist nebeneinander auf unterschiedlichen Ebenen.
+**Typischer Fehler:** Protokolle als konkurrierende Alternativen zu betrachten. In der Praxis laufen sie meist nebeneinander auf unterschiedlichen Ebenen.
 
 ## Ein kurzer historischer Blick
 
@@ -133,7 +133,7 @@ Nicht geeignet, wenn eine Anwendung nur ein oder zwei stabile lokale Funktionen 
 
 Sobald ein Agent Dateisysteme, APIs oder Codeausführung erreichen kann, wird Sicherheit zu einer Architekturfrage. Freigaben, Berechtigungen und Eingabekontrolle sind dann kein Zusatz, sondern Teil des Designs. Besonders heikel wird es, wenn ein Modell über natürliche Sprache dazu gebracht werden soll, auf sensitive Werkzeuge zuzugreifen.
 
-Grenze: Ein einheitliches Protokoll macht Integrationen leichter, aber es macht gefährliche Aktionen nicht automatisch sicher. Explizite Freigaben und klare Tool-Grenzen bleiben notwendig.
+**Grenze:** Ein einheitliches Protokoll macht Integrationen leichter, aber es macht gefährliche Aktionen nicht automatisch sicher. Explizite Freigaben und klare Tool-Grenzen bleiben notwendig.
 
 > [!WARNING] Tool-Beschreibungen sind keine Vertrauensgrenze<br>
 > Ein Modell sieht Tool-Namen und Beschreibungen als Steuerungsinformation. Diese Beschreibungen können falsch, zu weit gefasst oder absichtlich irreführend sein. Host-Anwendungen müssen Server, Tool-Rechte und Freigaben getrennt prüfen.
@@ -216,7 +216,7 @@ ACP ist deshalb interessant, weil es die Hürde für Agentenkommunikation senkt.
 
 ACP und A2A stehen nicht zwingend in Konkurrenz. A2A betont stärker Discovery, Aufgabensteuerung und standardisierte Agentenrollen. ACP bringt die Nähe zur gewohnten REST-Welt ein. In realen Systemen können genau diese Eigenschaften zusammen sinnvoll sein.
 
-Typischer Fehler: Zu fragen, welches der beiden Protokolle „gewinnt“. Die sinnvollere Frage lautet meist, ob eher offene Agentenkoordination oder eher einfache HTTP-Integration im Vordergrund steht.
+**Typischer Fehler:** Zu fragen, welches der beiden Protokolle „gewinnt“. Die sinnvollere Frage lautet meist, ob eher offene Agentenkoordination oder eher einfache HTTP-Integration im Vordergrund steht.
 
 ## AG-UI: wenn der Nutzer sehen soll, was der Agent gerade tut
 

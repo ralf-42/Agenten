@@ -26,13 +26,13 @@ has_toc: true
 Damit Künstliche Intelligenz (KI) sinnvoll mit Sprache, Bildern oder anderen Inhalten arbeiten kann, muss sie deren Bedeutung erfassen. Allerdings verarbeitet ein Computer keine Wörter oder Bilder direkt, sondern nur Zahlen. **Embeddings** sind eine Methode, um solche Inhalte als Zahlen zu kodieren, sodass die KI Zusammenhänge und Bedeutungen erkennen kann.
 
 # Was sind Embeddings?
-Ein **Embedding** ist eine mathematische Darstellung eines Wortes, Satzes oder Bildes in Form eines Vektors, also einer Zahlenliste. Diese Zahlen erfassen Ähnlichkeiten und Zusammenhänge zwischen verschiedenen Konzepten.
+Ein **Embedding** ist eine numerische Darstellung eines Wortes, Satzes oder Bildes in Form eines Vektors, also einer Zahlenliste. Diese Zahlen erfassen Ähnlichkeiten und Zusammenhänge zwischen verschiedenen Konzepten.
 
 **Beispiel für Sprache:**
 
-- Das Wort **„King“** könnte als Zahlenvektor **[0.96, 0.92, 0.08, 0.67]** dargestellt werden.
-- Das Wort **„Queen“** könnte **[0.98, 0.07, 0.93, 0.71]** haben.
-- Das Wort **„Girl“** könnte **[0.56, 0.09, 0.91, 0.11]** haben.
+- Das Wort <b><mark style="background: #BBFABBA6;">King</mark></b> könnte als Zahlenvektor **[0.96, 0.92, 0.08, 0.67]** dargestellt werden.
+- Das Wort <b><mark style="background: #FF5582A6;">Queen</mark></b> könnte **[0.98, 0.07, 0.93, 0.71]** haben.
+- Das Wort <b><mark style="background: #ADCCFFA6;">Girl</mark></b> könnte **[0.56, 0.09, 0.91, 0.11]** haben.
 
 → Die Zahlen von „King“ und „Queen“ sind **ähnlicher** als die von „Man“ und „Girl“. Dies zeigt, dass die KI die inhaltliche Nähe dieser Begriffe versteht.
 
@@ -180,7 +180,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 > Embeddings machen Ähnlichkeit berechenbar, ersetzen aber keine gute Datenstruktur. Wenn Texte schlecht geschnitten, uneinheitlich benannt oder ohne relevante Metadaten gespeichert werden, findet auch ein gutes Embedding-Modell nur scheinbar passende Treffer.
 ---
 
-## Abgrenzung zu verwandten Dokumenten
+# Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|

@@ -31,7 +31,7 @@ Viele Agentenprojekte scheitern nicht am Modell, sondern an einer unpassenden Gr
 
 Architektur meint in diesem Zusammenhang nicht zuerst Framework oder Programmiersprache. Gemeint ist die Entscheidung, wie ein Agent Aufgaben zerlegt, wie viel Entscheidungsfreiheit er erhält und an welchen Stellen deterministische Logik wichtiger ist als modellbasierte Flexibilität. Für einen Einsteigerkurs ist genau diese Unterscheidung zentral, weil sie viele spätere Probleme bereits vorwegnimmt.
 
-Typischer Fehler: Zu früh die technisch eindrucksvollste Architektur zu wählen. In der Praxis ist die einfachste Struktur oft die robusteste.
+**Typischer Fehler:** Zu früh die technisch eindrucksvollste Architektur zu wählen. In der Praxis ist die einfachste Struktur oft die robusteste.
 
 ## Ein einfaches Beispiel
 
@@ -210,7 +210,7 @@ response = agent.invoke({
 })
 ```
 
-Typischer Fehler: Ein einziges Tool für zu viele unterschiedliche Aufgaben zu bauen. Dann verliert das Modell die Klarheit, welches Werkzeug in welcher Situation gemeint ist.
+**Typischer Fehler:** Ein einziges Tool für zu viele unterschiedliche Aufgaben zu bauen. Dann verliert das Modell die Klarheit, welches Werkzeug in welcher Situation gemeint ist.
 
 ## Single-Agent-Architektur: mehrere Schritte, eine Rolle
 
@@ -324,7 +324,7 @@ Für den Einstieg reichen drei Grundformen:
 
 Utility-basierte oder adaptive Agenten sind mögliche Vertiefungen, aber für die erste Architekturwahl meist nicht nötig. Wichtiger ist die Frage, welche Entscheidungen fest in Code gehören und welche Entscheidungen das Modell flexibel treffen darf.
 
-Grenze: Diese Einteilung ersetzt keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
+**Grenze:** Diese Einteilung ersetzt keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
 
 ### Verbreitete Ansätze im Vergleich: sichtbare Reasoning-Artefakte
 
@@ -341,7 +341,7 @@ Diese Tabelle ist unabhängig von den vier Architekturstufen. Ein Single-Agent k
 
 Plan-and-Execute und Reflexion sind deshalb keine eigenen Stufen. Sie schneiden quer durch die Architektur und beschreiben, wie Arbeit sichtbar gemacht oder geprüft wird.
 
-Grenze: Sichtbare Artefakte sind kein Garant für Korrektheit. Ein Agent kann einen plausiblen Plan ausgeben und trotzdem ein falsches Tool wählen. Sichtbare Artefakte helfen beim Debuggen, ersetzen aber keine Validierung.
+**Grenze:** Sichtbare Artefakte sind kein Garant für Korrektheit. Ein Agent kann einen plausiblen Plan ausgeben und trotzdem ein falsches Tool wählen. Sichtbare Artefakte helfen beim Debuggen, ersetzen aber keine Validierung.
 
 ## Welche Design-Prinzipien immer gelten
 
@@ -404,7 +404,7 @@ class PolicyEngine:
         }
 ```
 
-Typischer Fehler: Geschäftslogik als schöne Formulierung im Prompt zu verstecken. Im Betrieb führt das zu Abweichungen, die schwer nachvollziehbar sind.
+**Typischer Fehler:** Geschäftslogik als schöne Formulierung im Prompt zu verstecken. Im Betrieb führt das zu Abweichungen, die schwer nachvollziehbar sind.
 
 ### Kontext darf nicht unbegrenzt wachsen
 

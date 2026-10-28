@@ -56,7 +56,7 @@ Oft kommt noch hinzu, dass das System nicht nur Fehler anzeigt, sondern selbstst
 
 Ein guter Praxistest: Würde ein fester Ablauf mit klaren Regeln dieselbe Aufgabe zuverlässig lösen? Wenn ja, spricht meist mehr für Workflow oder Code als für einen Agenten.
 
-Grenze: Auch eine offene Formulierung in natürlicher Sprache bedeutet nicht automatisch „Agent“. Viele Anfragen, die sich so anfühlen, lassen sich am Ende trotzdem mit klaren Pipelines lösen.
+**Grenze:** Auch eine offene Formulierung in natürlicher Sprache bedeutet nicht automatisch „Agent“. Viele Anfragen, die sich so anfühlen, lassen sich am Ende trotzdem mit klaren Pipelines lösen.
 
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/agentisch_2.png" class="logo" width="900"/>
@@ -113,7 +113,7 @@ Tool-Calling ist ein guter Einstieg, wenn Werkzeuge klar benannt sind und der Au
 
 ReAct arbeitet in einem Zyklus aus Denken, Handeln und Beobachten. Der Agent prüft eine Lage, führt eine Aktion aus und reagiert anschließend auf das Ergebnis. Das Muster passt besonders gut zu Recherche, Debugging oder offenen Problemlösungen – also überall dort, wo der nächste Schritt erst nach Sichtung der bisherigen Ergebnisse feststeht.
 
-Grenze: ReAct kann bei unklaren Aufgaben teuer und langsam werden. Ohne Begrenzung von Iterationen oder Budget verliert das System schnell die Kontrolle.
+**Grenze:** ReAct kann bei unklaren Aufgaben teuer und langsam werden. Ohne Begrenzung von Iterationen oder Budget verliert das System schnell die Kontrolle.
 
 ## Workflow: wenn die Reihenfolge wichtiger ist als Freiheit
 
@@ -125,7 +125,7 @@ Nicht geeignet, wenn: die Aufgabe stark explorativ ist und der Lösungsweg sich 
 
 Ein Multi-Agent-System verteilt Aufgaben auf spezialisierte Rollen wie Recherche, Schreiben, Review oder Code. Das kann sinnvoll sein, wenn die Teilaufgaben fachlich so unterschiedlich sind, dass ein einzelner Agent an Grenzen stößt oder parallele Arbeit tatsächlich Nutzen bringt.
 
-Typischer Fehler: Multi-Agent zu wählen, weil es eindrucksvoll klingt. Häufig löst ein einzelner Workflow mit guten Knoten dieselbe Aufgabe einfacher. 
+**Typischer Fehler:** Multi-Agent zu wählen, weil es eindrucksvoll klingt. Häufig löst ein einzelner Workflow mit guten Knoten dieselbe Aufgabe einfacher. 
 
 ## RAG-Agent: wenn Wissen und Handeln zusammenkommen
 

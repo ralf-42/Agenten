@@ -26,11 +26,10 @@ has_toc: true
 
 ## Was ist eine Prompt-Datei?
 
-Prompts müssen  nicht direkt im Code/Notebook als String hardcodiert werden, sondern können auch als
-separate Markdown-Dateien im Ordner `05_prompt/` gespeichert.
+Prompts müssen  nicht direkt im Code/Notebook als String hardcodiert werden, sondern können auch als Prompt-Vorlage in einer (Markdown-)Dateien gespeichert werden.
 
 **Vorteile:**
-- Prompts sind **wiederverwendbar** — einmal schreiben, überall nutzen
+- Prompts sind **wiederverwendbar** — einmal schreiben, mehrfach nutzen
 - Prompts sind **vom Code getrennt** — Prompt-Anpassungen ohne Code/Notebook-Änderung
 - Prompts sind **versionierbar** — Änderungen sind nachvollziehbar
 - `load_prompt()` lädt sie direkt als `ChatPromptTemplate` oder String
@@ -57,8 +56,7 @@ Du bist ein hilfreicher Assistent...
 
 ## Was ist YAML?
 
-**YAML** (*YAML Ain't Markup Language*) ist ein Format für strukturierte Daten —
-lesbar wie normaler Text, aber von Programmen direkt verarbeitbar.
+**YAML** (*YAML Ain't Markup Language* - Ist keine Auszeichnungssprache) ist ein Format für strukturierte Daten — lesbar wie normaler Text, aber von Programmen direkt verarbeitbar.
 
 ### YAML-Syntax kurz erklärt
 

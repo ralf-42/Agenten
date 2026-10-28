@@ -29,7 +29,7 @@ Ein Chatmodell, das nur Text beantwortet, kann falsche oder problematische Aussa
 
 Agentensicherheit umfasst das gesamte System: Welche Eingaben gelten als vertrauenswürdig? Welche Tools darf der Agent nutzen? Welche Daten dürfen in Prompts, Logs oder externe Dienste gelangen? Diese Grenzen sollten vor der Implementierung feststehen.
 
-Typischer Fehler: Nur auf Modell-Sicherheit des Anbieters zu vertrauen. Inhaltsfilter und RLHF helfen, ersetzen aber keine sichere Systemarchitektur.
+**Typischer Fehler:** Nur auf Modell-Sicherheit des Anbieters zu vertrauen. Inhaltsfilter und RLHF helfen, ersetzen aber keine sichere Systemarchitektur.
 
 ## Ein einfaches Beispiel
 
@@ -106,7 +106,7 @@ processing_agent = create_agent(
 )
 ```
 
-Typischer Fehler: Einen einzigen Generalisten mit zu vielen mächtigen Werkzeugen auszustatten, statt Rollen sauber zu trennen.
+**Typischer Fehler:** Einen einzigen Generalisten mit zu vielen mächtigen Werkzeugen auszustatten, statt Rollen sauber zu trennen.
 
 ## Eingaben an Systemgrenzen validieren
 
@@ -114,7 +114,7 @@ Alles, was von außen kommt, muss als potenziell unsicher behandelt werden. Dazu
 
 Längenbegrenzung, Vorfilterung typischer Injektionsmuster, Markierung untrusted sources und Rollenprüfung vor Tool-Aufrufen sind keine kosmetischen Zusatzmaßnahmen. Diese Maßnahmen bilden die erste Schutzschicht gegen missbräuchliche Eingaben.
 
-Grenze: Validierung allein erkennt nicht jede raffinierte Injection. Das Risiko sinkt, aber Rechtebegrenzung und saubere Tool-Architektur bleiben notwendig.
+**Grenze:** Validierung allein erkennt nicht jede raffinierte Injection. Das Risiko sinkt, aber Rechtebegrenzung und saubere Tool-Architektur bleiben notwendig.
 
 ## PII und sensible Daten dürfen nicht unkontrolliert wandern
 
@@ -189,7 +189,7 @@ Modell-Sicherheit betrifft das Verhalten des zugrunde liegenden LLMs, etwa Inhal
 | Modell-Sicherheit | Verhalten des LLM selbst | Modellanbieter |
 | System-Sicherheit | Architektur, Rechte, Validierung, Tools | Entwickler und Betreiber |
 
-Typischer Fehler: Sicherheitsprobleme als Modellproblem zu behandeln, obwohl sie durch zu breite Rechte oder zu schwache Tool-Grenzen entstehen.
+**Typischer Fehler:** Sicherheitsprobleme als Modellproblem zu behandeln, obwohl sie durch zu breite Rechte oder zu schwache Tool-Grenzen entstehen.
 
 ## Sicherheitsregeln für den Einstieg
 Für einen ersten sicheren Agenten reichen wenige Grundregeln: nur nötige Tools freigeben, externe Inhalte nie als Instruktionen behandeln, sensible Daten vor Persistierung bereinigen und bei riskanten Aktionen eine menschliche Freigabe vorsehen.

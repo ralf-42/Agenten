@@ -83,7 +83,7 @@ Für das Modell ist ein Tool letztlich ein Schema mit Name, Beschreibung und Par
 }
 ```
 
-Typischer Fehler: Zu denken, dass das Modell damit bereits sicher und korrekt gehandelt hat. In Wahrheit beginnt Sicherheit erst bei Validierung, Begrenzung und kontrollierter Ausführung.
+**Typischer Fehler:** Zu denken, dass das Modell damit bereits sicher und korrekt gehandelt hat. In Wahrheit beginnt Sicherheit erst bei Validierung, Begrenzung und kontrollierter Ausführung.
 
 ## Tools definieren mit `@tool`
 
@@ -193,9 +193,9 @@ def add(a: int, b: int) -> int:
 > [!WARNING] Fehlende Type Hints erzeugen schwache Tool-Schemata<br>
 > Wenn das Schema unvollständig ist, kann das Modell Parameter falsch oder gar nicht befüllen.
 
-## Pydantic als Vertrags-Schicht
+## Pydantic als Schema- und Validierungsschicht
 
-Bei produktionsnäheren Tools reicht ein Docstring oft nicht aus. Dann wird ein Pydantic-Modell zur eigentlichen Contract-Schicht. Es definiert zugleich das Schema, validiert die Eingaben und macht Übergaben zwischen Komponenten konsistent.
+Ein Docstring beschreibt ein Tool, prüft aber keine Eingaben. Bei produktionsnäheren Tools übernimmt deshalb ein Pydantic-Modell (Pydantic v2) über `args_schema` diese Aufgabe: Es legt Felder, Typen und Wertebereiche fest, validiert die Eingaben vor dem Aufruf und liefert dem Modell die Feldbeschreibungen als Teil des Tool-Schemas. Wird ein Wert verletzt, etwa eine Priorität außerhalb von 1–5, schlägt die Validierung fehl, bevor das Tool ausgeführt wird.
 
 ```python
 from pydantic import BaseModel, Field
@@ -253,13 +253,13 @@ def query_database(sql: str) -> str:
         return f"Unerwarteter Fehler: {str(e)}"
 ```
 
-Typischer Fehler: Nur `Error` zurückzugeben. Ein Agent braucht eine informative Fehlermeldung, sonst kann er weder sinnvoll erklären noch sinnvoll weiterfragen.
+**Typischer Fehler:** Nur `Error` zurückzugeben. Ein Agent braucht eine informative Fehlermeldung, sonst kann er weder sinnvoll erklären noch sinnvoll weiterfragen.
 
 ## Tool-Ausgaben vor dem Weitergeben filtern
 
 Was ein Werkzeug zurückgibt, ist nicht automatisch das, was in den Agenten-Kontext fließen sollte. Rohe API-Antworten enthalten oft Statusfelder, verschachtelte Metadaten oder große Mengen irrelevanter Daten. Fließt all das ungefiltert in das Kontextfenster, verbraucht es Token, kann das Modell ablenken und erhöht das Risiko, dass nachfolgende Entscheidungen auf Nebeninformationen statt auf dem Kern basieren.
 
-Typischer Fehler: Die Rückgabe eines API-Aufrufs wird direkt als Tool-Ergebnis übergeben, ohne dass geprüft wird, welche Felder für den nächsten Schritt tatsächlich gebraucht werden. Ein Agent, der zehn Suchresultate mit je fünfzig Feldern erhält, wird keinen dieser Einträge besser auswerten als einen, der fünf Treffer mit drei relevanten Feldern bekommt — er wird es aber langsamer und unzuverlässiger tun.
+**Typischer Fehler:** Die Rückgabe eines API-Aufrufs wird direkt als Tool-Ergebnis übergeben, ohne dass geprüft wird, welche Felder für den nächsten Schritt tatsächlich gebraucht werden. Ein Agent, der zehn Suchresultate mit je fünfzig Feldern erhält, wird keinen dieser Einträge besser auswerten als einen, der fünf Treffer mit drei relevanten Feldern bekommt — er wird es aber langsamer und unzuverlässiger tun.
 
 ```python
 @tool
@@ -282,7 +282,7 @@ Bevor ein Tool an einen Agenten gebunden wird, sollte es einzeln geprüft werden
 ```python
 print(f"Name: {multiply.name}")
 print(f"Beschreibung: {multiply.description}")
-print(f"Schema: {multiply.args_schema.schema()}")
+print(f"Schema: {multiply.get_input_schema().model_json_schema()}")
 
 result = multiply.invoke({"a": 7, "b": 8})
 print(f"Ergebnis: {result}")

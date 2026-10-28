@@ -156,69 +156,80 @@ Leitplanken können an mehreren Stellen eingreifen: bei Eingaben, im Dialog, bei
 
 ```mermaid
 flowchart LR
-    %% Farb- und Stildefinitionen nach Vorlage
-    classDef extNode fill:#e2e4f0,stroke:#9aa0b8,stroke-width:1.5px,color:#1e293b,rx:6px,ry:6px;
-    classDef railNode fill:#72b01d,stroke:#558614,stroke-width:1px,color:#ffffff,rx:6px,ry:6px;
+    %% Farbdefinitionen aus Ihrem Schema
+    classDef offline fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef precompute fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
+    classDef cache fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
+    classDef online fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
+    classDef io fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
 
-    %% Link-Styling-Klassen
-    linkStyle default stroke:#334155,stroke-width:1.5px;
+    %% Link-Standardstil
+    linkStyle default stroke:#64748b,stroke-width:1.5px;
 
-    %% Externe Komponenten (Links)
-    subgraph LeftExternal[" "]
+    %% 1. Externe Komponenten (Links)
+    subgraph Col_Left [" "]
         direction TB
-        App["Application<br/>Code"]:::extNode
-        KB["Knowledge<br/>Base"]:::extNode
-        Act["Actions<br/>(a.k.a. tools)"]:::extNode
+        App["Application<br/>Code"]:::io
+        KB["Knowledge<br/>Base"]:::cache
+        Act["Actions<br/>(a.k.a. tools)"]:::precompute
     end
 
-    %% Guardrails Container (Mitte)
-    subgraph Guardrails["Programmable Guardrails"]
-        direction TB
-        InRails["Input rails"]:::railNode
+    %% 2. Programmable Guardrails Container
+    subgraph Guardrails ["Programmable Guardrails"]
+        direction LR
         
-        subgraph MidRails[" "]
-            direction LR
-            subgraph RetExec[" "]
-                direction TB
-                RetRails["Retrieval<br/>rails"]:::railNode
-                ExecRails["Execution<br/>rails"]:::railNode
-            end
-            DiaRails["Dialog rails"]:::railNode
+        %% Retrieval & Execution Spalte
+        subgraph Col_MidLeft [" "]
+            direction TB
+            RetRails["Retrieval<br/>rails"]:::cache
+            ExecRails["Execution<br/>rails"]:::precompute
         end
-        
-        OutRails["Output rails"]:::railNode
 
-        %% Interne Verbindungen
-        InRails -.- DiaRails
-        DiaRails <-.-> RetRails
-        DiaRails <-.-> ExecRails
-        DiaRails -.- OutRails
+        %% Hauptachse: Input -> Dialog -> Output
+        subgraph Col_MidMain [" "]
+            direction TB
+            InRails["Input rails"]:::offline
+            DiaRails["Dialog rails"]:::online
+            OutRails["Output rails"]:::offline
+        end
     end
-    
-    %% Externe Komponente (Rechts)
-    LLM["LLM"]:::extNode
 
-    %% Verbindungen Links <-> Guardrails
+    %% 3. LLM (Rechts)
+    subgraph Col_Right [" "]
+        direction TB
+        LLM["LLM"]:::io
+    end
+
+    %% --- Datenfluss & Kanten ---
     App -.-> InRails
-    RetRails -.-> KB
-    KB -.-> RetRails
-    ExecRails -.-> Act
-    Act -.-> ExecRails
     OutRails -.-> App
 
-    %% Verbindungen Guardrails <-> LLM
+    KB <.-> RetRails
+    Act <.-> ExecRails
+
+    InRails -.-> DiaRails
+    DiaRails <-.-> RetRails
+    DiaRails <-.-> ExecRails
+    DiaRails -.-> OutRails
+
     DiaRails --> LLM
     LLM --> DiaRails
 
-    %% Styling der Subgraphen
-    style Guardrails fill:#f7fceb,stroke:#558614,stroke-width:2px,rx:8px,ry:8px,color:#3f6212;
-    style LeftExternal fill:none,stroke:none;
-    style MidRails fill:none,stroke:none;
-    style RetExec fill:none,stroke:none;
+    %% Unsichtbare Kanten zur stabilen vertikalen Fixierung
+    App ~~~ KB ~~~ Act
+    InRails ~~~ DiaRails ~~~ OutRails
+    RetRails ~~~ ExecRails
 
-    %% Spezifische Linienfarben anpassen (grün für Rückkanal & LLM-Hinweg)
-    linkStyle 10 stroke:#72b01d,stroke-width:2px;
-    linkStyle 11 stroke:#72b01d,stroke-width:2px;
+    %% Container-Styling
+    style Guardrails fill:#f8fafc,stroke:#0284c7,stroke-width:2px,stroke-dasharray: 4 4,rx:8px,ry:8px,color:#0369a1;
+    style Col_Left fill:none,stroke:none;
+    style Col_Right fill:none,stroke:none;
+    style Col_MidLeft fill:none,stroke:none;
+    style Col_MidMain fill:none,stroke:none;
+
+    %% Akzentuierte Kanten (Ausgabe- & LLM-Pfade farblich hervorheben)
+    linkStyle 1 stroke:#0284c7,stroke-width:2px;
+    linkStyle 8 stroke:#16a34a,stroke-width:2px;
 ```
 
 Dies ist die am wenigsten ausgereifte Schicht im Stack. Es gibt noch kein dominantes Rahmenwerk und nur wenige breit etablierte Muster. 2024 bedeuteten Leitplanken oft Ein- und Ausgabefilter bei einem Modell. 2026 ruft ein Agent Werkzeuge auf, verändert Daten und startet Prozesse. Leitplanken müssen deshalb Tool-Aufrufe autorisieren, Raten begrenzen und prüfen, was der Agent tatsächlich getan hat. Die OWASP MCP Top 10 (Beta) liefern dafür eine erste Sicherheitscheckliste für tool-verbundene Agenten. Das Zustandsproblem: Leitplanken müssen wissen, was der Agent gerade tut, um den nächsten Schritt begrenzen zu können. Das erfordert Statusverfolgung zur Laufzeit.
@@ -270,18 +281,6 @@ flowchart TD
 
 ---
 
-## Cheat Sheet
-
-| Schicht | Zustandsverwaltung | Lock-in-Risiko | Demo → Prod Gap |
-|---|---|---|---|
-| **Models & Inference** | Keine. Zustandslose API-Aufrufe. | Hoch (closed) / Niedrig (open-weight) | Kleinste |
-| **Protocols & Tools** | Keine. Aufruf und Antwort. | Niedrig. MCP ist offen. | Mittel. Sicherheit ist die Lücke. |
-| **Memory & Knowledge** | Höchste. Das IST die State Layer. | Mittel. pgvector ist portabel. | Groß. Kontextfenster maskieren es. |
-| **Frameworks & SDKs** | Kommt auf das Lager an. SDKs abstrahieren es. | Höchste. Code portiert nicht. | Groß. Fehler nur in Prod. |
-| **Eval & Observability** | Jeden Schritt tracen oder blind debuggen. | Moderat. OTel hilft. | Größte. Die meisten haben null Evals. |
-| **Guardrails & Safety** | Muss oft selbst gebaut werden. | Niedrig. Eigener Policy-Code. | Sehr groß. Demos haben meist kaum Schutzmechanismen. |
-
----
 
 ## Das große Ganze
 

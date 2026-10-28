@@ -263,6 +263,8 @@ Geeignete Messgrößen sind:
 
 Wer zunächst nur Chunk-Grenzen an Beispieldokumenten ansehen möchte, kann den [RAG Chunking Simulator](https://a2z.tools/rag-chunking-simulator) direkt im Browser verwenden. Er zeigt einfache Strategien wie rekursives, satz- und absatzbasiertes Chunking, bewertet aber nicht die Retrieval-Qualität. Für einen belastbaren Vergleich müssen repräsentative Fragen und relevante Zielpassagen in eine Evaluation einfließen.
 
+Eine Übersicht weiterer kostenloser Browser-Tools für KI-Anwendungen bietet [apprun.icu AI-Tools](https://apprun.icu/ai-tools/); darunter ist auch der Chunking Strategy Comparator.
+
 # Implementierungs-Beispiel (LangChain)
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter

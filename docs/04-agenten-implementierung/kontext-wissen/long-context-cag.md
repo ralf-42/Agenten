@@ -65,13 +65,29 @@ RAG löst das Kontextproblem anders. Die Frage sucht relevante Ausschnitte; das 
 
 ```mermaid
 flowchart LR
-    Q[Frage] --> R[Retriever]
-    KB[(Wissensbasis)] --> R
-    R --> C[Relevante Chunks]
-    C --> P[Prompt]
+    %% Definition der Farbklassen
+    classDef input fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef storage fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
+    classDef retrieval fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
+    classDef generation fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
+
+    %% Knoten
+    Q[Frage]:::input
+    KB[(Wissensbasis)]:::storage
+    R[Retriever]:::retrieval
+    C[Relevante Chunks]:::retrieval
+    P[Prompt Assembly]:::generation
+    LLM[LLM]:::generation
+    A[Antwort]:::input
+
+    %% Kanten
+    Q --> R
+    KB --> R
+    R --> C
+    C --> P
     Q --> P
-    P --> LLM[LLM]
-    LLM --> A[Antwort]
+    P --> LLM
+    LLM --> A
 ```
 
 RAG lohnt sich besonders, wenn die Wissensbasis groß, dynamisch oder nicht vollständig in den Kontext ladbar ist. Der Preis ist zusätzliche Infrastruktur: Dokumente müssen vorbereitet, gechunked, eingebettet, gesucht und oft gerankt werden.
@@ -92,12 +108,29 @@ Beim Verarbeiten eines langen Prompts berechnet ein Transformer interne **Key-Va
 
 ```mermaid
 flowchart TB
-    D[Stabile Dokumente] --> Prep[Knowledge Preparation]
-    Prep --> Pre[Pre-computation]
-    Pre --> KV[(KV Cache)]
-    Q[Neue Frage] --> Inf[Inference]
-    KV --> Inf
-    Inf --> A[Antwort]
+    %% Styling-Klassen
+    classDef offline fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef precompute fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
+    classDef cache fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
+    classDef online fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
+    classDef io fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
+
+    %% Nodes
+    D[Stabile Dokumente]:::io
+    Prep[Knowledge Preparation]:::offline
+    Pre[Pre-computation]:::precompute
+    KV[(KV Cache)]:::cache
+    Q[Neue Frage]:::io
+    Inf[Inference Engine]:::online
+    A[Antwort]:::io
+
+    %% Edges
+    D --> Prep
+    Prep --> Pre
+    Pre --> KV
+    Q --> Inf
+    KV -->|Cached States| Inf
+    Inf --> A
 ```
 
 CAG besteht typischerweise aus drei Phasen:
@@ -120,16 +153,16 @@ Das ist besonders nützlich für stabile Systemprompts, Richtlinien oder Produkt
 
 ## Entscheidungshilfe
 
-| Situation | Passende Strategie | Warum |
-|---|---|---|
-| Ein einzelnes Dokument soll einmal analysiert werden | Long Context | direkte Umsetzung, kein Retrieval nötig |
-| Mehrere begrenzte Dokumente müssen vollständig verglichen werden | Long Context | globale Zusammenhänge und Lücken bleiben sichtbar |
-| Viele Dokumente, aber nur wenige Ausschnitte sind je Anfrage relevant | RAG | Kontext bleibt klein und gezielt |
-| Stabile Wissensbasis wird sehr oft abgefragt | CAG / Prompt Caching | Vorverarbeitung amortisiert sich |
-| Wissensbasis ändert sich häufig | RAG | Cache-Neuberechnung wäre zu teuer |
-| Vollständigkeit wichtiger als Kosten | Long Context oder CAG | weniger Risiko, dass Retrieval etwas übersieht |
-| Sehr große Wissensbasis | RAG | alles Laden ist nicht realistisch |
-| Einzelne relevante Stelle in sehr viel Text finden | RAG oder gezieltes Context Engineering | weniger Rauschen im Modellkontext |
+| Situation                                                             | Passende Strategie                     | Warum                                             |
+| --------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- |
+| Ein einzelnes Dokument soll einmal analysiert werden                  | Long Context                           | direkte Umsetzung, kein Retrieval nötig           |
+| Mehrere begrenzte Dokumente müssen vollständig verglichen werden      | Long Context                           | globale Zusammenhänge und Lücken bleiben sichtbar |
+| Viele Dokumente, aber nur wenige Ausschnitte sind je Anfrage relevant | RAG                                    | Kontext bleibt klein und gezielt                  |
+| Stabile Wissensbasis wird sehr oft abgefragt                          | CAG / Prompt Caching                   | Vorverarbeitung amortisiert sich                  |
+| Wissensbasis ändert sich häufig                                       | RAG                                    | Cache-Neuberechnung wäre zu teuer                 |
+| Vollständigkeit wichtiger als Kosten                                  | Long Context oder CAG                  | weniger Risiko, dass Retrieval etwas übersieht    |
+| Sehr große Wissensbasis                                               | RAG                                    | alles Laden ist nicht realistisch                 |
+| Einzelne relevante Stelle in sehr viel Text finden                    | RAG oder gezieltes Context Engineering | weniger Rauschen im Modellkontext                 |
 
 In der Praxis kombinieren Architekturen diese Strategien. Beispiel: Ein Agent nutzt RAG, um relevante Dokumentbereiche zu finden, lädt ausgewählte Dateien in den Kontext und nutzt Prompt Caching für stabile Systemanweisungen.
 
@@ -169,11 +202,11 @@ Nicht das richtige Schlagwort entscheidet. Die Architektur muss zur Änderungsra
 
 ## Abgrenzung zu verwandten Dokumenten
 
-| Dokument | Frage |
-|---|---|
-| [RAG-Konzepte](./rag-konzepte.html) | Wie funktioniert eine Retrieval-Pipeline im Detail? |
-| [Context Engineering](./context-engineering.html) | Wie wird Kontext gezielt ausgewählt, strukturiert und begrenzt? |
-| [Memory-Systeme]({{ '/04-agenten-implementierung/ablauf-zustand/memory-systeme.html' | relative_url }}) | Was soll ein Agent über Sitzungen hinweg behalten? |
+| Dokument                                                                             | Frage                                                           |                                                    |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------------------------------------------- |
+| [RAG-Konzepte](./rag-konzepte.html)                                                  | Wie funktioniert eine Retrieval-Pipeline im Detail?             |                                                    |
+| [Context Engineering](./context-engineering.html)                                    | Wie wird Kontext gezielt ausgewählt, strukturiert und begrenzt? |                                                    |
+| [Memory-Systeme]({{ '/04-agenten-implementierung/ablauf-zustand/memory-systeme.html' | relative_url }})                                                | Was soll ein Agent über Sitzungen hinweg behalten? |
 
 ---
 

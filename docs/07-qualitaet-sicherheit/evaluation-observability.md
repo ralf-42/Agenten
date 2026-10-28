@@ -104,7 +104,7 @@ flowchart TB
     class L4 target;
 ```
 
-Wer nur die fertige Antwort speichert, sieht häufig nur das Symptom. Wer auch Trajectory und Tool-Verhalten speichert, erkennt meist die eigentliche Ursache: falsches Tool, leerer Retrieval-Kontext, unnötige Schleife oder ein Prompt, der dem Modell zu viel Spielraum lässt.
+Wer nur die fertige Antwort speichert, sieht häufig nur das Symptom. Wer auch Trajectory (Lösungsweg) und Tool-Verhalten speichert, erkennt meist die eigentliche Ursache: falsches Tool, leerer Retrieval-Kontext, unnötige Schleife oder ein Prompt, der dem Modell zu viel Spielraum lässt.
 
 > [!NOTE] Vier Signale mit hohem Nutzen<br>
 > Für einen Kurseinstieg genügen meist diese vier Beobachtungsebenen. Mehr Telemetrie hilft nur dann, wenn daraus auch Entscheidungen für Prompt, Tooling oder Datenbasis abgeleitet werden.
@@ -163,7 +163,8 @@ Ein häufiger erster Fehler ist ein Testset, das nur aus offensichtlichen Anfrag
 Dataset-Struktur:
 - Happy Path: typische Anfragen mit erwartbarem Verlauf
 - Edge Cases: unklare Formulierungen, Grenzwerte, fehlende Angaben
-- Negative Tests: Out-of-Scope, ungültige Eingaben, adversariale Inputs
+- Negative Tests: Out-of-Scope, ungültige Eingaben, gezielt manipulierte Daten (
+adversariale Inputs)
 ```
 
 Schon ein kleines Set sollte pro Fall nicht nur die erwartete Antwort enthalten, sondern auch das erwartete Tool (`expected_tool`, z. B. `track_order`) und – bei riskanten Anfragen wie „Lösche alle Kundendaten.“ – die erwartete Eskalation (`expected_escalation`). Entscheidend ist nicht Vollständigkeit, sondern eine bewusste Auswahl.
@@ -236,7 +237,7 @@ Typische Fehlerklassen:
 
 ## Regressionen früh erkennen
 
-Sobald ein Agent produktiv weiterentwickelt wird, reicht eine Einmalbewertung nicht mehr aus. Jede Änderung an Prompt, Modell, Tooling oder Wissensbasis kann frühere Verbesserungen wieder zerstören. Regression Testing vergleicht daher neue Varianten immer mit einer bekannten Baseline auf demselben Datensatz.
+Sobald ein Agent produktiv weiterentwickelt wird, reicht eine Einmalbewertung nicht mehr aus. Jede Änderung an Prompt, Modell, Tooling oder Wissensbasis kann frühere Verbesserungen wieder zerstören. Regression Testing (Wiederholung von Testfällen) vergleicht daher neue Varianten immer mit einer bekannten Baseline auf demselben Datensatz.
 
 ```python
 baseline_results = evaluate(
@@ -293,7 +294,7 @@ flowchart TD
 
 ## Konkrete Umsetzung mit LangSmith
 
-Werkzeuge wie LangSmith sind für das Grundprinzip nicht notwendig, aber sie machen reproduzierbare Evaluation und Trace-Analyse deutlich einfacher. Für einen Kurs ist der Mehrwert vor allem didaktisch: Testfälle, Experimente und Feedback lassen sich an einem Ort sammeln.
+Werkzeuge wie LangSmith sind für das Grundprinzip nicht notwendig, aber sie machen reproduzierbare Evaluation und Trace-Analyse deutlich einfacher. Testfälle, Experimente und Feedback lassen sich an einem Ort sammeln.
 
 Ein einfaches Dataset kann direkt per SDK angelegt werden:
 

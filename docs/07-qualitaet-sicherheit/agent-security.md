@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Agenten-Sicherheit
 parent: "Qualität & Sicherheit"
@@ -64,7 +64,7 @@ Der zweite Fall ist besonders heikel, weil der Agent externe Inhalte oft gerade 
 > [!DANGER] Externe Inhalte sind keine Anweisungen<br>
 > Webseiten, Uploads, API-Antworten und E-Mails müssen im Prompt und in der Verarbeitung ausdrücklich als untrusted data behandelt werden.
 
-Ein **Adversarial Benchmark** ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Security gehören dazu direkte und indirekte Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen. Agent Evaluation und Testing nutzt solche Fälle als Regressionstest.
+Ein **Adversarial Benchmark** (*feindlicher* Benchmark) ist ein Stresstest mit gezielt schwierigen oder manipulativen Testfällen. Für Security gehören dazu direkte und indirekte Prompt Injection, erzwungene falsche Tool-Wahl, manipulierte RAG-Quellen und Out-of-Scope-Anfragen. Agent Evaluation und Testing nutzt solche Fälle als Regressionstest.
 
 ## Principle of Least Privilege
 
@@ -118,9 +118,9 @@ Längenbegrenzung, Vorfilterung typischer Injektionsmuster, Markierung untrusted
 
 ## PII und sensible Daten dürfen nicht unkontrolliert wandern
 
-Sobald personenbezogene oder vertrauliche Daten verarbeitet werden, reicht eine gute Antwortqualität nicht mehr aus. Dann geht es um Datenschutz, Haftung und Nachvollziehbarkeit. Namen, E-Mails, Telefonnummern, Finanzdaten, Gesundheitsdaten oder API-Schlüssel sollten nur dann in Prompts oder Logs landen, wenn das wirklich nötig und erlaubt ist.
+Sobald personenbezogene oder vertrauliche Daten verarbeitet werden (PII = Personally Identifiable Information), reicht eine gute Antwortqualität nicht mehr aus. Dann geht es um Datenschutz, Haftung und Nachvollziehbarkeit. Namen, E-Mails, Telefonnummern, Finanzdaten, Gesundheitsdaten oder API-Schlüssel sollten nur dann in Prompts oder Logs landen, wenn das wirklich nötig und erlaubt ist.
 
-Ein besonders wichtiger Grundsatz lautet: sensible Daten müssen vor Persistierung bereinigt werden, nicht erst danach.
+Ein besonders wichtiger Grundsatz lautet: sensible Daten müssen vor Persistierung (dauerhafte Speicherung) bereinigt werden, nicht erst danach.
 
 ```python
 import re

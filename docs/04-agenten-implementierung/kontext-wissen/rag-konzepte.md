@@ -41,8 +41,23 @@ Die folgende Tabelle bündelt diese Ausgangslage, ersetzt aber nicht die eigentl
 
 Retrieval Augmented Generation ergänzt das Modell also nicht durch neues Training, sondern durch einen zusätzlichen Arbeitsschritt: Zuerst wird gesucht, dann erst formuliert. In Trainings zeigt sich oft, dass genau diese Trennung Missverständnisse aufdeckt. Ist die Suche schlecht, wird auch die Antwort schlecht. RAG verschiebt das Problem deshalb nicht weg, sondern macht sichtbar, wo die eigentliche Schwäche liegt: im Retrieval, im Chunking oder in der Kontextzusammenstellung.
 
-```
-Frage → Suche relevante Dokumente → Füge Kontext zum Prompt → LLM generiert Antwort
+```mermaid
+flowchart LR
+    Q([Frage]) --> S[Relevante Dokumente suchen]
+    S --> P[Kontext in Prompt einfügen]
+    P --> L[LLM generiert Antwort]
+    L --> A([Belegte Antwort])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class Q input;
+    class S metric;
+    class P target;
+    class A output;
 ```
 
 > [!NOTE] Kernidee RAG<br>
@@ -58,10 +73,21 @@ Ein RAG-System besteht aus zwei Hauptphasen: **Indexierung** und **Retrieval + G
 
 ```mermaid
 flowchart LR
-    A[Dokumente] --> B[Laden]
+    A([Dokumente]) --> B[Laden]
     B --> C[Chunking]
     C --> D[Embedding]
-    D --> E[Vektordatenbank]
+    D --> E[(Vektordatenbank)]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C metric;
+    class D output;
+    class E target;
 ```
 
 | Schritt | Beschreibung | Typische Tools |
@@ -75,12 +101,23 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
+    A([Frage]) --> B[Embedding]
+    B --> C{Similarity Search}
+    C --> D[(Top-k Dokumente)]
     D --> E[Prompt + Kontext]
     E --> F[LLM]
-    F --> G[Antwort]
+    F --> G([Antwort])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C metric;
+    class D target;
+    class G output;
 ```
 
 | Schritt | Beschreibung |
@@ -178,12 +215,23 @@ Das LLM extrahiert strukturierte Filter aus natürlichsprachlichen Fragen:
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    Q(["Frage:<br/>Sicherheitsrichtlinien 2024"]) --> P[Query-Parser LLM]
+    P --> S["Suchbegriff:<br/>Sicherheitsrichtlinien"]
+    P --> F["Metadaten-Filter:<br/>jahr = 2024"]
+    S --> V[(Vektordatenbank)]
+    F --> V
+    V --> R([Gefilterte Treffer])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class Q input;
+    class F metric;
+    class V target;
+    class R output;
 ```
 ### Contextual Compression
 
@@ -191,12 +239,21 @@ Gefundene Dokumente werden auf das Wesentliche komprimiert:
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    Q([Frage]) --> R[Basis-Retriever]
+    R --> C[(Lange Roh-Chunks)]
+    C --> K{Kompressor / Filter}
+    K --> E([Relevante Textpassagen])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class Q input;
+    class C target;
+    class K metric;
+    class E output;
 ```
 ### Parent Document Retriever
 
@@ -204,12 +261,22 @@ Kleine Chunks für präzises Retrieval, aber größere Kontextfenster für die G
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    Q([Frage]) --> S{Suche über<br/>kleine Child-Chunks}
+    S --> C[(Child-Chunk 200 Z.)]
+    C -->|Parent-ID| P[(Parent-Dokument 2000 Z.)]
+    P --> L[LLM mit vollem Kontext]
+    L --> A([Antwort])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class Q input;
+    class S metric;
+    class C,P target;
+    class A output;
 ```
 ---
 
@@ -221,23 +288,45 @@ Die Kombination aller Komponenten zu einer funktionierenden Pipeline.
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    Q([Frage]) --> RET["1. retriever.invoke()"]
+    RET --> FMT["2. format_docs()"]
+    FMT --> CHN["3. rag_chain.invoke()<br/>Prompt, LLM und Parser"]
+    CHN --> ANS([Antwort])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class Q input;
+    class RET target;
+    class FMT metric;
+    class ANS output;
 ```
 ### RAG als Agent-Tool
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    U([Nutzerfrage]) --> AG[Agent / LLM]
+    AG --> D{Internes Wissen nötig?}
+    D -->|Ja| T["@tool: firmenwissen_suchen"]
+    T --> V[(Vektordatenbank)]
+    V --> T
+    T -->|Belegte Chunks| AG
+    D -->|Nein| ANS([Antwort])
+    AG --> ANS
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class U input;
+    class D metric;
+    class T,V target;
+    class ANS output;
 ```
 ---
 
@@ -269,12 +358,27 @@ RAGAS (Retrieval Augmented Generation Assessment) bietet standardisierte Metrike
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    DS[(Test-Dataset)] --> RAG[RAG-Pipeline]
+    RAG --> CTX[(Gefundener Kontext)]
+    RAG --> ANS[Generierte Antwort]
+    CTX --> M1{Context Precision<br/>und Recall}
+    CTX --> M2{Faithfulness}
+    ANS --> M2
+    ANS --> M3{Answer Relevance}
+    M1 --> REP([Evaluationsbericht])
+    M2 --> REP
+    M3 --> REP
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class DS input;
+    class CTX target;
+    class M1,M2,M3 metric;
+    class REP output;
 ```
 ### Manuelles Testen
 
@@ -282,12 +386,24 @@ Für erste Iterationen ist manuelles Testen effektiver als ein großes Evaluatio
 
 ```mermaid
 flowchart LR
-    A[Frage] --> B[Embedding]
-    B --> C[Similarity Search]
-    C --> D[Top-k Dokumente]
-    D --> E[Prompt + Kontext]
-    E --> F[LLM]
-    F --> G[Antwort]
+    TF(["Testfall:<br/>Frage + erwartete Quelle"]) --> RET[Retriever prüfen]
+    RET --> Q1{Richtige Quelle<br/>gefunden?}
+    Q1 -->|Nein| F1[Chunking / Retrieval<br/>anpassen]
+    Q1 -->|Ja| GEN[Antwort generieren]
+    GEN --> Q2{Antwort belegt<br/>und korrekt?}
+    Q2 -->|Nein| F2[Prompt / Kontext<br/>anpassen]
+    Q2 -->|Ja| OK([Testfall bestanden])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class TF input;
+    class Q1,Q2 metric;
+    class F1,F2 stop;
+    class OK output;
 ```
 > [!TIP] Vertiefung<br>
 > Die einsteigerfreundliche Einordnung steht in [Evaluation & Observability]({{ '/07-qualitaet-sicherheit/evaluation-observability.html' | relative_url }}). Die technische Umsetzung mit Tracing, Datasets und Monitoring ist in [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) beschrieben.

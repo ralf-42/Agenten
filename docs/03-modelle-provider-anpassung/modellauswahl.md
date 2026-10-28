@@ -111,6 +111,15 @@ flowchart TD
     J --> JUDGE["gpt-6.1-sol oder gpt-6-astra"]
     W --> WORKER["gpt-6.1-terra"]
     D --> BASE["gpt-6-luna"]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class START input;
+    class R,J,W,D metric;
+    class ROUTER,SUP,JUDGE,WORKER,BASE output;
 ```
 
 ## Provider-Mapping

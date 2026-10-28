@@ -151,16 +151,16 @@ Nicht alle Quellen sind gleich vertrauenswürdig. Interner Code und Konfiguratio
 
 ```mermaid
 flowchart TB
-    subgraph HIGH["Vertrauenswürdig"]
+    subgraph HIGH["<b>Vertrauenswürdig</b>"]
         SP[System-Prompt]
         CODE[Interner Code]
         CFG[Konfiguration]
     end
-    subgraph MED["Eingeschränkt vertrauenswürdig"]
+    subgraph MED["<b>Eingeschränkt vertrauenswürdig</b>"]
         AUTH[Authentifizierte Nutzereingaben]
         IAPI[Interne API-Antworten]
     end
-    subgraph LOW["Nicht vertrauenswürdig"]
+    subgraph LOW["<b>Nicht vertrauenswürdig</b>"]
         ANON[Anonyme Eingaben]
         WEB[Externe Webseiten]
         EMAIL[E-Mails und Uploads]
@@ -170,6 +170,15 @@ flowchart TB
     HIGH --> AGENT[Agent]
     MED -->|prüfen| AGENT
     LOW -->|validieren und markieren| AGENT
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class SP,CODE,CFG input;
+    class AUTH,IAPI metric;
+    class ANON,WEB,EMAIL,EAPI stop;
 ```
 
 Diese Einteilung hilft nicht nur technisch. Zusätzlich wird klar, wo Prüfungen, Maskierungen oder Freigaben nötig sind.

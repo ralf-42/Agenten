@@ -87,12 +87,21 @@ Observability beginnt bei Agenten nicht mit Server-Uptime, sondern mit dem inhal
 
 ```mermaid
 flowchart TB
-    L1["1. Prompt und Antwort\nFrage, Kontext, Systeminstruktion, Ausgabe"]
-    L2["2. Schrittfolge\nPlan, Retrieval, Tool Calls, Zwischenergebnisse"]
-    L3["3. Kosten und Token\npro Session und pro Schritt"]
-    L4["4. Tool-Verhalten\nToolwahl, Parameter, Wiederholungen, Fehler"]
+    L1["1. Prompt und Antwort<br/>Frage, Kontext, Systeminstruktion, Ausgabe"]
+    L2["2. Schrittfolge<br/>Plan, Retrieval, Tool Calls, Zwischenergebnisse"]
+    L3["3. Kosten und Token<br/>pro Session und pro Schritt"]
+    L4["4. Tool-Verhalten<br/>Toolwahl, Parameter, Wiederholungen, Fehler"]
 
     L1 --> L2 --> L3 --> L4
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class L1 input;
+    class L3 metric;
+    class L4 target;
 ```
 
 Wer nur die fertige Antwort speichert, sieht häufig nur das Symptom. Wer auch Trajectory und Tool-Verhalten speichert, erkennt meist die eigentliche Ursache: falsches Tool, leerer Retrieval-Kontext, unnötige Schleife oder ein Prompt, der dem Modell zu viel Spielraum lässt.
@@ -269,6 +278,17 @@ flowchart TD
     
     %% Der Kreislauf zum nächsten Produktionsfall
     G -.-> A
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class B,C,F metric;
+    class G output;
+    class D target;
 ```
 
 ## Konkrete Umsetzung mit LangSmith

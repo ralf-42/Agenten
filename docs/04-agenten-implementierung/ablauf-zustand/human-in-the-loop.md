@@ -88,6 +88,17 @@ flowchart LR
     D --> I([Fertig])
     G --> I
     H --> I
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class A input;
+    class C,E,F metric;
+    class I output;
+    class H stop;
 ```
 
 Das zweite Muster ist das Eskalations-Pattern. Hier erkennt der Agent bewusst seine Grenze und übergibt den Fall, statt eine kritische Entscheidung selbst zu treffen.
@@ -103,6 +114,17 @@ flowchart LR
     F -->|Nein| H([Mensch beendet])
     C --> I([Ergebnis])
     G --> I
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class A input;
+    class B,E,F metric;
+    class I output;
+    class D,H stop;
 ```
 
 HITL ist sinnvoll, wenn der Agent bei Unsicherheit, Risiken oder Regelverstößen an eine menschliche Entscheidung übergeben soll.

@@ -75,6 +75,17 @@ flowchart LR
     S --> O
     F --> O
     O --> A[Ergebnis]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class U input;
+    class O metric;
+    class A output;
+    class T,F target;
 ```
 
 ---
@@ -105,6 +116,15 @@ flowchart TD
     B -->|Nein| D{Planning, Dateien oder<br>Sub-Agenten wichtig?}
     D -->|Ja| E[DeepAgents]
     D -->|Nein| F[LangGraph oder einfacher Agent]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class B,D metric;
+    class C,E,F output;
 ```
 
 ---
@@ -539,6 +559,17 @@ flowchart TD
     F --> R{Weitere Schritte offen?}
     R -->|Ja| P
     R -->|Nein| A[Endergebnis]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class U input;
+    class D,R metric;
+    class A output;
+    class T,F target;
 ```
 
 ---

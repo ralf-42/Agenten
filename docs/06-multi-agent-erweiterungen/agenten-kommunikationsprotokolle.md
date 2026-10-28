@@ -55,6 +55,15 @@ flowchart TD
     O -->|A2A / ACP| W2
     W1 -->|MCP| T1
     W2 -->|MCP| T2
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class H input;
+    class O metric;
+    class T1,T2 target;
 ```
 
 | Ebene | Wer kommuniziert? | Typisches Protokoll |
@@ -84,7 +93,7 @@ Das Model Context Protocol dient dazu, Agenten mit externen Werkzeugen, Datenque
 
 ```mermaid
 flowchart LR
-    subgraph MCP-Architektur
+    subgraph MCP["<b>MCP-Architektur</b>"]
         HOST[Host LLM-App]
         CLIENT[MCP Client Connector]
         SERVER[MCP Server Tool / Datenquelle]
@@ -96,6 +105,13 @@ flowchart LR
     SERVER --> DB[(Datenbank)]
     SERVER --> API[Web-API]
     SERVER --> FS[Dateisystem]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class HOST input;
+    class SERVER,DB,API,FS target;
 ```
 
 Für Entwickler reicht zunächst eine einfache Sicht: MCP stellt lesende Zugriffe, ausführbare Aktionen und wiederverwendbare Prompt-Vorlagen bereit. Damit lassen sich viele typische Integrationsfälle sauber abbilden.
@@ -257,6 +273,15 @@ flowchart LR
     S -->|liest| B[Agent B]
     B -->|schreibt| S
     S -->|liest| C[Agent C]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C output;
+    class S target;
 ```
 
 Ein LangGraph-System kann intern also über State kommunizieren und nach außen trotzdem MCP oder A2A einsetzen. Diese Ebenen widersprechen sich nicht.
@@ -272,6 +297,13 @@ flowchart TD
     F -->|Agent mit Tool oder Datenquelle| MCP[MCP]
     F -->|Agent mit Agent| A2A[A2A oder ACP]
     F -->|Agent mit Frontend| AGUI[AG-UI]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class F metric;
+    class MCP,A2A,AGUI output;
 ```
 
 | Protokoll | Wofür es zuerst taugt | Stärke |
@@ -291,12 +323,21 @@ flowchart LR
     OA["Order Agent"]
     SA1["Supplier Agent 1"]
     SA2["Supplier Agent 2"]
-    DB[("Produktdatenbank\nLagerbestand")]
+    DB[("Produktdatenbank<br/>Lagerbestand")]
 
     IA -->|MCP| DB
     IA -->|A2A| OA
     OA -->|A2A| SA1
     OA -->|A2A| SA2
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class IA input;
+    class SA1,SA2 output;
+    class DB target;
 ```
 
 Ein solches Beispiel zeigt die eigentliche Architekturidee: MCP gibt Agenten Zugriff auf Kontext und Werkzeuge. A2A gibt ihnen Kollegen.

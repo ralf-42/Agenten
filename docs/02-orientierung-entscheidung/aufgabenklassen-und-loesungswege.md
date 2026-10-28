@@ -160,6 +160,15 @@ flowchart TD
     AG2 -->|Nein| AG3{Offene Recherche oder iterativ?}
     AG3 -->|Ja| RE([ReAct])
     AG3 -->|Nein| TC([Tool-Calling])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class B,C,D,D0,E,F,G,AG1,AG2,AG3 metric;
+    class B1,C1,D1,E1,F1,H1,MA,WF,RE,TC output;
 ```
 
 ## Praxisbeispiele zur ersten Frage: Lösungsweg

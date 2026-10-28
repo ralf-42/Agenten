@@ -51,6 +51,15 @@ flowchart LR
     CP1[(Checkpoint 1)] -.->|gespeichert| N1
     CP2[(Checkpoint 2)] -.->|gespeichert| N2
     CP3[(Checkpoint 3)] -.->|gespeichert| N3
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class S input;
+    class E output;
+    class CP1,CP2,CP3 target;
 ```
 
 Für den Einstieg genügen vier Begriffe. Ein Thread ist eine Sitzung, typischerweise identifiziert durch eine `thread_id`. Ein Checkpoint ist ein gespeicherter Snapshot dieses States. Jede gespeicherte Version besitzt eine eigene Checkpoint-ID. Ein Namespace dient zur zusätzlichen organisatorischen Trennung mehrerer Thread-Gruppen.
@@ -140,6 +149,13 @@ flowchart TD
     A -->|Ja| C{Produktionsumgebung?}
     C -->|Nein| D[SqliteSaver]
     C -->|Ja| E[PostgresSaver]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A,C metric;
+    class B,D,E output;
 ```
 
 Nicht geeignet, wenn: Ein In-Memory-Checkpointer für einen produktiven Agenten mit echter Sitzungsfortsetzung oder HITL-Freigaben eingesetzt wird. Dann wäre der zentrale Vorteil von Checkpointing beim Neustart sofort verloren.
@@ -234,6 +250,17 @@ flowchart LR
     D --> E[Mensch entscheidet]
     E -->|resume| F[Aktion ausfuehren]
     F --> G([END])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C,E metric;
+    class G output;
+    class D target;
 ```
 
 > [!WARNING] interrupt() braucht einen Checkpointer<br>

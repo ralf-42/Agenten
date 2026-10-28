@@ -81,6 +81,15 @@ flowchart TD
     R --> S
     W --> S
     S --> E[Finale Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class S metric;
+    class E output;
 ```
 
 Der Vorteil liegt in klaren Verantwortlichkeiten. Der Nachteil ist, dass der Supervisor schnell zum Engpass wird, wenn er neben dem Routing auch selbst die Facharbeit übernimmt.
@@ -117,6 +126,15 @@ flowchart TD
     S1 --> E[Antwort]
     S2 --> E
     S3 --> E
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class R metric;
+    class E output;
 ```
 
 Der Vorteil liegt in geringer Latenz und klarer Zuständigkeit: Nur der passende Spezialagent wird aktiv. Das Muster ist aber empfindlich gegen falsche Klassifikation. Wenn der Router am Anfang falsch entscheidet, läuft die gesamte Bearbeitung in die falsche Richtung.
@@ -133,6 +151,13 @@ flowchart LR
     B -->|Ergebnis| C[Struktur-Agent]
     C -->|Ergebnis| D[Writer-Agent]
     D --> E[Finale Ausgabe]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class E output;
 ```
 
 Der Unterschied zum Supervisor: Es gibt keine zentrale Routing-Logik. Jeder Agent gibt sein Ergebnis direkt weiter, ohne dass eine übergeordnete Stelle steuert.
@@ -154,6 +179,15 @@ flowchart LR
     C -->|Ja| D[Agent B übernimmt]
     C -->|Nein| E[Antwort]
     D --> E
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class C metric;
+    class E output;
 ```
 
 Hier entscheidet der bearbeitende Agent selbst, ein externer Router greift vorab nicht ein. Das macht das System flexibler, erfordert aber sauberen Kontexttransfer.
@@ -195,6 +229,17 @@ flowchart TD
     E2 --> P
     E3 --> P
     P --> F[Finale Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class P metric;
+    class F output;
+    class L target;
 ```
 
 Der Nutzen liegt in der Prüfbarkeit. Ein Plan kann angezeigt, bewertet oder freigegeben werden, bevor riskante Aktionen laufen. Problematisch wird das Muster, wenn der Plan zu früh festgeschrieben wird und neue Beobachtungen nicht mehr zurückfließen.
@@ -213,6 +258,15 @@ flowchart TB
     W[Writer-Agent] <--> B
     Q[Review-Agent] <--> B
     B --> E[Finales Ergebnis]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class Q metric;
+    class E output;
+    class B target;
 ```
 
 Dieses Muster passt gut, wenn mehrere Agenten an demselben Artefakt arbeiten: einem Briefing, einem Bericht, einer Tabelle oder einem Plan. Der gemeinsame State braucht aber Pflege. Ohne Statusfelder, Quellenangaben und klare Schreibregeln wächst das Blackboard schnell unkontrolliert.
@@ -238,6 +292,13 @@ flowchart TD
     C2 --> TL2
     TL1 --> M
     TL2 --> M
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+
+    class A input;
+    class M,TL1,TL2 metric;
 ```
 
 Dieses Muster lohnt sich erst, wenn Anzahl der Rollen, Aufgabenkomplexität und Abhängigkeiten hoch genug sind. Für kleine Demo- oder Proof-of-Concept-Setups ist es meist schon die zweite oder dritte Ausbaustufe, nicht der Startpunkt.
@@ -259,6 +320,15 @@ flowchart TD
     R --> E[Gemeinsames Ergebnis]
     W --> E
     C --> E
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class C metric;
+    class E output;
 ```
 
 Das Muster ist flexibel, aber schwerer zu kontrollieren als Supervisor, Pipeline oder Blackboard. Ohne klare Regeln entstehen leicht doppelte Arbeit, widersprüchliche Entscheidungen und hohe Kosten.
@@ -273,6 +343,11 @@ Ein anderes Muster entsteht, wenn Agenten einander aktiv bewerten oder überarbe
 flowchart LR
     A[Kritiker] <-->|Feedback| B[Autor]
     B <-->|Entwurf| C[Faktenchecker]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+
+    class A,C metric;
 ```
 
 Diese Form kann Qualität deutlich erhöhen, birgt aber das Risiko von Endlosschleifen oder instabilen Iterationen. Deshalb braucht sie klare Abbruchbedingungen und Iterationsgrenzen.
@@ -303,6 +378,15 @@ flowchart TD
     D --> J
     W --> J
     J --> E[Finale Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class S metric;
+    class E output;
 ```
 
 Nicht geeignet, wenn: Schritt B inhaltlich vom Ergebnis aus Schritt A abhängt. Dann ist eine scheinbar parallele Architektur nur komplizierter, aber nicht schneller.

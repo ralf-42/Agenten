@@ -44,6 +44,17 @@ flowchart LR
     O --> C
     O --> R[Trace und Evaluation]
     R --> H
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class U input;
+    class H,G,R metric;
+    class C,T target;
+    class E stop;
 ```
 
 ## Warum ein Harness notwendig wird

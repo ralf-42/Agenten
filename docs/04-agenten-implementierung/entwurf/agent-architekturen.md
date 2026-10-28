@@ -61,6 +61,15 @@ flowchart LR
     A["1 · Tool-Calling<br/>ein Werkzeug,<br/>eine Entscheidung"] --> B["2 · Single-Agent<br/>mehrere Schritte,<br/>ein Agent"]
     B --> C["3 · Workflow<br/>fester Ablauf,<br/>klare Prüfungen"]
     C --> D["4 · Multi-Agent<br/>Spezialisierung,<br/>Koordination"]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class C metric;
+    class D output;
 ```
 
 | Stufe | Muster | Wann sinnvoll |
@@ -123,6 +132,17 @@ flowchart LR
     C -->|Support| S[Support-Pfad]
     C -->|Sales| V[Sales-Pfad]
     C -->|unsicher oder verboten| E[Eskalation oder Stopp]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class A input;
+    class C metric;
+    class S,V output;
+    class E stop;
 ```
 
 Das Muster eignet sich besonders dort, wo die Kontrolle wichtiger ist als maximale Flexibilität:
@@ -174,6 +194,17 @@ flowchart LR
     T --> Q
     Q -->|nicht ausreichend| N[Nachbessern oder Eskalation]
     Q -->|ausreichend| E[Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class A input;
+    class G,R,Q metric;
+    class E output;
+    class X,N stop;
 ```
 
 Eine robuste Grundregel lautet:
@@ -195,6 +226,17 @@ flowchart TD
     E --> F[Ergebnis einbinden]
     F --> B
     C -->|Nein| G[Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C metric;
+    class G output;
+    class E target;
 ```
 
 Ein Support-Agent kann etwa das Tool `track_order` für den Lieferstatus oder `send_invoice` für Rechnungen aufrufen. Die Stärke liegt darin, dass das Modell flexibel formulieren kann, während die eigentliche Aktion in deterministischem Code oder in einer externen API stattfindet.
@@ -244,6 +286,15 @@ flowchart LR
     D --> E{Ziel erreicht?}
     E -->|Nein| B
     E -->|Ja| F[Antwort]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class E metric;
+    class F output;
 ```
 
 Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
@@ -257,6 +308,15 @@ ReAct ist flexibel, aber für den Produktionseinsatz oft zu unstrukturiert. Prod
 ```mermaid
 flowchart LR
     E["<b>Explore</b><br/>nur lesen"] --> P["<b>Plan</b><br/>nur lesen"] --> A["<b>Act</b><br/>voller Zugriff"]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class E input;
+    class P metric;
+    class A output;
 ```
 
 **Explore** — der Agent liest, sucht und sammelt Informationen, ohne etwas zu verändern. Erlaubt: Dateien lesen, Suchen, Strukturen analysieren.
@@ -285,7 +345,16 @@ flowchart TD
     C --> F[Qualitätsprüfung]
     D --> F
     E --> F
-    F --> END((Ende))
+    F --> FINISH((Ende))
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class START input;
+    class B,F metric;
+    class FINISH output;
 ```
 
 Ein Beispiel wäre ein Beschwerdeprozess. Zuerst wird die Anfrage kategorisiert, dann folgt je nach Kategorie eine passende Bearbeitung, anschließend eine Qualitätsprüfung und schließlich entweder eine Antwort oder eine menschliche Freigabe. Diese Struktur ist weniger flexibel als ReAct, dafür aber meist robuster und erklärbarer.

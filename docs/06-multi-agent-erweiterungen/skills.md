@@ -108,6 +108,17 @@ flowchart TD
     C -->|Ja| D[SKILL.md laden]
     C -->|Nein| E[ohne Skill weiter]
     D --> F[Referenzen oder Skripte bei Bedarf]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class C metric;
+    class E output;
+    class D,F target;
 ```
 
 Genau dieses progressive Laden macht Skills praktisch. Fachlogik kann umfangreicher werden, ohne den Kernkontext jeder Anfrage dauerhaft zu überladen.

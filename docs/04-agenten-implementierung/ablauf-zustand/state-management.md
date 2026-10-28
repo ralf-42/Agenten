@@ -182,6 +182,23 @@ app = graph.compile()
 
 Ein gutes Beispiel ist ein Workflow, der ein Dokument zusammenfasst, danach ein Sentiment bestimmt und am Ende Schlüsselwörter extrahiert. Hier zeigt sich, dass verschiedene Knoten nacheinander auf unterschiedliche Felder desselben States aufbauen.
 
+```mermaid
+flowchart LR
+    A[START] --> B[summarize_node]
+    B -->|schreibt summary| C[sentiment_node]
+    C -->|schreibt sentiment| D[keywords_node]
+    D -->|schreibt keywords| E[END]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class E output;
+    class C target;
+```
+
 ```python
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
@@ -218,7 +235,26 @@ An diesem Beispiel lässt sich gut zeigen, dass State Management nicht abstrakt 
 
 State ist nicht nur Speicher, sondern auch Entscheidungsgrundlage. Wenn ein Workflow nach einer Klassifikation unterschiedlich weiterlaufen soll, liest die Routing-Funktion den aktuellen State und entscheidet den nächsten Pfad.
 
+```mermaid
+flowchart LR
+    A[classify_node] -->|schreibt query_type| B{router}
+    B -->|technical| C[tech_agent]
+    B -->|billing| D[billing_agent]
+    B -->|sonst| E[general_agent]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class E output;
+    class B target;
+```
+
 ```python
+from typing import Literal
+
 class RouterState(TypedDict):
     messages: Annotated[list, add_messages]
     query_type: str
@@ -228,7 +264,7 @@ def classify_node(state: RouterState) -> RouterState:
     query = state["messages"][-1].content
     return {"query_type": "technical"}
 
-def router(state: RouterState) -> str:
+def router(state: RouterState) -> Literal["tech_agent", "billing_agent", "general_agent"]:
     if state["query_type"] == "technical":
         return "tech_agent"
     elif state["query_type"] == "billing":

@@ -70,6 +70,13 @@ flowchart TB
     L --> L1["<b>Prozedural</b><br/>Workflow Memory"]
     L --> L2["<b>Semantisch</b><br/>Wissensbasis"]
     L --> L3["<b>Episodisch</b><br/>Conversational Memory"]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class M input;
+    class K1,K2,K3,K4,L1,L2,L3 target;
 ```
 
 Kurzzeit-Memory ist fast immer nötig, weil ein Agent sonst schon innerhalb einer Sitzung den roten Faden verliert. **Semantic Cache** ist eine ergänzende Kurzzeit-Strategie: Ähnliche Anfragen werden auf gecachte Vektoreinträge abgebildet, sodass identische oder semantisch nahestehende Fragen ohne erneuten Modellaufruf beantwortet werden können.
@@ -223,6 +230,17 @@ flowchart LR
     B -->|Ja| D[Aeltere Nachrichten zusammenfassen]
     D --> E[Zusammenfassung bleibt]
     E --> F[Letzte Nachrichten bleiben voll erhalten]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class A input;
+    class B metric;
+    class C,F output;
+    class E target;
 ```
 
 Ein Sliding Window hält bei langen Sitzungen die jüngsten Nachrichten im aktiven Kontext; ältere Einträge fallen heraus.
@@ -362,6 +380,15 @@ flowchart LR
     MATCH -->|Nein| NEW["Neu planen<br/>und speichern"]
     REUSE --> DONE([Ausführen])
     NEW --> DONE
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class ANFRAGE input;
+    class MATCH metric;
+    class DONE output;
 ```
 
 **Typischer Fehler:** Nur Konversationen zu speichern, aber ausgeführte Prozessschritte zu verwerfen. Gerade bei mehrstufigen Tool-Sequenzen ist genau dieser Ablauf das wertvollste wiederverwendbare Wissen.
@@ -429,6 +456,15 @@ flowchart TD
     RESPONSE -->|schreibt| ST
     RESPONSE -->|optional| LT
     RESPONSE -->|optional| EM
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class INPUT input;
+    class RESPONSE output;
+    class ST,LT,EM target;
 ```
 
 ```python
@@ -471,6 +507,13 @@ flowchart TB
     MM --> WF[("Workflow")]
     MM --> EN[("Entity")]
     MM --> SU[("Summary")]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class AGENT input;
+    class C,KB,WF,EN,SU target;
 ```
 
 ```python
@@ -497,6 +540,13 @@ flowchart TB
     S2["<b>Schicht 2 — On-Demand-Dateien</b><br/>Themenspezifisches Wissen, bei Bedarf"]
     S3["<b>Schicht 3 — Archiv</b><br/>Vollständige Geschichte, selten abgerufen"]
     S1 --> S2 --> S3
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class S1 input;
+    class S3 target;
 ```
 
 **Schicht 1 — Kompakter Index:** Ein komprimierter Überblick, der bei jedem Schritt automatisch im Kontext liegt. Enthält Zusammenfassungen, aktive Projektziele und häufig benötigte Fakten.

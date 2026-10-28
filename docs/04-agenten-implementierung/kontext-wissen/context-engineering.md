@@ -81,13 +81,13 @@ Ein Beispiel: Ein Agent soll ein Kundengespräch vorbereiten. Ohne Kontext entst
 | Precision Retrieval | nur den Kontext liefern, der zur aktuellen Aufgabe passt | Was braucht das Modell wirklich für diese Anfrage? |
 | Runtime Governance | Zugriff und Ausgabe zur Laufzeit prüfen | Darf dieser Agent diese Information nutzen oder ausgeben? |
 
-Connected Access verhindert, dass ein Agent nur eine isolierte Datenquelle sieht. In größeren Organisationen liegen relevante Informationen in Datenbanken, Dokumentenspeichern, SaaS-Systemen, APIs, Code-Repositories oder Ticketsystemen. Zero-Copy-Federation kann helfen, Daten dort abzufragen, wo sie liegen, statt sie vollständig in eine neue Wissensbasis zu kopieren.
+**Connected Access** verhindert, dass ein Agent nur eine isolierte Datenquelle sieht. In größeren Organisationen liegen relevante Informationen in Datenbanken, Dokumentenspeichern, SaaS-Systemen, APIs, Code-Repositories oder Ticketsystemen. Zero-Copy-Federation kann helfen, Daten dort abzufragen, wo sie liegen, statt sie vollständig in eine neue Wissensbasis zu kopieren.
 
-Der Knowledge Layer gibt diesen Daten Struktur. Er löst Entitäten auf, verbindet Datensätze über Systemgrenzen hinweg und hält fachliche Beziehungen fest. Ein Support-Ticket, ein Vertrag, eine Produktversion und ein Ansprechpartner sind für das Modell erst nützlich, wenn klar ist, wie sie zusammengehören.
+Der **Knowledge Layer** gibt diesen Daten Struktur. Er löst Entitäten auf, verbindet Datensätze über Systemgrenzen hinweg und hält fachliche Beziehungen fest. Ein Support-Ticket, ein Vertrag, eine Produktversion und ein Ansprechpartner sind für das Modell erst nützlich, wenn klar ist, wie sie zusammengehören.
 
-Precision Retrieval begrenzt den Kontext auf das, was für die Aufgabe zählt. Mehr Kontext ist nicht automatisch besser. Gute Systeme filtern nach Absicht, Rolle, Zeit, Quelle und Policy. Sie vermeiden, dass ein Modell mit langen, nur lose passenden Dokumenten arbeitet, während die entscheidende Information zwischen Nebensachen verschwindet.
+**Precision Retrieval** begrenzt den Kontext auf das, was für die Aufgabe zählt. Mehr Kontext ist nicht automatisch besser. Gute Systeme filtern nach Absicht, Rolle, Zeit, Quelle und Policy. Sie vermeiden, dass ein Modell mit langen, nur lose passenden Dokumenten arbeitet, während die entscheidende Information zwischen Nebensachen verschwindet.
 
-Runtime Governance macht die Kontextbereitstellung überprüfbar. Berechtigungen gelten beim Datenimport, beim Abruf und bei der Antworterzeugung. Ein Agent kann eine Quelle technisch erreichen und trotzdem nicht berechtigt sein, ihre Inhalte für diese Anfrage zu verwenden.
+**Runtime Governance** macht die Kontextbereitstellung überprüfbar. Berechtigungen gelten beim Datenimport, beim Abruf und bei der Antworterzeugung. Ein Agent kann eine Quelle technisch erreichen und trotzdem nicht berechtigt sein, ihre Inhalte für diese Anfrage zu verwenden.
 
 ### Precision Retrieval im Detail
 

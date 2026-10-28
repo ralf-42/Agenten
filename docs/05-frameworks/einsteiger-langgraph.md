@@ -94,7 +94,7 @@ class BriefingState(TypedDict):
 from langchain.chat_models import init_chat_model
 llm = init_chat_model("openai:gpt-6-luna")
 
-def agent_node(state: BriefingState) -> BriefingState:
+def agent_node(state: BriefingState) -> dict:
     response = llm.invoke(state["messages"])
     return {"messages": [response], "step": state["step"] + 1}
 ```
@@ -104,12 +104,12 @@ def agent_node(state: BriefingState) -> BriefingState:
 ```python
 from langgraph.graph import StateGraph, START, END
 
-g = StateGraph(BriefingState)
-g.add_node("agent", agent_node)
-g.add_edge(START, "agent")
-g.add_edge("agent", END)
+briefing_builder = StateGraph(BriefingState)
+briefing_builder.add_node("agent", agent_node)
+briefing_builder.add_edge(START, "agent")
+briefing_builder.add_edge("agent", END)
 
-graph = g.compile()
+briefing_agent = briefing_builder.compile()
 ```
 
 ### Graphen visualisieren
@@ -117,7 +117,7 @@ graph = g.compile()
 ```python
 from IPython.display import Image
 
-display(Image(graph.get_graph(xray=True).draw_mermaid_png()))
+display(Image(briefing_agent.get_graph(xray=True).draw_mermaid_png()))
 ```
 
 Dieser minimale Workflow sieht so aus:
@@ -140,7 +140,7 @@ flowchart LR
 from langchain_core.messages import HumanMessage
 
 initial_state = {"messages": [HumanMessage(content="Was ist LangGraph?")], "step": 0}
-result = graph.invoke(initial_state)
+result = briefing_agent.invoke(initial_state)
 result
 ```
 
@@ -160,7 +160,7 @@ Nach einem ersten funktionsfähiges Beispiel, kann das Konzept erklärt werden:
 ```mermaid
 flowchart TD
     %% Einstiegspunkt
-    INVOKE([graph.invoke]) --> START
+    INVOKE([briefing_agent.invoke]) --> START
 
     %% Hauptknoten
     subgraph START_NODE [ ]
@@ -230,7 +230,7 @@ Nodes sollen klein, fokussiert und deterministisch sein.
 ### Typ 1: LLM-Node
 
 ```python
-def summarize_node(state: BriefingState) -> BriefingState:
+def summarize_node(state: BriefingState) -> dict:
     text = "\n".join([m.content for m in state["messages"]])
     summary = llm.invoke([{"role": "human", "content": f"Fasse zusammen: {text}"}])
     return {"messages": [summary]}
@@ -247,7 +247,7 @@ def suche(query: str) -> str:
     """Durchsucht die Projektdokumente."""
     return f"Ergebnis für: {query}"
 
-def tool_node(state: BriefingState) -> BriefingState:
+def tool_node(state: BriefingState) -> dict:
     result = suche.invoke({"query": state["messages"][-1].content})
     return {"messages": [AIMessage(content=result)]}
 ```
@@ -265,7 +265,7 @@ research_agent = create_agent(
     system_prompt="Du bist ein Spezialist für Projektrecherche. Belege jede Aussage mit einer Quelle.",
 )
 
-def research_node(state: BriefingState) -> BriefingState:
+def research_node(state: BriefingState) -> dict:
     result = research_agent.invoke({"messages": state["messages"]})
     return {"messages": result["messages"]}
 ```
@@ -287,8 +287,8 @@ Nun erst wird Routing eingeführt – **nachdem Entwickler Nodes und State kenne
 ### Lineare Edges
 
 ```python
-g.add_edge(START, "agent")
-g.add_edge("agent", END)
+briefing_builder.add_edge(START, "agent")
+briefing_builder.add_edge("agent", END)
 ```
 
 ### Bedingtes Routing
@@ -306,13 +306,13 @@ def router(state: BriefingState) -> str:
 ```
 
 ```python
-g.add_node("tools", tool_node)
-g.add_conditional_edges(
+briefing_builder.add_node("tools", tool_node)
+briefing_builder.add_conditional_edges(
     "agent",
     router,
     {"tools": "tools", END: END},
 )
-g.add_edge("tools", "agent")
+briefing_builder.add_edge("tools", "agent")
 ```
 
 **Visualisierung des Tool-Loops:**
@@ -367,7 +367,7 @@ Streaming ist ein wichtiges Werkzeug für das Verständnis.
 ```python
 config = {"configurable": {"thread_id": "demo"}}
 
-for chunk in graph.stream(
+for chunk in briefing_agent.stream(
     initial_state,
     config=config,
     stream_mode="updates",
@@ -417,10 +417,10 @@ Checkpointing ermöglicht:
 ```python
 from langgraph.checkpoint.memory import InMemorySaver
 checkpointer = InMemorySaver()
-graph = g.compile(checkpointer=checkpointer)
+briefing_agent = briefing_builder.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "session-01"}}
-result1 = graph.invoke(initial_state, config)
+result1 = briefing_agent.invoke(initial_state, config)
 ```
 
 Später:
@@ -430,7 +430,7 @@ new_input = {
     "messages": [HumanMessage(content="Fahre mit der nächsten Frage fort.")],
     "step": 0,
 }
-result2 = graph.invoke(new_input, config)
+result2 = briefing_agent.invoke(new_input, config)
 ```
 
 Checkpointing lädt dabei den gespeicherten Zustand der `thread_id` und ergänzt ihn um den neuen Input. Für Human-in-the-Loop-Unterbrechungen wird dagegen nicht ein neuer State übergeben, sondern `Command(resume=...)`.
@@ -466,19 +466,46 @@ Human-in-the-Loop ist ein wichtiges Konzept – aber erst an dieser Stelle sinnv
 ### Interrupt
 
 ```python
-from langgraph.types import interrupt
+from typing import TypedDict
 
-def approval_node(state: BriefingState) -> BriefingState:
-    decision = interrupt("Aktion ausführen? yes/no")
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.graph import END, START, StateGraph
+from langgraph.types import Command, interrupt
+
+
+class ApprovalState(TypedDict):
+    draft: str
+    approved: bool
+
+
+def approval_node(state: ApprovalState) -> dict:
+    decision = interrupt({"draft": state["draft"], "question": "Freigeben? yes/no"})
     return {"approved": decision == "yes"}
+
+
+approval_builder = StateGraph(ApprovalState)
+approval_builder.add_node("approval_node", approval_node)
+approval_builder.add_edge(START, "approval_node")
+approval_builder.add_edge("approval_node", END)
+approval_agent = approval_builder.compile(checkpointer=InMemorySaver())
+
+approval_config = {"configurable": {"thread_id": "approval-001"}}
+approval_agent.invoke(
+    {"draft": "Vorgang freigeben", "approved": False},
+    config=approval_config,
+)
 ```
 
 ### Weiterführen
 
 ```python
-from langgraph.types import Command
-result = graph.invoke(Command(resume="yes"), config)
+result = approval_agent.invoke(
+    Command(resume="yes"),
+    config=approval_config,
+)
 ```
+
+Der Checkpointer hält den unterbrochenen Zustand. Zum Fortsetzen verwendet der Lauf dieselbe thread_id.
 
 **Human-in-the-Loop Pattern:**
 

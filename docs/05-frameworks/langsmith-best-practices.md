@@ -24,19 +24,38 @@ LangSmith macht Ausführungen von LangChain- und LangGraph-Anwendungen nachvollz
 
 ## Tracing einrichten
 
-Aktiviere Tracing über Umgebungsvariablen. Lege API-Schlüssel im Secret Store oder in der lokalen Umgebung ab und schreibe sie nicht in Notebooks oder Quellcode.
+Wähle, ob alle unterstützten Aufrufe oder nur einzelne Referenzläufe erfasst werden sollen. Lege API-Schlüssel im Secret Store oder in der lokalen Umgebung ab.
+
+### Globales Tracing
+
+Mit true werden unterstützte LangChain- und LangGraph-Aufrufe erfasst.
 
 ~~~python
 import os
 
 os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "m05_agent_tracing"
+os.environ["LANGSMITH_PROJECT"] = "m05_multi_tool_agents"
 # LANGSMITH_API_KEY aus einer sicheren Umgebungsvariable laden
 ~~~
 
 Für Accounts außerhalb der US-Region wird zusätzlich der passende LANGSMITH_ENDPOINT gesetzt. Für EU-Accounts lautet er https://eu.api.smith.langchain.com. Die Konfiguration sollte vor den ersten Modell- oder Agent-Aufrufen verfügbar sein.
 
-Nach der Einrichtung werden LangChain- und LangGraph-Aufrufe im angegebenen Projekt erfasst. Im Trace lassen sich Eingaben, Ausgaben, verschachtelte Runs, Laufzeiten und Fehlermeldungen untersuchen.
+### Selektives Tracing
+
+Mit false bleibt das globale Tracing aus. tracing_context aktiviert nur den umschlossenen Lauf.
+
+~~~python
+import os
+from langsmith import tracing_context
+
+os.environ["LANGSMITH_TRACING"] = "false"
+os.environ["LANGSMITH_PROJECT"] = "m05_multi_tool_agents"
+
+with tracing_context(enabled=True):
+    result = agent.invoke({"messages": [...]})
+~~~
+
+Im Trace lassen sich Eingaben, Ausgaben, verschachtelte Runs, Laufzeiten und Fehlermeldungen untersuchen.
 
 ## Namen und Run-Konfiguration
 
@@ -44,7 +63,7 @@ Projekt-, Run-, Experiment-, Dataset- und Prompt-Namen folgen im Kurs dem Muster
 
 ~~~python
 run_config = {
-    "run_name": "m05_support_agent",
+    "run_name": "m05_support_agent_trace",
     "tags": ["support", "demo"],
     "metadata": {"module": "m05"},
 }
@@ -55,7 +74,7 @@ result = agent.invoke(
 )
 ~~~
 
-Der Wert von LANGSMITH_PROJECT benennt das Zielprojekt, zum Beispiel m05_agent_tracing. Verwende denselben Namen auch dann, wenn ein Notebook mit show_trace(...) auf das Projekt verweist.
+Der Wert von LANGSMITH_PROJECT benennt das Zielprojekt, zum Beispiel m05_multi_tool_agents. Verwende denselben Namen auch dann, wenn ein Notebook mit show_trace(...) auf das Projekt verweist.
 
 ## Traces verantwortungsvoll nutzen
 

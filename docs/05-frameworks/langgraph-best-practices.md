@@ -54,7 +54,7 @@ def general_node(state: SupportState) -> dict:
     return {"answer": f"Wir kümmern uns um: {state['query']}"}
 
 
-def support_router(state: SupportState) -> Literal["billing_node", "general_node"]:
+def support_router(state: SupportState) -> Literal["billing", "general"]:
     return state["category"]
 
 
@@ -67,8 +67,8 @@ support_builder.add_conditional_edges(
     "classify_node",
     support_router,
     {
-        "billing_node": "billing_node",
-        "general_node": "general_node",
+        "billing": "billing_node",
+        "general": "general_node",
     },
 )
 support_builder.add_edge("billing_node", END)

@@ -65,20 +65,19 @@ RAG löst das Kontextproblem anders. Die Frage sucht relevante Ausschnitte; das 
 
 ```mermaid
 flowchart LR
-    %% Definition der Farbklassen
-    classDef input fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
-    classDef storage fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
-    classDef retrieval fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
-    classDef generation fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
 
     %% Knoten
     Q[Frage]:::input
-    KB[(Wissensbasis)]:::storage
-    R[Retriever]:::retrieval
-    C[Relevante Chunks]:::retrieval
-    P[Prompt Assembly]:::generation
-    LLM[LLM]:::generation
-    A[Antwort]:::input
+    KB[(Wissensbasis)]:::target
+    R[Retriever]
+    C[Relevante Chunks]
+    P[Prompt Assembly]
+    LLM[LLM]
+    A[Antwort]:::output
 
     %% Kanten
     Q --> R
@@ -108,21 +107,19 @@ Beim Verarbeiten eines langen Prompts berechnet ein Transformer interne **Key-Va
 
 ```mermaid
 flowchart TB
-    %% Styling-Klassen
-    classDef offline fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
-    classDef precompute fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
-    classDef cache fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
-    classDef online fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
-    classDef io fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
 
     %% Nodes
-    D[Stabile Dokumente]:::io
-    Prep[Knowledge Preparation]:::offline
-    Pre[Pre-computation]:::precompute
-    KV[(KV Cache)]:::cache
-    Q[Neue Frage]:::io
-    Inf[Inference Engine]:::online
-    A[Antwort]:::io
+    D[Stabile Dokumente]:::input
+    Prep[Knowledge Preparation]
+    Pre[Pre-computation]
+    KV[(KV Cache)]:::target
+    Q[Neue Frage]:::input
+    Inf[Inference Engine]
+    A[Antwort]:::output
 
     %% Edges
     D --> Prep

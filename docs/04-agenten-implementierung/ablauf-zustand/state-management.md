@@ -42,11 +42,34 @@ Genau deshalb braucht ein Agent einen State. Er ist das gemeinsame Arbeitsgedäc
 
 ## Was mit „State“ gemeint ist
 
-Der State ist das zentrale Datenobjekt eines Workflows. Er enthält die Informationen, die ein Agent oder Graph zwischen Knoten behalten muss. Ein Knoten liest daraus relevante Felder, verarbeitet sie und gibt anschließend nur die Änderungen zurück.
+Der State ist das zentrale Datenobjekt eines Workflows – anschaulich das **gemeinsame Whiteboard des Graphen**. Knoten reichen sich keine Ergebnisse direkt von Hand zu Hand weiter. Stattdessen tritt jeder Knoten an das Whiteboard, liest die für ihn relevanten Felder ab und trägt am Ende nur seine neuen oder geänderten Werte ein.
 
-```text
-[Node A] -> State -> [Node B] -> State' -> [Node C] -> State'' -> ...
+```mermaid
+flowchart LR
+    WB[("State (Whiteboard)<br/>messages · summary · query_type")]
+    NA[Node A] -->|liest und ergänzt| WB
+    WB -->|aktueller Stand| NB[Node B]
+    NB -->|schreibt Änderung| WB
+    WB -->|prüft Feld| R{Router}
+    R -->|wählt nächsten Schritt| NC([Node C])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class NA input;
+    class WB target;
+    class R metric;
+    class NC output;
 ```
+
+An dieser Whiteboard-Metapher lassen sich auch die weiteren Bausteine von LangGraph direkt einordnen:
+- **Standard-Update (Wegwischen und Überschreiben):** Gibt ein Knoten einen neuen Wert für ein einfaches Feld wie `current_step` zurück, wird der alte Eintrag auf dem Whiteboard ersetzt.
+- **Reducer (Werte zusammenführen):** Ein Reducer legt fest, wie ein neues Feld mit seinem bisherigen Wert zusammengeführt wird. Ohne Reducer wird der bisherige Wert ersetzt.
+- **Router (Nur ablesen):** Ein Router schreibt selbst nichts auf das Whiteboard, sondern schaut auf ein Feld (z. B. `query_type`) und entscheidet, welcher Knoten als Nächstes an die Reihe kommt.
+- **Checkpointer (Foto vom Whiteboard):** Nach jedem abgeschlossenen Schritt wird der aktuelle Stand des Whiteboards fotografiert und gespeichert (siehe [Checkpointing & Persistenz](./checkpointing-persistenz.html)).
 
 Ein guter State ist nicht einfach nur groß, sondern passend zugeschnitten. Er speichert nur, was wirklich benötigt wird, ist typisiert, bleibt möglichst serialisierbar und vermeidet unnötige Seiteneffekte.
 
@@ -81,7 +104,7 @@ Für den internen State eines LangGraph-Workflows ist `TypedDict` in der Regel d
 from typing import TypedDict, Annotated
 from langgraph.graph.message import add_messages
 
-class WorkflowState(TypedDict):
+class ApprovalState(TypedDict):
     messages: Annotated[list, add_messages]
     context: str
     approved: bool
@@ -110,7 +133,7 @@ class UserInput(BaseModel):
 
 Sobald mehrere Knoten an denselben Feldern arbeiten, reicht ein einfaches „letzter Wert gewinnt“ oft nicht mehr aus. Genau hier kommen Reducer ins Spiel. Sie bestimmen, wie neue Werte mit bestehenden Werten kombiniert werden.
 
-Ohne Reducer wird ein Feld bei jeder Rückgabe ersetzt. Für Nachrichtenverläufe ist das fast immer falsch, weil sonst frühere Nachrichten verloren gehen.
+Ohne Reducer wird ein Feld bei jeder Rückgabe ersetzt. Für Nachrichtenverläufe ist das meist unerwünscht, weil frühere Nachrichten verloren gehen können. `add_messages` fügt neue Nachrichten normalerweise hinzu, aktualisiert aber eine vorhandene Nachricht, wenn ihre ID übereinstimmt; mit `RemoveMessage` lassen sich Nachrichten gezielt entfernen.
 
 ```python
 # Ohne Reducer
@@ -168,12 +191,12 @@ def process_node(state: BriefingState) -> BriefingState:
         "completed": True
     }
 
-graph = StateGraph(BriefingState)
-graph.add_node("process", process_node)
-graph.add_edge(START, "process")
-graph.add_edge("process", END)
+agent_builder = StateGraph(BriefingState)
+agent_builder.add_node("process", process_node)
+agent_builder.add_edge(START, "process")
+agent_builder.add_edge("process", END)
 
-app = graph.compile()
+briefing_agent = agent_builder.compile()
 ```
 
 **Typischer Fehler:** Den gesamten State zurückzugeben oder ihn direkt zu mutieren, obwohl sich nur ein Feld geändert hat. Dadurch wird der Code unnötig unübersichtlich und kann spätere Checkpoints oder Reducer-Mechanismen stören.
@@ -255,16 +278,16 @@ flowchart LR
 ```python
 from typing import Literal
 
-class RouterState(TypedDict):
+class SupportState(TypedDict):
     messages: Annotated[list, add_messages]
     query_type: str
     response: str
 
-def classify_node(state: RouterState) -> RouterState:
+def classify_node(state: SupportState) -> SupportState:
     query = state["messages"][-1].content
     return {"query_type": "technical"}
 
-def router(state: RouterState) -> Literal["tech_agent", "billing_agent", "general_agent"]:
+def router(state: SupportState) -> Literal["tech_agent", "billing_agent", "general_agent"]:
     if state["query_type"] == "technical":
         return "tech_agent"
     elif state["query_type"] == "billing":
@@ -280,23 +303,26 @@ Viele Probleme entstehen nicht im Modell, sondern im schlecht gepflegten State. 
 
 ```python
 # Falsch: State direkt mutieren
-def mutating_node(state: MyState) -> MyState:
+class InventoryState(TypedDict):
+    items: list[str]
+
+def mutating_node(state: InventoryState) -> InventoryState:
     state["items"].append("new")
     return {"items": state["items"]}
 
 # Richtig: neue Liste erzeugen
-def pure_node(state: MyState) -> MyState:
+def pure_node(state: InventoryState) -> InventoryState:
     new_items = state["items"] + ["new"]
     return {"items": new_items}
 ```
 
 ```python
 # Falsch: kein Reducer für messages
-class BadState(TypedDict):
+class MessagesWithoutReducerState(TypedDict):
     messages: list
 
 # Richtig: add_messages verwenden
-class GoodState(TypedDict):
+class MessagesWithReducerState(TypedDict):
     messages: Annotated[list, add_messages]
 ```
 
@@ -309,7 +335,7 @@ Der State sollte flach und sprechend benannt sein. Felder wie `user_query`, `cur
 Reducer sollten nur dort eingesetzt werden, wo wirklich akkumuliert wird. Knoten sollten nur Änderungen zurückgeben. Und Debugging wird einfacher, wenn eingehender State und Rückgabe im Zweifel kurz protokolliert werden.
 
 ```python
-def debug_node(state: MyState) -> MyState:
+def debug_node(state: InventoryState) -> InventoryState:
     print(f"[DEBUG] Eingehender State: {state}")
     result = process(state)
     print(f"[DEBUG] Rueckgabe: {result}")

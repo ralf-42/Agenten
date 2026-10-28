@@ -167,6 +167,12 @@ Für Entwickler reicht meist eine einfache Regel: Alles, was schwer reversibel i
 
 Entwickler unterschätzen oft, dass HITL nicht gegen Automatisierung arbeitet. Es macht Automatisierung in vielen realen Projekten überhaupt erst akzeptabel.
 
+## Transfer: Delegationsgrenzen mit KI-Delegation-Poker
+
+Nach der Arbeit mit menschlichen Freigaben lässt sich die Frage nach dem passenden Autonomiegrad gemeinsam erproben. Öffne dazu den [KI-Delegation-Poker für Teilnehmende](https://ki-delegation-poker.ralf42-2025.chatgpt.site/teilnehmen){:target="_blank" rel="noopener"}.
+
+Für eine konkrete Runde teilt die Spielleitung den Teilnehmendenlink mit dem Rundencode. Entscheidet am PMO-Assistenten, welche Schritte selbstständig laufen dürfen und wo eine menschliche Freigabe nötig ist. Übertragt eure Entscheidungen anschließend auf das [Supervisor-Pattern]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}).
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |

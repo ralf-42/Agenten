@@ -70,6 +70,9 @@ graph TB
     TOOLS -->|integrate| APIS
 
     classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class LLM_PROVIDERS,VECTOR_DB,APIS target;
 ```
 
 ---

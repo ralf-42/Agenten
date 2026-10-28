@@ -25,7 +25,7 @@ has_toc: true
 
 ## Warum Checkpointing überhaupt gebraucht wird
 
-Ein einfacher Workflow im Arbeitsspeicher funktioniert nur so lange, wie der Prozess läuft und niemand den Ablauf unterbricht. Sobald ein Agent mehrere Schritte ausführt, auf menschliche Freigabe warten soll oder nach einem Fehler wieder an derselben Stelle weitermachen muss, reicht flüchtiger Speicher nicht mehr aus. Genau hier beginnt Checkpointing.
+Ein einfacher Workflow im Arbeitsspeicher funktioniert nur so lange, wie der Prozess läuft und niemand den Ablauf unterbricht. Sobald ein Agent mehrere Schritte ausführt, auf menschliche Freigabe warten soll oder nach einem Fehler wieder an derselben Stelle weitermachen muss, reicht **flüchtiger** Speicher nicht mehr aus. Genau hier beginnt Checkpointing.
 
 Checkpointing speichert den Zustand eines Graphen nach einzelnen Ausführungsschritten, sodass dieser Zustand später wieder geladen werden kann. Damit werden längere Gespräche, Human-in-the-Loop, Fehlertoleranz und das Zurückspringen zu früheren Punkten erst praktikabel.
 
@@ -39,7 +39,7 @@ Dasselbe gilt für längere Konversationen. Wenn ein Nutzer zuerst den eigenen N
 
 ## Was ein Checkpoint in LangGraph eigentlich ist
 
-LangGraph speichert nach Ausführung eines Knotens einen Snapshot des aktuellen States. Dieser Snapshot gehört zu einer bestimmten Sitzung und kann später wieder aufgerufen werden. Praktisch entsteht dadurch eine Folge gespeicherter Zustände, über die sich ein Workflow vorwärts und bei Bedarf auch rückwärts nachvollziehen lässt.
+LangGraph speichert nach Ausführung eines Knotens einen Snapshot des aktuellen States. Dieser **Snapshot** gehört zu einer bestimmten Sitzung und kann später wieder aufgerufen werden. Praktisch entsteht dadurch eine Folge gespeicherter Zustände, über die sich ein Workflow vorwärts und bei Bedarf auch rückwärts nachvollziehen lässt.
 
 ```mermaid
 flowchart LR
@@ -78,12 +78,12 @@ Die `thread_id` entscheidet, ob ein neuer Aufruf als Fortsetzung oder als neue S
 ```python
 config = {"configurable": {"thread_id": "nutzer-123-session-1"}}
 
-result1 = app.invoke(
+result1 = agent.invoke(
     {"messages": [{"role": "human", "content": "Mein Name ist Mara Vogt."}]},
     config=config
 )
 
-result2 = app.invoke(
+result2 = agent.invoke(
     {"messages": [{"role": "human", "content": "Wie heisse ich?"}]},
     config=config
 )
@@ -105,7 +105,7 @@ LangGraph bietet unterschiedliche Checkpointer für unterschiedliche Reifestufen
 from langgraph.checkpoint.memory import InMemorySaver
 
 checkpointer = InMemorySaver()
-app = graph.compile(checkpointer=checkpointer)
+agent = agent_builder.compile(checkpointer=checkpointer)
 ```
 
 ### SqliteSaver
@@ -116,8 +116,8 @@ app = graph.compile(checkpointer=checkpointer)
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 with SqliteSaver.from_conn_string("checkpoints.db") as checkpointer:
-    app = graph.compile(checkpointer=checkpointer)
-    result = app.invoke(inputs, config=config)
+    agent = agent_builder.compile(checkpointer=checkpointer)
+    result = agent.invoke(inputs, config=config)
 ```
 
 ### AsyncSqliteSaver und PostgresSaver
@@ -131,7 +131,7 @@ import psycopg
 with psycopg.connect("postgresql://user:pass@host/db") as conn:
     checkpointer = PostgresSaver(conn)
     checkpointer.setup()
-    app = graph.compile(checkpointer=checkpointer)
+    agent = agent_builder.compile(checkpointer=checkpointer)
 ```
 
 | Checkpointer | Geeignet für | Grenze |
@@ -180,22 +180,22 @@ def chat_node(state: BriefingState) -> BriefingState:
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
 
-graph = StateGraph(BriefingState)
-graph.add_node("chat", chat_node)
-graph.add_edge(START, "chat")
-graph.add_edge("chat", END)
+agent_builder = StateGraph(BriefingState)
+agent_builder.add_node("chat", chat_node)
+agent_builder.add_edge(START, "chat")
+agent_builder.add_edge("chat", END)
 
 checkpointer = InMemorySaver()
-app = graph.compile(checkpointer=checkpointer)
+briefing_agent = agent_builder.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "user-42"}}
 
-app.invoke(
+briefing_agent.invoke(
     {"messages": [{"role": "human", "content": "Mein Name ist Mara Vogt."}]},
     config=config
 )
 
-result = app.invoke(
+result = briefing_agent.invoke(
     {"messages": [{"role": "human", "content": "Wie heisse ich?"}]},
     config=config
 )
@@ -208,12 +208,12 @@ Dieses Beispiel ist didaktisch einfach, aber es zeigt den Kern: Der zweite Aufru
 Checkpointing wird besonders nützlich, wenn der gespeicherte Zustand aktiv inspiziert wird, statt nur im Hintergrund zu laufen. LangGraph erlaubt es, den aktuellen State eines Threads abzurufen und frühere Checkpoints durchzugehen.
 
 ```python
-state = app.get_state(config)
+state = briefing_agent.get_state(config)
 print(state.values)
 print(state.next)
 print(state.config)
 
-for checkpoint in app.get_state_history(config):
+for checkpoint in briefing_agent.get_state_history(config):
     cid = checkpoint.config["configurable"]["checkpoint_id"]
     n_msgs = len(checkpoint.values.get("messages", []))
     print(f"Checkpoint {cid}: {n_msgs} Nachrichten")
@@ -228,18 +228,18 @@ Sobald ein Agent an einer kritischen Stelle pausieren und auf eine menschliche E
 ```python
 from langgraph.types import interrupt, Command
 
-def kritische_aktion(state: BriefingState) -> BriefingState:
-    entscheidung = interrupt({
-        "frage": "Soll ich das Briefing wirklich an den Steuerkreis senden?",
-        "empfaenger": "steuerkreis@example.org"
+def critical_action_node(state: BriefingState) -> BriefingState:
+    decision = interrupt({
+        "question": "Soll ich das Briefing wirklich an den Steuerkreis senden?",
+        "recipient": "steuerkreis@example.org"
     })
 
-    if entscheidung == "ja":
+    if decision == "ja":
         return {"messages": [{"role": "assistant", "content": "Briefing gesendet."}]}
     return {"messages": [{"role": "assistant", "content": "Briefing abgebrochen."}]}
 
-app.invoke(inputs, config=config)
-app.invoke(Command(resume="ja"), config=config)
+briefing_agent.invoke(inputs, config=config)
+briefing_agent.invoke(Command(resume="ja"), config=config)
 ```
 
 ```mermaid
@@ -264,17 +264,17 @@ flowchart LR
 ```
 
 > [!WARNING] interrupt() braucht einen Checkpointer<br>
-> Ohne kompilierten Checkpointer kann ein unterbrochener Workflow nicht zuverlässig wieder aufgenommen werden. `graph.compile(checkpointer=...)` ist dafür zwingend.
+> Ohne kompilierten Checkpointer kann ein unterbrochener Workflow nicht zuverlässig wieder aufgenommen werden. `agent_builder.compile(checkpointer=...)` ist dafür zwingend.
 
 ## Time Travel: warum frühere Zustände nützlich sind
 
 Der gespeicherte Verlauf erlaubt außerdem, zu einem früheren Punkt zurückzugehen und von dort einen neuen Pfad zu testen. Genau deshalb wird in LangGraph oft von Time Travel gesprochen.
 
 ```python
-history = list(app.get_state_history(config))
+history = list(briefing_agent.get_state_history(config))
 earlier = history[3]
 
-result = app.invoke(
+result = briefing_agent.invoke(
     {"messages": [{"role": "human", "content": "Versuche es anders."}]},
     config=earlier.config
 )
@@ -324,8 +324,8 @@ def trim_node(state: BriefingState) -> BriefingState:
 
 ```python
 with SqliteSaver.from_conn_string("db.sqlite") as checkpointer:
-    app = graph.compile(checkpointer=checkpointer)
-    result = app.invoke(inputs, config=config)
+    briefing_agent = agent_builder.compile(checkpointer=checkpointer)
+    result = briefing_agent.invoke(inputs, config=config)
 ```
 
 Checkpointer sind nützlich, wenn Multi-Turn-Sitzungen wachsen, der State viele Nachrichten enthält oder mehrere Personen parallel arbeiten.

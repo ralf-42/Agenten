@@ -243,6 +243,8 @@ flowchart LR
     class E target;
 ```
 
+Interaktive Demo: [Trimming und Rolling Summary]({{ '/visualisierungen/trimming_summary/' | relative_url }}){:target="_blank" rel="noopener"} – vergleicht, wie beide Strategien ältere Nachrichten aus dem aktiven LLM-Kontext entfernen oder in eine Zusammenfassung überführen.
+
 Ein Sliding Window hält bei langen Sitzungen die jüngsten Nachrichten im aktiven Kontext; ältere Einträge fallen heraus.
 
 ## Context Compaction: Kontext auslagern statt verdichten
@@ -320,31 +322,31 @@ class EntityMemoryState(TypedDict):
     messages: Annotated[list, add_messages]
     entity_memory: dict
 
-class Entitaet(BaseModel):
+class Entity(BaseModel):
     name: str = Field(description="Name der Entität")
-    beschreibung: str = Field(description="Beschreibung in einem Satz")
+    description: str = Field(description="Beschreibung in einem Satz")
 
-class EntitaetListe(BaseModel):
-    entitaeten: list[Entitaet] = Field(description="Extrahierte Entitäten")
+class EntityListResult(BaseModel):
+    entities: list[Entity] = Field(description="Extrahierte Entitäten")
 
-FRAGE_PRAEFIXE = ("was ", "wer ", "wie ", "wo ", "wann ", "warum ", "welche", "kennst")
+QUESTION_PREFIXES = ("was ", "wer ", "wie ", "wo ", "wann ", "warum ", "welche", "kennst")
 
 def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
-    letzte = state["messages"][-1].content.strip()
-    if letzte.endswith("?") or letzte.lower().startswith(FRAGE_PRAEFIXE):
+    latest_message = state["messages"][-1].content.strip()
+    if latest_message.endswith("?") or latest_message.lower().startswith(QUESTION_PREFIXES):
         return {}
 
-    extractor = llm.with_structured_output(EntitaetListe)
+    extractor = llm.with_structured_output(EntityListResult)
     result = extractor.invoke(
-        f"Extrahiere wichtige Entitäten (Personen, Projekte, Orte) aus:\n{letzte}"
+        f"Extrahiere wichtige Entitäten (Personen, Projekte, Orte) aus:\n{latest_message}"
     )
 
     updated = dict(state.get("entity_memory", {}))
-    for e in result.entitaeten:
-        if e.name in updated and e.beschreibung not in updated[e.name]:
-            updated[e.name] = updated[e.name] + "; " + e.beschreibung
+    for entity in result.entities:
+        if entity.name in updated and entity.description not in updated[entity.name]:
+            updated[entity.name] = updated[entity.name] + "; " + entity.description
         else:
-            updated[e.name] = e.beschreibung
+            updated[entity.name] = entity.description
 
     return {"entity_memory": updated}
 ```
@@ -357,7 +359,7 @@ Workflow Memory speichert die geordnete Sequenz von Schritten, die ein Agent zur
 
 Prozedurales Memory hat in Agentensystemen zwei Ausprägungen. Erstens können erfolgreiche Abläufe nachträglich gespeichert werden, wie im Workflow Memory. Zweitens können Fähigkeiten vorab als **Skills** beschrieben werden. Ein Skill ist eine abgegrenzte Handlungsanweisung, oft in einer Datei wie `SKILL.md`: Was kann der Agent damit tun, wann soll er den Skill nutzen, welche Schritte sind auszuführen und welche Hilfsdateien oder Skripte gehören dazu?
 
-Der Vorteil von Skills ist **Progressive Disclosure**: Der Agent muss nicht alle detaillierten Anweisungen dauerhaft im Kontext halten. Er sieht zunächst nur einen kurzen Index mit Name und Beschreibung verfügbarer Skills. Erst wenn eine Aufgabe zu einem Skill passt, lädt er die vollständigen Anweisungen und danach nur die zusätzlichen Ressourcen, die für die Ausführung wirklich gebraucht werden. Das schützt das Working Memory vor Überladung.
+Der Vorteil von Skills ist **Progressive Disclosure** (schrittweise Offenlegung): Der Agent muss nicht alle detaillierten Anweisungen dauerhaft im Kontext halten. Er sieht zunächst nur einen kurzen Index mit Name und Beschreibung verfügbarer Skills. Erst wenn eine Aufgabe zu einem Skill passt, lädt er die vollständigen Anweisungen und danach nur die zusätzlichen Ressourcen, die für die Ausführung wirklich gebraucht werden. Das schützt das Working Memory vor Überladung.
 
 ```python
 workflow = {
@@ -405,7 +407,8 @@ import sqlite3
 
 conn = sqlite3.connect("user_memory.db", check_same_thread=False)
 checkpointer = SqliteSaver(conn)
-app = graph.compile(checkpointer=checkpointer)
+# memory_builder steht für den zuvor mit StateGraph erstellten Builder.
+memory_agent = memory_builder.compile(checkpointer=checkpointer)
 
 def get_user_config(user_id: str, session_id: str) -> dict:
     return {
@@ -473,7 +476,7 @@ class HybridMemoryState(TypedDict):
     summary: str
     entity_memory: dict
 
-def chat_with_memory(state: HybridMemoryState) -> HybridMemoryState:
+def chat_with_memory_node(state: HybridMemoryState) -> HybridMemoryState:
     long_term = memory_store.similarity_search(
         state["messages"][-1].content, k=2
     )

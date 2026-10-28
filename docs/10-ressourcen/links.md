@@ -168,6 +168,9 @@ Ressourcen zu Retrieval Augmented Generation und systematischer Agenten-Evaluati
 | Ressource | Beschreibung |
 |-----------|--------------|
 | [RAGAS](https://docs.ragas.io/) | Standard-Framework zur RAG-Evaluation: Faithfulness, Relevance, Context Recall (→ LangSmith Evaluations Basics/Agent Evaluation und Testing) |
+| [Chunkwise](https://chunkwise.github.io/) | Open-Source-Plattform zur Visualisierung, Evaluation und zum Vergleich von Chunking-Workflows für RAG; selbstverwalteter AWS-Deploy, Projektseite mit Walkthrough |
+| [Open RAG Eval (GitHub)](https://github.com/vectara/open-rag-eval) | Open-Source-Python-Toolkit zur Evaluation von RAG-Pipelines und zum Vergleich von Chunk-Größen und Überlappungen; lokale Ausführung erforderlich |
+| [RAG Chunking Simulator](https://a2z.tools/rag-chunking-simulator) | Frei zugänglicher Browser-Visualizer für einfache Chunking-Strategien; zeigt Grenzen und Tokenverteilung, ersetzt keine Retrieval-Evaluation |
 | [RAG Survey: Retrieval-Augmented Generation for Large Language Models](https://arxiv.org/abs/2312.10997) | Umfassender Überblick über RAG-Strategien und Pipeline-Varianten (→ RAG Grundlagen) |
 | [LlamaIndex Docs](https://docs.llamaindex.ai/) | RAG-orientierte Alternative zu LangChain mit starkem Index-Fokus (→ RAG Grundlagen bis RAG-Agent) |
 | [Agent-as-a-Judge: Evaluate Agents with Agents](https://arxiv.org/abs/2410.10934) | Grundlagenpaper zur State-Verification statt Text-Trust bei Agenten-Evaluation – Erweiterung von LLM-as-a-Judge auf Tool-Trajektorien (→ Agent Security Best Practices/Agent Evaluation und Testing) |

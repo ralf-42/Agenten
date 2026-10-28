@@ -30,6 +30,8 @@ Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres 
 
 Fine-Tuning passt, wenn das Modell ein Verhalten zuverlässig wiederholen soll, statt neues Faktenwissen aufzunehmen. Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikation und wiederkehrende Extraktion. Für wechselnde Fakten ist Retrieval die bessere Wahl, denn Trainingsdaten bleiben nach dem Fine-Tuning nicht automatisch aktuell.
 
+Interaktive Demo: [Entscheidungshilfe Modellsteuerung]({{ '/visualisierungen/modellsteuerung/' | relative_url }}){:target="_blank" rel="noopener"} und [Verfahren zur Modelloptimierung]({{ '/visualisierungen/modellsteuerung_optimierung/' | relative_url }}){:target="_blank" rel="noopener"} – ordnen Prompting, RAG, Fine-Tuning und Quantisierung im Vergleich ein.
+
 # Einsatzkriterien
 
 Fine-Tuning lohnt sich, wenn das gewünschte Verhalten aus vielen ähnlichen Beispielen gelernt werden kann. Ein Kundensupport-Modell kann etwa lernen, Rückfragen in einem bestimmten Ton zu stellen, Eskalationen konsistent zu erkennen oder interne Kategorien stabil zuzuordnen. Bei solchen Aufgaben zählt weniger einzelnes Faktenwissen als reproduzierbares Verhalten.
@@ -50,7 +52,7 @@ Transfer Learning nutzt ein vortrainiertes Modell als Ausgangspunkt und passt es
 
 Parameter-effizientes Fine-Tuning verändert nicht alle Gewichte des Basismodells. Verfahren wie LoRA, QLoRA, DoRA, Adapter oder Prompt Tuning ergänzen oder verändern nur kleine Teile der Modellparameter. Trainingsläufe werden dadurch günstiger, Varianten lassen sich getrennt verwalten und ein Basismodell kann mehrere Spezialisierungen tragen.
 
-Die Auswahl eines passenden Basismodells & Parametriesierung zeigt die [interaktive Modellauswahl]({{ '/visualisierungen/llm_selector/' | relative_url }}){:target="_blank" rel="noopener"}.
+Interaktive Demo: [LoRA Fine-Tuning]({{ '/visualisierungen/lora_fine_tuning/' | relative_url }}){:target="_blank" rel="noopener"} und [Quantisierung von Sprachmodellen]({{ '/visualisierungen/quantisierung_llm/' | relative_url }}){:target="_blank" rel="noopener"} – zeigen, wie Low-Rank-Adapter und Quantisierung den Speicher- und Trainingsaufwand senken.
 
 LoRA fügt kompakte Low-Rank-Matrizen ein, die Gewichtsänderungen approximieren. QLoRA kombiniert diesen Ansatz mit Quantisierung, um Speicherbedarf weiter zu senken. Adapter platzieren zusätzliche Module zwischen vorhandenen Schichten; Prompt Tuning arbeitet mit trainierbaren Prompt-Repräsentationen statt mit vollständig angepassten Modellgewichten.
 
@@ -79,6 +81,8 @@ Kategorie: Rechnungskorrektur
 Supervised Fine-Tuning arbeitet mit kuratierten Eingabe-Ausgabe-Beispielen. Es eignet sich für Aufgaben, bei denen Fachleute eine richtige oder zumindest bevorzugte Antwort festlegen können. Datenqualität zählt dabei stärker als Menge: Wenige konsistente Beispiele sind hilfreicher als viele widersprüchliche Demonstrationen.
 
 Für erste Experimente reichen oft kleine Datensätze, solange sie echte Zielaufgaben abbilden. Entscheidend ist, dass Trainings-, Validierungs- und Testfälle getrennt bleiben. Wenn Beispiele aus der Evaluation im Training landen, wirkt das Modell besser, ohne tatsächlich besser geworden zu sein.
+
+Interaktive Demo: [Supervised Fine-Tuning (SFTConfig)]({{ '/visualisierungen/fine_tune_sftconfig/' | relative_url }}){:target="_blank" rel="noopener"} – visualisiert die wichtigsten Trainingsparameter und ihren Einfluss auf den SFT-Ablauf.
 
 ## Preference- und Reinforcement-Verfahren
 

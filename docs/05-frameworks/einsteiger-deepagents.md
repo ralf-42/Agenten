@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Einsteiger DeepAgents
-parent: "Multi-Agent & Erweiterungen"
-nav_order: 4
+parent: Frameworks
+nav_order: 6
 description: Einführung in DeepAgents als Harness für Planning, Filesystem und Sub-Agenten
 has_toc: true
 ---

@@ -148,6 +148,8 @@ Das ist besonders nützlich für stabile Systemprompts, Richtlinien oder Produkt
 
 **Typischer Fehler:** Prompt Caching mit dauerhaftem Agenten-Memory zu verwechseln. Prompt Caching merkt sich keinen neuen Nutzerfakt und keine Erfahrung aus einer Sitzung. Es beschleunigt nur die Wiederverwendung eines gleichen oder sehr ähnlichen Kontextpräfixes.
 
+Interaktive Demo: [Token-Verbrauch & Prompt Caching]({{ '/visualisierungen/token_verbrauch_caching/' | relative_url }}){:target="_blank" rel="noopener"} und [LLM-Response-Caching]({{ '/visualisierungen/caching/' | relative_url }}){:target="_blank" rel="noopener"} – vergleichen Kostenersparnis und Ablauf von Prompt-Präfix-Caching und Response-Caching.
+
 ## Entscheidungshilfe
 
 | Situation                                                             | Passende Strategie                     | Warum                                             |

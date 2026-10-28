@@ -169,14 +169,6 @@ Weitere interaktive Visualisierungen von externen Anbietern
 | **Imaginary** | Interaktive Mathematik-Programme und Visualisierungen | [Imaginary](https://www.imaginary.org/de/programs) |
 | **DeepDive Audios GenAI** | Audio-Ressourcen zu Generativer KI | [DeepDive Audios GenAI](https://open.spotify.com/show/4nxwhKtK2tvNeDoHS91iY9?si=qLmrGhxmStu6NpZD6_DLZg&nd=1&dlsi=b1bfd4c659384aad) |
 
-## 🗂️ Visualisierungen
-
-Eigenständige HTML-Visualisierungen, die direkt aus dem Kursverzeichnis `visualisierungen/` ausgeliefert werden
-
-| Thema | Beschreibung | Link |
-|-------|--------------|------|
-| **RAG Chunking Explorer** | Chunking-Strategien für RAG im Vergleich: Wie unterschiedliche Splitter denselben Text in Chunks zerlegen | [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer/' | relative_url }}){:target="_blank" rel="noopener"} |
-
 ---
 
 ## Abgrenzung zu verwandten Dokumenten

@@ -164,6 +164,8 @@ def chat_node(state: BriefingState) -> BriefingState:
 
 **Grenze:** Der Verlauf wächst mit jeder Nachricht. Dadurch steigen Tokenverbrauch, Kosten und die Gefahr, dass das Kontextfenster überschritten wird.
 
+Interaktive Demo: [Kontextfenster und Kontextverlust]({{ '/visualisierungen/kontextfenster/' | relative_url }}){:target="_blank" rel="noopener"} – veranschaulicht, wie ein begrenztes Kontextfenster bei wachsendem Gesprächsverlauf überläuft.
+
 ## Sliding Window: wenn nur das Jüngste wichtig ist
 
 Beim Sliding Window werden nur die letzten Nachrichten im aktiven Kontext behalten. Ältere Inhalte fallen aus dem direkten Arbeitsgedächtnis heraus. Diese Strategie ist einfach, günstig und für viele Chats ausreichend, solange frühe Informationen nicht dauerhaft relevant bleiben.

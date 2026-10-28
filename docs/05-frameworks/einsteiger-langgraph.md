@@ -64,6 +64,8 @@ LangGraph lernt sich am besten in kleinen Schritten. Nicht jedes Thema wird sofo
 | Checkpointing | Speichert Zustand für Resume und Debugging |
 | Interrupt | Technischer Halt für Human-in-the-Loop |
 
+Interaktive Demo: [LangGraph – Interaktiver Explainer]({{ '/visualisierungen/langgraph_explainer/' | relative_url }}){:target="_blank" rel="noopener"} – macht State, Nodes, Edges und bedingtes Routing schrittweise erlebbar.
+
 ---
 
 ## Quickstart

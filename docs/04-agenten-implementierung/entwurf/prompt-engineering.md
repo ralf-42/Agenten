@@ -354,6 +354,8 @@ Konkrete Frage
 
 In der Praxis relevant, wenn Dokumente, Tabellen, Tool-Ergebnisse und Beispiele im selben Prompt stehen. Ohne saubere Trennung steigt die Wahrscheinlichkeit, dass das Modell ein Beispiel als echten Inhalt behandelt oder eine Regel nur auf den ersten Abschnitt anwendet.
 
+Interaktive Demo: [Programmatische Prompt-Optimierung mit DSPy]({{ '/visualisierungen/prompt_dspy/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt als weiterführenden Ausblick, wie Prompts systematisch kompiliert und optimiert werden können.
+
 ---
 
 ## Best Practices

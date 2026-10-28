@@ -127,6 +127,8 @@ flowchart LR
 | **Kontext-Erstellung** | Gefundene Chunks werden zum Prompt hinzugefügt |
 | **Generation** | Das LLM generiert eine Antwort basierend auf dem Kontext |
 
+Interaktive Demo: [RAG-Prozess-Visualisierung]({{ '/visualisierungen/rag_prozess_visualisierung/' | relative_url }}){:target="_blank" rel="noopener"} – führt Schritt für Schritt durch Indexierung, Vektorsuche und Antwortgenerierung.
+
 ---
 
 ## Chunking: Dokumente sinnvoll zerlegen
@@ -134,6 +136,8 @@ flowchart LR
 Chunking teilt Dokumente in Einheiten, die sich indexieren und später abrufen lassen. Größe, Trennstellen und Überlappung beeinflussen, ob ein Treffer genug Zusammenhang für eine belastbare Antwort enthält.
 
 Strategien, Tokenizer, Parameter und dokumenttypspezifische Beispiele stehen im Vertiefungskapitel [Tokenizing & Chunking](./tokenizing-chunking.html). Hier genügt die Einordnung: Chunking ist Teil der Indexierung und sollte anhand der späteren Retrieval-Qualität bewertet werden.
+
+Interaktive Demo: [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer/' | relative_url }}){:target="_blank" rel="noopener"} – vergleicht interaktiv, wie unterschiedliche Splitter denselben Text in Chunks zerlegen.
 
 ---
 

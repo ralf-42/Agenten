@@ -15,8 +15,6 @@ Diese Orientierungsseite behandelt die Skalierung von einzelnen Agenten zu koope
 | **Wann** lohnt sich ein Multi-Agent-System? | [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) | Kooperation zwischen spezialisierten Agenten und Rollen. |
 | **Wie** kommunizieren Agenten und Tools? | [Kommunikationsprotokolle]({{ '/06-multi-agent-erweiterungen/agenten-kommunikationsprotokolle.html' | relative_url }}) | MCP, Schnittstellen und agentenübergreifende Kommunikation. |
 | **Wie** werden Fähigkeiten wiederverwendbar? | [Skills]({{ '/06-multi-agent-erweiterungen/skills.html' | relative_url }}) | Wiederverwendbare Arbeitsrezepte und lokale Erweiterungen. |
-| **Welche** Vertiefungen gibt es? | [Einsteiger DeepAgents]({{ '/06-multi-agent-erweiterungen/einsteiger-deepagents.html' | relative_url }}) | Optionale Framework-Vertiefung. |
-
 ---
 
 **Stand:** Oktober 2026<br>

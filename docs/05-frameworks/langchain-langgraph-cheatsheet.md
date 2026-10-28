@@ -96,6 +96,8 @@ print(antwort.content)
 
 **Regel:** Caching ist für wiederholte Demo-Aufrufe nützlich. Es ist kein Memory: Cache speichert Modellantworten zu identischen Requests, Checkpointing speichert Session- oder Graph-Zustand. Agenten- und Tool-Läufe mit Seiteneffekten nicht blind cachen.
 
+Interaktive Demo: [LLM-Response-Caching]({{ '/visualisierungen/caching/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt den Ablauf von InMemory- und SQLite-Caching bei wiederholten Modellaufrufen.
+
 **Hierher gehören:** Modellaufrufe, Prompt-Vorlagen, Output Parser, Structured Output, lineare RAG-Chains und einfache Agenten mit `create_agent()`.
 
 ## Einfacher Agent mit Tools

@@ -58,6 +58,8 @@ Ein guter Praxistest: Würde ein fester Ablauf mit klaren Regeln dieselbe Aufgab
 
 **Grenze:** Auch eine offene Formulierung in natürlicher Sprache bedeutet nicht automatisch „Agent“. Viele Anfragen, die sich so anfühlen, lassen sich am Ende trotzdem mit klaren Pipelines lösen.
 
+Interaktive Demo: [Simulation: KI-Agenten]({{ '/visualisierungen/ki_agenten/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt anschaulich, wie ein LLM-basierter Agent über Wahrnehmung, Entscheidung und Werkzeugnutzung arbeitet.
+
 
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/agentisch_2.png" class="logo" width="900"/>
 
@@ -196,6 +198,8 @@ Datenschutz und Human-in-the-Loop werden ebenfalls oft zu spät berücksichtigt.
 ## Checkliste vor dem Agentenbau
 
 Am Anfang steht der Lösungsweg. Kläre zuerst: Reichen Chat, Workflow, RAG oder klassischer Code aus? Ist das Vorgehen wirklich nicht vollständig definierbar? Werden Tools oder Autonomie tatsächlich gebraucht?
+
+Interaktive Demo: [Checkliste Automatisierung]({{ '/visualisierungen/checkliste_automatisierung/' | relative_url }}){:target="_blank" rel="noopener"} und [KI-Prozessoptimierung]({{ '/visualisierungen/ki_prozessoptimierung/' | relative_url }}){:target="_blank" rel="noopener"} – unterstützen bei der systematischen Prüfung, ob und wie sich ein Prozess für KI-Automatisierung eignet.
 
 Danach folgt die Architekturfrage. Wurde die Struktur bewusst gewählt oder nur aus Begeisterung für Multi-Agent? Passt die Komplexität zum Anwendungsfall? Und gibt es einen Plan für Fehlerbehandlung, Fallbacks und Eskalation?
 

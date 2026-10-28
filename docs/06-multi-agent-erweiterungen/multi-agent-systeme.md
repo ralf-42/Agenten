@@ -269,6 +269,8 @@ flowchart TB
     class B target;
 ```
 
+Technisch ist das Blackboard ein Shared State. Das Muster beschreibt, dass dieser State die Zusammenarbeit steuert und nicht eine zentrale Rolle: Welcher Agent als Nächstes arbeitet, ergibt sich aus dem Stand des gemeinsamen Arbeitsbereichs.
+
 Dieses Muster passt gut, wenn mehrere Agenten an demselben Artefakt arbeiten: einem Briefing, einem Bericht, einer Tabelle oder einem Plan. Der gemeinsame State braucht aber Pflege. Ohne Statusfelder, Quellenangaben und klare Schreibregeln wächst das Blackboard schnell unkontrolliert.
 
 **Entscheide so:** Nimm Blackboard, wenn Zwischenergebnisse sichtbar geteilt werden sollen und der gemeinsame Arbeitsstand wichtiger ist als direkte Übergaben.
@@ -360,6 +362,28 @@ Das Debate-Muster geht weiter als einfache Feedback-Schleifen. Zwei unabhängige
 
 Die Rollen: Ein Proposer liefert die erste Lösung. Ein Challenger erarbeitet eine alternative Sichtweise oder sucht systematisch nach Schwachstellen. Ein Adjudicator vergleicht beide und trifft die finale Entscheidung. Das Ergebnis enthält einen Agreement-Level (HIGH, MEDIUM, LOW, CONTRADICTION). Bei CONTRADICTION ist menschliche Überprüfung angebracht.
 
+```mermaid
+flowchart LR
+    TASK[Aufgabe] --> PRO[Proposer: Lösung A]
+    TASK --> CHA[Challenger: Lösung B oder Schwachstellen]
+    PRO --> ADJ[Adjudicator vergleicht]
+    CHA --> ADJ
+    ADJ --> LEVEL{Agreement-Level}
+    LEVEL -->|HIGH, MEDIUM, LOW| RESULT[Finale Entscheidung]
+    LEVEL -->|CONTRADICTION| HUMAN[Menschliche Überprüfung]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+
+    class TASK input;
+    class ADJ,LEVEL metric;
+    class RESULT output;
+    class HUMAN stop;
+```
+
 Geeignet für komplexe Entscheidungen, bei denen ein einzelner Entwurf systematisch blind für eigene Fehler ist. Nicht geeignet für einfache, klar definierte Aufgaben — dort erzeugt Debate nur unnötigen Overhead.
 
 **Entscheide so:** Nimm Debate nur, wenn echte Gegensicht nötig ist und der zusätzliche Aufwand durch bessere Entscheidungen gerechtfertigt wird.
@@ -408,6 +432,8 @@ class MultiAgentState(TypedDict):
 ```
 
 Ohne sauberen gemeinsamen Zustand zerfällt die Koordination schnell.
+
+Der Shared State ist das Medium fast aller Muster in diesem Dokument. Zum [Blackboard](#blackboard-wenn-alle-an-einem-artefakt-arbeiten) wird er dann, wenn er selbst die Koordination übernimmt und keine feste Reihenfolge oder zentrale Rolle vorgibt.
 
 ## Was in der Praxis schnell schiefgeht
 

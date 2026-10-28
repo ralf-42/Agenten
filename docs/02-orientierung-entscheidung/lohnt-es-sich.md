@@ -104,6 +104,8 @@ Für Entwickler reicht oft eine nüchterne Vorprüfung. Wenn ein Vorhaben vor al
 
 Außerdem unterschätzen viele, wie viel Wert ein klares No-Go haben kann. Ein nicht gestartetes Projekt, das sauber verworfen wurde, spart oft mehr Zeit und Geld als ein vorschnell gebauter Prototyp.
 
+Interaktive Demo: [Checkliste Automatisierung]({{ '/visualisierungen/checkliste_automatisierung/' | relative_url }}){:target="_blank" rel="noopener"} – hilft bei der strukturierten Vorprüfung von Nutzen, Datenlage und Automatisierungspotenzial.
+
 ## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |

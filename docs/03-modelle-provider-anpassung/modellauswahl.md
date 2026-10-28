@@ -289,7 +289,7 @@ flowchart LR
 ### Finale Auswahl und Implementierung
 - Eine begründete Entscheidung für das am besten geeignete Modell treffen und es in die eigenen Systeme integrieren.
 
-[Interaktive Modellauswahl]({{ '/visualisierungen/llm_selector/' | relative_url }}){:target="_blank" rel="noopener"}
+Interaktive Demo: [Modellauswahl (LLM-Finder)]({{ '/visualisierungen/llm_selector/' | relative_url }}){:target="_blank" rel="noopener"}, [LLM-Parameter Simulator]({{ '/visualisierungen/llm_parameter/' | relative_url }}){:target="_blank" rel="noopener"} und [Mixture of Experts (MoE)]({{ '/visualisierungen/moe_demo/' | relative_url }}){:target="_blank" rel="noopener"} – veranschaulichen Modellwahl, Sampling-Parameter und effiziente MoE-Architekturen.
 
 ## Modellkaskade: Mehrere Modelle klug kombinieren
 Die Modellkaskade kombiniert mehrere KI-Modelle, um ihre jeweiligen Stärken zu nutzen und Schwächen auszugleichen:

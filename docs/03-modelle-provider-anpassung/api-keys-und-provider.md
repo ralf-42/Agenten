@@ -175,6 +175,8 @@ llm = init_chat_model("ollama:llama3.2")
 
 `llama3.2` ist ein kleines Beispielmodell, das auf Colab-GPUs läuft. Welche Modelle aktuell verfügbar sind, zeigt die [Ollama-Bibliothek](https://ollama.com/library).
 
+Interaktive Demo: [Quantisierung von Sprachmodellen]({{ '/visualisierungen/quantisierung_llm/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt, wie Modelle durch geringere Bitbreite auf lokaler Hardware oder Colab-GPUs lauffähig werden.
+
 **Vorteile:**
 - keine API-Kosten
 - mehr Kontrolle über Daten

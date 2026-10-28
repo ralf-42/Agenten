@@ -31,6 +31,8 @@ In der Praxis wird schnell sichtbar: Viele vermeintliche Modellfehler sind Konte
 
 Ein häufiger Fehler: Mehr Kontext wird mit besserem Kontext verwechselt. In vielen Agentensystemen sinkt die Antwortqualität, wenn relevante Signale in langen Historien, unpriorisierten Tool-Ausgaben und veralteten Informationen untergehen.
 
+Interaktive Demo: [Context Engineering für KI-Agenten]({{ '/visualisierungen/context_engineering/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt das Kontextfenster eines Agenten und die vier typischen Kontextfehler (Poisoning, Distraction, Confusion, Clash) mit passenden Gegenmaßnahmen.
+
 > [!NOTE] Kernidee<br>
 > Nicht der "perfekte Prompt" allein entscheidet, sondern die Qualität und Struktur des gesamten Kontexts.
 

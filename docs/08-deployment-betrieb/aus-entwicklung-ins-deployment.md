@@ -311,6 +311,8 @@ docker run -p 8000:8000 \
   meine-agenten-app
 ```
 
+Interaktive Demo: [Docker-Containerisierung]({{ '/visualisierungen/docker/' | relative_url }}){:target="_blank" rel="noopener"} – veranschaulicht den Weg vom Anwendungscode über Dockerfile und Image bis zum laufenden Container.
+
 ---
 
 ## Phase 9: Deployment auf der Zielplattform

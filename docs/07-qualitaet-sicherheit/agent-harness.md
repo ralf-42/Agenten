@@ -168,7 +168,7 @@ Nicht notwendig ist zu Beginn ein umfassendes Multi-Agent-System. Planning, Memo
 |---|---|
 | [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) | Welche Architektur passt zur Aufgabe? |
 | [Checkliste Agentensystem]({{ '/04-agenten-implementierung/checkliste-agentensystem.html' | relative_url }}) | Welche Prüfpunkte gelten vor Review und Freigabe? |
-| [Einsteiger DeepAgents]({{ '/06-multi-agent-erweiterungen/einsteiger-deepagents.html' | relative_url }}) | Wie stellt ein konkretes Framework Planning, Filesystem und Sub-Agenten bereit? |
+| [Einsteiger DeepAgents]({{ '/05-frameworks/einsteiger-deepagents.html' | relative_url }}) | Wie stellt ein konkretes Framework Planning, Filesystem und Sub-Agenten bereit? |
 | [Minimum Viable Agent Stack]({{ '/08-deployment-betrieb/minimum-viable-agent-stack.html' | relative_url }}) | Welche technischen Schichten braucht ein betreibbarer Agent? |
 | [Aus Entwicklung ins Deployment]({{ '/08-deployment-betrieb/aus-entwicklung-ins-deployment.html' | relative_url }}) | Wie wird aus einem Prototyp eine deploybare Anwendung? |
 

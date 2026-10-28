@@ -83,6 +83,8 @@ Die folgenden Abschnitte behandeln die vier Stufen in genau dieser Reihenfolge.
 
 Für Einsteiger ist vor allem diese erste Achse wichtig. Die späteren Abschnitte zu Harness Engineering, Entscheidungslogik, Reasoning-Sichtbarkeit und Produktionsreife sind als Vertiefung gedacht. Sie helfen beim Architekturreview, müssen aber nicht vor der ersten Architekturentscheidung vollständig beherrscht werden.
 
+Interaktive Demo: [KI-Agenten-Architektur]({{ '/visualisierungen/ki_agent_architektur/' | relative_url }}){:target="_blank" rel="noopener"} – simuliert den kompletten Ablauf eines Agenten mit Planung, Tool-Aufrufen und Schritt-für-Schritt-Zuständen.
+
 ## Schneller Entscheidungsleitfaden
 
 Diese Fragen helfen bei der Auswahl:

@@ -46,6 +46,8 @@ Der Supervisor entscheidet also bedingt. Die Rückkehr vom Worker zum Supervisor
 ist dagegen eine feste Kante. Diese Unterscheidung ist der wichtigste Baustein
 für eine klare Graph-Definition.
 
+Interaktive Demo: [LangGraph – Interaktiver Explainer]({{ '/visualisierungen/langgraph_explainer/' | relative_url }}){:target="_blank" rel="noopener"} – visualisiert das Zusammenspiel von State, Nodes und Routing im laufenden Graphen.
+
 ## Der Bauplan in sieben Schritten
 
 ### 1. State klein und eindeutig definieren

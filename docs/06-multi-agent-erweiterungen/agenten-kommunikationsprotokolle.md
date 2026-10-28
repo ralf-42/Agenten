@@ -126,9 +126,9 @@ Ein Support-Agent kann etwa ein Tool zur Rechnungserstellung nutzen und zusätzl
 
 ## Warum MCP nicht dasselbe ist wie eine REST-API
 
-MCP ersetzt klassische APIs nicht. Viele MCP-Server kapseln intern sogar genau solche APIs. Der Unterschied liegt in der Perspektive. REST ist allgemein für Softwareintegration gedacht. MCP ist darauf ausgelegt, dass ein Agent zur Laufzeit entdecken kann, welche Fähigkeiten verfügbar sind und wie sie genutzt werden.
+MCP ersetzt klassische APIs nicht. Viele MCP-Server kapseln intern sogar genau solche APIs. Der Unterschied liegt in der Perspektive. REST (Representational State Transfer) ist ein Architekturstil für Webschnittstellen: Programme sprechen darin Ressourcen über URLs an und greifen mit HTTP-Methoden wie `GET` (lesen) oder `POST` (Daten übermitteln) darauf zu. REST ist allgemein für Softwareintegration gedacht. MCP ist darauf ausgelegt, dass ein Agent zur **Laufzeit** entdecken kann, welche Fähigkeiten verfügbar sind und wie sie genutzt werden.
 
-Dadurch entsteht ein wichtiger Vorteil: Neue Fähigkeiten eines Servers können verfügbar werden, ohne dass auf Agentenseite sofort ein individueller Adapter geschrieben werden muss. Für Agentensysteme ist diese Discovery-Fähigkeit oft wertvoller als die reine Transporttechnik.
+Dadurch entsteht ein wichtiger Vorteil: Neue Fähigkeiten eines Servers können verfügbar werden, ohne dass auf Agentenseite sofort ein individueller Adapter geschrieben werden muss. Für Agentensysteme ist diese **Discovery-Fähigkeit** oft wertvoller als die reine Transporttechnik.
 
 MCP spart Anpassungsarbeit, wenn viele Tools angebunden werden oder sich serverseitige Fähigkeiten ändern. Der Agent muss dafür nicht jedes Mal neu entwickelt werden.
 
@@ -174,7 +174,7 @@ sequenceDiagram
     participant C as Client-Agent
     participant S as Server-Agent
 
-    C->>S: GET /.well-known/agent.json
+    C->>S: GET /.well-known/agent-card.json
     S-->>C: Agent Card
     C->>S: Aufgabe delegieren
     S-->>C: Status: Working
@@ -185,21 +185,54 @@ Ein Reiseagent kann auf diese Weise einen Hotelagenten finden, seine Fähigkeite
 
 ## Agent Cards und Task-Lebenszyklus
 
-Agent Cards sind maschinenlesbare Selbstbeschreibungen. Darin steht, welche Formate unterstützt werden, wie ein Agent erreicht wird und welche Sicherheitsanforderungen gelten. Damit wird ein Agent in gewisser Weise auffindbar und ansprechbar wie ein Web-Service.
+Eine Agent Card ist das maschinenlesbare Profil eines Agenten: Sie nennt seinen Endpunkt und seine Fähigkeiten.
 
-Nach der Übergabe einer Aufgabe bleibt die Kommunikation oft asynchron. Das ist wichtig, weil viele Agentenaufgaben nicht in einem einzelnen Request-Response-Schritt enden. Eine Aufgabe kann in Bearbeitung sein, Rückfragen auslösen, scheitern oder erfolgreich ein Ergebnis liefern.
+Beispiel für einen Hotelagenten. Die URL ist eine Platzhalter-Adresse.
+
+```json
+{
+  "name": "Hotel-Recherche-Agent",
+  "description": "Sucht passende Unterkünfte.",
+  "supportedInterfaces": [
+    {
+      "url": "https://hotel-agent.example.com/a2a/v1",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "version": "1.0.0",
+  "capabilities": {},
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["application/json"],
+  "skills": [
+    {
+      "id": "hotel-search",
+      "name": "Unterkünfte suchen",
+      "description": "Findet Unterkünfte nach Reiseziel und Zeitraum.",
+      "tags": ["hotel"]
+    }
+  ]
+}
+```
+
+Der Client liest aus der Card, wie er den Agenten aufruft und welche Aufgabe er übernehmen kann. Öffentlich veröffentlichte Cards sollten keine Zugangsdaten enthalten.
+
+Ein einfacher Aufruf kann direkt eine `Message` zurückgeben. Länger laufende Aufträge werden als `Task` verfolgt. Der typische Ablauf sieht so aus:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Submitted: Aufgabe übergeben
-    Submitted --> Working: Bearbeitung beginnt
-    Working --> InputRequired: Rückfrage nötig
-    InputRequired --> Working: Antwort erhalten
-    Working --> Completed: Erfolgreich
-    Working --> Failed: Fehler aufgetreten
-    Completed --> [*]
-    Failed --> [*]
+    state "input-required" as input_required
+    [*] --> submitted
+    submitted --> working
+    working --> input_required: Rückfrage nötig
+    input_required --> working: Antwort erhalten
+    working --> completed
+    working --> failed
+    completed --> [*]
+    failed --> [*]
 ```
+
+Weitere mögliche Zustände sind `auth-required`, `canceled` und `rejected`.
 
 Nicht geeignet, wenn: Die Aufgabe so klein und synchron ist, dass eine einfache API oder ein direkter Tool-Aufruf ausreicht. Dann wäre A2A oft unnötig schwergewichtig.
 

@@ -35,7 +35,7 @@ Ein Skill macht aus Fachwissen konkrete Arbeitsanweisungen. Ein Skill legt fest,
 
 Ein Agent soll wiederholt README-Dateien für Projekte erstellen. Ein einzelner Prompt kann das einmalig leisten. Ein Skill wird dann interessant, wenn immer dieselben Abschnitte geprüft, dieselben Stilregeln eingehalten und vielleicht noch deterministische Linkprüfungen ausgeführt werden sollen.
 
-Genau dort beginnt der Unterschied: Ein Prompt beantwortet eine Aufgabe. Ein Skill organisiert einen wiederholbaren Ablauf für diese Aufgabenkategorie.
+Genau dort beginnt der Unterschied: Ein Prompt definiert eine Aufgabe. Ein Skill organisiert einen wiederholbaren Ablauf für diese Aufgabenkategorie.
 
 ## Prompt, Skill, Tool und MCP haben unterschiedliche Rollen
 
@@ -135,11 +135,6 @@ Rules gelten dauerhaft im Hintergrund. Skills werden kontextbezogen aktiviert. D
 
 Wenn etwas in jeder Session gelten soll, gehört es eher in Rules. Wenn es nur bei bestimmten Aufgaben gebraucht wird, gehört es eher in einen Skill.
 
-## Subagenten und `context: fork`
-
-Ein Skill kann in einem eigenen Kontextfenster laufen, wenn die Aufgabe isoliert bearbeitet werden soll. Das ist besonders nützlich bei Recherche, Analyse oder komplexen Teilaufträgen. Für reine Richtlinien-Skills ist diese Trennung oft unnötig.
-
-**Grenze:** Ein Skill wird nicht automatisch besser, nur weil er einen Subagenten verwendet. Isolation lohnt sich nur, wenn sie die eigentliche Aufgabe klarer oder sicherer macht.
 
 ## Wie ein Agent einen Skill tatsächlich nutzt
 

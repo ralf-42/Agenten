@@ -88,7 +88,7 @@ Nicht jedes System braucht Reifegrad 4. Für öffentliche Demo-Daten kann Reifeg
 
 ## Europäische Strategien und technische Muster
 
-Europäische Initiativen wie Gaia-X, Catena-X, Manufacturing-X, Open Desk, der Data Act oder der European Chips Act verfolgen unterschiedliche Ziele: Datenräume, Interoperabilität, offene Standards, öffentliche digitale Infrastruktur und geringere Abhängigkeit in kritischen Lieferketten. Für Agenten-Architekturen sind daraus vor allem Muster relevant, keine Schlagworte.
+Europäische Initiativen wie Gaia-X, Catena-X, Manufacturing-X, openDesk, der Data Act oder der European Chips Act verfolgen unterschiedliche Ziele: Datenräume, Interoperabilität, offene Standards, öffentliche digitale Infrastruktur und geringere Abhängigkeit in kritischen Lieferketten. Für Agenten-Architekturen sind daraus vor allem Muster relevant, keine Schlagworte.
 
 Wichtige technische Muster:
 
@@ -98,6 +98,14 @@ Wichtige technische Muster:
 - **Regionale Verarbeitung:** Datenresidenz und Subprozessoren werden vor produktiver Nutzung geprüft.
 - **Open Source an kritischen Stellen:** zentrale Infrastruktur bleibt auditierbar und im Notfall betreibbar.
 - **Minimaler Trace:** Observability speichert nur, was für Debugging, Evaluation und Audit wirklich nötig ist.
+
+### Laufende Gesetzgebung und offene Rechtslage
+
+Einige Entwicklungen ändern die Rahmenbedingungen, sind aber noch nicht abgeschlossen. Sie eignen sich als Prüfpunkte, nicht als feste Vorgaben:
+
+- **Cloud and AI Development Act (CADA):** Die EU-Kommission hat den Gesetzesvorschlag am 3. Juni 2026 im Paket „Technologische Souveränität“ vorgelegt. Vorgesehen ist ein gestufter Bewertungsrahmen für die Souveränität von Cloud- und KI-Diensten. Die Spanne reicht von der Datenverarbeitung in der EU bis zu strengeren Anforderungen an Kontrolle durch Drittstaaten, EU-Eigentum und unabhängige Prüfungen. Für öffentliche Auftraggeber sollen Mindeststufen gelten. Der Vorschlag ist noch nicht in Kraft; Inhalt und Zeitplan können sich im Gesetzgebungsverfahren ändern.
+- **Chips Act 2.0:** Der Vorschlag vom 3. Juni 2026 soll den European Chips Act von 2023 ersetzen. Er betrifft Agenten-Architekturen nur indirekt über Hardware- und Lieferketten-Abhängigkeiten und ist ebenfalls noch nicht in Kraft.
+- **Datentransfer in die USA:** Das EU-US Data Privacy Framework gilt weiter. Das Gericht der EU hat es im September 2025 bestätigt, die Berufung vor dem EuGH (C-703/25 P) ist aber anhängig. Wer personenbezogene Daten an US-Anbieter überträgt, sollte deshalb eine Exit-Strategie vorsehen, etwa durch Modellwechsel, Regionenwahl und eigene Schlüsselverwaltung. Grundlagen zu Prompts, Traces und Auftragsverarbeitung stehen in [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}).
 
 Prüfe Anbieterentscheidungen spätestens beim Übergang vom Prototyp in den Produktivbetrieb. Bequeme Anfangslösungen können langfristige Architekturbindungen schaffen.
 
@@ -129,7 +137,7 @@ Für Kursprojekte ist ein kurzer Souveränitätscheck ausreichend: Datenklassifi
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

@@ -70,8 +70,9 @@ LANGSMITH_API_KEY=dein-langsmith-schluessel
 Lade die Werte in der ersten Setup-Zelle:
 
 ```python
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
 
 load_dotenv()
 

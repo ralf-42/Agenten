@@ -40,11 +40,13 @@ Der AI Act trat am **1. August 2024** in Kraft. Die Pflichten werden schrittweis
 |---|---|
 | **2. Februar 2025** | Verbote nach Art. 5, Definitionen und AI-Literacy-Pflichten gelten |
 | **2. August 2025** | GPAI-Regeln und Governance-Strukturen gelten; nationale Behörden und Sanktionen müssen vorbereitet sein |
-| **2. August 2026** | Der Großteil der Verordnung gilt, darunter Transparenzpflichten nach Art. 50 und Hochrisiko-Systeme aus Annex III |
-| **2. August 2027** | Hochrisiko-KI als Sicherheitskomponente in regulierten Produkten wird anwendbar |
+| **2. August 2026** | Transparenzpflichten nach Art. 50 gelten; für das maschinenlesbare Wasserzeichen (Art. 50 Abs. 2) gilt für Systeme, die vorher auf den Markt kamen, eine Übergangsfrist bis 2. Dezember 2026 |
+| **2. Dezember 2026** | Neues Verbot nach dem Digital Omnibus (KI zur Erzeugung nicht einvernehmlicher intimer Darstellungen und von Missbrauchsmaterial); Ende der Wasserzeichen-Übergangsfrist |
+| **2. Dezember 2027** | Hochrisiko-Systeme aus Annex III (gegenüber dem ursprünglichen 2. August 2026 verschoben) |
+| **2. August 2028** | Hochrisiko-KI als Sicherheitskomponente in regulierten Produkten, Annex I (gegenüber dem ursprünglichen 2. August 2027 verschoben) |
 | **31. Dezember 2030** | Sonderfristen für bestimmte bereits bestehende große IT-Systeme und einzelne Bestandssysteme |
 
-Seit Ende 2025 werden im Rahmen des **Digital Omnibus** Vereinfachungen und mögliche Anpassungen am AI Act diskutiert. Außerdem werden Leitlinien, Standards und Praxisinstrumente weiter konkretisiert. Für Kurs- und Projektplanung ist das relevant, aber kein Ersatz für den geltenden Rechtsstand. Bis eine Änderung beschlossen und anwendbar ist, bleibt der Zeitplan der Verordnung maßgeblich.
+Der **Digital Omnibus on AI** (Verordnung (EU) 2026/1744, seit 27. Juli 2026 in Kraft) hat den Zeitplan angepasst: Die Hochrisiko-Pflichten nach Annex III gelten erst ab dem 2. Dezember 2027, die nach Annex I ab dem 2. August 2028. Die Transparenzpflichten nach Art. 50 blieben beim 2. August 2026. Leitlinien, Standards und Praxisinstrumente werden weiter konkretisiert. Für Kurs- und Projektplanung gilt deshalb: Fristen vor einer Entscheidung am Verordnungstext und an den aktuellen Leitlinien der EU-Kommission prüfen.
 
 **Typischer Fehler:** Der Zeitplan wird nur mit "2026" beschrieben. Das verwischt, dass Verbote und AI-Literacy bereits seit Februar 2025 gelten und GPAI-Pflichten seit August 2025 relevant sind.
 
@@ -133,7 +135,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

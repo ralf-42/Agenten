@@ -132,6 +132,26 @@ Entwickler müssen das nicht selbst aushandeln — aber sie sollten wissen, dass
 
 ---
 
+## Drittlandübermittlung — wenn Daten die EU verlassen
+
+Die meisten großen LLM-APIs werden von Unternehmen mit Sitz in den USA betrieben. Sobald personenbezogene Daten dorthin übertragen oder von dort aus abgerufen werden können, handelt es sich um eine **Übermittlung in ein Drittland** (Kapitel V DSGVO). Sie braucht zusätzlich zum AVV eine eigene Rechtsgrundlage. Das gilt auch, wenn der Anbieter einen EU-Server anbietet, aber aus dem Drittland auf die Daten zugreifen kann (z. B. Support, Wartung).
+
+| Grundlage | Kurzbeschreibung | Was Entwickler prüfen |
+|---|---|---|
+| **Angemessenheitsbeschluss** (Art. 45) | Die EU-Kommission stellt fest, dass das Zielland ein angemessenes Schutzniveau bietet. Für die USA gilt das **EU-US Data Privacy Framework** (DPF) nur für Anbieter, die sich darunter zertifiziert haben. | Ist der Anbieter DPF-zertifiziert? |
+| **Standardvertragsklauseln** (Art. 46) | Vom Anbieter und Kunden vereinbarte EU-Standardklauseln, in der Regel Teil des AVV/DPA. | Sind sie im Vertrag enthalten? Wurde das Risiko des Drittlandzugriffs bewertet? |
+| **Keine Übermittlung** | Verarbeitung in der EU, lokales Modell oder EU-Anbieter ohne Zugriff aus Drittländern. | Ist der Zugriff aus Drittländern ausgeschlossen? |
+
+**Aktuelle Rechtslage (Stand Oktober 2026):** Das DPF gilt. Das Gericht der EU hat die Klage dagegen im September 2025 abgewiesen, die Berufung (C-703/25 P) ist beim EuGH anhängig. Frühere Abkommen (Safe Harbor, Privacy Shield) sind vom EuGH gekippt worden. Eine Aufhebung des DPF ist daher nicht ausgeschlossen.
+
+**Konsequenz für die Praxis:** Die Architektur sollte so gebaut sein, dass ein Wechsel möglich bleibt: Modellzugriff über Adapter, Region und Anbieter in der Konfiguration, keine Klardaten in Traces. Mehr dazu steht in [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}).
+
+**Typischer Fehler:** „Der Server steht in der EU, also gibt es keine Übermittlung." Entscheidend ist, wer auf die Daten zugreifen kann, nicht nur, wo sie gespeichert sind.
+
+Entwickler müssen die Rechtsgrundlage nicht selbst bewerten. Vor dem produktiven Einsatz mit personenbezogenen Daten sollten sie aber die Rechtsabteilung oder den Datenschutzbeauftragten einbeziehen. Diese Seite ersetzt keine Rechtsberatung.
+
+---
+
 ## Datenschutz by Design
 
 Datenschutz by Design bedeutet: Datenschutz nicht nachträglich einbauen, sondern von Anfang an in die Architektur einplanen. Bei Agenten-Systemen heißt das konkret: personenbezogene Daten möglichst früh im Datenfluss filtern oder anonymisieren, bevor sie in Prompt, RAG-Index, Tool-Aufruf, Notebook-Ausgabe oder Trace landen.
@@ -182,10 +202,11 @@ Ein Chatbot für FAQs zu Produkten erfüllt in der Regel keine dieser Bedingunge
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden Agenten gegen technische Angriffe wie Prompt Injection und Tool-Missbrauch abgesichert? |
 | [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wann und wie werden Menschen als Kontrollinstanz eingebunden — auch als Datenschutzmaßnahme bei sensiblen Entscheidungen? |
 | [Lohnt sich KI?]({{ '/02-orientierung-entscheidung/lohnt-es-sich.html' | relative_url }}) | Welche organisatorischen und rechtlichen Rahmenbedingungen sollten vor Projektstart geprüft werden? |
+| [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Wie werden Anbieterabhängigkeiten, Datenflüsse und Exit-Strategien gestaltet? |
 
 ---
 
-**Version:** 1.2<br>
+**Version:** 1.3<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

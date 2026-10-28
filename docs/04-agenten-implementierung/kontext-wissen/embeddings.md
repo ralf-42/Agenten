@@ -59,33 +59,24 @@ Embeddings werden nicht nur für Sprache und Bilder genutzt, sondern auch in Emp
 Embeddings werden mit **künstlichen neuronalen Netzen** oder **statistischen Methoden** erzeugt. Dabei durchläuft der Prozess mehrere Schritte:
 
 1. **Daten sammeln**
-
-- Sprachmodelle nutzen große Mengen an Texten aus Büchern, Webseiten oder Artikeln.
-- Bilderkennungsmodelle analysieren Millionen von Fotos mit passenden Beschreibungen.
-- Musik- oder Videoplattformen sammeln Daten zu Nutzerverhalten und Inhaltsmerkmalen.
-
+   - Sprachmodelle nutzen große Mengen an Texten aus Büchern, Webseiten oder Artikeln.
+   - Bilderkennungsmodelle analysieren Millionen von Fotos mit passenden Beschreibungen.
+   - Musik- oder Videoplattformen sammeln Daten zu Nutzerverhalten und Inhaltsmerkmalen.
 2. **Daten in Zahlen umwandeln**
-
-- Wörter werden als **Vektoren** dargestellt, die Bedeutungsähnlichkeiten widerspiegeln.
-- Bilder werden in **Pixelwerte** und Merkmale wie Kanten oder Farben umgerechnet.
-- Musik wird anhand von Frequenzmustern und Rhythmen analysiert.
-
+   - Wörter werden als **Vektoren** dargestellt, die Bedeutungsähnlichkeiten widerspiegeln.
+   - Bilder werden in **Pixelwerte** und Merkmale wie Kanten oder Farben umgerechnet.
+   - Musik wird anhand von Frequenzmustern und Rhythmen analysiert.
 3. **Neuronale Netze trainieren**
-
-- Modelle wie **Word2Vec, GloVe oder FastText** für Sprache sowie **ResNet oder VGG** für Bilder lernen, welche Begriffe oder Objekte ähnlich sind.
-- Empfehlungssysteme analysieren, welche Songs oder Filme Nutzer häufig zusammen konsumieren.
-
+   - Modelle wie **Word2Vec, GloVe oder FastText** für Sprache sowie **ResNet oder VGG** für Bilder lernen, welche Begriffe oder Objekte ähnlich sind.
+   - Empfehlungssysteme analysieren, welche Songs oder Filme Nutzer häufig zusammen konsumieren.
 4. **Ähnlichkeiten erkennen**
-
-- Begriffe mit ähnlicher Bedeutung liegen im Zahlenraum nahe beieinander.
-- Beispiel: Das Embedding für „König“ liegt näher an „Königin“ als an „Banane“.
-- Bilder von Hunden liegen näher an Wölfen als an Autos.
-
+   - Begriffe mit ähnlicher Bedeutung liegen im Zahlenraum nahe beieinander.
+   - Beispiel: Das Embedding für „König“ liegt näher an „Königin“ als an „Banane“.
+   - Bilder von Hunden liegen näher an Wölfen als an Autos.
 5. **Feinabstimmung (Fine-Tuning)**
-
-- Embeddings können für spezifische Anwendungen optimiert werden.
-- Beispiel: Eine KI für medizinische Analysen trainiert spezielle Embeddings für Fachbegriffe.
-- Streaming-Dienste passen ihre Embeddings an individuelle Nutzerpräferenzen an.
+   - Embeddings können für spezifische Anwendungen optimiert werden.
+   - Beispiel: Eine KI für medizinische Analysen trainiert spezielle Embeddings für Fachbegriffe.
+   - Streaming-Dienste passen ihre Embeddings an individuelle Nutzerpräferenzen an.
 
 ---
 

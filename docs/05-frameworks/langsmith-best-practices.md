@@ -28,7 +28,7 @@ Wähle, ob alle unterstützten Aufrufe oder nur einzelne Referenzläufe erfasst 
 
 ### Globales Tracing
 
-Mit true werden unterstützte LangChain- und LangGraph-Aufrufe erfasst.
+Mit `LANGSMITH_TRACING="true"` werden unterstützte LangChain- und LangGraph-Aufrufe erfasst.
 
 ~~~python
 import os
@@ -42,7 +42,7 @@ Für Accounts außerhalb der US-Region wird zusätzlich der passende LANGSMITH_E
 
 ### Selektives Tracing
 
-Mit false bleibt das globale Tracing aus. tracing_context aktiviert nur den umschlossenen Lauf.
+Mit `LANGSMITH_TRACING="false"` bleibt das globale Tracing aus. `tracing_context` aktiviert nur den umschlossenen Lauf.
 
 ~~~python
 import os

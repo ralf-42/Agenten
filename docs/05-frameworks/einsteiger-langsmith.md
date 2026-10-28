@@ -617,7 +617,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
 | `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
 
-> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing-in-kurs-notebooks). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
+> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
 
 ```python
 from langsmith import tracing_context

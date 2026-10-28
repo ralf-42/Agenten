@@ -33,7 +33,7 @@ DeepAgents bündelt Planung, Dateizugriff und Delegation in einem vorgefertigten
 
 ### Kernbausteine
 
-- **Planning** über `TodoListMiddleware` (`write_todos`) — seit 0.7.0 Opt-in
+- **Planning** über `TodoListMiddleware` (`write_todos`) — nur mit aktivierter Middleware
 - **Filesystem-Zugriff** über Lese-/Schreibwerkzeuge mit austauschbaren Backends
 - **Sub-Agenten** für delegierte Teilaufgaben
 - **Tool-Integration** für Recherche, APIs oder Code
@@ -139,7 +139,7 @@ Der schnellste Zugang ist ein Minimalbeispiel mit einem Tool und einem DeepAgent
 pip install deepagents
 ```
 
-Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt.
+Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt. `deepagents` lädt `langchain_anthropic` und `langchain_openai` beim Import nicht; die Pakete des gewählten Anbieters müssen installiert sein. Diese Seite beschreibt den Stand von `deepagents` 0.7.32.
 
 ### Ein einfaches Tool
 
@@ -203,21 +203,21 @@ Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum i
 | `tools` | Liste eigener Tools |
 | `system_prompt` | Systemrolle des Agenten |
 | `subagents` | Liste von Sub-Agent-Dicts |
-| `interrupt_on` | HITL-Freigabe vor bestimmten Tool-Calls; seit 0.6.8 auch für Filesystem-Permissions |
+| `interrupt_on` | HITL-Freigabe vor bestimmten Tool-Calls; auch für Filesystem-Permissions |
 | `memory` | Kontext-Dateien (z.B. AGENTS.md) beim Start laden |
-| `skills` | SKILL.md-Dateien laden; `pinned_skills` fixiert Skills per Namen (ab 0.7.23), die Tools eines Skills werden erst beim Lesen des Skills geladen (ab 0.7.22) |
-| `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`, seit 0.5.2) |
-| `response_format` | Strukturierte Ausgabe — Pydantic-Modell oder `dict` (seit 0.5.1) |
+| `skills` | SKILL.md-Dateien laden; `pinned_skills` fixiert Skills per Namen, die Tools eines Skills werden erst beim Lesen des Skills geladen |
+| `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`) |
+| `response_format` | Strukturierte Ausgabe — Pydantic-Modell oder `dict` |
 | `name` | Agent-Name für LangSmith-Tracing |
 | `cache` | Response-Caching — `BaseCache`-Instanz |
 | `backend` | Filesystem-Backend — In-Memory, Local, LangGraph Store oder Sandbox |
 | `store` | LangGraph Memory Store für thread-übergreifende Persistenz |
 | `context_schema` | Pydantic-Schema für den geteilten Agenten-Kontext |
-| `state_schema` | Eigenes State-Schema übergeben (**neu seit 0.6.6**) |
-| `middleware` | Eigene Middleware; bei gleichem `.name` ersetzt sie eine Default-Middleware (**seit 0.7.x**) |
+| `state_schema` | Eigenes State-Schema übergeben |
+| `middleware` | Eigene Middleware; bei gleichem `.name` ersetzt sie eine Default-Middleware |
 | `debug` | Debug-Ausgaben aktivieren |
 
-> **Neu seit 0.6.7:** `DeepAgentState` ist jetzt direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
+> `DeepAgentState` ist direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
 
 ---
 
@@ -227,8 +227,8 @@ DeepAgents wird leichter verständlich, wenn die drei Kernideen getrennt betrach
 
 ### Planning — und die No-Op-Einsicht
 
-> [!WARNING] Planning ist seit 0.7.0 Opt-in<br>
-> `TodoListMiddleware` ist nicht mehr Default. Ohne Aktivierung fehlen `write_todos`, der `todos`-State und der Planning-Prompt. Bei Sub-Agenten wird die Middleware pro `SubAgent` gesetzt.
+> [!WARNING] Planning ist Opt-in<br>
+> `TodoListMiddleware` ist nicht Default. Ohne Aktivierung fehlen `write_todos`, der `todos`-State und der Planning-Prompt. Bei Sub-Agenten wird die Middleware pro `SubAgent` gesetzt.
 
 ```python
 from langchain.agents.middleware import TodoListMiddleware
@@ -280,12 +280,12 @@ Das ist besonders nützlich für:
 
 Das Backend lässt sich austauschen, ohne die Agent-Logik zu ändern.
 
-Seit 0.7.0 nutzen `FilesystemBackend` und `LocalShellBackend` standardmäßig `virtual_mode=True`: Pfade mit `..` sind blockiert, Pfade außerhalb von `root_dir` lösen einen `ValueError` aus. Das neue rekursive `delete`-Tool zählt bei den Permissions als Schreiboperation, und `write_file` überschreibt vorhandene Dateien, statt einen Fehler zu liefern.
+`FilesystemBackend` und `LocalShellBackend` nutzen standardmäßig `virtual_mode=True`: Pfade mit `..` sind blockiert, Pfade außerhalb von `root_dir` lösen einen `ValueError` aus. Das rekursive `delete`-Tool zählt bei den Permissions als Schreiboperation, und `write_file` überschreibt vorhandene Dateien, statt einen Fehler zu liefern.
 
 Merksatz: **Wissen wird ausgelagert, statt nur im Nachrichtenverlauf mitgeschleppt zu werden.**
 
-> [!NOTE] Symlinks bei Permissions (ab 0.7.25)
-> Regeln und Freigaben (`interrupt_on`) prüfen jetzt sowohl den angefragten als auch den per Symlink aufgelösten Pfad. Ein Symlink kann eine Sperre also nicht mehr umgehen.
+> [!NOTE] Symlinks bei Permissions
+> Regeln und Freigaben (`interrupt_on`) prüfen jetzt sowohl den angefragten als auch den per Symlink aufgelösten Pfad. Ein Symlink kann eine Sperre also nicht umgehen.
 
 ### Sub-Agenten
 
@@ -300,8 +300,8 @@ Beispiele:
 
 Merksatz: **Der Hauptagent koordiniert, Spezialisten bearbeiten Teilprobleme.**
 
-> [!NOTE] Async-Sub-Agenten (0.7.24–0.7.27)
-> Für asynchrone Sub-Agenten gibt es einen Fork-Modus (ab 0.7.24). Außerdem werden Status-Updates an den Hauptagenten gemeldet, Runs erscheinen im Trace des Parents, und der Sub-Agent kennt seinen eigenen Namen (ab 0.7.26/0.7.27).
+> [!NOTE] Async-Sub-Agenten
+> Asynchrone Sub-Agenten unterstützen einen Fork-Modus. Status-Updates werden an den Hauptagenten gemeldet, Runs erscheinen im Trace des Parents, und der Sub-Agent kennt seinen eigenen Namen. `AsyncSubAgent` bietet zusätzlich die Parameter `notify_parent` und `webhook`. Follow-ups an einen laufenden Async-Sub-Agenten werden in eine Warteschlange gestellt und unterbrechen die laufende Arbeit nicht.
 
 ---
 
@@ -355,7 +355,7 @@ quellen_subagent = {
         "Knappe, saubere Zusammenfassungen belegter Projektfakten auf Deutsch liefern."
     ),
     "tools": [begriff_erklaeren, kurs_thema_info],
-    # "model": "openai:gpt-6-luna",  # Optional: eigenes Modell seit 0.4.11
+    # "model": "openai:gpt-6-luna",  # Optional: eigenes Modell
 }
 ```
 
@@ -367,12 +367,12 @@ quellen_subagent = {
 | `description` | ja | Erklärt dem Hauptagenten wann er zu rufen ist |
 | `system_prompt` | — | Rolle und Verhalten des Sub-Agenten (ohne Angabe: leerer Prompt) |
 | `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
-| `model` | — | Eigenes Modell pro Sub-Agent (seit 0.4.11) |
+| `model` | — | Eigenes Modell pro Sub-Agent |
 | `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
 | `interrupt_on` | — | Freigabe vor bestimmten Tools dieses Sub-Agenten |
 | `skills` | — | SKILL.md-Dateien für den Sub-Agenten |
-| `permissions` | — | Filesystem-Zugriffsrechte einschränken (**neu seit 0.5.2**) |
-| `response_format` | — | Strukturierte Ausgabe des Sub-Agenten (**neu seit 0.5.1**) |
+| `permissions` | — | Filesystem-Zugriffsrechte einschränken |
+| `response_format` | — | Strukturierte Ausgabe des Sub-Agenten |
 | `mode` | — | `isolated` (Standard: nur die Aufgabenbeschreibung sichtbar) oder `fork` (setzt die Konversation des Hauptagenten fort; **experimentell**, `skills` dort nicht erlaubt) |
 
 Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
@@ -394,7 +394,7 @@ Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede 
 
 ---
 
-## Profiles API (neu seit 0.5.4)
+## Profiles API
 
 Die **Profiles API** erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
 Eingebaute Profile existieren für OpenAI und Anthropic. Sie bündeln anbieterabhängige Einstellungen, ohne dass der eigentliche Agentencode geändert werden muss.
@@ -420,7 +420,7 @@ Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die einge
 
 ---
 
-## Middleware (experimentell, ab 0.6.0)
+## Middleware (experimentell)
 
 Middleware erlaubt es, Tool-Aufrufe transparent zu wrappen — ohne die Tools selbst zu ändern.
 Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts übergeben.
@@ -431,12 +431,12 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 | `RateLimitMiddleware` | `deepagents` | Begrenzt Tool-Calls pro Zeiteinheit |
 | `RetryMiddleware` | `deepagents` | Automatische Wiederholungen bei transienten Fehlern |
 | `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
-| `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell, neu in 0.6.0**) |
-| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (**neu in 0.6.5**; seit 0.7.x ohne festes Iterationslimit, Status `max_iterations_reached`) |
-| `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**seit 0.7.0 Opt-in**) |
-| `SummarizationMiddleware` | `langchain` | Verdichtet lange Konversationen; legt seit 0.7.26 ihren `summarizer` offen |
-| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` (**seit 0.7.x**) |
-| `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle (**neu in 0.6.12**) |
+| `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell**) |
+| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (ohne festes Iterationslimit, Status `max_iterations_reached`) |
+| `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**Opt-in**) |
+| `SummarizationMiddleware` | `langchain` | Verdichtet lange Konversationen; legt ihren `summarizer` offen |
+| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` |
+| `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle |
 
 ```python
 from deepagents.middleware import LoggingMiddleware, RetryMiddleware
@@ -470,12 +470,14 @@ Neben dem Python-SDK gibt es eine eigenständige **DeepAgents CLI** — die inte
 
 ### Installation der CLI
 
-```bash
-# CLI global installieren
-uv tool install deepagents-cli
+Die CLI heißt **DeepAgents Code** (Paket `deepagents-code`, Befehl `dcode`). Das frühere Paket `deepagents-cli` ist auf PyPI als veraltet markiert.
 
-# Oder ohne dauerhafte Installation ausführen
-uvx deepagents-cli --help
+```bash
+# Installation laut Projektdokumentation
+curl -LsSf https://langch.in/dcode | bash
+
+# Starten
+dcode
 ```
 
 Weitere Informationen stehen in der [offiziellen DeepAgents-Dokumentation](https://docs.langchain.com/oss/python/deepagents/overview).
@@ -574,26 +576,6 @@ flowchart TD
 
 ---
 
-## Migration 0.6 → 0.7
-
-Version 0.7.0 (Juli 2026) bringt mehrere Breaking Changes. Ab 0.7.1 kamen keine weiteren hinzu.
-
-| Änderung | Auswirkung und Anpassung |
-|---|---|
-| `TodoListMiddleware` nicht mehr Default | `write_todos` und `todos`-State fehlen; Wiederherstellung über `middleware=[TodoListMiddleware()]`, bei Sub-Agenten pro `SubAgent` |
-| Schlanker Default-Prompt | `BASE_AGENT_PROMPT` ist deprecated (Entfernung in 0.9.0); die Konstanten `TASK_`, `FILESYSTEM_`, `EXECUTION_` und `SUMMARIZATION_SYSTEM_PROMPT` sind entfernt |
-| `virtual_mode=True` als Default | `..` ist blockiert, Pfade außerhalb von `root_dir` lösen `ValueError` aus |
-| Neues `delete`-Tool | Rekursiv; Permissions behandeln es als Schreiboperation |
-| `write_file` überschreibt | Vorhandene Dateien werden ersetzt, es gibt keinen Fehler mehr |
-| Backend-Shims entfernt | Backend-Factories, `StoreBackend` ohne `namespace`, `ls_info`, `glob_info`, `grep_raw`, `files_update` und `SummarizationMiddleware(history_path_prefix=)` |
-| Geänderte Tool-Ausgaben | `ls` und `glob` liefern bei leeren Ergebnissen `No files found`; `read_file` nutzt ein neues Zeilennummern-Format |
-
-**Typischer Fehler:** Ein Agent, der nach dem Update nicht mehr plant, hat schlicht keine `TodoListMiddleware` mehr. Eigene Parser für `ls`-, `glob`- oder `read_file`-Ausgaben brechen wegen der neuen Formate.
-
-Weitere Neuerungen in 0.7.x: `read_file` mit Paginierungs-Infos und optionaler Video-Frame-Extraktion (`deepagents[video]`), Sandbox-Offload großer `execute`-Ausgaben und eine `LangSmithSandbox` mit Async-Client. Das Paket `libs/cli` heißt jetzt `deepagents-code`.
-
----
-
 ## Grenzen und Debugging
 
 DeepAgents spart Code, versteckt aber auch mehr Logik.
@@ -671,7 +653,7 @@ DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 - Integrierter Tool-Nutzung
 - Unterstützung mehrerer Modellanbieter; die verfügbaren Integrationen hängen von der eingesetzten Version ab
 - Profiles API — modell-spezifische Optimierung, eingebaute OpenAI/Anthropic-Profile
-- Middleware — Tool-Call-Wrapping, `CodeInterpreterMiddleware` (experimentell, ab 0.6.0)
+- Middleware — Tool-Call-Wrapping, `CodeInterpreterMiddleware` (experimentell)
 - CLI mit Web-Suche, HITL, MCP und persistentem Gedächtnis
 
 DeepAgents kann wiederkehrende Bausteine für längere Aufgaben bereitstellen. Ein explizit modellierter LangGraph-Workflow macht den Steuerfluss direkter sichtbar. Die Wahl hängt davon ab, welche Kontrolle und welche eingebauten Funktionen benötigt werden.
@@ -696,7 +678,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 1.9<br>
+**Version:** 2.0<br>
 **Stand:** Oktober 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

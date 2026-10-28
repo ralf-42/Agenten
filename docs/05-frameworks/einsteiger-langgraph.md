@@ -313,6 +313,7 @@ briefing_builder.add_conditional_edges(
     {"tools": "tools", END: END},
 )
 briefing_builder.add_edge("tools", "agent")
+briefing_agent = briefing_builder.compile()
 ```
 
 **Visualisierung des Tool-Loops:**
@@ -403,7 +404,7 @@ Streaming-Varianten:
 
 Empfehlung: **updates**.
 
-**Tipp für später:** Ab LangGraph v1.2.0 gibt es zusätzlich `stream_events(version="v3")` mit getrennten Kanälen (`run.values`, `run.messages`, `run.lifecycle`, `run.subgraphs`). Für den Einstieg reicht `stream(..., stream_mode=...)` völlig aus.
+**Tipp für später:** Ab LangGraph v1.2 gibt es zusätzlich `stream_events(version="v3")` mit getrennten Kanälen (`run.values`, `run.messages`, `run.lifecycle`, `run.subgraphs`). Die v3-API ist experimentell und kann sich ändern; für den Einstieg reicht `stream(..., stream_mode=...)` aus. [LangGraph-Referenz: `stream_events`](https://reference.langchain.com/python/langgraph/pregel/main/Pregel/stream_events)
 
 ---
 

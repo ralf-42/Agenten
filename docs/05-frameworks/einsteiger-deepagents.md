@@ -275,7 +275,7 @@ Das ist besonders nützlich für:
 | In-Memory | Tests, kurzlebige Aufgaben |
 | Local Disk | Lokale Entwicklung |
 | LangGraph Store | Thread-übergreifende Persistenz |
-| Sandboxes (Modal, Daytona, Deno) | Isolierte Code-Ausführung in der Cloud |
+| Sandboxes (Modal, Daytona, Runloop, LangSmith) | Isolierte Code-Ausführung in der Cloud; Modal, Daytona und Runloop über die Zusatzpakete `langchain-modal`, `langchain-daytona` und `langchain-runloop` |
 | Custom Backend | Eigenentwicklung für spezielle Anforderungen |
 
 Das Backend lässt sich austauschen, ohne die Agent-Logik zu ändern.

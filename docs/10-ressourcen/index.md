@@ -12,7 +12,7 @@ Diese Orientierungsseite ist der inhaltliche Werkzeugkasten für die Arbeit mit 
 
 | Frage | Dokument | Bezug |
 |---|---|---|
-| **Welche** Standards gelten im Code? | [Code Standards]({{ '/10-ressourcen/standards.html' | relative_url }}) | Best Practices für saubere Agenten-Entwicklung. |
+| **Welche** Konventionen gelten für die Frameworks? | [LangChain Best Practices]({{ '/05-frameworks/langchain-best-practices.html' | relative_url }}), [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}), [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) | Aktuelle Muster für Aufbau, Ablauf und Beobachtung von Agentensystemen. |
 | **Was** hilft bei typischen Fehlern? | [Troubleshooting]({{ '/10-ressourcen/troubleshooting.html' | relative_url }}) | Lösungen für häufige Probleme im Kursalltag. |
 | **Welche** Demos helfen beim Verstehen? | [Interaktive Visualisierungen]({{ '/10-ressourcen/interaktive-visualisierungen.html' | relative_url }}) | Interaktive Erklärungen und Anschauungsmaterial. |
 | **Wo** finde ich Vertiefung? | [Linksammlung]({{ '/10-ressourcen/links.html' | relative_url }}) | Kuratierte Quellen und weiterführende Materialien. |

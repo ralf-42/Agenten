@@ -396,27 +396,27 @@ Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede 
 
 ## Profiles API
 
-Die **Profiles API** erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
-Eingebaute Profile existieren für OpenAI und Anthropic. Sie bündeln anbieterabhängige Einstellungen, ohne dass der eigentliche Agentencode geändert werden muss.
+Die **Profiles API** (Beta) erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
+Eingebaute Harness-Profile gibt es für einzelne Modelle, unter anderem von Anthropic und OpenAI (Codex). Sie bündeln modellabhängige Einstellungen, ohne dass der eigentliche Agentencode geändert werden muss.
 
 ```python
-from deepagents.profiles import HarnessProfile, ProviderProfile, register_harness_profile
+from deepagents import HarnessProfile, register_harness_profile
 
-# Eigenes Profil registrieren
-my_profile = HarnessProfile(
-    provider=ProviderProfile.OPENAI,
-    system_prompt_suffix="Antworte immer auf Deutsch.",
+# Profil für alle Modelle eines Providers registrieren
+# (Schlüssel: "provider" oder "provider:modell")
+register_harness_profile(
+    "openai",
+    HarnessProfile(system_prompt_suffix="Antworte immer auf Deutsch."),
 )
-register_harness_profile(my_profile)
 
-# Agent nutzt automatisch das registrierte Profil
+# Der Agent nutzt automatisch das passende registrierte Profil
 agent = create_deep_agent(
     model=init_chat_model("openai:gpt-6-luna"),
     tools=[mein_tool],
 )
 ```
 
-Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die eingebauten Profile wirken automatisch.
+Ein `HarnessProfile` kann unter anderem einen Prompt-Zusatz (`system_prompt_suffix`), ausgeschlossene Tools (`excluded_tools`) und zusätzliche Middleware (`extra_middleware`) setzen. Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die eingebauten Profile wirken automatisch.
 
 ---
 
@@ -427,28 +427,28 @@ Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts üb
 
 | Middleware-Klasse | Paket | Beschreibung |
 |-------------------|-------|-------------|
-| `LoggingMiddleware` | `deepagents` | Loggt jeden Tool-Call mit Input/Output |
-| `RateLimitMiddleware` | `deepagents` | Begrenzt Tool-Calls pro Zeiteinheit |
-| `RetryMiddleware` | `deepagents` | Automatische Wiederholungen bei transienten Fehlern |
-| `CacheMiddleware` | `deepagents` | Cached Tool-Ergebnisse (identische Inputs) |
-| `CodeInterpreterMiddleware` | `deepagents[quickjs]` | JavaScript im Browser-Sandbox ausführen (**experimentell**) |
+| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` |
+| `SubAgentMiddleware`, `AsyncSubAgentMiddleware` | `deepagents` | Delegation an Sub-Agenten (synchron und asynchron) |
+| `MemoryMiddleware`, `SkillsMiddleware` | `deepagents` | Laden von `AGENTS.md`- und `SKILL.md`-Dateien (über `memory=` und `skills=` eingebunden) |
+| `SummarizationMiddleware` | `deepagents` | Verdichtet lange Konversationen und legt ihren `summarizer` offen |
 | `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (ohne festes Iterationslimit, Status `max_iterations_reached`) |
 | `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**Opt-in**) |
-| `SummarizationMiddleware` | `langchain` | Verdichtet lange Konversationen; legt ihren `summarizer` offen |
-| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` |
-| `BedrockPromptCachingMiddleware` | `deepagents[aws]` | Automatisches Prompt-Caching für AWS-Bedrock-Modelle |
+| `ToolRetryMiddleware` | `langchain` | Wiederholt fehlgeschlagene Tool-Calls (`max_retries`, Backoff) |
+| `ToolCallLimitMiddleware` | `langchain` | Begrenzt Tool-Calls pro Thread oder Run (`thread_limit`, `run_limit`) |
+| `CodeInterpreterMiddleware` | `langchain_quickjs` (`deepagents[quickjs]`) | JavaScript in einer QuickJS-Sandbox ausführen (**experimentell**) |
+| `BedrockPromptCachingMiddleware` | `langchain_aws` (`deepagents[aws]`) | Automatisches Prompt-Caching für AWS-Bedrock-Modelle |
 
 ```python
-from deepagents.middleware import LoggingMiddleware, RetryMiddleware
+from langchain.agents.middleware import ToolCallLimitMiddleware, ToolRetryMiddleware
 
 agent = create_deep_agent(
     model=init_chat_model("openai:gpt-6-luna"),
     tools=[mein_tool],
-    middleware=[LoggingMiddleware(), RetryMiddleware(max_retries=3)],
+    middleware=[ToolRetryMiddleware(max_retries=3), ToolCallLimitMiddleware(run_limit=20)],
 )
 ```
 
-`CodeInterpreterMiddleware` erfordert das Zusatz-Paket:
+`CodeInterpreterMiddleware` erfordert das Zusatz-Paket und wird aus `langchain_quickjs` importiert:
 
 ```bash
 pip install deepagents[quickjs]
@@ -652,8 +652,8 @@ DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
 - Sub-Agenten für parallele Delegation
 - Integrierter Tool-Nutzung
 - Unterstützung mehrerer Modellanbieter; die verfügbaren Integrationen hängen von der eingesetzten Version ab
-- Profiles API — modell-spezifische Optimierung, eingebaute OpenAI/Anthropic-Profile
-- Middleware — Tool-Call-Wrapping, `CodeInterpreterMiddleware` (experimentell)
+- Profiles API — modell-spezifische Optimierung über Harness-Profile
+- Middleware — Tool-Call-Wrapping (z. B. Retry und Call-Limits), `CodeInterpreterMiddleware` (experimentell)
 - CLI mit Web-Suche, HITL, MCP und persistentem Gedächtnis
 
 DeepAgents kann wiederkehrende Bausteine für längere Aufgaben bereitstellen. Ein explizit modellierter LangGraph-Workflow macht den Steuerfluss direkter sichtbar. Die Wahl hängt davon ab, welche Kontrolle und welche eingebauten Funktionen benötigt werden.

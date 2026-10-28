@@ -2,7 +2,7 @@
 layout: default
 title: Digitale Souveränität
 parent: "Regulatorik & Verantwortung"
-nav_order: 4
+nav_order: 3
 description: Was digitale Souveränität für KI-Agenten, Cloud-Abhängigkeiten, Datenflüsse und Modellwahl bedeutet
 has_toc: true
 ---
@@ -124,7 +124,6 @@ Für Kursprojekte ist ein kurzer Souveränitätscheck ausreichend: Datenklassifi
 |---|---|
 | [EU AI Act]({{ '/09-regulatorik-verantwortung/eu-ai-act.html' | relative_url }}) | Welche Risikostufen und regulatorischen Pflichten gelten für KI-Systeme? |
 | [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}) | Wie werden personenbezogene Daten in Prompts, Tools, Memory und Traces geschützt? |
-| [KI-Agenten in regulierten Branchen]({{ '/09-regulatorik-verantwortung/ki-agenten-in-regulierten-branchen.html' | relative_url }}) | Welche zusätzlichen Anforderungen gelten in Medizin, Legal, Finanzwesen und anderen sensiblen Kontexten? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Wie werden Tool-Grenzen, Prompt Injection und Datenabfluss technisch begrenzt? |
 | [Deployment und Betrieb]({{ '/08-deployment-betrieb/' | relative_url }}) | Wie werden Agenten-Systeme betrieben, abgesichert und beobachtet? |
 

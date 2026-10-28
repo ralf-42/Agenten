@@ -40,7 +40,7 @@ Der AI Act trat am **1. August 2024** in Kraft. Die Pflichten werden schrittweis
 |---|---|
 | **2. Februar 2025** | Verbote nach Art. 5, Definitionen und AI-Literacy-Pflichten gelten |
 | **2. August 2025** | GPAI-Regeln und Governance-Strukturen gelten; nationale Behörden und Sanktionen müssen vorbereitet sein |
-| **2. August 2026** | Der Großteil der Verordnung wird anwendbar, darunter Transparenzpflichten nach Art. 50 und Hochrisiko-Systeme aus Annex III |
+| **2. August 2026** | Der Großteil der Verordnung gilt, darunter Transparenzpflichten nach Art. 50 und Hochrisiko-Systeme aus Annex III |
 | **2. August 2027** | Hochrisiko-KI als Sicherheitskomponente in regulierten Produkten wird anwendbar |
 | **31. Dezember 2030** | Sonderfristen für bestimmte bereits bestehende große IT-Systeme und einzelne Bestandssysteme |
 
@@ -93,6 +93,15 @@ Für technische Kursbeispiele ergeben sich daraus fünf Mindestmuster:
 
 **Nicht geeignet, wenn:** Ein freier Automatisierungs- oder Agenten-Loop Entscheidungen mit Außenwirkung trifft, keine menschliche Freigabe vorgesehen ist oder keine überprüfbaren Kriterien dokumentiert sind. Gerade in Legal, Medizin, HR und Finanzwesen sollte ein Agent zunächst als Assistenzsystem entworfen werden, nicht als autonomer Entscheider.
 
+Damit verschiebt sich bei Agenten-Systemen auch die ethische und organisatorische Grundfrage von der bloßen Antwortqualität zur **Handlungsverantwortung**: Ein Agent darf nicht zum Verantwortungsloch zwischen Entwickler, Betreiber, Fachabteilung und Modellanbieter werden (*Verantwortungsdiffusion*). Für die Einordnung, ob ein Agent noch als unkritische Assistenz oder bereits im regulierten Bereich arbeitet, hilft eine pragmatische Abgrenzung:
+
+| Leitfrage | Indikator für unkritische Assistenz | Indikator für regulierten / freigabepflichtigen Einsatz |
+|---|---|---|
+| **Was tut der Agent?** | Zusammenfassen, strukturieren, recherchieren | Empfehlen, entscheiden, bewerten im Einzelfall |
+| **Wer sind die Betroffenen?** | Entwickler, interne Nutzer ohne direkten Schaden | Bewerber, Patienten, Mandanten, Kreditnehmer |
+| **Wie wird die Ausgabe genutzt?** | Als Ausgangspunkt für weitere fachliche Prüfung | Als direkte Handlungsgrundlage mit Außenwirkung |
+| **Gibt es einen menschlichen Entscheid danach?** | Ja, verbindlich vorgesehen | Nein oder organisatorisch unklar |
+
 ## Umsetzung im Kurskontext
 
 Für den Agenten-Kurs ist der AI Act kein isoliertes Rechtskapitel. Er berührt mehrere technische Module: Tool Use, RAG, Human-in-the-Loop, Evaluation, Security, Observability und Deployment. Die regulatorische Perspektive erklärt, warum diese Module zugleich Architekturthemen und Kontrollmechanismen sind.
@@ -116,7 +125,7 @@ Für Kurs- und Prototypensysteme empfiehlt sich ein Mindeststandard, auch wenn d
 
 | Dokument | Frage |
 |---|---|
-| [Ethik und KI-Agenten]({{ '/09-regulatorik-verantwortung/ethik-und-ki-agenten.html' | relative_url }}) | Welche Verantwortung entsteht jenseits rechtlicher Mindestpflichten? |
+| [Datenschutz & DSGVO]({{ '/09-regulatorik-verantwortung/datenschutz-dsgvo.html' | relative_url }}) | Wie werden personenbezogene Daten in Prompts, Tools, Memory und Traces geschützt? |
 | [Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }}) | Wie abhängig ist ein KI-System von Cloud, Plattformen und außereuropäischer Infrastruktur? |
 | [Agenten-Sicherheit]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Welche technischen Risiken entstehen durch Tools, Prompts, Daten und Agenten-Verhalten? |
 | [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}) | Wie werden menschliche Freigaben technisch in Agenten-Workflows eingebaut? |

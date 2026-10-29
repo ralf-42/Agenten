@@ -126,14 +126,14 @@ print(result["messages"][-1].content)
 ## Structured Output
 
 ```python
-class FrageTyp(BaseModel):
+class FrageTypResult(BaseModel):
     kategorie: Literal["definition", "retrieval", "out_of_corpus"] = Field(
         description="Kategorie der Research-Frage"
     )
 
 
-router = llm.with_structured_output(FrageTyp)
-ergebnis = router.invoke("Warum verbessert RAG die Zuverlässigkeit?")
+structured_llm = llm.with_structured_output(FrageTypResult)
+ergebnis = structured_llm.invoke("Warum verbessert RAG die Zuverlässigkeit?")
 print(ergebnis.kategorie)
 ```
 
@@ -171,20 +171,20 @@ def antwort_node(state: PmoState) -> dict:
     return {"antwort": f"Gewählter Pfad: {state['routing']}"}
 
 
-builder = StateGraph(PmoState)
-builder.add_node("analyse", analyse_node)
-builder.add_node("antwort", antwort_node)
-builder.add_edge(START, "analyse")
-builder.add_edge("analyse", "antwort")
-builder.add_edge("antwort", END)
+agent_builder = StateGraph(PmoState)
+agent_builder.add_node("analyse", analyse_node)
+agent_builder.add_node("antwort", antwort_node)
+agent_builder.add_edge(START, "analyse")
+agent_builder.add_edge("analyse", "antwort")
+agent_builder.add_edge("antwort", END)
 
-graph = builder.compile()
+agent = agent_builder.compile()
 ```
 
 ## Conditional Routing
 
 ```python
-def route_by_category(state: PmoState) -> str:
+def category_router(state: PmoState) -> Literal["definition", "retrieval"]:
     return state["routing"]
 
 
@@ -196,23 +196,23 @@ def retrieval_node(state: PmoState) -> dict:
     return {"antwort": "Retrievalpfad: Korpus abrufen und Quellen nennen."}
 
 
-builder = StateGraph(PmoState)
-builder.add_node("analyse", analyse_node)
-builder.add_node("definition", definition_node)
-builder.add_node("retrieval", retrieval_node)
-builder.add_edge(START, "analyse")
-builder.add_conditional_edges(
+agent_builder = StateGraph(PmoState)
+agent_builder.add_node("analyse", analyse_node)
+agent_builder.add_node("definition", definition_node)
+agent_builder.add_node("retrieval", retrieval_node)
+agent_builder.add_edge(START, "analyse")
+agent_builder.add_conditional_edges(
     "analyse",
-    route_by_category,
+    category_router,
     {
         "definition": "definition",
         "retrieval": "retrieval",
     },
 )
-builder.add_edge("definition", END)
-builder.add_edge("retrieval", END)
+agent_builder.add_edge("definition", END)
+agent_builder.add_edge("retrieval", END)
 
-graph = builder.compile()
+agent = agent_builder.compile()
 ```
 
 **Regel:** Router-Funktionen entscheiden nur. Die eigentliche Arbeit gehört in Nodes.
@@ -235,14 +235,14 @@ def revise_node(state: QualityState) -> dict:
     return {"antwort": state["antwort"] + " Quelle: kurs_korpus.md"}
 
 
-def quality_router(state: QualityState) -> str:
+def quality_router(state: QualityState) -> Literal["revise", END]:
     if state["score"] < 0.7 and state["versuche"] < 2:
         return "revise"
     return END
 
 
-builder.add_conditional_edges("check", quality_router)
-builder.add_edge("revise", "check")
+agent_builder.add_conditional_edges("check", quality_router)
+agent_builder.add_edge("revise", "check")
 ```
 
 **Regel:** Schleifen brauchen Abbruchbedingungen im State, zum Beispiel `versuche` oder `max_iter`.
@@ -271,14 +271,14 @@ def agent_node(state: ToolState) -> dict:
     return {"messages": [response]}
 
 
-builder = StateGraph(ToolState)
-builder.add_node("agent", agent_node)
-builder.add_node("tools", ToolNode(tools))
-builder.add_edge(START, "agent")
-builder.add_conditional_edges("agent", tools_condition)
-builder.add_edge("tools", "agent")
+agent_builder = StateGraph(ToolState)
+agent_builder.add_node("agent", agent_node)
+agent_builder.add_node("tools", ToolNode(tools))
+agent_builder.add_edge(START, "agent")
+agent_builder.add_conditional_edges("agent", tools_condition)
+agent_builder.add_edge("tools", "agent")
 
-graph = builder.compile()
+agent = agent_builder.compile()
 ```
 
 **Merksatz:** `bind_tools()` macht Tools dem Modell bekannt. `ToolNode` führt Tool-Calls aus. `tools_condition` routet zwischen Tool-Ausführung und `END`.
@@ -287,16 +287,16 @@ graph = builder.compile()
 
 ```python
 checkpointer = InMemorySaver()
-graph = builder.compile(checkpointer=checkpointer)
+agent = agent_builder.compile(checkpointer=checkpointer)
 
 config = {"configurable": {"thread_id": "research-pia-rag-01"}}
 
-graph.invoke(
+agent.invoke(
     {"messages": [HumanMessage(content="Merke: Thema ist RAG-Evaluation.")]},
     config=config,
 )
 
-result = graph.invoke(
+result = agent.invoke(
     {"messages": [HumanMessage(content="Was war das Thema?")]},
     config=config,
 )
@@ -321,7 +321,7 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 
 conn = sqlite3.connect("agent_sessions.db", check_same_thread=False)
 checkpointer = SqliteSaver(conn)
-app = builder.compile(checkpointer=checkpointer)
+agent = agent_builder.compile(checkpointer=checkpointer)
 ```
 
 **Regel:** `InMemorySaver()` ist für Demos. Sobald ein Notebook-Neustart oder mehrere Sessions relevant sind, persistenten Checkpointer nutzen.
@@ -349,11 +349,11 @@ def publish_node(state: ReviewState) -> dict:
     return {"finaler_text": state["entwurf"]}
 
 
-graph = builder.compile(checkpointer=InMemorySaver())
+agent = agent_builder.compile(checkpointer=InMemorySaver())
 config = {"configurable": {"thread_id": "review-42"}}
 
-graph.invoke(start_state, config=config)
-result = graph.invoke(Command(resume="ja"), config=config)
+agent.invoke(start_state, config=config)
+result = agent.invoke(Command(resume="ja"), config=config)
 ```
 
 **Wichtig:** `interrupt()` braucht einen Checkpointer und eine stabile `thread_id`, sonst kann der Graph nicht sauber fortgesetzt werden.
@@ -395,11 +395,13 @@ def supervisor_node(state: SupervisorState) -> dict:
     return {"route": route, "log": state["log"] + [f"Supervisor -> {route}"]}
 
 
-def supervisor_router(state: SupervisorState) -> str:
+def supervisor_router(
+    state: SupervisorState,
+) -> Literal["tabellen_worker", "text_worker", "synthese_worker", END]:
     return END if state["route"] == "FINISH" else state["route"]
 
 
-builder.add_conditional_edges(
+agent_builder.add_conditional_edges(
     "supervisor",
     supervisor_router,
     {
@@ -443,7 +445,7 @@ run_cfg = {
     },
 }
 
-result = graph.invoke(start_state, config=run_cfg)
+result = agent.invoke(start_state, config=run_cfg)
 ```
 
 Bei Sessions wird `thread_id` zusaetzlich in `configurable` gesetzt:
@@ -455,7 +457,7 @@ run_cfg = {
     "metadata": {"kurs": "agenten", "workflow": "session"},
 }
 
-result = graph.invoke(start_state, config={
+result = agent.invoke(start_state, config={
     "configurable": {"thread_id": "research-demo-01"},
     **run_cfg,
 })

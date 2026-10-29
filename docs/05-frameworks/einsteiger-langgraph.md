@@ -80,7 +80,7 @@ Ein Workflow besteht aus:
 ### State definieren
 
 ```python
-from typing import TypedDict, Annotated
+from typing import Annotated, Literal, TypedDict
 from langgraph.graph.message import add_messages
 
 class BriefingState(TypedDict):
@@ -298,7 +298,7 @@ def tool_node(state: BriefingState):
     result_message = ...  # echtes Tool
     return {"messages": [result_message]}
 
-def router(state: BriefingState) -> str:
+def router(state: BriefingState) -> Literal["tools", END]:
     last_msg = state["messages"][-1]
     if getattr(last_msg, "tool_calls", None):
         return "tools"
@@ -559,7 +559,7 @@ writer_agent   = create_agent(model=llm, tools=[...], system_prompt="Writer")
 ```python
 from langgraph.types import Command
 
-def supervisor(state: BriefingState) -> Command:
+def supervisor_node(state: BriefingState) -> Command:
     task = state.get("task_type", "research")
     return Command(goto=f"{task}_agent")
 ```

@@ -188,19 +188,19 @@ Viele Anwendungen benötigen klar definierte Datenstrukturen – etwa bei der Ex
 ```python
 from pydantic import BaseModel, Field
 
-class SupportTicket(BaseModel):
+class SupportTicketResult(BaseModel):
     kundennummer: str = Field(description="Eindeutige Kundennummer")
     kategorie: str = Field(description="z.B. 'Rechnung', 'Technik', 'Vertrag'")
     dringlichkeit: int = Field(description="Dringlichkeit von 1 (niedrig) bis 5 (hoch)")
 
-structured_llm = llm.with_structured_output(SupportTicket)
+structured_llm = llm.with_structured_output(SupportTicketResult)
 
 text = "Kundennummer 4711 meldet ein dringendes technisches Problem. Bitte sofort lösen!"
 result = structured_llm.invoke(
     "Extrahiere Kundennummer, Kategorie und Dringlichkeit aus folgendem Text: " + text
 )
 
-# result ist direkt ein SupportTicket-Objekt
+# result ist direkt ein SupportTicketResult-Objekt
 print(result)
 print(result.kategorie, result.dringlichkeit)
 ```
@@ -352,7 +352,7 @@ from langchain.agents import create_agent
 from pydantic import BaseModel, Field
 
 # Definiere strukturiertes Response-Schema
-class AgentResponse(BaseModel):
+class AgentResult(BaseModel):
     """Strukturierte Agent-Antwort mit Reasoning."""
     reasoning: str = Field(description="Denkprozess des Agents")
     action: str = Field(description="Geplante Aktion")
@@ -363,7 +363,7 @@ agent = create_agent(
     model=llm,
     tools=[multiply, safe_divide],
     system_prompt="You are a helpful research assistant",
-    response_format=AgentResponse,  # Strikte Validierung
+    response_format=AgentResult,  # Strikte Validierung
 )
 
 response = agent.invoke({

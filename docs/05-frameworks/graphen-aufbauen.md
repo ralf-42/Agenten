@@ -211,7 +211,7 @@ Architekturentscheidung vermischt werden.
 ### Node-Name nicht registriert
 
 ```python
-builder.add_edge("text_worker", "supervisor")  # falsch, wenn der Node text_worker_node heißt
+supervisor_builder.add_edge("text_worker", "supervisor")  # falsch, wenn der Node text_worker_node heißt
 ```
 
 Die Edge muss dieselbe ID verwenden wie `add_node()`.

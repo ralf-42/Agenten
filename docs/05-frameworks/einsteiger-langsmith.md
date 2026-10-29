@@ -538,18 +538,18 @@ def agent_node(state: ChatState):
     return {"messages": [response]}
 
 # Graph bauen
-graph = StateGraph(ChatState)
-graph.add_node("agent", agent_node)
-graph.add_edge(START, "agent")
-graph.add_edge("agent", END)
+agent_builder = StateGraph(ChatState)
+agent_builder.add_node("agent", agent_node)
+agent_builder.add_edge(START, "agent")
+agent_builder.add_edge("agent", END)
 
 # Mit Checkpointer kompilieren
 checkpointer = InMemorySaver()
-compiled_graph = graph.compile(checkpointer=checkpointer)
+agent = agent_builder.compile(checkpointer=checkpointer)
 
 # Ausführen: Bei aktiviertem Tracing erscheint ein Trace.
 config = {"configurable": {"thread_id": "demo-session"}}
-result = compiled_graph.invoke(
+result = agent.invoke(
     {"messages": [{"role": "human", "content": "Hallo!"}]},
     config=config,
 )
@@ -761,7 +761,7 @@ response  = named_llm.invoke("Was ist ein Sprachmodell?")
 ```python
 from pydantic import BaseModel, Field
 
-class Person(BaseModel):
+class PersonResult(BaseModel):
     name: str = Field(description="Vollständiger Name")
     alter: int = Field(description="Alter in Jahren")
 
@@ -770,7 +770,7 @@ run_cfg = {
     "tags":     ["structured_output"],
 }
 
-structured_llm = llm.with_structured_output(Person).with_config(**run_cfg)
+structured_llm = llm.with_structured_output(PersonResult).with_config(**run_cfg)
 ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
 ```
 

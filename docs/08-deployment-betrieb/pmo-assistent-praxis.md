@@ -165,13 +165,13 @@ class BriefingState(TypedDict):
 ### Aufgabe 1.2: Minimal-Nodes erstellen
 
 ```python
-def classify_intent(state: BriefingState) -> BriefingState:
+def classify_intent_node(state: BriefingState) -> BriefingState:
     """Erkennt den Fragetyp."""
     query = state["user_query"].lower()
     # einfache Heuristik oder LLM-Klassifikation ergänzen
     return state
 
-def fallback_answer(state: BriefingState) -> BriefingState:
+def fallback_answer_node(state: BriefingState) -> BriefingState:
     """Gibt eine sichere Fallback-Antwort zurück."""
     state["answer"] = "Ich kann diese Frage noch nicht zuverlässig aus dem Korpus beantworten."
     return state
@@ -180,15 +180,15 @@ def fallback_answer(state: BriefingState) -> BriefingState:
 ### Aufgabe 1.3: Minimalen Graphen bauen
 
 ```python
-workflow = StateGraph(BriefingState)
-workflow.add_node("classify_intent", classify_intent)
-workflow.add_node("fallback", fallback_answer)
+agent_builder = StateGraph(BriefingState)
+agent_builder.add_node("classify_intent_node", classify_intent_node)
+agent_builder.add_node("fallback_answer_node", fallback_answer_node)
 
-workflow.add_edge(START, "classify_intent")
-workflow.add_edge("classify_intent", "fallback")
-workflow.add_edge("fallback", END)
+agent_builder.add_edge(START, "classify_intent_node")
+agent_builder.add_edge("classify_intent_node", "fallback_answer_node")
+agent_builder.add_edge("fallback_answer_node", END)
 
-graph = workflow.compile()
+agent = agent_builder.compile()
 ```
 
 **Erfolgskriterium:**
@@ -207,28 +207,40 @@ graph = workflow.compile()
 ```python
 from typing import Literal
 
-def route_by_intent(
+def pmo_router(
     state: BriefingState,
-) -> Literal["factual", "comparison", "summary", "out_of_scope", "fallback"]:
-    return state["intent"] or "fallback"
+) -> Literal[
+    "answer_factual_question_node",
+    "compare_sources_node",
+    "summarize_findings_node",
+    "handle_out_of_scope_node",
+    "fallback_answer_node",
+]:
+    routes = {
+        "factual": "answer_factual_question_node",
+        "comparison": "compare_sources_node",
+        "summary": "summarize_findings_node",
+        "out_of_scope": "handle_out_of_scope_node",
+    }
+    return routes.get(state["intent"], "fallback_answer_node")
 ```
 
 ### Aufgabe 2.2: Antwort-Nodes anlegen
 
 ```python
-def answer_factual_question(state: BriefingState) -> BriefingState:
+def answer_factual_question_node(state: BriefingState) -> BriefingState:
     """Beantwortet faktische Fragen mit Quellenbezug."""
     ...
 
-def compare_sources(state: BriefingState) -> BriefingState:
+def compare_sources_node(state: BriefingState) -> BriefingState:
     """Vergleicht Aussagen aus mehreren Quellen."""
     ...
 
-def summarize_findings(state: BriefingState) -> BriefingState:
+def summarize_findings_node(state: BriefingState) -> BriefingState:
     """Fasst relevante Passagen aus dem Korpus zusammen."""
     ...
 
-def handle_out_of_scope(state: BriefingState) -> BriefingState:
+def handle_out_of_scope_node(state: BriefingState) -> BriefingState:
     """Stoppt Antworten, die nicht aus dem Korpus belegbar sind."""
     state["answer"] = "Nicht im Korpus."
     state["confidence"] = "niedrig"
@@ -238,15 +250,20 @@ def handle_out_of_scope(state: BriefingState) -> BriefingState:
 ### Aufgabe 2.3: Conditional Edges einbauen
 
 ```python
-workflow.add_conditional_edges(
-    "classify_intent",
-    route_by_intent,
+agent_builder.add_node("answer_factual_question_node", answer_factual_question_node)
+agent_builder.add_node("compare_sources_node", compare_sources_node)
+agent_builder.add_node("summarize_findings_node", summarize_findings_node)
+agent_builder.add_node("handle_out_of_scope_node", handle_out_of_scope_node)
+
+agent_builder.add_conditional_edges(
+    "classify_intent_node",
+    pmo_router,
     {
-        "factual": "factual",
-        "comparison": "comparison",
-        "summary": "summary",
-        "out_of_scope": "out_of_scope",
-        "fallback": "fallback",
+        "answer_factual_question_node": "answer_factual_question_node",
+        "compare_sources_node": "compare_sources_node",
+        "summarize_findings_node": "summarize_findings_node",
+        "handle_out_of_scope_node": "handle_out_of_scope_node",
+        "fallback_answer_node": "fallback_answer_node",
     },
 )
 ```
@@ -291,7 +308,7 @@ Für eine Basisversion reicht Retrieval-Light mit einfacher Chunk-Suche. Die bes
 **Typischer Fehler:** zwei Skalen vermischen. Chroma liefert bei `similarity_search_with_score` eine **Distanz** (kleiner = ähnlicher). Ein `score_threshold` im Retriever arbeitet mit einem **Relevanz-Score** (höher = besser).
 
 ```python
-def retrieve_context(state: BriefingState) -> BriefingState:
+def retrieve_context_node(state: BriefingState) -> BriefingState:
     """Sucht passende Passagen im Projektkorpus."""
     query = state["user_query"]
     # Chunks suchen, Scores prüfen, Quellen speichern
@@ -302,11 +319,11 @@ def retrieve_context(state: BriefingState) -> BriefingState:
 ### Aufgabe 3.3: Retrieval in den Graphen einbauen
 
 ```python
-workflow.add_node("retrieve_context", retrieve_context)
+agent_builder.add_node("retrieve_context_node", retrieve_context_node)
 
-workflow.add_edge(START, "classify_intent")
-workflow.add_edge("classify_intent", "retrieve_context")
-workflow.add_conditional_edges("retrieve_context", route_by_intent, ...)
+agent_builder.add_edge(START, "classify_intent_node")
+agent_builder.add_edge("classify_intent_node", "retrieve_context_node")
+agent_builder.add_conditional_edges("retrieve_context_node", pmo_router, ...)
 ```
 
 **Erfolgskriterium:**
@@ -326,7 +343,7 @@ workflow.add_conditional_edges("retrieve_context", route_by_intent, ...)
 from langgraph.checkpoint.sqlite import SqliteSaver
 
 checkpointer = SqliteSaver.from_conn_string("briefing_agent_sessions.db")
-graph = workflow.compile(checkpointer=checkpointer)
+agent = agent_builder.compile(checkpointer=checkpointer)
 ```
 
 ### Aufgabe 4.2: Session-basierte Interaktion
@@ -334,7 +351,7 @@ graph = workflow.compile(checkpointer=checkpointer)
 ```python
 config = {"configurable": {"thread_id": "mara_001"}}
 
-result1 = graph.invoke(
+result1 = agent.invoke(
     {
         "user_query": "Welche Entscheidungen wurden zur Vektordatenbank getroffen?",
         "intent": None,
@@ -347,7 +364,7 @@ result1 = graph.invoke(
     config=config,
 )
 
-result2 = graph.invoke(
+result2 = agent.invoke(
     {
         "user_query": "Welche Quelle war dafür am wichtigsten?",
         "intent": None,
@@ -381,7 +398,7 @@ class Quellenangabe(BaseModel):
     dokument: str = Field(description="Dateiname oder Titel der Quelle")
     passage: str = Field(description="Zitierter Textausschnitt, maximal 2 Sätze")
 
-class BriefingAntwort(BaseModel):
+class BriefingAntwortResult(BaseModel):
     antwort: str = Field(description="Synthese-Antwort auf die Frage")
     quellen: list[Quellenangabe] = Field(description="Mindestens eine Quellenangabe")
     sicherheit: str = Field(description="hoch / mittel / niedrig")
@@ -393,7 +410,7 @@ Je nach PMO-Kernfunktion ergänzt oder ersetzt ein eigenes Ergebnisformat dieses
 ### Aufgabe 5.2: Qualitäts-Gate ergänzen
 
 ```python
-def quality_gate(state: BriefingState) -> BriefingState:
+def quality_gate_node(state: BriefingState) -> BriefingState:
     """Markiert unsichere oder unbelegte Antworten für menschliche Prüfung."""
     if state["confidence"] == "niedrig" or not state["sources"]:
         state["needs_approval"] = True
@@ -436,7 +453,7 @@ import gradio as gr
 
 def chat_with_briefing_agent(message, history, thread_id):
     config = {"configurable": {"thread_id": thread_id}}
-    result = graph.invoke(
+    result = agent.invoke(
         {
             "user_query": message,
             "intent": None,

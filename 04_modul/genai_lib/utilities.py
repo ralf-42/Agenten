@@ -325,7 +325,7 @@ def get_model_profile(model: str, print_profile: bool = True, **kwargs):
     Parameter:
     ----------
     model : str
-        Model-Name im Format "provider:model" (z.B. "openai:gpt-5.6-luna")
+        Model-Name im Format "provider:model" (z.B. "openai:gpt-6-luna")
         oder als separater String (dann muss provider über kwargs übergeben werden)
     print_profile : bool, optional
         Wenn True, werden die wichtigsten Profile-Informationen ausgegeben (Standard: True)
@@ -342,7 +342,7 @@ def get_model_profile(model: str, print_profile: bool = True, **kwargs):
     >>> from genai_lib.utilities import get_model_profile
     >>>
     >>> # Kurznotation (empfohlen)
-    >>> profile = get_model_profile("openai:gpt-5.6-luna")
+    >>> profile = get_model_profile("openai:gpt-6-luna")
     >>>
     >>> # Mit zusätzlichen Parametern
     >>> profile = get_model_profile("anthropic:claude-3-sonnet", max_tokens=1000)

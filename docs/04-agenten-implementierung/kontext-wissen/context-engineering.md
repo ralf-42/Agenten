@@ -159,6 +159,8 @@ Memory ist nützlich, wenn Informationen nicht bei jeder Anfrage neu abgefragt w
 
 Kontext-Caching ist davon zu trennen. Das Modell lernt dabei nicht dauerhaft; wiederkehrender Kontext, vorbereitete Dokumentauszüge oder technische Zwischenergebnisse werden nur genutzt, um Kosten, Latenz und Tokenverbrauch zu senken. Sobald Kontext nutzerabhängig, vertraulich oder möglicherweise veraltet sein kann, braucht der Cache klare Regeln für Gültigkeit und Zugriff.
 
+Interaktive Demo: [LLM-Inferenz (Prefill, KV-Cache & Latenz)]({{ '/visualisierungen/llm_inferenz/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt Schritt für Schritt, wie Prompt-Länge und der KV-Cache die Prefill-Dauer (TTFT) und die Token-Generierung (ITL) beeinflussen.
+
 **Beispiel:**
 ```
 Kundeninteraktion 1: "Ich bevorzuge niedrige Beiträge"

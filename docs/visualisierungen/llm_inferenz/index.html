@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Was ist LLM-Inferenz? – Interaktive Visualisierung</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.13.0/dist/mermaid.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fcfcfb;
+  --surface: #f5f4f0;
+  --surface2: #eae8e1;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --text: #1c1c1a;
+  --muted: #5e5e59;
+  --hint: #8c8c85;
+
+  --purple: #4432a5;
+  --purple-light: #eceaff;
+  --purple-mid: #6352d9;
+  --teal: #0b5945;
+  --teal-light: #e3f7f1;
+  --teal-mid: #148f6c;
+  --coral: #822a10;
+  --coral-light: #fdf0ec;
+  --coral-mid: #c94a24;
+  --amber: #542e03;
+  --amber-light: #fdf3e4;
+  --amber-mid: #d98204;
+  --blue: #185fa5;
+  --blue-light: #e8f2fc;
+
+  --code-bg: #f8f9fa;
+  --code-border: #e4e7eb;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-ui: system-ui, -apple-system, sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border2);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: 0.3px;
+}
+.logo span { font-weight: 400; color: var(--muted); }
+
+.video-badge {
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  padding: 4px 10px;
+  border-radius: 99px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.video-badge:hover {
+  background: var(--purple-light);
+  color: var(--purple);
+  border-color: var(--purple-mid);
+}
+
+.step-counter {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 248px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border2);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 16px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all .15s;
+}
+.step-item:hover { background: var(--surface2); }
+.step-item.active {
+  background: var(--purple-light);
+  border-left-color: var(--purple-mid);
+}
+.step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-item.active .step-num {
+  background: var(--purple-mid);
+  color: #fff;
+}
+.step-item.done .step-num {
+  background: var(--teal-mid);
+  color: #fff;
+}
+.step-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.step-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  overflow: hidden;
+}
+
+.panel-left {
+  padding: 22px 26px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border2);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.panel-right {
+  background: var(--surface);
+  padding: 22px 26px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 99px;
+}
+.badge-purple { background: var(--purple-light); color: var(--purple); }
+.badge-teal   { background: var(--teal-light); color: var(--teal); }
+.badge-amber  { background: var(--amber-light); color: var(--amber); }
+.badge-coral  { background: var(--coral-light); color: var(--coral); }
+.badge-blue   { background: var(--blue-light); color: var(--blue); }
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.lead {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.callout {
+  background: var(--surface);
+  border-left: 3px solid var(--purple-mid);
+  padding: 12px 14px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.callout.teal { border-left-color: var(--teal-mid); background: var(--teal-light); color: var(--teal); }
+.callout.amber { border-left-color: var(--amber-mid); background: var(--amber-light); color: var(--amber); }
+.callout.blue { border-left-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 15px 18px;
+}
+.card-title {
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.seg-btn {
+  flex: 1;
+  min-width: 72px;
+  padding: 8px 10px;
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.seg-btn:hover { background: var(--surface2); }
+.seg-btn.active {
+  background: var(--purple-mid);
+  color: #fff;
+  border-color: var(--purple-mid);
+}
+.seg-btn .sub {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.82;
+  margin-top: 2px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.stat-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+}
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--purple-mid);
+  cursor: pointer;
+}
+input[type="text"] {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  background: var(--bg);
+  color: var(--text);
+}
+input[type="text"]:focus {
+  outline: 2px solid var(--purple-mid);
+  border-color: transparent;
+}
+
+/* Token Pills */
+.token-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 54px;
+}
+.tok-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.tok-str {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: pre;
+}
+.tok-id {
+  font-size: 10px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* Pipeline Stage Cards */
+.pipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.pipe-stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 13px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pipe-stage:hover { background: var(--surface2); }
+.pipe-stage.active {
+  background: var(--purple-light);
+  border-color: var(--purple-mid);
+  box-shadow: 0 2px 8px rgba(99,82,217,0.12);
+}
+.pipe-idx {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pipe-stage.active .pipe-idx {
+  background: var(--purple-mid);
+  color: #fff;
+  border-color: var(--purple-mid);
+}
+
+/* Quiz options */
+.quiz-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 9px 12px;
+  margin-top: 6px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.15s;
+}
+.quiz-opt:hover { background: var(--surface); }
+.quiz-opt.right {
+  border-color: var(--teal-mid);
+  background: var(--teal-light);
+  color: var(--teal);
+  font-weight: 600;
+}
+.quiz-opt.wrong {
+  border-color: var(--coral-mid);
+  background: var(--coral-light);
+  color: var(--coral);
+}
+
+.nav-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-btn:hover:not(:disabled) { background: var(--surface2); }
+.nav-btn:disabled { opacity: 0.4; cursor: default; }
+.nav-btn.primary {
+  background: var(--purple-mid);
+  color: #fff;
+  border-color: var(--purple-mid);
+}
+.nav-btn.primary:hover { background: var(--purple); }
+
+/* Crisp Mermaid SVG Container */
+.mermaid-box {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+.mermaid-box svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.formula-box {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .content { grid-template-columns: 1fr; overflow-y: auto; }
+  .panel-left { border-right: none; border-bottom: 1px solid var(--border2); }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">LLM INFERENZ <span>// Wie KI-Modelle in Echtzeit Antworten generieren</span></div>
+    <a class="video-badge" href="https://www.youtube.com/watch?v=615-yWyS1n0" target="_blank" rel="noopener">
+      ▶ Video: What Is LLM Inference? (IBM Technology)
+    </a>
+    <div class="step-counter" id="stepCounter">Schritt 1 / 6</div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="content">
+      <section class="panel-left" id="panelLeft"></section>
+      <section class="panel-right" id="panelRight"></section>
+    </div>
+  </div>
+</div>
+
+<script>
+// Projektstandard: _docs/Mermaid_Best_Practices.md (Abschnitt Farbschema)
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#e0f2fe',
+    primaryBorderColor: '#0284c7',
+    primaryTextColor: '#1e293b',
+    lineColor: '#64748b',
+    clusterBkg: '#f8fafc',
+    clusterBorder: '#cbd5e1',
+    noteBkgColor: '#fef3c7',
+    noteBorderColor: '#d97706',
+    noteTextColor: '#78350f',
+    edgeLabelBackground: '#ffffff'
+  },
+  securityLevel: 'loose',
+  htmlLabels: true,
+  flowchart: {
+    curve: 'basis'
+  }
+});
+
+const MERMAID_CLASSES = `
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+`;
+
+let mermaidRenderCounter = 0;
+async function renderMermaidInto(containerId, definition) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  try {
+    mermaidRenderCounter++;
+    const svgId = `mmd_svg_${mermaidRenderCounter}`;
+    const { svg } = await mermaid.render(svgId, definition);
+    el.innerHTML = svg;
+  } catch (err) {
+    el.innerHTML = `<pre style="color:var(--coral); font-size:11px;">${err.message}</pre>`;
+  }
+}
+
+const STEPS = [
+  {
+    num: 1,
+    title: "1. Training vs. Inferenz",
+    sub: "Pipeline, Modelltyp & RAG",
+    badge: "Kapitel 1 & Einordnung",
+    heading: "Was ist LLM-Inferenz? Statische Gewichte in Echtzeit nutzen",
+    lead: "Während das Training (Pre-Training + SFT + RLHF/DPO) einmalig die Modellgewichte formt, ist die Inferenz die produktive Laufzeitphase: Ein Live-Prompt durchläuft 5 Stationen, um mit eingefrorenen Gewichten in Echtzeit eine Antwort zu erzeugen."
+  },
+  {
+    num: 2,
+    title: "2. Tokenisierung",
+    sub: "Vom Prompt zu Token-IDs",
+    badge: "Kapitel 2 (02:15)",
+    heading: "Tokenisierung: Warum LLMs keine Wörter, sondern Zahlen lesen",
+    lead: "Ein Sprachmodell versteht keinen Rohtext. Bevor die GPU überhaupt rechnen kann, zerlegt ein Tokenizer den Prompt in Wortbruchstücke (Subword-Tokens) und übersetzt jedes Stück in eine feste numerische Token-ID aus dem Vokabular."
+  },
+  {
+    num: 3,
+    title: "3. Continuous Batching",
+    sub: "Inference Engine & GPU-Routing",
+    badge: "Kapitel 3 (02:59 – 03:30)",
+    heading: "Inference Engines & Continuous Batching: GPUs optimal auslasten",
+    lead: "Inference Engines (wie vLLM, TGI oder Ollama) routen Anfragen auf die GPU. Statt auf die längste Antwort einer statischen Gruppe zu warten, schleust Continuous Batching fertige Anfragen sofort aus und füllt freie GPU-Slots nahtlos nach."
+  },
+  {
+    num: 4,
+    title: "4. Prefill & KV-Cache",
+    sub: "Prompt lesen & Kontext-Speicher",
+    badge: "Kapitel 4 (04:23)",
+    heading: "Die Prefill-Phase & der KV-Cache: Das Kurzzeitgedächtnis der GPU",
+    lead: "In der Prefill-Phase verarbeitet die GPU alle Eingabe-Tokens des Prompts gleichzeitig (parallel) und speichert deren Attention-Zustände (Key- und Value-Vektoren) im KV-Cache, damit sie später nie wieder neu berechnet werden müssen."
+  },
+  {
+    num: 5,
+    title: "5. Decode-Phase",
+    sub: "Autoregressive Token-Schleife",
+    badge: "Kapitel 5 (05:24)",
+    heading: "Die Decode-Phase: Wort für Wort (Autoregressive Generierung)",
+    lead: "Nach dem Prefill wechselt das Modell in den Decode-Modus: Es sagt jeweils genau EIN nächstes Token voraus, hängt dessen Key/Value an den KV-Cache an und nutzt es als Eingabe für den nächsten Schritt – bis das Stopp-Token [EOS] erscheint."
+  },
+  {
+    num: 6,
+    title: "6. Latenz: TTFT & ITL",
+    sub: "Performance messen & optimieren",
+    badge: "Kapitel 6 (06:18)",
+    heading: "Latenz-Metriken: Time to First Token (TTFT) & Inter-Token Latency (ITL)",
+    lead: "Wie schnell fühlt sich ein LLM für Nutzer an? Zwei Metriken entscheiden: TTFT misst die Wartezeit bis zum allerersten Antwort-Wort (Prefill-Dauer), während ITL bestimmt, wie flüssig die weiteren Wörter über den Bildschirm strömen (Decode-Tempo)."
+  }
+];
+
+let currentStep = 0;
+let activeTimer = null;
+
+function clearTimers() {
+  if (activeTimer) {
+    clearInterval(activeTimer);
+    activeTimer = null;
+  }
+}
+
+// ─── STATE FOR STEP 1 (Pipeline Overview & Base vs Instruct) ─────────────────
+let s1Stage = 0;
+let s1ModelType = 'instruct'; // 'base' | 'instruct' | 'rag'
+const PIPE_STAGES = [
+  {
+    name: "1. API-Request & Prompt",
+    tag: "Client → Server",
+    desc: "Nutzer oder KI-Agent sendet einen Prompt (ggf. angereichert mit RAG-Kontext) an den Modell-Server.",
+    inOut: "Input: 'Was ist die Hauptstadt von Frankreich?'  →  HTTP POST /v1/chat/completions"
+  },
+  {
+    name: "2. Tokenisierung (Tokenizer)",
+    tag: "CPU Vorverarbeitung",
+    desc: "Der Text wird in Subword-Tokens zerlegt und in ganzzahlige Token-IDs übersetzt.",
+    inOut: "'Was ist die Hauptstadt...'  →  [1842, 891, 29410, 4102, 11890]"
+  },
+  {
+    name: "3. Engine Scheduling & Continuous Batching",
+    tag: "vLLM / TGI Scheduler",
+    desc: "Die Inference Engine bündelt mehrere parallele Nutzer-Anfragen dynamisch für die GPU.",
+    inOut: "Queue [Req A, Req B, Req C]  →  Aktiver GPU-Batch (maximale Auslastung)"
+  },
+  {
+    name: "4. Prefill-Phase & KV-Cache Aufbau",
+    tag: "GPU (Compute-bound)",
+    desc: "Alle Prompt-Tokens werden parallel durch die Transformer-Schichten geschickt; K/V-Tensoren landen im KV-Cache.",
+    inOut: "Alle Eingabe-Tokens parallel  →  KV-Cache gefüllt + 1. Antwort-Token (TTFT)"
+  },
+  {
+    name: "5. Autoregressive Decode-Schleife",
+    tag: "GPU (Memory-bound)",
+    desc: "Token für Token wird vorhergesagt, gestreamt und an den KV-Cache angehängt, bis [EOS] erreicht ist.",
+    inOut: "Loop: Token t → Token t+1 → ... → [EOS] (Antwort komplett)"
+  }
+];
+
+// ─── STATE FOR STEP 2 (Tokenizer) ────────────────────────────────────────────
+let s2Prompt = "KI-Agenten planen, handeln und prüfen in Echtzeit!";
+const S2_PRESETS = [
+  "KI-Agenten planen, handeln und prüfen in Echtzeit!",
+  "What is LLM Inference? How AI models generate responses.",
+  "def call_model(state: AgentState) -> dict:"
+];
+
+// ─── STATE FOR STEP 3 (Continuous Batching) ──────────────────────────────────
+let s3Mode = 'continuous';
+
+// ─── STATE FOR STEP 4 (Prefill & KV Cache) ───────────────────────────────────
+let s4UseKv = true;
+let s4SeqLen = 5;
+
+// ─── STATE FOR STEP 5 (Autoregressive Decode Loop) ───────────────────────────
+const S5_PROMPT_TOKENS = ["Was", " ist", " LLM", "-Inferenz", "?"];
+const S5_GEN_TOKENS = [
+  { tok: " Inferenz", prob: 84, alt1: " Ein", alt1p: 9,  alt2: " Das", alt2p: 4 },
+  { tok: " erzeugt",  prob: 78, alt1: " ist", alt1p: 14, alt2: " berechnet", alt2p: 5 },
+  { tok: " live",     prob: 71, alt1: " neue", alt1p: 16, alt2: " schnell", alt2p: 8 },
+  { tok: " Tokens",   prob: 89, alt1: " Antworten", alt1p: 7, alt2: " Text", alt2p: 3 },
+  { tok: " [EOS]",    prob: 93, alt1: " und", alt1p: 4,  alt2: ".", alt2p: 2 }
+];
+let s5DecodeStep = 0;
+
+// ─── STATE FOR STEP 6 (TTFT & ITL Metrics) ───────────────────────────────────
+let s6PromptToks = 1200;
+let s6OutputToks = 80;
+let s6BatchUsers = 4;
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.innerHTML = STEPS.map((s, idx) => `
+    <div class="step-item ${idx === currentStep ? 'active' : ''} ${idx < currentStep ? 'done' : ''}" onclick="goToStep(${idx})">
+      <div class="step-num">${idx < currentStep ? '✓' : s.num}</div>
+      <div>
+        <div class="step-label">${s.title}</div>
+        <div class="step-sub">${s.sub}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('stepCounter').textContent = `Schritt ${currentStep + 1} / ${STEPS.length}`;
+}
+
+function goToStep(idx) {
+  clearTimers();
+  currentStep = idx;
+  renderSidebar();
+  renderCurrentStep();
+}
+
+function navButtonsHtml() {
+  return `
+    <div class="nav-footer">
+      <button class="nav-btn" onclick="goToStep(${currentStep - 1})" ${currentStep === 0 ? 'disabled' : ''}>← Zurück</button>
+      <span style="font-size:12px; color:var(--muted);">Interaktive Ansicht rechts →</span>
+      <button class="nav-btn primary" onclick="goToStep(${currentStep + 1})" ${currentStep === STEPS.length - 1 ? 'disabled' : ''}>Weiter →</button>
+    </div>
+  `;
+}
+
+function renderCurrentStep() {
+  const s = STEPS[currentStep];
+  const left = document.getElementById('panelLeft');
+  const right = document.getElementById('panelRight');
+
+  if (currentStep === 0) renderStep1(s, left, right);
+  else if (currentStep === 1) renderStep2(s, left, right);
+  else if (currentStep === 2) renderStep3(s, left, right);
+  else if (currentStep === 3) renderStep4(s, left, right);
+  else if (currentStep === 4) renderStep5(s, left, right);
+  else if (currentStep === 5) renderStep6(s, left, right);
+}
+
+/* ─── SCHRITT 1: TRAINING VS. INFERENZ & PIPELINE (MERMAID) ───────────────── */
+function renderStep1(s, left, right) {
+  const st = PIPE_STAGES[s1Stage];
+
+  const modelExamples = {
+    base: {
+      title: "Reines Base-Modell (nur Pre-Training)",
+      prompt: "Frage: Was ist die Hauptstadt von Frankreich?",
+      response: "Frage: Was ist die Hauptstadt von Spanien? Frage: Was ist die Hauptstadt von Italien? (Setzt den Text nur wie ein Internet-Quiz fort!)",
+      note: "Ein Base-Checkpoint kennt Grammatik und Weltwissen, hat aber noch nicht gelernt, wie ein Assistent auf Anweisungen zu antworten."
+    },
+    instruct: {
+      title: "Post-Trained Modell (SFT + RLHF/DPO)",
+      prompt: "Frage: Was ist die Hauptstadt von Frankreich?",
+      response: "Die Hauptstadt von Frankreich ist Paris. [EOS]",
+      note: "Durch Supervised Fine-Tuning (SFT) und Alignment (RLHF/DPO) antwortet das Modell bei der Inferenz gezielt, hilfreich und sicher."
+    },
+    rag: {
+      title: "Goldene Regel: RAG (Inferenz-Kontext) statt Fine-Tuning",
+      prompt: "Kontext: [Projektbericht Q3: Release am 14.11.]\nFrage: Wann ist der Release-Termin?",
+      response: "Laut Projektbericht Q3 findet das Release am 14. November statt. [EOS]",
+      note: "Fine-Tuning ändert das Verhalten/Format. Für aktuelle oder interne Fakten übergibt man das Wissen per RAG direkt im Inferenz-Prompt!"
+    }
+  };
+  const ex = modelExamples[s1ModelType];
+
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-teal">End-to-End Architektur</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Welches Modellverhalten erwarten wir bei der Inferenz?</div>
+      <div class="btn-group" style="margin-bottom:10px;">
+        <button class="seg-btn ${s1ModelType === 'base' ? 'active' : ''}" onclick="s1ModelType='base'; renderCurrentStep();">
+          1. Base-Modell
+          <span class="sub">Nur Pre-Training</span>
+        </button>
+        <button class="seg-btn ${s1ModelType === 'instruct' ? 'active' : ''}" onclick="s1ModelType='instruct'; renderCurrentStep();">
+          2. Instruct / Aligned
+          <span class="sub">Nach SFT + RLHF/DPO</span>
+        </button>
+        <button class="seg-btn ${s1ModelType === 'rag' ? 'active' : ''}" onclick="s1ModelType='rag'; renderCurrentStep();">
+          3. Instruct + RAG
+          <span class="sub">Wissen im Prompt</span>
+        </button>
+      </div>
+      <div class="formula-box" style="margin-bottom:8px;">
+        <div style="color:var(--muted);">Prompt: ${ex.prompt.replace(/\n/g, '<br/>')}</div>
+        <div style="color:${s1ModelType === 'base' ? 'var(--coral-mid)' : 'var(--teal-mid)'}; font-weight:700; margin-top:4px;">
+          Inferenz-Ausgabe: "${ex.response}"
+        </div>
+      </div>
+      <div style="font-size:12px; color:var(--muted); line-height:1.45;">${ex.note}</div>
+    </div>
+
+    <div class="callout">
+      <strong>Klicke rechts auf die 5 Pipeline-Stationen:</strong><br>
+      Das Mermaid-Diagramm hebt die gewählte Station farblich hervor und zeigt den Datenfluss vom API-Aufruf bis zur GPU-Berechnung.
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `
+    <div class="card">
+      <div class="card-title">
+        <span>Interaktive Inferenz-Pipeline (Station anklicken)</span>
+        <button class="seg-btn" style="flex:0; padding:4px 10px; font-size:11px;" onclick="s1Stage=(s1Stage+1)%5; renderCurrentStep();">
+          ⏭ Nächste Station
+        </button>
+      </div>
+      <div class="pipe-list">
+        ${PIPE_STAGES.map((p, idx) => `
+          <div class="pipe-stage ${idx === s1Stage ? 'active' : ''}" onclick="s1Stage=${idx}; renderCurrentStep();">
+            <div class="pipe-idx">${idx + 1}</div>
+            <div style="flex:1;">
+              <div style="font-weight:700; font-size:13px;">${p.name}</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:2px;">${p.desc}</div>
+            </div>
+            <span class="badge ${idx >= 3 ? 'badge-purple' : 'badge-teal'}">${p.tag}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Datenfluss in Station ${s1Stage + 1}: ${st.name}</span>
+      </div>
+      <div class="formula-box" style="color:var(--purple); font-weight:600; margin-bottom:10px;">
+        ${st.inOut}
+      </div>
+      <div id="mmdStep1" class="mermaid-box"></div>
+    </div>
+  `;
+
+  const nodeIds = ['S1', 'S2', 'S3', 'S4', 'S5'];
+  const classLines = nodeIds.map((id, i) => {
+    if (i === s1Stage) return `class ${id} target;`;
+    if (i < s1Stage) return `class ${id} output;`;
+    return `class ${id} default;`;
+  }).join('\n    ');
+
+  const mmd = `flowchart LR
+    S1["<b>1. Prompt</b><br/>API-Request"] --> S2["<b>2. Tokenizer</b><br/>Token-IDs"]
+    S2 --> S3["<b>3. Batching</b><br/>GPU-Scheduler"]
+    S3 --> S4["<b>4. Prefill + KV</b><br/>Parallel lesen"]
+    S4 --> S5["<b>5. Decode</b><br/>Token-Schleife"]
+    ${MERMAID_CLASSES}
+    ${classLines}
+  `;
+  renderMermaidInto('mmdStep1', mmd);
+}
+
+/* ─── SCHRITT 2: TOKENISIERUNG (INTERAKTIV + MERMAID) ─────────────────────── */
+function tokenizeSim(text) {
+  if (!text) return [];
+  const rawParts = text.match(/(\s+[A-Za-zÄÖÜäöüß]+|[A-Za-zÄÖÜäöüß]+|\d+|[^\sA-Za-zÄÖÜäöüß\d]+|\s+)/g) || [];
+  const tokens = [];
+
+  const subwordRules = [
+    { re: /^(\s*Quant)(isierung)$/, parts: ['$1', '$2'] },
+    { re: /^(\s*Infer)(enz)$/, parts: ['$1', '$2'] },
+    { re: /^(\s*Echt)(zeit)$/, parts: ['$1', '$2'] },
+    { re: /^(\s*Agent)(en|State)$/, parts: ['$1', '$2'] },
+    { re: /^(\s*Token)(ization|s)?$/, parts: ['$1', '$2'] }
+  ];
+
+  rawParts.forEach(part => {
+    let matched = false;
+    for (const rule of subwordRules) {
+      const m = part.match(rule.re);
+      if (m && m[2]) {
+        tokens.push(m[1]);
+        tokens.push(m[2]);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      if (part.length > 9 && /^[A-Za-zÄÖÜäöüß\s]+$/.test(part)) {
+        const mid = Math.ceil(part.length * 0.58);
+        tokens.push(part.slice(0, mid));
+        tokens.push(part.slice(mid));
+      } else {
+        tokens.push(part);
+      }
+    }
+  });
+
+  return tokens.map(t => {
+    let hash = 5381;
+    for (let i = 0; i < t.length; i++) {
+      hash = ((hash << 5) + hash) + t.charCodeAt(i);
+    }
+    const id = Math.abs(hash % 98000) + 256;
+    return { str: t, id };
+  });
+}
+
+function renderStep2(s, left, right) {
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-blue">Subword-Tokens &amp; IDs</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Live-Tokenizer testen (Eigenen Prompt eingeben)</div>
+      <input type="text" id="tokInput" value="${s2Prompt.replace(/"/g, '&quot;')}"
+        oninput="s2Prompt=this.value; updateStep2Right();">
+      <div style="margin-top:10px; font-size:11px; color:var(--muted);">Beispiel-Prompts:</div>
+      <div class="btn-group" style="margin-top:6px;">
+        ${S2_PRESETS.map((p, i) => `
+          <button class="seg-btn" style="font-size:11px; padding:6px 8px;" onclick="s2Prompt=S2_PRESETS[${i}]; renderCurrentStep();">
+            Beispiel ${i + 1}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Warum Subword-Tokens statt ganzer Wörter?</strong><br>
+      Häufige Wörter (wie <code>" und"</code>) erhalten ein eigenes Token. Seltene oder zusammengesetzte Begriffe (wie <code>"Echt" + "zeit"</code> oder <code>"Infer" + "enz"</code>) werden in bekannte Wortstämme zerlegt. So bleibt das Vokabular kompakt (ca. 100.000–128.000 Einträge).
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `<div id="step2RightContainer"></div>`;
+  updateStep2Right();
+}
+
+function updateStep2Right() {
+  const container = document.getElementById('step2RightContainer');
+  if (!container) return;
+  const toks = tokenizeSim(s2Prompt);
+  const palette = [
+    { bg: '#eceaff', fg: '#4432a5' },
+    { bg: '#e3f7f1', fg: '#0b5945' },
+    { bg: '#fdf3e4', fg: '#542e03' },
+    { bg: '#e8f2fc', fg: '#185fa5' },
+    { bg: '#fdf0ec', fg: '#822a10' }
+  ];
+
+  const charsPerTok = toks.length ? (s2Prompt.length / toks.length).toFixed(1) : '0.0';
+
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:15px;">
+      <div class="card-title">
+        <span>1. Zerlegung in Subword-Tokens &amp; Token-IDs</span>
+        <span class="badge badge-purple">${toks.length} Tokens</span>
+      </div>
+      <div class="token-wrap">
+        ${toks.map((t, i) => {
+          const c = palette[i % palette.length];
+          const displayStr = t.str.replace(/ /g, '␣');
+          return `
+            <div class="tok-pill" style="background:${c.bg}; color:${c.fg};">
+              <span class="tok-str">${displayStr}</span>
+              <span class="tok-id">ID: ${t.id}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      <div style="font-size:11px; color:var(--muted); margin-top:8px;">
+        Hinweis: <code>␣</code> markiert führende Leerzeichen, die direkt Teil des Tokens sind.
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:15px;">
+      <div class="card-title">2. Tokenisierungs-Ablauf (Mermaid)</div>
+      <div id="mmdStep2" class="mermaid-box"></div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-label">Zeichenanzahl</div>
+        <div class="stat-val">${s2Prompt.length}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Token-Anzahl</div>
+        <div class="stat-val" style="color:var(--purple);">${toks.length}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Ø Zeichen / Token</div>
+        <div class="stat-val">${charsPerTok}</div>
+      </div>
+    </div>
+  `;
+
+  const sampleIds = toks.slice(0, 3).map(t => t.id).join(', ') + (toks.length > 3 ? ', ...' : '');
+  const mmd = `flowchart LR
+    RAW["<b>Rohtext-Prompt</b><br/>${s2Prompt.length} Zeichen"] --> TOK["<b>Tokenizer (BPE)</b><br/>Subword-Zerlegung"]
+    TOK --> IDS["<b>Token-IDs</b><br/>[${sampleIds}]"]
+    IDS --> EMB["<b>Embedding-Matrix</b><br/>${toks.length} Vektoren für GPU"]
+    ${MERMAID_CLASSES}
+    class RAW input;
+    class TOK metric;
+    class IDS target;
+    class EMB output;
+  `;
+  renderMermaidInto('mmdStep2', mmd);
+}
+
+/* ─── SCHRITT 3: CONTINUOUS BATCHING & GPU-ROUTING (MERMAID) ──────────────── */
+function renderStep3(s, left, right) {
+  const isCont = s3Mode === 'continuous';
+
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-teal">Durchsatz-Optimierung</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Scheduling-Verfahren der Inference Engine wählen</div>
+      <div class="btn-group">
+        <button class="seg-btn ${!isCont ? 'active' : ''}" onclick="s3Mode='static'; renderCurrentStep();">
+          Statisches Batching
+          <span class="sub">Wartet auf längste Anfrage</span>
+        </button>
+        <button class="seg-btn ${isCont ? 'active' : ''}" onclick="s3Mode='continuous'; renderCurrentStep();">
+          Continuous Batching
+          <span class="sub">In-Flight Nachrücken (vLLM)</span>
+        </button>
+      </div>
+    </div>
+
+    ${!isCont ? `
+      <div class="callout amber">
+        <strong>Problem beim statischen Batching:</strong><br>
+        Anfrage 1 und 3 sind schon nach wenigen Tokens fertig (<code>[EOS]</code>), aber ihre GPU-Slots bleiben durch rote <strong>Leerlauf-Phasen (IDLE)</strong> blockiert, bis auch die längste Anfrage 2 beendet ist!
+      </div>
+    ` : `
+      <div class="callout teal">
+        <strong>Lösung durch Continuous Batching (Iteration-Level Scheduling):</strong><br>
+        Sobald eine Anfrage ihr <code>[EOS]</code>-Token erreicht, gibt der Scheduler den GPU-Slot <em>sofort</em> frei und schleust nahtlos wartende Anfragen (<strong>Request 5, 6, 7</strong>) aus der Queue ein.
+      </div>
+    `}
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-label">GPU-Auslastung</div>
+        <div class="stat-val" style="color:${isCont ? 'var(--teal-mid)' : 'var(--amber-mid)'};">${isCont ? '96 %' : '54 %'}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Fertige Requests / Zyklus</div>
+        <div class="stat-val">${isCont ? '7 Anfragen' : '4 Anfragen'}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Wartezeit in Queue</div>
+        <div class="stat-val" style="color:${isCont ? 'var(--teal-mid)' : 'var(--coral-mid)'};">${isCont ? 'Minimal' : 'Hoch'}</div>
+      </div>
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `
+    <div class="card">
+      <div class="card-title">
+        <span>GPU-Slot-Belegung (${isCont ? 'Continuous Batching' : 'Statisches Batching'})</span>
+        <span class="badge ${isCont ? 'badge-teal' : 'badge-amber'}">${isCont ? 'Nahtloses Nachrücken' : '46 % GPU-Leerlauf (Idle)'}</span>
+      </div>
+      <div id="mmdStep3" class="mermaid-box"></div>
+    </div>
+  `;
+
+  const mmdStatic = `flowchart LR
+    subgraph GPU["<b>Statisches Batching — Batch erst fertig, wenn längste Anfrage (Req 2) endet</b>"]
+      direction TB
+      R1["<b>Slot 1: Req 1</b><br/>Kurz (4 Tokens) → EOS"] --> IDLE1["<b>GPU IDLE (Leerlauf)</b><br/>Wartet 7 Takte auf Req 2"]
+      R2["<b>Slot 2: Req 2</b><br/>Lang (11 Tokens) → EOS"] --> DONE2["<b>Batch-Ende</b><br/>Alle 4 Slots frei"]
+      R3["<b>Slot 3: Req 3</b><br/>Kurz (3 Tokens) → EOS"] --> IDLE3["<b>GPU IDLE (Leerlauf)</b><br/>Wartet 8 Takte auf Req 2"]
+      R4["<b>Slot 4: Req 4</b><br/>Mittel (7 Tokens) → EOS"] --> IDLE4["<b>GPU IDLE (Leerlauf)</b><br/>Wartet 4 Takte auf Req 2"]
+    end
+    ${MERMAID_CLASSES}
+    class R1,R2,R3,R4 input;
+    class IDLE1,IDLE3,IDLE4 stop;
+    class DONE2 metric;
+  `;
+
+  const mmdCont = `flowchart LR
+    subgraph GPU["<b>Continuous Batching (vLLM / TGI) — Freie Slots sofort neu belegen</b>"]
+      direction TB
+      R1["<b>Slot 1: Req 1</b><br/>4 Tokens → EOS"] --> N5["<b>Req 5 rückt sofort nach!</b><br/>Kein GPU-Leerlauf"]
+      R2["<b>Slot 2: Req 2</b><br/>Läuft durchgehend (11 Tokens)"] --> DONE2["<b>Req 2 → EOS</b><br/>Slot direkt bereit"]
+      R3["<b>Slot 3: Req 3</b><br/>3 Tokens → EOS"] --> N6["<b>Req 6 + Req 7 rücken nach!</b><br/>Kein GPU-Leerlauf"]
+      R4["<b>Slot 4: Req 4</b><br/>7 Tokens → EOS"] --> N7["<b>Req 8 rückt sofort nach!</b><br/>Kein GPU-Leerlauf"]
+    end
+    ${MERMAID_CLASSES}
+    class R1,R2,R3,R4 input;
+    class N5,N6,N7,DONE2 output;
+  `;
+
+  renderMermaidInto('mmdStep3', isCont ? mmdCont : mmdStatic);
+}
+
+/* ─── SCHRITT 4: PREFILL & KV-CACHE (MERMAID) ─────────────────────────────── */
+function renderStep4(s, left, right) {
+  const opsWithKv = s4SeqLen;
+  const opsWithoutKv = (s4SeqLen * (s4SeqLen + 1)) / 2;
+
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-teal">Parallel Prefill &amp; Memory</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Was passiert in der Prefill-Phase?</div>
+      <p style="font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:12px;">
+        1. Alle Tokens des Prompts werden <strong>in einem einzigen parallelen Durchlauf</strong> verarbeitet.<br>
+        2. Für jedes Token speichert die GPU die berechneten <strong>Key (K)</strong>- und <strong>Value (V)</strong>-Tensoren im <strong>KV-Cache</strong>.<br>
+        3. Ohne KV-Cache müsste das Modell bei jedem neuen Antwort-Wort den gesamten bisherigen Text immer wieder von vorn berechnen!
+      </p>
+
+      <div class="card-title">KV-Cache Modus vergleichen</div>
+      <div class="btn-group" style="margin-bottom:14px;">
+        <button class="seg-btn ${s4UseKv ? 'active' : ''}" onclick="s4UseKv=true; renderCurrentStep();">
+          Mit KV-Cache (Standard)
+          <span class="sub">Vergangene K/V wiederverwenden</span>
+        </button>
+        <button class="seg-btn ${!s4UseKv ? 'active' : ''}" onclick="s4UseKv=false; renderCurrentStep();">
+          Ohne KV-Cache
+          <span class="sub">Alles jedes Mal neu berechnen</span>
+        </button>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-header">
+          <span>Sequenzlänge (Tokens im Kontext):</span>
+          <span style="font-family:var(--font-mono); color:var(--purple);">${s4SeqLen} Tokens</span>
+        </div>
+        <input type="range" min="3" max="8" step="1" value="${s4SeqLen}"
+          oninput="s4SeqLen=parseInt(this.value); renderCurrentStep();">
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-label">Neue K/V-Berechnungen</div>
+        <div class="stat-val" style="color:${s4UseKv ? 'var(--teal-mid)' : 'var(--coral-mid)'};">
+          ${s4UseKv ? 'Nur 1 Token' : s4SeqLen + ' Tokens'}
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Gesamtaufwand (${s4SeqLen} Schritte)</div>
+        <div class="stat-val">${s4UseKv ? opsWithKv : opsWithoutKv} Ops</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Ersparnis durch KV-Cache</div>
+        <div class="stat-val" style="color:var(--teal-mid);">
+          -${Math.round((1 - opsWithKv / opsWithoutKv) * 100)} %
+        </div>
+      </div>
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `
+    <div class="card">
+      <div class="card-title">
+        <span>Berechnung bei Schritt ${s4SeqLen} (${s4UseKv ? 'MIT KV-Cache' : 'OHNE KV-Cache'})</span>
+        <span class="badge ${s4UseKv ? 'badge-teal' : 'badge-coral'}">${s4UseKv ? 'O(N) Linear' : 'O(N²) Quadratisch'}</span>
+      </div>
+      <div id="mmdStep4" class="mermaid-box"></div>
+    </div>
+  `;
+
+  const prevCount = s4SeqLen - 1;
+  const mmdWithKv = `flowchart TB
+    subgraph PREFILL["<b>1. Prefill-Phase (einmalig parallel)</b>"]
+      P1["<b>Tokens 1 bis ${prevCount}</b><br/>Parallel verarbeitet"] --> KV["<b>KV-Cache im GPU-VRAM</b><br/>Key/Value für Token 1..${prevCount} gespeichert"]
+    end
+    subgraph DECODE["<b>2. Aktueller Schritt ${s4SeqLen} (mit KV-Cache)</b>"]
+      NEW["<b>Neues Token #${s4SeqLen}</b><br/>Nur 1× K/V neu berechnen"] --> ATTN["<b>Self-Attention</b><br/>Kombiniert Cache + Token #${s4SeqLen}"]
+      KV -->|Direkt aus VRAM lesen| ATTN
+      ATTN --> OUT(["<b>Nächstes Token #${s4SeqLen + 1}</b><br/>-${Math.round((1 - opsWithKv / opsWithoutKv) * 100)} % Rechenarbeit gespart"])
+    end
+    ${MERMAID_CLASSES}
+    class P1,NEW input;
+    class KV target;
+    class ATTN default;
+    class OUT output;
+  `;
+
+  const mmdWithoutKv = `flowchart TB
+    subgraph RECALC["<b>Ohne KV-Cache: Komplette Neuberechnung in Schritt ${s4SeqLen}</b>"]
+      R1["<b>Tokens 1 bis ${prevCount}</b><br/>Werden komplett NEU berechnet!"] --> ATTN["<b>Self-Attention</b><br/>${opsWithoutKv} Operationen statt ${opsWithKv}"]
+      NEW["<b>Neues Token #${s4SeqLen}</b><br/>Wird berechnet"] --> ATTN
+      ATTN --> SLOW(["<b>Hohe Latenz!</b><br/>Quadratischer Aufwand O(N²)"])
+    end
+    ${MERMAID_CLASSES}
+    class NEW input;
+    class R1,SLOW stop;
+    class ATTN metric;
+  `;
+
+  renderMermaidInto('mmdStep4', s4UseKv ? mmdWithKv : mmdWithoutKv);
+}
+
+/* ─── SCHRITT 5: AUTOREGRESSIVE DECODE-PHASE (MERMAID) ────────────────────── */
+function toggleDecodeAuto() {
+  if (activeTimer) {
+    clearTimers();
+    renderCurrentStep();
+    return;
+  }
+  if (s5DecodeStep >= S5_GEN_TOKENS.length) s5DecodeStep = 0;
+  renderCurrentStep();
+  activeTimer = setInterval(() => {
+    if (s5DecodeStep < S5_GEN_TOKENS.length) {
+      s5DecodeStep++;
+      renderCurrentStep();
+    } else {
+      clearTimers();
+      renderCurrentStep();
+    }
+  }, 1800);
+}
+
+function renderStep5(s, left, right) {
+  const generated = S5_GEN_TOKENS.slice(0, s5DecodeStep);
+  const nextCandidate = S5_GEN_TOKENS[Math.min(s5DecodeStep, S5_GEN_TOKENS.length - 1)];
+  const isFinished = s5DecodeStep >= S5_GEN_TOKENS.length;
+
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-amber">Autoregressiver Loop</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Interaktive Decode-Steuerung (Token für Token)</div>
+      <div class="btn-group">
+        <button class="seg-btn ${activeTimer ? 'active' : ''}" onclick="toggleDecodeAuto();">
+          ${activeTimer ? '⏸ Pause' : '▶ Auto-Play (Langsam)'}
+        </button>
+        <button class="seg-btn" onclick="clearTimers(); s5DecodeStep = Math.min(${S5_GEN_TOKENS.length}, s5DecodeStep + 1); renderCurrentStep();" ${isFinished ? 'disabled' : ''}>
+          ⏭ Nächstes Token (${s5DecodeStep}/${S5_GEN_TOKENS.length})
+        </button>
+        <button class="seg-btn" style="flex:0;" onclick="clearTimers(); s5DecodeStep = 0; renderCurrentStep();">
+          ↺ Reset
+        </button>
+      </div>
+    </div>
+
+    <div class="callout ${isFinished ? 'teal' : ''}">
+      ${s5DecodeStep === 0
+        ? `<strong>Status: Prefill abgeschlossen.</strong><br>Die 5 Prompt-Tokens liegen im KV-Cache. Klicke auf <strong>„⏭ Nächstes Token“</strong>, um den ersten Decode-Schritt auszuführen.`
+        : isFinished
+          ? `<strong>Status: [EOS] (End-of-Sequence) erreicht!</strong><br>Das Modell hat das Stopp-Token generiert. Die Inferenz-Schleife wird beendet und der GPU-Slot für die nächste Anfrage freigegeben.`
+          : `<strong>Decode-Schritt ${s5DecodeStep}:</strong><br>Das soeben erzeugte Token <code>"${generated[generated.length - 1].tok}"</code> wird sofort wieder als Input für Schritt ${s5DecodeStep + 1} eingespeist (Autoregression).`
+      }
+    </div>
+
+    <div class="card">
+      <div class="card-title">Warum ist Decode langsamer als Prefill?</div>
+      <p style="font-size:12.5px; color:var(--muted); line-height:1.5;">
+        • <strong>Prefill = Compute-bound:</strong> Alle Prompt-Tokens sind gleichzeitig da → volle parallele GPU-Power.<br>
+        • <strong>Decode = Memory-Bandwidth-bound:</strong> Um auch nur <em>ein einziges</em> neues Token zu berechnen, müssen jedes Mal alle Milliarden Modellgewichte + der KV-Cache aus dem VRAM geladen werden.
+      </p>
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `
+    <div class="card">
+      <div class="card-title">
+        <span>Aktueller Kontext &amp; KV-Cache Zustand</span>
+        <span class="badge badge-purple">${S5_PROMPT_TOKENS.length + generated.length} Tokens im KV-Cache</span>
+      </div>
+      <div class="token-wrap">
+        ${S5_PROMPT_TOKENS.map(t => `
+          <div class="tok-pill" style="background:var(--blue-light); color:var(--blue);">
+            <span class="tok-str">${t}</span>
+            <span class="tok-id">Prompt (Prefill)</span>
+          </div>
+        `).join('')}
+        ${generated.map((g, i) => `
+          <div class="tok-pill" style="background:${g.tok.includes('EOS') ? 'var(--coral-light)' : 'var(--teal-light)'}; color:${g.tok.includes('EOS') ? 'var(--coral)' : 'var(--teal)'}; border:1.5px solid ${i === generated.length - 1 ? 'var(--teal-mid)' : 'transparent'};">
+            <span class="tok-str">${g.tok}</span>
+            <span class="tok-id">Decode #${i + 1}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Autoregressiver Decode-Zyklus &amp; Softmax-Auswahl (Mermaid)</span>
+      </div>
+      <div id="mmdStep5" class="mermaid-box"></div>
+    </div>
+  `;
+
+  const stepNum = Math.min(s5DecodeStep + 1, S5_GEN_TOKENS.length);
+  const cTok = nextCandidate.tok.trim();
+  const a1 = nextCandidate.alt1.trim();
+  const a2 = nextCandidate.alt2.trim();
+
+  const mmdDecode = isFinished
+    ? `flowchart LR
+        CTX["<b>Kontext + KV-Cache</b><br/>9 Tokens gespeichert"] --> LLM["<b>Transformer Decode #5</b><br/>Softmax über Vokabular"]
+        LLM --> EOS(["<b>Stopp-Token [EOS] (93 %)</b><br/>Generierung abgeschlossen!"])
+        ${MERMAID_CLASSES}
+        class CTX target;
+        class LLM default;
+        class EOS stop;
+      `
+    : `flowchart LR
+        CTX["<b>KV-Cache (${S5_PROMPT_TOKENS.length + generated.length} Tokens)</b><br/>Kontext im GPU-VRAM"] --> LLM["<b>Decode-Schritt #${stepNum}</b><br/>Gewichte + KV-Cache lesen"]
+        LLM -->|${nextCandidate.prob} %| C1["<b>Gewählt: '${cTok}'</b><br/>Höchste Wahrscheinlichkeit"]
+        LLM -->|${nextCandidate.alt1p} %| C2["Kandidat: '${a1}'"]
+        LLM -->|${nextCandidate.alt2p} %| C3["Kandidat: '${a2}'"]
+        C1 -->|Anhängen für Schritt #${stepNum + 1}| CTX
+        ${MERMAID_CLASSES}
+        class CTX target;
+        class LLM default;
+        class C1 output;
+        class C2,C3 metric;
+      `;
+
+  renderMermaidInto('mmdStep5', mmdDecode);
+}
+
+/* ─── SCHRITT 6: LATENZ-METRIKEN (TTFT & ITL MERMAID) ─────────────────────── */
+function renderStep6(s, left, right) {
+  const ttftMs = Math.round(65 + (s6PromptToks * 0.14) * (1 + (s6BatchUsers - 1) * 0.18));
+  const itlMs = Math.round(14 + (s6BatchUsers - 1) * 2.5 + (s6PromptToks / 2500) * 4);
+  const decodeTotalMs = (s6OutputToks - 1) * itlMs;
+  const totalMs = ttftMs + decodeTotalMs;
+  const tokPerSec = (1000 / itlMs).toFixed(1);
+
+  left.innerHTML = `
+    <div class="tag-row">
+      <span class="badge badge-purple">${s.badge}</span>
+      <span class="badge badge-teal">TTFT &amp; ITL Simulator</span>
+    </div>
+    <h1>${s.heading}</h1>
+    <p class="lead">${s.lead}</p>
+
+    <div class="card">
+      <div class="card-title">Workload-Parameter anpassen</div>
+
+      <div class="slider-row" style="margin-bottom:12px;">
+        <div class="slider-header">
+          <span>1. Prompt-Länge (Eingabe-Tokens → beeinflusst TTFT):</span>
+          <span style="font-family:var(--font-mono); color:var(--purple);">${s6PromptToks} Tokens</span>
+        </div>
+        <input type="range" min="100" max="4000" step="100" value="${s6PromptToks}"
+          oninput="s6PromptToks=parseInt(this.value); renderCurrentStep();">
+      </div>
+
+      <div class="slider-row" style="margin-bottom:12px;">
+        <div class="slider-header">
+          <span>2. Antwort-Länge (Ausgabe-Tokens → beeinflusst Decode-Dauer):</span>
+          <span style="font-family:var(--font-mono); color:var(--teal-mid);">${s6OutputToks} Tokens</span>
+        </div>
+        <input type="range" min="20" max="300" step="10" value="${s6OutputToks}"
+          oninput="s6OutputToks=parseInt(this.value); renderCurrentStep();">
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-header">
+          <span>3. Gleichzeitige Requests im Batch:</span>
+          <span style="font-family:var(--font-mono); color:var(--amber-mid);">${s6BatchUsers} Requests</span>
+        </div>
+        <input type="range" min="1" max="16" step="1" value="${s6BatchUsers}"
+          oninput="s6BatchUsers=parseInt(this.value); renderCurrentStep();">
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <strong>Gesamt-Antwortzeit (End-to-End Latency):</strong><br>
+      <code>Gesamt = TTFT + (Output_Tokens - 1) × ITL</code><br>
+      <span style="color:var(--purple); font-weight:700;">
+        ${totalMs} ms = ${ttftMs} ms (TTFT) + ${s6OutputToks - 1} × ${itlMs} ms (ITL)
+      </span>
+    </div>
+
+    ${navButtonsHtml()}
+  `;
+
+  right.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-label">TTFT (Time to 1st Token)</div>
+        <div class="stat-val" style="color:var(--purple);">${ttftMs} ms</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">ITL (Inter-Token Latency)</div>
+        <div class="stat-val" style="color:var(--teal-mid);">${itlMs} ms / Tok</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Streaming-Tempo</div>
+        <div class="stat-val">${tokPerSec} Tok/s</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Latenz-Ablauf: TTFT (Prefill) vs. ITL (Decode-Stream)</span>
+        <span class="badge badge-purple">Gesamt: ${(totalMs / 1000).toFixed(2)} s</span>
+      </div>
+      <div id="mmdStep6" class="mermaid-box"></div>
+    </div>
+
+    <div class="callout teal">
+      <strong>Praxis-Faustregel aus dem Video:</strong><br>
+      • <strong>Lange Prompts</strong> (z. B. RAG-Dokumente, lange Agenten-Historie) erhöhen vor allem die <strong>TTFT</strong> (längere Prefill-Phase).<br>
+      • <strong>Lange Antworten</strong> (z. B. Code-Generierung, Berichte) werden durch die <strong>ITL</strong> dominiert, weil jedes Ausgabe-Token einzeln im Decode-Schritt erzeugt werden muss.
+    </div>
+  `;
+
+  const mmdLatency = `flowchart LR
+    REQ(["<b>Prompt gesendet</b><br/>${s6PromptToks} Input-Tokens"]) --> TTFT["<b>1. TTFT: ${ttftMs} ms</b><br/>Queue + Parallel-Prefill<br/>→ 1. Token erscheint!"]
+    TTFT --> ITL["<b>2. Decode-Stream: ${decodeTotalMs} ms</b><br/>${s6OutputToks - 1} weitere Tokens × ${itlMs} ms ITL<br/>(${tokPerSec} Tokens/s)"]
+    ITL --> FIN(["<b>Antwort komplett [EOS]</b><br/>Gesamtzeit: ${totalMs} ms"])
+    ${MERMAID_CLASSES}
+    class REQ input;
+    class TTFT metric;
+    class ITL default;
+    class FIN output;
+  `;
+
+  renderMermaidInto('mmdStep6', mmdLatency);
+}
+
+// Initialize
+renderSidebar();
+renderCurrentStep();
+</script>
+</body>
+</html>

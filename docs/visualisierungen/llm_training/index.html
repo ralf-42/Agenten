@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LLM-Training: Pre-Training, SFT, RL und Evaluation</title>
+<style>
+  :root {
+    --bg: #fcfcfb; --surface: #f5f4f0; --surface2: #eae8e1;
+    --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.13);
+    --text: #1c1c1a; --muted: #5e5e59; --hint: #8c8c85;
+    --purple: #4432a5; --purple-light: #eceaff; --purple-mid: #6352d9;
+    --teal: #0b5945; --teal-light: #e3f7f1; --teal-mid: #148f6c;
+    --coral: #822a10; --coral-light: #fdf0ec; --coral-mid: #c94a24;
+    --amber: #542e03; --amber-light: #fdf3e4; --amber-mid: #d98204;
+    --blue: #185fa5; --blue-light: #e8f2fc;
+    --code-bg: #f8f9fa; --code-border: #e4e7eb;
+    --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { font-family: var(--font-ui); font-size: 14px; color: var(--text); background: var(--bg); }
+  button { font-family: inherit; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--purple-mid); outline-offset: 2px; }
+
+  .app { display: flex; flex-direction: column; height: 100vh; }
+  header {
+    display: flex; align-items: center; gap: 14px; padding: 12px 24px;
+    background: var(--bg); border-bottom: 1px solid var(--border2);
+  }
+  .logo { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--purple); white-space: nowrap; }
+  .logo span { font-weight: 400; color: var(--muted); }
+  .video-link {
+    font-size: 12px; color: var(--muted); text-decoration: none; padding: 4px 12px;
+    border: 1px solid var(--border2); border-radius: 99px; background: var(--surface); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; max-width: 460px;
+  }
+  .video-link:hover { background: var(--surface2); }
+  .counter { margin-left: auto; font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+  .main { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+  .sidebar { width: 248px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border2); overflow-y: auto; padding: 12px 0; }
+  .step-item {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; cursor: pointer;
+    padding: 12px 16px; border: 0; border-left: 3px solid transparent; background: transparent; color: var(--text);
+  }
+  .step-item:hover { background: var(--surface2); }
+  .step-item.active { background: var(--purple-light); border-left-color: var(--purple-mid); }
+  .step-num {
+    flex: 0 0 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; font-family: var(--font-mono); background: var(--surface2); color: var(--muted);
+  }
+  .step-item.active .step-num { background: var(--purple-mid); color: #fff; }
+  .step-item.done .step-num { background: var(--teal-light); color: var(--teal-mid); }
+  .step-label { font-size: 13px; font-weight: 700; display: block; }
+  .step-sub { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .content { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr 1.15fr; }
+  .panel-left { padding: 22px 26px; overflow-y: auto; border-right: 1px solid var(--border2); display: flex; flex-direction: column; gap: 15px; }
+  .panel-right { padding: 22px 26px; overflow-y: auto; background: var(--surface); display: flex; flex-direction: column; gap: 14px; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge { font-family: var(--font-mono); font-size: 11px; padding: 3px 9px; border-radius: 99px; }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-coral { background: var(--coral-light); color: var(--coral); }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  h1 { font-size: 20px; font-weight: 700; line-height: 1.3; margin: 0; }
+  .lead { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0; }
+  p { margin: 0; }
+
+  .card { background: #fff; border: 1px solid var(--border2); border-radius: 12px; padding: 15px 18px; }
+  .card-title { font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 10px; }
+  .callout { padding: 12px 14px; border-left: 3px solid var(--purple-mid); background: var(--surface); border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.55; }
+  .callout b { display: block; margin-bottom: 2px; }
+  .callout.teal { border-left-color: var(--teal-mid); background: var(--teal-light); }
+  .callout.amber { border-left-color: var(--amber-mid); background: var(--amber-light); }
+  .callout.blue { border-left-color: var(--blue); background: var(--blue-light); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .compare > div { border-left: 3px solid var(--purple-mid); background: var(--surface); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 12.5px; line-height: 1.55; }
+  .compare > div.b { border-left-color: var(--teal-mid); }
+  .compare b { display: block; font-size: 13px; margin-bottom: 4px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-box { background: var(--surface); border-radius: 8px; padding: 10px 12px; }
+  .stat-box .v { font-size: 20px; font-weight: 700; }
+  .stat-box .v small { font-size: 11px; font-weight: 400; color: var(--muted); }
+  .stat-box .l { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .formula-box { font-family: var(--font-mono); font-size: 12px; background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 8px; padding: 10px 12px; line-height: 1.8; }
+  .formula-box code, .box code { font-family: var(--font-mono); color: var(--purple); }
+
+  .nav-footer { margin-top: auto; border-top: 1px solid var(--border2); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .nav-footer .hint { font-size: 12px; color: var(--muted); text-align: center; }
+  .nav-btn { font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 8px; cursor: pointer; border: 1px solid var(--border2); background: #fff; color: var(--text); }
+  .nav-btn.primary { background: var(--purple-mid); border-color: var(--purple-mid); color: #fff; }
+  .nav-btn:disabled { opacity: .4; cursor: default; }
+
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
+  .seg-btn { flex: 1 1 auto; min-width: 72px; padding: 8px 10px; font-size: 12.5px; cursor: pointer; border-radius: 8px; border: 1px solid var(--border2); background: #fff; color: var(--text); }
+  .seg-btn.on { background: var(--purple-mid); border-color: var(--purple-mid); color: #fff; }
+  .seg-btn .sub { display: block; font-size: 10px; opacity: .8; }
+  .btn { font-size: 12.5px; padding: 7px 14px; border-radius: 8px; cursor: pointer; border: 1px solid var(--purple-mid); background: var(--purple-light); color: var(--purple); font-weight: 600; }
+  .btn.alt { border-color: var(--border2); background: #fff; color: var(--text); font-weight: 400; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  input[type=range] { width: 100%; accent-color: var(--purple-mid); }
+
+  .pipe-stage { display: block; width: 100%; text-align: left; cursor: pointer; margin-bottom: 8px; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border2); background: var(--surface); color: var(--text); }
+  .pipe-stage:hover { background: var(--surface2); }
+  .pipe-stage.on { background: var(--purple-light); border-color: var(--purple-mid); box-shadow: 0 2px 8px rgba(99,82,217,.15); }
+  .pipe-stage b { font-size: 13.5px; display: block; }
+  .pipe-stage span { font-size: 12px; color: var(--muted); }
+
+  .tok { font-family: var(--font-mono); font-size: 13px; padding: 6px 10px; border-radius: 6px; cursor: pointer; border: 1px solid var(--border2); background: #fff; color: var(--text); }
+  .tok.in { background: var(--blue-light); border-color: var(--blue); }
+  .tok.target { background: var(--teal-light); border-color: var(--teal-mid); }
+  .tok.future { opacity: .45; }
+  .tok:disabled { cursor: default; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 48px; gap: 8px; align-items: center; margin: 5px 0; font-size: 12.5px; }
+  .bar { height: 12px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--purple-mid); border-radius: 99px; transition: width .25s; }
+  .bar > i.good { background: var(--teal-mid); }
+  .bar > i.warn { background: var(--amber-mid); }
+  .big { font-size: 24px; font-weight: 700; }
+  .big small { font-size: 11.5px; font-weight: 400; color: var(--muted); }
+  .box { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.5; margin-bottom: 8px; }
+  .box.gold { border-color: var(--teal-mid); background: var(--teal-light); }
+  .box.dim { opacity: .45; }
+  .chip { display: inline-block; font-family: var(--font-mono); font-size: 10.5px; padding: 2px 8px; border-radius: 99px; background: var(--surface2); color: var(--muted); margin-left: 4px; }
+  .qgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+  .qgrid div { text-align: center; padding: 8px 0; border-radius: 6px; font-size: 12px; border: 1px solid var(--border2); background: #fff; }
+  .qgrid div.ok { border-color: var(--teal-mid); background: var(--teal-light); color: var(--teal); }
+  .qgrid div.no { border-color: var(--coral-mid); background: var(--coral-light); color: var(--coral); }
+  label.chk { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 6px 0; cursor: pointer; }
+  .opt { display: block; width: 100%; text-align: left; font-size: 13px; cursor: pointer; padding: 8px 12px; margin: 6px 0; border-radius: 8px; border: 1px solid var(--border2); background: #fff; color: var(--text); }
+  .opt.right { border-color: var(--teal-mid); background: var(--teal-light); }
+  .opt.wrong { border-color: var(--coral-mid); background: var(--coral-light); }
+  svg text { fill: var(--muted); font-size: 10.5px; font-family: var(--font-ui); }
+  .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 960px) {
+    .app { height: auto; min-height: 100vh; }
+    .main { flex-direction: column; overflow: visible; }
+    .sidebar { width: 100%; display: flex; overflow-x: auto; padding: 0; border-right: 0; border-bottom: 1px solid var(--border2); }
+    .step-item { width: auto; flex: 0 0 auto; border-left: 0; border-bottom: 3px solid transparent; }
+    .step-item.active { border-bottom-color: var(--purple-mid); }
+    .step-sub { display: none; }
+    .content { grid-template-columns: 1fr; }
+    .panel-left { border-right: 0; border-bottom: 1px solid var(--border2); }
+    .compare, .stat-grid { grid-template-columns: 1fr; }
+    .video-link { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">LLM TRAINING <span>// Vom Textkorpus zum Assistenten</span></div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=JRArFxEfyQU" target="_blank" rel="noopener">▶ Video: How are large language models trained? (Google for Developers)</a>
+    <div class="counter" id="counter"></div>
+  </header>
+  <div class="main">
+    <nav class="sidebar" id="sidebar" aria-label="Schritte"></nav>
+    <div class="content">
+      <section class="panel-left" id="left"></section>
+      <section class="panel-right" id="right" aria-live="polite"></section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const pct = v => (v * 100).toFixed(0) + " %";
+  const L = $("#left"), R = $("#right");
+  let timers = [], intervals = [];
+  const visited = new Set();
+  let cur = 0;
+
+  const card = (title, inner) => `<div class="card"><div class="card-title">${title}</div>${inner}</div>`;
+  const badges = arr => `<div class="badges">${arr.map(([c, t]) => `<span class="badge badge-${c}">${t}</span>`).join("")}</div>`;
+  function every(fn, ms) { const id = setInterval(fn, ms); intervals.push(id); return id; }
+  function stop(id) { clearInterval(id); }
+
+  /* ------------------------------------------------------------ Schritte */
+  const steps = [];
+
+  /* 1 · Überblick */
+  steps.push({
+    id: "ueberblick", label: "1. Überblick", sub: "Der Weg zum Assistenten",
+    left() {
+      return `${badges([["purple", "Kapitel 1 · Überblick"], ["teal", "End-to-End-Ablauf"]])}
+        <h1>Wie wird aus einem Textkorpus ein hilfreicher Assistent?</h1>
+        <p class="lead">Ein Sprachmodell (LLM – Large Language Model) durchläuft zuerst das Pre-Training (Vortraining) und danach das Post-Training (Nachschulung) mit SFT (Supervised Fine-Tuning, überwachtes Feinabstimmen) und RL (Reinforcement Learning, verstärkendes Lernen). Begleitet wird jede Phase von Messungen (Evaluation), sonst bleibt unklar, ob ein Experiment hilft oder nur Rechenzeit kostet.</p>
+        <div class="card"><div class="card-title">Pre-Training vs. Post-Training im Vergleich</div>
+          <div class="compare">
+            <div><b>Pre-Training</b>• Nächstes Token vorhersagen<br>• Öffentlich verfügbare Texte<br>• Ergebnis: Sprachmuster und etwas Weltwissen, aber unvorhersehbar</div>
+            <div class="b"><b>Post-Training</b>• Ausrichtung auf gewünschtes Verhalten<br>• Gold-Beispiele (SFT – Supervised Fine-Tuning) und Belohnungen (RL – Reinforcement Learning)<br>• Ziel: sicher, formatiert, hilfreich, genauer, angenehm</div>
+          </div></div>
+        <div class="callout"><b>Klicken Sie rechts auf die Stationen</b>Die Reihenfolge SFT (Supervised Fine-Tuning), dann RL (Reinforcement Learning) ist laut Video der gemeinsame Nenner aktueller Modelle. Ein Standardverhältnis zwischen beiden gibt es nicht.</div>`;
+    },
+    right(el) {
+      const st = [
+        ["Pre-Training", "Nächstes Token vorhersagen", "Selbstüberwachtes Lernen auf großen Textmengen. Eingabe und Ziel entstehen durch Zerlegen vorhandener Texte, ein Beschriften von Hand entfällt. Die Herausforderung ist der Maßstab: tausende GPUs (Graphics Processing Units, Grafikprozessoren), Ausfallsicherheit, Petabyte an Daten."],
+        ["SFT (Supervised Fine-Tuning)", "Aus Gold-Beispielen lernen", "Überwachtes Feinabstimmen (Supervised Fine-Tuning, SFT): Das Modell lernt aus Musterinteraktionen, die das gewünschte Verhalten zeigen: Prompt hinein, Antwort heraus, Verlust gegen die Gold-Antwort messen, Gewichte anpassen. SFT setzt den Boden."],
+        ["RL (Reinforcement Learning)", "Mit Belohnung verbessern", "Verstärkendes Lernen (Reinforcement Learning, RL): Das Modell erzeugt viele Antworten, ein separates Belohnungsmodell vergibt Punkte für hilfreich, sicher und korrekt. RL hebt die Decke und kann über die SFT-Daten hinaus verbessern."],
+        ["Evaluation", "Begleitet jede Phase", "Im Pre-Training genügt die Qualität der Vorhersage des nächsten Wortes. Im Post-Training zählt Ausrichtung: Testaufgaben mit prüfbarer Lösung oder ein Auto-Rater (automatisches Bewertungsmodell) mit Stichproben durch Menschen."]
+      ];
+      let sel = 0;
+      el.innerHTML = card("Interaktive Trainings-Pipeline (Station anklicken)",
+        `<div id="stations"></div><div class="row"><button type="button" class="btn" id="nextSt">⏭ Nächste Station</button></div>`) +
+        card("Details zur Station", `<div id="stInfo"></div>`);
+      const draw = () => {
+        $("#stations", el).innerHTML = st.map((s, i) =>
+          `<button type="button" class="pipe-stage ${i === sel ? "on" : ""}" data-i="${i}"><b>${i + 1}. ${s[0]}</b><span>${s[1]}</span></button>`).join("");
+        $("#stInfo", el).innerHTML = `<b>${st[sel][0]}</b><p class="lead" style="margin-top:6px">${st[sel][2]}</p>`;
+        $$(".pipe-stage", el).forEach(b => b.addEventListener("click", () => { sel = +b.dataset.i; draw(); }));
+      };
+      $("#nextSt", el).addEventListener("click", () => { sel = (sel + 1) % st.length; draw(); });
+      draw();
+    }
+  });
+
+  /* 2 · Pre-Training */
+  steps.push({
+    id: "pretraining", label: "2. Pre-Training", sub: "Nächstes Token vorhersagen",
+    left() {
+      return `${badges([["purple", "Kapitel 2 · Pre-Training"], ["teal", "Selbstüberwachtes Lernen"]])}
+        <h1>Das nächste Token vorhersagen: der Maßstab ist die Hürde</h1>
+        <p class="lead">Ein Text wird in Eingabe und Ziel zerlegt. Damit lernt das Modell nebenbei Sprachmuster, Schreibstile und Weltwissen, zum Beispiel dass die Monstera eine pflegeleichte Zimmerpflanze ist. Das Beschriften der Daten entfällt.</p>
+        <div class="card"><div class="card-title">Pre-Training in zwei Kennzahlen</div>
+          <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
+            <div class="stat-box"><div class="v">0<small> Labels</small></div><div class="l">Ziel steckt im Text</div></div>
+            <div class="stat-box"><div class="v">1<small> Aufgabe</small></div><div class="l">nächstes Token</div></div>
+          </div></div>
+        <div class="card"><div class="card-title">Warum der Maßstab die Hürde ist</div>
+          <div class="formula-box" style="font-family:var(--font-ui);font-size:13px;line-height:1.6">• Das Modell ist zu groß für einen einzelnen Chip: Modell und Daten werden mit komplexer Parallelisierung auf tausende vernetzte GPUs verteilt.<br>• Automatische Wiederherstellung fängt Abstürze ab, damit das Training weiterläuft.<br>• Große Pipelines bereiten Petabyte an Trainingsdaten vor.</div></div>
+        <div class="callout amber"><b>Nur Pre-Training reicht selten</b>Ein Modell, das nur diese Phase durchlaufen hat, ist oft fähig, aber unvorhersehbar und nicht ausgerichtet. Deshalb folgt das Post-Training.</div>`;
+    },
+    right(el) {
+      const toks = ["Die", "Monstera", "ist", "eine", "pflegeleichte", "Zimmerpflanze", "."];
+      const cands = [null,
+        ["Monstera", "Katze", "Rechnung", "Wolke"], ["ist", "wächst", "kauft", "blau"], ["eine", "der", "viele", "kein"],
+        ["pflegeleichte", "teure", "laute", "runde"], ["Zimmerpflanze", "Rakete", "Idee", "Jacke"], [".", "?", "und", "Zimmerpflanze"]];
+      const un = [null, [.2,.5,.1,.3], [.1,.4,.3,.2], [.3,.2,.4,.1], [.2,.3,.1,.4], [.4,.1,.3,.2], [.1,.3,.2,.4]];
+      const tr = [null, [2.6,.9,-.4,.1], [3.4,1.1,-.6,-.2], [2.8,.8,.4,-.5], [2.0,1.6,.2,-.4], [3.6,-.2,.3,-.6], [3.9,.7,.1,-.3]];
+      let pos = 5, prog = 0, play = null;
+      el.innerHTML = card("Interaktive Vorhersage (Zielwort anklicken)", `
+          <div class="row" id="toks" style="margin-bottom:10px"></div>
+          <div id="bars"></div>
+          <div class="row" style="margin-top:10px"><span class="note" style="margin:0">Trainingsfortschritt</span><span class="chip" id="pv">0 %</span></div>
+          <input type="range" id="prog" min="0" max="100" value="0" aria-label="Trainingsfortschritt" />
+          <div class="row" style="margin-top:8px;justify-content:space-between">
+            <div class="big" id="loss"></div>
+            <div class="row"><button type="button" class="btn" id="play">▶ Training abspielen</button><button type="button" class="btn alt" id="rs">Reset</button></div>
+          </div>`) +
+        card("Entstehender Trainingsdatensatz", `<div class="box" id="ds" style="margin:0"></div>
+          <p class="note">Aus einem Satz entstehen sechs Trainingsbeispiele. Wer „pflegeleichte“ nach „Die Monstera ist eine“ vorhersagt, lernt implizit etwas über die Pflanze.</p>`);
+      const sm = a => { const m = Math.max(...a), e = a.map(x => Math.exp(x - m)), s = e.reduce((p, c) => p + c, 0); return e.map(x => x / s); };
+      function drawToks() {
+        const box = $("#toks", el); box.innerHTML = "";
+        toks.forEach((t, i) => {
+          const b = document.createElement("button"); b.type = "button";
+          b.className = "tok " + (i < pos ? "in" : i === pos ? "target" : "future"); b.textContent = t; b.disabled = i === 0;
+          b.addEventListener("click", () => { pos = i; all(); }); box.appendChild(b);
+        });
+      }
+      function drawBars() {
+        const t = prog / 100, p = sm(un[pos].map((u, i) => u + (tr[pos][i] - u) * t));
+        $("#bars", el).innerHTML = cands[pos].map((c, i) =>
+          `<div class="bar-row"><span>${c}${i === 0 ? " ✓" : ""}</span><div class="bar"><i class="${i === 0 ? "good" : ""}" style="width:${(p[i] * 100).toFixed(1)}%"></i></div><span>${pct(p[i])}</span></div>`).join("");
+        $("#loss", el).innerHTML = (-Math.log(p[0])).toFixed(2) + "<small> Verlust = −ln p(Ziel)</small>";
+        $("#pv", el).textContent = prog + " %"; $("#prog", el).value = prog;
+      }
+      function drawDs() {
+        let h = ""; for (let i = 1; i < toks.length; i++)
+          h += `<div ${i === pos ? 'style="color:var(--teal);font-weight:700"' : ""}>${toks.slice(0, i).join(" ")} → ${toks[i]}</div>`;
+        $("#ds", el).innerHTML = h;
+      }
+      function all() { drawToks(); drawBars(); drawDs(); }
+      $("#prog", el).addEventListener("input", e => { prog = +e.target.value; drawBars(); });
+      $("#play", el).addEventListener("click", () => {
+        if (play) { stop(play); play = null; $("#play", el).textContent = "▶ Training abspielen"; return; }
+        if (prog >= 100) prog = 0;
+        $("#play", el).textContent = "⏸ Pause";
+        play = every(() => { prog = Math.min(100, prog + 2); drawBars(); if (prog >= 100) { stop(play); play = null; $("#play", el).textContent = "▶ Training abspielen"; } }, 80);
+      });
+      $("#rs", el).addEventListener("click", () => { if (play) { stop(play); play = null; $("#play", el).textContent = "▶ Training abspielen"; } prog = 0; drawBars(); });
+      all();
+    }
+  });
+
+  /* 3 · SFT */
+  steps.push({
+    id: "sft", label: "3. SFT", sub: "Aus Gold-Beispielen lernen",
+    left() {
+      return `${badges([["purple", "Kapitel 3 · Post-Training"], ["blue", "Supervised Fine-Tuning"]])}
+        <h1>SFT: dem Modell zeigen, wie eine gute Antwort aussieht</h1>
+        <p class="lead">Die Trainingsdaten bestehen aus Prompts und Gold-Antworten. Der Verlust zwischen Vorhersage und Gold-Antwort aktualisiert die Gewichte: klassisches überwachtes Lernen. Dasselbe Verfahren bringt dem Modell Werkzeugaufrufe oder Rechnen bei.</p>
+        <div class="card"><div class="card-title">Ein SFT-Trainingsschritt</div>
+          <div class="formula-box">① Prompt ins Modell<br>② Modell erzeugt Antwort<br>③ Verlust: Antwort gegen Gold-Antwort (Label)<br>④ Gewichte aktualisieren</div></div>
+        <div class="callout amber"><b>Grenze von SFT</b>Das Modell lernt, wie „gut“ in den Beispielen aussieht, und verallgemeinert nicht immer auf neue Varianten. Die Qualität bleibt an die kuratierten Daten gebunden. Daher folgt RL.</div>`;
+    },
+    right(el) {
+      const tasks = {
+        chat: ["Assistent", "Wie mache ich glutenfreie Muffins?", [
+          "Wie mache ich glutenfreie Muffins? Wie lange backt man sie? Rezepte findest du in unserem Forum unter …",
+          "Glutenfreie Muffins: Mehl, Eier, Zucker mischen und backen.",
+          "Gerne! Du brauchst glutenfreie Mehlmischung, Eier, Zucker, Backpulver und Milch. Alles verrühren und etwa 20 Minuten backen.",
+          "Gerne! Zutaten: glutenfreie Mehlmischung, 2 Eier, Zucker, Backpulver, Milch. 1. Ofen auf 180 °C vorheizen. 2. Alles verrühren. 3. In Förmchen füllen und 20 Minuten backen. Tipp: Eine Prise Xanthan macht den Teig lockerer."]],
+        tool: ["Werkzeug", "Wie ist das Wetter in Berlin?", [
+          "Wie ist das Wetter in Hamburg? Wie ist das Wetter in München? Wie ist das Wetter in Köln?",
+          "Das Wetter in Berlin ist meistens wechselhaft.",
+          "Ich schaue nach: get weather Berlin",
+          "<code>get_weather(city=\"Berlin\")</code>"]],
+        math: ["Rechnen", "Was ist 17 × 6?", [
+          "Was ist 17 × 7? Was ist 17 × 8? Aufgaben zum kleinen Einmaleins findest du auf …",
+          "17 × 6 ist ungefähr 100.", "17 × 6 = 100 + 2.", "17 × 6 = 10 × 6 + 7 × 6 = 60 + 42 = 102."]]
+      };
+      const losses = [2.8, 1.9, 1.1, 0.6];
+      let task = "chat", s = 0, play = null;
+      el.innerHTML = card("Aufgabe wählen und trainieren", `
+          <div class="seg" id="tk"></div>
+          <div style="margin-top:12px"><div class="note" style="margin:0 0 4px">Prompt</div><div class="box" id="sp"></div>
+          <div class="note" style="margin:0 0 4px">Antwort des Modells <span class="chip" id="ss"></span></div><div class="box" id="sa"></div>
+          <div class="note" style="margin:0 0 4px">Gold-Antwort (Label)</div><div class="box gold" id="sg"></div></div>
+          <div class="row" style="justify-content:space-between">
+            <div class="big" id="sl"></div>
+            <div class="row"><button type="button" class="btn" id="st">Trainingsschritt</button><button type="button" class="btn" id="sap">▶ Auto-Play</button><button type="button" class="btn alt" id="sr">Reset</button></div>
+          </div>`);
+      const tk = $("#tk", el);
+      Object.entries(tasks).forEach(([k, v]) => {
+        const b = document.createElement("button"); b.type = "button"; b.className = "seg-btn"; b.dataset.k = k; b.textContent = v[0];
+        b.addEventListener("click", () => { task = k; s = 0; halt(); draw(); }); tk.appendChild(b);
+      });
+      function halt() { if (play) { stop(play); play = null; $("#sap", el).textContent = "▶ Auto-Play"; } }
+      function draw() {
+        const t = tasks[task];
+        $$(".seg-btn", tk).forEach(b => b.classList.toggle("on", b.dataset.k === task));
+        $("#sp", el).textContent = t[1]; $("#sa", el).innerHTML = t[2][s]; $("#sg", el).innerHTML = t[2][3];
+        $("#ss", el).textContent = s === 0 ? "nur Pre-Training" : s === 3 ? "SFT abgeschlossen" : "SFT-Schritt " + s;
+        $("#sl", el).innerHTML = losses[s].toFixed(1) + "<small> Verlust (Beispielwert)</small>";
+        $("#st", el).disabled = s >= 3;
+      }
+      $("#st", el).addEventListener("click", () => { if (s < 3) s++; draw(); });
+      $("#sap", el).addEventListener("click", () => {
+        if (play) { halt(); return; }
+        if (s >= 3) s = 0; draw(); $("#sap", el).textContent = "⏸ Pause";
+        play = every(() => { s++; draw(); if (s >= 3) halt(); }, 1500);
+      });
+      $("#sr", el).addEventListener("click", () => { halt(); s = 0; draw(); });
+      draw();
+    }
+  });
+
+  /* 4 · RL */
+  steps.push({
+    id: "rl", label: "4. Reinforcement Learning", sub: "Üben und Rückmeldung bekommen",
+    left() {
+      return `${badges([["purple", "Kapitel 4 · Post-Training"], ["coral", "Belohnungsmodell"]])}
+        <h1>RL: SFT setzt den Boden, RL hebt die Decke</h1>
+        <p class="lead">Das Modell erzeugt zu einem Prompt viele Antworten. Ein separates Belohnungsmodell gibt Punkte für hilfreich, sicher und korrekt und bestraft unerwünschte Antworten. Nach den Punkten werden die Gewichte angepasst.</p>
+        <div class="card"><div class="card-title">SFT und RL im Vergleich</div>
+          <div class="compare">
+            <div><b>SFT</b>• lernt aus kuratierten Beispielen<br>• macht das Modell kompetent<br>• bleibt höchstens so gut wie die Daten</div>
+            <div class="b"><b>RL</b>• probiert viele Antwortwege aus<br>• behält die am besten bewerteten<br>• kann über die SFT-Daten hinausgehen</div>
+          </div></div>`;
+    },
+    right(el) {
+      const ans = [
+        { t: "Kurze, korrekte Antwort ohne Erklärung", h: .5, s: 1, k: 1 },
+        { t: "Ausführliche, korrekte Antwort mit Beispiel", h: 1, s: 1, k: 1 },
+        { t: "Freundliche Antwort mit einem Fehler im Detail", h: .8, s: 1, k: .4 },
+        { t: "Korrekt, aber unübersichtlich formatiert", h: .6, s: 1, k: 1 },
+        { t: "Hilfreiche Antwort mit riskantem Tipp", h: .9, s: .2, k: .8 },
+        { t: "Ausweichende Antwort ohne Inhalt", h: .1, s: 1, k: .5 }];
+      ans.forEach(a => a.r = (a.h + a.s + a.k) / 3);
+      const eta = 3; let p, rounds, play = null;
+      const reset = () => { p = ans.map(() => 1 / ans.length); rounds = 0; }; reset();
+      const avg = () => p.reduce((s, x, i) => s + x * ans[i].r, 0);
+      el.innerHTML = card("Antwortkandidaten und Belohnung", `<div id="cd"></div>
+          <div class="row" style="margin-top:8px"><button type="button" class="btn" id="r1">Eine RL-Runde</button><button type="button" class="btn" id="rap">▶ Auto-Play</button><button type="button" class="btn alt" id="rr">Reset</button></div>
+          <div class="big" id="ra" style="margin-top:10px"></div>`) +
+        card("Boden und Decke (Kurven frei gewählt)", `<svg id="ch" viewBox="0 0 340 190" width="100%" role="img" aria-label="Qualität über Trainingsschritte für SFT und SFT mit RL"></svg>
+          <input type="range" id="cs" min="0" max="100" value="0" aria-label="Trainingsschritte" />
+          <div class="note">Trainingsschritte: <b id="csv">0</b></div>`);
+      function draw() {
+        $("#cd", el).innerHTML = ans.map((a, i) => `<div class="box"><div style="display:flex;justify-content:space-between;gap:8px"><span>${a.t}</span><b>${(a.r * 10).toFixed(1)} / 10</b></div>
+          <div class="bar-row" style="grid-template-columns:90px 1fr 44px;margin:4px 0 0"><span style="color:var(--muted)">Wahrscheinl.</span><div class="bar"><i class="${a.r >= .9 ? "good" : a.r < .65 ? "warn" : ""}" style="width:${(p[i] * 100).toFixed(1)}%"></i></div><span>${pct(p[i])}</span></div>
+          <div style="font-size:11px;color:var(--muted)">hilfreich ${a.h} · sicher ${a.s} · korrekt ${a.k}</div></div>`).join("");
+        $("#ra", el).innerHTML = (avg() * 10).toFixed(2) + `<small> mittlere Belohnung nach ${rounds} Runden (max. 10)</small>`;
+      }
+      function round() { const m = avg(), q = p.map((x, i) => x * Math.exp(eta * (ans[i].r - m))), s = q.reduce((a, b) => a + b, 0); p = q.map(x => x / s); rounds++; }
+      function halt() { if (play) { stop(play); play = null; $("#rap", el).textContent = "▶ Auto-Play"; } }
+      $("#r1", el).addEventListener("click", () => { round(); draw(); });
+      $("#rap", el).addEventListener("click", () => {
+        if (play) { halt(); return; }
+        $("#rap", el).textContent = "⏸ Pause";
+        play = every(() => { round(); draw(); if (rounds >= 40) halt(); }, 500);
+      });
+      $("#rr", el).addEventListener("click", () => { halt(); reset(); draw(); });
+      function chart() {
+        const s = +$("#cs", el).value; $("#csv", el).textContent = s;
+        const W = 340, H = 190, Lx = 26, B = 22, T = 10, Rx = 8;
+        const x = v => Lx + (W - Lx - Rx) * v / 100, y = v => H - B - (H - B - T) * v;
+        const sft = v => .7 * (1 - Math.exp(-v / 15));
+        const rl = v => v <= 40 ? sft(v) : sft(40) + (.93 - sft(40)) * (1 - Math.exp(-(v - 40) / 25));
+        let d1 = "", d2 = ""; for (let v = 0; v <= s; v += 2) { d1 += (v ? "L" : "M") + x(v) + " " + y(sft(v)) + " "; d2 += (v ? "L" : "M") + x(v) + " " + y(rl(v)) + " "; }
+        $("#ch", el).innerHTML = `
+          <line x1="${Lx}" y1="${y(0)}" x2="${W - Rx}" y2="${y(0)}" stroke="#bbb"/><line x1="${Lx}" y1="${y(0)}" x2="${Lx}" y2="${T}" stroke="#bbb"/>
+          <line x1="${Lx}" y1="${y(.7)}" x2="${W - Rx}" y2="${y(.7)}" stroke="#6352d9" stroke-dasharray="4 4"/>
+          <text x="${Lx + 4}" y="${y(.7) - 4}">Qualität der SFT-Daten (Decke von SFT)</text>
+          <line x1="${x(40)}" y1="${y(0)}" x2="${x(40)}" y2="${T}" stroke="#bbb" stroke-dasharray="2 4"/><text x="${x(40) + 4}" y="${y(.1)}">Wechsel zu RL</text>
+          <path d="${d1}" fill="none" stroke="#c94a24" stroke-width="2"/><path d="${d2}" fill="none" stroke="#148f6c" stroke-width="2"/>
+          <text x="${Lx}" y="${H - 6}">Trainingsschritte →</text><text x="2" y="${T + 8}">Qualität</text>
+          <text x="${W - 138}" y="${T + 8}" style="fill:#c94a24">nur SFT</text><text x="${W - 88}" y="${T + 8}" style="fill:#148f6c">SFT, dann RL</text>`;
+      }
+      $("#cs", el).addEventListener("input", chart);
+      draw(); chart();
+    }
+  });
+
+  /* 5 · Evaluation */
+  steps.push({
+    id: "eval", label: "5. Evaluation", sub: "Fortschritt messen",
+    left() {
+      return `${badges([["purple", "Kapitel 5 · Messen"], ["amber", "Auto-Rater"]])}
+        <h1>Woran erkennt man, dass das Modell besser wird?</h1>
+        <p class="lead">Im Pre-Training genügt die Frage, ob das nächste Wort besser vorhergesagt wird. Im Post-Training geht es um Ausrichtung: Folgt das Modell Anweisungen, verhält es sich sicher, freundlich und hilfreich? Das lässt sich unterschiedlich gut messen.</p>
+        <div class="card"><div class="card-title">Zwei Arten von Messung</div>
+          <div class="compare">
+            <div><b>Prüfbare Aufgaben</b>• Mathe, Code<br>• Testsatz mit bekannten Lösungen<br>• Wert: Anteil richtiger Antworten</div>
+            <div class="b"><b>Schwer messbar</b>• hilfreich, humorvoll, kollaborativ<br>• Kriterium zuerst definieren<br>• Auto-Rater + Stichproben</div>
+          </div></div>
+        <div class="callout teal"><b>Wichtig</b>Der Auto-Rater ersetzt keine Kontrolle. Menschen prüfen Stichproben, und vor dem Produktiveinsatz sind robustere Tests nötig.</div>`;
+    },
+    right(el) {
+      let mode = "closed", ck = 0, crit = "help", st = 0;
+      const cps = [["Nach Pre-Training", [1,0,1,0,0,1,0,0,1,0]], ["Nach SFT", [1,1,1,0,1,1,0,1,1,0]], ["Nach SFT + RL", [1,1,1,1,1,1,0,1,1,1]]];
+      const cd = {
+        help: { name: "Hilfsbereitschaft", items: ["Beantwortet die Frage direkt", "Ist konkret und umsetzbar", "Enthält keine falschen Angaben", "Hat einen passenden Ton"], rel: [1,1,1,1,1] },
+        humor: { name: "Humor", items: ["Enthält einen erkennbaren Witz", "Der Witz passt zum Thema", "Bleibt respektvoll", "Die Pointe sitzt"], rel: [1,0,1,0,0] }
+      };
+      const prompts = ["Erkläre mir Rekursion.", "Erzähle einen Witz über Katzen.", "Plane meinen Wochenendeinkauf.", "Schreibe eine lustige Geburtstagskarte.", "Fasse den Vertrag in drei Sätzen zusammen."];
+      const resp = [
+        { t: "Antwort A: knapp, richtig, nüchtern", p: { help: [1,1,1,0], humor: [0,0,1,0] } },
+        { t: "Antwort B: ausführlich, mit Beispiel, freundlich", p: { help: [1,1,1,1], humor: [1,1,1,0] } },
+        { t: "Antwort C: weicht aus, enthält einen Fehler", p: { help: [0,0,0,1], humor: [0,0,0,0] } }];
+      const en = { help: [1,1,1,1], humor: [1,1,1,1] };
+      const seg = (items, cur2, attr) => `<div class="seg">${items.map((n, i) => `<button type="button" class="seg-btn ${i === cur2 ? "on" : ""}" ${attr}="${i}">${n}</button>`).join("")}</div>`;
+      function render() {
+        el.innerHTML = card("Messart wählen", `<div class="seg"><button type="button" class="seg-btn ${mode === "closed" ? "on" : ""}" data-m="closed">Prüfbare Aufgaben</button><button type="button" class="seg-btn ${mode === "open" ? "on" : ""}" data-m="open">Schwer messbare Eigenschaften</button></div>`) +
+          `<div id="evb"></div>`;
+        $$("[data-m]", el).forEach(b => b.addEventListener("click", () => { mode = b.dataset.m; render(); }));
+        const body = $("#evb", el);
+        if (mode === "closed") {
+          const [nm, res] = cps[ck], n = res.reduce((a, c) => a + c, 0);
+          body.innerHTML = card("Testsatz mit bekannten Lösungen", `${seg(cps.map(c => c[0]), ck, "data-c")}
+            <div class="qgrid" style="margin:12px 0">${res.map((r, i) => `<div class="${r ? "ok" : "no"}">${i + 1}<br>${r ? "✓" : "✗"}</div>`).join("")}</div>
+            <div class="big">${n} / 10<small> richtig · ${nm} (Beispielwerte)</small></div>`);
+          $$("[data-c]", body).forEach(b => b.addEventListener("click", () => { ck = +b.dataset.c; render(); }));
+        } else {
+          const c = cd[crit], names = ["1 Kriterium", "2 Testprompts", "3 Antworten", "4 Auto-Rater", "5 Stichprobe"];
+          let h = "";
+          if (st === 0) h = `<p class="lead">Zuerst definieren, was „${c.name}“ bedeutet und wie eine gute Antwort aussähe.</p>
+              <div class="seg" style="margin:8px 0">${Object.entries(cd).map(([k, v]) => `<button type="button" class="seg-btn ${k === crit ? "on" : ""}" data-k="${k}">${v.name}</button>`).join("")}</div>
+              ${c.items.map((it, i) => `<label class="chk"><input type="checkbox" data-i="${i}" ${en[crit][i] ? "checked" : ""}> ${it}</label>`).join("")}`;
+          else if (st === 1) h = `<p class="lead">Der Testsatz muss zum Kriterium passen. Für Hilfsbereitschaft ist fast jeder Prompt relevant. Für Humor taugen nur Prompts, bei denen man Humor erwartet, sonst fehlt das Signal.</p>
+              ${prompts.map((q, i) => `<div class="box ${c.rel[i] ? "" : "dim"}" style="margin-top:6px">${q}<span class="chip">${c.rel[i] ? "relevant" : "kaum Signal"}</span></div>`).join("")}`;
+          else if (st === 2) h = `<p class="lead">Die Prompts gehen an das zu bewertende Modell. Es liefert Antworten:</p>${resp.map(r => `<div class="box" style="margin-top:6px">${r.t}</div>`).join("")}`;
+          else if (st === 3) { const a = en[crit], n = a.reduce((x, y) => x + y, 0);
+            h = `<p class="lead">Ein zweites Modell (Auto-Rater) prüft jede Antwort gegen die aktiven Kriterien. Das skaliert; von Hand wäre es zu aufwendig.</p>
+              ${resp.map(r => { const ok = r.p[crit].reduce((s, v, i) => s + (a[i] ? v : 0), 0), sc = n ? ok / n : 0;
+                return `<div class="box" style="margin-top:6px"><div style="display:flex;justify-content:space-between"><span>${r.t}</span><b>${n ? ok + " / " + n : "–"}</b></div><div class="bar" style="margin-top:6px"><i class="${sc >= .75 ? "good" : sc < .5 ? "warn" : ""}" style="width:${sc * 100}%"></i></div></div>`; }).join("")}
+              ${n ? "" : '<p class="note">Kein aktives Kriterium. Wechseln Sie zu Schritt 1.</p>'}`; }
+          else h = `<p class="lead">Menschen prüfen Stichproben der Bewertungen, und vor dem Produktiveinsatz sind robustere Tests nötig. Mit definierten Kriterien und passenden Prompts erhalten Sie eine Zahl, die schnell berechenbar ist.</p><div class="box gold" style="margin-top:8px">Ergebnis: ein vergleichbarer Wert pro Modellstand statt eines Bauchgefühls.</div>`;
+          body.innerHTML = card("Bewertung in fünf Schritten", `${seg(names, st, "data-s")}<div style="margin-top:12px">${h}</div>`);
+          $$("[data-s]", body).forEach(b => b.addEventListener("click", () => { st = +b.dataset.s; render(); }));
+          $$("[data-k]", body).forEach(b => b.addEventListener("click", () => { crit = b.dataset.k; render(); }));
+          $$("input[type=checkbox]", body).forEach(x => x.addEventListener("change", () => { en[crit][+x.dataset.i] = x.checked ? 1 : 0; }));
+        }
+      }
+      render();
+    }
+  });
+
+  /* ------------------------------------------------------------ Gerüst */
+  function buildSidebar() {
+    const sb = $("#sidebar"); sb.innerHTML = "";
+    steps.forEach((s, i) => {
+      const b = document.createElement("button"); b.type = "button";
+      b.className = "step-item" + (i === cur ? " active" : visited.has(i) ? " done" : "");
+      b.innerHTML = `<span class="step-num">${i !== cur && visited.has(i) ? "✓" : i + 1}</span><span><span class="step-label">${s.label}</span><span class="step-sub">${s.sub}</span></span>`;
+      if (i === cur) b.setAttribute("aria-current", "step");
+      b.addEventListener("click", () => go(i)); sb.appendChild(b);
+    });
+  }
+  function go(i) {
+    intervals.forEach(clearInterval); timers.forEach(clearTimeout); intervals = []; timers = [];
+    cur = Math.max(0, Math.min(steps.length - 1, i)); visited.add(cur);
+    const s = steps[cur];
+    L.innerHTML = s.left() + `<div class="nav-footer"><button type="button" class="nav-btn" id="bk" ${cur === 0 ? "disabled" : ""}>← Zurück</button><span class="hint">Interaktive Ansicht rechts →</span><button type="button" class="nav-btn primary" id="fw" ${cur === steps.length - 1 ? "disabled" : ""}>Weiter →</button></div>`;
+    $("#bk").addEventListener("click", () => go(cur - 1));
+    $("#fw").addEventListener("click", () => go(cur + 1));
+    R.innerHTML = ""; s.right(R);
+    L.scrollTop = 0; R.scrollTop = 0;
+    $("#counter").textContent = "Schritt " + (cur + 1) + " / " + steps.length;
+    buildSidebar();
+    if (location.hash !== "#" + s.id) history.replaceState(null, "", "#" + s.id);
+  }
+  const h = (location.hash || "").slice(1), hi = steps.findIndex(s => s.id === h);
+  go(hi >= 0 ? hi : 0);
+})();
+</script>
+</body>
+</html>

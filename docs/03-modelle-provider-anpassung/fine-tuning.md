@@ -30,7 +30,7 @@ Fine-Tuning ist selten der erste sinnvolle Schritt. Bessere Prompts, stabileres 
 
 Fine-Tuning passt, wenn das Modell ein Verhalten zuverlässig wiederholen soll, statt neues Faktenwissen aufzunehmen. Beispiele sind feste Antwortformate, domänenspezifischer Stil, Klassifikation und wiederkehrende Extraktion. Für wechselnde Fakten ist Retrieval die bessere Wahl, denn Trainingsdaten bleiben nach dem Fine-Tuning nicht automatisch aktuell.
 
-Interaktive Demo: [Entscheidungshilfe Modellsteuerung]({{ '/visualisierungen/modellsteuerung/' | relative_url }}){:target="_blank" rel="noopener"} und [Verfahren zur Modelloptimierung]({{ '/visualisierungen/modellsteuerung_optimierung/' | relative_url }}){:target="_blank" rel="noopener"} – ordnen Prompting, RAG, Fine-Tuning und Quantisierung im Vergleich ein.
+Interaktive Demo: [LLM-Training (Pre-Training, SFT, RL & Evaluation)]({{ '/visualisierungen/llm_training/' | relative_url }}){:target="_blank" rel="noopener"}, [Entscheidungshilfe Modellsteuerung]({{ '/visualisierungen/modellsteuerung/' | relative_url }}){:target="_blank" rel="noopener"} und [Verfahren zur Modelloptimierung]({{ '/visualisierungen/modellsteuerung_optimierung/' | relative_url }}){:target="_blank" rel="noopener"} – zeigen den Weg vom Pre-Training über SFT und RL bis zur Evaluation und ordnen Prompting, RAG, Fine-Tuning sowie Quantisierung im Vergleich ein.
 
 # Einsatzkriterien
 

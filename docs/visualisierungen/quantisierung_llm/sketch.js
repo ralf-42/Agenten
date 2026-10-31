@@ -257,9 +257,9 @@ function drawFormatPanel() {
 // ─── PANEL 1: MODELLGRÖSSE ────────────────────────────────────────────────────
 
 function drawSizePanel() {
-  // Param selector centered
-  fill(COL_TEXT); textSize(12); textAlign(CENTER, CENTER); noStroke();
-  text('Modell-Parameter:', LW / 2 - (PARAM_OPTIONS.length * 98) / 2 - 10, paramButtons[0].y + 15);
+  // Param selector label (zweizeilig links neben der ersten Box)
+  fill(COL_TEXT); textSize(11); textLeading(14); textAlign(RIGHT, CENTER); noStroke();
+  text('Modell-\nParameter:', paramButtons[0].x - 12, paramButtons[0].y + paramButtons[0].h / 2);
 
   for (let b of paramButtons) {
     let sel = b.idx === selParamIdx;
@@ -291,26 +291,6 @@ function drawSizePanel() {
     noStroke();
     fill(COL_MUTED); textSize(9); textAlign(CENTER, TOP);
     text(r >= 1000 ? (r/1000).toFixed(1)+'TB' : r+' GB', x, PAD.top + iH + 4);
-  }
-
-  // Hardware reference lines
-  let hw = [
-    { gb:6,  lbl:'RTX 3060\n(6 GB)' },
-    { gb:24, lbl:'RTX 4090\n(24 GB)' },
-    { gb:80, lbl:'A100\n(80 GB)' },
-  ];
-  for (let h of hw) {
-    if (h.gb > maxGB) continue;
-    let x = PAD.left + (h.gb / maxGB) * iW;
-    stroke(color(180, 60, 30, 100)); strokeWeight(1);
-    drawingContext.setLineDash([4, 3]);
-    line(x, PAD.top - 22, x, PAD.top + iH);
-    drawingContext.setLineDash([]);
-    noStroke();
-    fill(color(180, 60, 30, 160)); textSize(9); textAlign(CENTER, BASELINE);
-    let lines = h.lbl.split('\n');
-    text(lines[0], x, PAD.top - 22);
-    text(lines[1], x, PAD.top - 11);
   }
 
   // Bars

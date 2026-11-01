@@ -35,13 +35,18 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 
 ```
 Agenten/
-├── 01_notebook/    # Jupyter Notebooks (KI-Agenten und Tool Use bis Production Deployment)
+├── 00_admin/       # Kursorganisation und Planung
+├── 01_notebook/    # Jupyter Notebooks (KI-Agenten und Tool Use bis DeepAgent Multi-Skill)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursfolien & Intro-Präsentation
 ├── 04_modul/       # Python-Module (genai_lib)
 ├── 05_prompt/      # Prompt-Templates (Markdown-Format)
 ├── 06_skill/       # Agent Skills (compliance, pmo-briefing, research)
 ├── 07_image/       # Bilder und Visualisierungen
+├── 08_podcast/     # Audio und Podcasts
+├── 09_courses/     # Ergänzende Kursmaterialien
+├── 10_certification/ # Materialien zur Zertifizierung
+├── output/         # Erzeugte Ausgaben
 └── docs/           # GitHub-Pages-Dokumentation, Lernpfad, Ressourcen
 ```
 
@@ -93,7 +98,7 @@ Der Kurs unterscheidet die Notebook-Stufe vom Anspruch einzelner Aufgaben. In de
 | --- | --- | --- |
 | **Grundlagen / Kern** | M01–M18 | Gemeinsame Mindestlernziele für alle Teilnehmenden. |
 | **Aufbau** | M19–M23 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
-| **Vertiefung** | M24–M26 und M50–M54 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
+| **Vertiefung** | M24–M26 und M50–M53 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
 
 Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./docs/02-orientierung-entscheidung/kursueberblick.md) beschrieben.
 
@@ -159,7 +164,6 @@ Sessions, Checkpointing und Memory sind in einem gemeinsamen Notebook zusammenge
 | 51 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
 | 52 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
 | 53 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
-| 54 | Production Deployment | Production Deployment | Notebook zu Production, zentrale Modell-Konfiguration und Docker |
 
 ## 🔑 Voraussetzungen
 

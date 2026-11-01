@@ -492,7 +492,7 @@ show_trace("m11_rag_chain", limit=3, show_steps=True)
 
 ### Überblick
 
-Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie RAG-Agent, LangSmith Evaluations Basics, Integration Pipeline, Advanced RAG Pipeline Patterns, Gradio UI für Agenten und Production Deployment verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. RAG Grundlagen baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
+Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden, in Chunks teilen, in eine persistente Chroma-Collection indexieren und als Tool für Agenten bereitstellen. Notebooks wie RAG-Agent, LangSmith Evaluations Basics, Integration Pipeline, Advanced RAG Pipeline Patterns und Gradio UI für Agenten verwenden dieselbe Kette, statt sie jeweils neu aufzubauen. RAG Grundlagen baut dieselben Schritte bewusst Schritt für Schritt selbst, um die Mechanik zu zeigen.
 
 ### Architektur
 
@@ -787,7 +787,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 ---
 
 **Version:** 3.5<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -15,8 +15,7 @@
       "LangSmith Evaluations Basics",
       "Human in the Loop",
       "Agent Security Best Practices",
-      "Agent Evaluation und Testing",
-      "Production Deployment"
+      "Agent Evaluation und Testing"
     ],
     "recommended_default_filter": {
       "corpus_part": "project"
@@ -457,8 +456,7 @@
       ],
       "recommended_modules": [
         "Human in the Loop",
-        "DeepAgents Vertiefung",
-        "Production Deployment"
+        "DeepAgents Vertiefung"
       ],
       "project_id": "projekt_kompass",
       "source_status": "template",

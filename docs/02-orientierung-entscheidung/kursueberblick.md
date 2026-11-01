@@ -58,7 +58,7 @@ Das praktische Ergebnis ist kein loses Beispielset, sondern ein **wachsendes Zie
 
 ## Kursstruktur
 
-Der Kurs umfasst die Kursmodule: M01–M26 (Grundlagen, Aufbau, Vertiefung) und die optionale Vertiefungsreihe M50–M54. Der gemeinsame Kernpfad umfasst M01–M18. In diesen Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. 
+Der Kurs umfasst die Kursmodule M01–M27 (Grundlagen, Aufbau, Vertiefung) und die optionale Vertiefungsreihe M50–M53. Der gemeinsame Kernpfad umfasst M01–M18. In diesen Kern-Notebooks sind die Grundlagenaufgaben das gemeinsame Mindestziel; Aufbau- und Vertiefungsaufgaben sind Wahlangebote.
 
 | Kurstag   | Schwerpunkt                                                    | Grundlagen / Kern | Aufbau im Kurs (optional)                               | Vertiefung an Tag 5 (optional)                                                             |
 | --------- | -------------------------------------------------------------- | ----------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -66,7 +66,7 @@ Der Kurs umfasst die Kursmodule: M01–M26 (Grundlagen, Aufbau, Vertiefung) und 
 | **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL        | M03–M06           | —                                                       | —                                                                                          |
 | **Tag 3** | LangGraph, State, Routing und Tool-Schleifen                   | M07–M10           | M20 Agent Security Best Practices                       | —                                                                                          |
 | **Tag 4** | RAG, Retrieval als Tool und erste Evaluation                   | M11–M13           | M19 Agentic RAG, M21 Agent Evaluation, M23 Advanced RAG | —                                                                                          |
-| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | —                                                       | M24 Gradio UI, M26 Agent Skill Compliance, M52 DeepAgents Skill, M54 Production Deployment |
+| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | M27 Learning Loop nach M21                              | M24 Gradio UI, M26 Agent Skill Compliance, M52 DeepAgents Skill                            |
 
 Die optionalen Module sind keine Voraussetzung für die gemeinsamen Kursziele. 
 
@@ -107,8 +107,8 @@ timeline
         Agentensysteme erweitern      : Agentic RAG, Security, Evaluation, Routing, Kosten, Advanced RAG
                                      : M19–M23
     section Vertiefung
-        Vom Agenten zum produktiven System : UI, MCP, Skills, DeepAgents, Deployment
-                                           : M24–M26, M50–M54
+        Vom Agenten zum produktiven System : UI, MCP, Skills und DeepAgents
+                                           : M24–M26, M50–M53
 ```
 
 Im Tag-5-Block spielen die Teilnehmenden nach Human-in-the-Loop eine KI-Delegation-Poker-Runde. Am Anwendungsfall **PMO-Assistenten** entscheiden sie, welche Schritte autonom laufen dürfen und wo eine menschliche Freigabe nötig ist.
@@ -197,5 +197,5 @@ Statt der gestellten Aufgaben lässt sich bei Bedarf auch eine **eigene** Proble
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

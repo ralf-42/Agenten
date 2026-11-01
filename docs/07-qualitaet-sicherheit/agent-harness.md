@@ -89,6 +89,8 @@ Weiterführend: [State Management]({{ '/04-agenten-implementierung/ablauf-zustan
 
 Planning beschreibt, welche Teilschritte für ein Ziel erforderlich sind. Orchestrierung legt fest, wie diese Schritte ausgeführt werden: seriell oder parallel, mit welchen Retries, mit welchen Sub-Agenten und unter welchen Abbruchbedingungen.
 
+Die verschiedenen Schleifen und ihre Gestaltung erläutert [Loop Engineering]({{ '/04-agenten-implementierung/ablauf-zustand/loop-engineering.html' | relative_url }}). Das Harness stellt die Laufzeit- und Kontrollmechanismen für solche Abläufe bereit.
+
 Planning ist dabei kein Freibrief für autonome Ausführung. Ein Plan muss an Zustandsgrenzen, Tool-Policies, Zeit- und Kostenbudgets sowie an fachlichen Prüfpunkten vorbeigeführt werden. Bei einfachen Aufgaben reicht eine explizite Kette; bei verzweigten Abläufen kann ein Graph mit Zuständen und Übergängen sinnvoller sein.
 
 Weiterführend: [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) und [LangGraph Best Practices]({{ '/05-frameworks/langgraph-best-practices.html' | relative_url }}).

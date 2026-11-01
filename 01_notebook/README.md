@@ -2,9 +2,9 @@
 
 ## Modulstruktur
 
-Dieses Verzeichnis enthält aktuell **31 reguläre Kursmodule**: M01–M26 und M50–M54. Dazu kommen eine Referenzimplementierung und zwei Hilfsnotebooks.
+Dieses Verzeichnis enthält aktuell **31 reguläre Kursmodule**: M01–M27 und M50–M53. Dazu kommen eine Referenzimplementierung und zwei Hilfsnotebooks.
 
-Der Kursweg gliedert sich in Grundlagen/Kern (M01–M18), Aufbau (M19–M23) und Vertiefung (M24–M26 sowie M50–M54). Die Datei-IDs M50–M54 kennzeichnen eine optionale Vertiefungsreihe und setzen die Nummerierung M01–M26 nicht fort.
+Der Kursweg gliedert sich in Grundlagen/Kern (M01–M18), Aufbau (M19–M23 und M27) und Vertiefung (M24–M26 sowie M50–M53). Die Datei-IDs M50–M53 kennzeichnen eine optionale Vertiefungsreihe und setzen die Nummerierung M01–M27 nicht fort.
 
 **Verbindlichkeit:** Alle Teilnehmenden arbeiten auf die gemeinsamen Mindestlernziele der Kernmodule hin. In den Kern-Notebooks sind die Grundlagenaufgaben verbindlich; Aufbau- und Vertiefungsaufgaben sind Wahlangebote. Ab Tag 3 wird nach Checkpoints differenziert. Die vollständige Bearbeitung aller Notebook-Zellen ist nicht Voraussetzung für das Kernziel.
 
@@ -81,7 +81,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ## Optionale Module — Aufbau und Vertiefung
 
-> M19–M23 sind **Aufbaumodule** und können nach Erreichen der Grundlagenziele im Kurs eingesetzt werden. M24–M26 und M50–M54 sind **Vertiefungsmodule** für optionale Impulse, Wahlaufgaben oder die Nachbereitung.
+> M19–M23 und M27 sind **Aufbaumodule** und können nach Erreichen der Grundlagenziele im Kurs eingesetzt werden. M24–M26 und M50–M53 sind **Vertiefungsmodule** für optionale Impulse, Wahlaufgaben oder die Nachbereitung. M27 baut insbesondere auf Evaluation in M21 auf.
 
 | Nr. | Modul | Datei | Inhalt | Priorität |
 | ---: |-------|-------|--------|-----------|
@@ -93,11 +93,11 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | 24 | Gradio UI für Agenten | `M24_Gradio_UI_fuer_Agenten.ipynb` | ChatInterface, Blocks, Streaming, HITL-UI | 🟣 Vertiefung |
 | 25 | MCP Local | `M25_MCP_Local.ipynb` | Model Context Protocol, lokale MCP-Server | 🟣 Vertiefung |
 | 26 | Agent Skill Compliance | `M26_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🟣 Vertiefung |
-| 27 | DeepAgents Harness | `M50_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🟣 Vertiefung |
-| 28 | DeepAgents Vertiefung | `M51_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
-| 29 | DeepAgents Skill PMO-Assistent | `M52_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
-| 30 | DeepAgent Multi-Skill | `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
-| 31 | Production Deployment | `M54_Production_Deployment.ipynb` | Notebook → Production, zentrale Modell-Konfiguration, Docker | 🟣 Vertiefung |
+| 27 | Learning Loop und Agentenverbesserung | `M27_Learning_Loop_Agentenverbesserung.ipynb` | Baseline, Fehleranalyse, Anweisungsänderung und zurückgehaltene Testfälle | 🔵 Aufbau |
+| 28 | DeepAgents Harness | `M50_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🟣 Vertiefung |
+| 29 | DeepAgents Vertiefung | `M51_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
+| 30 | DeepAgents Skill PMO-Assistent | `M52_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
+| 31 | DeepAgent Multi-Skill | `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
 
 > **Einordnung von M50:** Das Notebook führt in DeepAgents ein. Es ist der Einstieg in ein Vertiefungsthema und gehört nicht zum gemeinsamen Grundlagenkern des Kurses.
 

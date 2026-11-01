@@ -104,7 +104,7 @@ result = chain.invoke({"variable1": "Wert"})
 | RAG-Agent | `m12_rag_agent_system_prompt.md` |
 | MCP Local | `m25_math_agent_prompt.md`, `m25_multi_agent_prompt.md`, `m25_notiz_agent_prompt.md` |
 
-`_backup/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-23: `quality_judge_prompt`, `security_gate_prompt` (früher Integration Pipeline); Stand 2026-10-06: StateGraph Basics, LangSmith Evaluations Basics, Supervisor Pattern bis Agent Security Best Practices, `agent_system`, `research_few_shot`, `research_zero_shot`, `research_query`, `format_check`, `crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
+`_backups/` enthält nicht mehr genutzte Prompts (kein Notebook lädt sie per `load_prompt`; Stand 2026-10-23: `quality_judge_prompt`, `security_gate_prompt` (früher Integration Pipeline); Stand 2026-10-06: StateGraph Basics, LangSmith Evaluations Basics, Supervisor Pattern bis Agent Security Best Practices, `agent_system`, `research_few_shot`, `research_zero_shot`, `research_query`, `format_check`, `crypto_agent` sowie ältere Varianten). Rückfall-Sicherung, nicht löschen.
 
 ## Weiterführend
 

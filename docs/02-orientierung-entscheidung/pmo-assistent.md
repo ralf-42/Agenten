@@ -211,7 +211,7 @@ Der Kurs-Prototyp arbeitet bewusst mit einem kleinen, fiktiven und kuratierten K
 | Zugriffsrechte | Alle sehen den gesamten Korpus; die Rechte- und Rollensteuerung ist im Projekt Kompass als offener Punkt dokumentiert | Berechtigungsfilter bereits beim Retrieval, ergänzt durch eine Quellenprüfung nach der Antwort | Agent Security Best Practices |
 | Datenschutz | Ausschließlich fiktive Daten | Datenschutzfreigabe für produktive Daten, Logging-Konzept und Regeln für Aufbewahrung | Agent Security Best Practices |
 | Nutzenmessung | Das Eval-Set misst Antwortqualität und Quellentreue | Pilot mit einer Projektgruppe: Zeitaufwand der Meeting-Vorbereitung vorher und nachher, Rückmeldungen der Nutzenden | Agent Evaluation und Testing |
-| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | Production Deployment |
+| Betrieb | Notebook in Colab | Bereitstellung als Dienst mit Monitoring, Kostenkontrolle und versionierten Prompts | LangSmith Evaluations Basics, Model Routing und Cost Control (Ausblick) |
 | Aktionen | Der Assistent liest und schlägt vor | Kontrollierte Schreibaktionen wie das Anlegen einer Aufgabe, jeweils hinter einem Freigabe-Gate | Agent Security Best Practices, Integration Pipeline |
 
 > [!TIP] Empfohlene Reihenfolge<br>
@@ -229,5 +229,5 @@ Der Kurs-Prototyp arbeitet bewusst mit einem kleinen, fiktiven und kuratierten K
 ---
 
 **Version:** 2.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

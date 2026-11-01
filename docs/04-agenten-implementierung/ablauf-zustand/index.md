@@ -14,6 +14,7 @@ Dieser Bereich behandelt, wie Agenten Zustände verwalten, Sitzungen persistent 
 
 | Dokument | Inhalt |
 |---|---|
+| [Loop Engineering]({{ '/04-agenten-implementierung/ablauf-zustand/loop-engineering.html' | relative_url }}) | Agentenschleifen, Prüfungen, Grenzen und Eskalation gestalten |
 | [State Management](./state-management.html) | Zustandsführung in LangGraph: TypedDict, Reducer und Übergänge |
 | [Checkpointing & Persistenz](./checkpointing-persistenz.html) | Sitzungen speichern, fortsetzen und Fehler überstehen |
 | [Memory-Systeme](./memory-systeme.html) | Kurzzeit-, Langzeit- und semantisches Memory in Agenten |

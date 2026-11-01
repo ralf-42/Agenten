@@ -280,6 +280,8 @@ Sobald getrennte Fachrollen, eigene Kontexte oder unabhängige Prüfungen nötig
 
 ReAct kombiniert Nachdenken, Handeln und Beobachten in einem wiederholten Zyklus. Der Agent prüft den aktuellen Stand, führt eine Aktion aus, liest das Ergebnis und entscheidet anschließend über den nächsten Schritt. Dieses Muster eignet sich vor allem dann, wenn der Lösungsweg vorab nicht vollständig bekannt ist — es verfeinert damit den Single-Agent aus dem vorigen Abschnitt um einen konkreten Ablaufzyklus.
 
+Wie solche Schleifen mit Prüfungen, Budgets und Abbruchbedingungen gestaltet werden, erklärt [Loop Engineering]({{ '/04-agenten-implementierung/ablauf-zustand/loop-engineering.html' | relative_url }}).
+
 ```mermaid
 flowchart LR
     A[Aufgabe] --> B[Denken]

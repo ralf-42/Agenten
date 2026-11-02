@@ -101,7 +101,7 @@ class TeamState(TypedDict):
     task_complete: bool
 
 def supervisor_node(state: TeamState) -> Command:
-    last_message = state["messages"][-1].content.lower()
+    last_message = state["messages"][-1].text.lower()
     if "code" in last_message:
         return Command(goto="code_agent")
     if "quellen" in last_message:
@@ -467,8 +467,8 @@ Entwickler unterschätzen oft, dass Multi-Agent vor allem mehr Koordinationslogi
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.5<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

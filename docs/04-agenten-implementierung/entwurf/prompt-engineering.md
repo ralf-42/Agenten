@@ -309,7 +309,7 @@ def self_consistent_answer(question: str, n: int = 3) -> str:
     responses = []
     for _ in range(n):
         response = llm.invoke(question)
-        responses.append(response.content)
+        responses.append(response.text)
     
     # Häufigste Antwort oder Zusammenfassung
     return aggregate_responses(responses)
@@ -451,8 +451,8 @@ Für KI-Agenten besonders wichtig sind System-Prompts, Tool-Beschreibungen, stru
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.2<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

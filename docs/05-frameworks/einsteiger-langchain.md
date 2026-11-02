@@ -174,7 +174,7 @@ llm = init_chat_model("openai:gpt-6-luna")
 
 # Testaufruf
 response = llm.invoke("Nenne drei typische Einsatzgebiete von KI-Agenten.")
-print(response.content)
+print(response.text)
 ```
 
 ---
@@ -816,7 +816,7 @@ LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, struktur
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.4<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

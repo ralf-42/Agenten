@@ -240,15 +240,15 @@ llm = init_chat_model("openai:gpt-6-luna")
 
 def summarize_node(state: AnalysisState) -> AnalysisState:
     response = llm.invoke(f"Fasse zusammen: {state['document']}")
-    return {"summary": response.content}
+    return {"summary": response.text}
 
 def sentiment_node(state: AnalysisState) -> AnalysisState:
     response = llm.invoke(f"Bestimme das Sentiment: {state['summary']}")
-    return {"sentiment": response.content}
+    return {"sentiment": response.text}
 
 def keywords_node(state: AnalysisState) -> AnalysisState:
     response = llm.invoke(f"Extrahiere 5 Keywords: {state['document']}")
-    keywords = response.content.split(", ")
+    keywords = response.text.split(", ")
     return {"keywords": keywords, "analysis_complete": True}
 ```
 
@@ -284,7 +284,7 @@ class SupportState(TypedDict):
     response: str
 
 def classify_node(state: SupportState) -> SupportState:
-    query = state["messages"][-1].content
+    query = state["messages"][-1].text
     return {"query_type": "technical"}
 
 def router(state: SupportState) -> Literal["tech_agent", "billing_agent", "general_agent"]:
@@ -357,7 +357,7 @@ Entwickler unterschätzen oft, wie stark diese drei Regeln spätere Erweiterunge
 
 ---
 
-**Version:** 1.2<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.3<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

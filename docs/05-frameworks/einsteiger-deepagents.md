@@ -186,7 +186,7 @@ result = agent.invoke({
     ]
 })
 
-print(result["messages"][-1].content)
+print(result["messages"][-1].text)
 ```
 
 **Ergebnis:** Ein lauffähiger Agent mit eingebauter Harness-Struktur, ohne dass StateGraph, Routing-Funktionen oder Schleifen manuell modelliert werden mussten.
@@ -678,8 +678,8 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 2.0<br>
-**Stand:** Oktober 2026<br>
+**Version:** 2.1<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

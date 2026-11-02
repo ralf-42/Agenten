@@ -149,7 +149,7 @@ llm = init_chat_model("openai:gpt-6-luna")
 
 # Einfacher Aufruf: Bei aktiviertem Tracing erscheint ein Trace.
 response = llm.invoke("Erkläre LangSmith in einem Satz.")
-print(response.content)
+print(response.text)
 ```
 
 **Was passiert im Hintergrund:**
@@ -411,7 +411,7 @@ def predict(inputs: dict) -> dict:
         "messages": [{"role": "human", "content": inputs["question"]}]
     })
     # Antwort aus letzter Message extrahieren
-    return {"answer": response["messages"][-1].content}
+    return {"answer": response["messages"][-1].text}
 
 # Evaluierung starten
 results = evaluate(
@@ -454,7 +454,7 @@ def agent_ausfuehren(frage: str, run_tree=None) -> str:
     response = agent.invoke({
         "messages": [{"role": "human", "content": frage}]
     })
-    return response["messages"][-1].content
+    return response["messages"][-1].text
 
 # Agent ausführen
 antwort = agent_ausfuehren("Was ist 5 * 8?")
@@ -499,7 +499,7 @@ def llm_judge(run, example) -> dict:
         f"Antworte nur mit einer Zahl zwischen 0 und 1."
     )
     try:
-        score = float(llm.invoke(prompt).content.strip())
+        score = float(llm.invoke(prompt).text.strip())
     except ValueError:
         score = 0.0
     return {"key": "quality", "score": score}
@@ -1020,6 +1020,6 @@ LangSmith macht Agentenläufe nachvollziehbar. Traces zeigen einzelne Schritte, 
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.4<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

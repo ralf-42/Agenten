@@ -210,9 +210,9 @@ def summarize_node(state: SummaryState) -> SummaryState:
     prompt = (
         f"Bestehende Zusammenfassung: {existing_summary}\n\n"
         f"Neue Nachrichten zum Einarbeiten:\n"
-        + "\n".join(f"{m.type}: {m.content}" for m in to_summarize)
+        + "\n".join(f"{m.type}: {m.text}" for m in to_summarize)
     )
-    new_summary = llm.invoke(prompt).content
+    new_summary = llm.invoke(prompt).text
 
     to_remove = [RemoveMessage(id=m.id) for m in to_summarize]
     summary_msg = SystemMessage(
@@ -265,7 +265,7 @@ def compact_context(context: str, thread_id: str, memory_manager) -> str:
     summary_id = memory_manager.store_compacted(context, thread_id)
     description = llm.invoke(
         f"Beschreibe in einem Satz, was dieser Kontext enthält: {context[:500]}"
-    ).content
+    ).text
     return f"[Kontext kompaktiert: ID={summary_id} — {description}]"
 
 def expand_context(summary_id: str, memory_manager) -> str:
@@ -334,7 +334,7 @@ class EntityListResult(BaseModel):
 QUESTION_PREFIXES = ("was ", "wer ", "wie ", "wo ", "wann ", "warum ", "welche", "kennst")
 
 def entity_extractor_node(state: EntityMemoryState) -> EntityMemoryState:
-    latest_message = state["messages"][-1].content.strip()
+    latest_message = state["messages"][-1].text.strip()
     if latest_message.endswith("?") or latest_message.lower().startswith(QUESTION_PREFIXES):
         return {}
 
@@ -480,7 +480,7 @@ class HybridMemoryState(TypedDict):
 
 def chat_with_memory_node(state: HybridMemoryState) -> HybridMemoryState:
     long_term = memory_store.similarity_search(
-        state["messages"][-1].content, k=2
+        state["messages"][-1].text, k=2
     )
     memory_context = "\n".join(d.page_content for d in long_term)
 
@@ -624,6 +624,6 @@ Developer unterschätzen oft, dass Memory nicht nur eine Komfortfunktion ist. Oh
 
 ---
 
-**Version:** 1.4<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.5<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

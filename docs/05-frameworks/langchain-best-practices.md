@@ -125,7 +125,7 @@ result = agent.invoke({
         {"role": "user", "content": "Wie ist der Stand der Bestellung A-1042?"}
     ]
 })
-antwort = result["messages"][-1].content
+antwort = result["messages"][-1].text
 ~~~
 
 ---
@@ -241,6 +241,6 @@ Die Fehlerklassen und Wiederholungszahl sollten zum jeweiligen Provider und zur 
 
 ---
 
-**Version:** 2.0<br>
-**Stand:** Oktober 2026<br>
+**Version:** 2.1<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

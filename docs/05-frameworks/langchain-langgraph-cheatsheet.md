@@ -91,7 +91,7 @@ from langchain_core.globals import set_llm_cache
 set_llm_cache(InMemoryCache())
 
 antwort = llm.invoke("Erkläre Tool-Use bei Agenten in einem Satz.")
-print(antwort.content)
+print(antwort.text)
 ```
 
 **Regel:** Caching ist für wiederholte Demo-Aufrufe nützlich. Es ist kein Memory: Cache speichert Modellantworten zu identischen Requests, Checkpointing speichert Session- oder Graph-Zustand. Agenten- und Tool-Läufe mit Seiteneffekten nicht blind cachen.
@@ -118,7 +118,7 @@ agent = create_agent(
 )
 
 result = agent.invoke({"messages": [HumanMessage(content="Prüfe RAG-Evaluation.")]})
-print(result["messages"][-1].content)
+print(result["messages"][-1].text)
 ```
 
 **Regel:** `create_agent()` ist gut für schnelle Agenten. Wenn Routing, Gates, Checkpointing oder HITL explizit sichtbar sein sollen, wechsle zu LangGraph.
@@ -162,7 +162,7 @@ class PmoState(TypedDict):
 
 ```python
 def analyse_node(state: PmoState) -> dict:
-    frage = state["messages"][-1].content
+    frage = state["messages"][-1].text
     routing = "retrieval" if "rag" in frage.lower() else "definition"
     return {"routing": routing}
 
@@ -566,7 +566,7 @@ def contains_expected(outputs: dict, reference_outputs: dict) -> bool:
 
 ---
 
-**Version:** 1.1<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.2<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

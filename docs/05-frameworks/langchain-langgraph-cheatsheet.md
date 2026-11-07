@@ -437,7 +437,7 @@ os.environ["LANGSMITH_ENDPOINT"] = "https://eu.api.smith.langchain.com"
 ```python
 run_cfg = {
     "run_name": "m05_pmo_assistent_demo",
-    "tags": ["cheatsheet", "langgraph", "pmo-assistent"],
+    "tags": ["cheatsheet", "langgraph", "pmo_assistent"],
     "metadata": {
         "kurs": "agenten",
         "version": "1.0",

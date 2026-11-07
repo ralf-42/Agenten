@@ -637,7 +637,7 @@ from langsmith import traceable
 
 @traceable(
     run_type="chain",
-    tags=["rag", "produktiv", "version-2.0"],
+    tags=["rag", "produktiv", "version_2_0"],
 )
 def my_rag_chain(question: str):
     # RAG-Logik hier
@@ -880,7 +880,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 | Langsame Runs finden | `Latency` | `> 10s` |
 | Viele Child-Runs | `Child Runs` | `> 5` |
 | Spezifische Chain | `Name` | `contains "rag"` |
-| Experiment A vs. B | `Tags` | `experiment-A` / `experiment-B` |
+| Experiment A vs. B | `Tags` | `experiment_a` / `experiment_b` |
 | Zeitraum eingrenzen | `Start Time` | `Last 1 hour` / `Last 24 hours` |
 
 **Drei Kern-Views für den Einstieg:**
@@ -888,7 +888,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 ```
 1. Debugging:    Status = Error  +  Project = M##-...
 2. Latenz:       Latency > 5s   +  Child Runs > 3
-3. Experiment:   Tag "experiment-A" vs. Tag "experiment-B" (Compare-View)
+3. Experiment:   Tag "experiment_a" vs. Tag "experiment_b" (Compare-View)
 ```
 
 **Weitere Web-UI-Tipps:**

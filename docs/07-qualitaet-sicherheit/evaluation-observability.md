@@ -387,7 +387,7 @@ Ein einfacher Mindeststandard sieht so aus:
 
 ```python
 config = {
-    "tags": ["support", "release-2026-04"],
+    "tags": ["support", "release_2026_04"],
     "metadata": {
         "dataset_version": "eval-v1",
         "thread_id": "thread-4711",
@@ -433,5 +433,5 @@ Kleine Änderungen an einer Anfrage können einen scheinbar stabilen Agenten aus
 ---
 
 **Version:** 1.8<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

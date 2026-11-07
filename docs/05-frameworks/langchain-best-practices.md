@@ -41,19 +41,20 @@ LangChain eignet sich für Modellaufrufe, Chains und Agenten mit einem klar begr
 
 ## Modell initialisieren
 
-`init_chat_model()` bietet eine einheitliche Schnittstelle zu unterstützten Chatmodell-Providern. Die Schreibweise `provider:model` hält die Auswahl im Aufruf sichtbar.
+`init_chat_model()` bietet eine einheitliche Schnittstelle zu unterstützten Chatmodell-Providern. Die Modell-IDs kommen aus `genai_lib.model_config`, wo sie als Rollenkonstanten gepflegt werden — ein Modellwechsel wird damit an einer Stelle nachgezogen statt in jedem Beispiel.
 
 ~~~python
 from langchain.chat_models import init_chat_model
+from genai_lib.model_config import BASELINE, WORKER
 
-llm = init_chat_model("openai:gpt-5.6-luna")
+llm = init_chat_model(BASELINE)
 ~~~
 
-Provider-spezifische Parameter lassen sich bei der Initialisierung ergänzen:
+Für unterschiedliche Aufgaben stehen weitere Rollen bereit, etwa `ROUTER`, `WORKER`, `JUDGE`, `PLANNER` und `FRONTIER`. Provider-spezifische Parameter lassen sich bei der Initialisierung ergänzen:
 
 ~~~python
 llm = init_chat_model(
-    "openai:gpt-5.6-luna",
+    BASELINE,
     max_tokens=1_000,
 )
 ~~~
@@ -215,8 +216,8 @@ Weitere Content-Block-Typen und Provider-Einschränkungen stehen in der Modell- 
 Wiederholungen eignen sich für vorübergehende Fehler. Ein Fallback-Modell übernimmt, wenn die primäre Ausführung nach den Wiederholungen weiterhin fehlschlägt.
 
 ~~~python
-primary_llm = init_chat_model("openai:gpt-5.6-luna")
-fallback_llm = init_chat_model("anthropic:claude-sonnet-4-6")
+primary_llm = init_chat_model(BASELINE)
+fallback_llm = init_chat_model(WORKER)
 
 robust_llm = primary_llm.with_retry(
     retry_if_exception_type=(TimeoutError, ConnectionError),
@@ -230,7 +231,7 @@ Die Fehlerklassen und Wiederholungszahl sollten zum jeweiligen Provider und zur 
 
 ## Praxischeck
 
-- Modell über `init_chat_model()` auswählen und Provider-Parameter bewusst setzen.
+- Modell über `init_chat_model()` und die passende Rolle aus `genai_lib.model_config` auswählen, Provider-Parameter bewusst setzen.
 - Strukturierte Ergebnisse über ein Pydantic-Schema beschreiben.
 - Tools mit Typannotationen und aussagekräftigen Docstrings definieren.
 - Agenten mit den benötigten Tools und einer klaren Systemanweisung erstellen.
@@ -252,6 +253,6 @@ Die Fehlerklassen und Wiederholungszahl sollten zum jeweiligen Provider und zur 
 
 ---
 
-**Version:** 2.2<br>
+**Version:** 2.3<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

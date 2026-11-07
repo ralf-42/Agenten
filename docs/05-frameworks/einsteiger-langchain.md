@@ -209,6 +209,8 @@ Hinweis: Dieses Feature setzt voraus, dass der verwendete Modell‑Provider nati
 
 ---
 
+> ⚠️ **Absagen:** Lehnt das Modell die Anfrage ab, kann es kein schemakonformes Objekt liefern. `with_structured_output()` löst dann einen `ModelRefusalError` aus, nachzulesen in `langchain_core.exceptions`. Bei festen Prompts ist das selten; sobald freie Nutzereingaben ins Spiel kommen, lege einen `try`/`except` um den Aufruf.
+
 ## Werkzeuge definieren: `@tool`
 
 Tools erweitern die Fähigkeiten eines Agenten erheblich, da sie Funktionen abdecken, die ein Modell selbst nicht ausführen kann – etwa Berechnungen, Datenabrufe, lokale Analysen oder Abfragen externer Systeme. Der `@tool`‑Decorator ermöglicht eine klare, typensichere und gut dokumentierte Definition solcher Werkzeuge.
@@ -773,6 +775,10 @@ Prüfe, ob die benötigten Pakete installiert sind und ob die aktuellen LangChai
 
 Nutze `with_structured_output()` mit einem Pydantic-Modell. Prompt-Anweisungen allein reichen für robuste strukturierte Daten nicht aus.
 
+### Modell lehnt die Anfrage ab
+
+Bei einer ausdrücklichen Absage liefert `with_structured_output()` kein Objekt, sondern löst `ModelRefusalError` aus (`langchain_core.exceptions`). Fange die Ausnahme mit `except ModelRefusalError` ab; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`. Eine Ablehnung, die das Modell als gewöhnlichen Antworttext formuliert, wird davon nicht erfasst — dieser Fall fällt unter den vorigen Punkt.
+
 ### RAG-Antworten sind ungenau
 
 Prüfe zuerst Chunk-Größe, Overlap, Embedding-Modell und Retriever-Parameter. Das Modell kann nur mit dem Kontext arbeiten, den der Retriever liefert.
@@ -816,7 +822,7 @@ LangChain liefert die Bausteine für LLM-Anwendungen: Prompts, Modelle, struktur
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

@@ -86,7 +86,7 @@ Das Präfix vor dem Doppelpunkt ist der Providername von `init_chat_model`, also
 
 **OpenAI:**
 ```python
-!pip install "langchain-openai>=1.7.2"
+!pip install "langchain-openai>=1.7.4"
 from langchain.chat_models import init_chat_model
 llm = init_chat_model("openai:gpt-6-luna")
 ```
@@ -226,8 +226,8 @@ Interaktive Demo: [Quantisierung von Sprachmodellen]({{ '/visualisierungen/quant
 
 ---
 
-**Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Version:** 1.4<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -112,7 +112,7 @@ install_packages([
 ])
 
 # Versionspins erzwingen: immer installieren/aktualisieren
-install_packages(['langchain-core>=1.3.0'], upgrade=True)
+install_packages(['langchain-core>=1.7.6'], upgrade=True)
 ```
 
 **Parameter:**
@@ -664,47 +664,49 @@ Prüfe die Rollen-Konfiguration in `model_config.py` und ob lokale Overrides ode
 ### Abhängigkeiten
 
 ### Kern-Abhängigkeiten
-```python
+```text
 # LangChain Stack
-langchain>=1.3.13
-langchain-core>=1.4.0
-langchain-openai>=1.2.2
-langchain-text-splitters>=1.1.2
+langchain>=1.4.9
+langchain-core>=1.7.6
+langchain-openai>=1.7.4
+langchain-text-splitters>=1.1.3
 langchain-chroma>=1.1.0
 langchain-ollama>=1.1.0
 
 # Dokumente laden (pmo_rag)
-pypdf>=5.0.0
-markitdown[all]>=0.0.1
+pypdf>=7.0.0
+markitdown[all]>=0.1.9
 
 # LangGraph Stack
-langgraph>=1.2.4
-langgraph-checkpoint>=4.1.1
-langgraph-checkpoint-sqlite>=3.1.0
-langgraph-prebuilt>=1.1.0
-langgraph-sdk>=0.4.2
+langgraph>=1.2.20
+langgraph-checkpoint>=4.3.1
+langgraph-checkpoint-sqlite>=3.1.3
+langgraph-prebuilt>=1.1.1
+langgraph-sdk>=0.4.14
 
 # LangSmith
-langsmith>=0.8.0
+langsmith>=0.14.17
 
 # Agent Harness
-deepagents>=0.7.0
+deepagents>=0.7.29
 
 # OpenAI
-openai>=2.0.0
+openai>=2.45.0
 
 # Vektordatenbank
-chromadb>=1.0.0
+chromadb>=1.5.9
 
 # Pillow-Pin (Colab-Basisimage, wird u.a. von Gradio importiert)
 pillow>=11.0.0,<12.0.0
 
 # Utilities
-requests>=2.32.0
+requests>=2.34.2
 
 # Notebook-Tooling
-nbformat>=5.10.0
+nbformat>=5.11.1
 ```
+
+Maßgeblich ist immer `04_modul/requirements.txt` im Repository; die Liste hier ist eine Abschrift mit Stand November 2026.
 
 ---
 
@@ -786,7 +788,7 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ---
 
-**Version:** 3.5<br>
+**Version:** 3.6<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

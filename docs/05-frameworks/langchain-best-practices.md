@@ -77,6 +77,17 @@ structured_llm = llm.with_structured_output(AnswerResult)
 result = structured_llm.invoke("Nenne die Hauptstadt von Frankreich.")
 ~~~
 
+Lehnt das Modell ab, kann es kein schemakonformes Objekt liefern. `with_structured_output()` löst dann einen `ModelRefusalError` aus — bei OpenAI die Unterklasse `OpenAIRefusalError`, ebenso bei einem Content-Filter. Bei freien Nutzereingaben gehört ein `try`/`except` um den Aufruf; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`.
+
+~~~python
+from langchain_core.exceptions import ModelRefusalError
+
+try:
+    result = structured_llm.invoke(user_input)
+except ModelRefusalError:
+    result = None
+~~~
+
 Für Agenten kann das Schema direkt über `response_format` angegeben werden. Die strukturierte Antwort steht im Ergebnis unter `structured_response`.
 
 ~~~python
@@ -152,7 +163,7 @@ summary = summary_chain.invoke({
 
 ## Middleware für Agenten
 
-Middleware ergänzt einen Agenten um kontrollierte Schritte während seiner Ausführung. Human-in-the-Loop pausiert Tool-Aufrufe zur Freigabe; SummarizationMiddleware fasst längere Verläufe anhand eines konfigurierten Triggers zusammen.
+Middleware ergänzt einen Agenten um kontrollierte Schritte während seiner Ausführung. Human-in-the-Loop pausiert Tool-Aufrufe zur Freigabe; SummarizationMiddleware fasst längere Verläufe anhand eines konfigurierten Triggers zusammen. `ModelRefusalMiddleware()` behandelt eine Provider-Absage als Fehler statt als finale Antwort; sie wird ohne Argumente eingehängt und muss nach `ModelFallbackMiddleware` stehen, damit der Fallback den Fehler abfangen kann.
 
 ~~~python
 from langchain.agents import create_agent
@@ -241,6 +252,6 @@ Die Fehlerklassen und Wiederholungszahl sollten zum jeweiligen Provider und zur 
 
 ---
 
-**Version:** 2.1<br>
+**Version:** 2.2<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

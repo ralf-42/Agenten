@@ -209,7 +209,7 @@ Hinweis: Dieses Feature setzt voraus, dass der verwendete Modell‑Provider nati
 
 ---
 
-> ⚠️ **Absagen:** Lehnt das Modell die Anfrage ab, kann es kein schemakonformes Objekt liefern. `with_structured_output()` löst dann einen `ModelRefusalError` aus, nachzulesen in `langchain_core.exceptions`. Bei festen Prompts ist das selten; sobald freie Nutzereingaben ins Spiel kommen, lege einen `try`/`except` um den Aufruf.
+> ⚠️ **Absagen:** Lehnt das Modell die Anfrage ab, kann es kein schemakonformes Objekt liefern. `with_structured_output()` löst dann — mit der OpenAI-Integration `langchain-openai`, die dieser Kurs verwendet — einen `ModelRefusalError` aus, nachzulesen in `langchain_core.exceptions`. Bei festen Prompts ist das selten; sobald freie Nutzereingaben ins Spiel kommen, lege einen `try`/`except` um den Aufruf.
 
 ## Werkzeuge definieren: `@tool`
 
@@ -777,7 +777,7 @@ Nutze `with_structured_output()` mit einem Pydantic-Modell. Prompt-Anweisungen a
 
 ### Modell lehnt die Anfrage ab
 
-Bei einer ausdrücklichen Absage liefert `with_structured_output()` kein Objekt, sondern löst `ModelRefusalError` aus (`langchain_core.exceptions`). Fange die Ausnahme mit `except ModelRefusalError` ab; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`. Eine Ablehnung, die das Modell als gewöhnlichen Antworttext formuliert, wird davon nicht erfasst — dieser Fall fällt unter den vorigen Punkt.
+Bei einer ausdrücklichen Absage liefert `with_structured_output()` kein Objekt, sondern löst `ModelRefusalError` aus (`langchain_core.exceptions`). Gemessen am Wheel-Quelltext (2026-11-07): Die Ausnahme wirft nur `langchain-openai` 1.7.4. `langchain-anthropic` 1.7.10 und `langchain-google-genai` 4.4.3 erzeugen zwar den Refusal-Block, lösen aber keine Ausnahme aus — Anthropic übernimmt lediglich den Docstring-Text der Basisklasse. Für den Kurs ist das ohne Folgen, weil alle Modellkonstanten auf OpenAI zeigen. Fange die Ausnahme mit `except ModelRefusalError` ab; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`. Eine Ablehnung, die das Modell als gewöhnlichen Antworttext formuliert, wird davon nicht erfasst — dieser Fall fällt unter den vorigen Punkt.
 
 ### RAG-Antworten sind ungenau
 

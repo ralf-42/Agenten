@@ -77,7 +77,7 @@ structured_llm = llm.with_structured_output(AnswerResult)
 result = structured_llm.invoke("Nenne die Hauptstadt von Frankreich.")
 ~~~
 
-Lehnt das Modell ab, kann es kein schemakonformes Objekt liefern. `with_structured_output()` löst dann einen `ModelRefusalError` aus — bei OpenAI die Unterklasse `OpenAIRefusalError`, ebenso bei einem Content-Filter. Bei freien Nutzereingaben gehört ein `try`/`except` um den Aufruf; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`.
+Lehnt das Modell ab, kann es kein schemakonformes Objekt liefern. Mit `langchain-openai` 1.7.4 löst `with_structured_output()` dann einen `ModelRefusalError` aus — konkret die Unterklasse `OpenAIRefusalError`, und ebenso bei einem Content-Filter. Das gilt für alle `method`-Varianten dieser Integration. Am Quelltext gemessen gilt es aber **nur** für OpenAI: `langchain-anthropic` 1.7.10 und `langchain-google-genai` 4.4.3 erzeugen den Refusal-Block, werfen jedoch keine Ausnahme. Providerübergreifend trägt daher nur die Prüfung von `content_blocks` auf `type` gleich `refusal`. Bei freien Nutzereingaben gehört ein `try`/`except` um den Aufruf; mit `include_raw=True` erscheint die Absage stattdessen im Feld `parsing_error`.
 
 ~~~python
 from langchain_core.exceptions import ModelRefusalError

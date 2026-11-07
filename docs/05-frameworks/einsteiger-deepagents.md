@@ -139,7 +139,7 @@ Der schnellste Zugang ist ein Minimalbeispiel mit einem Tool und einem DeepAgent
 pip install deepagents
 ```
 
-Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt. `deepagents` lädt `langchain_anthropic` und `langchain_openai` beim Import nicht; die Pakete des gewählten Anbieters müssen installiert sein. Diese Seite beschreibt den Stand von `deepagents` 0.7.32.
+Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt. `deepagents` lädt `langchain_anthropic` und `langchain_openai` beim Import nicht; die Pakete des gewählten Anbieters müssen installiert sein. Beide sind allerdings harte Abhängigkeiten von `deepagents` und damit ohnehin installiert. Diese Seite beschreibt den Stand von `deepagents` 0.7.34.
 
 ### Ein einfaches Tool
 
@@ -678,7 +678,7 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 ---
 
-**Version:** 2.1<br>
+**Version:** 2.2<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

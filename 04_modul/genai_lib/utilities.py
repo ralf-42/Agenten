@@ -859,7 +859,7 @@ def load_prompt(path, mode="T"):
 
     # Template-Modus: ChatPromptTemplate erzeugen
     messages = _parse_md_prompt(content)
-    return ChatPromptTemplate.from_messages(messages)
+    return ChatPromptTemplate(messages)
 
 
 # Abwärtskompatibilität

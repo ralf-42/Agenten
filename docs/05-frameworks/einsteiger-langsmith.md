@@ -87,7 +87,8 @@ flowchart TB
 
 1. Kostenlosen Account anlegen: [eu.smith.langchain.com](https://eu.smith.langchain.com/)
 2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
-3. Optional: Organisation und Projekte anlegen
+3. Klassische Projektansicht aktivieren: Settings → General → **Switch to classic experience** (neue Cloud-Workspaces starten in der agentenbasierten Ansicht, erkennbar am Workspace-Namen oben links statt des LangSmith-Logos; die Umschaltung ist seit Ende Oktober 2026 in beide Richtungen möglich, Quelle: [LangSmith Changelog](https://docs.langchain.com/langsmith/changelog))
+4. Optional: Organisation und Projekte anlegen
 
 > [!WARNING] EU-Endpoint verwenden<br>
 > Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
@@ -158,7 +159,7 @@ print(response.text)
 3. Eigene Funktionen benötigen gegebenenfalls zusätzliche Instrumentierung.
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
-- URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects)
+- URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects) (in der *Classic Experience*; steht oben links statt des LangSmith-Logos der Workspace-Name, liegen über `LANGSMITH_PROJECT` gesendete Traces im Agent-Picker unter `Production` oder nach Umschaltung über Settings → General → **Switch to classic experience** unter `Projects`)
 - Projekt auswählen: `LANGSMITH_PROJECT="m13_langsmith_setup"`
 - Ersten Trace anklicken → vollständige Details sehen
 
@@ -1020,6 +1021,6 @@ LangSmith macht Agentenläufe nachvollziehbar. Traces zeigen einzelne Schritte, 
 
 ---
 
-**Version:** 1.4<br>
+**Version:** 1.5<br>
 **Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

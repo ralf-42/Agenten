@@ -88,7 +88,7 @@ Die Timeline zeigt den Grundlagenpfad nach Themenblöcken. Anschließend folgen 
 }}%%
 timeline
     title Agenten-Progression im Kursverlauf
-    section Agenten-Grundlagen
+    section Agenten-\nGrundlagen
         Erste handlungsfähige Agenten : Agentenbegriff, Tools, erster LangChain-Agent
                                      : M01–M02
     section Strukturierte Agenten

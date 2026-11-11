@@ -556,7 +556,8 @@ def extract_thinking(response: Any) -> Tuple[str, str]:
 # LANGSMITH TRACE UTILITIES
 # ============================================================================
 
-def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days: int = 7) -> None:
+def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days: int = 7,
+               steps_for: str | None = None) -> None:
     """
     Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Tabelle.
 
@@ -583,6 +584,11 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days
     days : int, optional
         Zeitfenster in Tagen, in dem nach Runs gesucht wird (Standard: 7).
         Die LangSmith-Abfrage begrenzt sonst auf die letzten 24 Stunden.
+    steps_for : str, optional
+        Run-Name, dessen Child-Runs die Step-Tabelle zeigt. Ohne Angabe gilt der
+        jüngste Run. Nützlich, wenn ein Notebook mehrere Referenzläufe erfasst und
+        der interessante Pfad nicht der letzte ist. Der Name muss unter den `limit`
+        geladenen Runs vorkommen, sonst erscheint ein Hinweis statt der Tabelle.
 
     Hinweis:
     --------
@@ -679,7 +685,15 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days
 
     # Step-Analyse des letzten Runs
     if show_steps:
-        last_run = runs[0]
+        if steps_for:
+            passend = [run for run in runs if (run.name or "") == steps_for]
+            if not passend:
+                mprint(f"> Run `{steps_for}` ist nicht unter den {len(runs)} geladenen Runs: "
+                       "`limit` erhöhen oder den Namen prüfen.")
+                return
+            last_run = passend[0]
+        else:
+            last_run = runs[0]
         children = kinder_von[last_run.id]
 
         if not children:
@@ -687,7 +701,7 @@ def show_trace(project_name: str, limit: int = 5, show_steps: bool = False, days
             return
 
         step_zeilen = [
-            f"\n### Steps — letzter Run: `{last_run.name or '—'}`", "",
+            f"\n### Steps — {'Run' if steps_for else 'letzter Run'}: `{last_run.name or '—'}`", "",
             "| # | Typ | Name | Status | Dauer |",
             "|---|-----|------|--------|-------|",
         ]

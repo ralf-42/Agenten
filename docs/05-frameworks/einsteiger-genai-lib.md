@@ -510,7 +510,7 @@ pmo_rag
 | Funktion | Zweck |
 |---|---|
 | `get_pmo_vectorstore(persist_directory, collection_name)` | Erstellt oder lädt die Chroma-Collection `pmo_korpus` mit `EMBEDDINGS` |
-| `index_pmo_corpus(vectorstore, directory_path, chunk_size=300, chunk_overlap=30, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; überspringt eine gefüllte Collection |
+| `index_pmo_corpus(vectorstore, directory_path, chunk_size=1200, chunk_overlap=200, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; prüft Inhalt, Metadaten und Chunk-Parameter vor Wiederverwendung |
 | `load_documents_from_directory(directory_path)` | Mehrformat-Lader für PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word |
 | `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Chunking mit Zeichenlängen an Wortgrenzen (`RecursiveCharacterTextSplitter`); `chunk_index` und `chunk_version` in den Metadaten |
 | `make_search_knowledge_base_tool(vectorstore, rag_chain=None)` | Erzeugt das Agenten-Tool `search_knowledge_base` |
@@ -532,7 +532,7 @@ from genai_lib.pmo_rag import (
 )
 
 vectorstore = get_pmo_vectorstore()
-index_pmo_corpus(vectorstore, "/content/files", chunk_size=300, chunk_overlap=30)
+index_pmo_corpus(vectorstore, "/content/files", chunk_size=1200, chunk_overlap=200)
 
 search_knowledge_base = make_search_knowledge_base_tool(vectorstore)
 tools = [search_knowledge_base]
@@ -635,7 +635,7 @@ from genai_lib.pmo_rag import (
 vectorstore = get_pmo_vectorstore(persist_directory="./chroma_pmo_local")
 
 # Neuaufbau nach geänderten Dokumenten oder geänderter Chunk-Größe
-index_pmo_corpus(vectorstore, "./files", chunk_size=300, chunk_overlap=30, force=True)
+index_pmo_corpus(vectorstore, "./files", chunk_size=1200, chunk_overlap=200, force=True)
 
 # Prüfen, ob alle Korpusdateien indexiert sind
 print(check_corpus(vectorstore, "./files"))
@@ -793,3 +793,9 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
+
+### Gemeinsames PMO-Chunking
+
+Die Standardwerte sind `DEFAULT_CHUNK_SIZE = 1200` und `DEFAULT_CHUNK_OVERLAP = 200` (Zeichen). M12, M27 und M40 verwenden diese zentralen Werte; M11 zeigt das weiterführende Chunking in einer eigenen lokalen Lern-Collection. Alte Collections werden über eine Signatur aus Dateiinhalten, Metadaten und Chunk-Konfiguration erkannt und beim nächsten Indexaufruf neu aufgebaut. Der Anforderungskatalog mit Prüffallvorgaben wird nicht indexiert; bekannte Kursanhänge werden aus den abgeleiteten Dokumenten entfernt. Originaldateien bleiben erhalten.
+
+`format_docs(docs, max_chars=None)` übernimmt vollständige Chunks. Ein optionales Zeichenlimit wird nur bei tatsächlicher Kürzung markiert. Größere Chunks sind ein begründeter Startwert für den PMO-Korpus, kein universell optimaler Wert. Die Qualität ist mit positiven, negativen und zeitabhängigen Korpusfragen zu prüfen.

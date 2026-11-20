@@ -36,6 +36,8 @@ Standardpfad bleibt für die Kurs-Notebooks die persistente Google-Drive-Collect
 """
 
 import csv
+import hashlib
+import re
 import json
 import urllib.request
 from pathlib import Path
@@ -61,9 +63,11 @@ SUPPORTED_EXTENSIONS = {
     ".txt", ".md", ".pdf", ".docx", ".doc", ".xlsx",
     ".html", ".htm", ".csv", ".json", ".xml",
 }
-IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json"}
+IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json", "anforderungskatalog_pmo_assistent_v1.md"}
 CHUNK_HEADER_PREFIX = "Dokument: "
-CHUNK_VERSION = 2  # 2 = Wortgrenzen (RecursiveCharacterTextSplitter) + Kopfzeile
+DEFAULT_CHUNK_SIZE = 1200
+DEFAULT_CHUNK_OVERLAP = 200
+CHUNK_VERSION = 3  # Gemeinsame Konfiguration, Quellenbereinigung und überprüfbare Indexsignatur
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -97,6 +101,13 @@ def load_pdf_documents(directory_path: str) -> list[Document]:
         except Exception as exc:
             mprint(f"  ⚠ {pdf_path.name} übersprungen: {exc}")
     return documents
+
+
+def _strip_course_guidance(text: str) -> str:
+    """Entfernt bekannte Kursanhänge aus abgeleiteten Dokumenten, nicht aus den Originaldateien."""
+    headings = r"Nutzungshinweis(?:e)?|Hinweis für Briefings|Prüffragen für den Agenten|Prüffälle(?: für den Agenten)?"
+    match = re.search(r"(?im)^\s*(?:#{1,6}\s*)?(?:" + headings + r")\s*$", text)
+    return text[:match.start()].strip() if match else text.strip()
 
 
 def load_documents_from_directory(directory_path: str) -> list[Document]:
@@ -140,7 +151,7 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
 
         try:
             result = converter.convert(str(file_path))
-            text = (result.text_content or "").strip()
+            text = _strip_course_guidance(result.text_content or "")
             if not text:
                 mprint(f"  ⚠ {file_path.name} übersprungen (kein Text)")
                 continue
@@ -167,7 +178,7 @@ def load_documents_from_directory(directory_path: str) -> list[Document]:
 
 
 def split_documents_by_characters(
-    documents: list[Document], chunk_size: int = 300, chunk_overlap: int = 30
+    documents: list[Document], chunk_size: int = DEFAULT_CHUNK_SIZE, chunk_overlap: int = DEFAULT_CHUNK_OVERLAP
 ) -> list[Document]:
     """Teilt Dokumente in überlappende Chunks, ohne Wörter zu zerschneiden.
 
@@ -193,6 +204,8 @@ def split_documents_by_characters(
             metadata = dict(doc.metadata)
             metadata["chunk_index"] = chunk_index
             metadata["chunk_version"] = CHUNK_VERSION
+            metadata["chunk_size"] = chunk_size
+            metadata["chunk_overlap"] = chunk_overlap
             chunks.append(Document(page_content=kopfzeile + chunk_text, metadata=metadata))
     return chunks
 
@@ -217,60 +230,60 @@ def get_pmo_vectorstore(
     )
 
 
+def _corpus_fingerprint(directory_path: str, chunk_size: int, chunk_overlap: int) -> str:
+    """Erkennt auch Inhaltsänderungen bei unveränderten Dateinamen und Metadaten."""
+    directory = Path(directory_path)
+    digest = hashlib.sha256(f"{CHUNK_VERSION}:{chunk_size}:{chunk_overlap}".encode())
+    files = [path for path in directory.rglob("*") if path.is_file() and
+             ((path.suffix.lower() in SUPPORTED_EXTENSIONS and path.name not in IGNORED_FILENAMES)
+              or path.name == "metadata.json")]
+    for path in sorted(files):
+        relative = path.relative_to(directory).as_posix().encode()
+        digest.update(len(relative).to_bytes(8, "big")); digest.update(relative)
+        digest.update(hashlib.sha256(path.read_bytes()).digest())
+    return digest.hexdigest()
+
+
 def index_pmo_corpus(
     vectorstore: Chroma,
     directory_path: str,
-    chunk_size: int = 300,
-    chunk_overlap: int = 30,
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    chunk_overlap: int = DEFAULT_CHUNK_OVERLAP,
     batch_size: int = 500,
     force: bool = False,
 ) -> int:
     """Indexiert unterstützte Dokumente aus directory_path in die Collection.
 
     Indexiert eine leere Collection und aktualisiert eine vorhandene, wenn sich
-    Dateibestand oder relevante Metadaten geändert haben. Stammt sie aus einem
+    Dateiinhalte, Dateibestand, Metadaten oder Chunk-Parameter geändert haben. Stammt sie aus einem
     älteren Chunking, wird sie ebenfalls neu aufgebaut. Mit ``force=True`` wird
     unabhängig vom erkannten Änderungsstand neu indexiert.
 
     Gibt die Anzahl neu indexierter Chunks zurück (0, wenn nichts zu tun war).
     """
-    if not force and vectorstore._collection.count() > 0:
-        probe = vectorstore.get(limit=1, include=["documents", "metadatas"])
-        probe_text = (probe["documents"] or [""])[0]
-        probe_meta = (probe["metadatas"] or [{}])[0] or {}
-        if (
-            probe_text.startswith(CHUNK_HEADER_PREFIX)
-            and probe_meta.get("chunk_version") == CHUNK_VERSION
-        ):
-            abweichungen = check_corpus(vectorstore, directory_path)
-            if not any(abweichungen.values()):
-                mprint(
-                    f"Collection ist aktuell ({vectorstore._collection.count()} Einträge) "
-                    "— kein erneutes Indexieren"
-                )
-                return 0
-            mprint(f"Korpus oder Metadaten geändert: {abweichungen} — Collection wird aktualisiert")
-            force = True
-        else:
-            mprint("Collection stammt aus einem älteren Chunking (ohne Kopfzeile oder Wortgrenzen) — wird neu aufgebaut")
-            force = True
-
-    if force:
-        vorhandene_ids = vectorstore.get()["ids"]
-        if vorhandene_ids:
-            vectorstore.delete(ids=vorhandene_ids)
-
+    if chunk_size <= 0 or not 0 <= chunk_overlap < chunk_size or batch_size <= 0:
+        raise ValueError("Chunk-Größe, Überlappung und Batch-Größe sind ungültig.")
+    fingerprint = _corpus_fingerprint(directory_path, chunk_size, chunk_overlap)
+    count = vectorstore._collection.count()
+    if not force and count:
+        probe = vectorstore.get(limit=1, include=["metadatas"])
+        meta = (probe["metadatas"] or [{}])[0] or {}
+        if meta.get("index_fingerprint") == fingerprint and not any(check_corpus(vectorstore, directory_path).values()):
+            mprint(f"Collection ist aktuell ({count} Einträge): Inhalt, Metadaten und Chunk-Konfiguration stimmen überein.")
+            return 0
+    # Erst laden und prüfen; ein leerer/fehlerhafter Import darf den vorhandenen Index nicht löschen.
     dokumente = load_documents_from_directory(directory_path)
-    chunks = split_documents_by_characters(
-        dokumente, chunk_size=chunk_size, chunk_overlap=chunk_overlap
-    )
-
+    chunks = split_documents_by_characters(dokumente, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    if not chunks:
+        raise ValueError("Keine indexierbaren Dokumente; vorhandene Collection bleibt unverändert.")
+    for chunk in chunks:
+        chunk.metadata["index_fingerprint"] = fingerprint
+    if count:
+        vectorstore.delete(ids=vectorstore.get()["ids"])
     for start in range(0, len(chunks), batch_size):
         batch = chunks[start:start + batch_size]
         vectorstore.add_documents(batch)
-        ende = min(start + batch_size, len(chunks))
-        mprint(f"  Batch {start // batch_size + 1}: {ende}/{len(chunks)} Chunks indexiert")
-
+        mprint(f"Batch {start // batch_size + 1}: {min(start + batch_size, len(chunks))}/{len(chunks)} Chunks indexiert")
     return len(chunks)
 
 
@@ -381,18 +394,24 @@ def check_corpus(vectorstore: Chroma, directory_path: str) -> dict[str, list[str
     return ergebnis
 
 
-def format_docs(docs: list[Document]) -> str:
-    """Formatiert Retrieval-Treffer mit Quelle, Korpus-Metadaten (Zeile ``Metadaten:``) und Ausschnitt."""
+def format_docs(docs: list[Document], max_chars: int | None = None) -> str:
+    """Formatiert vollständige Chunks; optionale Kürzung wird nur bei tatsächlicher Kürzung markiert."""
+    if max_chars is not None and max_chars <= 0:
+        raise ValueError("max_chars muss positiv oder None sein.")
     metadaten = load_korpus_metadata()
     teile = []
     for doc in docs:
         quelle = doc.metadata.get("source", "?").split("/")[-1]
         eintrag = {**metadaten.get(quelle, {}), **doc.metadata}
         info = _format_metadaten(eintrag)
+        content = doc.page_content.replace(chr(10), " ")
+        truncated = max_chars is not None and len(content) > max_chars
+        excerpt = content[:max_chars] if truncated else content
+        suffix = " … [gekürzt]" if truncated else ""
         teile.append(
             f"Quelle: {quelle}\n"
             + (f"Metadaten: {info}\n" if info else "")
-            + f"Ausschnitt: {doc.page_content.replace(chr(10), ' ')[:700]}"
+            + f"Ausschnitt: {excerpt}{suffix}"
         )
     return "\n\n---\n\n".join(teile)
 

@@ -460,18 +460,27 @@ def agent_ausfuehren(frage: str, run_tree=None) -> str:
 # Agent ausführen
 antwort = agent_ausfuehren("Was ist 5 * 8?")
 
-# Run-ID über letzten Run im Projekt ermitteln
-runs = list(client.list_runs(
-    project_name=os.environ["LANGSMITH_PROJECT"], limit=1
-))
-if runs:
+# Run-ID über den letzten Run im Projekt ermitteln (Notebook mit top-level await)
+from datetime import datetime, timedelta, timezone
+
+project = await client.aread_project(project_name=os.environ["LANGSMITH_PROJECT"])
+async for run in client.runs.query(
+    project_ids=[str(project.id)],
+    min_start_time=datetime.now(timezone.utc) - timedelta(days=7),
+    selects=["ID"], page_size=1,
+):
     client.create_feedback(
-        run_id=runs[0].id,
+        run_id=run.id,
         key="user_satisfaction",
         score=1.0,   # 0.0 = schlecht, 1.0 = gut
         comment="Antwort war präzise und korrekt.",
     )
+    break  # page_size begrenzt nur eine Seite, nicht die Gesamtzahl.
 ```
+
+Die SmithDB-Abfrage benötigt `langsmith>=0.10.15`. Projekt-UUID, Zeitfenster
+und benötigte Felder werden explizit angegeben. In Anwendungen mit parallelen
+Runs die ID des eigenen Runs festhalten, damit Feedback dem richtigen Run zugeordnet wird.
 
 
 ### Automatische Evaluierung mit LLM-as-Judge
@@ -896,7 +905,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 - **Playground direkt aus Trace:** Trace öffnen → *"Open in Playground"* — Prompt live editieren, Modell wechseln, sofort testen
 - **Compare-Ansicht:** Zwei Runs auswählen → *"Compare"* — zeigt Input/Output/Latenz/Tokens nebeneinander; ideal für Vorher/Nachher nach einem Fix
 - **Trace-Baum navigieren:** Linke Seitenleiste zeigt verschachtelte Child-Runs; Klick auf einen Child-Run öffnet Input/Output/Latenz direkt
-- **Export:** Run-Tabelle (gefiltert) → *"Export"* → CSV (nur Tabellen-Spalten); einzelne Traces → JSON (natives Format, nicht änderbar). Für vollständige Daten: `client.list_runs()` + `pandas.DataFrame.to_csv()`
+- **Export:** Run-Tabelle (gefiltert) → *"Export"* → CSV (nur Tabellen-Spalten); einzelne Traces → JSON (natives Format, nicht änderbar). Für programmatische Exporte: `client.runs.query()` mit Projekt-UUID, explizitem Zeitfenster und benötigten Feldern in `selects` per `async for` vollständig durchlaufen und die Daten anschließend mit `pandas.DataFrame.to_csv()` speichern.
 
 > 💡 **Tipp:** LangSmith-UI im zweiten Browser-Tab öffnen — so sind Traces direkt während der Entwicklung sichtbar, ohne den Notebook-Tab zu wechseln.
 

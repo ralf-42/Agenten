@@ -36,7 +36,7 @@ Teilnehmer mit **soliden Python-Kenntnissen** und ersten **AI/API-Basics**.
 ```
 Agenten/
 ├── 00_admin/       # Kursorganisation und Planung
-├── 01_notebook/    # Jupyter Notebooks (KI-Agenten und Tool Use bis DeepAgent Multi-Skill)
+├── 01_notebook/    # Jupyter Notebooks (KI-Agenten und Tool Use bis DeepAgents-Vertiefung)
 ├── 02_daten/       # Datasets (Text, Bild, Audio, Video)
 ├── 03_skript/      # Kursfolien & Intro-Präsentation
 ├── 04_modul/       # Python-Module (genai_lib)
@@ -60,7 +60,7 @@ Agenten/
 
 ### Spezialisierte Tools
 - **ChromaDB** (>=1.0.0) - Vektordatenbank für RAG-Systeme
-- **DeepAgents** (optional, >=0.7.29) - Harness für Planning, Filesystem und Sub-Agenten in DeepAgents Harness bis DeepAgent Multi-Skill
+- **DeepAgents** (optional, >=0.7.29) - Harness für Planning, Filesystem und Sub-Agenten in Harness, PMO-Skills und optionaler Parameter-/Sandbox-Vertiefung
 - **MCP / langchain-mcp-adapters** - lokale Tool-Server in MCP Local
 - **genai_lib** (eigene Module in `04_modul/genai_lib/`) - Projektspezifische Utilities
   - `utilities.py` - `mprint()`, `mermaid()`, `setup_api_keys()`, `check_environment()`, `show_trace()`
@@ -161,9 +161,11 @@ Sessions, Checkpointing und Memory sind in einem gemeinsamen Notebook zusammenge
 | 25 | MCP Local | MCP Local | Lokale MCP-Server und standardisierte Tool-Integration |
 | 26 | Agent Skill Compliance | Agent Skill – Compliance | SKILL.md-Struktur, Guardrails und Mixed-Model-Pattern |
 | 50 | DeepAgents Harness | DeepAgents: Autonomes Harness-Pattern | Planning, Tools und Sub-Agent Spawning |
-| 51 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
-| 52 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
-| 53 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| 51 | DeepAgents Skill PMO-Assistent | DeepAgents Skill: PMO-Briefing | PMO-Briefing als Skill für den PMO-Assistenten |
+| 52 | DeepAgent Multi-Skill | DeepAgent Multi-Skill | Native Skills-API, Progressive Disclosure und Multi-Skill-Routing |
+| 53 | DeepAgents Vertiefung | DeepAgents: Parameter, Sandbox & Einordnung | Weitere Parameter, Sandbox-Backends und Vergleich zu LangGraph |
+
+**DeepAgents-Lernpfad:** M50 Harness → M51 PMO-Skill → M52 Multi-Skill → M53 optionale Vertiefung.
 
 ## 🔑 Voraussetzungen
 

@@ -66,9 +66,13 @@ Der Kurs umfasst die Kursmodule M01–M27 (Grundlagen, Aufbau, Vertiefung) und d
 | **Tag 2** | Prompts, strukturierte Ausgaben, mehrere Tools und LCEL        | M03–M06           | —                                                       | —                                                                                          |
 | **Tag 3** | LangGraph, State, Routing und Tool-Schleifen                   | M07–M10           | M20 Agent Security Best Practices                       | —                                                                                          |
 | **Tag 4** | RAG, Retrieval als Tool und erste Evaluation                   | M11–M13           | M19 Agentic RAG, M21 Agent Evaluation, M23 Advanced RAG | —                                                                                          |
-| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | M27 Learning Loop nach M21                              | M24 Gradio UI, M26 Agent Skill Compliance, M52 DeepAgents Skill                            |
+| **Tag 5** | Sessions, Freigaben, Delegation und Multi-Agent-Zusammenarbeit | M14–M18           | M27 Learning Loop nach M21                              | M24 Gradio UI, M26 Agent Skill Compliance, M51 DeepAgents Skill                            |
 
 Die optionalen Module sind keine Voraussetzung für die gemeinsamen Kursziele. 
+
+### DeepAgents-Lernpfad
+
+Zuerst wird der Grundaufbau erarbeitet, dann ein einzelner PMO-Skill und anschließend die Kombination mehrerer Skills. Die Parameter- und Sandbox-Vertiefung ergänzt diese Schritte bei Bedarf.
 
 ### Kursprogression auf einen Blick
 

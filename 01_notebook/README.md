@@ -95,9 +95,11 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 | 26 | Agent Skill Compliance | `M26_Agent_Skill_Compliance.ipynb` | SKILL.md-Struktur, Guardrails, Mixed-Model-Pattern | 🟣 Vertiefung |
 | 27 | Learning Loop und Agentenverbesserung | `M27_Learning_Loop_Agentenverbesserung.ipynb` | Baseline, Fehleranalyse, Anweisungsänderung und zurückgehaltene Testfälle | 🔵 Aufbau |
 | 28 | DeepAgents Harness | `M50_DeepAgents_Harness.ipynb` | Planning, Tools, Sub-Agent Spawning (DeepAgents-Kern) | 🟣 Vertiefung |
-| 29 | DeepAgents Vertiefung | `M51_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
-| 30 | DeepAgents Skill PMO-Assistent | `M52_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
-| 31 | DeepAgent Multi-Skill | `M53_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
+| 29 | DeepAgents Skill PMO-Assistent | `M51_DeepAgents_Skill_PMO_Assistent.ipynb` | PMO-Briefing-Skill mit DeepAgents, GitHub-Skill-Dateien, MarkItDown | 🟣 Vertiefung |
+| 30 | DeepAgent Multi-Skill | `M52_DeepAgent_Multi_Skill.ipynb` | DeepAgents native skills=[...]-API, Progressive Disclosure, Multi-Skill-Routing | 🟣 Vertiefung |
+| 31 | DeepAgents Vertiefung | `M53_DeepAgents_Vertiefung.ipynb` | Weitere Parameter, Sandbox-Backends, Vergleich zu LangGraph | 🟣 Vertiefung |
+
+**DeepAgents-Lernpfad:** M50 Harness → M51 PMO-Skill → M52 Multi-Skill → M53 optionale Parameter- und Sandbox-Vertiefung. Die Nummerierung entspricht der empfohlenen Bearbeitungsreihenfolge.
 
 > **Einordnung von M50:** Das Notebook führt in DeepAgents ein. Es ist der Einstieg in ein Vertiefungsthema und gehört nicht zum gemeinsamen Grundlagenkern des Kurses.
 

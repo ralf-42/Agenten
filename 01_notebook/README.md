@@ -81,7 +81,7 @@ Der rote Faden der Grundlagen-, Aufbau- und Vertiefungsmodule ist ein **PMO-Assi
 
 ## Optionale Module — Aufbau und Vertiefung
 
-> M19–M23 und M27 sind **Aufbaumodule** und können nach Erreichen der Grundlagenziele im Kurs eingesetzt werden. M24–M26 und M50–M53 sind **Vertiefungsmodule** für optionale Impulse, Wahlaufgaben oder die Nachbereitung. M27 baut insbesondere auf Evaluation in M21 auf.
+> M19–M23 und M27 sind **Aufbaumodule** und können nach Erreichen der Grundlagenziele im Kurs eingesetzt werden. M24–M26 und M50–M53 sind **Vertiefungsmodule** für optionale Impulse, Wahlaufgaben oder die Nachbereitung. M27 folgt auf Evaluation in M13 oder M21. Ein eigenes Regressionstest-Set aus M21 kann weitergeführt werden; ohne dieses Set dienen die vorhandenen Entwicklungsfälle als Startpunkt.
 
 | Nr. | Modul | Datei | Inhalt | Priorität |
 | ---: |-------|-------|--------|-----------|

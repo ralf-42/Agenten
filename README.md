@@ -13,7 +13,7 @@ Ein deutschsprachiger, praxisorientierter Kurs zu **Agenten-Systemen** mit Fokus
 
 **Leitprofil:** Vom KI-Feature zum kontrollierten Arbeitssystem — Tools, State, Entscheidungen, Freigabe und Evaluation. Der Kurs baut auf GenAI-Grundlagen auf, geht aber über einzelne KI-Features hinaus: Es entsteht ein System, das **plant** (Routing, State, Tool-Auswahl, Supervisor), **handelt** (Tool-Use, RAG als Evidence Tool, Workflows) und **geprüft wird** (Human-in-the-Loop, Security, Evaluation).
 
-Der durchgehende Anwendungsfall ist ein **PMO-Assistent**: Eine fiktive Projektleiterin, Mara Vogt, baut schrittweise ein kontrolliertes Agentensystem, das einen Projektkorpus aus Protokollen, Entscheidungen, Risiken und Aufgaben semantisch durchsucht, Antworten mit Quellen belegt, Unsicherheit sichtbar macht und kritische Ausgaben per Human-in-the-Loop freigibt. Tool Use, Structured Output, RAG als Evidence Tool, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben kontrollierten Arbeitssystems erarbeitet.
+Der durchgehende Anwendungsfall ist ein **PMO-Assistent**, den die Teilnehmenden schrittweise entwickeln. Die fiktive Projektleiterin Mara Vogt nutzt ihn für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Das System durchsucht einen Projektkorpus aus Protokollen, Entscheidungen, Risiken und Aufgaben, belegt Antworten mit Quellen, macht Unsicherheit sichtbar und hält kritische Ausgaben zur menschlichen Prüfung an. Tool Use, Structured Output, RAG als Evidence Tool, Evaluation und Multi-Agent-Patterns werden dadurch nicht als Einzeltechniken, sondern als Bausteine desselben kontrollierten Arbeitssystems erarbeitet.
 
 ## 🌐 Kurs-Website
 
@@ -97,7 +97,7 @@ Der Kurs unterscheidet die Notebook-Stufe vom Anspruch einzelner Aufgaben. In de
 | Stufe | Modul-IDs | Einsatz |
 | --- | --- | --- |
 | **Grundlagen / Kern** | M01–M18 | Gemeinsame Mindestlernziele für alle Teilnehmenden. |
-| **Aufbau** | M19–M23 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
+| **Aufbau** | M19–M23 und M27 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
 | **Vertiefung** | M24–M26 und M50–M53 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
 
 Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./docs/02-orientierung-entscheidung/kursueberblick.md) beschrieben.
@@ -151,6 +151,7 @@ Sessions, Checkpointing und Memory sind in einem gemeinsamen Notebook zusammenge
 | 20 | Agent Security Best Practices | Agent Security & Best Practices | Prompt Injection, Tool-Gating, Audit-Log und PII-Redaktion |
 | 21 | Agent Evaluation und Testing | Agent Evaluation & Testing | Reproduzierbare Evaluation, Regression und RAGAS-Live-Lauf |
 | 22 | Model Routing und Cost Control | Model Routing & Cost Control | Fallback, Circuit Breaker, Token-/Kostenkontrolle und Budget Gate |
+| 27 | Learning Loop und Agentenverbesserung | Optionaler Aufbau nach Evaluation | Anweisungsänderung auf Entwicklungsfällen prüfen, bekannte Regressionen vergleichen und neue zurückgehaltene Fälle auswerten |
 
 ### Block 7: Integration und Produktion
 

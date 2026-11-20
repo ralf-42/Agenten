@@ -95,7 +95,7 @@ Wichtige technische Muster:
 - **Offene Schnittstellen:** Modell-, Retrieval- und Tool-Zugriffe laufen über austauschbare Adapter.
 - **Datenportabilität:** Dokumente, Chunks, Embeddings und Metadaten bleiben exportierbar.
 - **Externe Schlüsselkontrolle:** Verschlüsselung nutzt Schlüssel, die nicht vollständig beim Cloud-Anbieter liegen; BYOK oder External Key Management sind dafür typische Muster.
-- **Regionale Verarbeitung:** Datenresidenz und Subprozessoren werden vor produktiver Nutzung geprüft.
+- **Regionale Verarbeitung:** Datenresidenz (geografischer Speicherort der Daten) und Subprozessoren werden vor produktiver Nutzung geprüft.
 - **Open Source an kritischen Stellen:** zentrale Infrastruktur bleibt auditierbar und im Notfall betreibbar.
 - **Minimaler Trace:** Observability speichert nur, was für Debugging, Evaluation und Audit wirklich nötig ist.
 

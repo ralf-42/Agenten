@@ -220,7 +220,7 @@ Wer nur die Endantwort speichert, sieht meist nur das Symptom. Wer auch Tool-Wah
 
 ## Fehler benennen statt nur "falsch" zu sagen
 
-Agenten verbessern sich schneller, wenn Fehler systematisch benannt werden. Eine kleine Fehlertaxonomie hilft oft mehr als ein zusätzlicher Gesamt-Score.
+Agenten verbessern sich schneller, wenn Fehler systematisch benannt werden. Eine kleine Fehlertaxonomie (systematische Fehlerkategorisierung) hilft oft mehr als ein zusätzlicher Gesamt-Score.
 
 ```text
 Typische Fehlerklassen:

@@ -38,7 +38,7 @@ LangSmith beantwortet diese Fragen durch:
 - **Performance-Monitoring** in Produktion
 - **Feedback-Collection** von Nutzern
 
-Bei aktivem Tracing zeichnen unterstützte LangChain- und LangGraph-Integrationen Runs auf. Eigene Funktionen und nicht integrierte Aufrufe benötigen zusätzliche Instrumentierung; Umfang und Inhalt hängen von der Konfiguration ab.
+Bei aktivem Tracing zeichnen unterstützte LangChain- und LangGraph-Integrationen Runs auf. Eigene Funktionen und nicht integrierte Aufrufe benötigen zusätzliche Instrumentierung (Einbau von Mess- und Protokollpunkten); Umfang und Inhalt hängen von der Konfiguration ab.
 
 ### LangSmith im Entwicklungs-Workflow
 
@@ -156,7 +156,7 @@ print(response.text)
 **Was passiert im Hintergrund:**
 1. Die Integration übermittelt die für diesen Run verfügbaren Daten.
 2. LangSmith ordnet den Run einem Trace zu, der in der Web-UI angezeigt werden kann.
-3. Eigene Funktionen benötigen gegebenenfalls zusätzliche Instrumentierung.
+3. Eigene Funktionen benötigen gegebenenfalls zusätzliche Instrumentierung (Einbau von Mess- und Protokollpunkten).
 
 **Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
 - URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects) (in der *Classic Experience*; steht oben links statt des LangSmith-Logos der Workspace-Name, liegen über `LANGSMITH_PROJECT` gesendete Traces im Agent-Picker unter `Production` oder nach Umschaltung über Settings → General → **Switch to classic experience** unter `Projects`)

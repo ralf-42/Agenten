@@ -99,7 +99,7 @@ Weiterführend: [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/
 
 Tools geben dem Agenten Zugriff auf Daten, APIs, Dateien, Browser oder Rechenumgebungen. Das Harness kontrolliert diesen Zugriff über klare Tool-Spezifikationen, Parameterprüfung, Whitelists, Berechtigungen und Fehlerbehandlung.
 
-Besonders wichtig ist die Unterscheidung zwischen lesenden und schreibenden Aktionen. Schreibaktionen, externe Kommunikation und irreversible Vorgänge brauchen eine stärkere Kontrollstufe als eine reine Recherche. Idempotenz, Transaktions-IDs, Dry-Run-Modi und Rollback reduzieren Schäden bei Wiederholungen oder Teilfehlern.
+Besonders wichtig ist die Unterscheidung zwischen lesenden und schreibenden Aktionen. Schreibaktionen, externe Kommunikation und irreversible Vorgänge brauchen eine stärkere Kontrollstufe als eine reine Recherche. Idempotenz (mit gleichem Ergebnis wiederholbar), Transaktions-IDs, Dry-Run-Modi und Rollback reduzieren Schäden bei Wiederholungen oder Teilfehlern.
 
 Die Tool-Grenze ist eine technische Vertrauensgrenze. Inhalte aus Webseiten, E-Mails, PDFs oder Tool-Ergebnissen sind Daten und keine neuen Systemanweisungen. Vor der Übergabe an das Modell müssen sie deshalb strukturiert isoliert und bei Bedarf gefiltert werden.
 

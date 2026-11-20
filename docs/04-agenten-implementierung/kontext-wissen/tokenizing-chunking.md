@@ -47,7 +47,7 @@ Wenn Antworten unpräzise, unvollständig oder instabil sind, wird oft zuerst da
 | **Zusammenfassungen** | Verdichtung des Inhalts bei Beibehaltung der Kernaussagen | 256 Tokens mit moderater Überlappung (10–20%) | Semantisches Chunking | Semantisches Chunking bewahrt komplette Sinnabschnitte, sodass die Kernaussagen klar extrahiert werden können, ohne den Kontext zu verlieren. |
 | **Informationsretrieval (RAG)** | Effiziente Auffindbarkeit relevanter Abschnitte | 256–512 Tokens mit moderater Überlappung (10–20%) | Embeddingbasiertes Chunking | Embeddingbasiertes Chunking gruppiert semantisch verwandte Inhalte. So werden relevante Informationen leichter auffindbar und retrieval-technisch optimal aufbereitet. |
 | **Named Entity Recognition (NER)** | Identifikation wichtiger Entitäten | Ca. 256 Tokens an Satzgrenzen, minimale Überlappung (5–15%) | Semantisches Chunking (ggf. kombiniert mit embeddingbasierten Ansätzen) | Durch an Satzgrenzen ausgerichtete Chunks wird vermieden, dass Entitäten aufgespalten werden. Eine embeddingbasierte Analyse kann zusätzlich helfen, zusammengehörige Entitäten zu erfassen. |
-| **Textklassifikation** | Zuweisung von Labels zu Dokumenten oder Abschnitten | Ganze Dokumente oder 512 Tokens, wenig bis keine Überlappung | Semantisches Chunking (optional mit reduzierter Granularität) | Gröbere Unterteilungen verhindern Rauschen, während semantische Einheiten erhalten bleiben, die für die Klassifikation relevant sind. |
+| **Textklassifikation** | Zuweisung von Labels zu Dokumenten oder Abschnitten | Ganze Dokumente oder 512 Tokens, wenig bis keine Überlappung | Semantisches Chunking (optional mit reduzierter Granularität, also gröberem Detailgrad) | Gröbere Unterteilungen verhindern Rauschen, während semantische Einheiten erhalten bleiben, die für die Klassifikation relevant sind. |
 | **Code-Kommentierung/Erklärung** | Verständnis und Erklärung von Codeabschnitten | Pro Funktion/Modul, Überlappung nur bei Bedarf | Agentisches Chunking | Agentisches Chunking berücksichtigt syntaktische und semantische Aspekte des Codes. So bleiben logische Zusammenhänge, wie Funktionsdefinitionen, erhalten und können optimal erklärt werden. |
 
 > [!NOTE] Pilotphase<br>
@@ -218,7 +218,7 @@ flowchart TD
     START([Text analysieren]) --> Q1{Ist der Text<br>strukturiert?}
 
     Q1 -->|JA| DOK[Dokumentbasiertes<br>Chunking]
-    Q1 -->|NEIN| Q2{Ist semantische<br>Kohärenz wichtig?}
+    Q1 -->|NEIN| Q2{"Ist semantische Kohärenz<br>(inhaltlicher Zusammenhang)<br>wichtig?"}
 
     Q2 -->|NEIN| ZEICHEN[Einfaches<br>Zeichenbasiertes Chunking]
     Q2 -->|JA| Q3{Ist Rechenleistung<br>verfügbar?}

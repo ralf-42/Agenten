@@ -577,7 +577,7 @@ vision_message = HumanMessage(
 
 vision_response = llm.invoke([vision_message])
 
-# content_blocks können provider-agnostisch ausgewertet werden
+# content_blocks können provider-agnostisch (anbieterunabhängig) ausgewertet werden
 for block in vision_response.content_blocks:
     if block["type"] == "text":
         print("Antwort:", block["text"])
@@ -795,7 +795,7 @@ Diese Begriffe müssen für die ersten Beispiele nicht aktiv verwendet werden, s
 |---|---|
 | `llm.profile` / Model Profiles | Modelle stellen Fähigkeiten wie strukturierte Ausgabe, Tool Calling, Bild-Eingaben und Kontextgröße maschinenlesbar bereit. So muss Code weniger provider-spezifisch entscheiden. |
 | `ProviderStrategy` | Bei `with_structured_output()` wählt LangChain möglichst automatisch die passende Strategie: native strukturierte Ausgabe, wenn der Provider sie unterstützt, sonst ein Fallback. |
-| `.with_retry()` / `.with_fallbacks()` | Runnables können bei transienten Fehlern erneut ausgeführt oder auf ein alternatives Modell umgeleitet werden. Das ist vor allem für produktionsnähere Chains relevant. |
+| `.with_retry()` / `.with_fallbacks()` | Runnables können bei transienten (vorübergehenden) Fehlern erneut ausgeführt oder auf ein alternatives Modell umgeleitet werden. Das ist vor allem für produktionsnähere Chains relevant. |
 | `ContextOverflowError` | Wenn ein Modellaufruf das Kontextfenster überschreitet, kann dieser Fehler entstehen. Context-Management oder `SummarizationMiddleware` verhindert, dass lange Sessions daran scheitern. |
 
 ---

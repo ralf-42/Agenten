@@ -79,7 +79,7 @@ Nicht jeder KI-Dienst eignet sich für jeden Anwendungsfall. Die Entscheidung h�
 | Personenbezogene Daten (Standard) | Kundenfragen, interne E-Mails | Dienst mit AVV/DPA, klarer Datenhaltung und dokumentiertem Zweck |
 | Besondere Kategorien (Art. 9 DSGVO) | Gesundheitsdaten, Bewerbungsunterlagen | Lokales Modell oder streng kontrollierte Unternehmensumgebung |
 
-Bei Cloud-LLM-APIs müssen Datenkontrollen konkret geprüft werden: Werden Eingaben zum Training verwendet? Welche Logs entstehen? Wie lange werden Inhalte gespeichert? Gibt es einen Auftragsverarbeitungsvertrag, Datenresidenzoptionen oder regionale Verarbeitung? Solche Details gehören in die technische und organisatorische Bewertung, nicht nur in eine Produktauswahl nach Anbietername.
+Bei Cloud-LLM-APIs müssen Datenkontrollen konkret geprüft werden: Werden Eingaben zum Training verwendet? Welche Logs entstehen? Wie lange werden Inhalte gespeichert? Gibt es einen Auftragsverarbeitungsvertrag, Datenresidenzoptionen (geografischer Speicherort der Daten) oder regionale Verarbeitung? Solche Details gehören in die technische und organisatorische Bewertung, nicht nur in eine Produktauswahl nach Anbietername.
 
 Azure OpenAI, OpenAI-Datenresidenzoptionen, Enterprise-Verträge oder andere Anbieterangebote können für personenbezogene Daten geeignet sein, müssen aber konkret geprüft werden: Region, Subprozessoren, Vertragsgrundlage, Logging, Löschfristen und tatsächliche Datenflüsse zählen mehr als der Produktname.
 

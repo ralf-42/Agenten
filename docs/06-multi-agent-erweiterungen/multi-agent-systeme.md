@@ -446,7 +446,7 @@ def supervisor_router(state: TeamState) -> str:
     return "next_agent"
 ```
 
-**Typischer Fehler:** Kommunikation zirkulär zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
+**Typischer Fehler:** Kommunikation zirkulär (kreisförmig) zu bauen, ohne Timeouts oder klare Richtung. Dann warten Agenten indirekt aufeinander und blockieren den Ablauf.
 
 Eine weitere Entscheidung, die oft zu spät gestellt wird: Was passiert, wenn einzelne Worker scheitern? Partial Results (das System liefert, was fertig ist) und Fail Fast (sofortiger Abbruch bei erstem Fehler) sind zwei legitime Strategien mit unterschiedlichen Konsequenzen für Nutzende und nachgelagerte Systeme. Diese Wahl sollte bewusst getroffen werden — nicht durch fehlende Fehlerbehandlung von selbst entstehen.
 

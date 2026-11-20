@@ -27,7 +27,7 @@ has_toc: true
 
 Ein Agent kann eine Aufgabe selten allein dadurch lösen, dass er einmal eine Antwort erzeugt. Er ruft ein Tool auf, beobachtet das Ergebnis und entscheidet anhand des aktualisierten Zustands über den nächsten Schritt. Diese Agentenschleife ist nützlich, wenn der Lösungsweg nicht vollständig vorgegeben ist. Sie braucht aber ein klares Ziel und Grenzen: Sonst wiederholt der Agent wirkungslose Schritte oder verbraucht unnötig Zeit und Geld.
 
-Loop Engineering bezeichnet hier den Entwurf solcher Wiederholungen und ihrer Kontrollpunkte. Die folgende Einteilung ist eine **Orientierungshilfe**, keine allgemeingültige Taxonomie. Schleifen können ineinandergreifen, und nicht jede Aufgabe braucht alle Typen. Ist die Schrittfolge bekannt, kann ein fester Workflow einfacher und verlässlicher sein; siehe [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}).
+Loop Engineering bezeichnet hier den Entwurf solcher Wiederholungen und ihrer Kontrollpunkte. Die folgende Einteilung ist eine **Orientierungshilfe**, keine allgemeingültige Taxonomie (systematische Einteilung). Schleifen können ineinandergreifen, und nicht jede Aufgabe braucht alle Typen. Ist die Schrittfolge bekannt, kann ein fester Workflow einfacher und verlässlicher sein; siehe [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}).
 
 ## Sieben Perspektiven auf Schleifen
 

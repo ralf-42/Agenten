@@ -290,7 +290,7 @@ print(f"Antwort: {answer}")
 - `answer` (str): Eigentliche Antwort
 
 **Features:**
-- Provider-agnostisch: Ein Parser für alle LLMs
+- Provider-agnostisch (anbieterunabhängig): Ein Parser für alle LLMs
 - Fallback-Logik: Prüft automatisch alle bekannten Formate
 - Robust: Gibt leeren Thinking-String zurück, wenn kein Denkprozess vorhanden
 
@@ -715,7 +715,7 @@ Maßgeblich ist immer `04_modul/requirements.txt` im Repository; die Liste hier 
 ### Überblick
 
 > [!NOTE] model_config.py auf einen Blick<br>
-> Das `model_config`-Modul definiert Modell-IDs als benannte Konstanten nach Rolle. Die Instanziierung erfolgt im Notebook mit `init_chat_model()`, sodass API-Keys bereits gesetzt sind.
+> Das `model_config`-Modul definiert Modell-IDs als benannte Konstanten nach Rolle. Die Instanziierung (Erzeugung des konkreten Modell-Objekts) erfolgt im Notebook mit `init_chat_model()`, sodass API-Keys bereits gesetzt sind.
 
 ```python
 from genai_lib.model_config import BASELINE, WORKER, JUDGE, FRONTIER

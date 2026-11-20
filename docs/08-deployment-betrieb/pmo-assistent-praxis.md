@@ -168,7 +168,7 @@ class BriefingState(TypedDict):
 def classify_intent_node(state: BriefingState) -> BriefingState:
     """Erkennt den Fragetyp."""
     query = state["user_query"].lower()
-    # einfache Heuristik oder LLM-Klassifikation ergänzen
+    # einfache Heuristik (Faustregel) oder LLM-Klassifikation ergänzen
     return state
 
 def fallback_answer_node(state: BriefingState) -> BriefingState:

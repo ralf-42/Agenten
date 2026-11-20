@@ -506,7 +506,7 @@ Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können
 
 ---
 
-## Provider-Agnostik: was austauschbar ist
+## Provider-Agnostik (Anbieterunabhängigkeit): was austauschbar ist
 
 Das Modell wird über die LangChain-Modellschnittstelle eingebunden. Welche Anbieter verfügbar sind, hängt von den installierten Integrationen und ihren APIs ab.
 
@@ -608,7 +608,7 @@ Die Sicherheitsgrenze entsteht durch die tatsächlich erlaubten Tools, Backends 
 ### Praktische Hinweise
 
 - Versionen pinnen
-- Kleine Tools statt Monolithen bauen
+- Kleine Tools statt Monolithen (große, ungeteilte Blöcke) bauen
 - System-Prompts klar halten
 - Traces regelmäßig prüfen (LangSmith)
 - In Produktion: Sandboxes für Code-Ausführung verwenden

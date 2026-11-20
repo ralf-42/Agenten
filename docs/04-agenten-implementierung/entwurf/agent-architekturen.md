@@ -524,7 +524,7 @@ Gerade deshalb ist die Architekturfrage keine Entweder-oder-Entscheidung, sonder
 ## Mit wenigen Mustern starten
 Für einen ersten Kursagenten reicht meist eine begrenzte Kombination aus Tool-Calling, klaren Geschäftsregeln und einem kleinen Workflow für Sonderfälle. Diese Struktur ist einfacher zu erklären, leichter zu debuggen und robuster zu testen als ein frei planendes Multi-Agent-System.
 
-Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
+Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie (systematische Einteilung) vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
 
 ## Abgrenzung zu verwandten Dokumenten
 

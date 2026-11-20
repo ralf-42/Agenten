@@ -131,7 +131,7 @@ collection = client.create_collection(
     metadata={"description": "Firmendokumente für RAG"}
 )
 
-# Oder: Collection holen/erstellen (idempotent)
+# Oder: Collection holen/erstellen (idempotent – mit gleichem Ergebnis wiederholbar)
 collection = client.get_or_create_collection(name="meine_dokumente")
 
 # Bestehende Collection holen

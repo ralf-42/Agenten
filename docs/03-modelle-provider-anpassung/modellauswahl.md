@@ -267,7 +267,7 @@ flowchart LR
 
 ### Anforderungsanalyse
 - **Definition der Aufgaben**: Festlegen, welche spezifischen Funktionen das Modell erfüllen soll (z. B. Textgenerierung, Fragebeantwortung).
-- **Qualitätskriterien**: Bestimmen, welche Qualitätsstandards (Kohärenz, Genauigkeit) erfüllt werden müssen.
+- **Qualitätskriterien**: Bestimmen, welche Qualitätsstandards (Kohärenz – also inhaltlicher Zusammenhang –, Genauigkeit) erfüllt werden müssen.
 - **Domänenkenntnisse**: Identifizieren, welches Fachwissen für die Aufgabe notwendig ist.
 - **Antwortgeschwindigkeit**: Definieren, welche Reaktionszeit akzeptabel ist.
 - **Budget**: Einen finanziellen Rahmen für die KI-Lösung setzen.

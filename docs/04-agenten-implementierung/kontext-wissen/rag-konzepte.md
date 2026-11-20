@@ -197,7 +197,7 @@ Die initiale Vektorsuche ist schnell, aber nicht perfekt. Reranking verwendet ei
 |--------|--------------|-------------|
 | **Cross-Encoder** | Betrachtet Query + Dokument gemeinsam | Höchste Qualität, langsam |
 | **LLM-based** | LLM bewertet Relevanz | Flexibel, teuer |
-| **Lightweight** | Schnelle Heuristiken | Schnell, moderate Qualität |
+| **Lightweight** | Schnelle Heuristiken (einfache Faustregeln) | Schnell, moderate Qualität |
 
 ---
 

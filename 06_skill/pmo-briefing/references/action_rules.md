@@ -28,6 +28,14 @@ Fehlt eines dieser drei Elemente → Action Item trotzdem aufnehmen, fehlende Fe
 - Bereits abgeschlossene Aufgaben (Vergangenheitsform + Bestätigung)
 - Themen ohne konkreten nächsten Schritt
 
+## Gemeinsame Aufgabenübersicht
+
+`extract_actions` wird für die bereitgestellten Quelltexte aufgerufen. Seine Ausgabe bleibt als Skriptergebnis erkennbar. Die Heuristik kann Aufgaben übersehen; ein leeres Skriptergebnis beweist nicht, dass der Quelltext keine Aufgaben enthält.
+
+Alle für die Anfrage relevanten, belegten Aufgaben werden in einer gemeinsamen Tabelle zusammengeführt. Die Spalte `Herkunft` enthält `extract_actions` für tatsächlich ausgegebene Skript-Treffer oder `Quellenbefund` für ausdrücklich im Quelltext genannte, vom Skript nicht erfasste Aufgaben. Ein Quellenbefund darf nicht als Skriptergebnis ausgegeben werden. Allgemeine Empfehlungen und neue Vorschläge sind keine dokumentierten Aufgaben und bleiben getrennt.
+
+Je Zeile werden Aufgabe, Verantwortlich, Fällig, Herkunft und `Quelle / Datum` angegeben. Quelle ist der exakte Dateiname mit Dokumentdatum, soweit vorhanden. Bei mehreren Eingabedokumenten werden die Skript-Treffer anhand des jeweiligen Aufrufs zugeordnet; die Texte möglichst pro Quelldatei übergeben. Fehlende Angaben bleiben `[offen]`. Insbesondere wird keine Frist aus einem anderen Dokument oder einem bloßen Berichtsdatum übernommen. Nachweislich gleiche Aufgaben können zusammengeführt werden, ihre Quellen bleiben erhalten.
+
 ## Format-Regeln
 
 ### Beschreibung
@@ -61,5 +69,5 @@ Wenn zwei Quellen dasselbe Action Item unterschiedlich beschreiben:
 
 ## Sonderfall: Keine Action Items vorhanden
 
-- Leere Tabelle ausgeben mit Hinweis: „Keine Action Items in den Unterlagen gefunden."
+- Nur wenn weder Skript-Treffer noch ausdrücklich belegte Quellenbefunde vorliegen, eine leere Tabelle mit „Keine belegten Action Items gefunden“ ausgeben. Ein leeres Skriptergebnis allein reicht dafür nicht.
 - Kein Erfinden von Aufgaben

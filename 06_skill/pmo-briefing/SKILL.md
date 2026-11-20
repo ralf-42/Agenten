@@ -25,7 +25,7 @@ Typische Trigger-Phrasen sind in der `description` aufgeführt.
 
 1. **Immer alle verfügbaren Kontext-Dokumente laden** — kein Briefing ohne Grundlage.
 2. **Agenda-Regeln zwingend einhalten** — Format aus `agenda_rules.md` ist bindend.
-3. **Action Items deterministisch extrahieren** — Tool `extract_actions` aufrufen, nie manuell.
+3. **Action Items mit nachvollziehbarer Herkunft** — `extract_actions` aufrufen und seine Treffer übernehmen. Zusätzlich ausdrücklich belegte Aufgaben als `Quellenbefund` kennzeichnen; keine Aufgaben erfinden.
 4. **Keine Annahmen über fehlende Informationen** — Lücken explizit als „offen" markieren.
 5. **Sprache des Meetings übernehmen** — Deutsch wenn Meeting auf Deutsch, sonst Englisch.
 6. **Keine verbindlichen Projektentscheidungen ohne Freigabe** — Status, Aufgaben und Empfehlungen bleiben quellengebunden; externe Aktionen oder verbindliche Entscheidungen erfordern menschliche Prüfung.
@@ -57,6 +57,14 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 - Sachlicher, klarer Stil — keine Füllwörter
 - Keine eigenen Bewertungen ohne Quellenbeleg aus dem Kontext
 
+## Gemeinsame Aufgabenübersicht
+
+`extract_actions` wird für die bereitgestellten Quelltexte aufgerufen. Seine Ausgabe bleibt als Skriptergebnis erkennbar. Die Heuristik kann Aufgaben übersehen; ein leeres Skriptergebnis beweist nicht, dass der Quelltext keine Aufgaben enthält.
+
+Alle für die Anfrage relevanten, belegten Aufgaben werden in einer gemeinsamen Tabelle zusammengeführt. Die Spalte `Herkunft` enthält `extract_actions` für tatsächlich ausgegebene Skript-Treffer oder `Quellenbefund` für ausdrücklich im Quelltext genannte, vom Skript nicht erfasste Aufgaben. Ein Quellenbefund darf nicht als Skriptergebnis ausgegeben werden. Allgemeine Empfehlungen und neue Vorschläge sind keine dokumentierten Aufgaben und bleiben getrennt.
+
+Je Zeile werden Aufgabe, Verantwortlich, Fällig, Herkunft und `Quelle / Datum` angegeben. Quelle ist der exakte Dateiname mit Dokumentdatum, soweit vorhanden. Bei mehreren Eingabedokumenten werden die Skript-Treffer anhand des jeweiligen Aufrufs zugeordnet; die Texte möglichst pro Quelldatei übergeben. Fehlende Angaben bleiben `[offen]`. Insbesondere wird keine Frist aus einem anderen Dokument oder einem bloßen Berichtsdatum übernommen. Nachweislich gleiche Aufgaben können zusammengeführt werden, ihre Quellen bleiben erhalten.
+
 ## Ausgabeformat — Vorbereitung
 
 ```
@@ -74,11 +82,11 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 #### Agenda
 
-| Priorität | Punkt | Ziel | Dauer |
-|-----------|-------|------|-------|
-| 🔴 Hoch   | ...   | ...  | ...   |
-| 🟡 Mittel | ...   | ...  | ...   |
-| 🟢 Gering | ...   | ...  | ...   |
+| Priorität | Punkt | Ziel | Dauer | Owner |
+|-----------|-------|------|-------|-------|
+| 🔴 Hoch   | ...   | ...  | ...   | [offen] |
+| 🟡 Mittel | ...   | ...  | ...   | [offen] |
+| 🟢 Gering | ...   | ...  | ...   | [offen] |
 
 #### Offene Fragen (vor dem Meeting klären)
 
@@ -96,9 +104,9 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 #### Action Items (aus Vorgesprächen / Dokumenten)
 
-| # | Aufgabe | Verantwortlich | Fällig |
-|---|---------|---------------|--------|
-| 1 | ...     | ...           | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 ---
 *Erstellt durch PMO-Briefing-Skill*
@@ -122,9 +130,9 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 #### Offene Aufgaben
 
-| # | Aufgabe | Verantwortlich | Fällig | Status |
-|---|---------|----------------|--------|--------|
-| 1 | ...     | ...            | ...    | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Status | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | ... | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 #### Risiken, Entscheidungen und Abweichungen
 
@@ -151,9 +159,9 @@ Nutzeranfrage (Thema, Teilnehmer, Kontext)
 
 #### Action Items (neu)
 
-| # | Aufgabe | Verantwortlich | Fällig |
-|---|---------|---------------|--------|
-| 1 | ...     | ...           | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 #### Offene Punkte (vertagt)
 

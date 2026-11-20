@@ -53,20 +53,26 @@ Nutzeranfrage
 - Strukturierten Recherche-Output erzeugen
 - Keine eigenen Interpretationen — nur belegte Aussagen
 
+## Quellenzählung und Nachweise
+
+`Quellen ausgewertet` zählt unterschiedliche Quelldateien, deren Fundstellen tatsächlich gelesen und mit `score_relevance` bewertet wurden. `Relevante Quellen` zählt davon die Dateien mit mindestens einer passenden Fundstelle und Score ≥ 0.4. Mehrere Chunks oder wiederholte Bewertungen derselben Datei zählen nicht als zusätzliche Quelle. Beide Anzahlen werden aus den tatsächlichen Tool-Ergebnissen ermittelt, nicht geschätzt. Die Zahl relevanter Quellen darf die Zahl ausgewerteter Quellen nicht überschreiten.
+
+Jede Kernaussage nennt den exakten Quelldateinamen, das Dokumentdatum und den tatsächlich zurückgegebenen Relevanz-Score. Ein hoher Score ist kein Beweis für die fachliche Richtigkeit. Fehlende Datumsangaben werden als `[offen]` markiert. Der vollständige Recherchebericht enthält Fragestellung, beide Quellenanzahlen, Kernaussagen, offene oder nicht belegte Aspekte und eine Empfehlung für den nächsten Schritt. Wenn nichts offen ist, wird das ausdrücklich vermerkt. Auch bei einer kombinierten Recherche- und Freigabeanfrage bleiben Recherchebericht und anschließender Prüf-/Rückfrageteil getrennt erkennbar.
+
 ## Ausgabeformat
 
 ```
 ### Recherchebericht: [Thema]
 
 **Fragestellung:** [Originale Nutzeranfrage]
-**Quellen ausgewertet:** [Anzahl] | **Relevante Quellen:** [Anzahl nach Filter]
+**Quellen ausgewertet:** [Anzahl] | **Relevante Quellen:** [Anzahl unterschiedlicher Dateien nach Filter]
 
 ---
 
 #### Kernaussagen
 
-1. [Aussage] — Quelle: [Dokument, Datum], Relevanz: [Score]
-2. [Aussage] — Quelle: [Dokument, Datum], Relevanz: [Score]
+1. [Aussage] — Quelle: [exakter Dateiname, Dokumentdatum], Relevanz: [Score]
+2. [Aussage] — Quelle: [exakter Dateiname, Dokumentdatum], Relevanz: [Score]
 ...
 
 #### Offene Fragen / Nicht belegte Aspekte

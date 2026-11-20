@@ -31,6 +31,12 @@ Diese Regeln definieren die Suchstrategie des Dokumentenrecherche-Skills.
 - Bei 0 Quellen mit Score ≥ 0.4: `"Nicht im Korpus"` zurückgeben
 - Maximal **8 Quellen** verarbeiten (Kontext-Budget)
 
+## Quellenzählung und Nachweise
+
+`Quellen ausgewertet` zählt unterschiedliche Quelldateien, deren Fundstellen tatsächlich gelesen und mit `score_relevance` bewertet wurden. `Relevante Quellen` zählt davon die Dateien mit mindestens einer passenden Fundstelle und Score ≥ 0.4. Mehrere Chunks oder wiederholte Bewertungen derselben Datei zählen nicht als zusätzliche Quelle. Beide Anzahlen werden aus den tatsächlichen Tool-Ergebnissen ermittelt, nicht geschätzt. Die Zahl relevanter Quellen darf die Zahl ausgewerteter Quellen nicht überschreiten.
+
+Jede Kernaussage nennt den exakten Quelldateinamen, das Dokumentdatum und den tatsächlich zurückgegebenen Relevanz-Score. Ein hoher Score ist kein Beweis für die fachliche Richtigkeit. Fehlende Datumsangaben werden als `[offen]` markiert. Der vollständige Recherchebericht enthält Fragestellung, beide Quellenanzahlen, Kernaussagen, offene oder nicht belegte Aspekte und eine Empfehlung für den nächsten Schritt. Wenn nichts offen ist, wird das ausdrücklich vermerkt. Auch bei einer kombinierten Recherche- und Freigabeanfrage bleiben Recherchebericht und anschließender Prüf-/Rückfrageteil getrennt erkennbar.
+
 ## Konflikt-Erkennung
 
 Wenn zwei Quellen eine Kernaussage gegensätzlich darstellen (zum Beispiel D1 und D2):

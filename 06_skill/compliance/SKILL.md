@@ -49,11 +49,15 @@ Diese Felder aus der Nutzernachricht oder dem Gesprächsverlauf extrahieren, bev
 - confidential_content: enthält das Dokument vertrauliche Inhalte (zum Beispiel Budget- oder Personalangaben)
 - conflict_unresolved: gibt es widersprüchliche Quellen, die noch nicht aufgelöst sind (zum Beispiel zwei Entscheidungen zum selben Thema)
 - sources_complete: sind alle Aussagen mit Quellen belegt
-- privacy_clearance_confirmed: ausdrückliche Bestätigung, dass eine formale Datenschutzprüfung durchgeführt wurde und ob eine Freigabe erteilt wurde
+- privacy_clearance_confirmed: ausdrückliche Bestätigung von Durchführung und bekanntem Ergebnis der formalen Datenschutzprüfung, unabhängig davon, ob freigegeben oder verweigert wurde
+- privacy_clearance_denied: ausdrücklich verweigerte Freigabe; bekannter Blockadegrund
 
 Aus natürlicher Sprache extrahieren, wenn möglich. Nur nach Feldern fragen, die tatsächlich fehlen oder unklar sind — eine bereits beantwortete Frage niemals wiederholen.
 
-**Strikte Regel — niemals ableiten, niemals überspringen:** `privacy_clearance_confirmed` kann nicht aus dem Kontext abgeleitet werden. Den Nutzer MUSS explizit gefragt werden, ob eine formale Datenschutzprüfung durchgeführt wurde und was das Ergebnis war. Nicht mit Schritt 3 fortfahren, bis dies bestätigt ist. Diese Regel überschreibt alles andere.
+**Strikte Regel — niemals erfinden:** Durchführung, Ergebnis und Geltungsbereich einer Datenschutzprüfung müssen ausdrücklich mitgeteilt sein. Bereits vorliegende Angaben werden übernommen; nur fehlende oder unklare Angaben werden erfragt. Eine Testkorpus-Freigabe darf nicht als Produktivfreigabe ausgelegt werden.
+
+**Bestätigung ist nicht Zustimmung:** `privacy_clearance_confirmed=True` bedeutet, dass Durchführung und Ergebnis der formalen Prüfung ausdrücklich bekannt sind; es bedeutet nicht, dass die Freigabe erteilt wurde. Bei ausdrücklich verweigerter Freigabe wird zusätzlich `privacy_clearance_denied=True` übergeben. Die Verweigerung ist ein bekannter Blockadegrund und kein Fall fehlender Information. Eine bereits ausdrücklich mitgeteilte Prüfung samt Ergebnis wird nicht erneut erfragt. Nur wenn Durchführung, Ergebnis oder Geltungsbereich ungeklärt sind, wird gezielt nachgefragt und ohne Score gewartet. Eine ausdrücklich verweigerte Freigabe darf keinesfalls durch andere Angaben zu einer positiven Freigabe werden.
+
 
 **Hinweis zum Geltungsbereich:** Eine Datenschutzfreigabe gilt nur für die Datenbasis, für die sie erteilt wurde. Liegt die Freigabe nur für den Testkorpus vor, das Dokument nutzt aber produktive Daten, `data_basis` auf produktivdaten setzen — dafür ist eine separate Prüfung erforderlich.
 
@@ -61,7 +65,7 @@ Aus natürlicher Sprache extrahieren, wenn möglich. Nur nach Feldern fragen, di
 
 Diese Prüfungen immer durchführen:
 
-- Datenschutzprüfung (Freigabe bestätigt, Geltungsbereich beachtet)
+- Datenschutzprüfung (Durchführung und Ergebnis ausdrücklich bekannt, Geltungsbereich beachtet)
 - Empfängerkreisprüfung
 - Datenbasisprüfung (Testkorpus oder Produktivdaten)
 - Prüfung auf vertrauliche Inhalte

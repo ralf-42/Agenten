@@ -15,8 +15,8 @@ Diese Regeln definieren, wie der Skill eine Meeting-Agenda strukturiert.
 1. **Hoch-Priorität-Punkte zuerst** — nie ans Ende stellen
 2. **Maximal 5–7 Punkte** — mehr → zusammenfassen oder vertagen
 3. **Ziel pro Punkt benennen** — „entscheiden", „informieren", „klären", „präsentieren"
-4. **Zeitschätzung** — realistisch, Summe ≤ geplante Meeting-Dauer
-5. **Eigentümer pro Punkt** — wer moderiert diesen Punkt?
+4. **Dauer** — vorgegebene Zeiten übernehmen; fehlende Dauer als `[offen]` markieren. Eigene Vorschläge nur auf ausdrücklichen Wunsch und als Vorschlag kennzeichnen; ihre Summe darf die bekannte Meeting-Dauer nicht überschreiten.
+5. **Owner pro Punkt** — eigene Spalte für die belegte Zuständigkeit. Ohne ausdrückliche Zuordnung `[offen]` eintragen; Fachrolle oder bisherige Teilnahme allein beweisen keine Moderationszuständigkeit.
 
 ## Gesprächstypen und typische Struktur
 

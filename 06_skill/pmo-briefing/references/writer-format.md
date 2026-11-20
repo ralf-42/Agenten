@@ -21,8 +21,16 @@ Keine eigenen Strukturen erfinden — nur das vorgegebene Format verwenden.
 - Sachlich, klar, direkt — keine Füllwörter
 - Stichpunkte bevorzugen, kein Fließtext außer im Kontext-Abschnitt
 - Agenda-Punkte nach Priorität sortieren (Hoch → Mittel → Gering)
-- Action Items vollständig aus dem strukturierten Skill-Output übernehmen — nichts erfinden
+- Skript-Treffer und zusätzliche ausdrücklich belegte Aufgaben gemäß `action_rules.md` in einer Tabelle zusammenführen; Herkunft und Quelldatei/Datum je Zeile nennen. Empfehlungen bleiben getrennt.
 - Offene Punkte explizit benennen — nie verschweigen oder spekulieren
+
+## Gemeinsame Aufgabenübersicht
+
+`extract_actions` wird für die bereitgestellten Quelltexte aufgerufen. Seine Ausgabe bleibt als Skriptergebnis erkennbar. Die Heuristik kann Aufgaben übersehen; ein leeres Skriptergebnis beweist nicht, dass der Quelltext keine Aufgaben enthält.
+
+Alle für die Anfrage relevanten, belegten Aufgaben werden in einer gemeinsamen Tabelle zusammengeführt. Die Spalte `Herkunft` enthält `extract_actions` für tatsächlich ausgegebene Skript-Treffer oder `Quellenbefund` für ausdrücklich im Quelltext genannte, vom Skript nicht erfasste Aufgaben. Ein Quellenbefund darf nicht als Skriptergebnis ausgegeben werden. Allgemeine Empfehlungen und neue Vorschläge sind keine dokumentierten Aufgaben und bleiben getrennt.
+
+Je Zeile werden Aufgabe, Verantwortlich, Fällig, Herkunft und `Quelle / Datum` angegeben. Quelle ist der exakte Dateiname mit Dokumentdatum, soweit vorhanden. Bei mehreren Eingabedokumenten werden die Skript-Treffer anhand des jeweiligen Aufrufs zugeordnet; die Texte möglichst pro Quelldatei übergeben. Fehlende Angaben bleiben `[offen]`. Insbesondere wird keine Frist aus einem anderen Dokument oder einem bloßen Berichtsdatum übernommen. Nachweislich gleiche Aufgaben können zusammengeführt werden, ihre Quellen bleiben erhalten.
 
 ## Ausgabeformat — Vorbereitung
 
@@ -63,9 +71,9 @@ Keine eigenen Strukturen erfinden — nur das vorgegebene Format verwenden.
 
 #### Action Items (aus Vorgesprächen / Dokumenten)
 
-| # | Aufgabe | Verantwortlich | Fällig |
-|---|---------|----------------|--------|
-| 1 | ...     | ...            | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 ---
 *Erstellt durch PMO-Briefing-Skill*
@@ -89,9 +97,9 @@ Keine eigenen Strukturen erfinden — nur das vorgegebene Format verwenden.
 
 #### Offene Aufgaben
 
-| # | Aufgabe | Verantwortlich | Fällig | Status |
-|---|---------|----------------|--------|--------|
-| 1 | ...     | ...            | ...    | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Status | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | ... | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 #### Risiken, Entscheidungen und Abweichungen
 
@@ -118,9 +126,9 @@ Keine eigenen Strukturen erfinden — nur das vorgegebene Format verwenden.
 
 #### Action Items (neu)
 
-| # | Aufgabe | Verantwortlich | Fällig |
-|---|---------|----------------|--------|
-| 1 | ...     | ...            | ...    |
+| # | Aufgabe | Verantwortlich | Fällig | Herkunft | Quelle / Datum |
+|---|---------|----------------|--------|----------|----------------|
+| 1 | ... | [offen] | [offen] | extract_actions oder Quellenbefund | dateiname, Dokumentdatum oder [offen] |
 
 #### Offene Punkte (vertagt)
 

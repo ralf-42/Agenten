@@ -22,11 +22,11 @@ Installation (einmalig):
     !uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
 
 Import im Notebook:
-    from genai_lib.pmo_rag import get_pmo_vectorstore, index_pmo_corpus, make_suche_wissensdatenbank_tool
+    from genai_lib.pmo_rag import get_pmo_vectorstore, index_pmo_corpus, make_search_knowledge_base_tool
 
     vectorstore = get_pmo_vectorstore()
     index_pmo_corpus(vectorstore, KORPUS_TARGET)
-    suche_wissensdatenbank = make_suche_wissensdatenbank_tool(vectorstore)
+    search_knowledge_base = make_search_knowledge_base_tool(vectorstore)
 
 Lokaler Test ohne Google Drive:
     vectorstore = get_pmo_vectorstore(persist_directory="./chroma_pmo_local")
@@ -397,11 +397,11 @@ def format_docs(docs: list[Document]) -> str:
     return "\n\n---\n\n".join(teile)
 
 
-def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
-    """Baut das @tool suche_wissensdatenbank für eine gegebene Vectorstore-Instanz.
+def make_search_knowledge_base_tool(vectorstore: Chroma, rag_chain=None):
+    """Baut das @tool search_knowledge_base für eine gegebene Vectorstore-Instanz.
 
     Factory-Pattern nötig, weil @tool-Funktionen vom Agenten mit genau einem
-    Argument (frage) aufgerufen werden — der vectorstore wird per Closure
+    Argument (question) aufgerufen werden — der vectorstore wird per Closure
     injiziert statt über globalen Modul-State.
 
     Wird ``rag_chain`` übergeben, führt das Tool Retrieval, Kontextformatierung
@@ -410,7 +410,7 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
     """
 
     @tool
-    def suche_wissensdatenbank(frage: str) -> str:
+    def search_knowledge_base(question: str) -> str:
         """Durchsucht den Meeting- & Projekt-Korpus zu Entscheidungen, Risiken, Aufgaben und offenen Punkten.
         Geeignet für belegbare Fragen zu Projekt Kompass und Fragen nach Quellen.
 
@@ -420,7 +420,7 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
         try:
             # 1. Dokumente explizit abrufen
             retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-            retrieved = retriever.invoke(frage)
+            retrieved = retriever.invoke(question)
 
             # 2. Dokumente formatieren
             kontext_text = format_docs(retrieved)
@@ -432,17 +432,17 @@ def make_suche_wissensdatenbank_tool(vectorstore: Chroma, rag_chain=None):
 
             # 3. Chain mit dem fertigen Dictionary aufrufen
             return rag_chain.invoke(
-                {"context": kontext_text, "question": frage},
+                {"context": kontext_text, "question": question},
                 config={"run_name": "pmo_rag_chain_antwort"},
             )
         except Exception as exc:
             return f"Fehler bei der Datenbanksuche: {exc}"
 
-    return suche_wissensdatenbank
+    return search_knowledge_base
 
 
-def make_lies_tabellendaten_tool(directory_path: str):
-    """Baut das @tool lies_tabellendaten für strukturierte CSV-Analysen im PMO-Korpus.
+def make_read_table_data_tool(directory_path: str):
+    """Baut das @tool read_table_data für strukturierte CSV-Analysen im PMO-Korpus.
 
     Ermöglicht dem Tabellen-Worker im Supervisor-Pattern den gezielten Zugriff
     auf Controlling- und Ressourcentabellen (projektbudget_kostenstatus_q2_2026.csv,
@@ -451,19 +451,19 @@ def make_lies_tabellendaten_tool(directory_path: str):
     korpus_dir = Path(directory_path)
 
     @tool
-    def lies_tabellendaten(bereich: str) -> str:
+    def read_table_data(area: str) -> str:
         """Liest strukturierte Tabellendaten aus dem PMO-Korpus.
         Gültige Bereiche: 'budget' (Kostenstatus, Forecast, Abweichungen) oder
         'ressourcen' (Kapazitätsmatrix, Rollenallokation, Engpässe).
         """
-        bereich_clean = bereich.strip().lower()
-        if "budget" in bereich_clean or "kosten" in bereich_clean:
+        area_clean = area.strip().lower()
+        if "budget" in area_clean or "kosten" in area_clean:
             datei = korpus_dir / "projektbudget_kostenstatus_q2_2026.csv"
-        elif "ressource" in bereich_clean or "kapazit" in bereich_clean or "allokation" in bereich_clean:
+        elif "ressource" in area_clean or "kapazit" in area_clean or "allokation" in area_clean:
             datei = korpus_dir / "ressourcen_kapazitaetsmatrix_2026.csv"
         else:
             return (
-                f"Unbekannter Tabellenbereich '{bereich}'. "
+                f"Unbekannter Tabellenbereich '{area}'. "
                 "Verfügbare Bereiche: 'budget' (Kostenstatus) und 'ressourcen' (Kapazitätsmatrix)."
             )
 
@@ -495,4 +495,4 @@ def make_lies_tabellendaten_tool(directory_path: str):
         except Exception as exc:
             return f"Fehler beim Lesen der Tabelle {datei.name}: {exc}"
 
-    return lies_tabellendaten
+    return read_table_data

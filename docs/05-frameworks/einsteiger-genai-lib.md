@@ -62,7 +62,7 @@ Die Bibliothek besteht aus drei Hauptmodulen:
 | Modul | Beschreibung | Hauptfunktionen |
 |-------|-------------|----------------|
 | **utilities.py** | Hilfsfunktionen für Environment-Setup | Environment-Checks, Paket-Installation, API-Keys, Prompt-Templates, LLM-Response-Parsing, Model-Profile, GitHub-Datei-Download |
-| **pmo_rag.py** | Wiederverwendbare PMO-RAG-Kette | Mehrformat-Lader, Chunking, Chroma-Vectorstore, Indexierung, Tools `suche_wissensdatenbank` und `lies_tabellendaten` |
+| **pmo_rag.py** | Wiederverwendbare PMO-RAG-Kette | Mehrformat-Lader, Chunking, Chroma-Vectorstore, Indexierung, Tools `search_knowledge_base` und `read_table_data` |
 | **model_config.py** | Rollenbasierte Modell-Konfiguration | BASELINE, WORKER, JUDGE, PLANNER, ROUTER, CODING, WORKER_PREMIUM, FRONTIER, Medien-Rollen, EMBEDDINGS |
 
 ---
@@ -502,7 +502,7 @@ pmo_rag
 ├── Chunking:   split_documents_by_characters (Standard 300/30, Wortgrenzen)
 ├── Vectorstore: get_pmo_vectorstore + index_pmo_corpus (Chroma, Batching)
 ├── Kontext:    load_korpus_metadata, format_docs
-└── Tools:      make_suche_wissensdatenbank_tool, make_lies_tabellendaten_tool
+└── Tools:      make_search_knowledge_base_tool, make_read_table_data_tool
 ```
 
 ### Hauptfunktionen
@@ -513,8 +513,8 @@ pmo_rag
 | `index_pmo_corpus(vectorstore, directory_path, chunk_size=300, chunk_overlap=30, batch_size=500, force=False)` | Lädt, teilt und indexiert den Korpus; überspringt eine gefüllte Collection |
 | `load_documents_from_directory(directory_path)` | Mehrformat-Lader für PDF, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word |
 | `split_documents_by_characters(documents, chunk_size, chunk_overlap)` | Chunking mit Zeichenlängen an Wortgrenzen (`RecursiveCharacterTextSplitter`); `chunk_index` und `chunk_version` in den Metadaten |
-| `make_suche_wissensdatenbank_tool(vectorstore, rag_chain=None)` | Erzeugt das Agenten-Tool `suche_wissensdatenbank` |
-| `make_lies_tabellendaten_tool(directory_path)` | Erzeugt das Tool `lies_tabellendaten` für Budget- und Ressourcentabellen |
+| `make_search_knowledge_base_tool(vectorstore, rag_chain=None)` | Erzeugt das Agenten-Tool `search_knowledge_base` |
+| `make_read_table_data_tool(directory_path)` | Erzeugt das Tool `read_table_data` für Budget- und Ressourcentabellen |
 | `check_corpus(vectorstore, directory_path)` | Vergleicht Korpusdateien mit den indexierten Quellen |
 | `load_korpus_metadata(metadata_path=None)` | Lädt Datum, Dokumenttyp sowie Entscheidungs- und Risiko-IDs |
 | `format_docs(docs)` | Formatiert Treffer mit Quelle und Korpus-Metadaten |
@@ -528,14 +528,14 @@ drive.mount("/content/drive")
 from genai_lib.pmo_rag import (
     get_pmo_vectorstore,
     index_pmo_corpus,
-    make_suche_wissensdatenbank_tool,
+    make_search_knowledge_base_tool,
 )
 
 vectorstore = get_pmo_vectorstore()
 index_pmo_corpus(vectorstore, "/content/files", chunk_size=300, chunk_overlap=30)
 
-suche_wissensdatenbank = make_suche_wissensdatenbank_tool(vectorstore)
-tools = [suche_wissensdatenbank]
+search_knowledge_base = make_search_knowledge_base_tool(vectorstore)
+tools = [search_knowledge_base]
 ```
 
 Ohne `rag_chain` liefert das Tool den formatierten Korpuskontext (Quelle, Dokument-Metadaten, Ausschnitt). Mit `rag_chain` erzeugt es daraus eine quellengebundene Antwort.
@@ -544,14 +544,14 @@ Der RAG-Ablauf bleibt in drei Schritte getrennt:
 
 ```python
 # 1. Dokumente explizit abrufen
-retrieved = retriever.invoke(frage)
+retrieved = retriever.invoke(question)
 
 # 2. Dokumente formatieren
 kontext_text = format_docs(retrieved)
 
 # 3. Reine Chain mit dem fertigen Dictionary aufrufen
 antwort = rag_chain.invoke(
-    {"context": kontext_text, "question": frage},
+    {"context": kontext_text, "question": question},
     config={"run_name": "m11_rag_chain_antwort"},
 )
 ```
@@ -565,7 +565,7 @@ rag_chain = prompt | llm | parser
 Das optionale `rag_chain` kann beim Erzeugen des Tools übergeben werden:
 
 ```python
-suche_wissensdatenbank = make_suche_wissensdatenbank_tool(
+search_knowledge_base = make_search_knowledge_base_tool(
     vectorstore,
     rag_chain=rag_chain,
 )
@@ -574,7 +574,7 @@ suche_wissensdatenbank = make_suche_wissensdatenbank_tool(
 ### Retriever und Relevanz-Score
 
 `pmo_rag.py` verwendet für das Tool den normalen Retriever-Aufruf
-`retriever.invoke(frage)`. Wenn in eigenen Experimenten zusätzlich Scores oder
+`retriever.invoke(question)`. Wenn in eigenen Experimenten zusätzlich Scores oder
 Schwellwerte ausgewertet werden, gilt: Ein `score_threshold` bei
 `as_retriever(search_type="similarity_score_threshold")` arbeitet mit einem
 **Relevanz-Score** (höher = besser). Andere Chroma-Suchmethoden können dagegen

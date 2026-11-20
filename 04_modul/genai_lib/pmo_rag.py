@@ -67,7 +67,7 @@ IGNORED_FILENAMES = {"README.md", "KORPUS_QUALITAET.md", "metadata.json", "anfor
 CHUNK_HEADER_PREFIX = "Dokument: "
 DEFAULT_CHUNK_SIZE = 1200
 DEFAULT_CHUNK_OVERLAP = 200
-CHUNK_VERSION = 3  # Gemeinsame Konfiguration, Quellenbereinigung und überprüfbare Indexsignatur
+CHUNK_VERSION = 4  # Gemeinsame Konfiguration, Quellenbereinigung und überprüfbare Indexsignatur
 
 
 def _require_drive_mounted(persist_directory: str) -> None:
@@ -105,9 +105,15 @@ def load_pdf_documents(directory_path: str) -> list[Document]:
 
 def _strip_course_guidance(text: str) -> str:
     """Entfernt bekannte Kursanhänge aus abgeleiteten Dokumenten, nicht aus den Originaldateien."""
-    headings = r"Nutzungshinweis(?:e)?|Hinweis für Briefings|Prüffragen für den Agenten|Prüffälle(?: für den Agenten)?"
+    headings = r"Nutzungshinweis(?:e)?|Hinweis für Briefings|Prüffragen für den Agenten|Prüffälle(?: für den Agenten)?|Relevanz für den Assistenten"
     match = re.search(r"(?im)^\s*(?:#{1,6}\s*)?(?:" + headings + r")\s*$", text)
     return text[:match.start()].strip() if match else text.strip()
+
+
+def _contains_course_guidance(text: str) -> bool:
+    """Prüft die gespeicherten Chunks zusätzlich zu ihrer Indexsignatur."""
+    legacy_name = re.search(r"(?i)meeting-\s*(?:&|&amp;)\s*research-briefing-agent", text)
+    return _strip_course_guidance(text) != text.strip() or legacy_name is not None
 
 
 def load_documents_from_directory(directory_path: str) -> list[Document]:
@@ -269,13 +275,18 @@ def index_pmo_corpus(
         probe = vectorstore.get(limit=1, include=["metadatas"])
         meta = (probe["metadatas"] or [{}])[0] or {}
         if meta.get("index_fingerprint") == fingerprint and not any(check_corpus(vectorstore, directory_path).values()):
-            mprint(f"Collection ist aktuell ({count} Einträge): Inhalt, Metadaten und Chunk-Konfiguration stimmen überein.")
-            return 0
+            stored_texts = vectorstore.get(include=["documents"])["documents"]
+            if not any(_contains_course_guidance(text or "") for text in stored_texts):
+                mprint(f"Collection ist aktuell ({count} Einträge): Inhalt, Metadaten, Chunk-Konfiguration und Quellenbereinigung stimmen überein.")
+                return 0
+            mprint("Kursanhänge trotz passender Indexsignatur gefunden — Collection wird bereinigt neu aufgebaut.")
     # Erst laden und prüfen; ein leerer/fehlerhafter Import darf den vorhandenen Index nicht löschen.
     dokumente = load_documents_from_directory(directory_path)
     chunks = split_documents_by_characters(dokumente, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     if not chunks:
         raise ValueError("Keine indexierbaren Dokumente; vorhandene Collection bleibt unverändert.")
+    if any(_contains_course_guidance(chunk.page_content) for chunk in chunks):
+        raise ValueError("Quellenbereinigung unvollständig; vorhandener Index bleibt unverändert.")
     for chunk in chunks:
         chunk.metadata["index_fingerprint"] = fingerprint
     if count:

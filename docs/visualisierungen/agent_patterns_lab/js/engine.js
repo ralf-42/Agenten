@@ -90,8 +90,12 @@ class ExecutionEngine {
   }
 }
 
-export function sleep(ms) {
+function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export const engine = new ExecutionEngine();
+const engine = new ExecutionEngine();
+
+window.AgentLab = window.AgentLab || {};
+window.AgentLab.sleep = sleep;
+window.AgentLab.engine = engine;

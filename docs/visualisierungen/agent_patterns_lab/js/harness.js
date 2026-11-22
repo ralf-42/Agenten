@@ -1,5 +1,5 @@
-import { DOMAINS, TOOLS } from "./domains.js";
-import { engine, sleep } from "./engine.js";
+(function () {
+const { DOMAINS, TOOLS, engine, sleep } = window.AgentLab;
 
 const HARNESS_SCENARIOS = {
   insurance: {
@@ -74,7 +74,7 @@ const HARNESS_SCENARIOS = {
   }
 };
 
-export class HarnessController {
+class HarnessController {
   constructor() {
     this.domain = "insurance";
     this.memoryByDomain = Object.fromEntries(
@@ -227,3 +227,6 @@ export class HarnessController {
     });
   }
 }
+
+window.AgentLab.HarnessController = HarnessController;
+})();

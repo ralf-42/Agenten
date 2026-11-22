@@ -1,7 +1,5 @@
-import { engine } from "./engine.js";
-import { PATTERNS, PatternsController } from "./patterns.js";
-import { HarnessController } from "./harness.js";
-import { LoopsController } from "./loops.js";
+(function () {
+const { engine, PATTERNS, PatternsController, HarnessController, LoopsController } = window.AgentLab;
 
 const patternsCtrl = new PatternsController();
 new HarnessController();
@@ -102,3 +100,4 @@ function handleHash() {
 
 window.addEventListener("hashchange", handleHash);
 handleHash();
+})();

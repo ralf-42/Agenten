@@ -1,14 +1,14 @@
-import { DOMAINS, TOOLS } from "./domains.js";
-import { engine, sleep } from "./engine.js";
+(function () {
+const { DOMAINS, TOOLS, engine, sleep } = window.AgentLab;
 
-export const PATTERN_GROUPS = [
+const PATTERN_GROUPS = [
   { id: "foundational", label: "1. Grundlegende Single-Agent-Muster" },
   { id: "workflow", label: "2. Deterministische Workflow-Muster" },
-  { id: "multiagent", label: "3. Multi-Agent-Kollaborationsmuster" },
-  { id: "governance", label: "4. Governance- & Kontrollmuster" }
+  { id: "multiagent", label: "3. Multi-Agent- & Team-Muster" },
+  { id: "governance", label: "4. Querschnittskontrolle (für jedes Muster)" }
 ];
 
-export const PATTERNS = [
+const PATTERNS = [
   {
     id: "augmented",
     group: "foundational",
@@ -170,7 +170,30 @@ export const PATTERNS = [
         ["tally", "db"]
       ]
     },
-    lesson: "Voting verwandelt eine einzelne, potentiell riskante Stichprobe in ein messbares Übereinstimmungsniveau (z. B. 80 % UNSAFE) — besonders wertvoll bei sicherheitskritischen Ja/Nein-Fragen."
+    lesson: "Voting verwandelt eine einzelne Stichprobe in ein messbares Übereinstimmungsniveau (z. B. 80 % UNSAFE). Wichtig: Übereinstimmung ist kein Wahrheitsbeleg — Aufrufe desselben Modells können dieselben Fehler teilen. Mehrheit ersetzt keine Prüfung an Originalquellen oder Datenbanken."
+  },
+  {
+    id: "briefing_team",
+    group: "multiagent",
+    name: "Briefing-Team (PMO-Kursbeispiel)",
+    domain: "PMO-Assistent",
+    controlFlow: "Feste Pipeline + begrenzter Review-Loop (attempts ≤ 2)",
+    bestUse: "Arbeitsteiliges Briefing mit getrennter Recherche, Schreiben & Prüfung",
+    tradeOff: "Quellen-ID-Prüfung allein beweist keine sachliche Richtigkeit; Versand braucht separate Freigabe",
+    summary: "Das durchgängige Kursbeispiel aus „Multi-Agent-Systeme umsetzen“: Recherche → Schreiben → Prüfung (deterministische Quellen-ID-Prüfung vor LLM-Review) mit BriefingState und Abbruchgrenze (attempts ≤ 2, blocked).",
+    task: "Erstelle ein Steuerkreis-Briefing aus DOC-101 (Statusbericht) und DOC-102 (Protokoll). Vertrauliche Dokumente (DOC-103) sind tabu; bei fehlenden Quellen-IDs folgt höchstens eine Überarbeitung, danach blocked=True.",
+    graph: {
+      viewBox: "0 0 600 215",
+      nodes: [
+        { id: "research", x: 15, y: 40, w: 120, h: 50, title: "1. Recherche", sub: "DOC-101, DOC-102" },
+        { id: "writer", x: 165, y: 40, w: 120, h: 50, title: "2. Schreiben", sub: "Entwurf + IDs" },
+        { id: "review", x: 315, y: 40, w: 135, h: 50, title: "3. Prüfung", sub: "ID-Check + Review" },
+        { id: "gate", x: 480, y: 40, w: 105, h: 50, title: "Router-Gate", sub: "attempts ≤ 2" },
+        { id: "finish", x: 205, y: 140, w: 235, h: 50, title: "Abschluss / Eskalation", sub: "Geprüft oder blocked=True" }
+      ],
+      edges: [["research", "writer"], ["writer", "review"], ["review", "gate"], ["gate", "writer"], ["gate", "finish"]]
+    },
+    lesson: "Feste Ablaufsteuerung im Code reicht oft aus — ein dynamischer Supervisor ist nicht nötig. Deterministische Quellen-ID-Prüfung vor dem LLM-Reviewer spart Kosten, und ein klares Limit (attempts ≤ 2 → blocked=True) verhindert Endlosschleifen."
   },
   {
     id: "orchestrator",
@@ -291,7 +314,7 @@ export const PATTERNS = [
   }
 ];
 
-export class PatternsController {
+class PatternsController {
   constructor() {
     this.activeId = "augmented";
     this.results = new Map();
@@ -1311,3 +1334,8 @@ export class PatternsController {
     return { status: "idle", statusLabel: "Unbekannt", html: "" };
   }
 }
+
+window.AgentLab.PATTERN_GROUPS = PATTERN_GROUPS;
+window.AgentLab.PATTERNS = PATTERNS;
+window.AgentLab.PatternsController = PatternsController;
+})();

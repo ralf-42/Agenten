@@ -1,4 +1,5 @@
-import { sleep } from "./engine.js";
+(function () {
+const { sleep } = window.AgentLab;
 
 const LOOP_TECHNIQUES = [
   { id: "iteration_cap", name: "1. Iterations-Cap", desc: "Harte Obergrenze für Schleifendurchläufe (z. B. max. 3)." },
@@ -15,7 +16,7 @@ const LOOP_TECHNIQUES = [
   { id: "structured_trace", name: "12. Strukturierter Trace", desc: "Protokolliert jede Entscheidung & Abbruchursache." }
 ];
 
-export class LoopsController {
+class LoopsController {
   constructor() {
     this.enabled = new Set(LOOP_TECHNIQUES.map((t) => t.id));
     this.gridEl = document.getElementById("techniquesGrid");
@@ -240,3 +241,6 @@ export class LoopsController {
     }
   }
 }
+
+window.AgentLab.LoopsController = LoopsController;
+})();

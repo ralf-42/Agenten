@@ -2,6 +2,27 @@
 const { DOMAINS, TOOLS, engine, sleep } = window.AgentLab;
 
 const HARNESS_SCENARIOS = {
+  pmo: {
+    label: "PMO-Assistent (Briefing)",
+    task: "Steuerkreis-Briefing aus DOC-101 & DOC-102 erstellen. Das Harness erzwingt Quellen-ID-Prüfung und blockiert vertrauliche Dateien (DOC-103) unabhängig von der Modellmeinung.",
+    tools: ["validate_source_ids", "check_confidentiality"],
+    records: () => ({ "DOC-101": DOMAINS.pmo.sources["DOC-101"], "DOC-102": DOMAINS.pmo.sources["DOC-102"] }),
+    defaultMemory: [
+      "Quellenpflicht: Jede Aussage im Briefing muss mit [DOC-101] oder [DOC-102] belegt sein.",
+      "Vertraulichkeit: Dokumente mit Markierung [VERTRAULICH] (z. B. DOC-103) niemals einbinden oder versenden."
+    ],
+    guardrailCheck: (mem) => {
+      const hasConf = mem.some((m) => /vertraulich|DOC-103/i.test(m));
+      const hasSrc = mem.some((m) => /quellen|DOC-101/i.test(m));
+      return {
+        passed: hasConf && hasSrc,
+        note: hasConf && hasSrc
+          ? "Guardrail OK: Quellen-IDs [DOC-101]/[DOC-102] validiert; DOC-103 bleibt technisch gesperrt."
+          : "Guardrail-Warnung: Ohne Quellen- und Vertraulichkeitsregel im Memory drohen unbelegte Aussagen oder Datenlecks!"
+      };
+    },
+    suggestedFeedback: "Offene Entscheidungen (z. B. externes Audit) immer als eigenen Abschnitt ‚Offene Fragen‘ mit Verantwortlichem ausweisen."
+  },
   insurance: {
     label: "Versicherung (CLM002)",
     task: "Schadenfall CLM002 (Auffahrunfall, Betrugsscore 0,84): Prüfe Deckung, Policy-Grenzen und erstelle eine sichere Kundenrückmeldung.",
@@ -76,12 +97,12 @@ const HARNESS_SCENARIOS = {
 
 class HarnessController {
   constructor() {
-    this.domain = "insurance";
+    this.domain = "pmo";
     this.memoryByDomain = Object.fromEntries(
       Object.entries(HARNESS_SCENARIOS).map(([k, v]) => [k, [...v.defaultMemory]])
     );
     this.bindEvents();
-    this.selectDomain("insurance");
+    this.selectDomain("pmo");
   }
 
   bindEvents() {

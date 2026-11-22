@@ -1057,6 +1057,104 @@ class PatternsController {
       };
     }
 
+    // 7b. BRIEFING-TEAM (PMO-KURSBEISPIEL)
+    if (id === "briefing_team") {
+      const state = {
+        query: DOMAINS.pmo.query,
+        sources: { "DOC-101": DOMAINS.pmo.sources["DOC-101"], "DOC-102": DOMAINS.pmo.sources["DOC-102"] },
+        research: "",
+        draft: "",
+        feedback: "",
+        quality: "revise",
+        attempts: 0,
+        blocked: false
+      };
+
+      ctx.node("research", "active");
+      const res = await ctx.llm({
+        systemPrompt: "Extract facts and open questions from DOC-101 and DOC-102 in German. Cite DOC-101 and DOC-102.",
+        userPrompt: JSON.stringify(state.sources),
+        mockSmallFn: () => ({
+          text: "Recherche-Notizen: M3 (API-Go-Live) ist 2 Wochen verzögert wegen Schnittstellenfreigabe [DOC-101]. Externes Audit noch offen, Budget-Puffer 15.000 € [DOC-102].",
+          tokens: 185
+        })
+      });
+      state.research = res.text;
+      ctx.log("llm", "RECHERCHE", state.research);
+      ctx.node("research", "pass");
+
+      while (state.attempts < 2) {
+        state.attempts += 1;
+        ctx.node("writer", "active");
+        const w = await ctx.llm({
+          systemPrompt: "Write a concise German executive briefing based on research. Always cite [DOC-101] and [DOC-102].",
+          userPrompt: `Attempt ${state.attempts}. Research: ${state.research}. Feedback: ${state.feedback || "none"}`,
+          mockSmallFn: () => ({
+            text: state.attempts === 1
+              ? "Steuerkreis-Briefing: Der API-Go-Live verzögert sich um 2 Wochen. Das externe Audit ist noch offen, der Puffer beträgt 15.000 €."
+              : "Steuerkreis-Briefing: Der API-Go-Live verzögert sich um 2 Wochen [DOC-101]. Offene Frage: Freigabe für externes Audit; Budget-Puffer 15.000 € [DOC-102].",
+            tokens: 170
+          }),
+          mockStrongFn: () => ({
+            text: "Steuerkreis-Briefing: Meilenstein M3 liegt 2 Wochen hinter Plan [DOC-101]. Offene Entscheidung: externes Audit (Puffer 15.000 €) [DOC-102].",
+            tokens: 165
+          })
+        });
+        state.draft = w.text;
+        ctx.log("llm", `SCHREIBEN #${state.attempts}`, state.draft);
+        ctx.node("writer", "pass");
+
+        ctx.node("review", "active");
+        const cited = [...new Set(state.draft.match(/DOC-\d+/g) || [])];
+        const idCheck = TOOLS.validate_source_ids(cited);
+        ctx.tool("validate_source_ids", idCheck.valid
+          ? `Quellen-IDs gültig: ${cited.join(", ")}`
+          : `Fehlende/ungültige Quellen-IDs (${cited.join(", ") || "keine gefunden"}) — deterministisch vor LLM-Review abgefangen.`);
+
+        if (!idCheck.valid) {
+          state.quality = "revise";
+          state.feedback = "Bitte alle Fakten mit den erlaubten Quellen-IDs [DOC-101] und [DOC-102] belegen.";
+          ctx.node("review", "fail");
+          ctx.log("fail", `PRÜFUNG #${state.attempts}`, state.feedback);
+        } else {
+          const rev = await ctx.llm({
+            systemPrompt: "Review the briefing against DOC-101 and DOC-102. Reply ACCEPTED if complete.",
+            userPrompt: state.draft,
+            mockSmallFn: () => ({ text: "ACCEPTED: Terminlage, offene Frage und Quellen-IDs vollständig belegt.", tokens: 120 })
+          });
+          state.quality = "accepted";
+          state.feedback = rev.text;
+          ctx.node("review", "pass");
+          ctx.log("gate", `PRÜFUNG #${state.attempts}`, rev.text);
+        }
+
+        ctx.node("gate", "active");
+        await sleep(150);
+        if (state.quality === "accepted") {
+          ctx.node("gate", "pass");
+          ctx.log("gate", "ROUTER", `quality=accepted nach ${state.attempts} Versuch(en) → Abschluss.`);
+          break;
+        }
+        if (state.attempts >= 2) {
+          state.blocked = true;
+          ctx.node("gate", "fail");
+          ctx.log("fail", "ROUTER", "attempts=2 erreicht → blocked=True (Übergabe zur manuellen Prüfung).");
+          break;
+        }
+        ctx.node("gate", "wait");
+        ctx.log("gate", "ROUTER", `quality=revise, attempts=${state.attempts}/2 → zurück an Schreiben (Recherche wird nicht wiederholt).`);
+      }
+
+      ctx.node("finish", state.blocked ? "wait" : "pass");
+      return {
+        status: state.blocked ? "warn" : "pass",
+        statusLabel: state.blocked ? "blocked=True (Review)" : `Akzeptiert (${state.attempts}x)`,
+        html: `<p>${state.draft}</p>
+               <p class="muted-sm" style="margin-top:8px"><strong>BriefingState:</strong> <code>quality="${state.quality}"</code> · <code>attempts=${state.attempts}</code> · <code>blocked=${state.blocked}</code></p>
+               <p class="muted-sm" style="margin-top:4px">Hinweis: Ein akzeptierter Entwurf ist noch keine Versandfreigabe (externe Aktion getrennt prüfen).</p>`
+      };
+    }
+
     // 8. ORCHESTRATOR-WORKERS
     if (id === "orchestrator") {
       const comp = DOMAINS.drug.compounds["DM-3350"];

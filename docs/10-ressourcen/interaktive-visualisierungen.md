@@ -68,8 +68,8 @@ Vektorräume und semantische Repräsentationen
 
 | Thema             | Beschreibung                           | Link                                                                                  |
 | ----------------- | -------------------------------------- | ------------------------------------------------------------------------------------- |
-| **Embeddings**    | Fahrzeug-Beispiel für Vektorräume - 2D | [Embedding-Beispiel Fahrzeug]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} |
-| **Embeddings 3D** | Fahrzeug-Beispiel für Vektorräume - 3D | [Embedding_Visual_3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"}          |
+| **Embeddings 2D** | Fahrzeug-Beispiel für Vektorräume - 2D | [Embeddings 2D]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} |
+| **Embeddings 3D** | Fahrzeug-Beispiel für Vektorräume - 3D | [Embeddings 3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"} |
 
 ---
 
@@ -132,8 +132,8 @@ Retrieval Augmented Generation - Wissensabruf und Anreicherung
 | Thema                    | Beschreibung                                           | Link                                                                                        |
 | ------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | **RAG-Pipeline**         | Visualisierung der RAG-Architektur                     | [RAG]({{ '/visualisierungen/rag_prozess_visualisierung/' | relative_url }}){:target="_blank" rel="noopener"}                                |
-| **Embeddings**           | Fahrzeug-Beispiel für Vektorräume                      | [Embedding-Beispiel Fahrzeug]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"}        |
-| **Embeddings 3D**        | Fahrzeug-Beispiel für Vektorräume - 3D                 | [Embedding_Visual_3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"}                |
+| **Embeddings 2D**        | Fahrzeug-Beispiel für Vektorräume - 2D                 | [Embeddings 2D]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} |
+| **Embeddings 3D**        | Fahrzeug-Beispiel für Vektorräume - 3D                 | [Embeddings 3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Embedding Projector**  | TensorFlow Embedding-Visualisierung (PCA, t-SNE, UMAP) | [TF Projector](https://projector.tensorflow.org/?hl=de)                                     |
 | **Tokenizer**            | OpenAI Tokenizer - Token-Visualisierung                | [OpenAI Tokenizer](https://platform.openai.com/tokenizer)                                   |
 | **Tokenizer Playground** | Token-Visualisierung mit Kontextfenster                | [GPT Tokenizer Playground – Visualize Tokens for OpenAI Models](https://gpt-tokenizer.dev/) |

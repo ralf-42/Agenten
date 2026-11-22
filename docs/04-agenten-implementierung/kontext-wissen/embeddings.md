@@ -53,7 +53,7 @@ Embeddings werden nicht nur für Sprache und Bilder genutzt, sondern auch in Emp
 | Weiblichkeit | 0,08      | 0,93        | 0,10     | 0,91        | 0,15      |
 | Alter        | 0,67      | 0,71        | 0,56     | 0,11        | 0,42      |
 
-Interaktive Demo: [Embedding-Visualisierung 2D (Fahrzeuge)]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} und [Embedding-Visualisierung 3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"} – machen Nachbarschaften und Abstände im Vektorraum interaktiv erkundbar.
+Interaktive Demo: [Embeddings 2D]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} und [Embeddings 3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"} – machen Nachbarschaften und Abstände im Vektorraum interaktiv erkundbar.
 
 # Wie entstehen Embeddings?
 Embeddings werden mit **künstlichen neuronalen Netzen** oder **statistischen Methoden** erzeugt. Dabei durchläuft der Prozess mehrere Schritte:
@@ -182,6 +182,6 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 ---
 
 **Version:**    1.0<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

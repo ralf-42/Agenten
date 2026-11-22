@@ -11,16 +11,8 @@
     labLink.href = new URL('visualisierungen/agent_patterns_lab/#docs', labLink.href).href;
     labLink.target = '_blank';
     labLink.rel = 'noopener noreferrer';
-    labLink.title = 'Begleitende Übungen zum aktuellen Kurskapitel (öffnet in neuem Browserfenster)';
-    labLink.setAttribute('aria-label', 'Agent Lab (öffnet in neuem Browserfenster)');
-    labLink.addEventListener('click', function(event) {
-      // Modifizierte Klicks behalten die normale Browserbedienung bei.
-      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      // Direkt im Nutzer-Klick öffnen; die Dokumentation wird nicht navigiert.
-      // noopener liefert auch bei Erfolg null: kein zweites Fenster als Fallback öffnen.
-      window.open(labLink.href, '_blank', 'popup=yes,width=1280,height=900,noopener,noreferrer');
-    });
+    labLink.title = 'Begleitende Übungen zum aktuellen Kurskapitel (öffnet in neuem Tab)';
+    labLink.setAttribute('aria-label', 'Agent Lab (öffnet in neuem Tab)');
   }
 
   function processExternalLinks() {

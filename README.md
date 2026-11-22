@@ -206,6 +206,7 @@ Am Ende steht ein eigener **PMO-Assistent** als Capstone-Variante. Der Bauplan b
 ## 📖 Dokumentation
 
 - **Kurs-Website:** [https://ralf-42.github.io/Agenten/](https://ralf-42.github.io/Agenten/)
+- **Agent Patterns Lab:** [https://ralf-42.github.io/Agenten/visualisierungen/agent_patterns_lab/](https://ralf-42.github.io/Agenten/visualisierungen/agent_patterns_lab/) – Interaktive Browser-Demo zu Agent-Mustern, Harness, Loop Engineering, PMO-Evaluation und State/Checkpoints
 
 ## ⚖️ Lizenzen
 

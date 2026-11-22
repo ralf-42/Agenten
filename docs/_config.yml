@@ -22,6 +22,9 @@ remote_theme: just-the-docs/just-the-docs
 # Just the Docs Navigation Configuration
 # Sidebar wird automatisch aus Seiten mit nav_order generiert
 nav_external_links:
+  - title: Agent Patterns Lab
+    url: /Agenten/visualisierungen/agent_patterns_lab/#docs
+    opens_in_new_tab: true
   - title: GitHub Repository
     url: https://github.com/ralf-42/Agenten
 

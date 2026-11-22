@@ -29,7 +29,7 @@ Ein Agent kann eine Aufgabe selten allein dadurch lösen, dass er einmal eine An
 
 Loop Engineering bezeichnet hier den Entwurf solcher Wiederholungen und ihrer Kontrollpunkte. Die folgende Einteilung ist eine **Orientierungshilfe**, keine allgemeingültige Taxonomie (systematische Einteilung). Schleifen können ineinandergreifen, und nicht jede Aufgabe braucht alle Typen. Ist die Schrittfolge bekannt, kann ein fester Workflow einfacher und verlässlicher sein; siehe [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}).
 
-Interaktive Demo: [Agent Patterns Lab – Loop Engineering]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} – 12 Schutztechniken einzeln ein-/ausschalten und an fünf typischen Fehler-Szenarien testen.
+Interaktive Demo: [Agent Lab – Loop Engineering]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} – 12 Schutztechniken einzeln ein-/ausschalten und an fünf typischen Fehler-Szenarien testen.
 
 Das fünfte Szenario zeigt [indirekte Prompt Injection]({{ '/visualisierungen/agent_patterns_lab/#prompt_injection' | relative_url }}){:target="_blank" rel="noopener"}: DOC-104 fordert die externe Weitergabe vertraulicher Daten aus DOC-103. Vergleiche Datentrennung, Tool-Whitelist, feste Datenfreigaberegel und menschliche Entscheidung. Ein erlaubtes Tool ist keine Datenfreigabe. Die deterministische Simulation führt keinen Versand aus und belegt keine allgemeine Angriffssicherheit eines Modells.
 
@@ -47,7 +47,7 @@ Das fünfte Szenario zeigt [indirekte Prompt Injection]({{ '/visualisierungen/ag
 
 Ein einzelner Agentenlauf kann mehrere dieser Perspektiven verbinden: Ein Supervisor startet einen Agent Loop, ein Gate prüft dessen Ergebnis und bei Bedarf folgt eine menschliche Freigabe. Der Learning Loop betrachtet dagegen die Verbesserung **über mehrere Läufe hinweg**. Er braucht kuratierte Daten und eine erneute Bewertung; gespeicherte Gesprächshistorie allein ist noch kein solcher Lernprozess.
 
-Diese sieben Perspektiven beschreiben, **welche Art Schleife** vorliegt. Davon zu trennen sind die Schutzmechanismen, die eine Schleife verlässlich machen — Abbruchgrenzen, Budgets, Validierung, Whitelists oder Eskalation. Das Agent Patterns Lab zeigt **zwölf Schutztechniken**: Jeder Schalter nennt die zugeordneten Perspektiven; die Legende zählt die Schutztechniken je Perspektive. Eine Schutztechnik kann mehreren Perspektiven zugeordnet sein. Die Mehrheit sichert den **Agent Loop** und seine Gates ab, während Orchestration, Event-Driven und Learning Loop dort nur gestreift werden.
+Diese sieben Perspektiven beschreiben, **welche Art Schleife** vorliegt. Davon zu trennen sind die Schutzmechanismen, die eine Schleife verlässlich machen — Abbruchgrenzen, Budgets, Validierung, Whitelists oder Eskalation. Das Agent Lab zeigt **zwölf Schutztechniken**: Jeder Schalter nennt die zugeordneten Perspektiven; die Legende zählt die Schutztechniken je Perspektive. Eine Schutztechnik kann mehreren Perspektiven zugeordnet sein. Die Mehrheit sichert den **Agent Loop** und seine Gates ab, während Orchestration, Event-Driven und Learning Loop dort nur gestreift werden.
 
 ## Eine Schleife bewusst entwerfen
 

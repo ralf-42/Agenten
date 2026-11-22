@@ -31,7 +31,7 @@ Damit ist ein Harness größer als ein Prompt und konkreter als die allgemeine I
 
 Die Trennung ist entscheidend: Ein Modell darf einen Tool-Aufruf vorschlagen, sollte aber nicht allein entscheiden, ob dieser Aufruf zulässig ist. Diese Entscheidung gehört an eine überprüfbare Systemgrenze des Harnesses.
 
-Interaktive Demo: [Agent Patterns Lab – Agent Harness (3 Schichten)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Information, Execution und Feedback Layer mit aktivem Memory-Rückkopplungskreis testen.
+Interaktive Demo: [Agent Lab – Agent Harness (3 Schichten)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Information, Execution und Feedback Layer mit aktivem Memory-Rückkopplungskreis testen.
 
 Die drei Schichten der Demo bündeln die unten beschriebenen Bausteine: Der Information Layer stellt State, Memory und die freigegebenen Tool-Schemas bereit, der Execution Layer führt Planung, Tool-Aufruf und Policy-Gate aus, und der Feedback Layer prüft das Ergebnis und schreibt bestätigte Korrekturen zurück ins Memory.
 

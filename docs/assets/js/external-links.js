@@ -1,26 +1,21 @@
 // External Links - Open in new tab
 // Automatisch alle externen Links mit target="_blank" versehen
 (function() {
-  function positionAgentLabLink() {
-    // Das Theme hängt externe Einträge ans Menüende. Das kursbegleitende Lab
-    // steht stattdessen direkt nach dem Lernpfad, ohne zusätzliche Inhaltsseite.
-    var labLink = document.querySelector('.site-nav a[href$="/visualisierungen/agent_patterns_lab/#docs"]');
+  function configureAgentLabLink() {
+    // agent-lab.md wird über nav_order direkt nach dem Lernpfad einsortiert.
+    // Der Menülink öffnet das Lab direkt; die Seite bleibt als Weiterleitung
+    // für Aufrufe ohne JavaScript und gespeicherte Links erhalten.
+    var labLink = document.querySelector('.site-nav a[href$="/agent-lab.html"]');
     if (!labLink) return;
 
+    labLink.href = new URL('visualisierungen/agent_patterns_lab/#docs', labLink.href).href;
     labLink.target = '_blank';
     labLink.rel = 'noopener noreferrer';
     labLink.title = 'Begleitende Übungen zum aktuellen Kurskapitel (öffnet in neuem Tab)';
-
-    var learningPathLink = document.querySelector('.site-nav a[href$="/lernpfad.html"]');
-    var labItem = labLink.closest('li');
-    var learningPathItem = learningPathLink && learningPathLink.closest('li');
-    if (labItem && learningPathItem) {
-      learningPathItem.parentNode.insertBefore(labItem, learningPathItem.nextSibling);
-    }
   }
 
   function processExternalLinks() {
-    positionAgentLabLink();
+    configureAgentLabLink();
     var links = document.querySelectorAll('a');
     var count = 0;
 
@@ -41,9 +36,9 @@
     }
   }
 
-  if (document.readyState === 'complete') {
+  if (document.readyState !== 'loading') {
     processExternalLinks();
   } else {
-    window.addEventListener('load', processExternalLinks);
+    document.addEventListener('DOMContentLoaded', processExternalLinks, { once: true });
   }
 })();

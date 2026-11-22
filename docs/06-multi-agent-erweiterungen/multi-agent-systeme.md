@@ -64,7 +64,7 @@ Bei einem **Handoff** übernimmt die nächste Rolle die weitere Bearbeitung. Üb
 
 Ein Handoff überträgt weder automatisch neue Berechtigungen noch sämtliche bisherigen Nachrichten. Übergib prüfbare Ergebnisse und benötigte Originalstellen. Interne Gedankengänge des Modells sind kein Übergabeformat.
 
-Interaktive Demo: [Handoff im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#handoff' | relative_url }}){:target="_blank" rel="noopener"} – vollständige und unvollständige Übergabepakete am PMO-Beispiel vergleichen.
+Interaktive Demo: [Handoff im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#handoff' | relative_url }}){:target="_blank" rel="noopener"} – vollständige und unvollständige Übergabepakete am PMO-Beispiel vergleichen.
 
 ## Gemeinsamen State und Fachkontexte trennen
 
@@ -76,7 +76,7 @@ Im folgenden Beispiel enthält der State Frage, Quellen, Recherche, Entwurf, Fee
 
 Details zu State-Schemata und Reducern stehen in [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}).
 
-Interaktive Übung: [State und Checkpoints im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} – Feldänderungen beobachten, einen Checkpoint vor der Freigabe speichern und nach dem Neuladen ausdrücklich wiederherstellen. Die lokale Browsersimulation veranschaulicht das Konzept; sie ist kein LangGraph-Checkpointer und kein allgemeines Langzeit-Memory.
+Interaktive Übung: [State und Checkpoints im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} – Feldänderungen beobachten, einen Checkpoint vor der Freigabe speichern und nach dem Neuladen ausdrücklich wiederherstellen. Die lokale Browsersimulation veranschaulicht das Konzept; sie ist kein LangGraph-Checkpointer und kein allgemeines Langzeit-Memory.
 
 ## Durchgängiges LangGraph-Beispiel
 

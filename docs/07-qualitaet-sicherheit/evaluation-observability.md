@@ -15,7 +15,9 @@ redirect_from:
 > [!NOTE] Kernfrage<br>
 > Wie wird sichtbar, ob ein Agent fachlich gut arbeitet und warum Ergebnisse kippen?
 
-Interaktive Demo: [Evaluator-Optimizer im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluator' | relative_url }}){:target="_blank" rel="noopener"} – ein deterministischer Validator vor dem LLM-Judge, dazu Live-Trace und eine gemessene Auswahlmatrix mit Aufrufen, Tokens und Laufzeit.
+**Einstieg:** Lege zuerst Testfälle und erwartete Ergebnisse fest. Vergleiche dann im [Lab: PMO-Evaluation]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} Verkettung, ReAct und Briefing-Team mit denselben Aufgaben, Quellen und Regelchecks. Mock-Werte sind vorgegeben; WebGPU ermöglicht lokale Modellaufrufe. Die Checks ersetzen keine fachliche Prüfung des freien Antworttexts.
+
+**Bei Bedarf:** Das [Evaluator-Optimizer-Muster]({{ '/visualisierungen/agent_patterns_lab/#evaluator' | relative_url }}){:target="_blank" rel="noopener"} zeigt Prüfung und Überarbeitung innerhalb eines Laufs. Die PMO-Evaluation vergleicht dagegen Varianten über mehrere Läufe. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) vertieft die technische Umsetzung von Tracing und Evaluation; das Lab ist nicht an LangSmith angebunden.
 
 ---
 
@@ -29,9 +31,7 @@ Interaktive Demo: [Evaluator-Optimizer im Agent Patterns Lab]({{ '/visualisierun
 
 ## Evaluation und Observability: der Unterschied
 
-Evaluation beantwortet die Frage, ob ein Agent unter definierten Bedingungen gute Ergebnisse liefert. In produktionsnahen Workflows ist Evaluation außerdem ein **Gate**: Ein Lauf darf nur weitergehen, wenn Antwortqualität, Tool-Wahl, Kosten, Latenz und Sicherheitsgrenzen passen. Observability beantwortet die Anschlussfrage, warum ein Ergebnis gut, schlecht, teuer oder instabil war. Beides gehört zusammen: Ohne Evaluation fehlt ein belastbarer Maßstab, ohne Observability bleibt unklar, an welcher Stelle der Fehler entstanden ist.
-
-Für Entwickler wirkt beides zunächst ähnlich, weil in beiden Fällen Logs, Antworten und Metriken betrachtet werden. Der Unterschied liegt im Zweck. Evaluation vergleicht erwartetes Verhalten mit tatsächlichem Verhalten. Observability sammelt die Spuren, die diesen Vergleich erklärbar machen.
+**Evaluation** vergleicht erwartetes und tatsächliches Verhalten unter definierten Bedingungen. **Observability** macht anhand von Prompts, Tool-Aufrufen und weiteren Laufdaten nachvollziehbar, wie ein Ergebnis entstanden ist. Ein **Gate** nutzt vorab festgelegte Kriterien, um einen konkreten Lauf freizugeben oder zu stoppen. Antwortqualität, Tool-Wahl, Kosten, Latenz und Sicherheitsgrenzen können dabei eigene Kriterien sein.
 
 **Typischer Fehler:** Nur auf die Endantwort zu schauen. Ein Agent kann gut klingen und trotzdem das falsche Tool gewählt, eine unnötige Schleife gedreht oder eine riskante Aktion ohne ausreichende Kontrolle ausgelöst haben.
 

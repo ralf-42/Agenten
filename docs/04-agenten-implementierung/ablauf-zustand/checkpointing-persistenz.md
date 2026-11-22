@@ -13,6 +13,8 @@ has_toc: true
 
 > **Ein Checkpoint hält den Arbeitszustand eines Agenten fest: Nachrichten, Zwischenergebnisse und den nächsten Schritt.**
 
+**Einstieg:** Wie Arbeitsdaten aufgebaut und geändert werden, erklärt [State Management](./state-management.html). Hier geht es um ihr Speichern und Wiederherstellen. Übe im [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"}: vor der Freigabe speichern, die Seite neu laden und dieselbe Session wiederherstellen. Das ist eine lokale Browsersimulation; die LangGraph-Umsetzung folgt in diesem Kapitel.
+
 ---
 
 # Inhaltsverzeichnis
@@ -25,9 +27,7 @@ has_toc: true
 
 ## Warum Checkpointing überhaupt gebraucht wird
 
-Ein einfacher Workflow im Arbeitsspeicher funktioniert nur so lange, wie der Prozess läuft und niemand den Ablauf unterbricht. Sobald ein Agent mehrere Schritte ausführt, auf menschliche Freigabe warten soll oder nach einem Fehler wieder an derselben Stelle weitermachen muss, reicht **flüchtiger** Speicher nicht mehr aus. Genau hier beginnt Checkpointing.
-
-Checkpointing speichert den Zustand eines Graphen nach einzelnen Ausführungsschritten, sodass dieser Zustand später wieder geladen werden kann. Damit werden längere Gespräche, Human-in-the-Loop, Fehlertoleranz und das Zurückspringen zu früheren Punkten erst praktikabel.
+Flüchtiger State geht beim Prozessende verloren. Ein Checkpointer hält Zustände nach Ausführungsschritten fest und ermöglicht die Wiederaufnahme einer Sitzung. Damit die Daten auch einen Prozessneustart überstehen, braucht er einen persistenten Speicher; reiner In-Memory-Speicher genügt dafür nicht.
 
 **Typischer Fehler:** Checkpointing mit Logging zu verwechseln. Logs beschreiben, was passiert ist. Checkpoints speichern, von wo aus ein Workflow exakt weiterlaufen kann.
 

@@ -855,6 +855,29 @@ code {
   overflow-x: auto;
 }
 
+#view-docs summary {
+  cursor: pointer;
+  color: var(--sky);
+  font-weight: 600;
+}
+
+#view-docs details[open] > summary {
+  margin-bottom: 10px;
+}
+
+#view-docs td {
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+#view-docs td p {
+  margin-top: 8px;
+}
+
+.course-details > summary {
+  padding: 2px 0;
+}
+
 .matrix-table {
   width: 100%;
   border-collapse: collapse;

@@ -16,6 +16,8 @@ has_toc: true
 > [!NOTE] Bezug zum Kursprojekt<br>
 > Beim [PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) hält der State zum Beispiel Anfrage, gefundene Quellen, Antwortentwurf und Prüfstatus zusammen. So lässt sich nachvollziehen, was der Agent bereits weiß und welcher Schritt als Nächstes ansteht.
 
+**Einstieg:** Lies zunächst, welche Felder ein State braucht und wie Knoten sie ändern. Beobachte danach im [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} die Feldänderungen eines PMO-Laufs. Speichern und Wiederherstellen behandelt anschließend [Checkpointing & Persistenz](./checkpointing-persistenz.html). Das Lab simuliert beide Konzepte lokal im Browser; es verwendet keinen LangGraph-Checkpointer.
+
 ---
 
 # Inhaltsverzeichnis
@@ -28,9 +30,7 @@ has_toc: true
 
 ## Warum State Management überhaupt nötig ist
 
-Ein einfacher Chat mit einer einzelnen Anfrage braucht kaum mehr als die letzte Nachricht. Sobald ein Agent aber mehrere Schritte ausführt, Tools aufruft, Entscheidungen vorbereitet oder zwischen verschiedenen Pfaden routet, reicht ein loses Weiterreichen einzelner Variablen nicht mehr aus. Dann muss klar sein, welche Informationen an welcher Stelle vorhanden sind und wie sie sich verändern dürfen.
-
-Genau das leistet State Management. Es bündelt die relevanten Daten eines Workflows in einer zentralen Struktur, die von Schritt zu Schritt mitgeführt wird. Ohne diese Struktur gehen Informationen verloren, werden versehentlich überschrieben oder lassen sich später kaum noch debuggen.
+Bei einem mehrstufigen Ablauf muss feststehen, welche Informationen vorhanden sind und welcher Knoten sie ändern darf. Der State bündelt diese Arbeitsdaten und führt sie von Schritt zu Schritt mit. Dadurch bleiben Tool-Ergebnisse, Entwürfe und Entscheidungen nachvollziehbar.
 
 **Typischer Fehler:** State nur als technische Nebensache zu behandeln. In der Praxis entscheidet die Qualität des State-Designs oft darüber, ob ein LangGraph-Workflow nachvollziehbar oder fragil wird.
 

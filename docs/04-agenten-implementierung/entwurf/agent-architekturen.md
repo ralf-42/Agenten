@@ -15,7 +15,7 @@ has_toc: true
 
 Dieses Kapitel ist die gemeinsame Übersicht über die wichtigsten Muster. Es hilft dir zu entscheiden, wer den Ablauf bestimmt, welche Rollen gebraucht werden und wo Ergebnisse geprüft werden. Die praktische Teamumsetzung folgt in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}).
 
-Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 15 Agent-Muster und ein Kursbeispiel mit Flow-Graph, Trace und Auswahlmatrix direkt im Browser testen. Mock-Werte sind vorgegeben; WebGPU liefert lokale Modellaufrufe.
+**Einstieg:** Wähle mit der folgenden Tabelle eine passende Struktur und lies zunächst nur den zugehörigen Abschnitt. Erprobe dieses Muster anschließend im [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"}. Die 15 Muster und das PMO-Kursbeispiel sind ein Nachschlageangebot, keine vollständig abzuarbeitende Übungsliste. Beginne im Mock-Modus; WebGPU ist optional.
 
 ---
 

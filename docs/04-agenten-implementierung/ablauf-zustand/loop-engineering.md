@@ -33,7 +33,7 @@ Interaktive Demo: [Agent Patterns Lab – Loop Engineering]({{ '/visualisierunge
 
 ## Sieben Perspektiven auf Schleifen
 
-| Typ | Ebene und Akteur | Aufgabe und Beispiel |
+| Perspektive (Schleifentyp) | Ebene und Akteur | Aufgabe und Beispiel |
 |---|---|---|
 | **Orchestration Loop** | System; Supervisor oder Planer | Teilaufgaben verteilen, Ergebnisse zusammenführen und bei Bedarf den Plan ändern. Beispiel: Ein Supervisor fordert nach einem unvollständigen Rechercheergebnis eine ergänzende Suche an. |
 | **Agent Loop** | Einzelner Agent; Modell und Tools | Aktion wählen, Tool-Ergebnis beobachten und den nächsten Schritt bestimmen. Beispiel: Ein PMO-Agent sucht ein Dokument und verfeinert seine Suche. |
@@ -45,7 +45,7 @@ Interaktive Demo: [Agent Patterns Lab – Loop Engineering]({{ '/visualisierunge
 
 Ein einzelner Agentenlauf kann mehrere dieser Perspektiven verbinden: Ein Supervisor startet einen Agent Loop, ein Gate prüft dessen Ergebnis und bei Bedarf folgt eine menschliche Freigabe. Der Learning Loop betrachtet dagegen die Verbesserung **über mehrere Läufe hinweg**. Er braucht kuratierte Daten und eine erneute Bewertung; gespeicherte Gesprächshistorie allein ist noch kein solcher Lernprozess.
 
-Diese Perspektiven beschreiben, **welche Art Schleife** vorliegt. Davon zu trennen sind die Schutzmechanismen, die eine Schleife verlässlich machen — Abbruchgrenzen, Budgets, Validierung, Whitelists oder Eskalation. Im Loop-Engineering-Tab des Agent Patterns Lab nennt jeder Schalter die Perspektive, die er absichert; die Legende zeigt, wie viele Techniken je Perspektive greifen. Die Mehrheit sichert den **Agent Loop** und seine Gates ab, während Orchestration, Event-Driven und Learning Loop dort nur gestreift werden.
+Diese sieben Perspektiven beschreiben, **welche Art Schleife** vorliegt. Davon zu trennen sind die Schutzmechanismen, die eine Schleife verlässlich machen — Abbruchgrenzen, Budgets, Validierung, Whitelists oder Eskalation. Das Agent Patterns Lab zeigt **zwölf Schutztechniken**: Jeder Schalter nennt die zugeordneten Perspektiven; die Legende zählt die Schutztechniken je Perspektive. Eine Schutztechnik kann mehreren Perspektiven zugeordnet sein. Die Mehrheit sichert den **Agent Loop** und seine Gates ab, während Orchestration, Event-Driven und Learning Loop dort nur gestreift werden.
 
 ## Eine Schleife bewusst entwerfen
 

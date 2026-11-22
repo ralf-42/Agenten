@@ -1,8 +1,8 @@
 (function () {
 const { sleep } = window.AgentLab;
 
-// Die sieben Schleifen-Perspektiven aus "Loop Engineering" (loop-engineering.md).
-// Sie beschreiben Schleifen-TYPEN; die Techniken unten sind Schutz-MECHANISMEN fuer diese Typen.
+// Die sieben Perspektiven auf Schleifen aus "Loop Engineering" (loop-engineering.md).
+// Sie beschreiben Schleifentypen; die zwölf Techniken unten sind Schutzmechanismen für diese Schleifen.
 const LOOP_PERSPECTIVES = [
   { id: "orchestration", label: "Orchestration Loop", short: "Orchestration" },
   { id: "agent", label: "Agent Loop", short: "Agent" },
@@ -13,7 +13,7 @@ const LOOP_PERSPECTIVES = [
   { id: "learning", label: "Learning Loop", short: "Learning" }
 ];
 
-// loops: welche Perspektive die Technik absichert; die erste Nennung ist die primaere.
+// loops: welche Perspektiven die Schutztechnik absichert; die erste Nennung ist die primäre.
 const LOOP_TECHNIQUES = [
   { id: "iteration_cap", name: "1. Iterations-Cap", desc: "Harte Obergrenze für Schleifendurchläufe (z. B. max. 3).", loops: ["agent", "orchestration"] },
   { id: "token_budget", name: "2. Token-/Kostenbudget", desc: "Bricht ab, bevor Kosten explodieren.", loops: ["agent", "orchestration"] },
@@ -79,7 +79,7 @@ class LoopsController {
           <div>
             <strong>${t.name}${hit ? " ✓" : ""}</strong>
             <span>${t.desc}</span>
-            <span class="tech-loop" title="Schützt diese Schleifen-Perspektive">${t.loops.map((l) => perspectiveLabel(l)).join(" · ")}</span>
+            <span class="tech-loop" title="Zugeordnete Perspektiven auf Schleifen">${t.loops.map((l) => perspectiveLabel(l)).join(" · ")}</span>
           </div>
         </label>`;
     }).join("");

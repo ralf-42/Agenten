@@ -217,7 +217,9 @@ class HarnessController {
       })
     });
 
-    execBody.innerHTML += `<div class="layer-step"><strong>2. Modell &amp; Tools (${llmRes.tokens} Tokens):</strong><br/>${llmRes.text}</div>`;
+    const measurement = llmRes.simulated ? "Mock-Simulation" : "WebGPU-Lauf";
+    const tokenLabel = llmRes.simulated ? "Tokens simuliert" : llmRes.tokensEstimated ? "Tokens geschätzt" : "Tokens gemessen";
+    execBody.innerHTML += `<div class="layer-step"><strong>2. ${measurement} (${llmRes.tokens} ${tokenLabel}):</strong><br/>${llmRes.text}</div>`;
     await sleep(240);
 
     const guard = sc.guardrailCheck(mem);

@@ -57,8 +57,18 @@ const webllmStatusText = document.getElementById("webllmStatusText");
 const webllmProgressWrap = document.getElementById("webllmProgressWrap");
 const webllmProgressFill = document.getElementById("webllmProgressFill");
 
+function updateModeNote() {
+  document.getElementById("executionModeNote").textContent = engine.isWebLLM()
+    ? "WebGPU-Modus: Echte lokale Modellaufrufe nach dem Laden des gewählten Modells. Geschätzte Tokenzahlen sind markiert; die Demo-Zeit enthält Animationen und menschliche Pausen."
+    : "Mock-Modus: Antworten und Tokenzahlen sind vorgegeben. Die Demo-Zeit enthält künstliche Wartezeiten; das ist keine Messung der Modellleistung.";
+}
+updateModeNote();
+
 modeSelect.addEventListener("change", () => {
   engine.setMode(modeSelect.value);
+  patternsCtrl.selectPattern(patternsCtrl.activeId);
+  patternsCtrl.renderMatrix();
+  updateModeNote();
   const isWeb = engine.isWebLLM();
   loadModelBtn.classList.toggle("hidden", !isWeb);
   webllmStatus.classList.toggle("hidden", !isWeb);

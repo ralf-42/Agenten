@@ -64,6 +64,8 @@ Bei einem **Handoff** übernimmt die nächste Rolle die weitere Bearbeitung. Üb
 
 Ein Handoff überträgt weder automatisch neue Berechtigungen noch sämtliche bisherigen Nachrichten. Übergib prüfbare Ergebnisse und benötigte Originalstellen. Interne Gedankengänge des Modells sind kein Übergabeformat.
 
+Interaktive Demo: [Handoff im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#handoff' | relative_url }}){:target="_blank" rel="noopener"} – vollständige und unvollständige Übergabepakete am PMO-Beispiel vergleichen.
+
 ## Gemeinsamen State und Fachkontexte trennen
 
 Der **Shared State** hält den Arbeitsstand der Anwendung. Die einzelnen Agenten bekommen daraus jeweils nur die benötigten Felder. Ein gemeinsamer State bedeutet nicht, dass jede Rolle den gesamten Verlauf sehen muss.
@@ -129,7 +131,7 @@ Das Routing beendet den Lauf nach einer Akzeptanz oder nach zwei Entwürfen. Der
 
 ### Was das Beispiel absichert und was offenbleibt
 
-Die Recherche läuft einmal. Danach entstehen höchstens zwei Entwürfe mit jeweils einer Prüfung. Die Quellen-ID-Prüfung läuft vor dem bewertenden Modell; ohne gültige Referenzen wird eine Überarbeitung verlangt. Akzeptierte Ergebnisse enden als geprüfter Entwurf, nach ausgeschöpftem Budget bleibt das Ergebnis gesperrt. Das zusätzliche Rekursionslimit schützt vor unerwartet langen Graph-Läufen; es ersetzt kein Token-, Kosten- oder Zeitbudget.
+Die Recherche läuft einmal. Danach entstehen höchstens zwei Entwürfe mit jeweils einer Prüfung. Die Quellen-ID-Prüfung läuft vor dem bewertenden Modell; ohne gültige Referenzen wird eine Überarbeitung verlangt. Nach höchstens zwei Entwürfen endet der Lauf; bleibt die Prüfung negativ, wird das Ergebnis gesperrt (`blocked=True`). Ein akzeptierter Entwurf bleibt auch beim zweiten Versuch akzeptiert. Das zusätzliche Rekursionslimit schützt vor unerwartet langen Graph-Läufen; es ersetzt kein Token-, Kosten- oder Zeitbudget.
 
 **Wichtig:** Eine vorhandene Quellen-ID beweist nicht, dass die zugehörige Aussage stimmt. Der Modell-Reviewer kann ebenfalls irren. Das Beispiel enthält keine Versandfunktion und keine menschliche Freigabe. Auch ein akzeptierter Entwurf ist keine Versandgenehmigung.
 

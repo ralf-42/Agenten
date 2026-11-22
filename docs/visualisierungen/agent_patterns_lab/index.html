@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agent Patterns Lab – 13 Muster, Harness &amp; Loop Engineering</title>
+  <title>Agent Patterns Lab – Agent-Muster &amp; Kursbeispiel, Harness &amp; Loop Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
       <nav class="main-nav" aria-label="Hauptbereiche">
         <button class="nav-tab active" data-view="patterns">13 Agent-Muster + Kursbeispiel</button>
         <button class="nav-tab" data-view="harness">Agent Harness (3 Schichten)</button>
-        <button class="nav-tab" data-view="loops">Loop Engineering (12 Techniken)</button>
+        <button class="nav-tab" data-view="loops">Loop Engineering (12 Schutztechniken)</button>
       </nav>
 
       <div class="mode-controls">
@@ -50,6 +50,7 @@
   </header>
 
   <main class="container">
+    <p id="executionModeNote" class="muted-sm" role="status">Mock-Modus: Antworten und Tokenzahlen sind vorgegeben. Die Demo-Zeit enthält künstliche Wartezeiten; das ist keine Messung der Modellleistung.</p>
     <!-- ==================== VIEW 1: AGENT PATTERNS ==================== -->
     <section id="view-patterns" class="view active">
       <div class="view-intro">
@@ -57,18 +58,21 @@
           <h2>Agent Design Patterns im direkten Vergleich</h2>
           <p>
             Wähle ein Muster (inkl. dem <strong>PMO-Briefing-Team</strong> aus dem Kurs), starte den Lauf und beobachte
-            <strong>Flow-Graph</strong>, <strong>Live-Trace</strong>, <strong>Prüfpunkte</strong> und die gemessene <strong>Auswahlmatrix</strong>.
-            Hinweis: Kontrollmuster (Gruppe 5) sind keine eigene Entwicklungsstufe, sondern Querschnittsbausteine für jedes Muster.
+            <strong>Flow-Graph</strong>, <strong>Live-Trace</strong>, <strong>Prüfpunkte</strong> und die <strong>Auswahlmatrix mit gekennzeichneten Simulations- oder Live-Werten</strong>.
+            Hinweis: Kontrollmuster sind keine eigene Entwicklungsstufe, sondern Querschnittsbausteine für jedes Muster.
+          </p>
+          <p>
+            Der <strong>PMO-Assistent</strong> ist das Kursbeispiel. Versicherung, Klinik, Karriereberatung und Pharma-Forschung zeigen die Übertragbarkeit der Muster auf weitere Domänen.
           </p>
         </div>
         <div class="intro-actions">
-          <button id="runAllBtn" class="btn btn-secondary">Alle Muster testen (Benchmark)</button>
+          <button id="runAllBtn" class="btn btn-secondary">Alle Muster simulieren</button>
           <button id="resetMatrixBtn" class="btn btn-ghost">Matrix zurücksetzen</button>
         </div>
       </div>
 
       <div class="patterns-layout">
-        <!-- Sidebar: 4 Pattern Groups -->
+        <!-- Sidebar: 5 thematische Gruppen, keine Entwicklungsstufen -->
         <aside class="pattern-sidebar" id="patternSidebar" aria-label="Muster-Auswahl"></aside>
 
         <!-- Main Workspace -->
@@ -114,7 +118,7 @@
           <div id="hitlPanel" class="card hitl-card hidden">
             <div class="hitl-header">
               <span class="status-badge status-warn">⏸ Warten auf menschliche Freigabe (HITL)</span>
-              <h4>E-Mail-Entwurf vor Versand prüfen</h4>
+              <h4>Jeden Entwurf vor simuliertem Versand prüfen</h4>
             </div>
             <div id="hitlPrecheck" class="precheck-alert"></div>
             <div class="draft-box">
@@ -125,7 +129,7 @@
               <label for="hitlFeedbackInput">Feedback bei Ablehnung (wird im Memory gespeichert):</label>
               <input id="hitlFeedbackInput" type="text" value="Keinen internen Betrugsscore nennen! Stattdessen schreiben, dass der Fall in Prüfung ist (nicht abgelehnt), und benötigte Unterlagen auflisten." />
               <div class="hitl-buttons">
-                <button id="hitlApproveBtn" class="btn btn-success">✓ Freigeben &amp; senden</button>
+                <button id="hitlApproveBtn" class="btn btn-success">✓ Freigeben &amp; Versand simulieren</button>
                 <button id="hitlRejectBtn" class="btn btn-danger">✕ Ablehnen &amp; mit Feedback neu erstellen</button>
               </div>
             </div>
@@ -152,6 +156,7 @@
                 <h4>Ergebnis &amp; Prüfpunkte</h4>
                 <span id="resultStatusBadge" class="status-badge status-idle">Bereit</span>
               </div>
+              <p id="metricMode" class="muted-sm" role="status">Noch kein Lauf</p>
               <div class="metrics-strip">
                 <div class="metric-box">
                   <span class="metric-label">Modellaufrufe</span>
@@ -162,11 +167,11 @@
                   <strong id="metricTools">–</strong>
                 </div>
                 <div class="metric-box">
-                  <span class="metric-label">Tokens</span>
+                  <span class="metric-label" id="metricTokensLabel">Tokens</span>
                   <strong id="metricTokens">–</strong>
                 </div>
                 <div class="metric-box">
-                  <span class="metric-label">Laufzeit</span>
+                  <span class="metric-label">Demo-Zeit inkl. Pausen</span>
                   <strong id="metricTime">–</strong>
                 </div>
               </div>
@@ -194,8 +199,8 @@
       <section class="card matrix-card">
         <div class="card-header">
           <div>
-            <h4>Auswahlmatrix — gemessen, nicht geraten</h4>
-            <p class="muted-sm">Jeder Lauf trägt hier reale Kennzahlen für das gewählte Modell ein. Klicke auf eine Zeile, um direkt zum Muster zu springen.</p>
+            <h4>Auswahlmatrix — Simulation und Live-Läufe</h4>
+            <p class="muted-sm">Die Matrix zeigt jeweils den gewählten Modus. Mock-Tokenzahlen sind vorgegeben; WebGPU-Tokenzahlen werden als gemessen oder geschätzt gekennzeichnet. Die Demo-Zeit enthält Animationen und menschliche Pausen. Verschiedene Aufgaben sind kein kontrollierter Architektur-Benchmark.</p>
           </div>
         </div>
         <div class="table-wrap">
@@ -207,9 +212,10 @@
                 <th>Wer steuert?</th>
                 <th>Geeignet für</th>
                 <th>Typische Grenze</th>
+                <th>Modus / Modell</th>
                 <th>Calls</th>
                 <th>Tokens</th>
-                <th>Zeit</th>
+                <th>Demo-Zeit</th>
                 <th>Ergebnis</th>
               </tr>
             </thead>
@@ -298,14 +304,14 @@
     <section id="view-loops" class="view">
       <div class="view-intro">
         <div>
-          <h2>Loop Engineering: 12 Techniken für verlässliche Agentenschleifen</h2>
+          <h2>Loop Engineering: 12 Schutztechniken für verlässliche Agentenschleifen</h2>
           <p>
             Jeder Agent-Loop folgt dem Zyklus <code>Inspect → Act → Verify → Decide → Repeat</code>.
             Schalte einzelne Schutztechniken gezielt <strong>an oder aus</strong> und beobachte in vier typischen Fehler-Szenarien,
-            welche Technik den Lauf rettet — und was passiert, wenn sie fehlt.
+            welche Schutztechnik im jeweiligen Szenario greift — und was passiert, wenn sie fehlt.
           </p>
           <p>
-            Die Techniken sind <strong>Schutzmechanismen</strong>; das Kursdokument <a href="../../04-agenten-implementierung/ablauf-zustand/loop-engineering.html">Loop Engineering</a> unterscheidet davor sieben <strong>Schleifen-Typen</strong>. Jeder Schalter nennt die Perspektive, die er absichert.
+            Das Kursdokument Loop Engineering unterscheidet <strong>sieben Perspektiven auf Schleifen</strong>. Die <strong>zwölf Schutztechniken</strong> hier sind Mechanismen, die diese Schleifen absichern. Jeder Schalter nennt die zugeordneten Perspektiven; die Legende zählt die Schutztechniken je Perspektive. Eine Schutztechnik kann mehreren Perspektiven zugeordnet sein.
           </p>
         </div>
       </div>
@@ -330,7 +336,7 @@
       <div class="loops-layout">
         <div class="card techniques-card">
           <div class="card-header">
-            <h4>12 Zuverlässigkeitstechniken (ein-/ausschaltbar)</h4>
+            <h4>12 Schutztechniken (ein-/ausschaltbar)</h4>
             <span id="activeTechCount" class="muted-sm">12 / 12 aktiv</span>
           </div>
           <div id="loopPerspectiveLegend" class="loop-legend"></div>

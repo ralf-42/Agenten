@@ -57,7 +57,10 @@ class ExecutionEngine {
   async callLLM({ systemPrompt, userPrompt, mockSmallFn, mockStrongFn, temperature = 0.2, maxTokens = 220 }) {
     const start = performance.now();
 
-    if (this.isWebLLM() && this.webllmEngine) {
+    if (this.isWebLLM()) {
+      if (!this.webllmEngine || this.loadedModelId !== WEBLLM_MODELS[this.mode]) {
+        throw new Error("Das gewählte WebGPU-Modell ist noch nicht geladen. Bitte zuerst „Modell laden“ wählen.");
+      }
       const resp = await this.webllmEngine.chat.completions.create({
         messages: [
           { role: "system", content: systemPrompt },
@@ -67,12 +70,17 @@ class ExecutionEngine {
         max_tokens: maxTokens
       });
       const text = resp.choices?.[0]?.message?.content?.trim() || "";
-      const tokens = resp.usage?.total_tokens || Math.max(40, Math.round((systemPrompt.length + userPrompt.length + text.length) / 4));
+      const tokensEstimated = !Number.isFinite(resp.usage?.total_tokens);
+      const tokens = tokensEstimated
+        ? Math.max(40, Math.round((systemPrompt.length + userPrompt.length + text.length) / 4))
+        : resp.usage.total_tokens;
       return {
         text,
         tokens,
         ms: Math.round(performance.now() - start),
-        source: this.loadedModelId
+        source: this.loadedModelId,
+        simulated: false,
+        tokensEstimated
       };
     }
 
@@ -85,7 +93,9 @@ class ExecutionEngine {
       text: mock.text,
       tokens: mock.tokens || 180,
       ms: Math.round(performance.now() - start) + (mock.extraMs || 0),
-      source: this.mode === "mock-small" ? "Mock 1.5B" : "Mock Strong"
+      source: this.mode === "mock-small" ? "Mock 1.5B" : "Mock Strong",
+      simulated: true,
+      tokensEstimated: true
     };
   }
 }

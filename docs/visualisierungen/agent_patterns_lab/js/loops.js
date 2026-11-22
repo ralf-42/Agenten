@@ -1,20 +1,38 @@
 (function () {
 const { sleep } = window.AgentLab;
 
-const LOOP_TECHNIQUES = [
-  { id: "iteration_cap", name: "1. Iterations-Cap", desc: "Harte Obergrenze für Schleifendurchläufe (z. B. max. 3)." },
-  { id: "token_budget", name: "2. Token-/Kostenbudget", desc: "Bricht ab, bevor Kosten explodieren." },
-  { id: "schema_check", name: "3. Schema-Validierung", desc: "Prüft JSON-Struktur & Pflichtfelder deterministisch." },
-  { id: "tool_whitelist", name: "4. Tool-Whitelist", desc: "Blockiert halluzinierte oder unerlaubte Tool-Namen." },
-  { id: "loop_detection", name: "5. Wiederholungs-Erkennung", desc: "Erkennt identische Tool-Aufrufe ohne Fortschritt." },
-  { id: "tool_timeout", name: "6. Tool-Timeout", desc: "Begrenzt hängende API-Aufrufe hart." },
-  { id: "circuit_breaker", name: "7. Circuit Breaker", desc: "Stoppt Retry-Stürme nach N Fehlern desselben Tools." },
-  { id: "idempotency", name: "8. Idempotenz-Schutz", desc: "Verhindert doppelte E-Mails oder Zahlungen bei Retries." },
-  { id: "context_compaction", name: "9. Kontext-Kompression", desc: "Hält den aktiven State innerhalb des Token-Budgets." },
-  { id: "hitl_escalation", name: "10. HITL-Eskalation", desc: "Übergibt unklare/riskante Fälle an einen Menschen." },
-  { id: "graceful_fallback", name: "11. Graceful Fallback", desc: "Liefert einen sicheren Prüfbericht statt Absturz." },
-  { id: "structured_trace", name: "12. Strukturierter Trace", desc: "Protokolliert jede Entscheidung & Abbruchursache." }
+// Die sieben Schleifen-Perspektiven aus "Loop Engineering" (loop-engineering.md).
+// Sie beschreiben Schleifen-TYPEN; die Techniken unten sind Schutz-MECHANISMEN fuer diese Typen.
+const LOOP_PERSPECTIVES = [
+  { id: "orchestration", label: "Orchestration Loop", short: "Orchestration" },
+  { id: "agent", label: "Agent Loop", short: "Agent" },
+  { id: "verification", label: "Verification Loop", short: "Verification" },
+  { id: "safety", label: "Safety / Guardrail Loop", short: "Safety" },
+  { id: "hitl", label: "HITL / Collaboration Loop", short: "HITL" },
+  { id: "event", label: "Event-Driven Loop", short: "Event-Driven" },
+  { id: "learning", label: "Learning Loop", short: "Learning" }
 ];
+
+// loops: welche Perspektive die Technik absichert; die erste Nennung ist die primaere.
+const LOOP_TECHNIQUES = [
+  { id: "iteration_cap", name: "1. Iterations-Cap", desc: "Harte Obergrenze für Schleifendurchläufe (z. B. max. 3).", loops: ["agent", "orchestration"] },
+  { id: "token_budget", name: "2. Token-/Kostenbudget", desc: "Bricht ab, bevor Kosten explodieren.", loops: ["agent", "orchestration"] },
+  { id: "schema_check", name: "3. Schema-Validierung", desc: "Prüft JSON-Struktur & Pflichtfelder deterministisch.", loops: ["verification"] },
+  { id: "tool_whitelist", name: "4. Tool-Whitelist", desc: "Blockiert halluzinierte oder unerlaubte Tool-Namen.", loops: ["safety"] },
+  { id: "loop_detection", name: "5. Wiederholungs-Erkennung", desc: "Erkennt identische Tool-Aufrufe ohne Fortschritt.", loops: ["agent"] },
+  { id: "tool_timeout", name: "6. Tool-Timeout", desc: "Begrenzt hängende API-Aufrufe hart.", loops: ["agent"] },
+  { id: "circuit_breaker", name: "7. Circuit Breaker", desc: "Stoppt Retry-Stürme nach N Fehlern desselben Tools.", loops: ["agent", "event"] },
+  { id: "idempotency", name: "8. Idempotenz-Schutz", desc: "Verhindert doppelte E-Mails oder Zahlungen bei Retries.", loops: ["event", "safety"] },
+  { id: "context_compaction", name: "9. Kontext-Kompression", desc: "Hält den aktiven State innerhalb des Token-Budgets.", loops: ["agent"] },
+  { id: "hitl_escalation", name: "10. HITL-Eskalation", desc: "Übergibt unklare/riskante Fälle an einen Menschen.", loops: ["hitl"] },
+  { id: "graceful_fallback", name: "11. Graceful Fallback", desc: "Liefert einen sicheren Prüfbericht statt Absturz.", loops: ["safety", "verification"] },
+  { id: "structured_trace", name: "12. Strukturierter Trace", desc: "Protokolliert jede Entscheidung & Abbruchursache.", loops: ["learning", "verification"] }
+];
+
+function perspectiveLabel(id, key = "short") {
+  const p = LOOP_PERSPECTIVES.find((x) => x.id === id);
+  return p ? p[key] : id;
+}
 
 class LoopsController {
   constructor() {
@@ -25,6 +43,7 @@ class LoopsController {
     this.badgeEl = document.getElementById("loopResultBadge");
 
     this.bindEvents();
+    this.renderPerspectiveLegend();
     this.renderTechniques();
   }
 
@@ -40,6 +59,15 @@ class LoopsController {
     document.getElementById("runLoopBtn").addEventListener("click", () => this.runSimulation());
   }
 
+  renderPerspectiveLegend() {
+    const el = document.getElementById("loopPerspectiveLegend");
+    if (!el) return;
+    el.innerHTML = LOOP_PERSPECTIVES.map((p) => {
+      const n = LOOP_TECHNIQUES.filter((t) => t.loops.includes(p.id)).length;
+      return `<span class="loop-legend-item${n ? "" : " empty"}">${p.label}<b>${n}</b></span>`;
+    }).join("");
+  }
+
   renderTechniques(triggeredIds = new Set()) {
     document.getElementById("activeTechCount").textContent = `${this.enabled.size} / ${LOOP_TECHNIQUES.length} aktiv`;
     this.gridEl.innerHTML = LOOP_TECHNIQUES.map((t) => {
@@ -51,6 +79,7 @@ class LoopsController {
           <div>
             <strong>${t.name}${hit ? " ✓" : ""}</strong>
             <span>${t.desc}</span>
+            <span class="tech-loop" title="Schützt diese Schleifen-Perspektive">${t.loops.map((l) => perspectiveLabel(l)).join(" · ")}</span>
           </div>
         </label>`;
     }).join("");

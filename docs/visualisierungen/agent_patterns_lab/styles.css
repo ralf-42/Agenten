@@ -1040,6 +1040,43 @@ code {
   font-size: 0.74rem;
   color: var(--text-muted);
 }
+.tech-toggle .tech-loop {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: rgba(56, 189, 248, 0.14);
+  color: var(--sky);
+  padding: 1px 7px;
+  border-radius: 99px;
+}
+
+.loop-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.loop-legend-item {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 2px 9px;
+}
+
+.loop-legend-item b {
+  margin-left: 6px;
+  color: var(--sky);
+}
+
+.loop-legend-item.empty {
+  opacity: 0.55;
+}
+
 
 .loop-right-col {
   display: flex;

@@ -14,7 +14,7 @@ has_toc: true
 
 Die [Architekturübersicht]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) erklärt die Auswahl zwischen Workflows, einzelnen Agenten und Agententeams. Dieses Kapitel setzt eine begründete Rollenaufteilung voraus und zeigt ihre Umsetzung am Meeting- und Research-Briefing-Agenten.
 
-Interaktive Demo: [Agent Patterns Lab (Multi-Agent-Muster)]({{ '/visualisierungen/agent_patterns_lab/#orchestrator' | relative_url }}){:target="_blank" rel="noopener"} – Orchestrator-Workers, Hierarchie, Swarm/Handoff, Parallel Sectioning und Parallel Voting im Browser ausprobieren.
+Interaktive Demo: [Agent Patterns Lab (PMO-Briefing-Team &amp; Multi-Agent-Muster)]({{ '/visualisierungen/agent_patterns_lab/#briefing_team' | relative_url }}){:target="_blank" rel="noopener"} – das Briefing-Team (`Recherche → Schreiben → Prüfung`, `attempts ≤ 2`) sowie Orchestrator-Workers, Hierarchie, Swarm/Handoff und Parallelisierung im Browser ausprobieren.
 
 ---
 

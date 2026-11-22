@@ -104,14 +104,16 @@ code {
   max-width: 1440px;
   margin: 0 auto;
   padding: 12px 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "brand controls" "divider divider" "nav nav";
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
 }
 
 .brand {
+  grid-area: brand;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -136,13 +138,18 @@ code {
   line-height: 1.2;
 }
 
-.subtitle {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+.header-divider {
+  grid-area: divider;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
 }
 
 .main-nav {
+  grid-area: nav;
   display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   gap: 6px;
   background: var(--bg-elevated);
   padding: 4px;
@@ -174,10 +181,17 @@ code {
 }
 
 .mode-controls {
+  grid-area: controls;
+  justify-content: flex-end;
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+  .topbar-inner { grid-template-columns: minmax(0, 1fr); grid-template-areas: "brand" "divider" "nav" "controls"; }
+  .mode-controls { justify-content: flex-start; }
 }
 
 .mode-label {
@@ -186,6 +200,8 @@ code {
 }
 
 .mode-select, .preset-select {
+  min-width: 0;
+  max-width: 100%;
   background: var(--bg-subtle);
   color: var(--text);
   border: 1px solid var(--border-strong);
@@ -193,6 +209,11 @@ code {
   padding: 6px 10px;
   font: inherit;
   font-size: 0.84rem;
+}
+
+.loop-scenario-select {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .webllm-banner {
@@ -541,6 +562,10 @@ code {
   gap: 16px;
 }
 
+.workspace-grid > * {
+  min-width: 0;
+}
+
 .legend {
   display: flex;
   gap: 10px;
@@ -683,6 +708,16 @@ code {
   padding: 12px;
   font-size: 0.88rem;
   min-height: 110px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.result-body pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  font: 0.78rem/1.6 var(--mono);
+  margin: 8px 0;
 }
 
 .result-body ul {
@@ -1134,6 +1169,74 @@ code {
 }
 
 /* ==================== FOOTER ==================== */
+.learning-card,
+.learning-controls {
+  margin-bottom: 16px;
+}
+.learning-controls {
+  display: grid;
+  gap: 10px;
+}
+.learning-card h3,
+.learning-card p,
+.learning-card details,
+.learning-card ul {
+  margin-bottom: 10px;
+}
+.learning-card ul {
+  padding-left: 22px;
+}
+.learning-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.learning-columns,
+.state-change {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.learning-columns > *,
+.state-change > * {
+  min-width: 0;
+}
+.learning-card pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--bg-elevated);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font: 0.78rem/1.6 var(--mono);
+  max-height: 460px;
+  overflow: auto;
+  margin: 8px 0;
+}
+.learning-card details > summary {
+  cursor: pointer;
+  color: var(--sky);
+  padding: 8px 0;
+}
+.learning-card textarea,
+.learning-controls textarea,
+.learning-controls input:not([type="checkbox"]) {
+  width: 100%;
+  min-width: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 10px;
+  font: inherit;
+}
+.learning-card textarea { margin: 10px 0; }
+.learning-checkbox { display: flex; align-items: center; gap: 8px; }
+.learning-controls .status-badge { white-space: normal; justify-self: start; max-width: 100%; }
+@media (max-width: 800px) {
+  .learning-columns,
+  .state-change { grid-template-columns: 1fr; }
+}
+
 .footer {
   border-top: 1px solid var(--border);
   background: var(--bg-elevated);

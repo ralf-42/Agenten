@@ -16,6 +16,8 @@ has_toc: true
 > [!NOTE] Bezug zum Kursprojekt<br>
 > Der [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) braucht Werkzeuge, um Projektunterlagen zu durchsuchen und Ergebnisse kontrolliert vorzubereiten. Im passenden Notebook zeigt der **Praxis-Transfer: PMO-Assistent**, wie aus einer fachlichen Anfrage ein begrenzter Tool-Aufruf wird.
 
+Interaktive Demo: [ReAct-Loop im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#react' | relative_url }}){:target="_blank" rel="noopener"} – das Modell wählt seine Werkzeuge selbst; Schema-Prüfung und Iterations-Cap greifen sichtbar im Loop.
+
 ---
 
 # Inhaltsverzeichnis
@@ -457,7 +459,7 @@ Progressive Disclosure eignet sich, wenn ein Agent viele Werkzeuge nutzen kann, 
 ---
 
 **Version:** 1.5<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

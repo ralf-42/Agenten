@@ -43,6 +43,22 @@ async function test(name, run) {
 }
 
 (async () => {
+  for (const text of [
+    'The final payout for Claim CLM001 is **19,500 EUR**.',
+    'Auszahlung: 19.500 €.', 'Auszahlung: 19500 EUR.',
+    'Payout: 19,500.00 EUR.', 'Auszahlung: 19.500,00 €.', 'Auszahlung: 19\u202f500 €.'
+  ]) {
+    await test(`Augmented: Zahlenformat erkannt: ${text}`, async () => {
+      const result = await controller.executePatternLogic('augmented', createContext(() => text));
+      assert.equal(result.status, 'pass');
+    });
+  }
+  for (const text of ['119,500 EUR', '195,000 EUR', '19500.99 EUR', '19.50 EUR', 'CLM19500']) {
+    await test(`Augmented: falscher Betrag abgelehnt: ${text}`, async () => {
+      const result = await controller.executePatternLogic('augmented', createContext(() => text));
+      assert.equal(result.status, 'fail');
+    });
+  }
   for (const [quality, expected, count] of [['accepted', 'pass', 3], ['revise', 'warn', 5]]) {
     await test(`Briefing: ${quality} steuert den Abschluss`, async () => {
       const ctx = createContext(briefingResponse(quality));

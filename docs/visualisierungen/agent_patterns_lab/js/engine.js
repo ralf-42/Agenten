@@ -10,10 +10,17 @@ class ExecutionEngine {
     this.mode = "mock-small";
     this.webllmEngine = null;
     this.loadedModelId = null;
+    this.model_engines = new Map();
+    this.model_load_ms = new Map();
   }
 
   setMode(mode) {
     this.mode = mode;
+    const model_id = WEBLLM_MODELS[mode];
+    if (this.model_engines.has(model_id)) {
+      this.webllmEngine = this.model_engines.get(model_id);
+      this.loadedModelId = model_id;
+    }
   }
 
   isWebLLM() {
@@ -24,22 +31,27 @@ class ExecutionEngine {
     return this.mode === "mock-small";
   }
 
-  async loadWebLLM(onProgress) {
+  async loadWebLLM(onProgress, mode = this.mode) {
     if (!("gpu" in navigator)) {
       throw new Error("Dein Browser unterstützt kein WebGPU. Bitte Desktop-Chrome/Edge nutzen oder im Mock-Modus bleiben.");
     }
-    const modelId = WEBLLM_MODELS[this.mode];
+    const modelId = WEBLLM_MODELS[mode];
     if (!modelId) return;
-    if (this.webllmEngine && this.loadedModelId === modelId) {
+    if (this.model_engines.has(modelId) || (this.webllmEngine && this.loadedModelId === modelId)) {
+      if (mode === this.mode && this.model_engines.has(modelId)) {
+        this.webllmEngine = this.model_engines.get(modelId);
+        this.loadedModelId = modelId;
+      }
       onProgress?.({ progress: 1, text: `Modell ${modelId} bereits geladen.` });
       return;
     }
 
+    const load_start = performance.now();
     onProgress?.({ progress: 0.05, text: "Lade WebLLM-Bibliothek…" });
     const webllm = await import("https://esm.run/@mlc-ai/web-llm");
     onProgress?.({ progress: 0.1, text: `Initialisiere ${modelId} (einmaliger Download in den Browser-Cache)…` });
 
-    this.webllmEngine = await webllm.CreateMLCEngine(modelId, {
+    const model_engine = await webllm.CreateMLCEngine(modelId, {
       initProgressCallback: (report) => {
         onProgress?.({
           progress: report.progress ?? 0.2,
@@ -47,21 +59,28 @@ class ExecutionEngine {
         });
       }
     });
-    this.loadedModelId = modelId;
+    this.model_engines.set(modelId, model_engine);
+    this.model_load_ms.set(modelId, Math.round(performance.now() - load_start));
+    if (mode === this.mode) {
+      this.webllmEngine = model_engine;
+      this.loadedModelId = modelId;
+    }
   }
 
   /**
    * Führt einen einzelnen LLM-Aufruf aus (entweder echtes WebLLM oder realistische Mock-Antwort).
    * Interne JSON-Keys bleiben englisch für maximale Stabilität bei kleinen Modellen.
    */
-  async callLLM({ systemPrompt, userPrompt, mockSmallFn, mockStrongFn, temperature = 0.2, maxTokens = 220 }) {
+  async callLLM({ systemPrompt, userPrompt, mockSmallFn, mockStrongFn, temperature = 0.2, maxTokens = 220, modelMode = this.mode }) {
     const start = performance.now();
 
-    if (this.isWebLLM()) {
-      if (!this.webllmEngine || this.loadedModelId !== WEBLLM_MODELS[this.mode]) {
+    if (modelMode.startsWith("webllm-")) {
+      const requested_model = WEBLLM_MODELS[modelMode];
+      const backend = this.model_engines.get(requested_model) || (this.loadedModelId === requested_model ? this.webllmEngine : null);
+      if (!requested_model || !backend) {
         throw new Error("Das gewählte WebGPU-Modell ist noch nicht geladen. Bitte zuerst „Modell laden“ wählen.");
       }
-      const resp = await this.webllmEngine.chat.completions.create({
+      const resp = await backend.chat.completions.create({
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
@@ -78,22 +97,23 @@ class ExecutionEngine {
         text,
         tokens,
         ms: Math.round(performance.now() - start),
-        source: this.loadedModelId,
+        source: requested_model,
         simulated: false,
         tokensEstimated
       };
     }
 
     // Mock-Modus mit realistischer Schritt-Verzögerung für gute Sichtbarkeit im Flow-Graph
-    const delay = this.mode === "mock-small" ? 260 : 210;
+    if (!["mock-small", "mock-strong"].includes(modelMode)) throw new Error("Unbekannter Ausführungsmodus.");
+    const delay = modelMode === "mock-small" ? 260 : 210;
     await sleep(delay);
-    const fn = this.mode === "mock-small" ? mockSmallFn : (mockStrongFn || mockSmallFn);
+    const fn = modelMode === "mock-small" ? mockSmallFn : (mockStrongFn || mockSmallFn);
     const mock = fn();
     return {
       text: mock.text,
       tokens: mock.tokens || 180,
       ms: Math.round(performance.now() - start) + (mock.extraMs || 0),
-      source: this.mode === "mock-small" ? "Mock 1.5B" : "Mock Strong",
+      source: modelMode === "mock-small" ? "Mock 1.5B" : "Mock Strong",
       simulated: true,
       tokensEstimated: true
     };

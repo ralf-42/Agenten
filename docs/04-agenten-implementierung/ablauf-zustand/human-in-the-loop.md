@@ -16,6 +16,8 @@ has_toc: true
 > [!NOTE] Bezug zum Kursprojekt<br>
 > Der [PMO-Assistent]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) kann ein Briefing vorbereiten, soll unsichere oder folgenreiche Aussagen aber nicht ungeprüft als Entscheidung ausgeben. Human-in-the-Loop markiert die Stelle, an der ein Mensch prüft, freigibt oder den Fall übernimmt.
 
+Interaktive Demo: [Human-in-the-Loop im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#hitl' | relative_url }}){:target="_blank" rel="noopener"} – der Lauf hält am Gate tatsächlich an: Freigabe, Ablehnung mit Korrekturauftrag und das Speichern der Rückmeldung für den nächsten Durchlauf sind durchspielbar.
+
 ---
 
 # Inhaltsverzeichnis
@@ -185,7 +187,7 @@ Für eine konkrete Runde teilt die Spielleitung den Teilnehmendenlink mit dem Ru
 ---
 
 **Version:** 1.1<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

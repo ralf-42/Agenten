@@ -12,6 +12,15 @@ function parseModelObject(text) {
   return JSON.parse(json);
 }
 
+// Für die ganzzahligen Eurobeträge dieser Demo: DE-/EN-Tausendertrennzeichen,
+// geschützte Leerzeichen und optionale Null-Cents akzeptieren, keine Teilbeträge.
+function contains_amount(text, expected) {
+  if (!Number.isSafeInteger(expected) || expected < 0) return false;
+  const grouped = expected.toLocaleString("en-US", { useGrouping: true }).replace(/,/g, "[., \\u00a0\\u202f]");
+  const amount = `(?:${expected}|${grouped})(?:[.,]00)?`;
+  return new RegExp(`(?<![\\p{L}\\p{N}.,])${amount}(?![\\p{L}\\p{N}.,])`, "u").test(text);
+}
+
 
 const PATTERN_GROUPS = [
   { id: "foundational", label: "1. Grundbaustein: Augmented LLM", shortLabel: "Grundbaustein" },
@@ -453,6 +462,7 @@ class PatternsController {
     document.getElementById("patternTaskText").textContent = pattern.task;
 
     document.getElementById("routingInputWrap").classList.toggle("hidden", pattern.id !== "routing");
+    window.AgentLab.render_extension_controls?.(pattern.id);
 
     this.renderGraph(pattern);
     this.renderSidebar();
@@ -612,6 +622,7 @@ class PatternsController {
     document.getElementById("runAllBtn").disabled = true;
     document.getElementById("engineMode").disabled = true;
     document.getElementById("loadModelBtn").disabled = true;
+    document.getElementById("loadTierModelsBtn").disabled = true;
 
     this.renderGraph(pattern);
     this.setStatus("running", "Läuft…");
@@ -627,6 +638,7 @@ class PatternsController {
     const runMode = engine.mode;
     let modeLabel = engine.isWebLLM() ? `WebGPU · ${engine.loadedModelId || "nicht geladen"}` : (engine.isSmallMock() ? "Mock 1.5B · Simulation" : "Mock Strong · Simulation");
     let tokensEstimated = false;
+    const sources = new Set();
 
     const ctx = {
       log: (type, kind, message) => {
@@ -642,7 +654,8 @@ class PatternsController {
         const r = await engine.callLLM(opts);
         tokens += r.tokens;
         tokensEstimated ||= r.tokensEstimated;
-        modeLabel = r.simulated ? `${r.source} · Simulation` : `WebGPU · ${r.source}`;
+        sources.add(r.source);
+        modeLabel = r.simulated ? `${[...sources].join(" + ")} · Simulation` : `WebGPU · ${[...sources].join(" + ")}`;
         return r;
       },
       tool: (name, detail) => {
@@ -702,10 +715,18 @@ class PatternsController {
       document.getElementById("runAllBtn").disabled = false;
       document.getElementById("engineMode").disabled = false;
       document.getElementById("loadModelBtn").disabled = false;
+      document.getElementById("loadTierModelsBtn").disabled = false;
     }
   }
 
   async executePatternLogic(id, ctx) {
+    const extension = PATTERNS.find((pattern) => pattern.id === id)?.execute;
+    if (extension) {
+      const options = id === "model_tiers"
+        ? {budget: Number(document.getElementById("tierBudget").value)}
+        : {skill_id: document.getElementById("skillExample").value, allow_loading: document.getElementById("skillLoadingEnabled").checked};
+      return extension(ctx, options);
+    }
     const small = engine.isSmallMock();
 
     // 1. AUGMENTED LLM
@@ -735,17 +756,17 @@ class PatternsController {
 
       ctx.node("gate", "active");
       const expected = TOOLS.calc_settlement(claim.claim_amount, claim.deductible, claim.policy_limit);
-      const passed = res.text.includes("19.500") || res.text.includes("19500");
+      const passed = contains_amount(res.text, expected);
       await sleep(160);
       ctx.node("gate", passed ? "pass" : "fail");
       ctx.log(passed ? "gate" : "fail", "GROUNDING", passed
-        ? `Geprüft: Auszahlung ${expected.toLocaleString("de-DE")} € stimmt mit den Datensätzen überein.`
-        : `Abweichung: Erwartet wurden ${expected.toLocaleString("de-DE")} €.`);
+        ? `Betragsprüfung: ${expected.toLocaleString("de-DE")} € wurde erkannt (deutsches oder englisches Zahlenformat). Keine vollständige Prüfung der Begründung.`
+        : `Erwarteter Betrag ${expected.toLocaleString("de-DE")} € im unterstützten Zahlenformat nicht erkannt. Antwort manuell prüfen.`);
 
       return {
         status: passed ? "pass" : "fail",
         statusLabel: passed ? "Bestanden" : "Grounding-Fehler",
-        html: `<p>${res.text}</p><p class="muted-sm" style="margin-top:8px"><strong>Grounding-Check:</strong> ${passed ? "✓ Betrag (19.500 €) verifiziert" : "✕ Betrag weicht ab"}.</p>`
+        html: `<p>${escapeHtml(res.text)}</p><p class="muted-sm" style="margin-top:8px"><strong>Betragsprüfung:</strong> ${passed ? `✓ Erwarteter Betrag (${expected.toLocaleString("de-DE")} €) erkannt` : "✕ Erwarteten Betrag nicht erkannt"}. Dieser Check prüft nur das Vorkommen des Betrags; Widersprüche und fachliche Begründung sind zusätzlich zu prüfen.</p>`
       };
     }
 

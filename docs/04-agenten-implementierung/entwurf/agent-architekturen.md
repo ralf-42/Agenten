@@ -15,7 +15,7 @@ has_toc: true
 
 Dieses Kapitel ist die gemeinsame Übersicht über die wichtigsten Muster. Es hilft dir zu entscheiden, wer den Ablauf bestimmt, welche Rollen gebraucht werden und wo Ergebnisse geprüft werden. Die praktische Teamumsetzung folgt in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}).
 
-Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 13 Agent-Muster und ein Kursbeispiel mit Live-Flow-Graph, Trace und gemessener Auswahlmatrix direkt im Browser testen.
+Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 15 Agent-Muster und ein Kursbeispiel mit Flow-Graph, Trace und Auswahlmatrix direkt im Browser testen. Mock-Werte sind vorgegeben; WebGPU liefert lokale Modellaufrufe.
 
 ---
 
@@ -121,6 +121,8 @@ flowchart TD
 **Beispiel:** Eine Terminvorbereitung nutzt interne Protokolle, eine Marktfrage startet eine Recherche.
 
 **Einsatzgrenze:** Eine falsche Zuordnung führt zur falschen Bearbeitung. Validiere Kategorien und plane einen Fallback ein. Die Ziele können Funktionen, Modellaufrufe oder eigenständige Agenten sein; Routing setzt kein Agententeam voraus.
+
+Interaktive Variante: [Modellstufen-Routing]({{ '/visualisierungen/agent_patterns_lab/#model_tiers' | relative_url }}){:target="_blank" rel="noopener"} vergleicht kleine, stärkere und regelbasiert gewählte Modellstufen an denselben PMO-Fällen. Ein Aufrufbudget begrenzt Fallbacks; fehlende Quellen führen zum Stopp. Ladezeiten werden getrennt ausgewiesen. Die vorgegebenen Mock-Unterschiede belegen keine reale Überlegenheit einer Strategie.
 
 ### Parallelisierung: unabhängige Teilaufgaben zusammenführen
 
@@ -250,7 +252,7 @@ Interaktive Demo: [Handoff im Agent Patterns Lab]({{ '/visualisierungen/agent_pa
 
 - **Hierarchie:** Leitrollen koordinieren Unterteams. Das lohnt sich erst bei getrennten Teilbereichen; jede zusätzliche Ebene erhöht den Abstimmungsaufwand.
 - **Swarm / Peer-to-Peer:** Rollen koordinieren sich ohne festen Supervisor, etwa durch Handoffs. Handoff ist der Übergabemechanismus; Swarm beschreibt eine mögliche Teamorganisation. Globale Abschluss- und Kostenregeln bleiben erforderlich.
-- **Skills statt weiterer Agenten:** Ein Agent lädt Fachwissen oder Werkzeuge nach. Prüfe diese Alternative, wenn nur der aktive Kontext zu groß wird. Siehe [Skills]({{ '/06-multi-agent-erweiterungen/skills.html' | relative_url }}).
+- **Skills statt weiterer Agenten:** Ein Agent lädt Fachwissen oder Werkzeuge nach. Prüfe diese Alternative, wenn nur der aktive Kontext zu groß wird. Siehe [Skills]({{ '/06-multi-agent-erweiterungen/skills.html' | relative_url }}) und [Capability-Loading im Lab]({{ '/visualisierungen/agent_patterns_lab/#skills' | relative_url }}){:target="_blank" rel="noopener"}. Dort lädt derselbe Agent aus einer festen Registry eine Fachanweisung und ein begrenztes Tool; die Anwendung prüft die Berechtigungen.
 
 Rollen, Übergaben, gemeinsamer State und Fehlerbehandlung werden in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) praktisch ausgearbeitet.
 
@@ -304,6 +306,8 @@ Das sind qualitative Erwartungen bei vergleichbarer Aufgabe und Modellwahl. Toke
 **Für den ersten Kursagenten:** Beginne mit einem Briefing aus bereitgestellten Quellen. Ergänze feste Extraktions- und Prüfschritte. Öffne die Recherche für freie Tool-Entscheidungen, wenn diese nötig sind. Teile die Verantwortung erst auf, wenn getrennte Rollen einen messbaren Nutzen bringen.
 
 Vergleiche Varianten mit denselben Aufgaben, Quellen und Qualitätskriterien. Erfasse Modell- und Tool-Aufrufe, Token-Verbrauch, Laufzeit und akzeptierte Ergebnisse. Einzelne Demo-Läufe mit unterschiedlichen Aufgaben belegen keine allgemeine Überlegenheit eines Musters.
+
+Interaktive Übung: [PMO-Evaluation im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} – Verkettung, ReAct und Briefing-Team mit denselben Fällen und festen Regelchecks vergleichen. Mock-Ergebnisse sind vorgegeben; die automatischen Checks ersetzen keine fachliche Bewertung des freien Antworttexts.
 
 ## Quellen und nächste Schritte
 

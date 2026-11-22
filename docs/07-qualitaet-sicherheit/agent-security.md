@@ -13,6 +13,8 @@ has_toc: true
 > [!NOTE] Kernfrage<br>
 > Wie werden Agenten abgesichert, wenn sie Tools, Daten und externe Schnittstellen nutzen?
 
+Interaktive Demo: [Deterministische Kontrolle im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#deterministic' | relative_url }}){:target="_blank" rel="noopener"} – Regeln im Code treffen die verbindliche Entscheidung, das Modell erklärt sie nur; ein abweichendes Modellurteil bleibt wirkungslos. Der [Loop-Engineering-Tab]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} zeigt Tool-Whitelist, Idempotenz-Schutz und Budgetgrenzen einzeln schaltbar.
+
 ---
 
 # Inhaltsverzeichnis
@@ -217,7 +219,7 @@ Entwickler unterschätzen oft, dass Sicherheit nicht erst bei hochkritischen Sys
 ---
 
 **Version:** 1.5<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -57,6 +57,37 @@ class LoopsController {
       this.renderTechniques();
     });
     document.getElementById("runLoopBtn").addEventListener("click", () => this.runSimulation());
+    document.getElementById("loopScenarioSelect").addEventListener("change", () => {
+      this.injection_pending = null;
+      document.getElementById("injectionDecisionPanel").classList.add("hidden");
+      document.getElementById("injectionScenarioControls").classList.toggle("hidden", document.getElementById("loopScenarioSelect").value !== "prompt_injection");
+    });
+    for (const [id, approved] of [["injectionRejectBtn", false], ["injectionApproveBtn", true]]) {
+      document.getElementById(id).addEventListener("click", () => {
+        if (this.injection_pending) this.renderInjection(this.injection_pending, approved);
+      });
+    }
+  }
+
+  renderInjection(settings, decision = null) {
+    const result = window.AgentLab.pattern_extensions.simulate_injection(settings, decision);
+    const pending = result.outcome === "approval_required";
+    const blocked = result.outcome === "blocked";
+    this.injection_pending = pending ? settings : null;
+    document.getElementById("injectionDecisionPanel").classList.toggle("hidden", !pending);
+    this.badgeEl.className = `status-badge status-${pending ? "warn" : blocked ? "pass" : "fail"}`;
+    this.badgeEl.textContent = pending ? "Wartet auf Entscheidung" : blocked ? "Simuliert blockiert" : "Simulierter Datenabfluss";
+    this.outcomeEl.textContent = `${result.reason} Nur das vorgegebene Szenario wird ausgewertet; es findet kein Versand statt.`;
+    this.renderTrace([
+      {iter:1,type:"tool",kind:"DOC-104",msg:"Dokument enthält eine fremde Anweisung zur externen Weitergabe von DOC-103."},
+      {iter:1,type:"gate",kind:"KONTROLLEN",msg:`Datentrennung: ${settings.separate_data}; Datenregel: ${settings.confidential_policy}; Tool-Whitelist: ${settings.whitelist}; Tool erlaubt: ${settings.allow_send}; HITL: ${settings.hitl}.`},
+      {iter:1,type:blocked?"gate":pending?"human":"fail",kind:result.stage.toUpperCase(),msg:result.reason}
+    ], 1);
+    this.setStage("decide", pending ? "active" : blocked ? "pass" : "fail");
+    const triggered = new Set();
+    if (result.stage === "tool") triggered.add("tool_whitelist");
+    if (result.stage === "human") triggered.add("hitl_escalation");
+    this.renderTechniques(triggered);
   }
 
   renderPerspectiveLegend() {
@@ -117,6 +148,18 @@ class LoopsController {
 
   async runSimulation() {
     const scenario = document.getElementById("loopScenarioSelect").value;
+    this.injection_pending = null;
+    document.getElementById("injectionDecisionPanel").classList.add("hidden");
+    if (scenario === "prompt_injection") {
+      this.renderInjection({
+        separate_data:document.getElementById("injectionSeparateData").checked,
+        confidential_policy:document.getElementById("injectionBlockConfidential").checked,
+        whitelist:this.enabled.has("tool_whitelist"),
+        allow_send:document.getElementById("injectionAllowSend").checked,
+        hitl:this.enabled.has("hitl_escalation")
+      });
+      return;
+    }
     const entries = [];
     const triggered = new Set();
     const has = (id) => this.enabled.has(id);

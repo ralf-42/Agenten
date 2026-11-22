@@ -15,6 +15,8 @@ redirect_from:
 > [!NOTE] Kernfrage<br>
 > Wie wird sichtbar, ob ein Agent fachlich gut arbeitet und warum Ergebnisse kippen?
 
+Interaktive Demo: [Evaluator-Optimizer im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluator' | relative_url }}){:target="_blank" rel="noopener"} – ein deterministischer Validator vor dem LLM-Judge, dazu Live-Trace und eine gemessene Auswahlmatrix mit Aufrufen, Tokens und Laufzeit.
+
 ---
 
 # Inhaltsverzeichnis

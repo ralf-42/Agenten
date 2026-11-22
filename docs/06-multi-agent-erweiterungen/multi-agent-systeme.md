@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Multi-Agent-Systeme umsetzen
-parent: "Multi-Agent & Erweiterungen"
+title: Multi-Agent-Systeme
+parent: Multi-Agent & Erweiterungen
 nav_order: 1
 description: Rollen, Kontextübergaben, gemeinsamer State und begrenzte Review-Schleifen am Briefing-Agenten mit LangGraph
 has_toc: true
 ---
 
-# Multi-Agent-Systeme umsetzen
+# Multi-Agent-Systeme
 {: .no_toc }
 
 > **Ein Agententeam braucht klare Aufträge, begrenzte Kontexte und eine verantwortliche Stelle für das Ergebnis.**
@@ -75,6 +75,8 @@ Im folgenden Beispiel enthält der State Frage, Quellen, Recherche, Entwurf, Fee
 **Blackboard** nennt man eine Organisation, bei der mehrere Rollen einen gemeinsamen Arbeitsbereich beobachten und daraus ihre nächsten Aufgaben ableiten. Ein Shared State in einem fest gesteuerten Workflow ist noch kein Blackboard. Diese Variante braucht zusätzlich Aufgabenstatus, Schreibzuständigkeiten, Versionen und Konfliktregeln.
 
 Details zu State-Schemata und Reducern stehen in [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}).
+
+Interaktive Übung: [State und Checkpoints im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} – Feldänderungen beobachten, einen Checkpoint vor der Freigabe speichern und nach dem Neuladen ausdrücklich wiederherstellen. Die lokale Browsersimulation veranschaulicht das Konzept; sie ist kein LangGraph-Checkpointer und kein allgemeines Langzeit-Memory.
 
 ## Durchgängiges LangGraph-Beispiel
 

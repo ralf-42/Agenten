@@ -1,9 +1,11 @@
 (function () {
-const { engine, PATTERNS, PatternsController, HarnessController, LoopsController } = window.AgentLab;
+const { engine, PATTERNS, PatternsController, HarnessController, LoopsController, PmoEvaluationController, CheckpointController } = window.AgentLab;
 
 const patternsCtrl = new PatternsController();
 new HarnessController();
 new LoopsController();
+new PmoEvaluationController();
+new CheckpointController();
 
 function switchView(viewName) {
   document.querySelectorAll(".nav-tab").forEach((t) => {
@@ -18,9 +20,7 @@ document.querySelectorAll(".nav-tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     const view = tab.dataset.view;
     switchView(view);
-    if (view === "harness") window.location.hash = "harness";
-    else if (view === "loops") window.location.hash = "loops";
-    else window.location.hash = patternsCtrl.activeId;
+    window.location.hash = view === "patterns" ? patternsCtrl.activeId : view;
   });
 });
 
@@ -94,14 +94,33 @@ loadModelBtn.addEventListener("click", async () => {
   }
 });
 
+document.getElementById("loadTierModelsBtn").addEventListener("click", async () => {
+  const buttons = ["loadTierModelsBtn", "runPatternBtn", "runAllBtn", "engineMode", "loadModelBtn"];
+  buttons.forEach((id) => { document.getElementById(id).disabled = true; });
+  const status = document.getElementById("tierModelStatus");
+  try {
+    for (const mode of ["webllm-1.5b", "webllm-3b"]) {
+      await engine.loadWebLLM(({text}) => { status.textContent = text; }, mode);
+    }
+    status.textContent = "Beide Modellstufen geladen. Einmalige Ladezeiten werden getrennt vom Vergleich ausgewiesen.";
+  } catch (error) {
+    status.textContent = `Laden fehlgeschlagen: ${error.message}. Kein stiller Mock-Fallback.`;
+  } finally {
+    buttons.forEach((id) => { document.getElementById(id).disabled = false; });
+  }
+});
+
 // Hash-Routing (#augmented, #react, ..., #harness, #loops)
 function handleHash() {
   const hash = window.location.hash.replace(/^#/, "").trim();
   if (!hash) return;
-  if (hash === "harness") {
-    switchView("harness");
-  } else if (hash === "loops") {
+  if (hash === "prompt_injection") {
     switchView("loops");
+    const scenario = document.getElementById("loopScenarioSelect");
+    scenario.value = "prompt_injection";
+    scenario.dispatchEvent(new Event("change"));
+  } else if (["harness", "loops", "evaluation", "checkpoints", "docs"].includes(hash)) {
+    switchView(hash);
   } else if (PATTERNS.some((p) => p.id === hash)) {
     switchView("patterns");
     patternsCtrl.selectPattern(hash);

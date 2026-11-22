@@ -33,6 +33,8 @@ Die Trennung ist entscheidend: Ein Modell darf einen Tool-Aufruf vorschlagen, so
 
 Interaktive Demo: [Agent Patterns Lab – Agent Harness (3 Schichten)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Information, Execution und Feedback Layer mit aktivem Memory-Rückkopplungskreis testen.
 
+Die drei Schichten der Demo bündeln die unten beschriebenen Bausteine: Der Information Layer stellt State, Memory und die freigegebenen Tool-Schemas bereit, der Execution Layer führt Planung, Tool-Aufruf und Policy-Gate aus, und der Feedback Layer prüft das Ergebnis und schreibt bestätigte Korrekturen zurück ins Memory.
+
 ```mermaid
 flowchart LR
     U[Aufgabe] --> H[Agent Harness]
@@ -179,5 +181,5 @@ Nicht notwendig ist zu Beginn ein umfassendes Multi-Agent-System. Planning, Memo
 ---
 
 **Version:** 1.1<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

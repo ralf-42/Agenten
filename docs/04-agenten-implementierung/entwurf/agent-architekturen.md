@@ -15,7 +15,7 @@ has_toc: true
 
 Dieses Kapitel ist die gemeinsame Übersicht über die wichtigsten Muster. Es hilft dir zu entscheiden, wer den Ablauf bestimmt, welche Rollen gebraucht werden und wo Ergebnisse geprüft werden. Die praktische Teamumsetzung folgt in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}).
 
-Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 12 Agent-Muster mit Live-Flow-Graph, Trace und gemessener Auswahlmatrix direkt im Browser testen.
+Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 13 Agent-Muster und ein Kursbeispiel mit Live-Flow-Graph, Trace und gemessener Auswahlmatrix direkt im Browser testen.
 
 ---
 
@@ -243,6 +243,8 @@ flowchart LR
 **Beispiel:** Aus einer Protokollfrage entsteht ein Rechercheauftrag, den die Research-Rolle weiterführt.
 
 **Einsatzgrenze:** Übergib Ziel, belegte Ergebnisse, Quellen, offene Fragen und verbleibendes Budget. Bloße Gesprächsweitergabe lässt Verantwortung und Bearbeitungsstand unklar.
+
+Interaktive Demo: [Handoff im Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#handoff' | relative_url }}){:target="_blank" rel="noopener"} – der Übergabe-Check prüft diese Pflichtfelder deterministisch; das kleine Modell reicht nur das Gespräch weiter und fällt durch.
 
 ### Fortgeschrittene Varianten und einfachere Alternativen
 

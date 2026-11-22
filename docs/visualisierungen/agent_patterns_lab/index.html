@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agent Patterns Lab – 12 Muster, Harness &amp; Loop Engineering</title>
+  <title>Agent Patterns Lab – 13 Muster, Harness &amp; Loop Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -16,12 +16,12 @@
         <div class="brand-badge">KI</div>
         <div>
           <h1>Agent Patterns Lab</h1>
-          <p class="subtitle">12 Agent-Architekturmuster · 3-Schichten-Harness · Loop Engineering</p>
+          <p class="subtitle">13 Agent-Architekturmuster + Kursbeispiel · 3-Schichten-Harness · Loop Engineering</p>
         </div>
       </div>
 
       <nav class="main-nav" aria-label="Hauptbereiche">
-        <button class="nav-tab active" data-view="patterns">12 Agent-Patterns</button>
+        <button class="nav-tab active" data-view="patterns">13 Agent-Muster + Kursbeispiel</button>
         <button class="nav-tab" data-view="harness">Agent Harness (3 Schichten)</button>
         <button class="nav-tab" data-view="loops">Loop Engineering (12 Techniken)</button>
       </nav>
@@ -50,7 +50,7 @@
   </header>
 
   <main class="container">
-    <!-- ==================== VIEW 1: 12 AGENT PATTERNS ==================== -->
+    <!-- ==================== VIEW 1: AGENT PATTERNS ==================== -->
     <section id="view-patterns" class="view active">
       <div class="view-intro">
         <div>
@@ -58,11 +58,11 @@
           <p>
             Wähle ein Muster (inkl. dem <strong>PMO-Briefing-Team</strong> aus dem Kurs), starte den Lauf und beobachte
             <strong>Flow-Graph</strong>, <strong>Live-Trace</strong>, <strong>Prüfpunkte</strong> und die gemessene <strong>Auswahlmatrix</strong>.
-            Hinweis: Kontrollmuster (Gruppe 4) sind keine eigene Entwicklungsstufe, sondern Querschnittsbausteine für jedes Muster.
+            Hinweis: Kontrollmuster (Gruppe 5) sind keine eigene Entwicklungsstufe, sondern Querschnittsbausteine für jedes Muster.
           </p>
         </div>
         <div class="intro-actions">
-          <button id="runAllBtn" class="btn btn-secondary">Alle 12 Muster testen (Benchmark)</button>
+          <button id="runAllBtn" class="btn btn-secondary">Alle Muster testen (Benchmark)</button>
           <button id="resetMatrixBtn" class="btn btn-ghost">Matrix zurücksetzen</button>
         </div>
       </div>
@@ -204,9 +204,9 @@
               <tr>
                 <th>Muster</th>
                 <th>Gruppe</th>
-                <th>Kontrollfluss</th>
-                <th>Wann einsetzen</th>
-                <th>Trade-off</th>
+                <th>Wer steuert?</th>
+                <th>Geeignet für</th>
+                <th>Typische Grenze</th>
                 <th>Calls</th>
                 <th>Tokens</th>
                 <th>Zeit</th>

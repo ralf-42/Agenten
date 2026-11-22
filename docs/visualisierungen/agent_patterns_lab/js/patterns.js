@@ -2,10 +2,11 @@
 const { DOMAINS, TOOLS, engine, sleep } = window.AgentLab;
 
 const PATTERN_GROUPS = [
-  { id: "foundational", label: "1. Grundlegende Single-Agent-Muster" },
-  { id: "workflow", label: "2. Deterministische Workflow-Muster" },
-  { id: "multiagent", label: "3. Multi-Agent- & Team-Muster" },
-  { id: "governance", label: "4. Querschnittskontrolle (für jedes Muster)" }
+  { id: "foundational", label: "1. Grundbaustein: Augmented LLM" },
+  { id: "workflow", label: "2. Vorgegebene Workflows" },
+  { id: "agentic", label: "3. Ein Agent entscheidet den nächsten Schritt" },
+  { id: "multiagent", label: "4. Mehrere Agenten arbeiten zusammen" },
+  { id: "governance", label: "5. Kontrolle für jedes Muster" }
 ];
 
 const PATTERNS = [
@@ -29,50 +30,6 @@ const PATTERNS = [
       edges: [["retrieve", "llm"], ["llm", "gate"]]
     },
     lesson: "Starte immer hier: Viele vermeintliche Agenten-Probleme sind in Wahrheit Retrieval-Probleme. Günstigstes und schnellstes Muster."
-  },
-  {
-    id: "react",
-    group: "foundational",
-    name: "ReAct-Loop",
-    domain: "Klinik / Medikation",
-    controlFlow: "Dynamischer Loop (Iterations-Cap)",
-    bestUse: "Offene Aufgaben mit unbekanntem Lösungsweg",
-    tradeOff: "Braucht starkes Modell; teuer bei kleinen Modellen",
-    summary: "Der klassische Agent-Loop: Denken → Tool wählen → Beobachten → Wiederholen bis zur Antwort oder bis zum harten Iterations-Cap.",
-    task: "Patient P001 (74 J., nimmt Blutdrucksenker Amlodipin & Ramipril) fragt nach einem rezeptfreien Erkältungsmittel. Nutze die Klinik-Tools (vitals, interaction_check).",
-    graph: {
-      viewBox: "0 0 600 210",
-      nodes: [
-        { id: "think", x: 30, y: 35, w: 135, h: 50, title: "Denken (LLM)", sub: "Aktion planen" },
-        { id: "tool", x: 225, y: 35, w: 145, h: 50, title: "Tool / Observation", sub: "vitals / interaction" },
-        { id: "schema", x: 425, y: 35, w: 150, h: 50, title: "Schema & Cap", sub: "JSON + max 3 Runden" },
-        { id: "fallback", x: 225, y: 135, w: 200, h: 50, title: "Antwort / Fallback", sub: "Ergebnis oder Review" }
-      ],
-      edges: [["think", "tool"], ["tool", "schema"], ["schema", "think"], ["schema", "fallback"]]
-    },
-    lesson: "ReAct gibt dem Modell die größte Freiheit — und braucht deshalb das stärkste Modell. Auf kleinen Modellen (1.5B) schützt nur ein hartes Step-Cap plus Schema-Check vor Endlosschleifen."
-  },
-  {
-    id: "evaluator",
-    group: "foundational",
-    name: "Evaluator-Optimizer",
-    domain: "Karriereberatung",
-    controlFlow: "Generator ↔ Validator + Judge",
-    bestUse: "Aufgaben mit klar prüfbaren Qualitätskriterien",
-    tradeOff: "Kosten & Latenz wachsen mit jeder Runde",
-    summary: "Ein Generator erstellt einen Entwurf, ein deterministischer Validator prüft harte Fakten (erlaubte Zertifikate), danach bewertet ein LLM-Judge — bis zu einem festen Rundenlimit.",
-    task: "Erstelle einen Lernplan für den Wechsel von Marketing zu UX-Design. Es dürfen ausschließlich Zertifikate aus der geprüften Tool-Liste verwendet werden.",
-    graph: {
-      viewBox: "0 0 600 205",
-      nodes: [
-        { id: "gen", x: 25, y: 40, w: 135, h: 52, title: "Generator", sub: "Entwurf erstellen" },
-        { id: "val", x: 215, y: 40, w: 155, h: 52, title: "Regel-Validator", sub: "Zertifikat-Whitelist" },
-        { id: "judge", x: 425, y: 40, w: 145, h: 52, title: "LLM-Judge", sub: "Qualitätsscore" },
-        { id: "out", x: 215, y: 135, w: 185, h: 50, title: "Bestes Ergebnis", sub: "Max. 3 Runden" }
-      ],
-      edges: [["gen", "val"], ["val", "judge"], ["val", "gen"], ["judge", "out"], ["val", "out"]]
-    },
-    lesson: "Ein regelbasierter Validator vor dem LLM-Judge ist extrem günstig und fängt Halluzinationen ab (z. B. erfundene Zertifikate), die ein LLM-Judge oft durchwinkt."
   },
   {
     id: "chaining",
@@ -173,6 +130,50 @@ const PATTERNS = [
     lesson: "Voting verwandelt eine einzelne Stichprobe in ein messbares Übereinstimmungsniveau (z. B. 80 % UNSAFE). Wichtig: Übereinstimmung ist kein Wahrheitsbeleg — Aufrufe desselben Modells können dieselben Fehler teilen. Mehrheit ersetzt keine Prüfung an Originalquellen oder Datenbanken."
   },
   {
+    id: "evaluator",
+    group: "workflow",
+    name: "Evaluator-Optimizer",
+    domain: "Karriereberatung",
+    controlFlow: "Generator ↔ Validator + Judge",
+    bestUse: "Aufgaben mit klar prüfbaren Qualitätskriterien",
+    tradeOff: "Kosten & Latenz wachsen mit jeder Runde",
+    summary: "Ein Generator erstellt einen Entwurf, ein deterministischer Validator prüft harte Fakten (erlaubte Zertifikate), danach bewertet ein LLM-Judge — bis zu einem festen Rundenlimit.",
+    task: "Erstelle einen Lernplan für den Wechsel von Marketing zu UX-Design. Es dürfen ausschließlich Zertifikate aus der geprüften Tool-Liste verwendet werden.",
+    graph: {
+      viewBox: "0 0 600 205",
+      nodes: [
+        { id: "gen", x: 25, y: 40, w: 135, h: 52, title: "Generator", sub: "Entwurf erstellen" },
+        { id: "val", x: 215, y: 40, w: 155, h: 52, title: "Regel-Validator", sub: "Zertifikat-Whitelist" },
+        { id: "judge", x: 425, y: 40, w: 145, h: 52, title: "LLM-Judge", sub: "Qualitätsscore" },
+        { id: "out", x: 215, y: 135, w: 185, h: 50, title: "Bestes Ergebnis", sub: "Max. 3 Runden" }
+      ],
+      edges: [["gen", "val"], ["val", "judge"], ["val", "gen"], ["judge", "out"], ["val", "out"]]
+    },
+    lesson: "Ein regelbasierter Validator vor dem LLM-Judge ist extrem günstig und fängt Halluzinationen ab (z. B. erfundene Zertifikate), die ein LLM-Judge oft durchwinkt."
+  },
+  {
+    id: "react",
+    group: "agentic",
+    name: "ReAct-Loop",
+    domain: "Klinik / Medikation",
+    controlFlow: "Dynamischer Loop (Iterations-Cap)",
+    bestUse: "Offene Aufgaben mit unbekanntem Lösungsweg",
+    tradeOff: "Braucht starkes Modell; teuer bei kleinen Modellen",
+    summary: "Der klassische Agent-Loop: Denken → Tool wählen → Beobachten → Wiederholen bis zur Antwort oder bis zum harten Iterations-Cap.",
+    task: "Patient P001 (74 J., nimmt Blutdrucksenker Amlodipin & Ramipril) fragt nach einem rezeptfreien Erkältungsmittel. Nutze die Klinik-Tools (vitals, interaction_check).",
+    graph: {
+      viewBox: "0 0 600 210",
+      nodes: [
+        { id: "think", x: 30, y: 35, w: 135, h: 50, title: "Denken (LLM)", sub: "Aktion planen" },
+        { id: "tool", x: 225, y: 35, w: 145, h: 50, title: "Tool / Observation", sub: "vitals / interaction" },
+        { id: "schema", x: 425, y: 35, w: 150, h: 50, title: "Schema & Cap", sub: "JSON + max 3 Runden" },
+        { id: "fallback", x: 225, y: 135, w: 200, h: 50, title: "Antwort / Fallback", sub: "Ergebnis oder Review" }
+      ],
+      edges: [["think", "tool"], ["tool", "schema"], ["schema", "think"], ["schema", "fallback"]]
+    },
+    lesson: "ReAct gibt dem Modell die größte Freiheit — und braucht deshalb das stärkste Modell. Auf kleinen Modellen (1.5B) schützt nur ein hartes Step-Cap plus Schema-Check vor Endlosschleifen."
+  },
+  {
     id: "briefing_team",
     group: "multiagent",
     name: "Briefing-Team (PMO-Kursbeispiel)",
@@ -218,6 +219,28 @@ const PATTERNS = [
     lesson: "Im Gegensatz zum statischen Parallel Sectioning entstehen die Teilaufgaben erst zur Laufzeit — dafür zahlt man je einen zusätzlichen Planungs- und Synthese-Aufruf."
   },
   {
+    id: "handoff",
+    group: "multiagent",
+    name: "Handoff",
+    domain: "PMO-Assistent",
+    controlFlow: "Führung wechselt mit Übergabepaket",
+    bestUse: "Zuständigkeitswechsel während der Bearbeitung",
+    tradeOff: "Unvollständige Übergabe verliert Auftrag und Arbeitsstand",
+    summary: "Die bearbeitende Rolle erkennt einen Zuständigkeitswechsel und gibt die weitere Bearbeitung ab — anders als beim Worker-Aufruf geht die Führung mit über. Ein deterministischer Check prüft das Übergabepaket auf Ziel, belegte Ergebnisse, offene Fragen, zuständige Rolle und Restbudget.",
+    task: "Aus einer Protokollfrage zu DOC-102 (Entscheidung über das externe Audit ist offen) entsteht ein Rechercheauftrag, den die Research-Rolle weiterführt.",
+    graph: {
+      viewBox: "0 0 600 200",
+      nodes: [
+        { id: "meeting", x: 20, y: 36, w: 150, h: 54, title: "Meeting-Agent", sub: "erkennt Wechsel" },
+        { id: "package", x: 225, y: 36, w: 150, h: 54, title: "Übergabepaket", sub: "Auftrag & Stand" },
+        { id: "check", x: 225, y: 126, w: 150, h: 52, title: "Übergabe-Check", sub: "5 Pflichtfelder (Code)" },
+        { id: "research", x: 430, y: 36, w: 150, h: 54, title: "Research-Agent", sub: "übernimmt Führung" }
+      ],
+      edges: [["meeting", "package"], ["package", "check"], ["check", "research"]]
+    },
+    lesson: "Ein Handoff ist kein Weiterreichen des Gesprächs: ohne Ziel, belegte Ergebnisse, offene Fragen, zuständige Rolle und Restbudget bleibt unklar, wer was fertigstellt. Berechtigungen wandern nicht automatisch mit — gesperrte Quellen bleiben gesperrt."
+  },
+  {
     id: "hierarchical",
     group: "multiagent",
     name: "Hierarchische Zerlegung",
@@ -250,12 +273,12 @@ const PATTERNS = [
   {
     id: "swarm",
     group: "multiagent",
-    name: "Swarm / Handoff",
+    name: "Swarm / Peer-to-Peer",
     domain: "Versicherung + Klinik",
     controlFlow: "Dezentrale Übergabe + Shared State",
     bestUse: "Anfragen über mehrere Abteilungen ohne festen Ablauf",
     tradeOff: "Ohne Supervisor besitzt niemand das Gesamtbild",
-    summary: "Agenten reichen das Gespräch direkt weiter (Triage → Versicherung → Klinik). Ein kleines, validiertes Shared-State-Objekt verfolgt, welche Teilfragen beantwortet und welche noch offen sind.",
+    summary: "Rollen koordinieren sich ohne festen Supervisor und nutzen dafür Handoffs als Mechanismus (Triage → Versicherung → Klinik). Ein kleines, validiertes Shared-State-Objekt verfolgt, welche Teilfragen beantwortet und welche noch offen sind.",
     task: "Kundennachricht über zwei Abteilungen: „Ich habe mir einen Zahn abgebrochen — deckt meine Versicherung das ab, und welches Schmerzmittel ist bei Warfarin sicher?“",
     graph: {
       viewBox: "0 0 600 200",
@@ -267,7 +290,7 @@ const PATTERNS = [
       ],
       edges: [["triage", "claims"], ["claims", "clinical"], ["claims", "state"], ["clinical", "state"]]
     },
-    lesson: "Swarm ist flexibel und günstig (3 Calls), aber niemand besitzt die gesamte Konversation. Erst das validierte Shared-State-Objekt macht offene Fragen oder Zuständigkeitsüberschreitungen sichtbar."
+    lesson: "Swarm beschreibt die Teamorganisation, Handoff den Übergabemechanismus. Swarm ist flexibel und günstig (3 Calls), aber niemand besitzt die gesamte Konversation. Erst das validierte Shared-State-Objekt macht offene Fragen oder Zuständigkeitsüberschreitungen sichtbar."
   },
   {
     id: "hitl",
@@ -548,7 +571,7 @@ class PatternsController {
   async runAllBenchmark() {
     if (this.isRunning) return;
     if (engine.isWebLLM()) {
-      alert("Der Sammel-Benchmark über alle 12 Muster ist für den schnellen Mock-Modus gedacht. Im WebGPU-Modus bitte Muster einzeln ausführen.");
+      alert("Der Sammel-Benchmark über alle Muster ist für den schnellen Mock-Modus gedacht. Im WebGPU-Modus bitte Muster einzeln ausführen.");
       return;
     }
     for (const p of PATTERNS) {
@@ -1307,7 +1330,7 @@ class PatternsController {
       ctx.node("state", "active");
       await sleep(160);
       const allGood = sharedState.coverage_answered && sharedState.painkiller_answered && !sharedState.scope_violation;
-      ctx.node("state", allGood ? "pass" : "warn");
+      ctx.node("state", allGood ? "pass" : "fail");
       ctx.log(allGood ? "gate" : "fail", "SHARED-STATE", `coverage=${sharedState.coverage_answered}, painkiller=${sharedState.painkiller_answered}, scope_violation=${sharedState.scope_violation}`);
 
       return {
@@ -1317,6 +1340,79 @@ class PatternsController {
           ? "Beide Teilfragen sauber und rollenkonform beantwortet."
           : "<strong>Shared-State-Warnung:</strong> Der Versicherungs-Agent gab ungefragt einen medizinischen Tipp („Ibuprofen“), während die Schmerzmittelfrage noch als offen markiert blieb."}</p>
           <p class="muted-sm" style="margin-top:6px">Ohne Supervisor verhindert erst das validierte State-Objekt, dass offene Teilfragen still verloren gehen.</p>`
+      };
+    }
+
+    // 10. HANDOFF
+    if (id === "handoff") {
+      const REQUIRED = [
+        ["goal", "Ziel und Umfang des Auftrags"],
+        ["results", "Ergebnisse mit Quellenverweisen"],
+        ["open_questions", "offene Fragen und Unsicherheiten"],
+        ["next_role", "zuständige Rolle und erlaubte Aktionen"],
+        ["budget", "verbleibende Aufruf-, Zeit- und Kostenbudgets"]
+      ];
+
+      ctx.node("meeting", "active");
+      const ho = await ctx.llm({
+        systemPrompt: "You hand off work to another agent role. Reply with ONE JSON object. Keys: goal, results, open_questions, next_role, budget.",
+        userPrompt: `Protokollfrage zu DOC-102: ${DOMAINS.pmo.sources["DOC-102"]}\nDie Research-Rolle soll den offenen Audit-Punkt weiterführen.`,
+        mockSmallFn: () => ({
+          text: "Kannst du das mit dem Audit mal nachschauen? Steht im Protokoll.",
+          tokens: 95
+        }),
+        mockStrongFn: () => ({
+          text: JSON.stringify({
+            goal: "Entscheidungsgrundlage für das externe Audit bis zum nächsten Steuerkreis zusammenstellen",
+            results: "Audit-Entscheidung laut [DOC-102] offen; Budget-Puffer 15.000 EUR [DOC-102]",
+            open_questions: "Angebote externer Prüfer fehlen; Termin des nächsten Steuerkreises unbestätigt",
+            next_role: "research_agent — darf DOC-101 und DOC-102 lesen, kein externer Versand",
+            budget: "4 Modellaufrufe, 1 Arbeitstag"
+          }),
+          tokens: 210
+        })
+      });
+      ctx.log("llm", "MEETING-AGENT", ho.text);
+      ctx.node("meeting", "pass");
+
+      ctx.node("package", "active");
+      let pkg = null;
+      try {
+        const match = ho.text.match(/\{[\s\S]*\}/);
+        if (match) pkg = JSON.parse(match[0]);
+      } catch (err) {
+        pkg = null;
+      }
+      ctx.node("package", pkg ? "pass" : "fail");
+      ctx.log(pkg ? "gate" : "fail", "PAKET", pkg
+        ? "Strukturiertes Übergabepaket erkannt."
+        : "Kein strukturiertes Übergabepaket — es wurde nur Gesprächstext weitergereicht.");
+
+      ctx.node("check", "active");
+      await sleep(160);
+      const missing = REQUIRED
+        .filter(([key]) => {
+          const value = pkg ? pkg[key] : null;
+          return value === null || value === undefined || String(value).trim() === "";
+        })
+        .map(([, label]) => label);
+      const leaked = /DOC-103/.test(ho.text);
+      const complete = missing.length === 0 && !leaked;
+      ctx.node("check", complete ? "pass" : "fail");
+      ctx.log(complete ? "gate" : "fail", "ÜBERGABE-CHECK", complete
+        ? "Alle fünf Pflichtfelder belegt; keine gesperrte Quelle im Paket."
+        : `${missing.length} von 5 Pflichtfeldern fehlen${leaked ? "; gesperrte Quelle DOC-103 im Paket" : ""}.`);
+
+      ctx.node("research", complete ? "pass" : "fail");
+
+      return {
+        status: complete ? "pass" : "fail",
+        statusLabel: complete ? "Übergabe vollständig" : "Übergabe unvollständig",
+        html: complete
+          ? `<p>Die Research-Rolle übernimmt mit Ziel, belegten Ergebnissen, offenen Fragen, erlaubten Aktionen und Restbudget. Führung und Verantwortung sind eindeutig übergegangen.</p>
+             <p class="muted-sm" style="margin-top:6px">Der Check ist deterministischer Code, kein LLM-Urteil: er prüft genau die fünf Pflichtfelder der Übergabe.</p>`
+          : `<p><strong>Übergabe unvollständig.</strong> Fehlende Pflichtfelder: ${missing.join(", ") || "keine"}${leaked ? " · gesperrte Quelle DOC-103 im Paket" : ""}.</p>
+             <p class="muted-sm" style="margin-top:6px">Bloße Gesprächsweitergabe lässt Auftrag, Arbeitsstand und Zuständigkeit offen — die Research-Rolle müsste nachfragen oder würde den Auftrag neu erfinden.</p>`
       };
     }
 

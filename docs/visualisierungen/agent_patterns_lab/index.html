@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Patterns Lab – 12 Muster, Harness &amp; Loop Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">KI</div>
+        <div>
+          <h1>Agent Patterns Lab</h1>
+          <p class="subtitle">12 Agent-Architekturmuster · 3-Schichten-Harness · Loop Engineering</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Hauptbereiche">
+        <button class="nav-tab active" data-view="patterns">12 Agent-Patterns</button>
+        <button class="nav-tab" data-view="harness">Agent Harness (3 Schichten)</button>
+        <button class="nav-tab" data-view="loops">Loop Engineering (12 Techniken)</button>
+      </nav>
+
+      <div class="mode-controls">
+        <label class="mode-label" for="engineMode">Ausführungsmodus</label>
+        <select id="engineMode" class="mode-select">
+          <option value="mock-small" selected>Mock: Kleines Modell (1.5B-Sim)</option>
+          <option value="mock-strong">Mock: Starkes Modell (Sim)</option>
+          <option value="webllm-1.5b">WebGPU Live: Qwen 2.5 1.5B (~1,6 GB)</option>
+          <option value="webllm-3b">WebGPU Live: Qwen 2.5 3B (~2,1 GB)</option>
+        </select>
+        <button id="loadModelBtn" class="btn btn-secondary btn-sm hidden">Modell laden</button>
+        <button id="themeToggleBtn" class="btn btn-ghost btn-sm" type="button" title="Hell-/Dunkelmodus umschalten" aria-label="Hell-/Dunkelmodus umschalten">☀ Hell</button>
+      </div>
+    </div>
+
+    <div id="webllmStatus" class="webllm-banner hidden">
+      <div class="webllm-banner-inner">
+        <span id="webllmStatusText">WebGPU bereit. Klicke auf „Modell laden“, um ein lokales LLM im Browser zu starten (kein API-Key, kein Server).</span>
+        <div class="progress-track hidden" id="webllmProgressWrap">
+          <div class="progress-fill" id="webllmProgressFill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ==================== VIEW 1: 12 AGENT PATTERNS ==================== -->
+    <section id="view-patterns" class="view active">
+      <div class="view-intro">
+        <div>
+          <h2>12 AI Agent Design Patterns im direkten Vergleich</h2>
+          <p>
+            Wähle ein Muster, starte den Lauf und beobachte <strong>Flow-Graph</strong>, <strong>Live-Trace</strong>,
+            <strong>Prüfpunkte</strong> und die gemessene <strong>Auswahlmatrix</strong>.
+            Im Standardmodus <em>Kleines Modell (1.5B-Sim)</em> werden reale Fehler kleiner Modelle sichtbar — genau dort zeigt sich,
+            wo Struktur, Gates und Validatoren unverzichtbar sind.
+          </p>
+        </div>
+        <div class="intro-actions">
+          <button id="runAllBtn" class="btn btn-secondary">Alle 12 Muster testen (Benchmark)</button>
+          <button id="resetMatrixBtn" class="btn btn-ghost">Matrix zurücksetzen</button>
+        </div>
+      </div>
+
+      <div class="patterns-layout">
+        <!-- Sidebar: 4 Pattern Groups -->
+        <aside class="pattern-sidebar" id="patternSidebar" aria-label="Muster-Auswahl"></aside>
+
+        <!-- Main Workspace -->
+        <div class="pattern-workspace">
+          <div class="card pattern-header-card">
+            <div class="pattern-header-top">
+              <div>
+                <span class="group-pill" id="patternGroupPill">Gruppe</span>
+                <h3 id="patternTitle">Augmented LLM</h3>
+                <p id="patternSummary" class="muted"></p>
+              </div>
+              <div class="pattern-actions">
+                <button id="runPatternBtn" class="btn btn-primary">▶ Muster ausführen</button>
+              </div>
+            </div>
+
+            <div class="scenario-box">
+              <div class="scenario-meta">
+                <span class="meta-chip" id="patternDomainChip">Domäne</span>
+                <span class="meta-chip" id="patternControlChip">Kontrollfluss</span>
+              </div>
+              <p id="patternTaskText" class="scenario-text"></p>
+
+              <!-- Custom input for Routing pattern -->
+              <div id="routingInputWrap" class="custom-input-wrap hidden">
+                <label for="routingInput">Eigene Anfrage testen (oder Beispiel wählen):</label>
+                <div class="input-row">
+                  <input id="routingInput" type="text" value="Patient P004 nimmt Warfarin und fragt nach einem sicheren Mittel gegen Spannungskopfschmerzen." />
+                  <select id="routingPresets" class="preset-select">
+                    <option value="">Beispiele…</option>
+                    <option value="Patient P004 nimmt Warfarin und fragt nach einem sicheren Mittel gegen Spannungskopfschmerzen.">Klinik: Patient P004 (Warfarin)</option>
+                    <option value="Schadenfall CLM001: Wie hoch ist die Auszahlung für den Wasserschaden nach Selbstbehalt?">Versicherung: Schaden CLM001</option>
+                    <option value="Ich habe Marketing studiert und möchte UX-Designerin werden. Welche Zertifikate sind sinnvoll?">Karriere: Wechsel zu UX</option>
+                    <option value="Bitte prüfe das Toxizitätsprofil von Wirkstoff DM-3350 für die IND-Freigabe.">Pharma: Wirkstoff DM-3350</option>
+                    <option value="Kannst du mir das Wetter für morgen in München sagen?">Unbekannte Domäne (Human Queue)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive HITL Pause Banner (only visible when HITL pattern pauses) -->
+          <div id="hitlPanel" class="card hitl-card hidden">
+            <div class="hitl-header">
+              <span class="status-badge status-warn">⏸ Warten auf menschliche Freigabe (HITL)</span>
+              <h4>E-Mail-Entwurf vor Versand prüfen</h4>
+            </div>
+            <div id="hitlPrecheck" class="precheck-alert"></div>
+            <div class="draft-box">
+              <div class="draft-label">Aktueller Entwurf des Agenten:</div>
+              <pre id="hitlDraftText"></pre>
+            </div>
+            <div class="hitl-controls">
+              <label for="hitlFeedbackInput">Feedback bei Ablehnung (wird im Memory gespeichert):</label>
+              <input id="hitlFeedbackInput" type="text" value="Keinen internen Betrugsscore nennen! Stattdessen schreiben, dass der Fall in Prüfung ist (nicht abgelehnt), und benötigte Unterlagen auflisten." />
+              <div class="hitl-buttons">
+                <button id="hitlApproveBtn" class="btn btn-success">✓ Freigeben &amp; senden</button>
+                <button id="hitlRejectBtn" class="btn btn-danger">✕ Ablehnen &amp; mit Feedback neu erstellen</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flow Graph + Result Card -->
+          <div class="workspace-grid">
+            <div class="card graph-card">
+              <div class="card-header">
+                <h4>Live-Flow-Graph</h4>
+                <div class="legend">
+                  <span><i class="dot dot-idle"></i>Bereit</span>
+                  <span><i class="dot dot-active"></i>Aktiv</span>
+                  <span><i class="dot dot-pass"></i>OK</span>
+                  <span><i class="dot dot-fail"></i>Fehler/Gate</span>
+                  <span><i class="dot dot-wait"></i>HITL</span>
+                </div>
+              </div>
+              <div id="flowGraphContainer" class="flow-graph-container"></div>
+            </div>
+
+            <div class="card result-card">
+              <div class="card-header">
+                <h4>Ergebnis &amp; Prüfpunkte</h4>
+                <span id="resultStatusBadge" class="status-badge status-idle">Bereit</span>
+              </div>
+              <div class="metrics-strip">
+                <div class="metric-box">
+                  <span class="metric-label">Modellaufrufe</span>
+                  <strong id="metricCalls">–</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Tool-Aufrufe</span>
+                  <strong id="metricTools">–</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Tokens</span>
+                  <strong id="metricTokens">–</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Laufzeit</span>
+                  <strong id="metricTime">–</strong>
+                </div>
+              </div>
+              <div id="resultBody" class="result-body">
+                <p class="muted">Klicke auf <strong>„Muster ausführen“</strong>, um den Durchlauf zu starten.</p>
+              </div>
+              <div id="lessonBox" class="lesson-box hidden"></div>
+            </div>
+          </div>
+
+          <!-- Live Trace -->
+          <div class="card trace-card">
+            <div class="card-header">
+              <h4>Live-Trace (Prompts, Tool-Aufrufe, Gates &amp; Zeitstempel)</h4>
+              <span id="traceCount" class="muted-sm">0 Einträge</span>
+            </div>
+            <div id="traceList" class="trace-list">
+              <div class="trace-empty">Noch keine Trace-Einträge.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selection Matrix -->
+      <section class="card matrix-card">
+        <div class="card-header">
+          <div>
+            <h4>Auswahlmatrix — gemessen, nicht geraten</h4>
+            <p class="muted-sm">Jeder Lauf trägt hier reale Kennzahlen für das gewählte Modell ein. Klicke auf eine Zeile, um direkt zum Muster zu springen.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Muster</th>
+                <th>Gruppe</th>
+                <th>Kontrollfluss</th>
+                <th>Wann einsetzen</th>
+                <th>Trade-off</th>
+                <th>Calls</th>
+                <th>Tokens</th>
+                <th>Zeit</th>
+                <th>Ergebnis</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- ==================== VIEW 2: AGENT HARNESS ==================== -->
+    <section id="view-harness" class="view">
+      <div class="view-intro">
+        <div>
+          <h2>Agent Harness: Die 3-Schichten-Kontrollarchitektur</h2>
+          <p>
+            Ein Harness umschließt das LLM mit <strong>Information Layer</strong> (Kontext, Memory, Tool-Schemas),
+            <strong>Execution Layer</strong> (Plan, Tool-Ausführung, Guardrails) und <strong>Feedback Layer</strong>
+            (Schema-Prüfung, Human-in-the-Loop, Rückspeicherung ins Memory). Teste den Unterschied zwischen erstem Lauf und zweitem Lauf nach einer Korrektur!
+          </p>
+        </div>
+      </div>
+
+      <div class="harness-controls card">
+        <div class="harness-toolbar">
+          <div class="domain-tabs" id="harnessDomainTabs">
+            <button class="domain-btn active" data-domain="insurance">Versicherung (CLM002)</button>
+            <button class="domain-btn" data-domain="clinical">Klinik (Patient P004)</button>
+            <button class="domain-btn" data-domain="career">Karriereberatung (UX)</button>
+            <button class="domain-btn" data-domain="drug">Pharma-Forschung (DM-3350)</button>
+          </div>
+          <div class="harness-actions">
+            <button id="runHarnessBtn" class="btn btn-primary">▶ Harness-Durchlauf starten</button>
+            <button id="clearMemoryBtn" class="btn btn-ghost">Memory zurücksetzen</button>
+          </div>
+        </div>
+        <p id="harnessTaskDesc" class="scenario-text"></p>
+      </div>
+
+      <div class="harness-layers">
+        <div class="card layer-card" id="layer-info">
+          <div class="layer-header">
+            <span class="layer-num">Schicht 1</span>
+            <h4>Information Layer</h4>
+            <span class="status-badge status-idle" id="layerInfoBadge">Bereit</span>
+          </div>
+          <p class="muted-sm">Kontext-Assembly, relevante Datensätze, Langzeit-Memory und progressive Tool-Schemas.</p>
+          <div id="layerInfoBody" class="layer-body"></div>
+        </div>
+
+        <div class="card layer-card" id="layer-exec">
+          <div class="layer-header">
+            <span class="layer-num">Schicht 2</span>
+            <h4>Execution Layer</h4>
+            <span class="status-badge status-idle" id="layerExecBadge">Bereit</span>
+          </div>
+          <p class="muted-sm">Agent Loop: Planen → Tool-Aufruf → Policy-/Guardrail-Gate → Retry oder Abschluss.</p>
+          <div id="layerExecBody" class="layer-body"></div>
+        </div>
+
+        <div class="card layer-card" id="layer-feedback">
+          <div class="layer-header">
+            <span class="layer-num">Schicht 3</span>
+            <h4>Feedback Layer</h4>
+            <span class="status-badge status-idle" id="layerFeedbackBadge">Bereit</span>
+          </div>
+          <p class="muted-sm">Schema-Validierung, menschliche Korrektur und Speicherung als Regel im Memory für künftige Läufe.</p>
+          <div id="layerFeedbackBody" class="layer-body"></div>
+        </div>
+      </div>
+
+      <div class="card memory-card">
+        <div class="card-header">
+          <h4>Aktives Harness-Memory (wirkt beim nächsten Durchlauf im Information Layer)</h4>
+          <span id="memoryCount" class="muted-sm">0 Einträge</span>
+        </div>
+        <div id="harnessMemoryList" class="memory-list"></div>
+        <div class="memory-add-row">
+          <input id="customMemoryInput" type="text" placeholder="Eigene Korrektur oder Policy-Notiz ins Memory speichern…" />
+          <button id="addMemoryBtn" class="btn btn-secondary btn-sm">+ Ins Memory speichern</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: LOOP ENGINEERING ==================== -->
+    <section id="view-loops" class="view">
+      <div class="view-intro">
+        <div>
+          <h2>Loop Engineering: 12 Techniken für verlässliche Agentenschleifen</h2>
+          <p>
+            Jeder Agent-Loop folgt dem Zyklus <code>Inspect → Act → Verify → Decide → Repeat</code>.
+            Schalte einzelne Schutztechniken gezielt <strong>an oder aus</strong> und beobachte in vier typischen Fehler-Szenarien,
+            welche Technik den Lauf rettet — und was passiert, wenn sie fehlt.
+          </p>
+        </div>
+      </div>
+
+      <div class="card loop-scenario-bar">
+        <div class="loop-scenario-select">
+          <label for="loopScenarioSelect">Fehler-Szenario wählen:</label>
+          <select id="loopScenarioSelect" class="mode-select">
+            <option value="runaway">1. Endlosschleife &amp; wiederholte Tool-Aufrufe</option>
+            <option value="bad_json">2. Ungültiges JSON &amp; halluzinierter Tool-Name</option>
+            <option value="tool_failure">3. Externer Tool-Timeout &amp; Retry-Sturm</option>
+            <option value="side_effect">4. Doppelte Schreibaktion (E-Mail / Auszahlung) bei Retry</option>
+          </select>
+        </div>
+        <div class="loop-bar-actions">
+          <button id="toggleAllTechBtn" class="btn btn-secondary btn-sm">Alle 12 aktivieren</button>
+          <button id="disableAllTechBtn" class="btn btn-ghost btn-sm">Alle deaktivieren</button>
+          <button id="runLoopBtn" class="btn btn-primary">▶ Loop-Simulation starten</button>
+        </div>
+      </div>
+
+      <div class="loops-layout">
+        <div class="card techniques-card">
+          <div class="card-header">
+            <h4>12 Zuverlässigkeitstechniken (ein-/ausschaltbar)</h4>
+            <span id="activeTechCount" class="muted-sm">12 / 12 aktiv</span>
+          </div>
+          <div id="techniquesGrid" class="techniques-grid"></div>
+        </div>
+
+        <div class="loop-right-col">
+          <div class="card loop-cycle-card">
+            <div class="card-header">
+              <h4>Zyklus: Inspect → Act → Verify → Decide → Repeat</h4>
+              <span id="loopResultBadge" class="status-badge status-idle">Bereit</span>
+            </div>
+            <div id="loopCycleDiagram" class="loop-cycle-diagram">
+              <div class="cycle-step" data-stage="inspect">1. Inspect<small>Zustand &amp; Kontext</small></div>
+              <div class="cycle-arrow">→</div>
+              <div class="cycle-step" data-stage="act">2. Act<small>Modell &amp; Tool</small></div>
+              <div class="cycle-arrow">→</div>
+              <div class="cycle-step" data-stage="verify">3. Verify<small>Schema &amp; Gates</small></div>
+              <div class="cycle-arrow">→</div>
+              <div class="cycle-step" data-stage="decide">4. Decide<small>Weiter / Stopp / HITL</small></div>
+            </div>
+            <div id="loopOutcomeSummary" class="result-body">
+              <p class="muted">Wähle ein Szenario, aktiviere oder deaktiviere Techniken und starte die Simulation.</p>
+            </div>
+          </div>
+
+          <div class="card trace-card">
+            <div class="card-header">
+              <h4>Loop-Protokoll (Iterationen &amp; Eingriffe)</h4>
+              <span id="loopIterCount" class="muted-sm">0 Iterationen</span>
+            </div>
+            <div id="loopTraceList" class="trace-list">
+              <div class="trace-empty">Noch keine Simulation gestartet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>
+        <strong>Technische Voraussetzungen:</strong> Für die Teilnahme benötigen Sie einen aktuellen Browser (Chrome, Edge, Firefox oder Safari),
+        eine stabile Internetverbindung und gegebenenfalls einen Computer mit Node.js. Es ist keine spezielle Browser-Erweiterung oder zusätzliche Software im Browser erforderlich.
+      </p>
+      <p>
+        <strong>Bildungsdemo (fiktive Daten):</strong> Alle Patienten, Schadenfälle, Bewerbungen, Wirkstoffe und Schwellenwerte sind frei erfunden.
+        Keine medizinische, juristische, finanzielle oder regulatorische Beratung.
+      </p>
+      <p class="muted-sm">
+        Konzept &amp; Inspiration nach <a href="https://github.com/vishalmysore/harnessEngineeringDemo" target="_blank" rel="noopener">vishalmysore/harnessEngineeringDemo</a>
+        (MIT-Lizenz) sowie Anthropics <em>Building Effective Agents</em> und Yao et al. (<em>ReAct</em>, 2022).
+        Deutschsprachige Kurs-Umsetzung für <strong>KI-Agenten. Planen. Handeln. Prüfen.</strong>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

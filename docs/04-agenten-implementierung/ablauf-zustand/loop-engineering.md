@@ -29,6 +29,8 @@ Ein Agent kann eine Aufgabe selten allein dadurch lösen, dass er einmal eine An
 
 Loop Engineering bezeichnet hier den Entwurf solcher Wiederholungen und ihrer Kontrollpunkte. Die folgende Einteilung ist eine **Orientierungshilfe**, keine allgemeingültige Taxonomie (systematische Einteilung). Schleifen können ineinandergreifen, und nicht jede Aufgabe braucht alle Typen. Ist die Schrittfolge bekannt, kann ein fester Workflow einfacher und verlässlicher sein; siehe [Agenten-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}).
 
+Interaktive Demo: [Agent Patterns Lab – Loop Engineering]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} – 12 Schutztechniken einzeln ein-/ausschalten und an vier typischen Fehler-Szenarien testen.
+
 ## Sieben Perspektiven auf Schleifen
 
 | Typ | Ebene und Akteur | Aufgabe und Beispiel |

@@ -31,6 +31,8 @@ Damit ist ein Harness größer als ein Prompt und konkreter als die allgemeine I
 
 Die Trennung ist entscheidend: Ein Modell darf einen Tool-Aufruf vorschlagen, sollte aber nicht allein entscheiden, ob dieser Aufruf zulässig ist. Diese Entscheidung gehört an eine überprüfbare Systemgrenze des Harnesses.
 
+Interaktive Demo: [Agent Patterns Lab – Agent Harness (3 Schichten)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Information, Execution und Feedback Layer mit aktivem Memory-Rückkopplungskreis testen.
+
 ```mermaid
 flowchart LR
     U[Aufgabe] --> H[Agent Harness]

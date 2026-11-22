@@ -4,16 +4,18 @@ title: Agenten-Architekturen
 parent: Entwurf
 grand_parent: Agenten-Implementierung
 nav_order: 2
-description: Architekturmuster und Design-Prinzipien für KI-Agenten
+description: Grundbausteine, Workflows, einzelne Agenten und Agententeams gezielt auswählen und kombinieren
 has_toc: true
 ---
 
 # Agenten-Architekturen
 {: .no_toc }
 
-> **Die Architektur entscheidet, wie ein Agent denkt, handelt, Grenzen einhält und mit Fehlern umgeht.**
+> **Wähle die einfachste Struktur, die deine Aufgabe zuverlässig löst.**
 
-Dieses Dokument erklärt die wichtigsten Architekturmuster für KI-Agenten und hilft bei der Entscheidung, welches Muster zu welchem Problem passt.
+Dieses Kapitel ist die gemeinsame Übersicht über die wichtigsten Muster. Es hilft dir zu entscheiden, wer den Ablauf bestimmt, welche Rollen gebraucht werden und wo Ergebnisse geprüft werden. Die praktische Teamumsetzung folgt in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}).
+
+Interaktive Demo: [Agent Patterns Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"} – 12 Agent-Muster mit Live-Flow-Graph, Trace und gemessener Auswahlmatrix direkt im Browser testen.
 
 ---
 
@@ -25,519 +27,294 @@ Dieses Dokument erklärt die wichtigsten Architekturmuster für KI-Agenten und h
 
 ---
 
-## Warum die Architekturfrage früh geklärt werden muss
+## Welche Struktur braucht meine Aufgabe?
 
-Viele Agentenprojekte scheitern nicht am Modell, sondern an einer unpassenden Grundstruktur. Ein Agent soll vielleicht nur ein Werkzeug aufrufen, wird aber als komplexes Multi-Agent-System gebaut. Oder ein eigentlich mehrstufiger Prozess wird als freier ReAct-Loop modelliert und verliert dadurch Kontrolle, Nachvollziehbarkeit und Kostenstabilität.
+Ein Meeting- und Research-Briefing-Agent soll vor einem Projekttermin Quellen zusammenfassen, offene Fragen benennen und ein belegtes Briefing erstellen. Je nach Anforderung braucht er unterschiedliche Strukturen:
 
-Architektur meint in diesem Zusammenhang nicht zuerst Framework oder Programmiersprache. Gemeint ist die Entscheidung, wie ein Agent Aufgaben zerlegt, wie viel Entscheidungsfreiheit er erhält und an welchen Stellen deterministische Logik wichtiger ist als modellbasierte Flexibilität. Für einen Einsteigerkurs ist genau diese Unterscheidung zentral, weil sie viele spätere Probleme bereits vorwegnimmt.
-
-**Typischer Fehler:** Zu früh die technisch eindrucksvollste Architektur zu wählen. In der Praxis ist die einfachste Struktur oft die robusteste.
-
-## Ein einfaches Beispiel
-
-Ein Support-System soll drei Arten von Anfragen bearbeiten: Lieferstatus nennen, Rechnung erneut senden und komplexe Sonderfälle an einen Menschen weiterleiten. Schon dieses kleine Beispiel zeigt, dass Architektur keine akademische Zusatzfrage ist. Für den Lieferstatus reicht meist ein gezielter Tool-Aufruf. Für die Rechnung braucht es eventuell mehrere Schritte. Für Sonderfälle wird eine sichere Eskalation benötigt.
-
-Aus genau solchen Anforderungen ergibt sich die Architektur. Nicht jede Aufgabe braucht einen denkenden, frei planenden Agenten. Häufig genügt ein klarer Workflow oder ein Tool-Calling-Muster mit wenigen kontrollierten Entscheidungen.
-
-## Mini-Glossar für dieses Kapitel
-
-Einige Begriffe tauchen in Agenten-Architekturen immer wieder auf. Für dieses Dokument reichen diese Arbeitsdefinitionen:
-
-| Begriff | Einfache Bedeutung |
+| Anforderung | Sinnvoller Einstieg |
 |---|---|
-| **Agent** | Ein System, das mit einem Modell Entscheidungen trifft und bei Bedarf Werkzeuge nutzt. |
-| **Tool** | Eine klar beschriebene Funktion, die der Agent aufrufen darf, zum Beispiel Datenbankabfrage oder E-Mail-Versand. |
-| **State** | Der aktuelle Arbeitsstand: Nachrichten, Zwischenergebnisse, Entscheidungen oder offene Schritte. |
-| **Workflow** | Ein vorgegebener Ablauf aus Schritten, Verzweigungen und Prüfungen. |
-| **Tracing** | Protokollierung, was das Modell entschieden und welche Tools es aufgerufen hat. |
-| **Harness** | Die Steuerungsschicht um das Modell: Tools, Regeln, Speicher, Fehlerbehandlung und Freigaben. |
+| Relevante Unterlagen liegen bereits vor. | Augmented LLM: ein Modellaufruf mit bereitgestelltem Kontext |
+| Quellen sammeln, Fakten extrahieren und schreiben sind feste Schritte. | Workflow mit Verkettung und Prüfungen |
+| Die Anfrage bestimmt die benötigte Bearbeitung. | Workflow mit Routing |
+| Unabhängige Teilfragen können gleichzeitig bearbeitet werden. | Parallele Teilaufgaben mit Zusammenführung |
+| Erst gefundene Quellen zeigen, welche Recherche als Nächstes nötig ist. | Einzelner Agent mit ReAct-Schleife |
+| Getrennte Fachkontexte, Tools oder Verantwortlichkeiten sind erforderlich. | Mehrere spezialisierte Agenten |
 
-## Überblick
+Diese Möglichkeiten sind **keine aufeinanderfolgenden Entwicklungsstufen**. Unterscheide drei Fragen:
 
-Die Architekturen in diesem Dokument bauen aufeinander auf. Jede Stufe erhöht die Flexibilität, aber auch den Koordinationsaufwand:
+- **Ablauf:** Gibt Code die Schritte vor oder entscheidet das Modell über die nächsten Aktionen?
+- **Verantwortung:** Bearbeitet eine Rolle die Aufgabe oder werden Aufgaben an getrennte Rollen delegiert?
+- **Kontrolle:** Welche Ergebnisse und Aktionen müssen Regeln, Prüfungen oder Menschen freigeben?
+
+Ein Workflow kann mehrere Agenten enthalten. Ein einzelner Agent kann mehrere Tools nutzen. Menschliche Freigaben lassen sich in beide Formen einbauen.
+
+**Begriffe:** Ein *Tool* ist eine aufrufbare Funktion. *State* bezeichnet den aktuellen Arbeitsstand. Ein *Workflow* legt mögliche Übergänge im Code fest. Bei einem *Agenten* bestimmt das Modell innerhalb dieser Grenzen selbst die nächsten Aktionen. Mehrere Modellaufrufe allein machen noch kein Agententeam.
+
+## Grundbaustein: Augmented LLM
+
+**Idee:** Ein Modell erhält zusätzlich zur Frage relevante Daten: Dokumentauszüge, zuvor abgerufene Tool-Ergebnisse oder passende gespeicherte Informationen. Ein Modellaufruf erzeugt daraus die Antwort.
 
 ```mermaid
 flowchart LR
-    A["1 · Tool-Calling<br/>ein Werkzeug,<br/>eine Entscheidung"] --> B["2 · Single-Agent<br/>mehrere Schritte,<br/>ein Agent"]
-    B --> C["3 · Workflow<br/>fester Ablauf,<br/>klare Prüfungen"]
-    C --> D["4 · Multi-Agent<br/>Spezialisierung,<br/>Koordination"]
+    Q["Frage und Unterlagen"] --> C["Kontext zusammenstellen"]
+    C --> L["Ein Modellaufruf"] --> B["Briefing"]
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class Q input;
+    class B output;
+```
 
+**Beispiel:** Die Anwendung lädt das letzte Protokoll und den Projektstatus. Das Modell erstellt daraus das Terminbriefing mit Quellenangaben.
+
+**Einsatzgrenze:** Fehlende oder falsche Daten werden durch den Modellaufruf nicht behoben. Soll das System selbst über weitere Rechercheschritte entscheiden, reicht diese feste Struktur nicht mehr aus. Ein Augmented LLM ist ein Baustein und noch kein autonom handelnder Agent.
+
+### Tool-Calling ist eine Fähigkeit
+
+Beim Tool-Calling schlägt das Modell eine Funktion und deren Argumente vor. Die Anwendung prüft den Aufruf, führt ihn aus und gibt das Ergebnis zurück. Das kann ein begrenzter Bestandteil eines Workflows oder eine wiederholte Aktion innerhalb eines Agenten sein.
+
+Für das Briefing könnte ein Tool Projektunterlagen abrufen. Ob danach ein weiterer Aufruf erlaubt ist, entscheidet die umgebende Ablaufsteuerung. Tool-Calling steht deshalb nicht als eigene Architekturklasse neben Workflow oder Multi-Agent. Details erklärt [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html' | relative_url }}).
+
+## Vorgegebene Workflows
+
+Bei einem Workflow stehen mögliche Schritte und Übergänge im Code. Einzelne Modellantworten können variieren; auch eine Klassifikation kann vom Modell stammen. Die Anwendung legt jedoch fest, welche Fortsetzung jeweils erlaubt ist.
+
+### Verkettung: bekannte Schritte nacheinander ausführen
+
+**Idee:** Prompt Chaining oder Pipeline zerlegt die Aufgabe in feste Schritte. Jedes Zwischenergebnis wird geprüft, bevor die nächste Stufe beginnt.
+
+```mermaid
+flowchart LR
+    S["Quellen"] --> X["Fakten extrahieren"] --> V{"Vollständig?"}
+    V -->|Ja| W["Briefing schreiben"] --> B["Entwurf"]
+    V -->|Nein| H["Lücken melden"]
     classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
     classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
     classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
     classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-
-    class A input;
-    class C metric;
-    class D output;
+    class S input;
+    class V metric;
+    class B,H output;
 ```
 
-| Stufe | Muster | Wann sinnvoll |
-|---:|---|---|
-| 1 | Tool-Calling | Ein klares Ziel, ein kontrollierter Werkzeugaufruf |
-| 2 | Single-Agent | Offene Aufgabe, Zwischenschritte noch nicht bekannt |
-| 3 | Workflow | Fachlicher Ablauf ist vorgegeben oder auditierbar |
-| 4 | Multi-Agent | Spezialisierung ist wirklich nötig und Teilaufgaben sind trennbar |
+**Beispiel:** Protokolle einlesen, Beschlüsse und offene Aufgaben extrahieren, anschließend das Briefing formulieren.
 
-Die folgenden Abschnitte behandeln die vier Stufen in genau dieser Reihenfolge.
+**Einsatzgrenze:** Das Muster passt bei stabiler Reihenfolge. Übergib neben Zusammenfassungen auch Quellenverweise: Bei jeder Verdichtung können wichtige Details verloren gehen.
 
-Für Einsteiger ist vor allem diese erste Achse wichtig. Die späteren Abschnitte zu Harness Engineering, Entscheidungslogik, Reasoning-Sichtbarkeit und Produktionsreife sind als Vertiefung gedacht. Sie helfen beim Architekturreview, müssen aber nicht vor der ersten Architekturentscheidung vollständig beherrscht werden.
+### Routing: die passende Bearbeitung auswählen
 
-Interaktive Demo: [KI-Agenten-Architektur]({{ '/visualisierungen/ki_agent_architektur/' | relative_url }}){:target="_blank" rel="noopener"} – simuliert den kompletten Ablauf eines Agenten mit Planung, Tool-Aufrufen und Schritt-für-Schritt-Zuständen.
-
-## Schneller Entscheidungsleitfaden
-
-Diese Fragen helfen bei der Auswahl:
-
-1. **Gibt es nur eine klar begrenzte Aktion?**  
-   Dann reicht meist **Tool-Calling**.
-
-2. **Ist der Lösungsweg offen und muss der Agent selbst Zwischenschritte wählen?**  
-   Dann passt ein **Single-Agent**, häufig mit ReAct-artigem Ablauf.
-
-3. **Ist der Ablauf fachlich klar vorgegeben oder muss er auditierbar sein?**  
-   Dann ist ein deterministischer **Workflow** die bessere Wahl.
-
-4. **Sind die Teilaufgaben wirklich unterschiedlich genug, dass Spezialisierung hilft?**  
-   Erst dann lohnt sich **Multi-Agent**.
-
-5. **Gibt es schreibende oder riskante Aktionen?**  
-   Dann braucht jede Architektur zusätzliche Kontrolle: Validierung, Human-in-the-Loop oder feste Berechtigungen.
-
-Merksatz: **Erst Tool-Calling prüfen, dann Single-Agent oder Workflow, erst zuletzt Multi-Agent.**
-
-Typische Situationen lassen sich damit schnell einordnen:
-
-| Situation | Naheliegende Wahl |
-|---|---|
-| FAQ plus Datenbankzugriff | Tool-Calling |
-| Mehrstufiger Genehmigungsprozess | Workflow |
-| Offene Rechercheaufgabe | ReAct |
-| Arbeitsteilige Content-Erstellung | Multi-Agent |
-| Wissen aus Dokumenten mit Quellenpflicht | Tool-Calling oder Workflow mit RAG-Tool |
-| Riskante oder schreibende Aktion | Workflow mit Kontrolle |
-
-Im Capstone dient diese Auswahl als Architektur-Check: Die gewählte Lösung sollte begründen, warum sie Tool-Calling, Single-Agent, Workflow, Multi-Agent oder eine Kombination daraus nutzt und welche Kontrollpunkte sie ergänzt.
-
-## Das Kontroll-Dilemma: Wer entscheidet über den nächsten Schritt?
-
-Bei agentischen Systemen muss eine zentrale Architekturfrage beantwortet werden: Entscheidet die Anwendung beziehungsweise der Graph über den nächsten Schritt, oder darf das Modell selbst aus den verfügbaren Werkzeugen wählen? Beide Varianten sind sinnvoll, aber für unterschiedliche Arten von Unsicherheit.
-
-### Explizites Conditional Routing
-
-Beim **Conditional Routing** legt die Anwendung die möglichen Pfade fest. Eine Routing-Funktion liest zum Beispiel den State, ein Klassifikationsergebnis oder ein Sicherheits-Flag und leitet den Graphen an den passenden Node weiter.
-
-```mermaid
-flowchart LR
-    A[Anfrage] --> B[Analyse oder Klassifikation]
-    B --> C{Explizite Route}
-    C -->|Support| S[Support-Pfad]
-    C -->|Sales| V[Sales-Pfad]
-    C -->|unsicher oder verboten| E[Eskalation oder Stopp]
-
-    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
-    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
-    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
-
-    class A input;
-    class C metric;
-    class S,V output;
-    class E stop;
-```
-
-Das Muster eignet sich besonders dort, wo die Kontrolle wichtiger ist als maximale Flexibilität:
-
-- Sicherheitsprüfungen und Guardrails
-- strikte Verzweigungen nach Kundenkategorie oder Berechtigung
-- Qualitäts-Gates und finale Validierungen
-- klar begrenzte, auditierbare Prozesspfade
-
-Der Vorteil ist ein vorhersehbarer und meist kostengünstiger Ablauf. Wichtig ist die begriffliche Präzisierung: Conditional Routing muss nicht vollständig regelbasiert sein. Auch ein LLM-Klassifizierer kann die Vorentscheidung liefern. Die erlaubten Zielpfade, die Sicherheitsgrenzen und die Abbruchbedingungen bleiben aber im Graphen oder in der Anwendung explizit kontrollierbar.
-
-### Modellgesteuerte Tool-Auswahl
-
-Bei der **modellgesteuerten Tool-Auswahl** erhält das LLM mehrere beschriebene Werkzeuge und entscheidet anhand der Anfrage, ob und welches davon sinnvoll ist. Mit `bind_tools()` erzeugt das Modell zunächst eine strukturierte Tool-Absicht. Die Laufzeit oder ein `ToolNode` validiert und führt den Aufruf aus; bei Bedarf kann anschließend ein weiterer Modell- und Tool-Schritt folgen.
-
-Dieses Muster eignet sich für offene Aufgaben, deren Lösungsweg vorab nicht vollständig bekannt ist, zum Beispiel:
-
-- freie Webrecherche
-- mehrstufige Datenbank- oder Datenanalysen
-- Suche, Bewertung und anschließende Verfeinerung einer Anfrage
-- Aufgaben, bei denen das Ergebnis eines Tools die nächste Aktion bestimmt
-
-Der Vorteil ist die hohe Flexibilität. Dem stehen variable Kosten, höhere Latenz und eine größere Abhängigkeit von Tool-Beschreibungen, Modellverhalten und Laufzeitbegrenzungen gegenüber. Tool-Aufrufe brauchen deshalb weiterhin Validierung, Berechtigungen und ein Iterations- oder Budgetlimit.
-
-### Zwei Alternativen am Datenbankbeispiel
-
-Angenommen, eine Anfrage kann zusätzliches Wissen aus einer Datenbank benötigen. Dafür gibt es zwei grundsätzliche Entwürfe:
-
-| Variante | Ablauf | Stärke | Grenze |
-|---|---|---|---|
-| **A: Conditional Routing** | Ein Router prüft zuerst, ob die Datenbank gebraucht wird. Danach folgt entweder der Retrieval-Pfad oder direkt die Antwort-Node. | Geringe Kosten und Latenz; Verhalten gut vorhersehbar. | Eine falsche Vorentscheidung kann den gesamten Pfad verfehlen. |
-| **B: Modellgesteuerte Tool-Auswahl** | Das LLM erhält das Datenbank-Tool, entscheidet selbst über den Aufruf und kann das Ergebnis bewerten oder eine weitere Abfrage starten. | Flexibel bei unbekannten oder mehrstufigen Suchwegen. | Mehr Modellaufrufe, variable Kosten und höherer Kontrollbedarf. |
-
-Die Entscheidung sollte nicht danach getroffen werden, welches Muster moderner klingt. Ausschlaggebend sind die Fehlerkosten, die Offenheit des Lösungswegs und die Frage, ob ein falscher Pfad sicher abgefangen werden kann.
-
-### Best Practice: grobe Weiche plus autonomer Tool-Loop
-
-In produktionsnahen Systemen werden beide Muster häufig kombiniert. Eine explizite Kontrollschicht übernimmt die Entscheidungen, die nicht dem Modell überlassen werden dürfen. Innerhalb eines zulässigen Bearbeitungspfads darf ein Agent anschließend flexibel geeignete Werkzeuge auswählen.
-
-```mermaid
-flowchart LR
-    A[Anfrage] --> G{Security und Policy}
-    G -->|blockieren| X[Stopp oder Eskalation]
-    G -->|zulässig| R{Grobe Weiche}
-    R -->|direkte Antwort| L[LLM-Antwort]
-    R -->|Recherche nötig| T[Agent mit Tool-Loop]
-    T --> T
-    L --> Q[Validierung und Qualitäts-Gate]
-    T --> Q
-    Q -->|nicht ausreichend| N[Nachbessern oder Eskalation]
-    Q -->|ausreichend| E[Antwort]
-
-    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
-    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
-    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
-
-    class A input;
-    class G,R,Q metric;
-    class E output;
-    class X,N stop;
-```
-
-Eine robuste Grundregel lautet:
-
-> **Policies, Berechtigungen, Sicherheitsprüfungen und finale Gates gehören in explizite Kontrolllogik. Offene fachliche Zwischenschritte und die Auswahl unter mehreren geeigneten Werkzeugen können dem Modell überlassen werden.**
-
-So entsteht keine Entweder-oder-Architektur: Der Entwickler kontrolliert die Grenzen, während das Modell innerhalb dieser Grenzen flexibel handeln kann.
-
-## Tool-Calling: wenn das Modell Werkzeuge steuern soll
-
-Beim Tool-Calling entscheidet das Modell, welches Werkzeug mit welchen Parametern aufgerufen werden soll. Dieses Muster ist oft der sinnvollste Einstieg, weil die Freiheitsgrade begrenzt bleiben und die Architektur trotzdem bereits deutlich mehr kann als ein reiner Chatbot.
+**Idee:** Eine Regel oder ein Modell klassifiziert die Anfrage. Code leitet sie an eine der vorgesehenen Bearbeitungen weiter.
 
 ```mermaid
 flowchart TD
-    A[Anfrage] --> B[LLM analysiert]
-    B --> C{Tool nötig?}
-    C -->|Ja| D[Tool auswählen]
-    D --> E[Tool ausführen]
-    E --> F[Ergebnis einbinden]
-    F --> B
-    C -->|Nein| G[Antwort]
-
+    Q["Briefing-Anfrage"] --> R{"Kategorie?"}
+    R -->|Meeting| M["Protokolle auswerten"]
+    R -->|Research| S["Recherche ausführen"]
+    R -->|Unklar| H["Rückfrage stellen"]
     classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
     classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
     classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    class Q input;
+    class R metric;
+```
+
+**Beispiel:** Eine Terminvorbereitung nutzt interne Protokolle, eine Marktfrage startet eine Recherche.
+
+**Einsatzgrenze:** Eine falsche Zuordnung führt zur falschen Bearbeitung. Validiere Kategorien und plane einen Fallback ein. Die Ziele können Funktionen, Modellaufrufe oder eigenständige Agenten sein; Routing setzt kein Agententeam voraus.
+
+### Parallelisierung: unabhängige Teilaufgaben zusammenführen
+
+**Idee:** Bei *Sectioning* bearbeiten mehrere Aufrufe unterschiedliche Teilfragen gleichzeitig. Ein Aggregator führt die Ergebnisse zusammen.
+
+```mermaid
+flowchart TD
+    Q["Projektbriefing"] --> A["Termine auswerten"]
+    Q --> B["Risiken auswerten"]
+    A --> J["Ergebnisse abgleichen"]
+    B --> J
+    J --> O["Gemeinsames Briefing"]
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
     classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
-
-    class A input;
-    class C metric;
-    class G output;
-    class E target;
+    class Q input;
+    class O output;
 ```
 
-Ein Support-Agent kann etwa das Tool `track_order` für den Lieferstatus oder `send_invoice` für Rechnungen aufrufen. Die Stärke liegt darin, dass das Modell flexibel formulieren kann, während die eigentliche Aktion in deterministischem Code oder in einer externen API stattfindet.
+**Beispiel:** Terminlage und Projektrisiken werden unabhängig analysiert und danach auf Widersprüche geprüft.
 
-```python
-tools = [
-    {"name": "track_order", "description": "Liefert den aktuellen Sendungsstatus"},
-    {"name": "send_invoice", "description": "Versendet eine Rechnung erneut per E-Mail"},
-]
+**Einsatzgrenze:** Abhängige Schritte werden durch Parallelisierung nicht schneller. Die Zusammenführung braucht Regeln für Widersprüche, fehlende Ergebnisse und Quellen.
 
-response = agent.invoke({
-    "messages": [{"role": "human", "content": "Bitte sende mir die Rechnung erneut."}]
-})
-```
+Eine Variante ist **Voting**: Mehrere Aufrufe beantworten dieselbe Frage; die Anwendung aggregiert ihre Antworten. Übereinstimmung ist kein Wahrheitsbeleg. Aufrufe desselben Modells können dieselben Fehler teilen. Für das Briefing ersetzt eine Mehrheit keine Prüfung an Originalquellen.
 
-**Typischer Fehler:** Ein einziges Tool für zu viele unterschiedliche Aufgaben zu bauen. Dann verliert das Modell die Klarheit, welches Werkzeug in welcher Situation gemeint ist.
+### Evaluator-Optimizer: Entwurf prüfen und überarbeiten
 
-## Single-Agent-Architektur: mehrere Schritte, eine Rolle
-
-Ein einzelner Agent übernimmt die vollständige Bearbeitung einer Aufgabe. Er kann ein Ziel in Zwischenschritte zerlegen, Tools nutzen, Ergebnisse auswerten und den nächsten Schritt wählen. Das ist mehr als ein einzelner Tool-Aufruf, aber noch kein Agententeam.
-
-Dieses Muster passt, wenn eine Aufgabe mehrere Schritte braucht, aber weiterhin von einer einzigen Rolle sinnvoll bearbeitet werden kann. Ein PMO-Assistent kann zum Beispiel Dokumente lesen, offene Fragen sammeln, Action-Items extrahieren und ein Briefing formulieren. Solange diese Arbeit nicht in getrennte Fachrollen aufgeteilt werden muss, bleibt ein Single-Agent oft die einfachste robuste Lösung.
-
-**Vorteile:**
-
-- keine Koordination zwischen mehreren Agenten
-- geringerer Token-Verbrauch als bei Multi-Agent-Systemen
-- leichter zu erklären, zu testen und zu debuggen
-
-**Nachteile:**
-
-- ein einzelner Agent wird schnell überladen, wenn zu viele Rollen zusammenfallen
-- lange Aufgaben brauchen klare Grenzen für Kontext, Tools und Iterationen
-- falsche Tool-Auswahl oder fehlerhafte Zwischenergebnisse verschieben den gesamten Pfad
-
-Sobald getrennte Fachrollen, eigene Kontexte oder unabhängige Prüfungen nötig werden, sollte die Architektur anders geschnitten werden.
-
-## ReAct: wenn der Lösungsweg noch nicht feststeht
-
-ReAct kombiniert Nachdenken, Handeln und Beobachten in einem wiederholten Zyklus. Der Agent prüft den aktuellen Stand, führt eine Aktion aus, liest das Ergebnis und entscheidet anschließend über den nächsten Schritt. Dieses Muster eignet sich vor allem dann, wenn der Lösungsweg vorab nicht vollständig bekannt ist — es verfeinert damit den Single-Agent aus dem vorigen Abschnitt um einen konkreten Ablaufzyklus.
-
-Wie solche Schleifen mit Prüfungen, Budgets und Abbruchbedingungen gestaltet werden, erklärt [Loop Engineering]({{ '/04-agenten-implementierung/ablauf-zustand/loop-engineering.html' | relative_url }}).
+**Idee:** Ein Generator erstellt einen Entwurf. Regeln und gegebenenfalls ein bewertendes Modell prüfen ihn nach festgelegten Kriterien. Rückmeldungen gehen in eine begrenzte Überarbeitungsschleife ein.
 
 ```mermaid
 flowchart LR
-    A[Aufgabe] --> B[Denken]
-    B --> C[Handeln]
-    C --> D[Beobachten]
-    D --> E{Ziel erreicht?}
-    E -->|Nein| B
-    E -->|Ja| F[Antwort]
-
+    W["Entwurf schreiben"] --> P{"Kriterien erfüllt?"}
+    P -->|Ja| B["Geprüfter Entwurf"]
+    P -->|Nein, Budget frei| W
+    P -->|Budget erschöpft| H["Zur manuellen Prüfung"]
     classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
     classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
     classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-
-    class A input;
-    class E metric;
-    class F output;
-```
-
-Ein typisches Beispiel ist eine Rechercheaufgabe. Der Agent beginnt mit einer Hypothese, ruft ein Suchwerkzeug auf, liest die Ergebnisse, präzisiert die Suche und erzeugt erst dann eine Antwort. Der Vorteil liegt in der Flexibilität. Der Nachteil liegt in den Schleifen: Ohne gute Begrenzung wachsen Kosten, Latenz und Fehlersuche schnell an.
-
-ReAct passt zu offenen Aufgaben mit mehreren Zwischenschritten, wenn der nächste sinnvolle Schritt erst während der Bearbeitung feststeht.
-
-### Produktionsvariante: Explore → Plan → Act
-
-ReAct ist flexibel, aber für den Produktionseinsatz oft zu unstrukturiert. Produktive Agenten unterteilen ihre Arbeit deshalb in **drei klar getrennte Phasen** mit unterschiedlichen Berechtigungen:
-
-```mermaid
-flowchart LR
-    E["<b>Explore</b><br/>nur lesen"] --> P["<b>Plan</b><br/>nur lesen"] --> A["<b>Act</b><br/>voller Zugriff"]
-
-    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
-    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
-    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
-    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-
-    class E input;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
     class P metric;
-    class A output;
+    class B output;
+    class H stop;
 ```
 
-**Explore** — der Agent liest, sucht und sammelt Informationen, ohne etwas zu verändern. Erlaubt: Dateien lesen, Suchen, Strukturen analysieren.
+**Beispiel:** Das Review prüft Beschlüsse, offene Fragen und nachvollziehbare Belege. Fehlende Belege führen zur Überarbeitung.
 
-**Plan** — der Agent entscheidet, welche Schritte notwendig sind, und skizziert die Änderungen. Noch kein Schreiben, kein Ausführen.
+**Einsatzgrenze:** Ohne klare Kriterien produziert die Schleife bloß weitere Formulierungen. Begrenze die Durchläufe; eine Modellbewertung garantiert keine sachliche Richtigkeit. Getrennte Generator- und Reviewer-Rollen sind möglich, aber nicht zwingend eigenständige Agenten.
 
-**Act** — erst jetzt darf der Agent verändernd eingreifen: Dateien schreiben, APIs aufrufen, Daten speichern. Voller Werkzeugzugriff.
+**Debate** ergänzt unabhängige Lösungsvorschläge und eine bewertende Instanz. Nutze diese Variante, wenn unterschiedliche Perspektiven den Mehraufwand rechtfertigen; eine Einigung ersetzt keine Evidenz.
 
-Beispiel beim Bearbeiten von Code: Explore liest relevante Dateien und versteht die Struktur. Plan skizziert die Änderungen und prüft Auswirkungen. Act schreibt den Code und führt Tests aus.
+## Ein Agent entscheidet den nächsten Schritt
 
-Diese Phasentrennung reduziert destruktive Fehler erheblich, weil ein Agent nicht im selben Schritt erkunden und gleichzeitig schreiben kann.
+### ReAct: beobachten, handeln und neu entscheiden
 
-Explore → Plan → Act passt, wenn Aktionen schwer umkehrbar sind, mehrere Dateien oder Systeme betreffen oder vorher abgesichert werden müssen.
-
-## Workflow-basierte Architektur: wenn der Ablauf kontrolliert sein muss
-
-Workflow-basierte Architekturen modellieren einen klaren Ablauf aus Knoten und Verzweigungen. Das System entscheidet nicht in jeder Runde frei über den nächsten Schritt, sondern bewegt sich entlang eines vorgegebenen Prozesses. Genau dadurch werden Genehmigungen, Qualitätsprüfungen und sichere Übergaben deutlich leichter beherrschbar.
+**Idee:** Ein Agent wählt anhand des bisherigen Ergebnisses die nächste Aktion. Bei ReAct wechseln sich Entscheidung, Tool-Aufruf und Beobachtung ab, bis das Ziel oder eine Grenze erreicht ist.
 
 ```mermaid
-flowchart TD
-    START((Start)) --> A[Eingabe analysieren]
-    A --> B{Kategorie?}
-    B -->|Technik| C[Technik-Agent]
-    B -->|Vertrieb| D[Vertrieb-Agent]
-    B -->|Sonstiges| E[Fallback]
-    C --> F[Qualitätsprüfung]
-    D --> F
-    E --> F
-    F --> FINISH((Ende))
-
+flowchart LR
+    Q["Rechercheauftrag"] --> D{"Nächster Schritt?"}
+    D -->|Tool nutzen| T["Quelle abrufen"] --> O["Ergebnis auswerten"] --> D
+    D -->|Fertig| B["Briefing"]
+    D -->|Grenze erreicht| H["Lücken melden"]
     classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
     classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
     classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
     classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
-
-    class START input;
-    class B,F metric;
-    class FINISH output;
+    class Q input;
+    class D metric;
+    class B,H output;
 ```
 
-Ein Beispiel wäre ein Beschwerdeprozess. Zuerst wird die Anfrage kategorisiert, dann folgt je nach Kategorie eine passende Bearbeitung, anschließend eine Qualitätsprüfung und schließlich entweder eine Antwort oder eine menschliche Freigabe. Diese Struktur ist weniger flexibel als ReAct, dafür aber meist robuster und erklärbarer.
+**Beispiel:** Eine Quelle nennt einen ungeklärten Termin. Der Agent sucht einen neueren Statusbericht und entscheidet danach, ob weitere Recherche nötig ist.
 
-Nicht geeignet, wenn: Die Aufgabe stark explorativ ist und der Lösungsweg erst während der Bearbeitung entsteht.
+**Einsatzgrenze:** ReAct hilft bei offenen Lösungswegen. Es braucht begrenzte Tools, Kontext- und Aufrufbudgets sowie einen Abbruchpfad. Sichtbar gemacht werden Tool-Aufrufe, Ergebnisse und Prüfungen; eine interne Gedankenkette des Modells ist dafür nicht erforderlich.
 
-## Multi-Agent: wenn Arbeitsteilung wirklich einen Mehrwert bringt
+### Explizite Planung als Ergänzung
 
-Mehrere Agenten lohnen sich, wenn klar getrennte Rollen einen fachlichen Gewinn bringen, der den zusätzlichen Koordinationsaufwand rechtfertigt. Prüfe zuerst, ob Tool-Calling, ein einzelner Agent oder ein expliziter Workflow genügt.
+Bei **Plan-and-Execute** wird zunächst ein prüfbarer Arbeitsplan erstellt und anschließend abgearbeitet. Neue Beobachtungen können Planänderungen auslösen. Im Briefing-Fall enthält der Plan Teilfragen, benötigte Quellen und Prüfkriterien.
 
-Die Auswahl zwischen Supervisor, Pipeline, Handoff und kollaborativen Mustern gehört in [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}). Dieser Abschnitt beschränkt sich auf die Architekturentscheidung: Braucht die Aufgabe wirklich mehrere spezialisierte Rollen?
+Planung kann innerhalb eines Agenten oder zwischen Planner und mehreren Ausführenden stattfinden. Sie ist keine zusätzliche Architekturklasse. Für riskante Aufgaben lassen sich Recherche, Planung und Ausführung durch unterschiedliche Berechtigungen begrenzen. Ein Plan erteilt keine pauschale Freigabe für spätere Aktionen.
 
-## Vertiefung: drei zusätzliche Perspektiven
+## Mehrere Agenten arbeiten zusammen
 
-Die vier Architekturstufen aus dem Überblick bleiben die wichtigste Entscheidungshilfe. Die folgenden drei Perspektiven sind Ergänzungen für das Architekturreview. Sie beantworten nicht „Welche Stufe wähle ich?“, sondern helfen, eine gewählte Architektur besser zu prüfen:
+Mehrere Rollen helfen, wenn Fachkontexte, Werkzeuge oder Verantwortlichkeiten sinnvoll getrennt werden müssen. Für das Briefing könnte eine Recherche-Rolle Quellen erschließen, eine Schreib-Rolle den Entwurf erstellen und eine Prüf-Rolle Belege kontrollieren. Eine feste Abfolge solcher Rollen bleibt zugleich ein Workflow.
 
-| Perspektive | Prüffrage |
+### Orchestrator-Workers: zentral delegieren
+
+**Idee:** Ein Orchestrator oder Supervisor beauftragt spezialisierte Worker und führt Ergebnisse zusammen. Bei dynamischer Orchestrierung entscheidet das Modell erst während des Laufs, welche Teilaufgaben nötig sind.
+
+```mermaid
+flowchart TD
+    Q["Briefing-Auftrag"] --> S["Supervisor"]
+    S --> R["Recherche-Worker"] --> S
+    S --> W["Schreib-Worker"] --> S
+    S --> P["Prüf-Worker"] --> S
+    S --> B["Ergebnis oder Eskalation"]
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class Q input;
+    class B output;
+```
+
+**Beispiel:** Der Supervisor erkennt eine Quellenlücke und beauftragt eine weitere Recherche, bevor das Briefing geschrieben wird.
+
+**Einsatzgrenze:** Delegation benötigt klare Aufträge, Ergebnisformate und Budgets. Der Supervisor kann zum Engpass werden. Ein einfacher Workflow genügt, wenn Reihenfolge und Aufgaben feststehen.
+
+### Handoff: Verantwortung gezielt übergeben
+
+**Idee:** Die bearbeitende Rolle erkennt einen Zuständigkeitswechsel und übergibt die weitere Bearbeitung an eine andere Rolle. Anders als beim Worker-Aufruf geht die Führung der Bearbeitung über.
+
+```mermaid
+flowchart LR
+    A["Meeting-Agent"] --> H["Auftrag und Arbeitsstand"] --> B["Research-Agent übernimmt"]
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    class H metric;
+```
+
+**Beispiel:** Aus einer Protokollfrage entsteht ein Rechercheauftrag, den die Research-Rolle weiterführt.
+
+**Einsatzgrenze:** Übergib Ziel, belegte Ergebnisse, Quellen, offene Fragen und verbleibendes Budget. Bloße Gesprächsweitergabe lässt Verantwortung und Bearbeitungsstand unklar.
+
+### Fortgeschrittene Varianten und einfachere Alternativen
+
+- **Hierarchie:** Leitrollen koordinieren Unterteams. Das lohnt sich erst bei getrennten Teilbereichen; jede zusätzliche Ebene erhöht den Abstimmungsaufwand.
+- **Swarm / Peer-to-Peer:** Rollen koordinieren sich ohne festen Supervisor, etwa durch Handoffs. Handoff ist der Übergabemechanismus; Swarm beschreibt eine mögliche Teamorganisation. Globale Abschluss- und Kostenregeln bleiben erforderlich.
+- **Skills statt weiterer Agenten:** Ein Agent lädt Fachwissen oder Werkzeuge nach. Prüfe diese Alternative, wenn nur der aktive Kontext zu groß wird. Siehe [Skills]({{ '/06-multi-agent-erweiterungen/skills.html' | relative_url }}).
+
+Rollen, Übergaben, gemeinsamer State und Fehlerbehandlung werden in [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) praktisch ausgearbeitet.
+
+## Kontrolle für jedes Muster
+
+Die Kontrollschicht um Modell und Tools heißt **Harness**. Sie setzt Berechtigungen durch, prüft Ergebnisse, begrenzt Schleifen und behandelt Fehler. Das gilt für einen Modellaufruf ebenso wie für ein Agententeam.
+
+| Kontrollpunkt | Umsetzung beim Briefing-Agenten |
 |---|---|
-| Harness Engineering | Ist die Steuerungsschicht um das Modell robust genug? |
-| Entscheidungslogik | Trifft das System regelbasiert, zustandsbasiert oder zielorientiert Entscheidungen? |
-| Sichtbare Reasoning-Artefakte | Welche Plan-, Tool- und Prüfschritte sind für Debugging und Evaluation sichtbar? |
+| Eingaben und Tool-Aufrufe validieren | Erlaubte Quellen und Argumente prüfen; Dokumentinhalte als Daten behandeln |
+| Ergebnisse an Belegen prüfen | Quellen-IDs technisch validieren und Aussagen mit Originalstellen abgleichen |
+| Geschäftsregeln in Code durchsetzen | Vertrauliche Unterlagen unabhängig von der Modellmeinung vom Versand ausschließen |
+| Kontext und Arbeit begrenzen | Quellen gezielt auswählen, Aufrufe und Überarbeitungen begrenzen |
+| Fehler sichtbar beenden | Unvollständiges Briefing mit offenen Punkten kennzeichnen |
+| Menschliche Freigabe einbauen | Externen Versand erst nach ausdrücklicher Freigabe ausführen |
 
-### Harness Engineering: die Steuerungsschicht um das Modell
+Eine Freigabe muss das konkrete Artefakt und die konkrete Aktion betreffen. Auch Menschen können Fehler übersehen. Weder Human-in-the-Loop noch eine weitere Modellprüfung ersetzen technische Berechtigungen und nachvollziehbare Belege.
 
-Ein Harness ergänzt eine gewählte Architektur um kontrollierten Kontext, begrenzte Aktionen, Fehlerbehandlung und überprüfbare Läufe. Hier dient Harness Engineering als Prüfperspektive im Architekturreview; Aufbau, Bausteine und Review-Fragen stehen im Fachkapitel [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}).
+Details stehen in [Agent Harness]({{ '/07-qualitaet-sicherheit/agent-harness.html' | relative_url }}), [Loop Engineering]({{ '/04-agenten-implementierung/ablauf-zustand/loop-engineering.html' | relative_url }}) und [Human-in-the-Loop]({{ '/04-agenten-implementierung/ablauf-zustand/human-in-the-loop.html' | relative_url }}).
 
-### Entscheidungslogik: drei einfache Grundformen
+## Muster vergleichen und auswählen
 
-Für den Einstieg reichen drei Grundformen:
+| Muster | Wer steuert den Ablauf? | Geeignet für | Typische Grenze |
+|---|---|---|---|
+| Augmented LLM | Code stellt Kontext bereit | Antworten aus vorliegenden Unterlagen | Qualität hängt vom Kontext ab |
+| Verkettung | Code bestimmt Reihenfolge | Bekannte Verarbeitungsschritte | Informationsverlust an Übergängen |
+| Routing | Code erlaubt Pfade; Regel oder Modell wählt | Unterschiedliche Anfragearten | Falsche Zuordnung; Fallback erforderlich |
+| Parallelisierung | Code verteilt und sammelt | Unabhängige Teilfragen | Zusammenführung und Widersprüche |
+| Evaluator-Optimizer | Code begrenzt Prüfschleife | Entwürfe mit prüfbaren Kriterien | Reviewer kann irren |
+| ReAct | Modell wählt nächste Aktion | Explorative Recherche und Tool-Nutzung | Abbruchgrenzen nötig |
+| Supervisor / Orchestrator-Workers | Zentrale Rolle delegiert | Unterschiedliche, teils erst entstehende Aufgaben | Koordination und Kontextübergaben |
+| Handoff | Bearbeitende Rolle übergibt | Wechselnde Zuständigkeit | Abschlussverantwortung und Kontexttransfer |
 
-| Form | Einfache Idee | Beispiel |
+Die Tabelle ist eine Auswahlhilfe, keine Rangfolge. Prüfe zuerst den Bedarf an freien Entscheidungen und getrennten Rollen. Ergänze anschließend die notwendigen Kontrollen.
+
+### Kosten und Latenz abschätzen
+
+| Muster | Zusätzliche Modellaufrufe / Kosten | Typischer Einfluss auf die Latenz |
 |---|---|---|
-| **Regelbasiert** | Wenn Bedingung A erfüllt ist, folgt Aktion B. | Betrag über Limit → Human Review |
-| **Zustandsbasiert** | Der bisherige Verlauf verändert die nächste Entscheidung. | Identität wurde geprüft → nächste Option freischalten |
-| **Zielorientiert** | Das System wählt den nächsten Schritt, der dem Ziel näherkommt. | ReAct-Recherche verfeinert die Suche nach jeder Observation |
+| Augmented LLM | Ein Generierungsaufruf; Retrieval kann weitere Kosten verursachen | Keine Generierungsschleife; Abrufzeit kommt hinzu |
+| Verkettung | Ein oder mehrere Aufrufe pro Stufe | Sequenzielle Stufen addieren ihre Laufzeit |
+| Routing | Bei Modellklassifikation zusätzlicher Router-Aufruf | Klassifikation liegt vor der gewählten Bearbeitung |
+| Parallelisierung / Voting | Aufrufe je Teilaufgabe oder Stichprobe, gegebenenfalls Aggregator | Parallelität kann Wartezeit senken; Zusammenführung bleibt |
+| Evaluator-Optimizer | Generierung und Prüfung je Runde | Jede Überarbeitung verlängert den Lauf |
+| ReAct | Variable Anzahl von Modell- und Tool-Aufrufen | Abhängig von Beobachtungen und Schleifen |
+| Supervisor / Orchestrator-Workers | Delegation, Worker und Zusammenführung | Abhängig von paralleler oder sequenzieller Bearbeitung |
+| Handoff | Weitere Aufrufe je Übergabe und Bearbeitung | Übergaben verlängern den Bearbeitungspfad |
 
-Utility-basierte oder adaptive Agenten sind mögliche Vertiefungen, aber für die erste Architekturwahl meist nicht nötig. Wichtiger ist die Frage, welche Entscheidungen fest in Code gehören und welche Entscheidungen das Modell flexibel treffen darf.
+Das sind qualitative Erwartungen bei vergleichbarer Aufgabe und Modellwahl. Tokenmenge, Kontextlänge, Tool-Laufzeiten und Wiederholungen bestimmen die tatsächlichen Kosten. Weniger Wartezeit bedeutet bei parallelen Aufrufen nicht automatisch geringere Kosten.
 
-**Grenze:** Diese Einteilung ersetzt keine Architekturentscheidung. Ein zielorientierter Agent kann technisch als ReAct-System, als Workflow mit Verzweigungen oder als Mischform gebaut sein.
+**Für den ersten Kursagenten:** Beginne mit einem Briefing aus bereitgestellten Quellen. Ergänze feste Extraktions- und Prüfschritte. Öffne die Recherche für freie Tool-Entscheidungen, wenn diese nötig sind. Teile die Verantwortung erst auf, wenn getrennte Rollen einen messbaren Nutzen bringen.
 
-### Verbreitete Ansätze im Vergleich: sichtbare Reasoning-Artefakte
+Vergleiche Varianten mit denselben Aufgaben, Quellen und Qualitätskriterien. Erfasse Modell- und Tool-Aufrufe, Token-Verbrauch, Laufzeit und akzeptierte Ergebnisse. Einzelne Demo-Läufe mit unterschiedlichen Aufgaben belegen keine allgemeine Überlegenheit eines Musters.
 
-Eine dritte Perspektive fragt, welche Artefakte ein Agent nach außen sichtbar macht: Plan, Tool-Wahl, Observation, Quellenstatus, Prüfergebnis oder Gate-Entscheidung. Gemeint ist nicht die versteckte interne Gedankenkette des Modells. Diese Dimension entscheidet mit, wie gut sich ein System debuggen, prüfen und in regulierten Kontexten begründen lässt.
+## Quellen und nächste Schritte
 
-| Ansatz | Kernidee | Sichtbares Artefakt |
-|---|---|---|
-| **Tool-Calling ohne Zwischenschritt** | Werkzeugaufruf wird direkt aus der Anfrage abgeleitet | kaum sichtbar |
-| **ReAct** | Aktion und Beobachtung wechseln sich ab | sichtbar über Tool-Aufrufe und Observations |
-| **Plan-and-Execute** | Erst Plan, dann Ausführung | Plan sichtbar, Einzelschritte je nach Umsetzung |
-| **Reflexion / Self-Critique** | Ergebnis wird geprüft und ggf. korrigiert | Prüfschritt sichtbar |
+- [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents) – Grundbausteine, Workflows und modellgesteuerte Agenten.
+- [LangChain: Multi-agent](https://docs.langchain.com/oss/python/langchain/multi-agent) – Rollenaufteilung, Kontext und kombinierbare Muster.
+- [LangGraph: Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents) – Verkettung, Routing, Parallelisierung und Orchestrator-Workers mit Codebeispielen.
+- [Vishal Mysore: 12 AI Agent Design Patterns Explained](https://medium.com/@visrow/12-ai-agent-design-patterns-explained-react-multi-agent-human-in-the-loop-live-browser-demo-7905f7889712) und [Agent Patterns Lab](https://vishalmysore.github.io/harnessEngineeringDemo/patterns.html#augmented) – ergänzende Beispiele und Demonstration; Messwerte gelten für die jeweiligen Versuchsläufe.
+- [Interaktive Architektur-Demo]({{ '/visualisierungen/ki_agent_architektur/' | relative_url }}) – ergänzende Darstellung; für die Einordnung der Muster gilt dieses Kapitel.
 
-Diese Tabelle ist unabhängig von den vier Architekturstufen. Ein Single-Agent kann etwa als ReAct-System gebaut sein, ein Workflow kann Reflexions- oder Prüfknoten enthalten, und ein Multi-Agent-System kann intern wiederum Tool-Calling nutzen.
-
-Plan-and-Execute und Reflexion sind deshalb keine eigenen Stufen. Sie schneiden quer durch die Architektur und beschreiben, wie Arbeit sichtbar gemacht oder geprüft wird.
-
-**Grenze:** Sichtbare Artefakte sind kein Garant für Korrektheit. Ein Agent kann einen plausiblen Plan ausgeben und trotzdem ein falsches Tool wählen. Sichtbare Artefakte helfen beim Debuggen, ersetzen aber keine Validierung.
-
-## Welche Design-Prinzipien immer gelten
-
-Unabhängig vom Muster bleibt gute Agentenarchitektur an einige wenige Grundprinzipien gebunden. Komponenten sollten eine klar abgegrenzte Verantwortung haben. Kritische Aktionen sollten nicht ohne Kontrolle ausgelöst werden. Fehlerpfade müssen mitgedacht werden. Entscheidungen sollten nachvollziehbar bleiben, damit sich Probleme später nicht nur beobachten, sondern auch beheben lassen.
-
-Diese Prinzipien klingen allgemein, werden aber in Agentensystemen schnell konkret. Ein Tool, das gleichzeitig sucht, entscheidet und schreibt, ist schwer zu testen. Ein Agent, der ohne Freigabe E-Mails versendet oder Zahlungen auslöst, wird im Betrieb riskant. Ein System ohne Traces ist im Fehlerfall kaum noch zu verstehen.
-
-## Von der Architektur zur Produktionsreife
-
-Die bisherigen Abschnitte klären, welches Muster zu einer Aufgabe passt. Dieser Abschnitt ist der spätere Betriebscheck: Er wird wichtig, sobald ein Agent nicht mehr nur demonstriert, sondern mit echten Daten, echten Nutzern oder verändernden Aktionen eingesetzt wird.
-
-Vier Fragen reichen als Einstieg:
-
-| Betriebsfrage | Worauf achten? |
-|---|---|
-| Wann muss ein Mensch übernehmen? | deterministische Eskalation |
-| Welche Regeln dürfen nie verletzt werden? | Geschäftsregeln in Code |
-| Wie groß darf der Kontext werden? | Memory, Zusammenfassung, Token-Budget |
-| Wie wird Verhalten geprüft? | Tests, Tracing, persistenter Zustand |
-
-Die folgenden Beispiele sind bewusst Architekturprinzipien, keine vollständigen Produktionsvorlagen.
-
-### Deterministische Eskalation statt Modellgefühl
-
-Bei kritischen Entscheidungen sollte die Eskalation nicht von einem gefühlten Konfidenzwert des Modells abhängen. Modelle schätzen Unsicherheit inkonsistent ein. Verlässlicher sind explizite Flags, die aus Regeln, Tools oder Vorverarbeitung stammen.
-
-```python
-ESCALATION_FLAGS = {
-    "compliance_trigger": True,
-    "amount_exceeds_limit": True,
-    "pii_detected": False,
-}
-
-def route_response(state: AgentState) -> str:
-    flags = state.get("flags", {})
-    if flags.get("compliance_trigger") or flags.get("amount_exceeds_limit"):
-        return "human_review"
-    return "continue"
-```
-
-Dieses Muster ist für Entwickler besonders wichtig, weil es eine grundlegende Grenze moderner Modelle zeigt: Sprachliche Plausibilität ist kein Ersatz für verbindliche Geschäftsregeln.
-
-### Geschäftsregeln gehören in Code
-
-Wenn Freigabegrenzen, Erstattungsbeträge oder Compliance-Vorgaben gelten, gehören diese Regeln in deterministischen Code und nicht in den System-Prompt. Ein Prompt kann beschrieben werden. Eine Regel im Code kann geprüft, getestet und garantiert eingehalten werden.
-
-```python
-class PolicyEngine:
-    _REFUND_LIMITS = {
-        "basic": 100.0,
-        "premium": 500.0,
-        "vip": 5000.0,
-    }
-
-    def check_policy(self, tier: str, requested_amount: float) -> dict:
-        limit = self._REFUND_LIMITS[tier]
-        return {
-            "approved": requested_amount <= limit,
-            "limit": limit,
-        }
-```
-
-**Typischer Fehler:** Geschäftslogik als schöne Formulierung im Prompt zu verstecken. Im Betrieb führt das zu Abweichungen, die schwer nachvollziehbar sind.
-
-### Kontext darf nicht unbegrenzt wachsen
-
-Je länger eine Session dauert, desto größer wird der aktive Kontext. Ohne Begrenzung steigen Token-Verbrauch, Latenz und Fehlerrisiko. Deshalb braucht ein Agent ab einer gewissen Laufzeit eine Strategie, um ältere Inhalte zu verdichten und nur das Wesentliche aktiv mitzuschleppen.
-
-```python
-TOKEN_BUDGET = 4000
-
-def compact_context(state: AgentState) -> AgentState:
-    if state["context"].token_count > TOKEN_BUDGET:
-        older_messages = state["messages"][:-5]
-        state["context"] = summarize_to_budget(older_messages)
-        state["messages"] = state["messages"][-5:]
-    return state
-```
-
-Begrenze den Kontext, wenn ReAct viele Iterationen braucht, Sitzungen lange offen bleiben oder große RAG-Kontexte wiederholt einfließen.
-
-### Caching und Tests sind Architekturthemen
-
-Bestimmte Optimierungen wirken auf den ersten Blick wie Betriebsdetails, gehören aber in Wahrheit zur Architektur. Wenn in jeder Session dasselbe Regelwerk mitgeschickt wird, kann Prompt Caching die Kosten stark senken. Wenn ein Agent angeblich eine Aktion ausgeführt hat, sollte nicht nur die Modellantwort geprüft werden, sondern der persistente Zustand des Systems.
-
-```python
-system = [
-    {"type": "text", "text": agent_instructions},
-    {"type": "text", "text": POLICY_DOCUMENT,
-     "cache_control": {"type": "ephemeral"}},
-]
-```
-
-```python
-assert financial_system.get_transaction(customer_id) is not None
-assert escalation_queue.contains(session_id)
-```
-
-Der gemeinsame Punkt ist einfach: Gute Agentenarchitektur endet nicht bei der Promptlogik. Sie umfasst auch Kostenverhalten, Prüfbarkeit und Betriebssicherheit.
-
-## Wie mehrere Muster kombiniert werden
-
-Die vorgestellten Architekturen schließen sich nicht gegenseitig aus. Ein Workflow kann Tool-Calling-Knoten enthalten. Ein Multi-Agent-System kann intern ReAct-Worker verwenden. Ein Support-Agent kann in einfachen Fällen direkt mit Tool-Calling arbeiten und in kritischen Fällen in einen festen Eskalationsworkflow wechseln.
-
-Gerade deshalb ist die Architekturfrage keine Entweder-oder-Entscheidung, sondern eine Frage nach sinnvollen Grenzen. Nicht jede Flexibilität ist ein Gewinn. Oft entsteht die beste Lösung dort, wo freie Modellentscheidungen nur an den Stellen erlaubt werden, an denen sie echten Mehrwert bringen.
-
-## Mit wenigen Mustern starten
-Für einen ersten Kursagenten reicht meist eine begrenzte Kombination aus Tool-Calling, klaren Geschäftsregeln und einem kleinen Workflow für Sonderfälle. Diese Struktur ist einfacher zu erklären, leichter zu debuggen und robuster zu testen als ein frei planendes Multi-Agent-System.
-
-Entwickler profitieren vor allem dann von Architekturwissen, wenn es nicht als vollständige Taxonomie (systematische Einteilung) vermittelt wird, sondern als Auswahlhilfe. Die praktische Kernfrage lautet nicht, wie viele Muster existieren, sondern welches Muster das aktuelle Problem mit möglichst wenig Komplexität löst.
-
-## Abgrenzung zu verwandten Dokumenten
-
-| Dokument                                                                          | Frage            |                                                                                |
-| --------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------ |
-| [Aufgaben & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) | Wann ist ein Agent sinnvoll und wann eher Workflow, RAG oder klassischer Code? |
-| [Tool Use & Function Calling]({{ '/04-agenten-implementierung/entwurf/tool-use-function-calling.html'  | relative_url }}) | Wie werden Werkzeuge technisch beschrieben, aufgerufen und abgesichert?        |
-| [Multi-Agent-Systeme]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html'                  | relative_url }}) | Wie arbeiten mehrere Agenten koordiniert zusammen?                             |
-| [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html'                     | relative_url }}) | Wie wird Zustand über mehrere Schritte und Knoten hinweg verwaltet?            |
-
+**Weiter im Kurs:** [Aufgaben & Lösungswege]({{ '/02-orientierung-entscheidung/aufgabenklassen-und-loesungswege.html' | relative_url }}) begründet den Agentenbedarf. [Multi-Agent-Systeme umsetzen]({{ '/06-multi-agent-erweiterungen/multi-agent-systeme.html' | relative_url }}) zeigt die Teamumsetzung. [State Management]({{ '/04-agenten-implementierung/ablauf-zustand/state-management.html' | relative_url }}) erklärt den Arbeitsstand zwischen Schritten.
 
 ---
 
-**Version:** 1.16<br>
-**Stand:** Oktober 2026<br>
+**Version:** 2.0<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

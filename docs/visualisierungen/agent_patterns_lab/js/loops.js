@@ -1,318 +1,633 @@
 (function () {
-const { sleep } = window.AgentLab;
+  const { sleep } = window.AgentLab;
+  const escape = (value) =>
+    String(value ?? "").replace(
+      /[&<>"']/g,
+      (char) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[char],
+    );
+  const questions = [
+    {
+      id: "progress",
+      name: "1. Wann ist die Aufgabe erledigt?",
+      desc: "Erfolgskriterien prüfen und fehlenden Fortschritt erkennen. Hier: Beide benötigten Quellen sind gefunden; zwei Suchen ohne neue Quelle bedeuten Stillstand.",
+    },
+    {
+      id: "limits",
+      name: "2. Wann muss der Lauf stoppen?",
+      desc: "Die gewählte Grenze für Schritte, simulierte Tokens oder Laufzeit prüfen. Zusätzlich begrenzt dieser Schalter im Fehlerfall die Wartezeit auf eine Tool-Antwort.",
+    },
+    {
+      id: "verification",
+      name: "3. Wie prüfen und überarbeiten wir Ergebnisse?",
+      desc: "Ein Ergebnis gegen feste Kriterien prüfen und bei Fehlern gezielt überarbeiten. Hier: Antwortformat und belegter Terminverzug; höchstens zwei Entwürfe. Tool- und Datenrechte vertieft Agent Harness.",
+    },
+    {
+      id: "retry_policy",
+      name: "4. Wie reagieren wir auf technische Fehler?",
+      desc: "Nur vorübergehende Fehler erneut versuchen: höchstens drei Versuche insgesamt, mit wachsenden Wartezeiten und kleinen Zeitversätzen. Einen fehlerhaften Auftrag nicht unverändert wiederholen.",
+    },
+    {
+      id: "idempotency",
+      name: "5. Wie verhindern wir doppelte Aktionen?",
+      desc: "Eine feste Vorgangs-ID sorgt dafür, dass derselbe Auftrag bei Wiederholung nur einmal wirkt. Eine verlorene Bestätigung beweist nicht, dass die Aktion fehlgeschlagen ist.",
+    },
+    {
+      id: "safe_exit",
+      name: "6. Wie endet ein erfolgloser Lauf sinnvoll?",
+      desc: "Erledigte und offene Schritte mit einer Begründung zur menschlichen Prüfung vorlegen. Bei unklarer Ausführung einer Schreibaktion erst klären, statt blind erneut zu senden.",
+    },
+  ];
+  const labels = {
+    completed: "Ziel erreicht",
+    blocked: "Aufruf blockiert",
+    stopped: "Kontrolliert gestoppt",
+    error: "Technischer Fehler",
+    unsafe: "Unsicherer Simulationsverlauf",
+    review_required: "Menschliche Klärung nötig",
+    approval_required: "Wartet auf Entscheidung",
+  };
 
-// Die sieben Perspektiven auf Schleifen aus "Loop Engineering" (loop-engineering.md).
-// Sie beschreiben Schleifentypen; die zwölf Techniken unten sind Schutzmechanismen für diese Schleifen.
-const LOOP_PERSPECTIVES = [
-  { id: "orchestration", label: "Orchestration Loop", short: "Orchestration" },
-  { id: "agent", label: "Agent Loop", short: "Agent" },
-  { id: "verification", label: "Verification Loop", short: "Verification" },
-  { id: "safety", label: "Safety / Guardrail Loop", short: "Safety" },
-  { id: "hitl", label: "HITL / Collaboration Loop", short: "HITL" },
-  { id: "event", label: "Event-Driven Loop", short: "Event-Driven" },
-  { id: "learning", label: "Learning Loop", short: "Learning" }
-];
-
-// loops: welche Perspektiven die Schutztechnik absichert; die erste Nennung ist die primäre.
-const LOOP_TECHNIQUES = [
-  { id: "iteration_cap", name: "1. Iterations-Cap", desc: "Harte Obergrenze für Schleifendurchläufe (z. B. max. 3).", loops: ["agent", "orchestration"] },
-  { id: "token_budget", name: "2. Token-/Kostenbudget", desc: "Bricht ab, bevor Kosten explodieren.", loops: ["agent", "orchestration"] },
-  { id: "schema_check", name: "3. Schema-Validierung", desc: "Prüft JSON-Struktur & Pflichtfelder deterministisch.", loops: ["verification"] },
-  { id: "tool_whitelist", name: "4. Tool-Whitelist", desc: "Blockiert halluzinierte oder unerlaubte Tool-Namen.", loops: ["safety"] },
-  { id: "loop_detection", name: "5. Wiederholungs-Erkennung", desc: "Erkennt identische Tool-Aufrufe ohne Fortschritt.", loops: ["agent"] },
-  { id: "tool_timeout", name: "6. Tool-Timeout", desc: "Begrenzt hängende API-Aufrufe hart.", loops: ["agent"] },
-  { id: "circuit_breaker", name: "7. Circuit Breaker", desc: "Stoppt Retry-Stürme nach N Fehlern desselben Tools.", loops: ["agent", "event"] },
-  { id: "idempotency", name: "8. Idempotenz-Schutz", desc: "Verhindert doppelte E-Mails oder Zahlungen bei Retries.", loops: ["event", "safety"] },
-  { id: "context_compaction", name: "9. Kontext-Kompression", desc: "Hält den aktiven State innerhalb des Token-Budgets.", loops: ["agent"] },
-  { id: "hitl_escalation", name: "10. HITL-Eskalation", desc: "Übergibt unklare/riskante Fälle an einen Menschen.", loops: ["hitl"] },
-  { id: "graceful_fallback", name: "11. Graceful Fallback", desc: "Liefert einen sicheren Prüfbericht statt Absturz.", loops: ["safety", "verification"] },
-  { id: "structured_trace", name: "12. Strukturierter Trace", desc: "Protokolliert jede Entscheidung & Abbruchursache.", loops: ["learning", "verification"] }
-];
-
-function perspectiveLabel(id, key = "short") {
-  const p = LOOP_PERSPECTIVES.find((x) => x.id === id);
-  return p ? p[key] : id;
-}
-
-class LoopsController {
-  constructor() {
-    this.enabled = new Set(LOOP_TECHNIQUES.map((t) => t.id));
-    this.gridEl = document.getElementById("techniquesGrid");
-    this.traceEl = document.getElementById("loopTraceList");
-    this.outcomeEl = document.getElementById("loopOutcomeSummary");
-    this.badgeEl = document.getElementById("loopResultBadge");
-
-    this.bindEvents();
-    this.renderPerspectiveLegend();
-    this.renderTechniques();
-  }
-
-  bindEvents() {
-    document.getElementById("toggleAllTechBtn").addEventListener("click", () => {
-      LOOP_TECHNIQUES.forEach((t) => this.enabled.add(t.id));
-      this.renderTechniques();
-    });
-    document.getElementById("disableAllTechBtn").addEventListener("click", () => {
-      this.enabled.clear();
-      this.renderTechniques();
-    });
-    document.getElementById("runLoopBtn").addEventListener("click", () => this.runSimulation());
-    document.getElementById("loopScenarioSelect").addEventListener("change", () => {
-      this.injection_pending = null;
-      document.getElementById("injectionDecisionPanel").classList.add("hidden");
-      document.getElementById("injectionScenarioControls").classList.toggle("hidden", document.getElementById("loopScenarioSelect").value !== "prompt_injection");
-    });
-    for (const [id, approved] of [["injectionRejectBtn", false], ["injectionApproveBtn", true]]) {
-      document.getElementById(id).addEventListener("click", () => {
-        if (this.injection_pending) this.renderInjection(this.injection_pending, approved);
-      });
-    }
-  }
-
-  renderInjection(settings, decision = null) {
-    const result = window.AgentLab.pattern_extensions.simulate_injection(settings, decision);
-    const pending = result.outcome === "approval_required";
-    const blocked = result.outcome === "blocked";
-    this.injection_pending = pending ? settings : null;
-    document.getElementById("injectionDecisionPanel").classList.toggle("hidden", !pending);
-    this.badgeEl.className = `status-badge status-${pending ? "warn" : blocked ? "pass" : "fail"}`;
-    this.badgeEl.textContent = pending ? "Wartet auf Entscheidung" : blocked ? "Simuliert blockiert" : "Simulierter Datenabfluss";
-    this.outcomeEl.textContent = `${result.reason} Nur das vorgegebene Szenario wird ausgewertet; es findet kein Versand statt.`;
-    this.renderTrace([
-      {iter:1,type:"tool",kind:"DOC-104",msg:"Dokument enthält eine fremde Anweisung zur externen Weitergabe von DOC-103."},
-      {iter:1,type:"gate",kind:"KONTROLLEN",msg:`Datentrennung: ${settings.separate_data}; Datenregel: ${settings.confidential_policy}; Tool-Whitelist: ${settings.whitelist}; Tool erlaubt: ${settings.allow_send}; HITL: ${settings.hitl}.`},
-      {iter:1,type:blocked?"gate":pending?"human":"fail",kind:result.stage.toUpperCase(),msg:result.reason}
-    ], 1);
-    this.setStage("decide", pending ? "active" : blocked ? "pass" : "fail");
-    const triggered = new Set();
-    if (result.stage === "tool") triggered.add("tool_whitelist");
-    if (result.stage === "human") triggered.add("hitl_escalation");
-    this.renderTechniques(triggered);
-  }
-
-  renderPerspectiveLegend() {
-    const el = document.getElementById("loopPerspectiveLegend");
-    if (!el) return;
-    el.innerHTML = LOOP_PERSPECTIVES.map((p) => {
-      const n = LOOP_TECHNIQUES.filter((t) => t.loops.includes(p.id)).length;
-      return `<span class="loop-legend-item${n ? "" : " empty"}">${p.label}<b>${n}</b></span>`;
-    }).join("");
-  }
-
-  renderTechniques(triggeredIds = new Set()) {
-    document.getElementById("activeTechCount").textContent = `${this.enabled.size} / ${LOOP_TECHNIQUES.length} aktiv`;
-    this.gridEl.innerHTML = LOOP_TECHNIQUES.map((t) => {
-      const on = this.enabled.has(t.id);
-      const hit = triggeredIds.has(t.id);
-      return `
-        <label class="tech-toggle${on ? " enabled" : ""}${hit ? " triggered" : ""}">
-          <input type="checkbox" data-tech="${t.id}" ${on ? "checked" : ""} />
-          <div>
-            <strong>${t.name}${hit ? " ✓" : ""}</strong>
-            <span>${t.desc}</span>
-            <span class="tech-loop" title="Zugeordnete Perspektiven auf Schleifen">${t.loops.map((l) => perspectiveLabel(l)).join(" · ")}</span>
-          </div>
-        </label>`;
-    }).join("");
-
-    this.gridEl.querySelectorAll("input[type='checkbox']").forEach((cb) => {
-      cb.addEventListener("change", () => {
-        if (cb.checked) this.enabled.add(cb.dataset.tech);
-        else this.enabled.delete(cb.dataset.tech);
-        this.renderTechniques();
-      });
-    });
-  }
-
-  setStage(stage, state) {
-    document.querySelectorAll("#loopCycleDiagram .cycle-step").forEach((el) => {
-      el.classList.remove("active", "pass", "fail");
-      if (el.dataset.stage === stage) el.classList.add(state);
-    });
-  }
-
-  renderTrace(entries, iterCount) {
-    document.getElementById("loopIterCount").textContent = `${iterCount} Iterationen`;
-    this.traceEl.innerHTML = entries
-      .map(
-        (e) => `
-      <div class="trace-entry type-${e.type}">
-        <span class="trace-time">Iter ${e.iter}</span>
-        <span class="trace-kind">${e.kind}</span>
-        <div>${e.msg}</div>
-      </div>`
-      )
-      .join("");
-    this.traceEl.scrollTop = this.traceEl.scrollHeight;
-  }
-
-  async runSimulation() {
-    const scenario = document.getElementById("loopScenarioSelect").value;
-    this.injection_pending = null;
-    document.getElementById("injectionDecisionPanel").classList.add("hidden");
-    if (scenario === "prompt_injection") {
-      this.renderInjection({
-        separate_data:document.getElementById("injectionSeparateData").checked,
-        confidential_policy:document.getElementById("injectionBlockConfidential").checked,
-        whitelist:this.enabled.has("tool_whitelist"),
-        allow_send:document.getElementById("injectionAllowSend").checked,
-        hitl:this.enabled.has("hitl_escalation")
-      });
-      return;
-    }
-    const entries = [];
-    const triggered = new Set();
-    const has = (id) => this.enabled.has(id);
-
-    const log = (iter, type, kind, msg) => {
-      entries.push({ iter, type, kind, msg });
-      this.renderTrace(entries, iter);
+  // Reine Lernsimulation: keine Modellaufrufe, Netzwerkanfragen oder Schreibaktionen.
+  function simulate_loop({
+    scenario = "success",
+    enabled = questions.map((item) => item.id),
+    limit_kind = "steps",
+    revision_issue = "format",
+    revision_outcome = "corrected",
+    service = "recovering",
+    circuit_breaker = false,
+  } = {}) {
+    const active = new Set(enabled),
+      triggered = new Set(),
+      events = [];
+    const state = {
+      calls: 0,
+      tokens: 0,
+      time_ms: 0,
+      tools: 0,
+      effects: 0,
+      evidence: [],
+      breaker: "closed",
     };
-
-    this.badgeEl.className = "status-badge status-running";
-    this.badgeEl.textContent = "Simuliert…";
-    this.renderTechniques();
-
-    // SCENARIO 1: Endlosschleife
-    if (scenario === "runaway") {
-      const maxSteps = has("iteration_cap") ? 3 : 6;
-      for (let i = 1; i <= maxSteps; i++) {
-        this.setStage("inspect", "active");
-        await sleep(170);
-        this.setStage("act", "active");
-        log(i, "tool", "ACT", `Modell ruft erneut search_docs(query="CLM002") auf (identisches Ergebnis).`);
-        await sleep(170);
-        this.setStage("verify", "active");
-
-        if (i === 2 && has("loop_detection")) {
-          triggered.add("loop_detection");
-          if (has("structured_trace")) triggered.add("structured_trace");
-          log(i, "gate", "LOOP-DETECT", "Identischer Tool-Aufruf ohne neuen Fortschritt erkannt → Schleife gezielt gestoppt.");
-          this.setStage("decide", "pass");
-          break;
-        }
-        if (i === 3 && has("iteration_cap")) {
-          triggered.add("iteration_cap");
-          if (has("graceful_fallback")) triggered.add("graceful_fallback");
-          log(i, "gate", "ITER-CAP", "Hartes Iterations-Cap (3/3) erreicht → sicherer Abbruch.");
-          this.setStage("decide", "pass");
-          break;
-        }
-        if (i === 4 && has("token_budget")) {
-          triggered.add("token_budget");
-          log(i, "gate", "BUDGET", "Token-Budget überschritten → Notbremse ausgelöst.");
-          this.setStage("decide", "pass");
-          break;
-        }
-        log(i, "fail", "VERIFY", "Kein Fortschritt — aber kein aktiver Schutz greift.");
+    const has = (id) => active.has(id);
+    const log = (stage, kind, message) =>
+      events.push({
+        stage,
+        kind,
+        message,
+        iter: state.calls,
+        time_ms: state.time_ms,
+      });
+    const done = (status, reason, open = []) => {
+      log("decide", "ENDE", reason);
+      let report = null;
+      if (
+        has("safe_exit") &&
+        !["completed", "unsafe", "approval_required"].includes(status)
+      ) {
+        triggered.add("safe_exit");
+        report = {
+          completed: state.evidence.length
+            ? "Gefundene Quellen: " + state.evidence.join(", ")
+            : state.effects
+              ? "Eine Aktion wurde simuliert ausgeführt; ihr Zustand ist vor einem neuen Auftrag zu prüfen."
+              : "Kein abschließendes Arbeitsergebnis.",
+          open: open.length
+            ? open
+            : ["Aufgabe fachlich prüfen und das weitere Vorgehen festlegen."],
+          reason,
+        };
+        log(
+          "decide",
+          "PRÜFBERICHT",
+          "Teilergebnis, offene Schritte und Abbruchgrund werden zur menschlichen Prüfung vorgelegt.",
+        );
       }
+      return {
+        status,
+        reason,
+        report,
+        state,
+        events,
+        triggered: [...triggered],
+      };
+    };
+    const spend = (milliseconds) => {
+      if (
+        has("limits") &&
+        limit_kind === "time" &&
+        state.time_ms + milliseconds > 8000
+      ) {
+        triggered.add("limits");
+        return false;
+      }
+      state.time_ms += milliseconds;
+      return true;
+    };
+    const next = (duration = 1500) => {
+      if (has("limits")) {
+        if (
+          (limit_kind === "steps" && state.calls >= 3) ||
+          (limit_kind === "tokens" && state.tokens + 180 > 500)
+        ) {
+          triggered.add("limits");
+          return false;
+        }
+      }
+      if (!spend(duration)) return false;
+      state.calls++;
+      state.tokens += 180;
+      log(
+        "inspect",
+        "SCHRITT",
+        "Schritt " + state.calls + ": Zustand und verbleibende Grenzen prüfen.",
+      );
+      return true;
+    };
+    const limited = () =>
+      done(
+        "stopped",
+        "Laufgrenze erreicht: " +
+          ({
+            steps: "höchstens drei Schritte",
+            tokens: "höchstens 500 simulierte Tokens",
+            time: "höchstens acht simulierte Sekunden",
+          }[limit_kind] || limit_kind),
+        ["Fehlende Arbeit erst mit neuem Auftrag und Budget fortsetzen."],
+      );
+    log(
+      "inspect",
+      "SIMULATION",
+      "Vorgegebener Lernfall; Zeit, Tokenverbrauch und Aktionen sind simuliert. Das Protokoll bleibt immer aktiv.",
+    );
 
-      const saved = triggered.size > 0;
-      this.renderTechniques(triggered);
-      this.badgeEl.className = `status-badge status-${saved ? "pass" : "fail"}`;
-      this.badgeEl.textContent = saved ? "Sicher gestoppt" : "Unkontrolliert gelaufen";
-      this.outcomeEl.innerHTML = saved
-        ? `<p><strong>Endlosschleife erfolgreich abgefangen!</strong> Ausgelöste Techniken: ${[...triggered].map((x) => `<code>${x}</code>`).join(", ")}.</p>`
-        : `<p><strong>Fehlschlag:</strong> Ohne <em>Wiederholungs-Erkennung</em>, <em>Iterations-Cap</em> oder <em>Token-Budget</em> lief der Agent 6 Runden lang im Kreis und verbrannte unnötig Tokens.</p>`;
-      return;
+    if (scenario === "success" || scenario === "runaway") {
+      let stagnant = 0;
+      for (let turn = 0; turn < 6; turn++) {
+        if (!next()) return limited();
+        state.tools++;
+        const source =
+          scenario === "success" ? (turn === 0 ? "DOC-101" : "DOC-102") : null;
+        const added = source && !state.evidence.includes(source);
+        if (added) {
+          state.evidence.push(source);
+          stagnant = 0;
+        } else stagnant++;
+        log(
+          "act",
+          "SUCHE",
+          "search_docs(query='Projektstatus Variante " +
+            (turn + 1) +
+            "') → " +
+            (added ? "neue Quelle " + source : "keine neue Quelle"),
+        );
+        log(
+          "verify",
+          "FORTSCHRITT",
+          state.evidence.length +
+            "/2 benötigte Quellen; " +
+            stagnant +
+            " Schritte ohne neue Information.",
+        );
+        if (has("progress") && state.evidence.length === 2) {
+          triggered.add("progress");
+          return done(
+            "completed",
+            "Erfolgskriterium erfüllt: Beide benötigten Quellen liegen vor. Weitere Suchen sind unnötig.",
+          );
+        }
+        if (has("progress") && stagnant >= 2) {
+          triggered.add("progress");
+          return done(
+            "stopped",
+            "Zwei Suchschritte ohne neue Quelle: Stillstand trotz wechselnder Suchanfragen.",
+            [
+              "Suchstrategie ändern oder fehlende Quelle beim Menschen erfragen.",
+            ],
+          );
+        }
+      }
+      return done(
+        "unsafe",
+        "Die Demonstration endet nach sechs Schritten. Diese Vorführgrenze ist keine aktive Schutzmaßnahme des Agenten.",
+      );
     }
 
-    // SCENARIO 2: Bad JSON & Hallucinated Tool
-    if (scenario === "bad_json") {
-      this.setStage("inspect", "active");
-      await sleep(180);
-      this.setStage("act", "active");
-      log(1, "llm", "ACT", `Modell schlägt Tool <code>delete_all_claims()</code> vor und liefert fehlerhaftes JSON.`);
-      await sleep(200);
-      this.setStage("verify", "active");
-
-      const caughtTool = has("tool_whitelist");
-      const caughtSchema = has("schema_check");
-      if (caughtTool) {
-        triggered.add("tool_whitelist");
-        log(1, "gate", "WHITELIST", "Halluziniertes Tool delete_all_claims() blockiert.");
+    if (scenario === "revision") {
+      const expected = {
+        answer: "Der Terminverzug beträgt zwei Wochen.",
+        delay_weeks: 2,
+        source_id: "DOC-101",
+      };
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        if (!next()) return limited();
+        const corrected = attempt === 2 && revision_outcome === "corrected";
+        const draft = corrected
+          ? JSON.stringify(expected)
+          : revision_issue === "format"
+            ? '{"answer":'
+            : JSON.stringify({ ...expected, delay_weeks: 99 });
+        log("act", "ENTWURF", "Entwurf " + attempt + ": " + draft);
+        if (!has("verification"))
+          return done(
+            "unsafe",
+            "Ohne Ergebnisprüfung wird der fehlerhafte Entwurf ungeprüft übernommen.",
+          );
+        triggered.add("verification");
+        let result = null;
+        try {
+          result = JSON.parse(draft);
+        } catch (_) {}
+        const format = Boolean(
+          result &&
+            typeof result.answer === "string" &&
+            Number.isInteger(result.delay_weeks) &&
+            typeof result.source_id === "string",
+        );
+        const supported =
+          format && result.delay_weeks === 2 && result.source_id === "DOC-101";
+        if (supported) {
+          state.evidence.push("DOC-101");
+          log(
+            "verify",
+            "PRÜFUNG",
+            "Format und belegter Faktenwert stimmen mit der vorgegebenen Quelle überein.",
+          );
+          return done(
+            "completed",
+            "Der zweite Entwurf erfüllt die festen Kriterien. Die gezielte Überarbeitung hat den Fehler korrigiert.",
+          );
+        }
+        const feedback = !format
+          ? "Erzeuge vollständiges JSON mit answer, delay_weeks und source_id."
+          : "Korrigiere delay_weeks auf den in DOC-101 belegten Wert 2; erfinde keinen Terminverzug.";
+        log("verify", "PRÜFBERICHT", feedback);
+        if (attempt === 2)
+          return done(
+            "stopped",
+            "Überarbeitungslimit erreicht: Auch der zweite Entwurf erfüllt die Kriterien nicht.",
+            ["Fehlerbericht und Entwurf fachlich prüfen lassen."],
+          );
+        log(
+          "decide",
+          "ÜBERARBEITUNG",
+          "Ein neuer Entwurf erhält den konkreten Prüfhinweis. Das ist inhaltliche Korrektur, kein Retry einer technischen Anfrage.",
+        );
       }
-      if (caughtSchema) {
-        triggered.add("schema_check");
-        log(1, "gate", "SCHEMA", "Ungültiges JSON erkannt — Korrektur-Retry angefordert.");
-      }
-      if (!caughtTool && !caughtSchema) {
-        this.setStage("verify", "fail");
-        log(1, "fail", "CRASH", "Ungeprüfter Aufruf führt zu Laufzeitfehler / unsicherer Ausgabe.");
-      } else {
-        if (has("graceful_fallback")) triggered.add("graceful_fallback");
-        this.setStage("decide", "pass");
-      }
-
-      const ok = caughtTool && caughtSchema;
-      this.renderTechniques(triggered);
-      this.badgeEl.className = `status-badge status-${ok ? "pass" : caughtTool || caughtSchema ? "warn" : "fail"}`;
-      this.badgeEl.textContent = ok ? "Vollständig abgefangen" : caughtTool || caughtSchema ? "Teilweise geschützt" : "Ungeschützt";
-      this.outcomeEl.innerHTML = ok
-        ? `<p><strong>Beide Fehler gestoppt:</strong> <code>tool_whitelist</code> blockte das erfundene Tool und <code>schema_check</code> verhinderte defektes JSON.</p>`
-        : `<p><strong>Lücke erkannt:</strong> Für vollständigen Schutz werden sowohl <code>tool_whitelist</code> als auch <code>schema_check</code> benötigt.</p>`;
-      return;
     }
 
-    // SCENARIO 3: Tool Timeout & Retry Storm
     if (scenario === "tool_failure") {
-      for (let i = 1; i <= 4; i++) {
-        this.setStage("act", "active");
-        await sleep(180);
-        if (has("tool_timeout")) {
-          triggered.add("tool_timeout");
-          log(i, "gate", "TIMEOUT", `Externe API antwortet nicht → nach 3 s sauber abgebrochen (Versuch ${i}).`);
-        } else {
-          log(i, "fail", "HANG", `Externe API hängt 30 s ohne Timeout (Versuch ${i}).`);
+      let failures = 0;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        const successful = service === "recovering" && attempt === 3;
+        const duration = successful ? 500 : has("limits") ? 1000 : 3000;
+        if (!next(duration)) return limited();
+        state.tools++;
+        if (successful) {
+          log(
+            "act",
+            "TOOL",
+            "Der vorübergehend gestörte Dienst antwortet wieder.",
+          );
+          if (state.breaker === "half_open") {
+            state.breaker = "closed";
+            log(
+              "verify",
+              "CIRCUIT",
+              "Test erfolgreich: Circuit Breaker wieder geschlossen.",
+            );
+          }
+          return done(
+            "completed",
+            "Tool erfolgreich nach " +
+              attempt +
+              " Versuchen; die erwarteten Daten liegen vor.",
+          );
         }
-        if (i === 2 && has("circuit_breaker")) {
+        failures++;
+        log(
+          "act",
+          has("limits") ? "TIMEOUT" : "FEHLER",
+          has("limits")
+            ? "Tool-Wartezeit nach einer simulierten Sekunde beendet. Vorübergehender Fehler; Seiteneffekt ist in diesem reinen Lesefall ausgeschlossen."
+            : "Dienst antwortet drei simulierte Sekunden lang nicht; danach wird eine vorgegebene Fehlerrückgabe angenommen.",
+        );
+        if (state.breaker === "half_open") {
+          state.breaker = "open";
           triggered.add("circuit_breaker");
-          if (has("graceful_fallback")) triggered.add("graceful_fallback");
-          log(i, "gate", "CIRCUIT", "Circuit Breaker öffnet nach 2 Fehlern → keine weiteren Retries, sauberer Fallback.");
-          this.setStage("decide", "pass");
-          break;
+          return done(
+            "error",
+            "Kontrollierter Testaufruf ebenfalls fehlgeschlagen: Circuit Breaker wieder offen.",
+          );
+        }
+        if (!has("retry_policy"))
+          return done(
+            "error",
+            "Kein automatischer Wiederholungsversuch konfiguriert.",
+            ["Dienstzustand prüfen oder später einen neuen Lauf starten."],
+          );
+        triggered.add("retry_policy");
+        if (attempt === 3)
+          return done(
+            "error",
+            "Retry-Budget ausgeschöpft: drei Versuche insgesamt.",
+            ["Dienst prüfen; keine weiteren automatischen Versuche."],
+          );
+        if (circuit_breaker && failures >= 2) {
+          triggered.add("circuit_breaker");
+          state.breaker = "open";
+          log(
+            "decide",
+            "CIRCUIT",
+            "Nach zwei Fehlern offen: Weitere Aufrufe werden während der Ruhezeit unterdrückt.",
+          );
+          if (!spend(5000)) return limited();
+          state.breaker = "half_open";
+          log(
+            "inspect",
+            "CIRCUIT",
+            "Nach fünf simulierten Sekunden ein einzelner Testaufruf (halb offen).",
+          );
+        } else {
+          const delay = attempt === 1 ? 1100 : 2200;
+          if (!spend(delay)) return limited();
+          log(
+            "decide",
+            "BACKOFF",
+            "Vor nächstem Versuch " +
+              (delay / 1000).toFixed(1) +
+              " simulierte Sekunden warten; wachsender Abstand plus vorgegebener kleiner Zeitversatz (Jitter).",
+          );
         }
       }
-      const ok = has("tool_timeout") && has("circuit_breaker");
-      this.renderTechniques(triggered);
-      this.badgeEl.className = `status-badge status-${ok ? "pass" : "warn"}`;
-      this.badgeEl.textContent = ok ? "Resilient" : "Retry-Sturm";
-      this.outcomeEl.innerHTML = ok
-        ? `<p><strong>Stabil bei API-Ausfall:</strong> <code>tool_timeout</code> + <code>circuit_breaker</code> verhinderten Hänger und Retry-Sturm.</p>`
-        : `<p><strong>Risiko:</strong> Ohne <code>tool_timeout</code> und <code>circuit_breaker</code> blockiert eine gestörte API den gesamten Agenten-Loop.</p>`;
-      return;
     }
 
-    // SCENARIO 4: Duplicate Side Effect
     if (scenario === "side_effect") {
-      this.setStage("act", "active");
-      log(1, "tool", "SEND", "Schreibaktion: send_payout(CLM001, 19.500 €, tx_id='TX-101') ausgeführt; Netzwerk-ACK geht verloren.");
-      await sleep(220);
-      this.setStage("verify", "active");
-
-      if (has("hitl_escalation")) {
-        triggered.add("hitl_escalation");
-        log(2, "human", "HITL", "Schreibaktion vorab durch Freigabe-Gate abgesichert.");
+      if (!next()) return limited();
+      state.tools++;
+      state.effects = 1;
+      log(
+        "act",
+        "SCHREIBAKTION",
+        "send_document mit Vorgangs-ID TX-101 simuliert ausgeführt; die Bestätigung geht verloren.",
+      );
+      log(
+        "verify",
+        "UNGEWISS",
+        "Keine Bestätigung bedeutet nicht, dass die Aktion ausgeblieben ist.",
+      );
+      if (!has("idempotency") && has("safe_exit")) {
+        triggered.add("safe_exit");
+        return done(
+          "review_required",
+          "Ausführungszustand unklar und kein Idempotenz-Schutz: Keine automatische Wiederholung.",
+          [
+            "Vor erneutem Senden prüfen lassen, ob TX-101 bereits ausgeführt wurde.",
+          ],
+        );
       }
+      if (!has("retry_policy"))
+        return done(
+          "stopped",
+          "Ohne Retry-Regel wird kein zweiter Versuch gestartet. Der Ausführungszustand bleibt ungeklärt.",
+        );
+      triggered.add("retry_policy");
+      if (!spend(1100) || !next()) return limited();
+      state.tools++;
       if (has("idempotency")) {
         triggered.add("idempotency");
-        log(2, "gate", "IDEMPOTENZ", "Retry mit tx_id='TX-101' erkannt → doppelte Auszahlung verhindert!");
-        this.setStage("decide", "pass");
-      } else {
-        this.setStage("verify", "fail");
-        log(2, "fail", "DOPPELZAHLUNG", "Retry ohne Idempotency-Key löst send_payout(19.500 €) ein ZWEITES Mal aus!");
+        log(
+          "act",
+          "IDEMPOTENZ",
+          "TX-101 ist bekannt: Bestätigung des ersten Auftrags zurückgeben, keine zweite Ausführung.",
+        );
+        return done(
+          "completed",
+          "Wiederholung bestätigt; die Aktion wirkt genau einmal in diesem simulierten Vorgangsregister.",
+        );
       }
+      state.effects++;
+      log(
+        "act",
+        "DOPPELAKTION",
+        "Ungeprüfter Retry löst dieselbe Aktion ein zweites Mal aus.",
+      );
+      return done("unsafe", "Zwei simulierte Ausführungen desselben Auftrags.");
+    }
 
-      const ok = has("idempotency");
-      this.renderTechniques(triggered);
-      this.badgeEl.className = `status-badge status-${ok ? "pass" : "fail"}`;
-      this.badgeEl.textContent = ok ? "Keine Doppelaktion" : "Doppelte Schreibaktion!";
-      this.outcomeEl.innerHTML = ok
-        ? `<p><strong>Sicher bei Wiederholungen:</strong> <code>idempotency</code> verhinderte die doppelte Auszahlung trotz Netzwerk-Retry.</p>`
-        : `<p><strong>Kritischer Fehler:</strong> Ohne <code>idempotency</code> führte ein einfacher Retry zu einer doppelten Auszahlung von 19.500 €.</p>`;
+    return done("error", "Unbekanntes Szenario.");
+  }
+
+  class LoopsController {
+    constructor() {
+      this.enabled = new Set(questions.map((item) => item.id));
+      this.running = false;
+      this.gridEl = document.getElementById("techniquesGrid");
+      this.traceEl = document.getElementById("loopTraceList");
+      this.outcomeEl = document.getElementById("loopOutcomeSummary");
+      this.badgeEl = document.getElementById("loopResultBadge");
+      document
+        .getElementById("toggleAllTechBtn")
+        .addEventListener("click", () => {
+          if (!this.running) {
+            this.enabled = new Set(questions.map((item) => item.id));
+            this.renderTechniques();
+          }
+        });
+      document
+        .getElementById("disableAllTechBtn")
+        .addEventListener("click", () => {
+          if (!this.running) {
+            this.enabled.clear();
+            this.renderTechniques();
+          }
+        });
+      document
+        .getElementById("runLoopBtn")
+        .addEventListener("click", () => this.runSimulation());
+      document
+        .getElementById("loopScenarioSelect")
+        .addEventListener("change", () => this.renderScenario());
+      this.renderTechniques();
+      this.renderScenario();
+    }
+    renderScenario() {
+      const scenario = document.getElementById("loopScenarioSelect").value;
+      document
+        .getElementById("loopRevisionControls")
+        .classList.toggle("hidden", scenario !== "revision");
+      document
+        .getElementById("loopServiceControls")
+        .classList.toggle("hidden", scenario !== "tool_failure");
+    }
+    renderTechniques(triggered = []) {
+      document.getElementById("activeTechCount").textContent =
+        this.enabled.size + " / 6 aktiv";
+      this.gridEl.innerHTML = questions
+        .map(
+          (item) =>
+            '<label class="tech-toggle' +
+            (this.enabled.has(item.id) ? " enabled" : "") +
+            (triggered.includes(item.id) ? " triggered" : "") +
+            '"><input type="checkbox" data-tech="' +
+            item.id +
+            '" ' +
+            (this.enabled.has(item.id) ? "checked" : "") +
+            " " +
+            (this.running ? "disabled" : "") +
+            " /><div><strong>" +
+            item.name +
+            "</strong><span>" +
+            item.desc +
+            "</span></div></label>",
+        )
+        .join("");
+      this.gridEl.querySelectorAll("input[data-tech]").forEach((input) =>
+        input.addEventListener("change", () => {
+          if (this.running) return;
+          if (input.checked) this.enabled.add(input.dataset.tech);
+          else this.enabled.delete(input.dataset.tech);
+          this.renderTechniques();
+        }),
+      );
+    }
+    renderTrace(events) {
+      this.traceEl.innerHTML = events
+        .map(
+          (event) =>
+            '<div class="trace-entry"><span class="trace-time">' +
+            (event.time_ms / 1000).toFixed(1) +
+            " s · Schritt " +
+            event.iter +
+            '</span><span class="trace-kind">' +
+            escape(event.kind) +
+            "</span><div>" +
+            escape(event.message) +
+            "</div></div>",
+        )
+        .join("");
+      this.traceEl.scrollTop = this.traceEl.scrollHeight;
+    }
+    renderResult(result) {
+      this.renderTrace(result.events);
+      this.renderTechniques(result.triggered);
+      this.badgeEl.className =
+        "status-badge status-" +
+        (result.status === "completed"
+          ? "pass"
+          : result.status === "unsafe"
+            ? "fail"
+            : "warn");
+      this.badgeEl.textContent = labels[result.status];
+      document.getElementById("loopIterCount").textContent =
+        result.state.calls +
+        " Schritte · " +
+        result.state.tokens +
+        " simulierte Tokens · " +
+        (result.state.time_ms / 1000).toFixed(1) +
+        " simulierte Sekunden";
+      let report = "";
+      if (result.report)
+        report =
+          '<div class="precheck-alert"><strong>Prüfbericht für einen Menschen</strong><p>' +
+          escape(result.report.completed) +
+          "</p><p>Offen: " +
+          result.report.open.map(escape).join(" ") +
+          "</p></div>";
+      this.outcomeEl.innerHTML =
+        "<p>" +
+        escape(result.reason) +
+        "</p>" +
+        report +
+        '<p class="muted-sm">Dies ist eine deterministische Lernsimulation. Kein Modell, kein Netzwerkzugriff und keine tatsächliche Schreibaktion. Ein sicherer Stopp ist noch kein fachlich gelöster Auftrag.</p>';
+      document
+        .querySelectorAll("#loopCycleDiagram .cycle-step")
+        .forEach((element) => {
+          element.classList.remove("active", "pass", "fail");
+          if (element.dataset.stage === "decide")
+            element.classList.add(
+              result.status === "completed"
+                ? "pass"
+                : result.status === "unsafe"
+                  ? "fail"
+                  : "active",
+            );
+        });
+    }
+    reportControllerError(error) {
+      console.error("Loop-Controller:", error);
+      if (this.badgeEl) {
+        this.badgeEl.className = "status-badge status-fail";
+        this.badgeEl.textContent = "Technischer Fehler in der Oberfläche";
+      }
+      if (this.outcomeEl)
+        this.outcomeEl.textContent =
+          "Die Simulation konnte nicht angezeigt werden: " +
+          String(error.message || error);
+    }
+    async runSimulation() {
+      if (this.running) return;
+      this.running = true;
+      this.last_triggered = [];
+      const ids = [
+        "runLoopBtn",
+        "loopScenarioSelect",
+        "toggleAllTechBtn",
+        "disableAllTechBtn",
+        "loopLimitKind",
+        "loopRevisionIssue",
+        "loopRevisionOutcome",
+        "loopServiceState",
+        "loopCircuitBreaker",
+      ];
+      const previous = ids.map(
+        (id) => document.getElementById(id)?.disabled || false,
+      );
+      const setDisabled = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.disabled = value;
+      };
+      try {
+        ids.forEach((id) => setDisabled(id, true));
+        this.renderTechniques();
+        this.badgeEl.textContent = "Simuliert…";
+        const result = simulate_loop({
+          scenario: document.getElementById("loopScenarioSelect").value,
+          enabled: [...this.enabled],
+          limit_kind: document.getElementById("loopLimitKind").value,
+          revision_issue: document.getElementById("loopRevisionIssue").value,
+          revision_outcome: document.getElementById("loopRevisionOutcome")
+            .value,
+          service: document.getElementById("loopServiceState").value,
+          circuit_breaker:
+            document.getElementById("loopCircuitBreaker").checked,
+        });
+        for (let index = 0; index < result.events.length; index++) {
+          this.renderTrace(result.events.slice(0, index + 1));
+          await sleep(55);
+        }
+        this.last_triggered = result.triggered;
+        this.renderResult(result);
+      } catch (error) {
+        this.reportControllerError(error);
+      } finally {
+        this.running = false;
+        ids.forEach((id, index) => setDisabled(id, previous[index]));
+        try {
+          this.renderTechniques(this.last_triggered);
+        } catch (error) {
+          this.reportControllerError(error);
+        }
+      }
     }
   }
-}
-
-window.AgentLab.LoopsController = LoopsController;
+  window.AgentLab.loop_learning = { questions, simulate_loop };
+  window.AgentLab.LoopsController = LoopsController;
 })();

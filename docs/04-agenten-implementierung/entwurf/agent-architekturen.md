@@ -307,7 +307,7 @@ Das sind qualitative Erwartungen bei vergleichbarer Aufgabe und Modellwahl. Toke
 
 Vergleiche Varianten mit denselben Aufgaben, Quellen und Qualitätskriterien. Erfasse Modell- und Tool-Aufrufe, Token-Verbrauch, Laufzeit und akzeptierte Ergebnisse. Einzelne Demo-Läufe mit unterschiedlichen Aufgaben belegen keine allgemeine Überlegenheit eines Musters.
 
-Interaktive Übung: [PMO-Evaluation im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} – Verkettung, ReAct und Briefing-Team mit denselben Fällen und festen Regelchecks vergleichen. Mock-Ergebnisse sind vorgegeben; die automatischen Checks ersetzen keine fachliche Bewertung des freien Antworttexts.
+Interaktive Übung: [PMO-Evaluation im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} – Verkettung, ReAct und die sequenzielle Agenten-Pipeline mit denselben Fällen und festen Regelchecks vergleichen. Mock-Ergebnisse sind vorgegeben; die automatischen Checks ersetzen keine fachliche Bewertung des freien Antworttexts.
 
 ## Quellen und nächste Schritte
 

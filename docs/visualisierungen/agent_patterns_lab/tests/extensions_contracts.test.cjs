@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const sandbox = { window: {}, performance, console, setTimeout(fn) { fn(); }, navigator: {gpu:{}} };
 vm.createContext(sandbox);
-for (const name of ['domains.js','engine.js','patterns.js','pmo_learning.js','pattern_extensions.js']) {
+for (const name of ['domains.js','engine.js','patterns.js','pmo_learning.js','pattern_extensions.js','architecture_extensions.js']) {
   vm.runInContext(fs.readFileSync(path.join(__dirname,'..','js',name),'utf8'),sandbox,{filename:name});
 }
 const lab = sandbox.window.AgentLab;
@@ -21,11 +21,11 @@ function context(override) {
   }};
 }
 (async()=>{
-  await test('Katalog: 15 Muster plus ein Kursbeispiel, eindeutige IDs',()=>{
-    assert.equal(lab.PATTERNS.length,16);
-    assert.equal(new Set(lab.PATTERNS.map(p=>p.id)).size,16);
-    assert.equal(lab.PATTERNS.at(-2).id,'model_tiers');
-    assert.equal(lab.PATTERNS.at(-1).id,'skills');
+  await test('Katalog: 16 Architekturen und zwei Harness-Kontrollen, eindeutige IDs',()=>{
+    assert.equal(lab.PATTERNS.length,18);
+    assert.equal(new Set(lab.PATTERNS.map(p=>p.id)).size,18);
+    assert.ok(lab.PATTERNS.some(p=>p.id==='model_tiers' && p.group==='workflow'));
+    assert.ok(lab.PATTERNS.some(p=>p.id==='skills' && p.group==='agentic'));
   });
   await test('Routing: offengelegte Bedarfsregel und Quellenstopp',()=>{
     assert.equal(ext.tier_decision(lab.pmo_learning.case_by_id('status')).tier,'small');

@@ -1299,3 +1299,56 @@ code {
     grid-template-columns: 1fr;
   }
 }
+
+/* Harness-Bausteine wirken zusammen; sie sind keine zeitlichen Schichten. */
+.harness-components { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.harness-components .layer-body { min-height: 100px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.harness-components h3 { font-size: 1rem; }
+.harness-run-card { margin-bottom: 16px; }
+.harness-output { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; overflow: auto; }
+@media (max-width: 1100px) { .harness-components { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .harness-components { grid-template-columns: minmax(0, 1fr); } }
+
+/* Loop-Lernfragen und optionale Vertiefungen. */
+.loop-settings, .loop-details { margin-bottom: 16px; }
+.loop-settings { padding: 16px; }
+.loop-settings label { display: block; margin-bottom: 6px; }
+.loop-details > summary { cursor: pointer; padding: 16px; font-weight: 600; }
+#techniquesGrid .tech-toggle strong { line-height: 1.4; }
+#loopTraceList .trace-time { white-space: normal; }
+#loopCycleDiagram .cycle-step { overflow-wrap: anywhere; }
+
+/* Sechs Schritte im Evaluation-Labor. */
+.eval-step { scroll-margin-top: 180px; }
+.eval-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.eval-fields input, .eval-fields select { display: block; width: 100%; margin-top: 6px; }
+.eval-review { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 14px; }
+.eval-review label { display: block; margin: 12px 0; }
+.eval-review select { display: block; margin-top: 6px; }
+#evalResults td { vertical-align: top; }
+@media (max-width: 700px) { .eval-fields { grid-template-columns: minmax(0, 1fr); } }
+
+/* State-Lernweg: Klartext vor technischen Snapshots. */
+.state-terms dt, .state-overview dt { font-weight: 600; margin-top: 10px; }
+.state-terms dd, .state-overview dd { margin: 4px 0 10px; }
+.state-overview { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 2fr); gap: 8px 16px; }
+.state-overview dt, .state-overview dd { margin: 0; }
+.state-advanced { margin-bottom: 16px; }
+.state-advanced > summary { padding: 16px; cursor: pointer; font-weight: 600; }
+.state-advanced textarea { width: 100%; }
+.state-advanced pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+#stateStartTitle + p + label + input { width: 100%; max-width: 420px; margin: 8px 0; }
+@media (max-width: 700px) { .state-overview { grid-template-columns: minmax(0, 1fr); } }
+
+/* Navigation, kontextbezogene Modellbedienung und fokussierte Auswahl. */
+.mode-engine-controls { display: contents; border: 0; padding: 0; margin: 0; min-width: 0; }
+.mode-engine-controls:disabled .mode-select, .mode-engine-controls:disabled .btn { opacity: .55; cursor: not-allowed; }
+.pattern-filter { margin-bottom: 16px; }
+.pattern-filter label { font-weight: 600; margin-right: 10px; }
+.pattern-filter p { margin-top: 10px; }
+.core-badge { display: block; margin-top: 3px; color: var(--sky); font-size: .7rem; }
+.harness-subnav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.harness-subnav [aria-pressed="true"] { border-color: var(--primary); background: rgba(99,102,241,.22); }
+.harness-panel > h3, .harness-panel > p { margin-bottom: 14px; }
+#harnessControlsPanel section { margin-top: 0 !important; }
+#evalCandidateVersion { width: 100%; max-width: 420px; display: block; margin: 8px 0 12px; }

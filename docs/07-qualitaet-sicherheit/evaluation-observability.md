@@ -15,9 +15,13 @@ redirect_from:
 > [!NOTE] Kernfrage<br>
 > Wie wird sichtbar, ob ein Agent fachlich gut arbeitet und warum Ergebnisse kippen?
 
-**Einstieg:** Lege zuerst Testfälle und erwartete Ergebnisse fest. Vergleiche dann im [Lab: PMO-Evaluation]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} Verkettung, ReAct und Briefing-Team mit denselben Aufgaben, Quellen und Regelchecks. Mock-Werte sind vorgegeben; WebGPU ermöglicht lokale Modellaufrufe. Die Checks ersetzen keine fachliche Prüfung des freien Antworttexts.
+**Einstieg:** Das [Lab: Evaluation]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} führt durch sechs Schritte: Bewertungsziel festlegen, Testfälle ansehen, Prüfverfahren verstehen, Baseline messen und festhalten, eine Änderung vergleichen und Ergebnisse beurteilen. Verkettung, ReAct und die sequenzielle Agenten-Pipeline nutzen dieselben Aufgaben, Quellen und externen Prüfkriterien.
 
-**Bei Bedarf:** Das [Evaluator-Optimizer-Muster]({{ '/visualisierungen/agent_patterns_lab/#evaluator' | relative_url }}){:target="_blank" rel="noopener"} zeigt Prüfung und Überarbeitung innerhalb eines Laufs. Die PMO-Evaluation vergleicht dagegen Varianten über mehrere Läufe. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) vertieft die technische Umsetzung von Tracing und Evaluation; das Lab ist nicht an LangSmith angebunden.
+**Bestehensregel im Lab:** Alle sieben automatischen Kriterien müssen erfüllt sein; zusätzlich bewertet ein Mensch die freie Antwort auf Richtigkeit, Vollständigkeit und Verständlichkeit. Fakten-, Beleg-, Sperrstatus- und Tool-Fehler gelten als kritisch. Die Baseline wird ausdrücklich als unveränderte Referenz festgehalten. Rückschritte und Verbesserungen werden pro Kriterium ausgewiesen, auch wenn ihre Anzahl gleich ist.
+
+**Grenzen der Demo:** Mock-Antworten und Fehlerprofile sind vorgegeben; eine Änderung der Zusatzanweisung hat dort keine gemessene Prompt-Wirkung. WebGPU führt echte Modellaufrufe aus. Eine oder drei Wiederholungen illustrieren Einzelfälle und Schwankungen, erlauben aber keine statistisch belastbare Rangfolge. Messungen und menschliche Urteile bleiben nur im Speicher der geöffneten Seite.
+
+**Bei Bedarf:** Das [Evaluator-Optimizer-Muster]({{ '/visualisierungen/agent_patterns_lab/#evaluator' | relative_url }}){:target="_blank" rel="noopener"} zeigt Prüfung und Überarbeitung innerhalb eines Laufs. Das Evaluation-Lab vergleicht dagegen Versionen und Architekturen über mehrere Läufe. [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }}) vertieft die technische Umsetzung von Tracing und Evaluation; das Lab ist nicht an LangSmith angebunden.
 
 ---
 

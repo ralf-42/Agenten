@@ -31,9 +31,13 @@ Damit ist ein Harness größer als ein Prompt und konkreter als die allgemeine I
 
 Die Trennung ist entscheidend: Ein Modell darf einen Tool-Aufruf vorschlagen, sollte aber nicht allein entscheiden, ob dieser Aufruf zulässig ist. Diese Entscheidung gehört an eine überprüfbare Systemgrenze des Harnesses.
 
-Interaktive Demo: [Agent Lab – Agent Harness (3 Schichten)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Information, Execution und Feedback Layer mit aktivem Memory-Rückkopplungskreis testen.
+Interaktive Demo: [Agent Lab – Agent Harness (Bausteine nach LangChain)]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} – Tool-Berechtigungen, Ergebnisvalidierung und begrenzte Läufe mit klaren Endzuständen testen.
 
-Die drei Schichten der Demo bündeln die unten beschriebenen Bausteine: Der Information Layer stellt State, Memory und die freigegebenen Tool-Schemas bereit, der Execution Layer führt Planung, Tool-Aufruf und Policy-Gate aus, und der Feedback Layer prüft das Ergebnis und schreibt bestätigte Korrekturen zurück ins Memory.
+Im Lab sind die Bereiche **Harness-Bausteine**, **HITL & deterministische Kontrolle** und **Sicherheit & Prompt Injection** direkt am Einstieg auswählbar. Der bestehende [Injection-Direktlink]({{ '/visualisierungen/agent_patterns_lab/#prompt_injection' | relative_url }}){:target="_blank" rel="noopener"} öffnet den Sicherheitsbereich. Die deterministische Sicherheitsdemo benötigt keine Modellaufrufe.
+
+Die Demo orientiert sich an [LangChains Harness-Beschreibung](https://www.langchain.com/blog/the-anatomy-of-an-agent-harness) und zeigt sechs zusammenwirkende Bausteine: Arbeitsbereich und Zustand, Tools und Ausführung, Ausführungsumgebung und Rechte, Memory und Suche, Kontextmanagement sowie Planung und Verifikation. Sie sind eine didaktische Bündelung, keine verbindliche Schichtenarchitektur. Das Browser-Lab verwendet lokale Lesefunktionen und flüchtigen Zustand; Shell, produktive Sandbox, Websuche und Langzeitpersistenz werden nicht implementiert.
+
+**Prüfregel für Harness-Demos:** Verbindliche Policies werden unabhängig von veränderlichem Memory vor jedem Tool-Zugriff geprüft. Erfolgsmeldungen entstehen aus tatsächlichen Schema-, Quellen- und Belegprüfungen. Blockaden, ungültige Ergebnisse, Aufruflimit, Timeout, Abbruch und technische Fehler erhalten eigene Endzustände. Eine technische Validierung ersetzt keine fachliche Freigabe.
 
 ```mermaid
 flowchart LR

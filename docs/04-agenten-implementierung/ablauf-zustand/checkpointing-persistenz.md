@@ -13,7 +13,9 @@ has_toc: true
 
 > **Ein Checkpoint hält den Arbeitszustand eines Agenten fest: Nachrichten, Zwischenergebnisse und den nächsten Schritt.**
 
-**Einstieg:** Wie Arbeitsdaten aufgebaut und geändert werden, erklärt [State Management](./state-management.html). Hier geht es um ihr Speichern und Wiederherstellen. Übe im [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"}: vor der Freigabe speichern, die Seite neu laden und dieselbe Session wiederherstellen. Das ist eine lokale Browsersimulation; die LangGraph-Umsetzung folgt in diesem Kapitel.
+**Einstieg:** Wie Arbeitsdaten aufgebaut sind, erklärt [State Management](./state-management.html). Übe im [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"}: vor der Freigabe speichern, die Seite neu laden, dieselbe Session-ID eingeben und den Checkpoint ausdrücklich laden. Erst danach wird der nächste Schritt ausgeführt oder die Freigabe erteilt. Die lokale Browsersimulation bewahrt einen Checkpoint pro Session-ID; erneutes Speichern ersetzt ihn. Sie führt keine Verlaufshistorie und ersetzt keine produktive LangGraph-Persistenz.
+
+**Prüfregel für die Lernsimulation:** Arbeitsstand und gespeicherter Checkpoint werden getrennt angezeigt. Laden ersetzt den aktuellen Arbeitsstand und führt keinen Arbeitsschritt automatisch aus. Ein neuer Lauf verändert einen vorhandenen Checkpoint erst durch ausdrückliches Speichern. Checkpointing kann sitzungsbezogenes Kurzzeitgedächtnis bereitstellen; sitzungsübergreifendes Langzeit-Memory ist davon zu unterscheiden.
 
 ---
 

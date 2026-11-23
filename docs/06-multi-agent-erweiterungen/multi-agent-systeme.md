@@ -14,7 +14,7 @@ has_toc: true
 
 Die [Architekturübersicht]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }}) erklärt die Auswahl zwischen Workflows, einzelnen Agenten und Agententeams. Dieses Kapitel setzt eine begründete Rollenaufteilung voraus und zeigt ihre Umsetzung am Meeting- und Research-Briefing-Agenten.
 
-**Einstieg:** Beginne mit Rollen, Übergaben und dem begrenzten Review des [PMO-Briefing-Teams im Lab]({{ '/visualisierungen/agent_patterns_lab/#briefing_team' | relative_url }}){:target="_blank" rel="noopener"} (`Recherche → Schreiben → Prüfung`, `attempts ≤ 2`). Weitere Teamformen sind Vertiefungen für konkrete Koordinationsprobleme. Die allgemeine Musterwahl bleibt in der Architekturübersicht; dieses Kapitel konzentriert sich auf die Zusammenarbeit.
+**Einstieg:** Beginne mit Rollen, Übergaben und dem begrenzten Review der [sequenziellen Agenten-Pipeline im Lab]({{ '/visualisierungen/agent_patterns_lab/#briefing_team' | relative_url }}){:target="_blank" rel="noopener"} (`Recherche → Schreiben → Prüfung`, `attempts ≤ 2`). Weitere Teamformen sind Vertiefungen für konkrete Koordinationsprobleme. Die allgemeine Musterwahl bleibt in der Architekturübersicht; dieses Kapitel konzentriert sich auf die Zusammenarbeit.
 
 ---
 
@@ -102,7 +102,7 @@ flowchart TD
 
 ### State und Abbruchlogik im Überblick
 
-Der vollständige, ausführbare Code steht im Notebook **Multi-Agent Patterns**, Abschnitt **4.1 | Briefing-Team mit begrenztem Review**: [auf GitHub ansehen](https://github.com/ralf-42/Agenten/blob/main/01_notebook/M16_Multi_Agent_Patterns.ipynb) oder [in Colab öffnen](https://colab.research.google.com/github/ralf-42/Agenten/blob/main/01_notebook/M16_Multi_Agent_Patterns.ipynb).
+Der vollständige, ausführbare Code steht im Notebook **Multi-Agent Patterns**, Abschnitt **4.1 | Sequenzielle Agenten-Pipeline: Briefing mit begrenztem Review**: [auf GitHub ansehen](https://github.com/ralf-42/Agenten/blob/main/01_notebook/M16_Multi_Agent_Patterns.ipynb) oder [in Colab öffnen](https://colab.research.google.com/github/ralf-42/Agenten/blob/main/01_notebook/M16_Multi_Agent_Patterns.ipynb).
 
 Das optionale Transferbeispiel folgt auf die Pipeline. Es benötigt nur die Umgebungszelle des Notebooks und die mitgelieferten Quellen; Drive-Mount und RAG-Index können für diesen Abschnitt übersprungen werden. Die späteren Notebooks vertiefen Supervisor-Steuerung sowie Reflection mit RAG, Parallelisierung und Hierarchie. Ein zusätzliches Kursmodul ist dafür nicht nötig.
 

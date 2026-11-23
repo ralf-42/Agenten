@@ -16,7 +16,7 @@ has_toc: true
 > [!NOTE] Bezug zum Kursprojekt<br>
 > Beim [PMO-Assistenten]({{ '/02-orientierung-entscheidung/pmo-assistent.html' | relative_url }}) hält der State zum Beispiel Anfrage, gefundene Quellen, Antwortentwurf und Prüfstatus zusammen. So lässt sich nachvollziehen, was der Agent bereits weiß und welcher Schritt als Nächstes ansteht.
 
-**Einstieg:** Lies zunächst, welche Felder ein State braucht und wie Knoten sie ändern. Beobachte danach im [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} die Feldänderungen eines PMO-Laufs. Speichern und Wiederherstellen behandelt anschließend [Checkpointing & Persistenz](./checkpointing-persistenz.html). Das Lab simuliert beide Konzepte lokal im Browser; es verwendet keinen LangGraph-Checkpointer.
+**Einstieg:** Lies zunächst, welche Felder ein State braucht und wie Knoten sie ändern. Das [Lab: State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} führt durch vier Schritte: Lauf starten, Arbeitsstand verändern, Checkpoint speichern und nach dem Neuladen fortsetzen. Klartext-Zusammenfassungen zeigen Phase, Prüfstatus, Freigabe und ungespeicherte Änderungen; vollständiges JSON bleibt als Detailansicht verfügbar. Die Demo verwendet keinen LangGraph-Checkpointer.
 
 ---
 

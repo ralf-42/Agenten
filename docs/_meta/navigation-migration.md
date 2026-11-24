@@ -75,7 +75,7 @@ Die PDF-Begleitdatei `modellauswahl.pdf` liegt jetzt neben dem Artikel unter `03
 
 ## Prüfgrenzen
 
-Ergebnis: neun Lab-Testsuiten ohne Fehler; Navigationshierarchie, interne Liquid- und relative Artikellinks sowie die Links aus dem Lab geprüft. 66 Markdown-Dateien und eine unverändert erhaltene PDF-Begleitdatei wurden verschoben. Die 68 Weiterleitungen umfassen die bisherigen HTML-Adressen und bereits zuvor vorhandene historischen Adressen. Gliederung und Fachseiten von Ressourcen und Rechtliches sind unverändert; ihre Indexseiten wurden in das gemeinsame Schema überführt.
+Ergebnis: neun Lab-Testsuiten ohne Fehler; Navigationshierarchie, interne Liquid- und relative Artikellinks sowie die Links aus dem Lab geprüft. 66 Markdown-Dateien und eine unverändert erhaltene PDF-Begleitdatei wurden verschoben. Die 68 Weiterleitungen umfassen die bisherigen HTML-Adressen und bereits zuvor vorhandene historische Adressen. Gliederung und Fachseiten von Ressourcen und Rechtliches sind unverändert; ihre Indexseiten wurden in das gemeinsame Schema überführt.
 
 Die Browserprüfung der Dokumentation verwendet eine Layoutvorschau mit dem vorhandenen veröffentlichten Theme. Ein vollständiger lokaler Jekyll-Build war nicht möglich: Ruby/Jekyll sind nicht installiert, und der Docker-Dienst läuft nicht. Das tatsächliche Lab wurde lokal im Browser geprüft. Änderungen sind noch nicht veröffentlicht.
 

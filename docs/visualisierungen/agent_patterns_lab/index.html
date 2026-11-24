@@ -693,42 +693,38 @@
     <section id="view-docs" class="view active">
       <div class="view-intro">
         <div>
-          <h2>Von der Dokumentation zur passenden Übung</h2>
-          <p>
-            Wähle die Zeile zu deinem aktuellen Kursthema: <strong>Hauptdokument lesen → eine passende Übung durchführen → Ergebnis erklären</strong>.
-            Die Muster lassen sich kombinieren: Eine Agenten-Pipeline kann beispielsweise einen Evaluator-Optimizer enthalten.
-            Du musst weder alle Muster ausprobieren noch alle verlinkten Dokumente lesen. Beginne im Mock-Modus; WebGPU ist optional.
-          </p>
-          <p>Die Vertiefungen bleiben zunächst eingeklappt. Kursdokumente öffnen in einem neuen Tab; dein Stand im Lab bleibt erhalten.</p>
+          <h2>So beginnst du</h2>
+          <p>Wähle oben ein Thema, das du ausprobieren möchtest. Die Tabelle unten zeigt dir, welche Erklärung zur jeweiligen Übung gehört. Eine Übung genügt für den Anfang.</p>
+          <p>Nutze zunächst den voreingestellten Modus mit vorbereiteten Beispielantworten. Du musst dafür kein eigenes KI-Modell laden.</p>
         </div>
       </div>
 
       <section class="card course-directory" aria-labelledby="courseDirectoryTitle">
-        <div class="card-header"><h3 id="courseDirectoryTitle">Die sieben Bereiche der Dokumentation</h3></div>
-        <p class="muted-sm">Dieselben Bereiche stehen in der Dokumentationsnavigation. Die sechs Arbeitsreiter des Labs finden sich dort jeweils auf Ebene 2 wieder.</p>
+        <div class="card-header"><h3 id="courseDirectoryTitle">Zur Kursdokumentation</h3></div>
+        <p>Wenn du neu im Kurs bist, beginne mit „Start“. Die anderen Bereiche helfen dir bei konkreten Fragen.</p>
         <nav class="course-directory-links" aria-label="Kursbereiche">
-          <a href="../../01-einstieg/" target="_blank" rel="noopener">Start</a>
-          <a href="../../02-architekturen/" target="_blank" rel="noopener">Architekturen</a>
-          <a href="../../03-entwicklung/" target="_blank" rel="noopener">Entwicklung</a>
-          <a href="../../04-frameworks/" target="_blank" rel="noopener">Frameworks</a>
-          <a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener">Qualität &amp; Sicherheit</a>
-          <a href="../../06-praxis-betrieb/" target="_blank" rel="noopener">Praxis &amp; Betrieb</a>
-          <a href="../../07-verantwortung/" target="_blank" rel="noopener">Verantwortung</a>
+          <a href="../../01-einstieg/" target="_blank" rel="noopener"><strong>Start</strong><span>Kursüberblick, Grundbegriffe und empfohlener Lernweg</span></a>
+          <a href="../../02-architekturen/" target="_blank" rel="noopener"><strong>Architekturen</strong><span>Die passende Struktur für eine Aufgabe auswählen</span></a>
+          <a href="../../03-entwicklung/" target="_blank" rel="noopener"><strong>Entwicklung</strong><span>Modelle, Prompts, Tools, Wissen und Abläufe zusammenfügen</span></a>
+          <a href="../../04-frameworks/" target="_blank" rel="noopener"><strong>Frameworks</strong><span>Mit LangChain, LangGraph und LangSmith arbeiten</span></a>
+          <a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener"><strong>Qualität &amp; Sicherheit</strong><span>Ergebnisse prüfen und den Handlungsspielraum begrenzen</span></a>
+          <a href="../../06-praxis-betrieb/" target="_blank" rel="noopener"><strong>Praxis &amp; Betrieb</strong><span>Den PMO-Assistenten umsetzen und Anwendungen betreiben</span></a>
+          <a href="../../07-verantwortung/" target="_blank" rel="noopener"><strong>Verantwortung</strong><span>Datenschutz, rechtliche Anforderungen und Anbieterabhängigkeit beachten</span></a>
         </nav>
-        <p class="muted-sm">Dokumentationslinks öffnen in einem neuen Tab; der Stand im Lab bleibt erhalten.</p>
+        <p class="muted-sm">Die Kursdokumente öffnen in einem neuen Tab. Dein Stand im Lab bleibt erhalten.</p>
       </section>
 
       <section class="card" style="margin-bottom: 16px;">
         <div class="card-header">
-          <h4>Zuordnung der 6 Arbeits-Reiter zur Kurs-Dokumentation</h4>
+          <h3>Eine passende Übung finden</h3>
         </div>
         <div class="table-wrap">
           <table class="matrix-table">
             <thead>
               <tr>
-                <th>Reiter im Lab / Ort in der Dokumentation</th>
-                <th>Zuerst lesen</th>
-                <th>Optionale Vertiefung</th>
+                <th>Übung im Lab</th>
+                <th>Passende Erklärung</th>
+                <th>Mehr zum Thema</th>
               </tr>
             </thead>
             <tbody>
@@ -736,7 +732,7 @@
                 <td><a href="#augmented"><strong>Agenten-Architekturen</strong></a><p class="muted-sm"><a href="../../02-architekturen/" target="_blank" rel="noopener">Architekturen</a> → Agenten-Architekturen</p></td>
                 <td>
                   <a href="../../02-architekturen/agent-architekturen.html" target="_blank" rel="noopener">Agenten-Architekturen</a>: die einfachste passende Struktur wählen.
-                  <p class="muted-sm">Nur bei begründetem Teambedarf anschließend <a href="../../02-architekturen/multi-agent-systeme.html" target="_blank" rel="noopener">Multi-Agent-Systeme</a> lesen. Im Lab genügt zunächst ein Muster.</p>
+                  <p class="muted-sm">Beginne mit einem einzelnen Agenten. Wenn mehrere Rollen nötig sind, lies anschließend <a href="../../02-architekturen/multi-agent-systeme.html" target="_blank" rel="noopener">Multi-Agent-Systeme</a>.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Entscheidung, Skills und Tools</summary>
@@ -750,14 +746,14 @@
               </tr>
               <tr>
                 <td><a href="#context"><strong>Kontext &amp; Wissen</strong></a><p class="muted-sm"><a href="../../03-entwicklung/kontext-wissen/" target="_blank" rel="noopener">Entwicklung → Kontext &amp; Wissen</a></p></td>
-                <td><a href="../../03-entwicklung/kontext-wissen/context-engineering.html" target="_blank" rel="noopener">Context Engineering</a><p class="muted-sm">Eine der fünf vorhandenen Visualisierungen auswählen und Kontext, Retrieval oder Dokumentaufbereitung untersuchen.</p></td>
+                <td><a href="../../03-entwicklung/kontext-wissen/context-engineering.html" target="_blank" rel="noopener">Context Engineering</a><p class="muted-sm">Wähle eine der fünf Demos. Beobachte, welche Informationen ein Agent erhält und wie er Wissen aus Dokumenten nutzt.</p></td>
                 <td><details><summary>Bei Bedarf: RAG und Wissensstrategien</summary><a href="../../03-entwicklung/kontext-wissen/rag-konzepte.html" target="_blank" rel="noopener">RAG-Konzepte</a> · <a href="../../03-entwicklung/kontext-wissen/long-context-cag.html" target="_blank" rel="noopener">Long Context, RAG &amp; CAG</a></details></td>
               </tr>
               <tr>
                 <td><a href="#loops"><strong>Loop Engineering</strong></a><p class="muted-sm"><a href="../../03-entwicklung/" target="_blank" rel="noopener">Entwicklung</a> → Loop Engineering</p></td>
                 <td>
                   <a href="../../03-entwicklung/loop-engineering.html" target="_blank" rel="noopener">Loop Engineering</a>
-                  <p class="muted-sm">Mit dem Normalfall beginnen und danach einen Fehlerfall vergleichen. Sechs Leitfragen erklären Erfolg, Grenzen, Ergebnisprüfung und Überarbeitung, Retries, Idempotenz und sinnvollen Abschluss; Circuit Breaker bleibt eine Vertiefung.</p>
+                  <p class="muted-sm">Starte einen erfolgreichen Lauf und vergleiche ihn mit einem Fehlerfall. Beobachte, wann der Agent weiterarbeitet, einen Versuch wiederholt oder stoppt.</p>
                 </td>
                 <td>
                   <details><summary>Ergänzend: Sicherheit und Freigaben im Harness</summary>
@@ -769,7 +765,7 @@
               <tr>
                 <td><a href="#checkpoints"><strong>State &amp; Checkpoints</strong></a><p class="muted-sm"><a href="../../03-entwicklung/state-checkpoints/" target="_blank" rel="noopener">Entwicklung → State &amp; Checkpoints</a></p></td>
                 <td>
-                  <a href="../../03-entwicklung/state-checkpoints/state-management.html" target="_blank" rel="noopener">State Management</a>: aktuelle Arbeitsdaten und Feldänderungen.
+                  <a href="../../03-entwicklung/state-checkpoints/state-management.html" target="_blank" rel="noopener">State Management</a>: die Daten, mit denen ein Agent gerade arbeitet.
                   <p>Danach <a href="../../03-entwicklung/state-checkpoints/checkpointing-persistenz.html" target="_blank" rel="noopener">Checkpointing &amp; Persistenz</a>: speichern, neu laden und dieselbe Session fortsetzen.</p>
                 </td>
                 <td>
@@ -784,7 +780,7 @@
                 <td><a href="#harness"><strong>Agent Harness</strong></a><p class="muted-sm"><a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener">Qualität &amp; Sicherheit</a> → Agent Harness</p></td>
                 <td>
                   <a href="../../05-qualitaet-sicherheit/agent-harness.html" target="_blank" rel="noopener">Agent Harness</a>
-                  <p class="muted-sm">Harness-Bausteine unterscheiden; Tool-Rechte, Ergebnisvalidierung und Laufgrenzen ausprobieren. Die Demos <a href="#hitl">Human-in-the-Loop</a> und <a href="#deterministic">Deterministische Kontrolle</a> zeigen Freigaben und verbindliche Regeln. <a href="#prompt_injection">Sicherheit &amp; Prompt Injection</a> zeigt den Umgang mit nicht vertrauenswürdigen Inhalten.</p>
+                  <p class="muted-sm">Probiere aus, welche Werkzeuge ein Agent nutzen darf und wann er stoppen muss. <a href="#hitl">Human-in-the-Loop</a> zeigt menschliche Freigaben, <a href="#deterministic">Deterministische Kontrolle</a> feste Regeln. <a href="#prompt_injection">Sicherheit &amp; Prompt Injection</a> zeigt, wie fremde Inhalte einen Agenten beeinflussen können.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Sicherheit und Kontext</summary>
@@ -798,7 +794,7 @@
                 <td><a href="#evaluation"><strong>Evaluation</strong></a><p class="muted-sm"><a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener">Qualität &amp; Sicherheit</a> → Evaluation</p></td>
                 <td>
                   <a href="../../05-qualitaet-sicherheit/evaluation-observability.html" target="_blank" rel="noopener">Evaluation &amp; Observability</a>
-                  <p class="muted-sm">Mit einem PMO-Fall beginnen: Erwartungen festlegen, Ausgangsversion messen, Baseline festhalten und Änderungen je Kriterium vergleichen. Evaluator-Optimizer ist dagegen Prüfung und Überarbeitung innerhalb eines Laufs.</p>
+                  <p class="muted-sm">Vergleiche verschiedene Lösungen für dieselbe PMO-Aufgabe. Lege zuerst fest, was eine gute Antwort leisten muss. Prüfe dann die Ergebnisse und beobachte, was sich nach einer Änderung verbessert oder verschlechtert.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Projektkontext und LangSmith</summary>

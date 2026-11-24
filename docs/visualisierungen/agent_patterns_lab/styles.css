@@ -40,16 +40,37 @@
 }
 
 .course-directory-links {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
 .course-directory-links a {
-  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   background: var(--bg-subtle);
+}
+
+.course-directory-links a span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1000px) {
+  .course-directory-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .course-directory-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .course-directory-links a:focus-visible {

@@ -41,7 +41,7 @@ console.log('PASS Dokumentationshierarchie: eindeutige Titel und vollständige E
 
 const navLabels = [...fs.readFileSync(path.join(docs, '_data/course_navigation.yml'), 'utf8').matchAll(/^- title: (.+)$/gm)].map(match => match[1]);
 const directory = lab.match(/<nav class="course-directory-links"[\s\S]*?<\/nav>/)[0];
-const labLabels = [...directory.matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map(match => decode(match[1]));
+const labLabels = [...directory.matchAll(/<strong>([^<]+)<\/strong>/g)].map(match => decode(match[1]));
 assert.deepEqual(labLabels, navLabels);
 console.log('PASS Lab und Dokumentation: dieselben sieben Bereiche in gleicher Reihenfolge');
 

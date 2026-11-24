@@ -23,15 +23,15 @@ Es gilt eine klare Reihenfolge: **LangChain**, **LangGraph** und **LangSmith** b
 
 | Thema | Inhalt |
 |---|---|
-| [LangChain-Ökosystem]({{ '/04-frameworks/langchain-oekosystem.html' | relative_url }}) | *LangChain, LangGraph und LangSmith einordnen* Zusammenspiel und Aufgaben der Kernkomponenten |
-| [Einsteiger LangChain]({{ '/04-frameworks/langchain/einsteiger-langchain.html' | relative_url }}) | *LangChain erstmals nutzen* Lernweg und erste Chains, Tools und Agenten |
-| [LangChain Best Practices]({{ '/04-frameworks/langchain/langchain-best-practices.html' | relative_url }}) | *Verbindliche LangChain-Muster nachschlagen* Projektstandards und robuste API-Muster |
-| [Einsteiger LangGraph]({{ '/04-frameworks/langgraph/einsteiger-langgraph.html' | relative_url }}) | *LangGraph erstmals nutzen* StateGraph-Grundlagen und erste Workflows |
-| [Graphen mit LangGraph aufbauen]({{ '/04-frameworks/langgraph/graphen-aufbauen.html' | relative_url }}) | *Einen Graphen strukturiert aufbauen* Kompakter Bauplan für Nodes, Edges und Routing |
-| [LangGraph Best Practices]({{ '/04-frameworks/langgraph/langgraph-best-practices.html' | relative_url }}) | *Robuste Graph-Patterns nachschlagen* State, Routing, Checkpointing und Freigaben |
-| [Einsteiger DeepAgents]({{ '/04-frameworks/einsteiger-deepagents.html' | relative_url }}) | *DeepAgents erstmals nutzen* Optionaler Harness für Planning, Filesystem, Sub-Agenten und Backends |
-| [Cheatsheet]({{ '/04-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | *Code-Bausteine schnell finden* Kurzreferenz; ersetzt keine Einführung oder Standards |
-| [LangSmith]({{ '/04-frameworks/langsmith/' | relative_url }}) und [Weitere Tools]({{ '/04-frameworks/weitere-tools.html' | relative_url }}) | *LangSmith und weitere Tools einordnen* Tracing, Evaluation, ChromaDB und Kursbibliothek |
+| [LangChain-Ökosystem]({{ '/04-frameworks/langchain-oekosystem.html' | relative_url }}) | *LangChain, LangGraph und LangSmith einordnen:* Zusammenspiel und Aufgaben der Kernkomponenten |
+| [Einsteiger LangChain]({{ '/04-frameworks/langchain/einsteiger-langchain.html' | relative_url }}) | *LangChain erstmals nutzen:* Lernweg und erste Chains, Tools und Agenten |
+| [LangChain Best Practices]({{ '/04-frameworks/langchain/langchain-best-practices.html' | relative_url }}) | *Verbindliche LangChain-Muster nachschlagen:* Projektstandards und robuste API-Muster |
+| [Einsteiger LangGraph]({{ '/04-frameworks/langgraph/einsteiger-langgraph.html' | relative_url }}) | *LangGraph erstmals nutzen:* StateGraph-Grundlagen und erste Workflows |
+| [Graphen mit LangGraph aufbauen]({{ '/04-frameworks/langgraph/graphen-aufbauen.html' | relative_url }}) | *Einen Graphen strukturiert aufbauen:* Kompakter Bauplan für Nodes, Edges und Routing |
+| [LangGraph Best Practices]({{ '/04-frameworks/langgraph/langgraph-best-practices.html' | relative_url }}) | *Robuste Graph-Patterns nachschlagen:* State, Routing, Checkpointing und Freigaben |
+| [Einsteiger DeepAgents]({{ '/04-frameworks/einsteiger-deepagents.html' | relative_url }}) | *DeepAgents erstmals nutzen:* Optionaler Harness für Planning, Filesystem, Sub-Agenten und Backends |
+| [Cheatsheet]({{ '/04-frameworks/langchain-langgraph-cheatsheet.html' | relative_url }}) | *Code-Bausteine schnell finden:* Kurzreferenz; ersetzt keine Einführung oder Standards |
+| [LangSmith]({{ '/04-frameworks/langsmith/' | relative_url }}) und [Weitere Tools]({{ '/04-frameworks/weitere-tools.html' | relative_url }}) | *LangSmith und weitere Tools einordnen:* Tracing, Evaluation, ChromaDB und Kursbibliothek |
 
 ## Weiterführend
 

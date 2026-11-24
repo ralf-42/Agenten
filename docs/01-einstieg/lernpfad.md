@@ -4,7 +4,7 @@ title: Lernpfad
 nav_order: 3
 description: Orientierung, Lernpfade und empfohlene Einstiege durch die Agenten-Dokumentation
 has_toc: true
-parent: "Einstieg"
+parent: "Start"
 redirect_from: ["/lernpfad.html"]
 ---
 
@@ -112,7 +112,7 @@ Empfohlener Einstieg:
 
 | Dokument | Frage |
 |---|---|
-| [Orientierung & Entscheidung]({{ '/01-einstieg/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
+| [Start]({{ '/01-einstieg/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
 | [Agenten-Implementierung]({{ '/03-entwicklung/' | relative_url }}) | Welche Grundlagen brauche ich für die erste Umsetzung? |
 | [Checkliste Agentensystem]({{ '/03-entwicklung/checkliste-agentensystem.html' | relative_url }}) | Welche Prüfpunkte sichern Entwurf, Review und Freigabe ab? |
 | [Deployment & Betrieb]({{ '/06-praxis-betrieb/' | relative_url }}) | Welche Dokumente begleiten den Weg in Betrieb und Projektarbeit? |

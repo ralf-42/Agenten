@@ -1,7 +1,7 @@
 ---
 layout: default
 title: PMO-Assistent
-parent: "Einstieg"
+parent: "Start"
 nav_order: 6
 description: "Zielbild und roter Faden: PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
 has_toc: true

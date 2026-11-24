@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Einstieg"
+title: "Start"
 nav_order: 1
 has_children: true
 description: "Kursüberblick, Lernpfad, Nutzen, Grundbegriffe und PMO-Assistent"
@@ -8,7 +8,7 @@ has_toc: false
 redirect_from: ["/02-orientierung-entscheidung/"]
 ---
 
-# Einstieg
+# Start
 
 Hier beginnt der Kurs: Ziel und Nutzen klären, die Grundbegriffe kennenlernen und den PMO-Assistenten als gemeinsames Beispiel einordnen. „Zuerst lesen“ bietet den kürzesten Einstieg; der Lernpfad führt anschließend zu den passenden Fachartikeln.
 

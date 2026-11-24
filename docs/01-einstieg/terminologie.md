@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Grundbegriffe"
-parent: "Einstieg"
+parent: "Start"
 nav_order: 5
 has_toc: true
 description: Englisch-deutsche Übersetzungstabelle für KI-Agenten-Fachbegriffe mit Verwendungshinweisen

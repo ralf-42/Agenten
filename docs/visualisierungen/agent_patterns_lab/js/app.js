@@ -109,7 +109,7 @@
     const orientation = ["docs", "context"].includes(activeView);
     const orientationNote = activeView === "context"
       ? "Kontext & Wissen: Die verlinkten Visualisierungen öffnen in einem neuen Tab. Modellwahl und Modellladen werden in den Modell-Demos verfügbar."
-      : "Einstieg: Wähle zuerst eine passende Übung. Modellwahl und Modellladen werden in den Modell-Demos verfügbar.";
+      : "Start: Wähle zuerst eine passende Übung. Modellwahl und Modellladen werden in den Modell-Demos verfügbar.";
     document.getElementById("modelModeControls").disabled =
       deterministic || orientation;
     document.getElementById("executionModeNote").textContent = deterministic

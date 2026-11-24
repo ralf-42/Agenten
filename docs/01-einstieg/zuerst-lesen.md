@@ -4,7 +4,7 @@ title: Zuerst lesen
 nav_order: 1
 description: "Kompakter Einstieg: die wichtigsten Dokumente vor dem ersten Agentenprojekt"
 has_toc: true
-parent: "Einstieg"
+parent: "Start"
 redirect_from: ["/zuerst-lesen.html"]
 ---
 

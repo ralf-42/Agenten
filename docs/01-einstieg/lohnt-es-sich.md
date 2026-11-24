@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Lohnt sich KI?
-parent: "Einstieg"
+parent: "Start"
 nav_order: 4
 description: "Einschätzung vor Projektstart: ob ein KI-Vorhaben sinnvoll, machbar und verantwortbar ist"
 has_toc: true

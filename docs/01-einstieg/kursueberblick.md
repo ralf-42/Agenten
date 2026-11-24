@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Kursüberblick
-parent: "Einstieg"
+parent: "Start"
 nav_order: 2
 description: "Überblick über Zielgruppe, Kursstruktur, Modulprogression und roten Faden im Agenten-Kurs"
 has_toc: true

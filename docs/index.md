@@ -26,7 +26,7 @@ Ein KI-Agent verbindet ein Sprachmodell mit Werkzeugen und einer Ablaufsteuerung
 
 | Bereich | Leitfrage |
 |---|---|
-| [Einstieg]({{ '/01-einstieg/' | relative_url }}) | Wie beginnt der Kurs, und welche Aufgabe übernimmt der PMO-Assistent? |
+| [Start]({{ '/01-einstieg/' | relative_url }}) | Wie beginnt der Kurs, und welche Aufgabe übernimmt der PMO-Assistent? |
 | [Architekturen]({{ '/02-architekturen/' | relative_url }}) | Welcher Lösungsweg und welche Agentenstruktur passen zur Aufgabe? |
 | [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) | Wie wirken Modelle, Prompts, Tools, Kontext, Loops und State zusammen? |
 | [Frameworks]({{ '/04-frameworks/' | relative_url }}) | Wie werden die Bausteine mit LangChain, LangGraph und weiteren Werkzeugen umgesetzt? |

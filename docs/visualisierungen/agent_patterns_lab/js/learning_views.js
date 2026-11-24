@@ -275,7 +275,7 @@
         by_id("evalProgress").textContent = this.cancelled
           ? "Angehalten. Teilergebnisse ersetzen keine Baseline."
           : this.complete
-            ? "Messung abgeschlossen. Prüfe die Einzelkriterien und bewerte anschließend die freie Antwort."
+            ? "Messung abgeschlossen. Die Einzelkriterien liegen vor; die fachliche Bewertung der freien Antwort steht noch aus."
             : "Mit technischen Fehlern beendet. Diese Messung kann keine Baseline ersetzen.";
       } finally {
         this.running = false;
@@ -541,7 +541,7 @@
           this.history = [
             "Neuer Arbeitsstand angelegt. Ein vorhandener gespeicherter Checkpoint wird dabei nicht verändert.",
           ];
-        }, "Neuer Lauf gestartet. Führe Recherche, Entwurf und Prüfung schrittweise aus, bis die Freigabepause erreicht ist."),
+        }, "Neuer Lauf gestartet. Recherche, Entwurf und Prüfung führen schrittweise bis zur Freigabepause."),
       );
       for (const [id, action] of [
         ["stateStepBtn", "step"],
@@ -584,7 +584,7 @@
           this.history.push(
             "Checkpoint gespeichert; der bisherige Speicherstand derselben Session wurde ersetzt. Der Arbeitsstand bleibt unverändert.",
           );
-        }, "Checkpoint gespeichert. Notiere die Session-ID, lade die Seite neu und lade danach den Checkpoint unter derselben ID."),
+        }, "Checkpoint gespeichert. Nach dem Neuladen stellen dieselbe Session-ID und „Checkpoint laden“ den gespeicherten Arbeitsstand wieder her."),
       );
       by_id("stateLoadBtn").addEventListener("click", () =>
         this.perform(() => {
@@ -598,7 +598,7 @@
           this.history = [
             "Checkpoint geladen. Der zuvor aktive Arbeitsstand wurde ersetzt. Kein Arbeitsschritt und keine Weitergabe wurden ausgeführt.",
           ];
-        }, "Checkpoint geladen. Das Laden stellt nur den Arbeitsstand wieder her. Führe jetzt den nächsten Schritt aus oder erteile die ausstehende Freigabe."),
+        }, "Checkpoint geladen. Das Laden stellt nur den Arbeitsstand wieder her. Ein weiterer Schritt oder die ausstehende Freigabe muss ausdrücklich ausgelöst werden."),
       );
       by_id("stateReloadBtn").addEventListener("click", () =>
         window.location.reload(),
@@ -718,7 +718,7 @@
               execute:
                 "Schritt 4: Die freigegebene Weitergabe direkt dort simulieren.",
               finished:
-                "Der Lauf ist beendet. Du kannst den letzten Arbeitsstand speichern oder einen neuen Lauf beginnen.",
+                "Der Lauf ist beendet. Der letzte Arbeitsstand lässt sich speichern; ein neuer Lauf ist ebenfalls möglich.",
               blocked:
                 "Der Lauf ist gesperrt. Eine Fortsetzung braucht einen neuen oder korrigierten Auftrag.",
             }[state.phase];

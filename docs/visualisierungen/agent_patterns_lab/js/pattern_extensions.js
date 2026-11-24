@@ -482,8 +482,8 @@
       tradeOff:
         "Fallback kann teurer werden; fehlende Quellen verlangen einen Stopp",
       summary:
-        "Routing-Variante, keine zusätzliche Architekturklasse. Vergleiche immer klein, immer stärker und regelbasiertes Routing mit denselben PMO-Fällen.",
-      task: "Wähle ein Aufrufbudget je Strategie. Im Mock sind Modellunterschiede vorgegeben; im WebGPU-Modus müssen beide lokalen Modelle geladen sein.",
+        "Routing-Variante, keine zusätzliche Architekturklasse. Dieselben PMO-Fälle werden mit drei Strategien verglichen: immer kleines Modell, immer stärkeres Modell und regelbasiertes Routing.",
+      task: "Das Aufrufbudget lässt sich für jede Strategie festlegen. Im Mock sind Modellunterschiede vorgegeben; im WebGPU-Modus müssen beide lokalen Modelle geladen sein.",
       graph: {
         viewBox: "0 0 600 200",
         nodes: [
@@ -533,7 +533,7 @@
         ],
       },
       lesson:
-        "Routing spart nicht automatisch Aufwand. Prüfe Qualität, Tokenaufwand und Laufzeit; fehlende Evidenz lässt sich nicht durch ein größeres Modell ersetzen.",
+        "Routing spart nicht automatisch Aufwand. Qualität, Tokenaufwand und Laufzeit müssen gemeinsam betrachtet werden; fehlende Evidenz lässt sich nicht durch ein größeres Modell ersetzen.",
       execute: run_tier_comparison,
     },
     {
@@ -547,7 +547,7 @@
         "Nachgeladene Anweisungen sind keine technischen Berechtigungen",
       summary:
         "Ein Hauptagent lädt eine Fachanweisung und ein begrenztes Tool nach. Es entsteht kein zusätzlicher Spezialagent.",
-      task: "Vergleiche Meeting-Briefing und Budgetprüfung mit aktiviertem oder deaktiviertem Skill-Loading.",
+      task: "Meeting-Briefing und Budgetprüfung lassen sich mit und ohne nachgeladene Arbeitsanweisung (Skill) vergleichen.",
       graph: {
         viewBox: "0 0 600 185",
         nodes: [
@@ -595,7 +595,7 @@
         ],
       },
       lesson:
-        "Prüfe Skills als einfachere Alternative zum Agententeam. Kontext wird gezielt erweitert; die Verantwortung bleibt bei einem Agenten.",
+        "Skills sind eine mögliche Alternative zum Agententeam. Kontext wird gezielt erweitert; die Verantwortung bleibt bei einem Agenten.",
       execute: run_skill,
     },
   );

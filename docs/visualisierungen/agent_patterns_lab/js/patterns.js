@@ -114,7 +114,7 @@
         ],
       },
       lesson:
-        "Prüfe zuerst, ob ein Modellaufruf mit passenden Daten genügt. Kosten und Laufzeit hängen auch von Kontext und Retrieval ab; diese Demo begründet keine allgemeine Rangfolge.",
+        "Oft genügt ein einzelner Modellaufruf mit passenden Daten. Kosten und Laufzeit hängen auch von Kontext und Retrieval ab; diese Demo begründet keine allgemeine Rangfolge.",
     },
     {
       id: "chaining",
@@ -186,7 +186,7 @@
       tradeOff: "Alles nach dem Router hängt vom Router ab",
       summary:
         "Ein Router klassifiziert die Anfrage und leitet sie an genau einen Spezialisten (mit eigenen Tools) weiter. Ein günstiger Konsistenzcheck erkennt typische Fehlroutings.",
-      task: "Gib eine eigene Anfrage ein oder teste das Standardbeispiel (Patient P004 auf Warfarin) — beobachte den Konsistenzcheck auf Datensatz-IDs!",
+      task: "Eine eigene Anfrage oder das Standardbeispiel (Patient P004 auf Warfarin) macht den Abgleich der Datensatz-IDs sichtbar.",
       graph: {
         viewBox: "0 0 600 210",
         nodes: [
@@ -494,7 +494,7 @@
       tradeOff: "Braucht starkes Modell; teuer bei kleinen Modellen",
       summary:
         "Der klassische Agent-Loop: Denken → Tool wählen → Beobachten → Wiederholen bis zur Antwort oder bis zum harten Iterations-Cap.",
-      task: "Patient P001 (74 J., nimmt Blutdrucksenker Amlodipin & Ramipril) fragt nach einem rezeptfreien Erkältungsmittel. Nutze die Klinik-Tools (vitals, interaction_check).",
+      task: "Patient P001 (74 J., nimmt Blutdrucksenker Amlodipin & Ramipril) fragt nach einem rezeptfreien Erkältungsmittel. Die Prüfung nutzt die Klinik-Tools (vitals, interaction_check).",
       graph: {
         viewBox: "0 0 600 210",
         nodes: [
@@ -923,8 +923,8 @@
       bestUse: "Externe, schreibende oder irreversible Aktionen",
       tradeOff: "Menschliche Latenz — dafür kein Fehlschuss nach außen",
       summary:
-        "Der Agent entwirft eine Kunden-E-Mail für einen verdächtigen Schadenfall (CLM002). Ein Policy-Pre-Check prüft den Entwurf, danach pausiert das System für deine echte Freigabe oder Korrektur.",
-      task: "Schadenfall CLM002 (Betrugsscore 0,84): Entwirf eine E-Mail an den Kunden. Prüfe den Entwurf selbst — bei Ablehnung speichert das System dein Feedback im Memory und erstellt Entwurf 2.",
+        "Der Agent entwirft eine Kunden-E-Mail für einen verdächtigen Schadenfall (CLM002). Ein Policy-Pre-Check prüft den Entwurf, danach pausiert das System für eine ausdrückliche menschliche Freigabe oder Korrektur.",
+      task: "Schadenfall CLM002 (Betrugsscore 0,84): Eine Kunden-E-Mail wird entworfen und menschlich geprüft. Bei Ablehnung speichert das System die Rückmeldung im Memory und erstellt einen zweiten Entwurf.",
       graph: {
         viewBox: "0 0 600 200",
         nodes: [
@@ -1228,7 +1228,7 @@
           tokens: "–",
           timeText: "–",
         });
-        this.resultBodyEl.innerHTML = `<p class="muted">Klicke auf <strong>„Muster ausführen“</strong>, um den Durchlauf zu starten.</p>`;
+        this.resultBodyEl.innerHTML = `<p class="muted"><strong>„Muster ausführen“</strong> startet den Durchlauf.</p>`;
         this.lessonBoxEl.classList.add("hidden");
         this.setStatus("idle", "Bereit");
         this.renderTraces([]);
@@ -2005,7 +2005,7 @@
         ctx.log(
           "llm",
           "SETUP",
-          "Starte 5 parallele Durchläufe bei Temperaturen 0.1, 0.3, 0.5, 0.7, 0.9.",
+          "Fünf parallele Durchläufe mit den Temperaturwerten 0.1, 0.3, 0.5, 0.7 und 0.9 starten.",
         );
         ctx.node("q", "pass");
 
@@ -2471,7 +2471,7 @@
             "Answer tooth insurance coverage and hand off medical part to Clinical.",
           userPrompt: "Tooth claim + painkiller.",
           mockSmallFn: () => ({
-            text: "Versicherung: Zahnbehandlung ist über Zusatzbaustein gedeckt. Tipp: Nehmen Sie einfach Ibuprofen. Handoff → Klinik.",
+            text: "Versicherung: Zahnbehandlung ist über Zusatzbaustein gedeckt. Tipp: Einfach Ibuprofen nehmen. Handoff → Klinik.",
             tokens: 165,
           }),
           mockStrongFn: () => ({
@@ -2552,7 +2552,7 @@
             "You hand off work to another agent role. Reply with ONE JSON object. Keys: goal, results, open_questions, next_role, budget.",
           userPrompt: `Protokollfrage zu DOC-102: ${DOMAINS.pmo.sources["DOC-102"]}\nDie Research-Rolle soll den offenen Audit-Punkt weiterführen.`,
           mockSmallFn: () => ({
-            text: "Kannst du das mit dem Audit mal nachschauen? Steht im Protokoll.",
+            text: "Die Auditfrage ist noch offen. Hinweise stehen im Protokoll.",
             tokens: 95,
           }),
           mockStrongFn: () => ({
@@ -2643,8 +2643,8 @@
             mockSmallFn: () => ({
               text:
                 attempt === 1
-                  ? "Betreff: Schadenfall CLM002\nIhr Antrag wurde wegen eines internen Betrugsscores (0,84) gestoppt."
-                  : "Betreff: Rückfrage zu CLM002\nIhr Schadenfall befindet sich in Prüfung, nicht in Ablehnung. Bitte reichen Sie Unfallbericht und Werkstattrechnung nach.",
+                  ? "Betreff: Schadenfall CLM002\nDer Antrag wurde wegen eines internen Betrugsscores (0,84) gestoppt."
+                  : "Betreff: Rückfrage zu CLM002\nDer Schadenfall befindet sich in Prüfung, nicht in Ablehnung. Für die weitere Bearbeitung werden Unfallbericht und Werkstattrechnung benötigt.",
               tokens: attempt === 1 ? 180 : 205,
             }),
           });
@@ -2666,7 +2666,7 @@
             return {
               status: "warn",
               statusLabel: "Menschliche Freigabe ausstehend",
-              html: "<p>Der Sammellauf ersetzt keine menschliche Entscheidung. Starte das HITL-Muster einzeln, um den konkreten Entwurf zu prüfen. Kein simulierter Versand.</p>",
+              html: "<p>Der Sammellauf ersetzt keine menschliche Entscheidung. Die Prüfung des konkreten Entwurfs erfolgt im einzeln gestarteten HITL-Muster. Kein simulierter Versand.</p>",
             };
           }
           if (decision.approved) {

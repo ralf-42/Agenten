@@ -47,7 +47,7 @@
 
     <div id="webllmStatus" class="webllm-banner hidden">
       <div class="webllm-banner-inner">
-        <span id="webllmStatusText">WebGPU bereit. Klicke auf „Modell laden“, um ein lokales LLM im Browser zu starten (kein API-Key, kein Server).</span>
+        <span id="webllmStatusText">WebGPU bereit. „Modell laden“ startet ein lokales Sprachmodell im Browser. Dafür sind weder API-Key noch Server erforderlich.</span>
         <div class="progress-track hidden" id="webllmProgressWrap">
           <div class="progress-fill" id="webllmProgressFill" style="width: 0%"></div>
         </div>
@@ -62,12 +62,8 @@
       <div class="view-intro">
         <div>
           <h2>Agenten-Architekturen im direkten Vergleich</h2>
-          <p>
-            Wähle ein Muster, starte den Lauf und beobachte
-            <strong>Flow-Graph</strong>, <strong>Live-Trace</strong>, <strong>Prüfpunkte</strong> und die <strong>Auswahlmatrix mit gekennzeichneten Simulations- oder Live-Werten</strong>.
-            Alle Muster können durch Freigaben und deterministische Prüfungen abgesichert werden.
-            Die passenden Demos findest du unter <a href="#harness">Agent Harness</a>.
-          </p>
+          <p class="view-learning-goal"><strong>Lernziel:</strong> Agenten-Architekturen anhand ihres Ablaufs vergleichen. Ablaufdiagramm, Ausführungsprotokoll und Prüfpunkte machen die Unterschiede sichtbar.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Muster auswählen → Lauf starten → Ergebnis und Prüfpunkte vergleichen. Freigaben und feste Regeln ergänzen die Demos unter <a href="#harness">Agent Harness</a>.</p>
           <p>
             Der <strong>PMO-Assistent</strong> ist das Kursbeispiel. Versicherung, Klinik, Karriereberatung und Pharma-Forschung zeigen die Übertragbarkeit der Muster auf weitere Domänen.
           </p>
@@ -82,7 +78,7 @@
         <label for="patternFilter">Muster-Auswahl</label>
         <select id="patternFilter" class="mode-select"><option value="core">Kernmuster</option><option value="all">Alle Muster</option></select>
         <span id="patternFilterCount" class="muted-sm"></span>
-        <p class="muted-sm">Beginne mit Augmented LLM, Verkettung, Routing, ReAct, sequenzieller Pipeline und Supervisor. „Alle Muster“ öffnet die Vertiefungen. Ein Direktlink auf ein anderes Muster erweitert die Auswahl automatisch.</p>
+        <p class="muted-sm">Die Kernmuster sind Augmented LLM, Verkettung, Routing, ReAct, sequenzielle Pipeline und Supervisor. „Alle Muster“ öffnet die Vertiefungen. Ein Direktlink auf ein anderes Muster erweitert die Auswahl automatisch.</p>
       </div>
       <div class="patterns-layout" id="architectureLayout">
         <!-- Sidebar: 4 thematische Gruppen, keine Entwicklungsstufen -->
@@ -132,7 +128,7 @@
                     <option value="Schadenfall CLM001: Wie hoch ist die Auszahlung für den Wasserschaden nach Selbstbehalt?">Versicherung: Schaden CLM001</option>
                     <option value="Ich habe Marketing studiert und möchte UX-Designerin werden. Welche Zertifikate sind sinnvoll?">Karriere: Wechsel zu UX</option>
                     <option value="Bitte prüfe das Toxizitätsprofil von Wirkstoff DM-3350 für die IND-Freigabe.">Pharma: Wirkstoff DM-3350</option>
-                    <option value="Kannst du mir das Wetter für morgen in München sagen?">Unbekannte Domäne (Human Queue)</option>
+                    <option value="Wie ist das Wetter morgen in München?">Unbekannte Domäne (Human Queue)</option>
                   </select>
                 </div>
               </div>
@@ -201,7 +197,7 @@
                 </div>
               </div>
               <div id="resultBody" class="result-body">
-                <p class="muted">Klicke auf <strong>„Muster ausführen“</strong>, um den Durchlauf zu starten.</p>
+                <p class="muted"><strong>„Muster ausführen“</strong> startet den Durchlauf.</p>
               </div>
               <div id="lessonBox" class="lesson-box hidden"></div>
             </div>
@@ -254,8 +250,10 @@
     <section id="view-harness" class="view">
       <div class="view-intro"><div>
         <h2>Agent Harness: Bausteine und Kontrollen</h2>
-        <p>Das Modell schlägt Schritte vor; das Harness stellt Kontext, Werkzeuge und eine kontrollierte Ausführung bereit. Die Bausteine unten orientieren sich an <a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener">The Anatomy of an Agent Harness</a>. Sie wirken zusammen und sind keine aufeinanderfolgenden Schichten.</p>
-        <p>Wähle einen der drei Bereiche. Die Baustein- und Kontrollmuster-Demos verwenden den gewählten Modellmodus. Die Sicherheitsdemo ist eine deterministische Simulation ohne Modellaufrufe.</p>
+        <p class="view-learning-goal"><strong>Lernziel:</strong> Die Steuerung eines Agenten durch Werkzeuge, Arbeitsdaten und Schutzregeln nachvollziehen.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Bereich auswählen → Baustein oder Kontrolle testen → Entscheidung und Protokoll prüfen.</p>
+        <p class="muted-sm">Die Bausteine orientieren sich an <a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener">The Anatomy of an Agent Harness</a>. Die Bausteine wirken zusammen und sind keine aufeinanderfolgenden Schichten. HITL bezeichnet menschliche Freigaben; deterministische Kontrollen prüfen feste Regeln.</p>
+        <p>Drei Bereiche zeigen Bausteine, Freigaben und Sicherheitsregeln. Die Baustein- und Kontrollmuster-Demos verwenden den gewählten Modellmodus. Die Sicherheitsdemo ist eine deterministische Simulation ohne Modellaufrufe.</p>
       </div></div>
       <div class="harness-subnav" role="group" aria-label="Bereiche im Agent Harness">
         <button class="btn btn-secondary" data-harness-panel="components" aria-pressed="true">Harness-Bausteine</button>
@@ -322,7 +320,7 @@
           <span class="layer-num">Baustein 4</span>
           <h3 id="harness_title_memory">Memory & Suche</h3>
           <p class="muted-sm">Memory and search</p>
-          <p>Optionale Hinweise können übernommen werden. Sie ändern keine Berechtigungen. Memory gilt nur für die geöffnete Seite; Websuche und Langzeitablage werden hier nicht implementiert.</p>
+          <p>Optionale Hinweise können übernommen werden. Diese Hinweise ändern keine Berechtigungen. Memory gilt nur für die geöffnete Seite; Websuche und Langzeitablage werden hier nicht implementiert.</p>
           <div class="layer-body" id="harness_memory"></div>
         </section>
         <section class="card layer-card" aria-labelledby="harness_title_context">
@@ -377,7 +375,7 @@
       </div>
       <section id="harnessSecurityPanel" class="harness-panel hidden" aria-labelledby="harnessSecurityTitle">
         <h3 id="harnessSecurityTitle">Sicherheitskontrollen an einer Vertrauensgrenze</h3>
-        <p>Dokumente können fremde Anweisungen enthalten. Das Harness entscheidet, welche Tools und Daten ein Agent verwenden darf. Prüfe hier unabhängig vom Modellmodus, welche Kontrolle einen vorgegebenen Weitergabeversuch stoppt.</p>
+        <p>Dokumente können fremde Anweisungen enthalten. Das Harness entscheidet, welche Tools und Daten ein Agent verwenden darf. Die Simulation zeigt unabhängig vom Modellmodus, welche Kontrolle einen vorgegebenen Weitergabeversuch stoppt.</p>
       <div id="injectionScenarioControls" class="card">
         <div class="result-body">
           <h4>Fiktiver Angriff aus DOC-104</h4>
@@ -407,8 +405,9 @@
     <section id="view-loops" class="view">
       <div class="view-intro"><div>
         <h2>Loop Engineering: Fortschritt prüfen und kontrolliert enden</h2>
-        <p>Ein Agent wiederholt Schritte, bis sein Ziel erreicht ist oder eine Grenze greift. Die sechs Leitfragen helfen, diese Entscheidungen zu gestalten. Der Ablauf unten ist ein Lernmodell: Zustand ansehen → Aktion vorschlagen und vor Ausführung prüfen → Ergebnis prüfen → fortsetzen oder stoppen.</p>
-        <p><strong>Einstieg:</strong> Starte mit „Ziel erreicht“. Schalte danach Frage 1 aus und vergleiche, ob die Recherche rechtzeitig endet. Wähle anschließend „Suche ohne Fortschritt“ oder „Vorübergehender Tool-Fehler“.</p>
+        <p class="view-learning-goal"><strong>Lernziel:</strong> Mit sechs Leitfragen Fortschritt, Fehlerbehandlung und den Abschluss eines Agentenlaufs steuern.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Erfolgreichen Lauf ansehen → eine Kontrolle ausschalten → den passenden Fehlerfall vergleichen.</p>
+        <p><strong>Einstieg:</strong> Der Fall „Ziel erreicht“ zeigt den normalen Ablauf. Ohne Frage 1 lässt sich beobachten, ob die Recherche rechtzeitig endet. „Suche ohne Fortschritt“ und „Vorübergehender Tool-Fehler“ zeigen anschließend zwei Fehlerfälle.</p>
         <p class="muted-sm">Alle Antworten, Aktionen, Zeiten und Tokenzahlen sind vorgegeben und simuliert. Es werden keine Modellaufrufe, Netzwerkanfragen oder Schreibaktionen ausgeführt. Die sechs Fragen sind eine didaktische Gliederung, kein verbindlicher Standard.</p>
       </div></div>
       <div class="card loop-scenario-bar">
@@ -460,7 +459,7 @@
               <div class="cycle-step" data-stage="verify">3. Ergebnis prüfen<small>Fortschritt oder Fehler?</small></div><div class="cycle-arrow">→</div>
               <div class="cycle-step" data-stage="decide">4. Entscheiden<small>Weiter, fertig, Stopp oder Mensch</small></div>
             </div>
-            <div id="loopOutcomeSummary" class="result-body"><p>Wähle einen Lernfall und starte die Simulation.</p></div>
+            <div id="loopOutcomeSummary" class="result-body"><p>Die Simulation beginnt nach Auswahl eines Lernfalls mit „Simulation starten“.</p></div>
           </section>
           <section class="card trace-card" aria-labelledby="loopTraceTitle">
             <div class="card-header"><h3 id="loopTraceTitle">Protokoll – immer aktiv</h3><span id="loopIterCount" class="muted-sm">Noch kein Lauf</span></div>
@@ -473,7 +472,7 @@
         <div class="result-body">
           <p>Eine Retry-Regel begrenzt Versuche für einen Auftrag. Ein Circuit Breaker sperrt einen gestörten Dienst nach wiederholten Fehlern zeitweise und lässt später einen einzelnen Test zu.</p>
           <label><input id="loopCircuitBreaker" type="checkbox" /> Circuit Breaker im Tool-Fehlerfall ergänzen</label>
-          <p>Wähle „Vorübergehender oder dauerhafter Tool-Fehler“ und lasse Frage 4 aktiv. Nach zwei Fehlern wird der Circuit Breaker <strong>offen</strong>: fünf simulierte Sekunden lang keine Aufrufe. Danach ist er <strong>halb offen</strong>: ein Testaufruf. Bei Erfolg wird er <strong>geschlossen</strong>; bei erneutem Fehler bleibt er offen und der Lauf endet.</p>
+          <p>Im Fall „Vorübergehender oder dauerhafter Tool-Fehler“ lässt sich bei aktiver Frage 4 eine Schutzschaltung (Circuit Breaker) beobachten. Nach zwei Fehlern wird der Circuit Breaker <strong>offen</strong>: fünf simulierte Sekunden lang keine Aufrufe. Danach ist er <strong>halb offen</strong>: ein Testaufruf. Bei Erfolg wird er <strong>geschlossen</strong>; bei erneutem Fehler bleibt er offen und der Lauf endet.</p>
           <p class="muted-sm">Die Zustände gelten hier für einen einzelnen Simulationslauf. Ein produktiver Circuit Breaker verwaltet den Dienstzustand gewöhnlich über mehrere Aufträge hinweg. Eine aktive Laufgrenze kann schon während der Ruhezeit greifen.</p>
         </div>
       </details>
@@ -486,7 +485,8 @@
     <section id="view-evaluation" class="view">
       <div class="view-intro"><div>
         <h2>Evaluation: Testfälle prüfen und Verbesserungen nachweisen</h2>
-        <p>Evaluation macht überprüfbar, ob ein Agent seine Aufgabe richtig und zuverlässig löst. Du legst Erwartungen fest, misst eine Ausgangsversion und prüfst Änderungen gegen diese feste Baseline. Die sechs Schritte zeigen diesen Ablauf an drei fiktiven PMO-Fällen.</p>
+        <p class="view-learning-goal"><strong>Lernziel:</strong> Die Qualität einer Agentenlösung an festen Testfällen bewerten und Änderungen mit einer Referenzmessung vergleichen.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Bewertungsziel festlegen → Testfälle ansehen → Prüfverfahren verstehen → Ausgangsversion messen → Änderung messen → Ergebnisse beurteilen.</p>
         <p class="muted-sm">Dies ist eine lokale Offline-Evaluation im Sinn eines festen Testsets: kein Produktionsmonitoring und keine LangSmith-Anbindung. WebGPU führt echte Modellaufrufe aus; im Mock-Modus sind Antworten und Fehler vorgegeben. Ein kleines Testset erlaubt keine allgemeine Rangfolge von Architekturen.</p>
       </div></div>
       <section class="card learning-card eval-step" aria-labelledby="evalGoalTitle">
@@ -505,12 +505,12 @@
         <span class="layer-num">Schritt 3</span><h3 id="evalMethodsTitle">Prüfverfahren verstehen</h3>
         <div class="learning-columns">
           <div><h4>Automatische Regelprüfung</h4><p>Code prüft Antwortformat, Faktenwerte, Belege, offene Angaben und Sperrstatus. Hinzu kommen Tool-Verwendung und Abschluss des Ablaufs. Quellenabrufe werden nicht nur gezählt: Die beobachteten Quellen-IDs und unerlaubte Aktionsvorschläge werden ausgewertet.</p><p class="muted-sm">Die Checks sind bewusst streng. Fachliche Synonyme können scheitern. Richtige strukturierte Felder beweisen nicht, dass auch jeder Satz der freien Antwort stimmt.</p></div>
-          <div><h4>Menschliches Urteil</h4><p>Prüfe, ob die freie Antwort sachlich richtig, vollständig und verständlich ist. Ein negatives Urteil braucht eine kurze Begründung und wird für genau diese Ausgabe gespeichert.</p><h4>Modell als Prüfer</h4><p>Die sequenzielle Pipeline hat einen internen Modell-Reviewer. Er unterstützt die Erstellung, ist aber fehlbar. Sein Urteil ist kein unabhängiges menschliches Urteil und ersetzt die gemeinsamen externen Prüfungen nicht.</p></div>
+          <div><h4>Menschliches Urteil</h4><p>Das menschliche Urteil bewertet, ob die freie Antwort sachlich richtig, vollständig und verständlich ist. Ein negatives Urteil braucht eine kurze Begründung und wird für genau diese Ausgabe gespeichert.</p><h4>Modell als Prüfer</h4><p>Die sequenzielle Pipeline hat einen internen Modell-Reviewer. Er unterstützt die Erstellung, ist aber fehlbar. Sein Urteil ist kein unabhängiges menschliches Urteil und ersetzt die gemeinsamen externen Prüfungen nicht.</p></div>
         </div>
       </section>
       <section class="card learning-card eval-step" aria-labelledby="evalBaselineTitle">
         <span class="layer-num">Schritt 4</span><h3 id="evalBaselineTitle">Baseline messen und festhalten</h3>
-        <p>Eine Baseline ist deine feste Referenzmessung. Gib der Ausgangsversion einen Namen, wähle die Zahl der Wiederholungen und starte die Messung. Halte danach die vollständige Messung ausdrücklich fest. Weitere Läufe verändern diese Referenz nicht.</p>
+        <p>Eine Baseline ist eine feste Referenzmessung aus einer benannten Ausgangsversion und der gewählten Zahl an Wiederholungen. Nach Abschluss lässt sich die vollständige Messung als Baseline festhalten. Weitere Läufe verändern diese Referenz nicht.</p>
         <div class="eval-fields">
           <label for="evalVersion">Name der zu messenden Version<input id="evalVersion" value="ausgangsversion" maxlength="80" /></label>
           <label for="evalRepetitions">Wiederholungen pro Fall und Variante<select id="evalRepetitions" class="mode-select"><option value="1">1 – schneller Einstieg</option><option value="3">3 – mehrere Versuche vergleichen</option></select></label>
@@ -520,12 +520,12 @@
         <p id="evalProgress" role="status">Noch keine Messung. Mit einem Fall und einer Wiederholung beginnen.</p>
         <div class="learning-actions"><button id="evalPinBaselineBtn" class="btn btn-secondary" disabled>Letzte vollständige Messung als Baseline festhalten</button><button id="evalClearBaselineBtn" class="btn btn-ghost" disabled>Baseline lösen</button></div>
         <p id="evalBaseline" role="status"></p>
-        <p class="muted-sm">Zum Vergleichen menschlicher Urteile bewerte die Ausgangsausgaben in Schritt 6, bevor du sie als Baseline festhältst. Alle Messwerte und Bewertungen leben nur in dieser geöffneten Seite; Neuladen setzt sie zurück.</p>
+        <p class="muted-sm">Für einen Vergleich menschlicher Urteile müssen die Ausgangsausgaben vor dem Festhalten der Baseline in Schritt 6 bewertet sein. Alle Messwerte und Bewertungen leben nur in dieser geöffneten Seite; Neuladen setzt sie zurück.</p>
         <details><summary>Festgehaltene Baseline-Konfiguration</summary><pre id="evalBaselineConfig"></pre></details>
       </section>
       <section class="card learning-card eval-step" aria-labelledby="evalChangeTitle">
         <span class="layer-num">Schritt 5</span><h3 id="evalChangeTitle">Eine Änderung vergleichen</h3>
-        <p>Nach dem Festhalten der Baseline vergib hier einen neuen Versionsnamen und ändere genau einen Einflussfaktor. Die Zusatzanweisung und das Lernprofil gelten jeweils für alle drei Architekturen. Die Kandidatenmessung kannst du direkt in diesem Schritt starten.</p>
+        <p>Nach dem Festhalten der Baseline erhält die geänderte Variante einen neuen Versionsnamen. Ein einzelner veränderter Einflussfaktor erleichtert den Vergleich. Zusatzanweisung und Lernprofil gelten jeweils für alle drei Architekturen. „Kandidatenversion messen“ startet die neue Messung.</p>
         <label for="evalCandidateVersion">Name der Kandidatenversion</label><input id="evalCandidateVersion" maxlength="80" value="kandidatenversion" />
         <label for="evalInstructions">Gemeinsame Zusatzanweisung</label>
         <textarea id="evalInstructions" rows="3">Fehlende Angaben als offen kennzeichnen. Keine Termine oder Zuständigkeiten erfinden.</textarea>
@@ -558,16 +558,17 @@
     <section id="view-checkpoints" class="view">
       <div class="view-intro"><div>
         <h2>State &amp; Checkpoints: Arbeit sichern und später fortsetzen</h2>
-        <p>Was bleibt erhalten, wenn du die Seite neu lädst? Führe einen Lauf bis zur Freigabepause aus, speichere ihn und stelle ihn nach dem Neuladen wieder her. Der gespeicherte Arbeitsstand bestimmt, wo es weitergeht.</p>
+        <p class="view-learning-goal"><strong>Lernziel:</strong> Einen Agentenlauf speichern und nach dem Neuladen an derselben Stelle fortsetzen.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Lauf bis zur Freigabepause ausführen → Checkpoint speichern → Seite neu laden → Checkpoint laden und fortsetzen.</p>
         <p class="muted-sm">Deterministische Lernsimulation ohne Modellaufrufe und ohne LangGraph-Backend. Verwendet werden fiktive Beispieldaten im Speicher dieser Seite und im lokalen Browserspeicher. Die Weitergabe wird nur simuliert.</p>
       </div></div>
       <div class="card learning-card state-terms">
         <h3>Vier Begriffe für den Lernweg</h3>
-        <dl><dt>State – aktueller Arbeitsstand</dt><dd>Hält fest, was der Agent gerade bearbeitet und bereits erledigt hat: zum Beispiel „Recherche abgeschlossen, Entwurf wartet auf Freigabe“.</dd><dt>Checkpoint – gespeicherte Momentaufnahme</dt><dd>Bewahrt genau diesen Arbeitsstand für später auf. Er ändert sich erst, wenn du erneut speicherst.</dd><dt>Session-ID – Kennzeichen der Sitzung</dt><dd>Unter dieser ID findet die Demo den gespeicherten Checkpoint wieder. Eine andere ID wählt einen anderen Speicherplatz; ein neuer Lauf ersetzt noch keinen gespeicherten Checkpoint.</dd><dt>Fortsetzen – ausdrücklich weiterarbeiten</dt><dd>Laden stellt den Arbeitsstand wieder her. Erst ein weiterer Klick führt den nächsten Schritt aus oder erteilt eine Freigabe.</dd></dl>
+        <dl><dt>State – aktueller Arbeitsstand</dt><dd>Hält fest, was der Agent gerade bearbeitet und bereits erledigt hat: zum Beispiel „Recherche abgeschlossen, Entwurf wartet auf Freigabe“.</dd><dt>Checkpoint – gespeicherte Momentaufnahme</dt><dd>Bewahrt genau diesen Arbeitsstand für später auf. Die gespeicherte Momentaufnahme ändert sich erst beim erneuten Speichern.</dd><dt>Session-ID – Kennzeichen der Sitzung</dt><dd>Unter dieser ID findet die Demo den gespeicherten Checkpoint wieder. Eine andere ID wählt einen anderen Speicherplatz; ein neuer Lauf ersetzt noch keinen gespeicherten Checkpoint.</dd><dt>Fortsetzen – ausdrücklich weiterarbeiten</dt><dd>Laden stellt den Arbeitsstand wieder her. Erst ein weiterer Klick führt den nächsten Schritt aus oder erteilt eine Freigabe.</dd></dl>
       </div>
       <section class="card learning-card" aria-labelledby="stateStartTitle">
         <span class="layer-num">Schritt 1</span><h3 id="stateStartTitle">Einen Lauf starten</h3>
-        <p>Beginne mit der vorgeschlagenen Session-ID <code>pmo_demo</code>. Das Beispiel recherchiert Quellen, erstellt einen Entwurf und hält vor der menschlichen Freigabe an.</p>
+        <p>Für den Einstieg ist die Session-ID <code>pmo_demo</code> voreingestellt. Das Beispiel recherchiert Quellen, erstellt einen Entwurf und hält vor der menschlichen Freigabe an.</p>
         <label for="stateSession">Session-ID – nach dem Neuladen wieder dieselbe ID eingeben</label><input id="stateSession" value="pmo_demo" maxlength="64" autocomplete="off" />
         <p id="stateSessionHint" class="muted-sm"></p>
         <button id="stateNewBtn" class="btn btn-secondary">Neuen Lauf starten</button>
@@ -580,14 +581,14 @@
         <dl class="state-overview"><dt>Aktuelle Phase</dt><dd id="statePhase"></dd><dt>Entwurf</dt><dd id="stateDraftStatus"></dd><dt>Menschliche Freigabe</dt><dd id="stateApprovalStatus"></dd><dt>Speicherstatus</dt><dd id="stateDirtyStatus"></dd></dl>
         <p id="stateNextAction" class="precheck-alert" role="status"></p>
         <button id="stateStepBtn" class="btn btn-primary" disabled>Nächster Arbeitsschritt</button>
-        <p class="muted-sm">Klicke nacheinander auf Recherche, Entwurf und Prüfung. Jeder Klick verändert den State. An der Freigabepause ist kein automatischer nächster Schritt möglich.</p>
+        <p class="muted-sm">Recherche, Entwurf und Prüfung laufen nacheinander ab. Jeder Klick verändert den aktuellen Arbeitsstand (State). An der Freigabepause ist kein automatischer nächster Schritt möglich.</p>
         <details><summary>Aktuellen Entwurf ansehen</summary><pre id="stateDraftPreview"></pre></details>
         <h4>Letzte Änderung am Arbeitsstand</h4><div id="stateChangeSummary"></div>
         <details><summary>Technische Details: vollständiger State und Feldänderungen</summary><p>Der State liegt nur im Arbeitsspeicher dieser Seite.</p><pre id="stateRuntime"></pre><p>Feldänderungen: vorher und nachher.</p><div id="stateDiff"></div><p class="muted-sm">Das Feld blocked sperrt die Weitergabe, etwa solange eine Prüfung fehlt. Es bedeutet nicht in jeder Phase, dass der ganze Lauf beendet ist.</p></details>
       </section>
       <section class="card learning-card" aria-labelledby="stateSaveTitle">
         <span class="layer-num">Schritt 3</span><h3 id="stateSaveTitle">Einen Checkpoint speichern</h3>
-        <p>Speichere an der Freigabepause. Der Checkpoint enthält den geprüften Entwurf und die Information, dass die menschliche Freigabe noch fehlt. Speichern führt keinen Arbeitsschritt aus und verändert den aktuellen State nicht.</p>
+        <p>Die Freigabepause eignet sich als Speicherpunkt. Der Checkpoint enthält den geprüften Entwurf und die Information, dass die menschliche Freigabe noch fehlt. Speichern führt keinen Arbeitsschritt aus und verändert den aktuellen State nicht.</p>
         <button id="stateSaveBtn" class="btn btn-secondary" disabled>Checkpoint speichern</button>
         <p id="stateCheckpointSummary"></p>
         <p><strong>Ein Speicherstand pro Session-ID:</strong> Erneutes Speichern überschreibt den bisherigen Checkpoint. Die Demo führt keine Verlaufshistorie. Ungespeicherte Änderungen gehen beim Neuladen oder beim Laden eines anderen Arbeitsstands verloren.</p>
@@ -595,10 +596,10 @@
       </section>
       <section class="card learning-card" aria-labelledby="stateResumeTitle">
         <span class="layer-num">Schritt 4</span><h3 id="stateResumeTitle">Nach dem Neuladen fortsetzen</h3>
-        <ol><li>Notiere deine Session-ID und prüfe, dass keine ungespeicherten Änderungen mehr vorliegen.</li><li>Lade die Seite neu. Der aktuelle State verschwindet; der Checkpoint bleibt im selben Browser erhalten.</li><li>Gib oben dieselbe Session-ID ein und lade ihren Checkpoint.</li><li>Prüfe den wiederhergestellten Entwurf. Erteile die ausstehende Freigabe und führe anschließend die simulierte Weitergabe direkt hier aus.</li></ol>
+        <ol><li>Vor dem Neuladen müssen die Session-ID bekannt und alle Änderungen gespeichert sein.</li><li>Beim Neuladen verschwindet der aktuelle State. Der Checkpoint bleibt im selben Browser erhalten.</li><li>Dieselbe Session-ID und „Checkpoint laden“ stellen den gespeicherten Arbeitsstand wieder her.</li><li>Nach der Prüfung des Entwurfs folgen die ausstehende Freigabe und die ausdrücklich gestartete simulierte Weitergabe.</li></ol>
         <div class="learning-actions"><button id="stateReloadBtn" class="btn btn-ghost">Seite neu laden – ungespeicherten State verwerfen</button><button id="stateLoadBtn" class="btn btn-secondary" disabled>Checkpoint dieser Session laden</button><button id="stateApproveBtn" class="btn btn-success" disabled>Aktuellen Entwurf freigeben</button><button id="stateFinishBtn" class="btn btn-primary" disabled>Freigegebene Weitergabe simulieren</button></div>
         <p class="muted-sm">Laden ersetzt einen eventuell vorhandenen Arbeitsstand. Dabei wird nichts automatisch freigegeben oder weitergegeben. Ein gelöschter Browserspeicher oder ein anderes Browserprofil kann den Checkpoint nicht bereitstellen.</p>
-        <p id="stateMessage" role="status">Noch kein Lauf. Starte bei Schritt 1 oder lade einen vorhandenen Checkpoint.</p>
+        <p id="stateMessage" role="status">Noch kein Lauf. Schritt 1 startet einen neuen Lauf; ein vorhandener Checkpoint lässt sich direkt laden.</p>
       </section>
       <details class="card state-advanced">
         <summary>Vertiefung: Ablehnung, Textänderung und weitere Testfälle</summary>
@@ -620,8 +621,9 @@
       <div class="view-intro">
         <div>
           <h2>Kontext &amp; Wissen</h2>
-          <p>Welche Informationen braucht ein Agent für die aktuelle Aufgabe? Hier lassen sich Kontextauswahl, Wissensabruf und die Aufbereitung von Dokumenten mit den vorhandenen Visualisierungen erkunden.</p>
-          <p>Beginne mit einer Frage und einer Demo. Die Visualisierungen und Fachartikel öffnen in einem neuen Tab; dein Stand im Agent Lab bleibt erhalten.</p>
+          <p class="view-learning-goal"><strong>Lernziel:</strong> Passende Informationen für eine Agentenaufgabe auswählen und die Aufbereitung von Dokumenten verstehen.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Fragestellung auswählen → passende Demo öffnen → Beobachtungen mit dem Fachartikel einordnen.</p>
+          <p>Für den Einstieg genügen eine Frage und eine Demo. Visualisierungen und Fachartikel öffnen in einem neuen Tab. Der aktuelle Stand im Agent Lab bleibt erhalten.</p>
           <p><a href="../../03-entwicklung/kontext-wissen/" target="_blank" rel="noopener">Dokumentation: Entwicklung → Kontext &amp; Wissen ↗</a></p>
         </div>
       </div>
@@ -630,8 +632,8 @@
         <article class="card" aria-labelledby="context_selection_title">
           <h3 id="context_selection_title">1. Kontext gezielt zusammenstellen</h3>
           <p>Welche Anweisungen, Quellen und bisherigen Nachrichten gehören in das Kontextfenster?</p>
-          <p><strong>Beobachtungsauftrag:</strong> Wähle in der Context-Engineering-Demo einen Kontextbestandteil. Simuliere anschließend einen Fehlerfall und wende die zugehörige Gegenmaßnahme an. Erkläre, welche Information den Ablauf gestört hat.</p>
-          <p class="muted-sm">Die Demo visualisiert Kontextbestandteile und simulierte Fehlerfälle. Sie misst keine reale Modell-Attention.</p>
+          <p><strong>Beobachtungsauftrag:</strong> Ein ausgewählter Kontextbestandteil und ein simulierter Fehlerfall zeigen, welche Information den Ablauf stört. Die zugehörige Gegenmaßnahme macht den Unterschied sichtbar.</p>
+          <p class="muted-sm">Die Demo visualisiert Kontextbestandteile und simulierte Fehlerfälle. Die Darstellung misst keine reale Modell-Attention.</p>
           <div class="context-demo-actions">
             <a class="btn btn-primary btn-sm" href="../context_engineering/" target="_blank" rel="noopener">Context Engineering öffnen ↗</a>
             <a href="../../03-entwicklung/kontext-wissen/context-engineering.html" target="_blank" rel="noopener">Fachartikel ↗</a>
@@ -641,7 +643,7 @@
         <article class="card" aria-labelledby="context_rag_title">
           <h3 id="context_rag_title">2. Wissen mit RAG abrufen</h3>
           <p>Wie gelangen passende Dokumente in die Antwort eines Sprachmodells?</p>
-          <p><strong>Beobachtungsauftrag:</strong> Vergleiche Datenaufbereitung und Inferenz in der RAG-Prozessdarstellung. Benenne, wo Dokumente vorbereitet, relevante Inhalte abgerufen und diese dem Modell übergeben werden.</p>
+          <p><strong>Beobachtungsauftrag:</strong> Die RAG-Prozessdarstellung zeigt Datenaufbereitung und Antworterzeugung. Der Vergleich macht sichtbar, wo Dokumente vorbereitet, passende Inhalte abgerufen und dem Modell übergeben werden.</p>
           <p class="muted-sm">Die Prozessdarstellung erläutert den Ablauf; sie führt keine echte Dokumentensuche oder Modellanfrage aus.</p>
           <div class="context-demo-actions">
             <a class="btn btn-primary btn-sm" href="../rag_prozess_visualisierung/" target="_blank" rel="noopener">RAG-Prozess öffnen ↗</a>
@@ -652,7 +654,7 @@
         <article class="card" aria-labelledby="context_chunking_title">
           <h3 id="context_chunking_title">3. Dokumente in Chunks aufteilen</h3>
           <p>Welche Textabschnitte entstehen bei unterschiedlichen Strategien, Größen und Überlappungen?</p>
-          <p><strong>Beobachtungsauftrag:</strong> Zerlege denselben Text mit zwei Chunking-Strategien. Verändere Größe und Overlap und prüfe an den Chunk-Grenzen, ob wichtige Zusammenhänge erhalten bleiben.</p>
+          <p><strong>Beobachtungsauftrag:</strong> Derselbe Text lässt sich mit zwei Strategien in Abschnitte (Chunks) zerlegen. Unterschiedliche Größen und Überlappungen zeigen, ob wichtige Zusammenhänge an den Abschnittsgrenzen erhalten bleiben.</p>
           <p class="muted-sm">Die Textzerlegung läuft in der Demo. Die Tokenisierung ist simuliert; aus den Chunks werden keine echten Embeddings berechnet.</p>
           <div class="context-demo-actions">
             <a class="btn btn-primary btn-sm" href="../rag_chunking_explorer/" target="_blank" rel="noopener">Chunking Explorer öffnen ↗</a>
@@ -663,7 +665,7 @@
         <article class="card" aria-labelledby="context_embeddings_title">
           <h3 id="context_embeddings_title">4. Vektoren und Ähnlichkeit verstehen</h3>
           <p>Wie lassen sich Abstände zwischen Beispielvektoren anschaulich vergleichen?</p>
-          <p><strong>Beobachtungsauftrag:</strong> Fahre über die Punkte der 2D-Ansicht und vergleiche die Koordinaten mit der Ähnlichkeitsliste. Beschreibe, was Nähe im gewählten Beispiel ausdrückt.</p>
+          <p><strong>Beobachtungsauftrag:</strong> Die Punkte der 2D-Ansicht zeigen beim Darüberfahren ihre Koordinaten. Die Ähnlichkeitsliste erklärt, welche Beispiele im gewählten Koordinatensystem nahe beieinander liegen.</p>
           <p class="muted-sm">Die Fahrzeugkoordinaten sind vorgegeben. Die Demo erzeugt keine Text-Embeddings und ruft kein Embedding-Modell auf.</p>
           <div class="context-demo-actions">
             <a class="btn btn-primary btn-sm" href="../embedding_visual_2d/" target="_blank" rel="noopener">Embedding-Ansicht öffnen ↗</a>
@@ -674,7 +676,7 @@
         <article class="card" aria-labelledby="context_history_title">
           <h3 id="context_history_title">5. Gesprächsverlauf kürzen oder zusammenfassen</h3>
           <p>Welche Informationen bleiben bei Trimming und Rolling Summary im Kontext erhalten?</p>
-          <p><strong>Beobachtungsauftrag:</strong> Füge Nachrichten hinzu und wechsle zwischen den beiden Strategien. Vergleiche, welche älteren Fakten noch verfügbar sind und welche Nachrichten entfallen.</p>
+          <p><strong>Beobachtungsauftrag:</strong> Zusätzliche Nachrichten und ein Wechsel der Strategie zeigen, welche älteren Fakten verfügbar bleiben und welche Nachrichten entfallen.</p>
           <p class="muted-sm">Die Demo nutzt einen festgelegten Nachrichtenpool und feste Zusammenfassungsregeln. Es wird keine echte Modellzusammenfassung erzeugt.</p>
           <div class="context-demo-actions">
             <a class="btn btn-primary btn-sm" href="../trimming_summary/" target="_blank" rel="noopener">Trimming &amp; Summary öffnen ↗</a>
@@ -685,7 +687,7 @@
 
       <section class="card context-follow-up" aria-labelledby="context_transfer_title">
         <h3 id="context_transfer_title">Auf den PMO-Assistenten übertragen</h3>
-        <p>Welche Protokolle und Entscheidungen werden für ein Meeting-Briefing benötigt? Welche Angaben müssen beim Aufteilen von Dokumenten erhalten bleiben? Welche älteren Gesprächsinhalte dürfen entfallen? Begründe die Auswahl anhand einer konkreten Anfrage.</p>
+        <p>Welche Protokolle und Entscheidungen werden für ein Meeting-Briefing benötigt? Welche Angaben müssen beim Aufteilen von Dokumenten erhalten bleiben? Welche älteren Gesprächsinhalte dürfen entfallen? Eine konkrete Anfrage hilft dabei, die Auswahl der Informationen zu begründen.</p>
         <p>Die Entscheidung zwischen vollständigem Kontext, Retrieval und Caching vertieft <a href="../../03-entwicklung/kontext-wissen/long-context-cag.html" target="_blank" rel="noopener">Long Context, RAG &amp; CAG ↗</a>. Wie der Agent seine aktuellen Arbeitsdaten und gespeicherten Sitzungen verwaltet, zeigt <a href="#checkpoints">State &amp; Checkpoints</a>.</p>
       </section>
     </section>
@@ -693,25 +695,26 @@
     <section id="view-docs" class="view active">
       <div class="view-intro">
         <div>
-          <h2>So beginnst du</h2>
-          <p>Wähle oben ein Thema, das du ausprobieren möchtest. Die Tabelle unten zeigt dir, welche Erklärung zur jeweiligen Übung gehört. Eine Übung genügt für den Anfang.</p>
-          <p>Nutze zunächst den voreingestellten Modus mit vorbereiteten Beispielantworten. Du musst dafür kein eigenes KI-Modell laden.</p>
+          <h2>Einstieg ins Agent Lab</h2>
+          <p class="view-learning-goal"><strong>Lernziel:</strong> Die passenden Kursdokumente und Übungen zu einem Thema finden. Für den Anfang genügt eine Übung.</p>
+        <p class="view-learning-path"><strong>Ablauf:</strong> Bereich auswählen → Erklärung lesen → Übung öffnen.</p>
+          <p>Der voreingestellte Modus nutzt vorbereitete Beispielantworten. Ein eigenes KI-Modell ist dafür nicht erforderlich.</p>
         </div>
       </div>
 
       <section class="card course-directory" aria-labelledby="courseDirectoryTitle">
         <div class="card-header"><h3 id="courseDirectoryTitle">Zur Kursdokumentation</h3></div>
-        <p>Wenn du neu im Kurs bist, beginne mit „Start“. Die anderen Bereiche helfen dir bei konkreten Fragen.</p>
+        <p>Für den ersten Einstieg bietet „Start“ den Kursüberblick und den empfohlenen Lernweg. Die übrigen Bereiche erklären einzelne Themen.</p>
         <nav class="course-directory-links" aria-label="Kursbereiche">
-          <a href="../../01-einstieg/" target="_blank" rel="noopener"><strong>Start</strong><span>Kursüberblick, Grundbegriffe und empfohlener Lernweg</span></a>
-          <a href="../../02-architekturen/" target="_blank" rel="noopener"><strong>Architekturen</strong><span>Die passende Struktur für eine Aufgabe auswählen</span></a>
-          <a href="../../03-entwicklung/" target="_blank" rel="noopener"><strong>Entwicklung</strong><span>Modelle, Prompts, Tools, Wissen und Abläufe zusammenfügen</span></a>
-          <a href="../../04-frameworks/" target="_blank" rel="noopener"><strong>Frameworks</strong><span>Mit LangChain, LangGraph und LangSmith arbeiten</span></a>
-          <a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener"><strong>Qualität &amp; Sicherheit</strong><span>Ergebnisse prüfen und den Handlungsspielraum begrenzen</span></a>
-          <a href="../../06-praxis-betrieb/" target="_blank" rel="noopener"><strong>Praxis &amp; Betrieb</strong><span>Den PMO-Assistenten umsetzen und Anwendungen betreiben</span></a>
-          <a href="../../07-verantwortung/" target="_blank" rel="noopener"><strong>Verantwortung</strong><span>Datenschutz, rechtliche Anforderungen und Anbieterabhängigkeit beachten</span></a>
+          <a href="../../01-einstieg/" target="_blank" rel="noopener"><strong>Start</strong> <span>Kursüberblick, Grundbegriffe und empfohlener Lernweg</span></a>
+          <a href="../../02-architekturen/" target="_blank" rel="noopener"><strong>Architekturen</strong> <span>Die passende Struktur für eine Aufgabe auswählen</span></a>
+          <a href="../../03-entwicklung/" target="_blank" rel="noopener"><strong>Entwicklung</strong> <span>Modelle, Anweisungen, Werkzeuge, Wissen und Abläufe zusammenfügen</span></a>
+          <a href="../../04-frameworks/" target="_blank" rel="noopener"><strong>Frameworks</strong> <span>Mit LangChain, LangGraph und LangSmith arbeiten</span></a>
+          <a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener"><strong>Qualität &amp; Sicherheit</strong> <span>Ergebnisse prüfen und den Handlungsspielraum begrenzen</span></a>
+          <a href="../../06-praxis-betrieb/" target="_blank" rel="noopener"><strong>Praxis &amp; Betrieb</strong> <span>Den PMO-Assistenten umsetzen und Anwendungen betreiben</span></a>
+          <a href="../../07-verantwortung/" target="_blank" rel="noopener"><strong>Verantwortung</strong> <span>Datenschutz, rechtliche Anforderungen und Anbieterabhängigkeit beachten</span></a>
         </nav>
-        <p class="muted-sm">Die Kursdokumente öffnen in einem neuen Tab. Dein Stand im Lab bleibt erhalten.</p>
+        <p class="muted-sm">Die Kursdokumente öffnen in einem neuen Tab. Der aktuelle Stand im Lab bleibt erhalten.</p>
       </section>
 
       <section class="card" style="margin-bottom: 16px;">
@@ -732,7 +735,7 @@
                 <td><a href="#augmented"><strong>Agenten-Architekturen</strong></a><p class="muted-sm"><a href="../../02-architekturen/" target="_blank" rel="noopener">Architekturen</a> → Agenten-Architekturen</p></td>
                 <td>
                   <a href="../../02-architekturen/agent-architekturen.html" target="_blank" rel="noopener">Agenten-Architekturen</a>: die einfachste passende Struktur wählen.
-                  <p class="muted-sm">Beginne mit einem einzelnen Agenten. Wenn mehrere Rollen nötig sind, lies anschließend <a href="../../02-architekturen/multi-agent-systeme.html" target="_blank" rel="noopener">Multi-Agent-Systeme</a>.</p>
+                  <p class="muted-sm">Für den Einstieg eignet sich ein einzelner Agent. Die Zusammenarbeit mehrerer Rollen ist unter <a href="../../02-architekturen/multi-agent-systeme.html" target="_blank" rel="noopener">Multi-Agent-Systeme</a> beschrieben.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Entscheidung, Skills und Tools</summary>
@@ -746,14 +749,14 @@
               </tr>
               <tr>
                 <td><a href="#context"><strong>Kontext &amp; Wissen</strong></a><p class="muted-sm"><a href="../../03-entwicklung/kontext-wissen/" target="_blank" rel="noopener">Entwicklung → Kontext &amp; Wissen</a></p></td>
-                <td><a href="../../03-entwicklung/kontext-wissen/context-engineering.html" target="_blank" rel="noopener">Context Engineering</a><p class="muted-sm">Wähle eine der fünf Demos. Beobachte, welche Informationen ein Agent erhält und wie er Wissen aus Dokumenten nutzt.</p></td>
+                <td><a href="../../03-entwicklung/kontext-wissen/context-engineering.html" target="_blank" rel="noopener">Context Engineering</a><p class="muted-sm">Fünf Demos zeigen, welche Informationen ein Agent erhält und wie er Wissen aus Dokumenten nutzt.</p></td>
                 <td><details><summary>Bei Bedarf: RAG und Wissensstrategien</summary><a href="../../03-entwicklung/kontext-wissen/rag-konzepte.html" target="_blank" rel="noopener">RAG-Konzepte</a> · <a href="../../03-entwicklung/kontext-wissen/long-context-cag.html" target="_blank" rel="noopener">Long Context, RAG &amp; CAG</a></details></td>
               </tr>
               <tr>
                 <td><a href="#loops"><strong>Loop Engineering</strong></a><p class="muted-sm"><a href="../../03-entwicklung/" target="_blank" rel="noopener">Entwicklung</a> → Loop Engineering</p></td>
                 <td>
                   <a href="../../03-entwicklung/loop-engineering.html" target="_blank" rel="noopener">Loop Engineering</a>
-                  <p class="muted-sm">Starte einen erfolgreichen Lauf und vergleiche ihn mit einem Fehlerfall. Beobachte, wann der Agent weiterarbeitet, einen Versuch wiederholt oder stoppt.</p>
+                  <p class="muted-sm">Der Vergleich eines erfolgreichen Laufs mit einem Fehlerfall zeigt, wann der Agent weiterarbeitet, einen Versuch wiederholt oder stoppt.</p>
                 </td>
                 <td>
                   <details><summary>Ergänzend: Sicherheit und Freigaben im Harness</summary>
@@ -780,7 +783,7 @@
                 <td><a href="#harness"><strong>Agent Harness</strong></a><p class="muted-sm"><a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener">Qualität &amp; Sicherheit</a> → Agent Harness</p></td>
                 <td>
                   <a href="../../05-qualitaet-sicherheit/agent-harness.html" target="_blank" rel="noopener">Agent Harness</a>
-                  <p class="muted-sm">Probiere aus, welche Werkzeuge ein Agent nutzen darf und wann er stoppen muss. <a href="#hitl">Human-in-the-Loop</a> zeigt menschliche Freigaben, <a href="#deterministic">Deterministische Kontrolle</a> feste Regeln. <a href="#prompt_injection">Sicherheit &amp; Prompt Injection</a> zeigt, wie fremde Inhalte einen Agenten beeinflussen können.</p>
+                  <p class="muted-sm">Die Übungen zeigen, welche Werkzeuge ein Agent nutzen darf und wann er stoppen muss. <a href="#hitl">Human-in-the-Loop</a> zeigt menschliche Freigaben, <a href="#deterministic">Deterministische Kontrolle</a> feste Regeln. <a href="#prompt_injection">Sicherheit &amp; Prompt Injection</a> zeigt, wie fremde Inhalte einen Agenten beeinflussen können.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Sicherheit und Kontext</summary>
@@ -794,7 +797,7 @@
                 <td><a href="#evaluation"><strong>Evaluation</strong></a><p class="muted-sm"><a href="../../05-qualitaet-sicherheit/" target="_blank" rel="noopener">Qualität &amp; Sicherheit</a> → Evaluation</p></td>
                 <td>
                   <a href="../../05-qualitaet-sicherheit/evaluation-observability.html" target="_blank" rel="noopener">Evaluation &amp; Observability</a>
-                  <p class="muted-sm">Vergleiche verschiedene Lösungen für dieselbe PMO-Aufgabe. Lege zuerst fest, was eine gute Antwort leisten muss. Prüfe dann die Ergebnisse und beobachte, was sich nach einer Änderung verbessert oder verschlechtert.</p>
+                  <p class="muted-sm">Verschiedene Lösungen für dieselbe PMO-Aufgabe werden anhand festgelegter Kriterien verglichen. So wird sichtbar, was sich nach einer Änderung verbessert oder verschlechtert.</p>
                 </td>
                 <td>
                   <details><summary>Bei Bedarf: Projektkontext und LangSmith</summary>
@@ -877,7 +880,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <p>
-        <strong>Technische Voraussetzungen:</strong> Für das Lab brauchst du einen aktuellen Browser. Die Mock-Demos benötigen weder Node.js noch einen API-Key.
+        <strong>Technische Voraussetzungen:</strong> Das Lab benötigt einen aktuellen Browser. Die Mock-Demos benötigen weder Node.js noch einen API-Key.
         Die optionalen WebGPU-Demos setzen WebGPU-Unterstützung und einen einmaligen Modelldownload voraus.
       </p>
       <p>

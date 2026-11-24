@@ -33,7 +33,7 @@ class ExecutionEngine {
 
   async loadWebLLM(onProgress, mode = this.mode) {
     if (!("gpu" in navigator)) {
-      throw new Error("Dein Browser unterstützt kein WebGPU. Bitte Desktop-Chrome/Edge nutzen oder im Mock-Modus bleiben.");
+      throw new Error("WebGPU ist in diesem Browser nicht verfügbar. Der Mock-Modus mit vorbereiteten Antworten bleibt nutzbar. Für lokale Modellaufrufe ist ein Browser mit WebGPU-Unterstützung erforderlich.");
     }
     const modelId = WEBLLM_MODELS[mode];
     if (!modelId) return;
@@ -47,7 +47,7 @@ class ExecutionEngine {
     }
 
     const load_start = performance.now();
-    onProgress?.({ progress: 0.05, text: "Lade WebLLM-Bibliothek…" });
+    onProgress?.({ progress: 0.05, text: "WebLLM-Bibliothek wird geladen…" });
     const webllm = await import("https://esm.run/@mlc-ai/web-llm");
     onProgress?.({ progress: 0.1, text: `Initialisiere ${modelId} (einmaliger Download in den Browser-Cache)…` });
 
@@ -55,7 +55,7 @@ class ExecutionEngine {
       initProgressCallback: (report) => {
         onProgress?.({
           progress: report.progress ?? 0.2,
-          text: report.text || "Lade Modellgewichte…"
+          text: report.text || "Modelldaten werden geladen…"
         });
       }
     });

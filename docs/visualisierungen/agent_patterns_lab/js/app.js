@@ -109,7 +109,7 @@
     const orientation = ["docs", "context"].includes(activeView);
     const orientationNote = activeView === "context"
       ? "Kontext & Wissen: Die verlinkten Visualisierungen öffnen in einem neuen Tab. Modellwahl und Modellladen werden in den Modell-Demos verfügbar."
-      : "Wähle ein Thema. Für die ersten Übungen genügen die vorbereiteten Beispielantworten.";
+      : "Die Reiter öffnen die einzelnen Themen. Für die ersten Übungen genügen die vorbereiteten Beispielantworten.";
     document.getElementById("modelModeControls").disabled =
       deterministic || orientation;
     document.getElementById("executionModeNote").textContent = deterministic
@@ -136,7 +136,7 @@
     updateModeNote();
     if (isWeb) {
       webllmStatusText.textContent =
-        "WebGPU-Modus gewählt. Klicke auf „Modell laden“, um das LLM lokal im Browser zu initialisieren (kein API-Key).";
+        "WebGPU-Modus gewählt. „Modell laden“ startet das lokale Sprachmodell im Browser. Ein API-Key ist nicht erforderlich.";
       webllmProgressWrap.classList.add("hidden");
     }
   });
@@ -152,7 +152,7 @@
       webllmStatusText.textContent =
         "✓ Lokales WebGPU-Modell geladen und einsatzbereit!";
     } catch (err) {
-      webllmStatusText.textContent = `Fehler: ${err.message} (Wechsle zurück in den Mock-Modus oder nutze Chrome/Edge mit WebGPU.)`;
+      webllmStatusText.textContent = `Fehler: ${err.message} (Der Mock-Modus bleibt als Alternative verfügbar. Lokale Modellaufrufe benötigen WebGPU-Unterstützung.)`;
     } finally {
       loadModelBtn.disabled = false;
     }

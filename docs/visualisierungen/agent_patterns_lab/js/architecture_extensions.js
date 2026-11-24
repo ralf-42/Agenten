@@ -349,7 +349,7 @@
         "Ein falscher Plan braucht Korrektur; Planung kostet zusätzliche Aufrufe",
       summary:
         "Ein Agent erstellt zuerst einen expliziten Mehrschrittplan. Code führt die freigegebenen Leseschritte aus. Fehlen vor dem Abschluss Belege, darf der Agent einmal neu planen. Im kleinen Mock fehlt im ersten Plan absichtlich die Budgetrecherche.",
-      task: "Kläre Terminverzug, Audit-Puffer und offene Freigabe. Vergleiche kleinen und starken Mock: ein vorgegebener unvollständiger Plan mit Neuplanung gegenüber einem vollständigen Plan.",
+      task: "Terminverzug, Audit-Puffer und offene Freigabe werden anhand eines Arbeitsplans geklärt. Die Mock-Modi zeigen einen unvollständigen Plan mit Überarbeitung und einen vollständigen Plan.",
       graph: {
         viewBox: "0 0 650 220",
         nodes: [
@@ -423,7 +423,7 @@
         "Zusätzliche Koordinationsaufrufe; isolierte Kontexte brauchen klare Übergaben",
       summary:
         "Ein Hauptagent ruft spezialisierte Agenten als Tools auf. Jeder arbeitet mit einer begrenzten Quelle und gibt einen Bericht zurück. Erst danach entscheidet der Supervisor über den nächsten Aufruf oder den Abschluss. Die Kontrolle kehrt immer zum Hauptagenten zurück.",
-      task: "Beantworte dieselbe Statusfrage wie bei Plan-and-Execute. Beobachte die Rückkehr zum Supervisor nach jedem Spezialistenaufruf. Die beiden Mock-Modi geben unterschiedliche Aufrufreihenfolgen vor.",
+      task: "Dieselbe Statusfrage wie bei Plan-and-Execute wird durch spezialisierte Rollen bearbeitet. Nach jedem Aufruf kehrt der Ablauf zum Supervisor zurück. Die beiden Mock-Modi geben unterschiedliche Aufrufreihenfolgen vor.",
       graph: {
         viewBox: "0 0 650 235",
         nodes: [

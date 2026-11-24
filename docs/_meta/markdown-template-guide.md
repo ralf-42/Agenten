@@ -297,27 +297,37 @@ flowchart TD
 
 ## Kategorie-Seiten
 
-Kategorie-Seiten wie `concepts.md` oder `frameworks.md` dienen der Orientierung. Sie verwenden `has_children: true` und bei Bedarf `permalink:`. Die Einträge arbeiten mit absoluten URLs und ergänzen technische Titel durch eine kursive W-Frage.
+Bereichs- und Kategorieübersichten werden als `index.md` geführt. Ihr gemeinsamer Aufbau ist: Titel, kurze Einführung, Abschnitt „Themen“ mit einer zweispaltigen Tabelle „Thema / Inhalt“ und Abschnitt „Weiterführend“ mit passenden Nachbarbereichen oder Visualisierungen. Die Einträge arbeiten mit absoluten URLs über `relative_url`; hilfreiche Auswahlfragen können in der Inhaltsspalte erhalten bleiben.
+
+Diese Seiten verwenden `has_children: true` und `has_toc: false`. Die explizite Tabelle ersetzt die automatisch angehängte Kinderliste. Kategorieübersichten erhalten keinen Versions- oder Standblock. Fachliche Prioritäten dürfen in der Einführung erläutert werden. Die Website-Startseite behält zusätzlich ihre Kurs- und Projektorientierung; die verlinkten Ressourcen- und Rechtsdokumente behalten ihren eigenen Seitentyp.
 
 ````markdown
 ---
 layout: default
 title: Konzepte
 has_children: true
+has_toc: false
 description: Theoretische Grundlagen und technische Konzepte für KI-Agenten
 ---
 
 # Konzepte
+{: .no_toc }
 
 Kurze Einordnung des Bereichs in einem Absatz.
 
-## Grundlagen
+## Themen
 
-- **[Checkpointing & Persistenz]({{ '/03-entwicklung/state-checkpoints/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
-- **[Agent Security]({{ '/05-qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+| Thema | Inhalt |
+|---|---|
+| [Checkpointing & Persistenz]({{ '/03-entwicklung/state-checkpoints/checkpointing-persistenz.html' | relative_url }}) | Zustandsspeicherung und Session-Persistenz in LangGraph. |
+| [Agenten-Sicherheit]({{ '/05-qualitaet-sicherheit/agent-security.html' | relative_url }}) | Sicherheitsrisiken und Schutzprinzipien für KI-Agenten. |
+
+## Weiterführend
+
+Die Übersicht [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) ordnet die Bausteine eines Agentensystems ein.
 ````
 
-Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.
+Listen bleiben für echte Zusatzinformationen möglich, etwa die Einordnung in Pflicht- und Wahlthemen. Die eigentliche Themenübersicht verwendet die gemeinsame Tabellenform.
 
 ---
 

@@ -8,6 +8,7 @@ nav_exclude: true
 ---
 
 # KI-Agenten
+{: .no_toc }
 
 > **KI-Agenten. Planen. Handeln. Prüfen.**<br>
 Planung, Tool-Nutzung und Kontrolle von Agenten mit LangChain, LangGraph und LangSmith
@@ -21,10 +22,9 @@ Planung, Tool-Nutzung und Kontrolle von Agenten mit LangChain, LangGraph und Lan
 
 Ein KI-Agent verbindet ein Sprachmodell mit Werkzeugen und einer Ablaufsteuerung. Damit kann er Informationen abrufen, Arbeitsschritte ausführen und Ergebnisse anhand festgelegter Regeln prüfen. Sein Handlungsspielraum ergibt sich aus den verfügbaren Tools, Daten und Kontrollschritten.
 
+## Themen
 
-## Themen der Dokumentation
-
-| Bereich | Leitfrage |
+| Thema | Inhalt |
 |---|---|
 | [Start]({{ '/01-einstieg/' | relative_url }}) | Wie beginnt der Kurs, und welche Aufgabe übernimmt der PMO-Assistent? |
 | [Architekturen]({{ '/02-architekturen/' | relative_url }}) | Welcher Lösungsweg und welche Agentenstruktur passen zur Aufgabe? |
@@ -33,6 +33,8 @@ Ein KI-Agent verbindet ein Sprachmodell mit Werkzeugen und einer Ablaufsteuerung
 | [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie lassen sich Agenten kontrollieren, bewerten und absichern? |
 | [Praxis & Betrieb]({{ '/06-praxis-betrieb/' | relative_url }}) | Wie wird aus dem Prototyp eine betreibbare Anwendung? |
 | [Verantwortung]({{ '/07-verantwortung/' | relative_url }}) | Welche rechtlichen Anforderungen und Abhängigkeiten sind zu beachten? |
+
+## Weiterführend
 
 **Begleitend ausprobieren:** [Agent Lab öffnen]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}){:target="_blank" rel="noopener"}. Die sechs Arbeitsreiter finden sich mit denselben Namen auf Ebene 2 der Dokumentationsnavigation wieder.
 

@@ -9,10 +9,13 @@ redirect_from: ["/04-agenten-implementierung/"]
 ---
 
 # Entwicklung
+{: .no_toc }
 
 Ein Agentensystem entsteht aus Modellzugriff, Anweisungen, Werkzeugen, Kontext und einem kontrollierten Ablauf. Die folgenden Bereiche erklären diese Bausteine unabhängig vom verwendeten Framework.
 
-| Thema | Einstieg |
+## Themen
+
+| Thema | Inhalt |
 |---|---|
 | [Modelle & Zugang]({{ '/03-entwicklung/modelle-zugang/' | relative_url }}) | Modell auswählen, Provider anbinden und Modellanpassungen einordnen. |
 | [Prompts & Werkzeuge]({{ '/03-entwicklung/prompts-werkzeuge/' | relative_url }}) | Anweisungen formulieren, Tools einbinden und Skills wiederverwenden. |
@@ -21,4 +24,6 @@ Ein Agentensystem entsteht aus Modellzugriff, Anweisungen, Werkzeugen, Kontext u
 | [State & Checkpoints]({{ '/03-entwicklung/state-checkpoints/' | relative_url }}) | Zustände, Persistenz, Erinnerung und Freigaben gestalten. |
 | [Checkliste Agentensystem]({{ '/03-entwicklung/checkliste-agentensystem.html' | relative_url }}) | Entwurf und Umsetzung anhand gemeinsamer Prüfpunkte durchgehen. |
 
-**Weiterführend:** Die [Framework-Guides]({{ '/04-frameworks/' | relative_url }}) zeigen die konkrete Umsetzung mit LangChain, LangGraph und weiteren Werkzeugen.
+## Weiterführend
+
+Die [Framework-Guides]({{ '/04-frameworks/' | relative_url }}) zeigen die konkrete Umsetzung mit LangChain, LangGraph und weiteren Werkzeugen.

@@ -10,11 +10,18 @@ redirect_from: ["/03-modelle-provider-anpassung/"]
 ---
 
 # Modelle & Zugang
+{: .no_toc }
 
 Modellrollen und Zugriffswege stehen vor dem ersten Modellaufruf fest. Fine-Tuning ist eine spätere Vertiefung, wenn Verbesserungen an Prompts, Kontext oder Werkzeugen nicht ausreichen.
 
-| Thema | Einstieg |
+## Themen
+
+| Thema | Inhalt |
 |---|---|
 | [Modellauswahl]({{ '/03-entwicklung/modelle-zugang/modellauswahl.html' | relative_url }}) | Qualität, Kosten, Latenz, Kontextfenster und Modellrollen abwägen. |
 | [API-Keys & Provider]({{ '/03-entwicklung/modelle-zugang/api-keys-und-provider.html' | relative_url }}) | API-Zugang und Provider-Konfiguration bereitstellen. |
 | [Fine-Tuning · Vertiefung]({{ '/03-entwicklung/modelle-zugang/fine-tuning.html' | relative_url }}) | Voraussetzungen und Grenzen einer Modellanpassung verstehen. |
+
+## Weiterführend
+
+Die nächsten Bausteine stehen unter [Prompts & Werkzeuge]({{ '/03-entwicklung/prompts-werkzeuge/' | relative_url }}). Die Übersicht [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) ordnet Modellzugriff, Kontext und Ablauf ein.

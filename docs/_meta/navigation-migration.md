@@ -8,7 +8,7 @@ has_toc: false
 
 # Navigationsumstellung November 2026
 
-Die Dokumentation wird nach sieben Themenbereichen gegliedert. Die Dateistruktur folgt derselben Zuordnung. Ressourcen und Rechtliches bleiben einschließlich Titeln, Reihenfolge, Unterpunkten, Dateien und Pfaden unverändert.
+Die Dokumentation wird nach sieben Themenbereichen gegliedert. Die Dateistruktur folgt derselben Zuordnung. Bei Ressourcen und Rechtliches bleiben Titel, Reihenfolge, Unterpunkte, Fachseiten und Pfade erhalten. Auf ausdrücklichen Wunsch folgen ihre Indexseiten ebenfalls dem gemeinsamen Aufbau.
 
 ## Arbeitsplan
 
@@ -20,7 +20,8 @@ Die Dokumentation wird nach sieben Themenbereichen gegliedert. Die Dateistruktur
 - [x] Auf zusätzliche Bereichsleiste verzichten; Suche und „Agent Lab öffnen ↗“ oben beibehalten.
 - [x] Dateien in passende Haupt- und Unterverzeichnisse verschieben.
 - [x] Interne Verweise auf die neuen Ziele umstellen; historische HTML-Adressen mit `redirect_from` erhalten.
-- [x] Navigationshierarchie, Weiterleitungen, interne Links und unveränderte Ressourcen-/Rechtsseiten prüfen.
+- [x] Navigationshierarchie, Weiterleitungen, interne Links und unveränderte Ressourcen-/Rechtsfachseiten prüfen.
+- [x] Alle 16 Bereichs- und Kategorieindizes einschließlich Ressourcen und Rechtliches auf „Einführung → Themen → Weiterführend“ vereinheitlichen; Startseiten-Tabelle angleichen.
 - [x] Vorhandene Lab-Tests ausführen und eine Prüfung zur Übereinstimmung der Navigation ergänzen.
 - [x] Darstellung und Reiterwechsel des Labs bei 1440 und 390 Pixeln in Headless Edge prüfen.
 - [x] Header und Seiteneinstieg mit dem vorhandenen Theme bei Desktop- und Mobilbreite prüfen.
@@ -47,8 +48,8 @@ docs/
 ├── 05-qualitaet-sicherheit/
 ├── 06-praxis-betrieb/
 ├── 07-verantwortung/
-├── 10-ressourcen/                  unverändert
-├── 11-rechtliches/                 unverändert
+├── 10-ressourcen/                  Gliederung erhalten
+├── 11-rechtliches/                 Gliederung erhalten
 └── visualisierungen/
     └── agent_patterns_lab/
 ```
@@ -74,7 +75,7 @@ Die PDF-Begleitdatei `modellauswahl.pdf` liegt jetzt neben dem Artikel unter `03
 
 ## Prüfgrenzen
 
-Ergebnis: neun Lab-Testsuiten ohne Fehler; Navigationshierarchie, interne Liquid- und relative Artikellinks sowie die Links aus dem Lab geprüft. 66 Markdown-Dateien und eine unverändert erhaltene PDF-Begleitdatei wurden verschoben. Die 68 Weiterleitungen umfassen die bisherigen HTML-Adressen und bereits zuvor vorhandene historische Adressen. Ressourcen und Rechtliches sind unverändert.
+Ergebnis: neun Lab-Testsuiten ohne Fehler; Navigationshierarchie, interne Liquid- und relative Artikellinks sowie die Links aus dem Lab geprüft. 66 Markdown-Dateien und eine unverändert erhaltene PDF-Begleitdatei wurden verschoben. Die 68 Weiterleitungen umfassen die bisherigen HTML-Adressen und bereits zuvor vorhandene historischen Adressen. Gliederung und Fachseiten von Ressourcen und Rechtliches sind unverändert; ihre Indexseiten wurden in das gemeinsame Schema überführt.
 
 Die Browserprüfung der Dokumentation verwendet eine Layoutvorschau mit dem vorhandenen veröffentlichten Theme. Ein vollständiger lokaler Jekyll-Build war nicht möglich: Ruby/Jekyll sind nicht installiert, und der Docker-Dienst läuft nicht. Das tatsächliche Lab wurde lokal im Browser geprüft. Änderungen sind noch nicht veröffentlicht.
 

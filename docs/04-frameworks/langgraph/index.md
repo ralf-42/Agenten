@@ -25,4 +25,4 @@ Diese Orientierungsseite bündelt die LangGraph-Dokumente: StateGraph-Grundlagen
 
 ## Weiterführend
 
-Die [Framework-Übersicht]({{ '/04-frameworks/' | relative_url }}) ordnet die Werkzeuge ein. [State & Checkpoints]({{ '/03-entwicklung/state-checkpoints/' | relative_url }}) erklärt die fachlichen Grundlagen; das [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}) macht den Ablauf sichtbar.
+Die [Framework-Übersicht]({{ '/04-frameworks/' | relative_url }}) ordnet die Werkzeuge ein. [State & Checkpoints]({{ '/03-entwicklung/state-checkpoints/' | relative_url }}) erklärt die fachlichen Grundlagen; das [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} macht den Ablauf sichtbar.

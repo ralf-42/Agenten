@@ -331,6 +331,20 @@ Listen bleiben für echte Zusatzinformationen möglich, etwa die Einordnung in P
 
 ---
 
+## Konsistenz zwischen Dokumentation und Agent Lab
+
+- Bereichslinks verwenden die aktuellen Namen aus der Navigation und führen direkt zum aktuellen Ziel. Historische URLs bleiben in `redirect_from` erhalten und werden nicht als neue interne Linkziele verwendet.
+- Links auf eigene Kursseiten werden im statischen Agent Lab relativ angegeben. Dokumentationslinks zum Lab öffnen mit `{:target="_blank" rel="noopener"}` einen neuen Tab.
+- Jeder Arbeitsreiter erhält einen passenden Rücklink von seiner maßgeblichen Dokumentationsseite. Das gilt zusätzlich für direkt zugeordnete Spezialdemos wie Skills und Modellstufen-Routing.
+- Beschreibungen nennen die tatsächlich vorhandenen Bedienelemente und kennzeichnen Simulationen. Die Modellrollen werden aus `genai_lib.model_config` abgeleitet; allgemeine Modellbeispiele sind davon getrennt zu betrachten.
+- Browser-Voraussetzungen des Labs werden von Entwicklerwerkzeugen für lokale Tests getrennt. Aussagen über geprüfte Links nennen den Prüfungsumfang; statische Zielprüfungen ersetzen keinen veröffentlichten Jekyll-Build oder eine Prüfung externer Websites.
+
+Die Navigationsverträge werden mit `node docs/visualisierungen/agent_patterns_lab/tests/run_all.cjs` aus dem Projektverzeichnis ausgeführt.
+
+Die ergänzende Dokumentprüfung wird aus dem Workspace-Stamm mit `python -X utf8 tools/maintenance/check_agent_docs.py` ausgeführt. Sie berücksichtigt Backtick- und Tilden-Fences. Der Browserchecker `tools/maintenance/check_viz_lab.py` lädt die echte Lab-Seite einschließlich `pattern_extensions.js` und `architecture_extensions.js`; eine separate VM-Auswertung ohne diese Module ist kein vollständiger Katalognachweis. Fehlende Prüfeingaben oder eine nicht lesbare Browserauswertung sind als nicht durchführbare Prüfung mit Exitcode 2 zu melden.
+
+---
+
 ## Querschnittsseiten und Checklisten
 
 Querschnittsseiten wie Checklisten, Review-Hilfen oder Freigabeübersichten verbinden mehrere Themenbereiche. Sie brauchen deshalb eine stärkere Navigationsfunktion als normale Konzeptseiten.

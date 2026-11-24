@@ -235,12 +235,12 @@ Diese Seite ordnet die Rollen von LangChain, LangGraph und LangSmith ein. Die te
 | Dokument | Frage |
 |---|---|
 | [LangChain Best Practices]({{ '/04-frameworks/langchain/langchain-best-practices.html' | relative_url }}) | Welche LangChain-Konventionen gelten für produktionsnahe Anwendungen? |
-| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für LangChain-basierte Anwendungen? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie werden LangChain-basierte Anwendungen bewertet, beobachtet und abgesichert? |
 
 ---
 
 **Version:** 1.2<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

@@ -223,8 +223,8 @@ Interaktive Demo: [Quantisierung von Sprachmodellen]({{ '/visualisierungen/quant
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/03-entwicklung/' | relative_url }}) | Wo starte ich als Entwickler mit API-Keys & Provider? |
-| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für API-Keys & Provider? |
+| [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) | Wie werden Modellzugriff, Tools und Agentenabläufe zusammengesetzt? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie lassen sich API-Zugriffe, Zugangsdaten und Agentenläufe absichern? |
 
 ---
 

@@ -316,7 +316,7 @@ flowchart TB
 ```
 
 **ASCII-Darstellung:**
-```
+```text
 Dokument: [AAAA|BBBB|CCCC|DDDD]
 
 Ohne Overlap:
@@ -654,7 +654,7 @@ Häufige Probleme und deren Lösungen:
 ### SQLite-Versionsfehler (Google Colab)
 
 **Fehlermeldung:**
-```
+```text
 sqlite3.OperationalError: database is locked
 RuntimeError: Your system has an unsupported version of sqlite3
 ```
@@ -675,7 +675,7 @@ import chromadb
 ### Collection existiert bereits
 
 **Fehlermeldung:**
-```
+```text
 ValueError: Collection meine_dokumente already exists
 ```
 
@@ -874,7 +874,7 @@ flowchart TB
 ```
 
 **Text-Version:**
-```
+```text
 1. Dokumente laden
       ↓
 2. Chunking (RecursiveCharacterTextSplitter)
@@ -934,6 +934,6 @@ results = retriever.invoke("Meine Frage")
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 

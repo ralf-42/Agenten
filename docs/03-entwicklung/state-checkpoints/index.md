@@ -25,4 +25,4 @@ Ein nachvollziehbarer Zustand hält die Arbeitsdaten eines Agenten zusammen. Che
 
 ## Weiterführend
 
-[Loop Engineering]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}) und [State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}) im Agent Lab.
+[Loop Engineering]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} und [State & Checkpoints]({{ '/visualisierungen/agent_patterns_lab/#checkpoints' | relative_url }}){:target="_blank" rel="noopener"} im Agent Lab.

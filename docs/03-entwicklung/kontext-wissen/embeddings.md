@@ -16,7 +16,7 @@ redirect_from: ["/04-agenten-implementierung/kontext-wissen/embeddings.html"]
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -26,7 +26,7 @@ redirect_from: ["/04-agenten-implementierung/kontext-wissen/embeddings.html"]
 
 Damit Künstliche Intelligenz (KI) sinnvoll mit Sprache, Bildern oder anderen Inhalten arbeiten kann, muss sie deren Bedeutung erfassen. Allerdings verarbeitet ein Computer keine Wörter oder Bilder direkt, sondern nur Zahlen. **Embeddings** sind eine Methode, um solche Inhalte als Zahlen zu kodieren, sodass die KI Zusammenhänge und Bedeutungen erkennen kann.
 
-# Was sind Embeddings?
+## Was sind Embeddings?
 Ein **Embedding** ist eine numerische Darstellung eines Wortes, Satzes oder Bildes in Form eines Vektors, also einer Zahlenliste. Diese Zahlen erfassen Ähnlichkeiten und Zusammenhänge zwischen verschiedenen Konzepten.
 
 **Beispiel für Sprache:**
@@ -56,7 +56,7 @@ Embeddings werden nicht nur für Sprache und Bilder genutzt, sondern auch in Emp
 
 Interaktive Demo: [Embeddings 2D]({{ '/visualisierungen/embedding_visual_2d/' | relative_url }}){:target="_blank" rel="noopener"} und [Embeddings 3D]({{ '/visualisierungen/embedding_visual_3d/' | relative_url }}){:target="_blank" rel="noopener"} – machen Nachbarschaften und Abstände im Vektorraum interaktiv erkundbar.
 
-# Wie entstehen Embeddings?
+## Wie entstehen Embeddings?
 Embeddings werden mit **künstlichen neuronalen Netzen** oder **statistischen Methoden** erzeugt. Dabei durchläuft der Prozess mehrere Schritte:
 
 1. **Daten sammeln**
@@ -81,7 +81,7 @@ Embeddings werden mit **künstlichen neuronalen Netzen** oder **statistischen Me
 
 ---
 
-# Positional Encoding
+## Positional Encoding
 Die Positionskodierung fügt jedem Token-Vektor (aus der Einbettungsmatrix) Informationen über seine Position in der Sequenz hinzu.  Dies geschieht durch die Kombination von Positionsinformationen und den ursprünglichen Token-Einbettungen. Ohne zusätzliche Information gäbe es keinen Unterschied zwischen:
 + *Die Katze jagt den Hund* und
 + *Den Hund jagt die Katze*
@@ -90,7 +90,7 @@ Die Positionskodierung ist wie ein kleiner Hinweiszettel, der sagt, welches Wort
 
 ---
 
-# Embedding-Modelle
+## Embedding-Modelle
 Es gibt verschiedene Einbettungsmodelle wie Word2Vec, GloVe und FastText für Wortrepräsentationen, BERT für kontextuelle Einbettungen sowie Node2Vec und LSTM-basierte Modelle für Netzwerke und Sequenzen, die jeweils auf spezifische Anwendungsfälle und Datenstrukturen optimiert sind.
 
 **Übersicht Einbettungsmodelle:**
@@ -111,7 +111,7 @@ Es gibt verschiedene Einbettungsmodelle wie Word2Vec, GloVe und FastText für Wo
 | Node2Vec                          | 64-256 Dimensionen                             | Graphenanalysen, soziale Netzwerke       |
 | LSTM-basierte Sequenzeinbettungen | 50-500 Dimensionen                             | Zeitreihen, Sprachmodellierung, NLP      |
 
-# Grenzen und typische Fehler
+## Grenzen und typische Fehler
 
 **Typischer Fehler:** Index und Anfrage mit unterschiedlichen Embedding-Modellen erzeugen. Die Vektoren verschiedener Modelle liegen in unterschiedlichen Räumen und sind nicht vergleichbar. Nach einem Modellwechsel muss der gesamte Bestand neu indexiert werden.
 
@@ -119,7 +119,7 @@ Es gibt verschiedene Einbettungsmodelle wie Word2Vec, GloVe und FastText für Wo
 
 **Praxis:** Jedes Embedding-Modell hat eine maximale Eingabelänge (bei den OpenAI-Modellen 8.191 Tokens); längere Texte werden abgeschnitten oder abgelehnt und gehören vorher in Chunks zerlegt.
 
-# Training von Embedding-Modellen
+## Training von Embedding-Modellen
 Das Training von Embedding-Modellen wie Word2Vec basiert auf der Idee, dass Wörter, die in ähnlichen Kontexten vorkommen, ähnliche Bedeutungen haben. Hier wird detaillierter beschrieben, wie dieses Prinzip im Training umgesetzt wird:
 
 **Algorithmus-Auswahl**
@@ -148,7 +148,7 @@ Das Ergebnis des Trainings ist ein Set von Vektoren, eines für jedes Wort im Vo
 
 Um die Qualität der Embeddings zu überprüfen, werden oft qualitative Tests wie die Suche nach den nächsten Nachbarn (ähnliche Wörter finden) oder quantitative Benchmarks (z.B. auf Datensätzen für analoge Aufgaben) durchgeführt. Diese Evaluierungen helfen dabei festzustellen, ob das Modell die Wortbedeutungen effektiv erfasst hat.
 
-# Kombi: Embedding - Token - Chunk
+## Kombi: Embedding - Token - Chunk
 Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** zeigt, welche **Tokenizer** und **Chunking-Strategien** zulässig oder üblich sind
 
 | **Embeddingmodell**         | **Zulässiger Tokenizer**                                                               | **Empfohlene Chunking-Strategie**                                               |
@@ -160,7 +160,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 | `sentence-transformers/...` | `transformers.AutoTokenizer.from_pretrained(...)`                                      | Chunking nach **Max Token Length** des jeweiligen Modells (oft 384–512 Tokens)  |
 | `e5-base-v2`                | `transformers.AutoTokenizer.from_pretrained("intfloat/e5-base-v2")`                    | Max. **512 Tokens** ggf. Split mit Overlap, um Kontext zu erhalten              |
 
-# Warum sind Embeddings so wichtig?
+## Warum sind Embeddings so wichtig?
 + **Sprachverarbeitung**: Chatbots, Übersetzungen und Textanalysen basieren auf Embeddings. 
 + **Bilderkennung**: KI kann ähnliche Bilder oder Objekte erkennen.  
 + **Suche & Empfehlungssysteme**: Personalisierte Vorschläge auf Plattformen wie Netflix, Spotify oder YouTube nutzen Embeddings.  
@@ -172,7 +172,7 @@ Hier ist eine tabellarische Übersicht, die ausgehend vom **Embedding-Modell** z
 > Embeddings machen Ähnlichkeit berechenbar, ersetzen aber keine gute Datenstruktur. Wenn Texte schlecht geschnitten, uneinheitlich benannt oder ohne relevante Metadaten gespeichert werden, findet auch ein gutes Embedding-Modell nur scheinbar passende Treffer.
 ---
 
-# Abgrenzung zu verwandten Dokumenten
+## Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|

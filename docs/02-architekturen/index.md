@@ -24,4 +24,4 @@ Die Aufgabe bestimmt den Lösungsweg: Ein Prompt, eine feste Verarbeitungskette 
 
 ## Weiterführend
 
-[Agenten-Architekturen im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}). Wiederverwendbare [Skills]({{ '/03-entwicklung/prompts-werkzeuge/skills.html' | relative_url }}) stehen unter Entwicklung → Prompts & Werkzeuge.
+[Agenten-Architekturen im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"}. Wiederverwendbare [Skills]({{ '/03-entwicklung/prompts-werkzeuge/skills.html' | relative_url }}) stehen unter Entwicklung → Prompts & Werkzeuge.

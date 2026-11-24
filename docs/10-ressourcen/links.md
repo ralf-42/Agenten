@@ -94,7 +94,7 @@ Offizielle Dokumentationen der im Kurs verwendeten Frameworks – tägliche Refe
 | [LangChain Docs](https://python.langchain.com/) | Offizielle Dokumentation: Chains, Agents, Tools, RAG (→ KI-Agenten und Tool Use bis LCEL Chains) |
 | [LangGraph Docs](https://langchain-ai.github.io/langgraph/) | Offizielle Dokumentation: StateGraph, Nodes, Edges, HITL, Multi-Agent (→ Warum LangGraph bis Tool Loop, Sessions, Checkpointing und Memory bis Supervisor Pattern) |
 | [LangSmith Docs](https://docs.smith.langchain.com/) | Offizielle Dokumentation: Tracing, Evaluation, Datasets (→ LangSmith Evaluations Basics, Agent Evaluation und Testing) |
-| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ KI-Agenten und Tool Use bis LangChain Erste Agenten) |
+| [OpenAI API Reference](https://platform.openai.com/docs) | API-Referenz: Modelle, Endpoints, Function Calling, Embeddings (→ Modellaufrufe, Tool Use und LangChain) |
 | [ChromaDB Docs](https://docs.trychroma.com/) | Offizielle Dokumentation: Collections, Embeddings, Persistenz (→ RAG Grundlagen) |
 | [Pydantic Docs](https://docs.pydantic.dev/) | Offizielle Dokumentation: BaseModel, Field, Validierung (→ Structured Output, täglich) |
 | [Was ist Hugging Face? – Modelle, Datensätze & Räume (YouTube)](https://www.youtube.com/watch?v=qP9mbY3wuWk) | Einführung in die Hugging Face Plattform: Modelle, Datensätze und Spaces (→ MCP Local) |
@@ -212,13 +212,13 @@ Referenzwerke für verantwortungsvolle Agenten-Entwicklung.
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}) | Wo starte ich als Entwickler mit Links? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Links? |
+| [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) | Welche Bausteine und Implementierungsthemen vertiefen diese Quellen? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Konzepte helfen bei Evaluation und Absicherung von Agenten? |
 
 ---
 
 **Version:** 1.8<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

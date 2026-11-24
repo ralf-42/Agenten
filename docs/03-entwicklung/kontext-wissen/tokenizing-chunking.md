@@ -16,7 +16,7 @@ redirect_from: ["/04-agenten-implementierung/kontext-wissen/tokenizing-chunking.
 
 ---
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 {: .no_toc .text-delta }
 
 1. TOC
@@ -28,8 +28,8 @@ Die Textverarbeitung in LLM-Systemen steht und fällt oft mit drei Entscheidunge
 
 Wenn Antworten unpräzise, unvollständig oder instabil sind, wird oft zuerst das Modell verdächtigt. Die Ursache liegt häufig früher in der Pipeline: Chunks sind zu klein, Grenzen fallen ungünstig oder Überlappungen erzeugen Rauschen. Tokenizing und Chunking prägen deshalb die Qualität des Retrievals.
 
-# Tokenizer-, Chunking- & Strategieauswahl
-## Dokumenttypen
+## Tokenizer-, Chunking- & Strategieauswahl
+### Dokumenttypen
 
 | Dokumenttyp | Tokenizer | Chunk-Größe | Überlappung | Chunking-Strategie | Begründung |
 |-------------|-----------|-------------|-------------|-------------------|------------|
@@ -40,7 +40,7 @@ Wenn Antworten unpräzise, unvollständig oder instabil sind, wird oft zuerst da
 
 <div style="page-break-after: always;"></div>
 
-## Anwendungsszenarien
+### Anwendungsszenarien
 
 | Szenario | Ziel | Empfohlenes Chunking | Strategie | Begründung |
 |----------|------|---------------------|-----------|------------|
@@ -54,7 +54,7 @@ Wenn Antworten unpräzise, unvollständig oder instabil sind, wird oft zuerst da
 > [!NOTE] Pilotphase<br>
 > Vor einer konkreten Implementierung lohnt sich eine kurze Pilotphase mit echten Dokumenten. Häufig reichen schon zwei oder drei Varianten, um zu sehen, ob ein Setup eher Kontext erhält oder eher Rauschen produziert.
 
-# Beispiel
+## Beispiel
 <img src="https://raw.githubusercontent.com/ralf-42/Agenten/main/07_image/tokenizing-chunking-prozess.png" alt="Tokenizing & Chunking Prozess" width="700">
 <p><font color='black' size="2">
 KI-generiertes Bild
@@ -75,7 +75,7 @@ KI-generiertes Bild
 	+ Chunks werden nacheinander verarbeitet
 	+ LLM behält Kontext zwischen Chunks durch Überlappungen
 
-# Parameter- und Strategieauswahl
+## Parameter- und Strategieauswahl
 - **Tokenizer-Auswahl:**
     - **SentencePiece/BPE** sind ideal für lange, unstrukturierte Texte, da sie feine Subworteinheiten erzeugen und dabei semantische Bedeutung beibehalten.
     - **WordPiece** ist optimal für hybride Texte, in denen technische sowie allgemeine Sprache vorkommen.
@@ -99,42 +99,42 @@ Aus Kurssicht ist vor allem eine Erfahrung wichtig: Es gibt selten eine universe
 
 <div style="page-break-after: always;"></div>
 
-# Chunking-Strategien im Detail
+## Chunking-Strategien im Detail
 Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je nach Anwendung berücksichtigt werden sollten.
 
-## Zeichenbasiertes Chunking
+### Zeichenbasiertes Chunking
 
 - **Einfach:** Text wird nach fester Zeichenanzahl geteilt
 - **Nachteile:** Kann Wörter oder Sätze mitten durchschneiden
 - **Anwendung:** Selten empfohlen, nur für sehr einfache Fälle
 
-## Rekursives Zeichen-Chunking
+### Rekursives Zeichen-Chunking
 
 - **Vorgehen:** Versucht zunächst an Absatzgrenzen zu trennen, dann an Sätzen, schließlich an Wörtern
 - **Vorteile:** Erhält mehr strukturelle Integrität als einfaches Zeichen-Chunking
 - **Anwendung:** Standard für viele Texttypen
 
-## Dokumentbasiertes Chunking
+### Dokumentbasiertes Chunking
 
 - **Vorgehen:** Nutzt dokumentspezifische Struktur (z.B. Markdown-Header, HTML-Tags)
 - **Vorteile:** Semantisch sinnvolle Grenzen
 - **Anwendung:** Strukturierte Dokumente, technische Dokumentation
 
-## Semantisches Chunking
+### Semantisches Chunking
 
 - **Vorgehen:** Analysiert semantische Ähnlichkeit zwischen Sätzen
 - **Vorteile:** Hält zusammenhängende Inhalte zusammen
 - **Nachteile:** Rechenintensiver
 - **Anwendung:** Hochwertige RAG-Systeme
 
-## Embeddingbasiertes Chunking
+### Embeddingbasiertes Chunking
 
 - **Vorgehen:** Nutzt Embeddings um semantisch ähnliche Abschnitte zu identifizieren
 - **Vorteile:** Sehr genaue semantische Gruppierung
 - **Nachteile:** Hoher Rechenaufwand
 - **Anwendung:** Retrieval-optimierte Systeme
 
-## Agentisches Chunking
+### Agentisches Chunking
 
 - **Vorgehen:** KI-Agent analysiert Text und entscheidet über Chunk-Grenzen
 - **Vorteile:** Adaptiv, kontextabhängig
@@ -143,8 +143,8 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
 
 <div style="page-break-after: always;"></div>
 
-# Tokenizer-Typen im Vergleich
-## Byte-Pair Encoding (BPE)
+## Tokenizer-Typen im Vergleich
+### Byte-Pair Encoding (BPE)
 
 - **Prinzip:** Häufig auftretende Zeichenpaare werden iterativ zusammengefasst
 - **Vorteile:**
@@ -154,7 +154,7 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
   - Training erforderlich
 - **Verwendung:** GPT-Modelle, viele Transformer
 
-## WordPiece
+### WordPiece
 
 - **Prinzip:** Ähnlich wie BPE, optimiert auf Wahrscheinlichkeitsmaximierung
 - **Vorteile:**
@@ -164,7 +164,7 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
   - Komplexere Implementation
 - **Verwendung:** BERT, DistilBERT
 
-## SentencePiece
+### SentencePiece
 
 - **Prinzip:** Behandelt Text als Rohdaten ohne Whitespace-Annahmen
 - **Vorteile:**
@@ -174,7 +174,7 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
   - Etwas langsamer
 - **Verwendung:** T5, XLNet
 
-## Whitespace/Symbol-basierte Tokenizer
+### Whitespace/Symbol-basierte Tokenizer
 
 - **Prinzip:** Trennung an Leerzeichen und Satzzeichen
 - **Vorteile:**
@@ -188,8 +188,8 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
 
 <div style="page-break-after: always;"></div>
 
-# Best Practices
-## Chunk-Größe wählen
+## Best Practices
+### Chunk-Größe wählen
 
 1. **Kleine Chunks (128-256 Tokens):**
    - Präzises Retrieval
@@ -205,14 +205,14 @@ Verschiedene Chunking-Strategien haben spezifische Vor- und Nachteile, die je na
    - Weniger Chunks
    - Risiko: Irrelevante Informationen
 
-## Überlappung optimieren
+### Überlappung optimieren
 
 - **Keine Überlappung (0%):** Nur wenn Chunks völlig unabhängig sind
 - **Kleine Überlappung (5-10%):** Strukturierte Dokumente
 - **Moderate Überlappung (10-20%):** Standard für RAG
 - **Hohe Überlappung (30-50%):** Wenn Kontext kritisch ist (Q&A)
 
-## Strategie-Auswahl
+### Strategie-Auswahl
 
 ```mermaid
 flowchart TD
@@ -237,15 +237,15 @@ flowchart TD
     class DOK,ZEICHEN,EMBED,REKURSIV,AGENT output;
 ```
 
-# Evaluation & Monitoring
-## Metriken für Chunking-Qualität
+## Evaluation & Monitoring
+### Metriken für Chunking-Qualität
 
 - **Retrieval Precision:** Anteil relevanter Chunks in Top-K Ergebnissen
 - **Retrieval Recall:** Anteil gefundener relevanter Chunks
 - **Context Preservation:** Wird wichtiger Kontext über Chunk-Grenzen hinweg erhalten?
 - **Chunk Size Distribution:** Sind die Chunks gleichmäßig groß?
 
-## A/B Testing
+### A/B Testing
 
 Sinnvoll ist der Vergleich mehrerer Konfigurationen:
 - Chunk-Größe: 256 vs. 512 Tokens
@@ -257,7 +257,7 @@ Geeignete Messgrößen sind:
 - Retrieval-Geschwindigkeit
 - Kosten (API-Calls, Compute)
 
-## Tools zum Vergleichen von Chunking-Strategien
+### Tools zum Vergleichen von Chunking-Strategien
 
 Interaktive Demos: [RAG Chunking Explorer]({{ '/visualisierungen/rag_chunking_explorer/' | relative_url }}){:target="_blank" rel="noopener"} (Vergleich verschiedener Chunking-Strategien und Parameter) sowie [LLM-Inferenz (Tokenisierung & Pipeline)]({{ '/visualisierungen/llm_inferenz/' | relative_url }}){:target="_blank" rel="noopener"} (Subword-Tokenisierung in Token-IDs und Weiterverarbeitung in der Inferenz-Pipeline).
 
@@ -268,7 +268,7 @@ Wer zunächst nur Chunk-Grenzen an Beispieldokumenten ansehen möchte, kann den 
 
 Eine Übersicht weiterer kostenloser Browser-Tools für KI-Anwendungen bietet [apprun.icu AI-Tools](https://apprun.icu/ai-tools/); darunter ist auch der Chunking Strategy Comparator.
 
-# Implementierungs-Beispiel (LangChain)
+## Implementierungs-Beispiel (LangChain)
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
@@ -296,7 +296,7 @@ text_splitter = TokenTextSplitter(
 chunks = text_splitter.split_text(document_text)
 ```
 
-# Fazit
+## Fazit
 Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Strategie ist entscheidend für die Qualität einer NLP-Anwendung:
 
 - **Dokumenttyp bestimmt Tokenizer:** Lange Texte → BPE/SentencePiece, Code → Whitespace/Symbol
@@ -313,7 +313,7 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 
 ---
 
-## Abgrenzung zu verwandten Dokumenten
+### Abgrenzung zu verwandten Dokumenten
 
 | Dokument | Frage |
 |---|---|
@@ -324,5 +324,5 @@ Die Wahl der richtigen Kombination aus Tokenizer, Chunk-Größe und Chunking-Str
 ---
 
 **Version:**    1.1<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

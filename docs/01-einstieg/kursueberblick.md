@@ -80,20 +80,9 @@ Zuerst wird der Grundaufbau erarbeitet, dann ein einzelner PMO-Skill und anschli
 Die Timeline zeigt den Grundlagenpfad nach Themenblöcken. Anschließend folgen die optionalen Module für Aufbau und Vertiefung; die Modul-IDs entsprechen der Kurstabelle und der Zusatzübersicht.
 
 ```mermaid
-%%{init: {
-  'theme': 'base',
-  'themeVariables': {
-    'timelineLineColor': '#2e7d32',
-    'sectionBkgColor': '#c8e6c9',
-    'sectionTextColor': '#1b5e20',
-    'containerBkgColor': '#f9f9f9',
-    'taskBkgColor': '#e8f5e9',
-    'taskTextColor': '#1b5e20'
-  }
-}}%%
 timeline
     title Agenten-Progression im Kursverlauf
-    section Agenten-\nGrundlagen
+    section Agenten-Grundlagen
         Erste handlungsfähige Agenten : Agentenbegriff, Tools, erster LangChain-Agent
                                      : M01–M02
     section Strukturierte Agenten

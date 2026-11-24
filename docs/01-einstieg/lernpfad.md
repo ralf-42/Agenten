@@ -113,14 +113,14 @@ Empfohlener Einstieg:
 | Dokument | Frage |
 |---|---|
 | [Start]({{ '/01-einstieg/' | relative_url }}) | Welche Grundentscheidungen stehen vor dem Bau eines Agenten? |
-| [Agenten-Implementierung]({{ '/03-entwicklung/' | relative_url }}) | Welche Grundlagen brauche ich für die erste Umsetzung? |
+| [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) | Welche Grundlagen brauche ich für die erste Umsetzung? |
 | [Checkliste Agentensystem]({{ '/03-entwicklung/checkliste-agentensystem.html' | relative_url }}) | Welche Prüfpunkte sichern Entwurf, Review und Freigabe ab? |
-| [Deployment & Betrieb]({{ '/06-praxis-betrieb/' | relative_url }}) | Welche Dokumente begleiten den Weg in Betrieb und Projektarbeit? |
-| [Regulatorik & Verantwortung]({{ '/07-verantwortung/' | relative_url }}) | Welche inhaltlichen Rahmenbedingungen gelten für Agentensysteme? |
+| [Praxis & Betrieb]({{ '/06-praxis-betrieb/' | relative_url }}) | Welche Dokumente begleiten den Weg in Betrieb und Projektarbeit? |
+| [Verantwortung]({{ '/07-verantwortung/' | relative_url }}) | Welche inhaltlichen Rahmenbedingungen gelten für Agentensysteme? |
 | [Ressourcen]({{ '/10-ressourcen/' | relative_url }}) | Welche Hilfen und Nachschlagepunkte unterstützen die Umsetzung? |
 
 ---
 
 **Version:** 1.5<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

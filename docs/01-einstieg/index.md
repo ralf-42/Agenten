@@ -26,4 +26,4 @@ Hier beginnt der Kurs: Ziel und Nutzen klären, die Grundbegriffe kennenlernen u
 
 ## Weiterführend
 
-Unter [Architekturen]({{ '/02-architekturen/' | relative_url }}) wird die passende Lösung für eine Aufgabe ausgewählt. Im [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}) lassen sich die Themen begleitend erkunden.
+Unter [Architekturen]({{ '/02-architekturen/' | relative_url }}) wird die passende Lösung für eine Aufgabe ausgewählt. Im [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}){:target="_blank" rel="noopener"} lassen sich die Themen begleitend erkunden.

@@ -6,6 +6,7 @@ const docs = path.resolve(__dirname, '../../..');
 const lab = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const decode = text => text.replaceAll('&amp;', '&');
 const pages = [];
+const allPages = [];
 
 function collect(folder) {
   for (const entry of fs.readdirSync(folder, {withFileTypes: true})) {
@@ -21,6 +22,7 @@ function collect(folder) {
         const match = line.match(/^(title|parent|grand_parent|nav_exclude|has_children):\s*(.+)$/);
         if (match) meta[match[1]] = match[2].replace(/^"|"$/g, '');
       }
+      allPages.push({file, ...meta});
       if (meta.nav_exclude !== 'true') pages.push({file, ...meta});
     }
   }
@@ -51,7 +53,36 @@ for (const match of lab.matchAll(/<button class="nav-tab[^"\n]*" data-view="([^"
 }
 console.log('PASS Alle Lab-Reiter stehen unter identischen Namen auf Ebene 1 oder 2');
 
-for (const page of pages.filter(page => ['Agenten-Architekturen', 'Kontext & Wissen', 'Loop Engineering', 'Agent Harness', 'Evaluation'].includes(page.title))) {
-  assert.match(fs.readFileSync(page.file, 'utf8'), /agent_patterns_lab\/#(?:augmented|context|loops|harness|evaluation)/, page.title);
+const returnLinks = new Map([
+  ['Agenten-Architekturen', 'augmented'],
+  ['Kontext & Wissen', 'context'],
+  ['Loop Engineering', 'loops'],
+  ['State & Checkpoints', 'checkpoints'],
+  ['Agent Harness', 'harness'],
+  ['Evaluation', 'evaluation'],
+  ['Skills', 'skills'],
+  ['Modellauswahl', 'model_tiers'],
+]);
+for (const [title, fragment] of returnLinks) {
+  const page = byTitle.get(title);
+  assert.ok(page, `Pflichtziel fehlt: ${title}`);
+  assert.ok(fs.readFileSync(page.file, 'utf8').includes(`/visualisierungen/agent_patterns_lab/#${fragment}`), `Passender Rücklink fehlt: ${title} → #${fragment}`);
 }
-console.log('PASS Arbeitsreiter: direkte Rücklinks von den Fachartikeln ins Lab');
+console.log('PASS Alle sechs Arbeitsreiter sowie Skills und Modellstufen-Routing haben den passenden Rücklink');
+
+let labLinks = 0;
+for (const page of allPages) {
+  const source = fs.readFileSync(page.file, 'utf8');
+  for (const match of source.matchAll(/\]\(\{\{\s*['"]\/visualisierungen\/agent_patterns_lab\/[^}]*\}\}\)(\{:[^}]*\})?/g)) {
+    assert.ok(match[1]?.includes('target="_blank"'), `Lab-Link ohne neuen Tab: ${page.file}`);
+    assert.ok(match[1]?.includes('rel="noopener"'), `Lab-Link ohne noopener: ${page.file}`);
+    labLinks++;
+  }
+}
+assert.ok(labLinks > 0, 'Keine Lab-Verweise geprüft');
+console.log(`PASS ${labLinks} Dokumentationsverweise öffnen das Lab einheitlich in einem neuen Tab`);
+
+for (const match of lab.matchAll(/href=["']([^"']+)["']/g)) {
+  assert.ok(!match[1].startsWith('https://ralf-42.github.io/Agenten/'), 'Eigene Kursseiten werden im Lab relativ verlinkt');
+}
+console.log('PASS Lab-Verweise auf eigene Kursseiten verwenden einheitlich relative URLs');

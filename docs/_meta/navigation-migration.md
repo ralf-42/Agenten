@@ -25,7 +25,7 @@ Die Dokumentation wird nach sieben Themenbereichen gegliedert. Die Dateistruktur
 - [x] Vorhandene Lab-Tests ausführen und eine Prüfung zur Übereinstimmung der Navigation ergänzen.
 - [x] Darstellung und Reiterwechsel des Labs bei 1440 und 390 Pixeln in Headless Edge prüfen.
 - [x] Header und Seiteneinstieg mit dem vorhandenen Theme bei Desktop- und Mobilbreite prüfen.
-- [ ] Zwei Links in der geschützten Projekt-README nach Freigabe auf die neuen Dateipfade umstellen (DeepAgents und Kursüberblick).
+- [x] Im Rahmen der beauftragten Konsistenzbereinigung die zwei README-Links auf die neuen Dateipfade umstellen (DeepAgents und Kursüberblick).
 
 ## Zielstruktur
 
@@ -73,7 +73,22 @@ Vor jedem Verschieben werden Quell- und Zielpfade sowie bestehende Weiterleitung
 
 Die PDF-Begleitdatei `modellauswahl.pdf` liegt jetzt neben dem Artikel unter `03-entwicklung/modelle-zugang/`. `redirect_from` gilt für HTML-Seiten; eine Weiterleitung der bisherigen PDF-Adresse ist damit nicht eingerichtet.
 
+## Redaktionelle Konsistenzbereinigung
+
+Die nachfolgende Prüfung von Dokumentation und Lab hat weitere redaktionelle Abweichungen aufgedeckt. Die beauftragte Bereinigung ergänzt die abgeschlossene Navigationseinrichtung:
+
+- Beschreibungen von Loop Engineering, Modellrollen und Lab-Voraussetzungen korrigiert; Kontext & Wissen in der Ressourcenübersicht ergänzt.
+- Die Katalogzählung präzisiert: 16 Architektur-Demos (15 Muster und PMO-Agenten-Pipeline) sowie zwei Harness-Kontrollen.
+- Alte Bereichs-Linktexte und indirekte interne Ziele aktualisiert; generische Abgrenzungsfragen fachlich konkretisiert.
+- Lab-Verweise auf eigene Kursseiten vereinheitlicht und fehlende Rücklinks für Skills und Modellstufen-Routing ergänzt.
+- Rücklinkprüfung für alle sechs Arbeitsreiter erweitert; 41 Dokumentationsverweise öffnen das Lab einheitlich in einem neuen Tab.
+- Die zwei README-Dateipfade und ein zusätzlicher Lizenzlink auf die Repository-Datei korrigiert. Die rechtlichen Aussagen bleiben unverändert.
+
+Geprüft wurden lokale interne Ziele und Weiterleitungen sowie die 16 aus der Dokumentation verwendeten Lab-Sprungrouten im Browser. Alle neun Testsuiten bestehen. Die 68 historischen Weiterleitungen sind unverändert. Externe Websites wurden nicht auf Erreichbarkeit geprüft.
+
 ## Prüfgrenzen
+
+Die ergänzende Regelbereinigung hat den zentralen Browserchecker und seinen Smoke-Test an die aktuelle Struktur angepasst. `tools/maintenance/check_agent_docs.py` macht die statische Prüfung von Dokumentregeln reproduzierbar. Die bestätigten Befunde und die Korrektur der früher unvollständigen Katalogauswertung sind im Workspace-Bericht `_docs/Agenten_Docs_Agent_Lab_Konsistenzpruefung_2026-11-24.md` dokumentiert.
 
 Ergebnis: neun Lab-Testsuiten ohne Fehler; Navigationshierarchie, interne Liquid- und relative Artikellinks sowie die Links aus dem Lab geprüft. 66 Markdown-Dateien und eine unverändert erhaltene PDF-Begleitdatei wurden verschoben. Die 68 Weiterleitungen umfassen die bisherigen HTML-Adressen und bereits zuvor vorhandene historische Adressen. Gliederung und Fachseiten von Ressourcen und Rechtliches sind unverändert; ihre Indexseiten wurden in das gemeinsame Schema überführt.
 

@@ -264,7 +264,7 @@ graph TB
 ```
 
 **ASCII-Darstellung:**
-```
+```text
 Chain Run (Gesamt)
 ├─ Prompt Run (Template-Formatierung)
 ├─ LLM Run (gpt-6.1-terra Call)
@@ -628,7 +628,7 @@ result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("..."
 | `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
 | `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
 
-> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
+> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices]({{ '/04-frameworks/langsmith/langsmith-best-practices.html#selektives-tracing' | relative_url }}). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
 
 ```python
 from langsmith import tracing_context
@@ -840,7 +840,7 @@ Die folgenden Patterns treten immer wieder auf, quer durch alle Chain- und RAG-T
 
 **Reales Beispiel — Over-Retrieval in einer RAG-Chain:**
 
-```
+```text
 User: "Was ist LangSmith?"
 → Retriever: retrieve_documents(query="LangSmith")   ← unnötig bei Wissensfrage
 → Tool: 0 relevante Dokumente gefunden
@@ -853,13 +853,14 @@ Ohne LangSmith-Trace wäre der Grund für die erhöhte Latenz nicht erkennbar ge
 **Programmatische Pattern-Analyse mit `show_trace()`:**
 
 ```python
+import os
 from genai_lib.utilities import show_trace
 
-# Letzte 3 Runs anzeigen
-show_trace("m11_rag_chain", limit=3)
+# Letzte 3 Runs des im Setup konfigurierten Projekts anzeigen
+show_trace(os.environ["LANGSMITH_PROJECT"], limit=3)
 
 # Mit Step-Analyse des letzten Runs (zeigt alle Retrieval-Schritte)
-show_trace("m11_rag_chain", show_steps=True)
+show_trace(os.environ["LANGSMITH_PROJECT"], show_steps=True)
 ```
 
 `show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
@@ -895,7 +896,7 @@ leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enth
 
 **Drei Kern-Views für den Einstieg:**
 
-```
+```text
 1. Debugging:    Status = Error  +  Project = M##-...
 2. Latenz:       Latency > 5s   +  Child Runs > 3
 3. Experiment:   Tag "experiment_a" vs. Tag "experiment_b" (Compare-View)

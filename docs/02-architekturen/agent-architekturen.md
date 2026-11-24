@@ -17,7 +17,7 @@ redirect_from: ["/04-agenten-implementierung/entwurf/agent-architekturen.html"]
 
 Dieses Kapitel ist die gemeinsame Übersicht über die wichtigsten Muster. Es hilft dir zu entscheiden, wer den Ablauf bestimmt, welche Rollen gebraucht werden und wo Ergebnisse geprüft werden. Die praktische Teamumsetzung folgt in [Multi-Agent-Systeme umsetzen]({{ '/02-architekturen/multi-agent-systeme.html' | relative_url }}).
 
-**Einstieg:** Wähle mit der folgenden Tabelle eine passende Struktur und lies zunächst nur den zugehörigen Abschnitt. Erprobe dieses Muster anschließend im [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"}. Die 15 Muster und das PMO-Kursbeispiel sind ein Nachschlageangebot, keine vollständig abzuarbeitende Übungsliste. Beginne im Mock-Modus; WebGPU ist optional.
+**Einstieg:** Wähle mit der folgenden Tabelle eine passende Struktur und lies zunächst nur den zugehörigen Abschnitt. Erprobe dieses Muster anschließend im [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#augmented' | relative_url }}){:target="_blank" rel="noopener"}. Das Lab enthält 16 Architektur-Demos: 15 Muster und die sequenzielle PMO-Agenten-Pipeline als Kursbeispiel. Hinzu kommen zwei Harness-Kontrollen für menschliche Freigabe und deterministische Regeln. Die Architektur-Demos sind ein Nachschlageangebot, keine vollständig abzuarbeitende Übungsliste. Beginne im Mock-Modus; WebGPU ist optional.
 
 ---
 
@@ -309,7 +309,7 @@ Das sind qualitative Erwartungen bei vergleichbarer Aufgabe und Modellwahl. Toke
 
 Vergleiche Varianten mit denselben Aufgaben, Quellen und Qualitätskriterien. Erfasse Modell- und Tool-Aufrufe, Token-Verbrauch, Laufzeit und akzeptierte Ergebnisse. Einzelne Demo-Läufe mit unterschiedlichen Aufgaben belegen keine allgemeine Überlegenheit eines Musters.
 
-Interaktive Übung: [PMO-Evaluation im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} – Verkettung, ReAct und die sequenzielle Agenten-Pipeline mit denselben Fällen und festen Regelchecks vergleichen. Mock-Ergebnisse sind vorgegeben; die automatischen Checks ersetzen keine fachliche Bewertung des freien Antworttexts.
+Interaktive Übung: [Evaluation im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} – Verkettung, ReAct und die sequenzielle Agenten-Pipeline mit denselben Fällen und festen Regelchecks vergleichen. Mock-Ergebnisse sind vorgegeben; die automatischen Checks ersetzen keine fachliche Bewertung des freien Antworttexts.
 
 ## Quellen und nächste Schritte
 

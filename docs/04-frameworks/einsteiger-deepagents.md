@@ -674,8 +674,8 @@ So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/03-entwicklung/' | relative_url }}) | Wo starten Entwickler ohne DeepAgents-Erfahrung? |
-| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für DeepAgents? |
+| [Entwicklung]({{ '/03-entwicklung/' | relative_url }}) | Welche Grundlagen zu Tools, Kontext und State braucht ein DeepAgent? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie werden DeepAgents-Läufe geprüft und abgesichert? |
 
 ---
 

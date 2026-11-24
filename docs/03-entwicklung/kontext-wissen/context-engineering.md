@@ -130,7 +130,7 @@ Die richtigen Informationen zur richtigen Zeit bereitstellen.
 Selection ist meist der erste Engpass. In vielen Prototypen wird alles in den Prompt gelegt, was verfügbar ist. Das funktioniert kurzzeitig, skaliert aber schlecht. Gute Systeme entscheiden früh, was für die jeweilige Aufgabe relevant ist und was nicht in den aktuellen Lauf gehört.
 
 **Beispiel - Versicherungsberatung:**
-```
+```text
 Kundenkontext:
 - Alter: 35 Jahre
 - Familie: 2 Kinder
@@ -146,7 +146,7 @@ Nur die wichtigsten Informationen behalten.
 Kompression ist eine Qualitätsfrage, keine kosmetische Kürzung. Wenn Nebensachen genauso ausführlich erscheinen wie entscheidende Fakten, sinkt die Trennschärfe. Zusammenfassungen müssen deshalb priorisieren und dürfen nicht bloß kürzen.
 
 **Beispiel:**
-```
+```text
 Lange Schadenshistorie (50 Seiten)
 ↓
 Zusammenfassung: "3 Kleinschäden in 5 Jahren, 
@@ -163,7 +163,7 @@ Kontext-Caching ist davon zu trennen. Das Modell lernt dabei nicht dauerhaft; wi
 Interaktive Demo: [LLM-Inferenz (Prefill, KV-Cache & Latenz)]({{ '/visualisierungen/llm_inferenz/' | relative_url }}){:target="_blank" rel="noopener"} – zeigt Schritt für Schritt, wie Prompt-Länge und der KV-Cache die Prefill-Dauer (TTFT) und die Token-Generierung (ITL) beeinflussen.
 
 **Beispiel:**
-```
+```text
 Kundeninteraktion 1: "Ich bevorzuge niedrige Beiträge"
 ↓ (gespeichert)
 Kundeninteraktion 2: KI erinnert sich an Präferenz
@@ -175,7 +175,7 @@ Verschiedene Aufgaben mit separaten Kontexten bearbeiten.
 Isolation wird oft erst wichtig, wenn ein System komplexer wird. Spätestens bei Agenten, Werkzeugnutzung oder sensiblen Daten führt kein Weg an ihr vorbei. Nicht jede Komponente sollte denselben Kontext sehen. Klare Trennung reduziert Fehler, vereinfacht Debugging und hilft bei Compliance-Fragen.
 
 **Beispiel:**
-```
+```text
 Agent A: Schadensprüfung (hat Zugang zu Schadensdaten)
 Agent B: Kundenberatung (hat Zugang zu Produktdaten)
 ```
@@ -252,5 +252,5 @@ In der Praxis wird das relevant, wenn ein Agent mehrere Quellen kombiniert, Tool
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

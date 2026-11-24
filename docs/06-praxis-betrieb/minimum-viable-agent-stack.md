@@ -32,7 +32,7 @@ Ein Agent ist nicht ein Chatbot mit mehr Prompts. Ein Chatbot braucht Inferenz u
 
 ### Die sechs Schichten
 
-```
+```text
 1 · Models & Inference    →  Closed APIs · Open-weight APIs · Self-hosted
 2 · Protocols & Tools     →  MCP · Browser Use · ACP / A2A
 3 · Memory & Knowledge    →  pgvector · Pinecone · Neo4j · Mem0
@@ -303,7 +303,7 @@ Anbieter und Frameworks verändern ihre Schnittstellen laufend. Bei einer Störu
 ---
 
 **Version:** 1.2<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

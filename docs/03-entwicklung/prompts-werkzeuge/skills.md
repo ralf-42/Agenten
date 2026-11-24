@@ -12,6 +12,8 @@ redirect_from: ["/06-multi-agent-erweiterungen/skills.html"]
 # Skills
 {: .no_toc }
 
+> **Im Agent Lab ausprobieren:** [Skills]({{ '/visualisierungen/agent_patterns_lab/#skills' | relative_url }}){:target="_blank" rel="noopener"} (neuer Tab).
+
 > [!NOTE] Kernfrage<br>
 > Wann wird aus einem Prompt ein wiederverwendbarer Skill mit Regeln, Referenzen und Hilfslogik?
 
@@ -189,7 +191,7 @@ Eine Vorlage für eigene Skills liegt lokal unter `06_skill/README.md`. Genau di
 ---
 
 **Version:** 1.7<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

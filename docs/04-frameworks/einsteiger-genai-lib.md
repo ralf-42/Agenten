@@ -450,17 +450,18 @@ copy_from_github("myorg/private-repo", "./ziel", token="ghp_...")
 Zeigt die letzten LangSmith-Runs eines Projekts als formatierte Markdown-Tabelle direkt im Notebook.
 
 ```python
+import os
 from genai_lib.utilities import show_trace
 
 # Letzte 5 Runs als Tabelle
-show_trace("m11_rag_chain")
+show_trace(os.environ["LANGSMITH_PROJECT"])
 
 # Mit Step-Analyse des letzten Runs
-show_trace("m11_rag_chain", limit=3, show_steps=True)
+show_trace(os.environ["LANGSMITH_PROJECT"], limit=3, show_steps=True)
 ```
 
 **Parameter:**
-- `project_name` (str): Name des LangSmith-Projekts (z.B. `LANGSMITH_PROJECT="m11_rag_chain"`)
+- `project_name` (str): Im Setup gesetzter Projektname aus `os.environ["LANGSMITH_PROJECT"]`
 - `limit` (int): Anzahl der anzuzeigenden Runs (Standard: 5)
 - `show_steps` (bool): Child-Runs (Tool-Calls, LLM-Calls) des letzten Runs anzeigen (Standard: False)
 
@@ -496,7 +497,7 @@ Das Modul `pmo_rag` bündelt die RAG-Kette des PMO-Assistenten: Dokumente laden,
 
 ### Architektur
 
-```
+```text
 pmo_rag
 ├── Laden:      load_documents_from_directory (MarkItDown), load_pdf_documents (pypdf)
 ├── Chunking:   split_documents_by_characters (Standard 300/30, Wortgrenzen)
@@ -614,13 +615,14 @@ setup_api_keys(["OPENAI_API_KEY"])
 
 ### . LangSmith Trace-Analyse
 ```python
+import os
 from genai_lib.utilities import show_trace
 
 # Letzte Runs prüfen
-show_trace("m11_rag_chain")
+show_trace(os.environ["LANGSMITH_PROJECT"])
 
 # Step-Analyse für Debugging
-show_trace("m11_rag_chain", show_steps=True)
+show_trace(os.environ["LANGSMITH_PROJECT"], show_steps=True)
 ```
 
 ### . PMO-RAG-Kette
@@ -760,8 +762,8 @@ judge_llm = init_chat_model(JUDGE)
 frontier_llm = init_chat_model(FRONTIER)
 ```
 
-> [!DANGER] Kein temperature bei GPT-5.x<br>
-> `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM` und `FRONTIER` basieren auf GPT-5.x-Modellen. `temperature` wird für diese Rollen nicht gesetzt. Das gilt nicht automatisch für Medienmodelle wie `IMAGE_GENERATION` oder `TRANSCRIPTION`.
+> [!DANGER] Modellrollen ohne temperature<br>
+> Die aktuellen Modellzuordnungen für `BASELINE`, `WORKER`, `JUDGE`, `PLANNER`, `ROUTER`, `CODING`, `WORKER_PREMIUM` und `FRONTIER` stehen in `genai_lib.model_config`. Gemäß Kursstandard wird `temperature` für diese Rollen nicht gesetzt. Das gilt nicht automatisch für Medienmodelle wie `IMAGE_GENERATION` oder `TRANSCRIPTION`.
 
 ---
 
@@ -796,8 +798,8 @@ Die Module stehen unter der MIT-Lizenz und können frei für eigene Projekte ver
 
 ### Gemeinsames PMO-Chunking
 
-Die Standardwerte sind `DEFAULT_CHUNK_SIZE = 1200` und `DEFAULT_CHUNK_OVERLAP = 200` (Zeichen). M12, M27 und M40 verwenden diese zentralen Werte; M11 zeigt das weiterführende Chunking in einer eigenen lokalen Lern-Collection. Alte Collections werden über eine Signatur aus Dateiinhalten, Metadaten und Chunk-Konfiguration erkannt und beim nächsten Indexaufruf neu aufgebaut. Der Anforderungskatalog mit Prüffallvorgaben wird nicht indexiert; bekannte Kursanhänge werden aus den abgeleiteten Dokumenten entfernt. Originaldateien bleiben erhalten.
+Die Standardwerte sind `DEFAULT_CHUNK_SIZE = 1200` und `DEFAULT_CHUNK_OVERLAP = 200` (Zeichen). Der RAG-Agent, der Learning Loop und die PMO-Referenzimplementierung verwenden diese zentralen Werte; die RAG-Grundlagen zeigen das weiterführende Chunking in einer eigenen lokalen Lern-Collection. Alte Collections werden über eine Signatur aus Dateiinhalten, Metadaten und Chunk-Konfiguration erkannt und beim nächsten Indexaufruf neu aufgebaut. Der Anforderungskatalog mit Prüffallvorgaben wird nicht indexiert; bekannte Kursanhänge werden aus den abgeleiteten Dokumenten entfernt. Originaldateien bleiben erhalten.
 
 `format_docs(docs, max_chars=None)` übernimmt vollständige Chunks. Ein optionales Zeichenlimit wird nur bei tatsächlicher Kürzung markiert. Größere Chunks sind ein begründeter Startwert für den PMO-Korpus, kein universell optimaler Wert. Die Qualität ist mit positiven, negativen und zeitabhängigen Korpusfragen zu prüfen.
 
-Die Wiederverwendung des PMO-Index prüft zusätzlich seine gespeicherten Texte auf bekannte Kursanhänge und das alte Briefing-Agenten-Label. Solche Reste erzwingen auch bei passender Indexsignatur einen Neuaufbau. Unbereinigte neu geladene Chunks ersetzen den vorhandenen Index nicht. M12 lädt das Bibliotheksmodul vor dem Indexaufruf neu und überprüft die Stakeholder-Anhänge auch nach der Indexierung; bei erfolgloser Bereinigung wird der RAG-Lauf gestoppt.
+Die Wiederverwendung des PMO-Index prüft zusätzlich seine gespeicherten Texte auf bekannte Kursanhänge und das alte Briefing-Agenten-Label. Solche Reste erzwingen auch bei passender Indexsignatur einen Neuaufbau. Unbereinigte neu geladene Chunks ersetzen den vorhandenen Index nicht. Das RAG-Agent-Beispiel lädt das Bibliotheksmodul vor dem Indexaufruf neu und überprüft die Stakeholder-Anhänge auch nach der Indexierung; bei erfolgloser Bereinigung wird der RAG-Lauf gestoppt.

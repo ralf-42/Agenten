@@ -4,7 +4,7 @@
   <tr>
     <td><a href="./04_modul/requirements.txt"><img src="https://img.shields.io/badge/LangGraph-%3E%3D1.2.16-brightgreen" alt="LangGraph &gt;=1.2.16"></a></td>
     <td><a href="https://smith.langchain.com"><img src="https://img.shields.io/badge/LangSmith-%3E%3D0.14.11-blue" alt="LangSmith &gt;=0.14.11"></a></td>
-    <td><a href="./docs/05-frameworks/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.29-brightgreen" alt="DeepAgents optional &gt;=0.7.29"></a></td>
+    <td><a href="./docs/04-frameworks/einsteiger-deepagents.md"><img src="https://img.shields.io/badge/DeepAgents_optional-%3E%3D0.7.29-brightgreen" alt="DeepAgents optional &gt;=0.7.29"></a></td>
     <td><a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT"></a></td>
   </tr>
 </table>
@@ -100,7 +100,7 @@ Der Kurs unterscheidet die Notebook-Stufe vom Anspruch einzelner Aufgaben. In de
 | **Aufbau** | M19–M23 und M27 | Optionale Erweiterungen im Kurs, wenn die Grundlagenziele erreicht sind und Zeit bleibt. |
 | **Vertiefung** | M24–M26 und M50–M53 | Optionale Impulse, Wahlaufgaben oder Nachbereitung. M50 ist der Einstieg in das Vertiefungsthema DeepAgents. |
 
-Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./docs/02-orientierung-entscheidung/kursueberblick.md) beschrieben.
+Die Modul-IDs verweisen auf die Notebook-Dateien. Details stehen in der [Notebook-Übersicht](./01_notebook/README.md); Tagesablauf und optionale Module sind im [Kursplan](./docs/01-einstieg/kursueberblick.md) beschrieben.
 
 ### Block 1: Agenten-Grundlagen
 | Nr. | Modul | Thema                             | Beschreibung                                                    |

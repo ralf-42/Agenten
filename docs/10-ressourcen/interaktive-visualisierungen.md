@@ -97,7 +97,7 @@ Agentenbasierte KI-Systeme und deren Funktionsweise
 | ------------ | --------------------------------------------- | ------------------------------------------------------------------- |
 | **KI-Agent** | Visualisierung eines LLM-basierten KI-Agenten | [KI_Agenten]({{ '/visualisierungen/ki_agenten/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **KI-Agenten-Architektur** | Architektur eines LLM-Agenten mit Tool-Aufrufen und Schritt-für-Schritt-Simulation | [KI-Agenten-Architektur]({{ '/visualisierungen/ki_agent_architektur/' | relative_url }}){:target="_blank" rel="noopener"} |
-| **Agent Lab** | Übungen zu Agenten-Architekturen, Harness, Loops, PMO-Evaluation sowie State & Checkpoints. Passend zum aktuellen Kurskapitel auswählen; Mock-Modus genügt für den Einstieg. | [Lab öffnen]({{ '/visualisierungen/agent_patterns_lab/' | relative_url }}){:target="_blank" rel="noopener"} · [Zuordnung und optionale Vertiefungen]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}){:target="_blank" rel="noopener"} |
+| **Agent Lab** | Sechs Arbeitsreiter: Agenten-Architekturen, Kontext & Wissen, Loop Engineering, State & Checkpoints, Agent Harness und Evaluation. Passend zum aktuellen Kursthema auswählen. Die Modell-Demos lassen sich im Mock-Modus nutzen; Kontext & Wissen bündelt vorhandene Visualisierungen. | [Lab öffnen]({{ '/visualisierungen/agent_patterns_lab/' | relative_url }}){:target="_blank" rel="noopener"} · [Zuordnung und optionale Vertiefungen]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}){:target="_blank" rel="noopener"} |
 | **LangGraph** | Interaktiver Explainer zu LangGraph-Konzepten | [Interaktiver Explainer]({{ '/visualisierungen/langgraph_explainer/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Trimming und Summary** | Context-Management-Strategien (Trimming, Summary) für LangGraph Memory | [Trimming und Summary]({{ '/visualisierungen/trimming_summary/' | relative_url }}){:target="_blank" rel="noopener"} |
 | **Context Engineering** | Kontextfenster eines Agenten und vier Kontextfehler (Poisoning, Distraction, Confusion, Clash) mit passender Gegenmaßnahme | [Context Engineering]({{ '/visualisierungen/context_engineering/' | relative_url }}){:target="_blank" rel="noopener"} |
@@ -178,13 +178,13 @@ Weitere interaktive Visualisierungen von externen Anbietern
 
 | Dokument | Frage |
 |---|---|
-| [Erste Agenten]({{ '/04-agenten-implementierung/' | relative_url }}){:target="_blank" rel="noopener"} | Wo starte ich als Entwickler mit Interaktive Visualisierungen? |
-| [Qualität und Sicherheit]({{ '/07-qualitaet-sicherheit/' | relative_url }}){:target="_blank" rel="noopener"} | Welche Produktionsstandards gelten für Interaktive Visualisierungen? |
+| [Entwicklung]({{ '/03-entwicklung/' | relative_url }}){:target="_blank" rel="noopener"} | Welche fachlichen Bausteine erklären die Visualisierungen? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}){:target="_blank" rel="noopener"} | Wie werden die gezeigten Abläufe bewertet und abgesichert? |
 
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

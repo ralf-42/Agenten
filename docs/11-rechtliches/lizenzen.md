@@ -10,7 +10,7 @@ nav_exclude: true
 
 ## Quellcode
 
-Der Quellcode, die Python-Module und die ausführbaren Codebeispiele dieses Repositories stehen unter der [MIT License](../../LICENSE). Für die Verwendung des Quellcodes gelten ausschließlich die Bedingungen dieser Lizenz.
+Der Quellcode, die Python-Module und die ausführbaren Codebeispiele dieses Repositories stehen unter der [MIT License](https://github.com/ralf-42/Agenten/blob/main/LICENSE). Für die Verwendung des Quellcodes gelten ausschließlich die Bedingungen dieser Lizenz.
 
 ## Kursmaterialien
 

@@ -20,8 +20,8 @@ Diese Checkliste begleitet Entwurf, Umsetzung und Freigabe. Sie enthält die ent
 
 Quellenbasis:
 
-- [Agenten-Implementierung]({{ '/03-entwicklung/' | relative_url }})
-- [Multi-Agent & Erweiterungen]({{ '/02-architekturen/' | relative_url }})
+- [Entwicklung]({{ '/03-entwicklung/' | relative_url }})
+- [Architekturen]({{ '/02-architekturen/' | relative_url }})
 - [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }})
 - Projektregeln: AGENTS.md · CLAUDE.md · LangChain_Standards.md · LangGraph_Standards.md
 - API-Referenzen: [LangChain Agents](https://docs.langchain.com/oss/python/langchain/agents) · [LangGraph Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)
@@ -152,5 +152,5 @@ Diese Punkte sind abhängig von Risiko, Last und Betriebsumgebung zusätzlich zu
 ---
 
 **Version:** 1.1<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

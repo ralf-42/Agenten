@@ -28,7 +28,7 @@ redirect_from: ["/08-deployment-betrieb/aus-entwicklung-ins-deployment.html"]
 
 Die Agentenanwendung wurde in einem Jupyter Notebook entwickelt und getestet. Jetzt soll sie in den Produktivbetrieb. Diese Anleitung zeigt Schritt für Schritt, wie dieser Übergang gelingt.
 
-```
+```text
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │   Entwicklung   │ ──► │   Vorbereitung  │ ──► │   Deployment    │
 │    (.ipynb)     │     │    (.py + ...)  │     │   (Container)   │
@@ -87,7 +87,7 @@ Bevor Code extrahiert wird, sollte das Notebook in Ordnung gebracht werden.
 
 Eine saubere Ordnerstruktur für das Projekt:
 
-```
+```text
 mein-genai-projekt/
 ├── src/
 │   ├── __init__.py
@@ -389,12 +389,12 @@ Vor dem Go-Live sollten diese Punkte geprüft werden:
 | Dokument | Frage |
 |---|---|
 | [LangChain Best Practices]({{ '/04-frameworks/langchain/langchain-best-practices.html' | relative_url }}) | Welche LangChain-Konventionen helfen beim Übergang in eine produktionsreife Anwendung? |
-| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für Agenten-Anwendungen? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Prüfungen und Schutzmaßnahmen braucht eine Agentenanwendung vor dem Betrieb? |
 
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 

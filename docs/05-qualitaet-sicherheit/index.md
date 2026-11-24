@@ -24,4 +24,4 @@ Diese Orientierungsseite macht Agenten messbar, beobachtbar und kontrollierbar. 
 
 ## Weiterführend
 
-Die Reiter [Agent Harness]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}) und [Evaluation]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}) im Agent Lab ergänzen die Fachartikel. Die technische Umsetzung behandelt [LangSmith]({{ '/04-frameworks/langsmith/' | relative_url }}).
+Die Reiter [Agent Harness]({{ '/visualisierungen/agent_patterns_lab/#harness' | relative_url }}){:target="_blank" rel="noopener"} und [Evaluation]({{ '/visualisierungen/agent_patterns_lab/#evaluation' | relative_url }}){:target="_blank" rel="noopener"} im Agent Lab ergänzen die Fachartikel. Die technische Umsetzung behandelt [LangSmith]({{ '/04-frameworks/langsmith/' | relative_url }}).

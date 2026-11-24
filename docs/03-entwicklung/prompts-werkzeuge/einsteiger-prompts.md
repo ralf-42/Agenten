@@ -115,7 +115,7 @@ Mensch Überschriften und Absätze wahrnimmt.
 **Vergleich: ohne vs. mit XML-Tags**
 
 Ohne Tags (fließender Text — bei langen Prompts unübersichtlich):
-```
+```text
 Du bist Projektanalyst. Suche Fakten zum Thema in den Projektunterlagen. Nutze maximal 3 Suchen.
 Gib mindestens 3 Kernfakten aus. Antworte auf Deutsch in maximal 200 Wörtern.
 ```
@@ -431,5 +431,5 @@ Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen l
 ---
 
 **Version:** 1.0<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

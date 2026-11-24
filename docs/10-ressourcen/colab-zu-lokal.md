@@ -164,8 +164,8 @@ Die in den Kursnotebooks verwendeten API-Modelle und OpenAI-Embeddings benötige
 
 ## Weiterführende Dokumente
 
-- [Weitere Tools: MCP und Integration]({{ '/05-frameworks/weitere-tools.html' | relative_url }})
-- [LangSmith Best Practices]({{ '/05-frameworks/langsmith-best-practices.html' | relative_url }})
+- [Weitere Tools: MCP und Integration]({{ '/04-frameworks/weitere-tools.html' | relative_url }})
+- [LangSmith Best Practices]({{ '/04-frameworks/langsmith/langsmith-best-practices.html' | relative_url }})
 - [Google Colab: lokale Runtimes](https://research.google.com/colaboratory/local-runtimes.html)
 - [JupyterLab installieren](https://jupyter.org/install)
 - [IPython-Kernel in Jupyter installieren](https://ipython.readthedocs.io/en/stable/install/kernel_install.html)
@@ -173,5 +173,5 @@ Die in den Kursnotebooks verwendeten API-Modelle und OpenAI-Embeddings benötige
 ---
 
 **Version:** 1.2<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

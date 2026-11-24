@@ -23,4 +23,4 @@ Diese Orientierungsseite ist der inhaltliche Werkzeugkasten für die Arbeit mit 
 
 ## Weiterführend
 
-Der [Lernpfad]({{ '/01-einstieg/lernpfad.html' | relative_url }}) führt von einer fachlichen Frage zu passenden Dokumenten. Das [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}) bündelt die begleitenden Übungen.
+Der [Lernpfad]({{ '/01-einstieg/lernpfad.html' | relative_url }}) führt von einer fachlichen Frage zu passenden Dokumenten. Das [Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#docs' | relative_url }}){:target="_blank" rel="noopener"} bündelt die begleitenden Übungen.

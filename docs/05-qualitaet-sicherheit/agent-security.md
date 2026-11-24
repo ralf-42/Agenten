@@ -14,7 +14,7 @@ redirect_from: ["/07-qualitaet-sicherheit/agent-security.html"]
 > [!NOTE] Kernfrage<br>
 > Wie werden Agenten abgesichert, wenn sie Tools, Daten und externe Schnittstellen nutzen?
 
-Interaktive Demo: [Deterministische Kontrolle im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#deterministic' | relative_url }}){:target="_blank" rel="noopener"} – Regeln im Code treffen die verbindliche Entscheidung, das Modell erklärt sie nur; ein abweichendes Modellurteil bleibt wirkungslos. Der [Loop-Engineering-Tab]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} zeigt Tool-Whitelist, Idempotenz-Schutz und Budgetgrenzen einzeln schaltbar.
+Interaktive Demo: [Deterministische Kontrolle im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#deterministic' | relative_url }}){:target="_blank" rel="noopener"} – Regeln im Code treffen die verbindliche Entscheidung, das Modell erklärt sie nur; ein abweichendes Modellurteil bleibt wirkungslos. Der [Loop-Engineering-Tab]({{ '/visualisierungen/agent_patterns_lab/#loops' | relative_url }}){:target="_blank" rel="noopener"} zeigt sechs Leitfragen zu Fortschritt, Laufgrenzen, Ergebnisprüfung und Überarbeitung, Retries, Idempotenz und sicherem Abschluss. Tool- und Datenrechte behandelt der [Sicherheitsbereich des Agent Harness]({{ '/visualisierungen/agent_patterns_lab/#prompt_injection' | relative_url }}){:target="_blank" rel="noopener"}.
 
 ---
 
@@ -90,6 +90,14 @@ def get_task_status(task_id: str) -> str:
 ```
 
 Trenne Rollen, Datenquellen und sensible Operationen, sobald dafür unterschiedliche Berechtigungen gelten.
+
+## Deterministische Regeln vor Modellurteilen
+
+Budgetgrenzen, erforderliche Freigaben und erlaubte Aktionen werden durch Regeln im Code geprüft. Das Modell kann die Befunde erklären oder einen überarbeiteten Entwurf vorschlagen. Es darf eine fehlgeschlagene Regelprüfung nicht durch ein positives eigenes Urteil überstimmen.
+
+Beim PMO-Assistenten kann eine Regel beispielsweise ein Briefing ohne Quellenbelege sperren oder eine Versandaktion bis zur menschlichen Freigabe zurückhalten. Eine bestandene Regelprüfung bestätigt nur die geprüften Bedingungen; sie beweist nicht die sachliche Richtigkeit des gesamten Textes.
+
+Die [deterministische Kontrolle im Agent Lab]({{ '/visualisierungen/agent_patterns_lab/#deterministic' | relative_url }}){:target="_blank" rel="noopener"} zeigt die Trennung zwischen verbindlicher Regelentscheidung und Modellerklärung.
 
 ## Tool-Whitelisting statt impliziter Freiheit
 

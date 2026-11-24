@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Start
+title: KI-Agenten
 nav_order: 1
 description: "Onboarding, Kursziel und Einstieg in die Dokumentation"
 permalink: /
@@ -63,5 +63,5 @@ Quellen, Tool-Aufrufe und Zustandswechsel müssen nachvollziehbar bleiben. Tests
 ---
 
 **Version:** 1.3<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

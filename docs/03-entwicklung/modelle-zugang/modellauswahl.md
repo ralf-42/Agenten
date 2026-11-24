@@ -12,6 +12,8 @@ grand_parent: "Entwicklung"
 # Modellauswahl
 {: .no_toc }
 
+> **Im Agent Lab ausprobieren:** [Modellstufen-Routing]({{ '/visualisierungen/agent_patterns_lab/#model_tiers' | relative_url }}){:target="_blank" rel="noopener"} (neuer Tab).
+
 > [!NOTE] Kernfrage<br>
 > Welches Modell passt zur Aufgabe, zum Risiko, zum Budget und zur Latenzanforderung?
 
@@ -348,10 +350,10 @@ Wenn ein Agent mehrere Rollen umfasst, sollte jede Rolle ein Modell erhalten, da
 |---|---|
 | [Fine-Tuning]({{ '/03-entwicklung/modelle-zugang/fine-tuning.html' | relative_url }}) | Wann reicht Modellwahl nicht mehr und Training wird notwendig? |
 | [Context Engineering]({{ '/03-entwicklung/kontext-wissen/context-engineering.html' | relative_url }}) | Welche Kontextstrategie entscheidet mit darüber, ob ein Modell genügt? |
-| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie werden Modellqualität, Tracing und Evaluation sichtbar gemacht? |
+| [Qualität & Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Wie werden Modellqualität, Tracing und Evaluation sichtbar gemacht? |
 
 ---
 
 **Version:** 1.8<br>
-**Stand:** Oktober 2026<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -105,16 +105,16 @@ Die Zahl zwei ist hier eine beispielhafte Grenze. Für einen realen Anwendungsfa
 
 ## Was der Kurs bereits zeigt
 
-| Kursmodul | Beitrag zum Thema |
+| Kursthema | Beitrag zum Thema |
 |---|---|
-| **M10 – Tool Loop** | Tool-Schleife und ein Beispiel mit begrenztem Tool-Budget. |
-| **M14 – Sessions, Checkpointing und Memory** | Zustand sichern und fortsetzen; Memory und Kontext verwalten. Ein externer Ereignistrigger ist damit nicht automatisch gegeben. |
-| **M15 – Human in the Loop** | Freigabe, Ablehnung, Korrektur und Genehmigung von Tool-Aufrufen. |
-| **M17 – Supervisor Pattern** | Routing zu spezialisierten Workern und Iterationsschutz. |
-| **M18 – Reflection, Parallelisierung und Hierarchie** | Generator und Kritiker überarbeiten ein Ergebnis wiederholt bis zur Freigabe oder zum Limit. |
-| **M20 – Agent Security Best Practices** | Sicherheitsprüfungen, Tool-Whitelist und Blockierung als einzelne Schutzbausteine. |
-| **M21 – Agent Evaluation und Testing** | Deterministische Metriken und Regressionstests; eine Test-Korrektur-Schleife ist davon zu unterscheiden. |
-| **M27 – Learning Loop und Agentenverbesserung** | Baseline und Variante anhand mehrerer PMO-Fälle vergleichen und eine gezielte Anweisungsänderung mit zurückgehaltenen Fällen prüfen. |
+| **Tool Loop** | Tool-Schleife und ein Beispiel mit begrenztem Tool-Budget. |
+| **Sessions, Checkpointing und Memory** | Zustand sichern und fortsetzen; Memory und Kontext verwalten. Ein externer Ereignistrigger ist damit nicht automatisch gegeben. |
+| **Human in the Loop** | Freigabe, Ablehnung, Korrektur und Genehmigung von Tool-Aufrufen. |
+| **Supervisor Pattern** | Routing zu spezialisierten Workern und Iterationsschutz. |
+| **Reflection, Parallelisierung und Hierarchie** | Generator und Kritiker überarbeiten ein Ergebnis wiederholt bis zur Freigabe oder zum Limit. |
+| **Agent Security Best Practices** | Sicherheitsprüfungen, Tool-Whitelist und Blockierung als einzelne Schutzbausteine. |
+| **Agent Evaluation und Testing** | Deterministische Metriken und Regressionstests; eine Test-Korrektur-Schleife ist davon zu unterscheiden. |
+| **Learning Loop und Agentenverbesserung** | Baseline und Variante anhand mehrerer PMO-Fälle vergleichen und eine gezielte Anweisungsänderung mit zurückgehaltenen Fällen prüfen. |
 
 Die [Notebook-Übersicht](https://github.com/ralf-42/Agenten/blob/main/01_notebook/README.md) führt die Module und ihre Dateien auf. Ein Event-Driven Loop geht über die hier genannten Beispiele hinaus.
 

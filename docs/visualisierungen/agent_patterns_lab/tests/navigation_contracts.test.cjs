@@ -86,3 +86,10 @@ for (const match of lab.matchAll(/href=["']([^"']+)["']/g)) {
   assert.ok(!match[1].startsWith('https://ralf-42.github.io/Agenten/'), 'Eigene Kursseiten werden im Lab relativ verlinkt');
 }
 console.log('PASS Lab-Verweise auf eigene Kursseiten verwenden einheitlich relative URLs');
+
+// Auch dynamische Meldungen und vorbereitete Beispielantworten bleiben ohne Anrede.
+const languageSources = [path.join(__dirname, '../index.html'), ...fs.readdirSync(path.join(__dirname, '../js')).filter(name => name.endsWith('.js')).map(name => path.join(__dirname, '../js', name))];
+for (const file of languageSources) {
+  assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /\b(?:[Dd]u|[Dd]ich|[Dd]ir|[Dd]ein[a-z]*|Sie|Ihnen|Ihr[a-z]*)\b/, `Direkte Anrede in ${file}`);
+}
+console.log('PASS Beschreibungen, Meldungen und vorbereitete Beispieltexte ohne direkte Anrede');

@@ -1,0 +1,435 @@
+---
+layout: default
+title: Prompt-Templates
+parent: "Prompts & Werkzeuge"
+grand_parent: "Entwicklung"
+nav_order: 1
+description: Wie erstelle ich eigene Prompt-Dateien in 05_prompt/? YAML, XML-Tags und die drei Prompt-Typen erklärt.
+has_toc: true
+redirect_from: ["/04-agenten-implementierung/entwurf/einsteiger-prompts.html"]
+---
+
+# Prompt-Templates — Einsteiger-Guide
+{: .no_toc }
+
+> **Eigene Prompts erstellen, strukturieren und wiederverwenden.**<br>
+> YAML-Frontmatter, XML-Tags und `load_prompt()` Schritt für Schritt erklärt.    
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Was ist eine Prompt-Datei?
+
+Prompts müssen  nicht direkt im Code/Notebook als String hardcodiert werden, sondern können auch als Prompt-Vorlage in einer (Markdown-)Dateien gespeichert werden.
+
+**Vorteile:**
+- Prompts sind **wiederverwendbar** — einmal schreiben, mehrfach nutzen
+- Prompts sind **vom Code getrennt** — Prompt-Anpassungen ohne Code/Notebook-Änderung
+- Prompts sind **versionierbar** — Änderungen sind nachvollziehbar
+- `load_prompt()` lädt sie direkt als `ChatPromptTemplate` oder String
+
+**Aufbau einer Prompt-Datei — drei Teile:**
+
+```markdown
+---
+name: mein_prompt
+description: Kurzbeschreibung was dieser Prompt tut
+variables: []
+---
+
+## system
+
+Du bist ein hilfreicher Assistent...
+```
+
+① **YAML-Header** (Metadaten zwischen den `---`-Trennern)
+② **Sektion-Bezeichner** (`## system`, `## human`, `## ai`)
+③ **Prompt-Text** (der eigentliche Inhalt)
+
+---
+
+## Was ist YAML?
+
+**YAML** (*YAML Ain't Markup Language* - Ist keine Auszeichnungssprache) ist ein Format für strukturierte Daten — lesbar wie normaler Text, aber von Programmen direkt verarbeitbar.
+
+### YAML-Syntax kurz erklärt
+
+```yaml
+---                           # Beginn des YAML-Blocks (Pflicht)
+schluessel: wert              # Schlüssel-Wert-Paar
+liste: [eintrag1, eintrag2]   # Liste in eckigen Klammern
+leere_liste: []               # Leere Liste
+---                           # Ende des YAML-Blocks (Pflicht)
+```
+
+**Wichtige Regeln:**
+- Immer `Schlüssel: Wert` mit Doppelpunkt **und** Leerzeichen dahinter
+- Kein Tabulator — Einrückung nur mit Leerzeichen
+- Strings mit Sonderzeichen in Anführungszeichen: `"wert mit: Doppelpunkt"`
+
+### YAML-Header in Prompt-Dateien
+
+```yaml
+---
+name: rag_prompt                    # Interner Name (snake_case)
+description: RAG-Prompt für Q&A     # Kurzbeschreibung (1 Satz)
+variables: [context, question]      # Platzhalter im Prompt-Text
+---
+```
+
+| Feld | Pflicht | Bedeutung |
+|---|---|---|
+| `name` | ✅ | Eindeutiger Bezeichner |
+| `description` | ✅ | Kurzbeschreibung (1 Satz) |
+| `variables` | ✅ | Liste der `{variable}`-Platzhalter, oder `[]` wenn keine |
+
+> [!WARNING] `variables: []` vergessen → KeyError beim Laden<br>
+> `load_prompt()` erwartet das `variables`-Feld immer — auch wenn keine Platzhalter vorhanden sind. Fehlt das Feld, wirft `load_prompt()` einen `KeyError`.
+
+---
+
+## Was sind XML-Tags?
+
+**XML** (*Extensible Markup Language*) ist eine Auszeichnungssprache, die Inhalte durch
+Tags mit öffnender und schließender Klammer strukturiert:
+
+```xml
+<TagName>
+Inhalt des Tags
+</TagName>
+```
+
+### Warum XML-Tags in Prompts?
+
+Sprachmodelle wurden während des Trainings mit enormen Mengen an XML- und HTML-Dokumenten
+trainiert. Dadurch erkennen sie Tags als **semantische Abgrenzungen** — ähnlich wie ein
+Mensch Überschriften und Absätze wahrnimmt.
+
+**Vergleich: ohne vs. mit XML-Tags**
+
+Ohne Tags (fließender Text — bei langen Prompts unübersichtlich):
+```
+Du bist Projektanalyst. Suche Fakten zum Thema in den Projektunterlagen. Nutze maximal 3 Suchen.
+Gib mindestens 3 Kernfakten aus. Antworte auf Deutsch in maximal 200 Wörtern.
+```
+
+Mit Tags (klar gegliedert — Modell "sieht" die Struktur):
+```xml
+Du bist Projektanalyst.
+
+<Role>
+Projektanalyst für belegbare Kurzantworten.
+</Role>
+
+<Task>
+Recherchiere Fakten zum angefragten Thema.
+</Task>
+
+<Instructions>
+1. Beginne mit einem breiten Suchbegriff
+2. Verfeinere bei Bedarf
+3. Antworte auf Deutsch
+</Instructions>
+
+<HardLimits>
+Tool-Budget: maximal 3 Suchaufrufe pro Nutzeranfrage.
+Stoppe, sobald die Anfrage beantwortbar ist.
+</HardLimits>
+
+<OutputRules>
+Mindestens 3 Kernfakten als Stichpunkte. Maximal 200 Wörter.
+</OutputRules>
+```
+
+**Vorteile strukturierter Prompts:**
+- Das Modell trennt klar zwischen Aufgabe, Anleitung und Grenzen
+- Einzelne Abschnitte lassen sich ändern ohne den Rest zu berühren
+- Reproduzierbarere und konsistentere Ergebnisse
+- Weniger Halluzinationen bei komplexen Anweisungen
+
+### Wann XML-Tags verwenden?
+
+| Prompt-Komplexität | Empfehlung |
+|---|---|
+| Wenige Zeilen, eine klare Aufgabe | Kein XML nötig |
+| Mehrere unterschiedliche Anweisungsblöcke | XML-Tags empfohlen |
+| Agenten-Prompts mit Hard Limits | XML-Tags Pflicht |
+| Few-Shot-Prompts mit Beispielen | Meist `## human` / `## ai`, nur bei sehr komplexen Beispielen zusätzliche Tags |
+
+### Häufig verwendete Tags
+
+| Tag | Zweck | Beispiel für den Inhalt |
+|---|---|---|
+| `<role>` | Rolle oder Perspektive festlegen | Du bist ein geduldiger Python-Tutor. |
+| `<task>` | Aufgabe beschreiben | Erkläre den folgenden Python-Code. |
+| `<goal>` | Gewünschtes Ergebnis benennen | Die Lernenden sollen Schleifen verstehen. |
+| `<context>` | Hintergrundinformationen bereitstellen | Der Code stammt aus einem Einsteigerkurs. |
+| `<audience>` | Zielgruppe und Vorwissen beschreiben | Erwachsene ohne Programmiererfahrung. |
+| `<input>` | Zu bearbeitende Inhalte abgrenzen | Ein Text, eine Frage oder ein Datensatz. |
+| `<document>` | Dokumentinhalt kennzeichnen | Inhalt eines Berichts. |
+| `<code>` | Programmcode abgrenzen | `for number in range(5): print(number)` |
+| `<instructions>` | Vorgehensweise festlegen | Erkläre zuerst die Idee, dann die einzelnen Schritte. |
+| `<rules>` | Verhaltensregeln definieren | Gib die vollständige Lösung erst auf Nachfrage. |
+| `<constraints>` | Grenzen und Einschränkungen setzen | Maximal 200 Wörter; keine externen Bibliotheken. |
+| `<style>` | Ton und Sprache bestimmen | Sachlich, verständlich, auf Deutsch. |
+| `<output_format>` | Form der Antwort festlegen | Markdown-Tabelle mit drei Spalten. |
+| `<examples>` | Mehrere Muster bündeln | Beispiele für passende Erklärungen. |
+| `<example>` | Ein einzelnes Muster abgrenzen | Eine Beispiel-Frage mit Beispiel-Antwort. |
+| `<criteria>` | Qualitätsanforderungen nennen | Fachlich korrekt, verständlich und praxisnah. |
+| `<validation>` | Abschließende Kontrolle anfordern | Prüfe, ob alle Anforderungen erfüllt sind. |
+| `<sources>` | Quellenmaterial abgrenzen | Auszüge aus bereitgestellten Fachtexten. |
+| `<Team>` | Verfügbare Agenten, Teams oder Tools benennen | Quellen-Agent, Schreib-Agent und Prüf-Agent. |
+| `<Workflow>` | Erwarteten Ablauf oder Routing-Logik festlegen | Recherchiere, prüfe die Quellen und formuliere anschließend die Antwort. |
+| `<HardLimits>` | Absolute Grenzen, Tool-Budget und Abbruchbedingungen festlegen | Maximal drei Suchaufrufe; stoppe, sobald die Anfrage beantwortbar ist. |
+| `<OutputRules>` | Gewünschtes Format und die Struktur der Antwort festlegen | Mindestens drei Kernfakten als Stichpunkte, maximal 200 Wörter. |
+
+Tag-Namen enthalten keine Leerzeichen. Deshalb wird `<HardLimits>` verwendet, nicht `<Hard Limits>`.
+
+---
+
+## Die drei Prompt-Typen
+
+### Typ 1 — System-only Prompt
+
+**Wann:** Nur Rolle und Verhalten definieren — keine Laufzeit-Variablen.
+Wird direkt als `system`-Nachricht übergeben, zum Beispiel an `create_agent()`.
+
+```markdown
+---
+name: assistent_prompt
+description: Einfacher Assistenten-Prompt ohne Variablen
+variables: []
+---
+
+Du bist ein hilfreicher Assistent.
+Antworte immer präzise und auf Deutsch.
+```
+
+```python
+from genai_lib.utilities import load_prompt
+
+system_text = load_prompt("05_prompt/mXX_assistent_prompt.md", mode="S")
+# Rückgabe: String → direkt an create_agent() übergeben
+```
+
+Bei `mode="S"` wird der Inhalt nach dem YAML-Frontmatter als reiner String geladen. Eine `## system`-Überschrift ist erlaubt, aber nicht nötig. Bei `mode="T"` sind `## system`, `## human` und optional `## ai` dagegen die Struktur, aus der `ChatPromptTemplate`-Nachrichten entstehen.
+
+---
+
+### Typ 2 — Template-Prompt (mit Variablen)
+
+**Wann:** Der Prompt enthält Platzhalter `{variable}`, die zur Laufzeit befüllt werden.
+Typisch für RAG-Chains, SQL-Generierung, strukturierte Aufgaben.
+
+```markdown
+---
+name: rag_prompt
+description: RAG-Prompt mit Kontext und Frage als Variablen
+variables: [context, question]
+---
+
+## system
+
+Du beantwortest Fragen ausschließlich auf Basis des bereitgestellten Kontexts.
+Wenn die Antwort nicht im Kontext enthalten ist, sage das klar.
+
+## human
+
+Kontext:
+{context}
+
+Frage: {question}
+```
+
+```python
+from genai_lib.utilities import load_prompt
+
+prompt = load_prompt("05_prompt/m11_rag_prompt.md", mode="T")
+# Rückgabe: ChatPromptTemplate → in LCEL-Chain einsetzbar
+chain = prompt | llm | StrOutputParser()
+antwort = chain.invoke({"context": "...", "question": "Was ist RAG?"})
+```
+
+---
+
+### Typ 3 — Few-Shot Prompt
+
+**Wann:** Das Modell soll an Beispielen lernen, wie die Antwort aussehen soll.
+One-Shot = 1 Beispiel, Few-Shot = 2–5 Beispiele.
+
+```markdown
+---
+name: klassifikation_few_shot
+description: Few-Shot Klassifikation von Support-Tickets
+variables: [ticket]
+---
+
+## system
+
+Klassifiziere Support-Tickets in: TECHNIK, ABRECHNUNG oder SONSTIGES.
+Antworte nur mit dem Kategorie-Namen.
+
+## human
+
+Ticket: "Meine Rechnung ist doppelt abgebucht worden."
+
+## ai
+
+ABRECHNUNG
+
+## human
+
+Ticket: "Die App stürzt beim Start ab."
+
+## ai
+
+TECHNIK
+
+## human
+
+Ticket: {ticket}
+```
+
+> Die `## ai`-Sektionen simulieren Modell-Antworten als Vorab-Beispiele.
+> Das Modell lernt das gewünschte Ausgabeformat aus den Beispielpaaren.
+
+```python
+prompt = load_prompt("05_prompt/mXX_klassifikation_few_shot.md", mode="T")
+chain = prompt | llm | StrOutputParser()
+ergebnis = chain.invoke({"ticket": "Ich kann mich nicht einloggen."})
+```
+
+---
+
+### Hintergrund: Sektionen und LangChain MessageTypes
+
+Die Datei-Sektionen sind eine vereinfachte Schreibweise — unter der Haube erzeugt
+`load_prompt()` daraus typisierte LangChain-Message-Objekte:
+
+| Datei-Sektion | LangChain MessageType | Verwendung |
+|---|---|---|
+| `## system` | `SystemMessage` | Rolle, Verhalten, Anweisungen an das Modell |
+| `## human` | `HumanMessage` | Benutzereingabe oder Template mit `{variablen}` |
+| `## ai` | `AIMessage` | Modell-Antwort — nur bei Few-Shot-Prompts |
+| — | `ToolMessage` | Tool-Ergebnis zur Laufzeit — kein Template, von LangChain automatisch eingefügt |
+
+> `ToolMessage` und `ChatMessage` (freie Rollen) erscheinen **nicht** in Prompt-Dateien.
+> Sie entstehen zur Laufzeit und werden von LangChain intern verwaltet.
+
+---
+
+## load_prompt() — Übersicht
+
+```python
+from genai_lib.utilities import load_prompt
+
+# mode="S" → String (für system_prompt in create_agent)
+system_text = load_prompt("05_prompt/mXX_mein_prompt.md", mode="S")
+
+# mode="T" → ChatPromptTemplate (für LCEL-Chains)
+prompt_template = load_prompt("05_prompt/mXX_mein_prompt.md", mode="T")
+```
+
+| `mode` | Rückgabetyp          | Wann verwenden                                 |
+| ------ | -------------------- | ---------------------------------------------- |
+| `"S"`  | `str`                | `create_agent(..., system_prompt=system_text)` |
+| `"T"`  | `ChatPromptTemplate` | `chain = prompt | llm`                         |
+
+`mode="S"` entfernt nur das YAML-Frontmatter und gibt den restlichen Text zurück. `mode="T"` parst die Markdown-Sektionen `## system`, `## human` und `## ai`; ohne mindestens eine gültige Sektion schlägt das Laden fehl.
+
+---
+
+## Schritt-für-Schritt: Eigenen Prompt erstellen
+
+**1.** Datei in `05_prompt/` anlegen: `mXX_rolle_prompt.md`
+
+**2.** YAML-Header schreiben:
+```yaml
+---
+name: mXX_mein_prompt
+description: Was dieser Prompt macht (1 Satz)
+variables: []
+---
+```
+
+**3.** System-Prompt schreiben — bei `mode="S"` direkt nach dem Frontmatter, bei `mode="T"` als `## system`-Block
+
+**4.** Bei Variablen: `variables: [var1]` im Header + `{var1}` im `## human`-Block
+
+**5.** Bei komplexen System-Prompts mit Rollen, Tools, Workflows oder Budgets: XML-artige Tags wie `<Task>`, `<Instructions>` und `<HardLimits>` verwenden
+
+**6.** Testen im Notebook:
+```python
+from genai_lib.utilities import load_prompt
+p = load_prompt("05_prompt/mXX_mein_prompt.md", mode="S")
+print(p)  # Prompt-Text prüfen
+```
+
+---
+
+## Entscheidungshilfe
+
+```mermaid
+flowchart TD
+    A[Neuer Prompt] --> B{Platzhalter nötig?}
+    B -->|Nein| C{Beispiele zeigen?}
+    B -->|Ja| D([Typ 2: Template-Prompt<br>variables: list])
+    C -->|Ja| E([Typ 3: Few-Shot<br>## ai Sektionen])
+    C -->|Nein| F{Mehrere Anweisungsblöcke?}
+    F -->|Ja| G([Typ 1 + XML-Tags])
+    F -->|Nein| H([Typ 1: System-only<br>variables: empty])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class D,E,G,H output;
+```
+
+---
+
+## Häufige Fehler
+
+> [!WARNING] XML-Tags gehören in `## system`, nicht in `## human`<br>
+> XML-Tags in der `## human`-Sektion werden als Nutzer-Text interpretiert und können wörtlich in der Ausgabe erscheinen. Strukturierungs-Tags (`<Task>`, `<Instructions>` etc.) gehören in System-Prompts.
+
+| Fehler                                    | Ursache                                      | Lösung                                    |
+| ----------------------------------------- | -------------------------------------------- | ----------------------------------------- |
+| `KeyError: 'variables'`                   | `variables:` im Header fehlt                 | Immer angeben, auch leer: `variables: []` |
+| Platzhalter wird nicht ersetzt            | `{variable}` im `## system` statt `## human` | Template-Variablen in `## human`          |
+| `## system` fehlt bei `mode="T"`           | Sektion vergessen                            | Für Templates mindestens `## system` oder `## human` verwenden |
+| XML-Tags erscheinen in der Ausgabe        | Tags im falschen Block                       | XML-Tags in System-Prompts platzieren     |
+| `KeyError` beim Laden mit `mode="T"`       | Keine gültige Message-Section vorhanden      | Genau `## system`, `## human` oder `## ai` verwenden |
+
+---
+
+## Referenz-Dateien
+
+| Typ | Datei | Modul |
+|---|---|---|
+| System-only, einfach | `m03_pmo_system_prompt.md` | Prompt Engineering für Agenten Prompt Engineering |
+| System-only, einfach | `m05_multi_tool_system_prompt.md` | Multi-Tool-Agents Multi-Tool |
+| Template mit Variablen | `m09_pmo_routing_prompt.md` | Conditional Routing Routing |
+| Komplex mit XML-Tags | `m12_rag_agent_system_prompt.md` | RAG-Agent RAG-Agent |
+
+> Alle Prompt-Dateien liegen in `Agenten/05_prompt/`.
+
+Die technische Kurzreferenz für Dateiformat, Loader-Modi und Tag-Konventionen liegt zusätzlich in [`Agenten/05_prompt/README.md`](https://github.com/ralf-42/Agenten/blob/main/05_prompt/README.md).
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Inhalt |
+|---|---|
+| [Einsteiger LangChain]({{ '/04-frameworks/langchain/einsteiger-langchain.html' | relative_url }}) |  als Alternative zu Prompt-Dateien |
+| [Einsteiger genai_lib]({{ '/04-frameworks/einsteiger-genai-lib.html' | relative_url }}) |  als Ladefunktion für Prompt-Dateien |
+
+---
+
+**Version:** 1.0<br>
+**Stand:** Oktober 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

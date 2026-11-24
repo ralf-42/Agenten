@@ -1,0 +1,693 @@
+---
+layout: default
+title: "DeepAgents"
+parent: "Frameworks"
+nav_order: 5
+description: Einführung in DeepAgents als Harness für Planning, Filesystem und Sub-Agenten
+has_toc: true
+redirect_from: ["/05-frameworks/einsteiger-deepagents.html"]
+---
+
+# DeepAgents
+{: .no_toc }
+
+> **Harness für Planning, Dateizugriff und Sub-Agenten**
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Kurzüberblick: Was ist DeepAgents?
+
+DeepAgents ist eine zusätzliche Abstraktionsschicht im LangChain-Ökosystem.
+Während LangGraph Workflows explizit über **State**, **Nodes** und **Edges** modelliert, liefert DeepAgents ein bereits vorbereitetes **Harness** für typische agentische Langläufer-Aufgaben.
+
+### Einordnung
+
+DeepAgents bündelt Planung, Dateizugriff und Delegation in einem vorgefertigten Harness. Für die Auswahl zählen die verfügbaren APIs, Backends und Sicherheitsgrenzen; die Herkunft des Projekts sagt darüber wenig aus.
+
+### Kernbausteine
+
+- **Planning** über `TodoListMiddleware` (`write_todos`) — nur mit aktivierter Middleware
+- **Filesystem-Zugriff** über Lese-/Schreibwerkzeuge mit austauschbaren Backends
+- **Sub-Agenten** für delegierte Teilaufgaben
+- **Tool-Integration** für Recherche, APIs oder Code
+- **Persistentes Gedächtnis** über LangGraph Memory Store
+
+Ein Minimalaufbau besteht aus einem Modell, klar begrenzten Tools und einem präzisen `system_prompt`. Weitere Funktionen wie Planung, Dateizugriff und Sub-Agenten sollten erst hinzukommen, wenn eine konkrete Anforderung sie braucht.
+
+Die drei Schritte lassen sich so auf DeepAgents beziehen:
+
+| Motto | DeepAgents-Bezug |
+|---|---|
+| **Planen** | `write_todos` (per `TodoListMiddleware` aktiviert), Aufgabenliste, Zwischenschritte sichtbar machen |
+| **Handeln** | Tools, Dateien, Sub-Agenten und Backends nutzen |
+| **Prüfen** | Permissions, Interrupts, Sandboxes, Tracing und Tests einsetzen |
+
+Kurz gesagt:
+
+- **LangGraph** = maximale Kontrolle
+- **DeepAgents** = weniger Boilerplate, mehr eingebaute Infrastruktur
+
+DeepAgents eignet sich besonders für:
+
+- Recherche mit mehreren Zwischenschritten
+- Sammeln und Ablegen von Notizen
+- Delegation an spezialisierte Unteragenten
+- Längere Aufgaben mit Zwischenständen und Plananpassung
+
+Ein kompakter Architektur-Blick:
+
+```mermaid
+flowchart LR
+    U[Anfrage] --> O[DeepAgent Orchestrator]
+    O --> P[Planning]
+    O --> T[Tools]
+    O --> S[Sub-Agenten]
+    O --> F[Dateien / Backends]
+    P --> O
+    T --> O
+    S --> O
+    F --> O
+    O --> A[Ergebnis]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class U input;
+    class O metric;
+    class A output;
+    class T,F target;
+```
+
+---
+
+## Wann DeepAgents, wann LangGraph?
+
+DeepAgents ist kein Ersatz für LangGraph, sondern eine bequeme Schicht darüber.
+
+| Frage | Eher LangGraph | Eher DeepAgents |
+|---|---|---|
+| Muss jeder Schritt exakt kontrolliert werden? | Ja | Nein |
+| Sollen Routing und State vollständig sichtbar sein? | Ja | Nur teilweise |
+| Soll ein Agent autonom planen und Dateien nutzen? | Mit Eigenbau | Direkt eingebaut |
+| Werden Sub-Agenten als Komfortfunktion gebraucht? | Aufwändiger | Direkt vorgesehen |
+| Steht Lerntransparenz im Vordergrund? | Stärker geeignet | Nur bedingt |
+| Müssen verschiedene Modellanbieter verglichen werden? | Aufwändig | Direkt unterstützt |
+
+**Faustregel:**
+Wenn Kontrolle und Nachvollziehbarkeit im Vordergrund stehen, ist LangGraph meist die bessere Wahl.
+Wenn ein autonomer Agent mit Planning, Dateien und Delegation schnell aufgebaut werden soll, ist DeepAgents oft der direktere Weg.
+
+Als schnelle Orientierung:
+
+```mermaid
+flowchart TD
+    A[Neue Agenten-Aufgabe] --> B{Jeder Schritt<br>explizit steuerbar?}
+    B -->|Ja| C[LangGraph]
+    B -->|Nein| D{Planning, Dateien oder<br>Sub-Agenten wichtig?}
+    D -->|Ja| E[DeepAgents]
+    D -->|Nein| F[LangGraph oder einfacher Agent]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+
+    class A input;
+    class B,D metric;
+    class C,E,F output;
+```
+
+---
+
+## Das kleinstmögliche funktionierende Beispiel
+
+Der schnellste Zugang ist ein Minimalbeispiel mit einem Tool und einem DeepAgent.
+
+### Installation
+
+```bash
+pip install deepagents
+```
+
+Je nach eingesetztem Modellanbieter werden zusätzlich die passenden Provider-Pakete und API-Schlüssel benötigt. `deepagents` lädt `langchain_anthropic` und `langchain_openai` beim Import nicht; die Pakete des gewählten Anbieters müssen installiert sein. Beide sind allerdings harte Abhängigkeiten von `deepagents` und damit ohnehin installiert. Diese Seite beschreibt den Stand von `deepagents` 0.7.34.
+
+### Ein einfaches Tool
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def begriff_erklaeren(begriff: str) -> str:
+    """Erklärt einen KI-Begriff in einem Satz."""
+    glossar = {
+        "langgraph": "LangGraph ist ein Framework für zustandsbasierte Workflows mit Nodes und Edges.",
+        "harness": "Ein Harness ist ein Rahmengerüst, das Planung, Dateien und Delegation bereitstellt.",
+        "deepagents": "DeepAgents ist ein LangChain-Harness für planende, dateibasierte Agenten mit Sub-Agenten.",
+    }
+    return glossar.get(begriff.lower(), f"Kein Eintrag für: {begriff}")
+```
+
+### Agent erzeugen
+
+```python
+from deepagents import create_deep_agent
+from langchain.chat_models import init_chat_model
+
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    tools=[begriff_erklaeren],
+    system_prompt=(
+        "Ein kompakter Kurs-Assistent für agentische Systeme. "
+        "Werkzeuge gezielt nutzen und auf Deutsch antworten."
+    ),
+    # Weitere praxisrelevante Parameter:
+    # interrupt_on={"tool_names": ["write_file"]},  # HITL vor bestimmten Tools
+    # memory=["AGENTS.md"],                          # Kontext-Dateien beim Start laden
+    # skills=["path/to/SKILL.md"],                   # SKILL.md-Dateien laden (→ DeepAgents Harness/DeepAgents Vertiefung)
+)
+```
+
+### Agent ausführen
+
+```python
+result = agent.invoke({
+    "messages": [
+        {"role": "human", "content": "Was ist ein Harness und was ist DeepAgents?"}
+    ]
+})
+
+print(result["messages"][-1].text)
+```
+
+**Ergebnis:** Ein lauffähiger Agent mit eingebauter Harness-Struktur, ohne dass StateGraph, Routing-Funktionen oder Schleifen manuell modelliert werden mussten.
+
+`create_deep_agent()` gibt einen kompilierten LangGraph-Graphen zurück — Streaming, LangGraph Studio, Checkpointer und Persistenz funktionieren damit automatisch.
+
+### Alle create_deep_agent()-Parameter
+
+Für die ersten Übungen sind nicht alle Parameter gleich wichtig. Das Minimum ist `model`, `tools` und `system_prompt`. Danach folgen `subagents`, `interrupt_on`, `memory` und `skills`. Backend, Store, eigene Schemas oder Middleware sind Vertiefung, sobald ein Agent länger läuft oder produktnäher wird.
+
+| Parameter | Beschreibung |
+|-----------|-------------|
+| `model` | LangChain-Chatmodell (`init_chat_model(...)`) |
+| `tools` | Liste eigener Tools |
+| `system_prompt` | Systemrolle des Agenten |
+| `subagents` | Liste von Sub-Agent-Dicts |
+| `interrupt_on` | HITL-Freigabe vor bestimmten Tool-Calls; auch für Filesystem-Permissions |
+| `memory` | Kontext-Dateien (z.B. AGENTS.md) beim Start laden |
+| `skills` | SKILL.md-Dateien laden; `pinned_skills` fixiert Skills per Namen, die Tools eines Skills werden erst beim Lesen des Skills geladen |
+| `permissions` | Filesystem-Zugriffsrechte (`list[FilesystemPermission]`) |
+| `response_format` | Strukturierte Ausgabe — Pydantic-Modell oder `dict` |
+| `name` | Agent-Name für LangSmith-Tracing |
+| `cache` | Response-Caching — `BaseCache`-Instanz |
+| `backend` | Filesystem-Backend — In-Memory, Local, LangGraph Store oder Sandbox |
+| `store` | LangGraph Memory Store für thread-übergreifende Persistenz |
+| `context_schema` | Pydantic-Schema für den geteilten Agenten-Kontext |
+| `state_schema` | Eigenes State-Schema übergeben |
+| `middleware` | Eigene Middleware; bei gleichem `.name` ersetzt sie eine Default-Middleware |
+| `debug` | Debug-Ausgaben aktivieren |
+
+> `DeepAgentState` ist direkt aus `deepagents` importierbar: `from deepagents import DeepAgentState`
+
+---
+
+## Die Grundidee: Planning, Dateien, Delegation
+
+DeepAgents wird leichter verständlich, wenn die drei Kernideen getrennt betrachtet werden.
+
+### Planning — und die No-Op-Einsicht
+
+> [!WARNING] Planning ist Opt-in<br>
+> `TodoListMiddleware` ist nicht Default. Ohne Aktivierung fehlen `write_todos`, der `todos`-State und der Planning-Prompt. Bei Sub-Agenten wird die Middleware pro `SubAgent` gesetzt.
+
+```python
+from langchain.agents.middleware import TodoListMiddleware
+
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    middleware=[TodoListMiddleware()],   # Planning aktivieren
+)
+```
+
+Das Harness kann Aufgaben in Teilschritte zerlegen und diese intern als Arbeitsplan verwalten.
+
+**Die wichtigste Erkenntnis:** Das eingebaute `write_todos`-Tool ist ein No-Op — es führt nichts aus. Es schreibt lediglich eine Aufgabenliste.
+
+Das klingt zunächst trivial, ist aber das Herzstück der Architektur:
+
+> Das Tool tut nichts. Aber **der Akt des Planens** hält den Agenten über viele Schritte auf Kurs.
+
+Das ist kein Bug, sondern bewusstes **Context Engineering**: Das Modell formuliert einen Plan, hält ihn im Kontext und passt ihn bei neuen Informationen an. So bleiben auch lange Aufgaben fokussiert — nicht weil ein Mechanismus den Agenten zwingt, sondern weil das Niederschreiben des Plans bereits die Aufmerksamkeit lenkt.
+
+Typischer Nutzen:
+
+- Mehrstufige Aufgaben werden expliziter
+- Zwischenschritte bleiben nachvollziehbarer
+- Neue Informationen können in den Plan zurückfließen
+
+Merksatz: **Nicht nur reagieren, sondern Arbeitsschritte sichtbar organisieren.**
+
+### Dateien statt nur Chat-History — und austauschbare Backends
+
+DeepAgents arbeitet nicht nur mit Nachrichten, sondern kann Informationen in Dateien ablegen und später wieder lesen.
+
+Das ist besonders nützlich für:
+
+- Längere Recherchen
+- Notizen und Zwischenstände
+- Strukturierte Ergebnisablage
+- Entlastung des Chat-Kontexts
+
+**Pluggable Filesystem Backends** — der Ablageort ist konfigurierbar:
+
+| Backend | Verwendung |
+|---------|-----------|
+| In-Memory | Tests, kurzlebige Aufgaben |
+| Local Disk | Lokale Entwicklung |
+| LangGraph Store | Thread-übergreifende Persistenz |
+| Sandboxes (Modal, Daytona, Runloop, LangSmith) | Isolierte Code-Ausführung in der Cloud; Modal, Daytona und Runloop über die Zusatzpakete `langchain-modal`, `langchain-daytona` und `langchain-runloop` |
+| Custom Backend | Eigenentwicklung für spezielle Anforderungen |
+
+Das Backend lässt sich austauschen, ohne die Agent-Logik zu ändern.
+
+`FilesystemBackend` und `LocalShellBackend` nutzen standardmäßig `virtual_mode=True`: Pfade mit `..` sind blockiert, Pfade außerhalb von `root_dir` lösen einen `ValueError` aus. Das rekursive `delete`-Tool zählt bei den Permissions als Schreiboperation, und `write_file` überschreibt vorhandene Dateien, statt einen Fehler zu liefern.
+
+Merksatz: **Wissen wird ausgelagert, statt nur im Nachrichtenverlauf mitgeschleppt zu werden.**
+
+> [!NOTE] Symlinks bei Permissions
+> Regeln und Freigaben (`interrupt_on`) prüfen jetzt sowohl den angefragten als auch den per Symlink aufgelösten Pfad. Ein Symlink kann eine Sperre also nicht umgehen.
+
+### Sub-Agenten
+
+Teilaufgaben können an spezialisierte Sub-Agenten delegiert werden.
+Jeder Sub-Agent arbeitet mit eigener History und klarer Rolle.
+
+Beispiele:
+
+- Quellen-Agent
+- Schreib-Agent
+- Analyse-Agent
+
+Merksatz: **Der Hauptagent koordiniert, Spezialisten bearbeiten Teilprobleme.**
+
+> [!NOTE] Async-Sub-Agenten
+> Asynchrone Sub-Agenten unterstützen einen Fork-Modus. Status-Updates werden an den Hauptagenten gemeldet, Runs erscheinen im Trace des Parents, und der Sub-Agent kennt seinen eigenen Namen. `AsyncSubAgent` bietet zusätzlich die Parameter `notify_parent` und `webhook`. Follow-ups an einen laufenden Async-Sub-Agenten werden in eine Warteschlange gestellt und unterbrechen die laufende Arbeit nicht.
+
+---
+
+## Eigene Tools ergänzen
+
+DeepAgents lebt von kleinen, klaren Werkzeugen.
+
+Ein typisches Muster:
+
+```python
+@tool
+def kurs_thema_info(thema: str) -> str:
+    """Liefert Kurzinfos zu einem Kursthema."""
+    daten = {
+        "routing": "Bedingte Ablaufsteuerung in Graphen.",
+        "checkpointing": "Speichern und Wiederaufnehmen von Sitzungen.",
+        "supervisor": "Koordinator-Agent für mehrere spezialisierte Worker.",
+    }
+    return daten.get(thema.lower(), "Kein Eintrag gefunden.")
+```
+
+Anschließend wird das Tool einfach beim Agenten registriert:
+
+```python
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    tools=[begriff_erklaeren, kurs_thema_info],
+    system_prompt="Ein deutschsprachiger Kurs-Assistent.",
+)
+```
+
+Bewährte Regeln:
+
+- Pro Tool eine klar abgegrenzte Aufgabe
+- Präziser Docstring
+- Sprechende Parameternamen
+- Einfache, serialisierbare Rückgaben
+
+---
+
+## Einfacher Sub-Agent
+
+Sub-Agenten werden als Konfigurationsobjekte beschrieben und dem Hauptagenten übergeben.
+
+```python
+quellen_subagent = {
+    "name": "quellen",
+    "description": "Sammelt gezielt belegte Informationen aus den Projektunterlagen",
+    "system_prompt": (
+        "Spezialisierter Quellen-Agent. "
+        "Knappe, saubere Zusammenfassungen belegter Projektfakten auf Deutsch liefern."
+    ),
+    "tools": [begriff_erklaeren, kurs_thema_info],
+    # "model": "openai:gpt-6-luna",  # Optional: eigenes Modell
+}
+```
+
+**Vollständige SubAgent-Dict Felder:**
+
+| Feld | Pflicht | Beschreibung |
+|------|---------|-------------|
+| `name` | ja | Interner Name des Sub-Agenten |
+| `description` | ja | Erklärt dem Hauptagenten wann er zu rufen ist |
+| `system_prompt` | — | Rolle und Verhalten des Sub-Agenten (ohne Angabe: leerer Prompt) |
+| `tools` | — | Tools (sonst: erbt vom Hauptagenten) |
+| `model` | — | Eigenes Modell pro Sub-Agent |
+| `middleware` | — | Eigene Middleware für Sub-Agent-Tools |
+| `interrupt_on` | — | Freigabe vor bestimmten Tools dieses Sub-Agenten |
+| `skills` | — | SKILL.md-Dateien für den Sub-Agenten |
+| `permissions` | — | Filesystem-Zugriffsrechte einschränken |
+| `response_format` | — | Strukturierte Ausgabe des Sub-Agenten |
+| `mode` | — | `isolated` (Standard: nur die Aufgabenbeschreibung sichtbar) oder `fork` (setzt die Konversation des Hauptagenten fort; **experimentell**, `skills` dort nicht erlaubt) |
+
+Der Hauptagent erhält diesen Sub-Agenten beim Erstellen:
+
+```python
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    tools=[],
+    subagents=[quellen_subagent],
+    system_prompt=(
+        "Ein Koordinator-Agent. "
+        "Recherche-Aufgaben bei Bedarf an den Sub-Agenten delegieren."
+    ),
+)
+```
+
+Der wichtige Punkt:
+Der Hauptagent sieht am Ende vor allem das Ergebnis der Teilaufgabe, nicht jede interne Einzelaktion des Sub-Agenten.
+
+---
+
+## Profiles API
+
+Die **Profiles API** (Beta) erlaubt einen deklarativen Override-Layer für modell-spezifische Konfiguration.
+Eingebaute Harness-Profile gibt es für einzelne Modelle, unter anderem von Anthropic und OpenAI (Codex). Sie bündeln modellabhängige Einstellungen, ohne dass der eigentliche Agentencode geändert werden muss.
+
+```python
+from deepagents import HarnessProfile, register_harness_profile
+
+# Profil für alle Modelle eines Providers registrieren
+# (Schlüssel: "provider" oder "provider:modell")
+register_harness_profile(
+    "openai",
+    HarnessProfile(system_prompt_suffix="Antworte immer auf Deutsch."),
+)
+
+# Der Agent nutzt automatisch das passende registrierte Profil
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    tools=[mein_tool],
+)
+```
+
+Ein `HarnessProfile` kann unter anderem einen Prompt-Zusatz (`system_prompt_suffix`), ausgeschlossene Tools (`excluded_tools`) und zusätzliche Middleware (`extra_middleware`) setzen. Für die meisten Notebook-Szenarien ist kein eigenes Profil nötig — die eingebauten Profile wirken automatisch.
+
+---
+
+## Middleware (experimentell)
+
+Middleware erlaubt es, Tool-Aufrufe transparent zu wrappen — ohne die Tools selbst zu ändern.
+Sie wird als Liste an `create_deep_agent()` oder an einzelne Sub-Agent-Dicts übergeben.
+
+| Middleware-Klasse | Paket | Beschreibung |
+|-------------------|-------|-------------|
+| `FilesystemMiddleware` | `deepagents` | Filesystem-Tools; `tools=[...]` als Allowlist (`FsToolName`) und `grep_max_count` |
+| `SubAgentMiddleware`, `AsyncSubAgentMiddleware` | `deepagents` | Delegation an Sub-Agenten (synchron und asynchron) |
+| `MemoryMiddleware`, `SkillsMiddleware` | `deepagents` | Laden von `AGENTS.md`- und `SKILL.md`-Dateien (über `memory=` und `skills=` eingebunden) |
+| `SummarizationMiddleware` | `deepagents` | Verdichtet lange Konversationen und legt ihren `summarizer` offen |
+| `RubricMiddleware` | `deepagents` | Selbst-evaluierte Agenten-Iteration — automatische Qualitätsprüfung (ohne festes Iterationslimit, Status `max_iterations_reached`) |
+| `TodoListMiddleware` | `langchain` | Stellt `write_todos` und den `todos`-State bereit (**Opt-in**) |
+| `ToolRetryMiddleware` | `langchain` | Wiederholt fehlgeschlagene Tool-Calls (`max_retries`, Backoff) |
+| `ToolCallLimitMiddleware` | `langchain` | Begrenzt Tool-Calls pro Thread oder Run (`thread_limit`, `run_limit`) |
+| `CodeInterpreterMiddleware` | `langchain_quickjs` (`deepagents[quickjs]`) | JavaScript in einer QuickJS-Sandbox ausführen (**experimentell**) |
+| `BedrockPromptCachingMiddleware` | `langchain_aws` (`deepagents[aws]`) | Automatisches Prompt-Caching für AWS-Bedrock-Modelle |
+
+```python
+from langchain.agents.middleware import ToolCallLimitMiddleware, ToolRetryMiddleware
+
+agent = create_deep_agent(
+    model=init_chat_model("openai:gpt-6-luna"),
+    tools=[mein_tool],
+    middleware=[ToolRetryMiddleware(max_retries=3), ToolCallLimitMiddleware(run_limit=20)],
+)
+```
+
+`CodeInterpreterMiddleware` erfordert das Zusatz-Paket und wird aus `langchain_quickjs` importiert:
+
+```bash
+pip install deepagents[quickjs]
+```
+
+> `CodeInterpreterMiddleware` ist als experimentell markiert — API kann sich noch ändern.
+
+`BedrockPromptCachingMiddleware` erfordert das Zusatz-Paket:
+
+```bash
+pip install deepagents[aws]
+```
+
+---
+
+## CLI und erweiterte Features
+
+Neben dem Python-SDK gibt es eine eigenständige **DeepAgents CLI** — die interaktive Terminal-Variante für den direkten Einsatz.
+
+### Installation der CLI
+
+Die CLI heißt **DeepAgents Code** (Paket `deepagents-code`, Befehl `dcode`). Das frühere Paket `deepagents-cli` ist auf PyPI als veraltet markiert.
+
+```bash
+# Installation laut Projektdokumentation
+curl -LsSf https://langch.in/dcode | bash
+
+# Starten
+dcode
+```
+
+Weitere Informationen stehen in der [offiziellen DeepAgents-Dokumentation](https://docs.langchain.com/oss/python/deepagents/overview).
+
+### Was die CLI hinzufügt
+
+| Feature | SDK | CLI |
+|---------|-----|-----|
+| Tools registrieren | ja | ja |
+| Sub-Agenten | ja | ja |
+| Filesystem Backends | ja | ja |
+| Web-Suche | nein | ja |
+| Remote-Sandboxes | nein | ja |
+| Persistentes Gedächtnis | nein | ja |
+| Human-in-the-Loop Approval | nein | ja |
+| Custom Skills | nein | ja |
+
+### MCP-Support
+
+DeepAgents unterstützt das **Model Context Protocol (MCP)** via `langchain-mcp-adapters`.
+Bereits konfigurierte MCP-Server (z. B. Google Workspace, Notion, Slack) können direkt verwendet werden.
+
+### Langzeitgedächtnis
+
+Über den LangGraph Memory Store kann der Agent Informationen **thread-übergreifend** speichern. Vorherige Gespräche und deren Kontext bleiben erhalten.
+
+---
+
+## Provider-Agnostik (Anbieterunabhängigkeit): was austauschbar ist
+
+Das Modell wird über die LangChain-Modellschnittstelle eingebunden. Welche Anbieter verfügbar sind, hängt von den installierten Integrationen und ihren APIs ab.
+
+```python
+# OpenAI
+agent = create_deep_agent(model=init_chat_model("openai:gpt-6-luna"), ...)
+
+# Anthropic
+agent = create_deep_agent(model=init_chat_model("anthropic:claude-sonnet-5-5"), ...)
+
+# Google
+agent = create_deep_agent(model=init_chat_model("google_genai:gemini-3.8-flash"), ...)
+```
+
+Der Wechsel erfordert nur eine Zeile — Planning, Tools, Sub-Agenten und Filesystem bleiben unverändert.
+
+Das ist besonders relevant, wenn:
+
+- Verschiedene Modelle für denselben Agenten verglichen werden sollen
+- Organisationsrichtlinien Multi-Provider-Unterstützung erfordern
+- Kosten zwischen Anbietern optimiert werden sollen
+
+### Ansätze vergleichen
+
+Eine belastbare Auswahl hängt von der konkreten Aufgabe und den geprüften Versionen ab. Zu vergleichen sind Modellzugang, Tool-Berechtigungen, Sandbox, Sitzungsverwaltung, Wiederaufnahme und Auswertung. Eine allgemeine Rangliste sagt wenig darüber aus, welches Framework in einer konkreten Anwendung passt.
+
+---
+
+## Was intern passiert
+
+Auch wenn das Harness viel Arbeit abnimmt, läuft darunter weiterhin ein agentischer Workflow ab:
+
+1. Eine Anfrage trifft ein.
+2. Das Harness plant oder verfeinert Teilschritte (`write_todos` — No-Op, per `TodoListMiddleware` aktiviert).
+3. Tools oder Sub-Agenten werden aufgerufen.
+4. Ergebnisse werden im Kontext oder in Dateien abgelegt.
+5. Der Plan wird angepasst, bis ein Endergebnis vorliegt.
+
+Das ist der zentrale Unterschied zu einfachen Loop-Agenten:
+
+- **flacher Agent**: Anfrage → Tool-Call → Antwort
+- **DeepAgent**: Anfrage → Plan → Teilaufgaben → Zwischenstände → Überarbeitung → Ergebnis
+
+```mermaid
+flowchart TD
+    U[Anfrage] --> P[Plan erstellen oder aktualisieren]
+    P --> D{Teilaufgabe delegieren?}
+    D -->|Ja| S[Sub-Agent ausfuehren]
+    D -->|Nein| T[Tool direkt nutzen]
+    S --> F[Ergebnisse in Dateien oder Kontext ablegen]
+    T --> F
+    F --> R{Weitere Schritte offen?}
+    R -->|Ja| P
+    R -->|Nein| A[Endergebnis]
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef target fill:#fae8ff,stroke:#c026d3,stroke-width:2px,color:#701a75;
+
+    class U input;
+    class D,R metric;
+    class A output;
+    class T,F target;
+```
+
+---
+
+## Grenzen und Debugging
+
+DeepAgents spart Code, versteckt aber auch mehr Logik.
+
+### Typische Grenzen
+
+- Weniger direkte Kontrolle als bei manuell gebautem LangGraph
+- Interne Abläufe sind nicht so transparent wie ein selbst definierter Graph
+- Frühe API-Versionen können sich schneller ändern
+- Debugging setzt weiterhin LangGraph-Grundverständnis voraus
+
+### Versionsabhängige Einordnung
+
+APIs, Voreinstellungen und Backends können sich zwischen Versionen ändern. Vor einem Einsatz sind die installierte Version, die dazugehörige Dokumentation und die benötigten Sicherheitsfunktionen zu prüfen. Ob DeepAgents geeignet ist, hängt von diesen Anforderungen und den eigenen Tests ab; eine pauschale Reifegradbewertung ersetzt diese Prüfung nicht.
+
+### Das "Trust the LLM"-Modell und Security
+
+DeepAgents verfolgt eine bewusst offene Philosophie — aus dem README:
+
+> *"Deep Agents follows a 'trust the LLM' model. The agent can do anything its tools allow. Enforce boundaries at the tool/sandbox level, not by expecting the model to self-police."*
+
+Das bedeutet:
+
+- Grenzen werden **nicht** durch Model-Prompts gesetzt
+- Grenzen entstehen durch **Tool-Konfiguration** und **Sandbox-Wahl**
+- Ein Agent mit breitem Filesystem-Zugriff und ohne Sandbox kann alles, was Tools erlauben
+
+Die Sicherheitsgrenze entsteht durch die tatsächlich erlaubten Tools, Backends und Berechtigungen. Ein Prompt allein verhindert keinen unzulässigen Zugriff.
+
+### Praktische Hinweise
+
+- Versionen pinnen
+- Kleine Tools statt Monolithen (große, ungeteilte Blöcke) bauen
+- System-Prompts klar halten
+- Traces regelmäßig prüfen (LangSmith)
+- In Produktion: Sandboxes für Code-Ausführung verwenden
+
+Deshalb gilt:
+
+- Für **Lerntransparenz**, präzises Routing und kontrollierte Abläufe ist LangGraph oft besser.
+- Für **autonome, längere Aufgaben mit Planning und Delegation** ist DeepAgents attraktiv.
+
+---
+
+## Einordnung in der Praxis
+
+DeepAgents ist am nützlichsten, wenn bereits ein Fundament vorhanden ist:
+
+- Tool-Nutzung
+- Strukturierte Ausgaben
+- State-Denken
+- Routing
+- Multi-Agent-Muster
+
+Dann wird klar, was das Harness tatsächlich leistet:
+
+- Es ersetzt nicht das Verständnis der Mechanik.
+- Es verpackt bekannte Mechaniken in ein schneller nutzbares Gerüst.
+- Es zeigt, wie Planen, Handeln und Prüfen als fertige Harness-Struktur zusammenkommen.
+
+Kurzform:
+
+- **LangGraph lernen**, um agentische Abläufe zu verstehen
+- **DeepAgents nutzen**, um bestimmte komplexe Muster schneller aufzubauen
+
+---
+
+## Zusammenfassung
+
+DeepAgents ist ein komfortabler Harness-Ansatz für agentische Systeme mit:
+
+- Planning (No-Op-Mechanismus als Context Engineering)
+- Dateibasiertem Arbeiten mit austauschbaren Backends
+- Sub-Agenten für parallele Delegation
+- Integrierter Tool-Nutzung
+- Unterstützung mehrerer Modellanbieter; die verfügbaren Integrationen hängen von der eingesetzten Version ab
+- Profiles API — modell-spezifische Optimierung über Harness-Profile
+- Middleware — Tool-Call-Wrapping (z. B. Retry und Call-Limits), `CodeInterpreterMiddleware` (experimentell)
+- CLI mit Web-Suche, HITL, MCP und persistentem Gedächtnis
+
+DeepAgents kann wiederkehrende Bausteine für längere Aufgaben bereitstellen. Ein explizit modellierter LangGraph-Workflow macht den Steuerfluss direkter sichtbar. Die Wahl hängt davon ab, welche Kontrolle und welche eingebauten Funktionen benötigt werden.
+
+Vor einem produktiven Einsatz müssen Version, Tool-Berechtigungen, Backend, Sandbox und Wiederaufnahme für den konkreten Anwendungsfall geprüft werden.
+
+Für den Einstieg empfiehlt sich daher folgende Reihenfolge:
+
+1. LangChain-Grundlagen
+2. LangGraph-Grundlagen
+3. Multi-Agent- und Kontrollmuster
+4. Erst dann DeepAgents
+
+So bleibt sichtbar, wo das Harness vereinfacht und wo weiterhin LangGraph-Denken im Hintergrund wirkt.
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [Erste Agenten]({{ '/03-entwicklung/' | relative_url }}) | Wo starten Entwickler ohne DeepAgents-Erfahrung? |
+| [Qualität und Sicherheit]({{ '/05-qualitaet-sicherheit/' | relative_url }}) | Welche Produktionsstandards gelten für DeepAgents? |
+
+---
+
+**Version:** 2.2<br>
+**Stand:** November 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
+
+
+
+
+
+
+
+
+

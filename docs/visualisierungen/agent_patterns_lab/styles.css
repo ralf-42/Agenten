@@ -1,3 +1,62 @@
+.context-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.context-demo-grid .card p,
+.context-follow-up p {
+  margin-top: 12px;
+}
+
+.context-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.context-demo-actions .btn {
+  white-space: normal;
+}
+
+.context-follow-up {
+  margin-top: 16px;
+}
+
+@media (max-width: 760px) {
+  .context-demo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.course-directory {
+  margin-bottom: 16px;
+}
+
+.course-directory > p {
+  margin: 12px 0;
+}
+
+.course-directory-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.course-directory-links a {
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+.course-directory-links a:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
+
 :root {
   --bg: #0b1120;
   --bg-elevated: #111827;

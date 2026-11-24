@@ -106,13 +106,16 @@
         .classList.contains("hidden");
     const deterministic =
       ["loops", "checkpoints"].includes(activeView) || securityPanel;
-    const orientation = activeView === "docs";
+    const orientation = ["docs", "context"].includes(activeView);
+    const orientationNote = activeView === "context"
+      ? "Kontext & Wissen: Die verlinkten Visualisierungen öffnen in einem neuen Tab. Modellwahl und Modellladen werden in den Modell-Demos verfügbar."
+      : "Einstieg: Wähle zuerst eine passende Übung. Modellwahl und Modellladen werden in den Modell-Demos verfügbar.";
     document.getElementById("modelModeControls").disabled =
       deterministic || orientation;
     document.getElementById("executionModeNote").textContent = deterministic
       ? "Deterministische Lernsimulation ohne Modellaufrufe. Die Modellwahl hat in dieser Ansicht keine Wirkung; sie bleibt für die Modell-Demos erhalten."
       : orientation
-        ? "Start & Kurs-Doku: Wähle zuerst eine passende Übung. Modellwahl und Modellladen werden in den Modell-Demos verfügbar."
+        ? orientationNote
         : engine.isWebLLM()
           ? "WebGPU-Modus: Echte lokale Modellaufrufe nach dem Laden des gewählten Modells. Geschätzte Tokenzahlen sind markiert; die Demo-Zeit enthält Animationen und menschliche Pausen."
           : "Mock-Modus: Antworten und Tokenzahlen sind vorgegeben. Die Demo-Zeit enthält künstliche Wartezeiten; das ist keine Messung der Modellleistung.";
@@ -197,7 +200,7 @@
       switchView("harness");
       window.AgentLab.show_harness_panel("security");
     } else if (
-      ["harness", "loops", "evaluation", "checkpoints", "docs"].includes(hash)
+      ["harness", "loops", "evaluation", "checkpoints", "context", "docs"].includes(hash)
     ) {
       switchView(hash);
     } else if (PATTERNS.some((p) => p.id === hash)) {

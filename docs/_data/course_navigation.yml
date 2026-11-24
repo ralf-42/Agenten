@@ -1,0 +1,14 @@
+- title: Einstieg
+  url: /01-einstieg/
+- title: Architekturen
+  url: /02-architekturen/
+- title: Entwicklung
+  url: /03-entwicklung/
+- title: Frameworks
+  url: /04-frameworks/
+- title: Qualität & Sicherheit
+  url: /05-qualitaet-sicherheit/
+- title: Praxis & Betrieb
+  url: /06-praxis-betrieb/
+- title: Verantwortung
+  url: /07-verantwortung/

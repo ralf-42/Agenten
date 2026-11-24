@@ -1,0 +1,1036 @@
+---
+layout: default
+title: Einsteiger LangSmith
+parent: LangSmith
+grand_parent: Frameworks
+nav_order: 1
+description: Monitoring & Debugging mit LangSmith
+has_toc: true
+redirect_from: ["/05-frameworks/einsteiger-langsmith.html"]
+---
+
+# LangSmith
+{: .no_toc }
+
+> **Monitoring & Debugging mit LangSmith**
+
+---
+
+## Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Kurzüberblick: Warum LangSmith?
+
+LangChain und LangGraph ermöglichen den Bau komplexer KI-Anwendungen. Doch bei der Entwicklung stellen sich schnell Fragen:
+- **Warum** hat die Chain eine bestimmte Antwort produziert?
+- **Welche** Retrieval-Schritte wurden in welcher Reihenfolge ausgeführt?
+- **Wo** ist der Fehler in einer 10-Schritte-RAG-Pipeline?
+- **Wie gut** funktioniert das System mit echten Nutzerfragen?
+
+LangSmith beantwortet diese Fragen durch:
+- Traces für unterstützte LLM-, Tool- und Chain-Aufrufe, wenn Tracing aktiviert ist
+- **Visuelle Darstellung** komplexer Workflows
+- **Dataset-Management** für systematische Evaluierung  
+- **Performance-Monitoring** in Produktion
+- **Feedback-Collection** von Nutzern
+
+Bei aktivem Tracing zeichnen unterstützte LangChain- und LangGraph-Integrationen Runs auf. Eigene Funktionen und nicht integrierte Aufrufe benötigen zusätzliche Instrumentierung (Einbau von Mess- und Protokollpunkten); Umfang und Inhalt hängen von der Konfiguration ab.
+
+### LangSmith im Entwicklungs-Workflow
+
+```mermaid
+flowchart TB
+    DEV[Development<br/>LangChain/LangGraph Code]
+    RUN[Code Execution<br/>Chain/RAG/Tool Runs]
+    LANGSMITH[LangSmith Platform<br/>Automatic Tracing]
+    UI[LangSmith Web UI<br/>Visualization & Analysis]
+    DEBUG[Debug & Optimize<br/>Based on Insights]
+
+    DEV --> RUN
+    RUN -->|Automatic| LANGSMITH
+    LANGSMITH --> UI
+    UI --> DEBUG
+    DEBUG -.Improve Code.-> DEV
+
+    subgraph "No Code Changes Needed"
+        RUN
+        LANGSMITH
+    end
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class LANGSMITH output;
+```
+
+---
+
+## Zentrale Konzepte
+
+| Konzept | Bedeutung im Agenten-Kontext |
+|---|---|
+| Trace | Vollständige Ausführung eines Agenten-, Chain- oder Graph-Laufs |
+| Run | Einzelner Schritt innerhalb eines Trace |
+| Thread | Zusammengehörige Gesprächs- oder Session-Historie |
+| Dataset | Testfälle für Evaluation und Regression |
+| Feedback | Manuelle oder automatische Qualitätsbewertung |
+| Project | Arbeitsbereich für Traces, Experimente und Monitoring |
+
+---
+
+## Quickstart: API-Key und Umgebung
+
+### LangSmith-Account erstellen
+
+1. Kostenlosen Account anlegen: [eu.smith.langchain.com](https://eu.smith.langchain.com/)
+2. API-Key generieren: Settings → API Keys → Create API Key (im **EU-Workspace**)
+3. Klassische Projektansicht aktivieren: Settings → General → **Switch to classic experience** (neue Cloud-Workspaces starten in der agentenbasierten Ansicht, erkennbar am Workspace-Namen oben links statt des LangSmith-Logos; die Umschaltung ist seit Ende Oktober 2026 in beide Richtungen möglich, Quelle: [LangSmith Changelog](https://docs.langchain.com/langsmith/changelog))
+4. Optional: Organisation und Projekte anlegen
+
+> [!WARNING] EU-Endpoint verwenden<br>
+> Für diesen Kurs immer den EU-Endpoint verwenden: `https://eu.api.smith.langchain.com`.
+> Account und API-Key müssen ebenfalls im EU-Workspace erstellt werden, sonst erscheinen Traces nicht im erwarteten Projekt.
+> APAC-Account (Asia-Pacific): `https://ap.api.smith.langchain.com` (seit SDK 0.8.x).
+
+### API-Keys in Google Colab Secrets hinterlegen
+
+**Schritt 1: Secrets in Colab einrichten**
+1. In Google Colab: Schlüssel-Symbol 🔑 in der linken Seitenleiste
+2. Neue Secrets hinzufügen:
+   - `OPENAI_API_KEY`: Eigener OpenAI-Key
+   - `LANGSMITH_API_KEY`: LangSmith-Key (beginnt mit `lsv2_pt_...`)
+   - Optional: `HF_TOKEN` für Hugging Face
+
+**Schritt 2: Umgebung einrichten (Standard-Setup)**
+
+> [!WARNING] Reihenfolge-Regel: Env-Vars vor Imports<br>
+> LangSmith-Env-Vars müssen gesetzt sein, bevor `langchain`, `langsmith` oder `genai_lib` importiert werden. Der Tracer liest die Env-Vars beim ersten Import — späteres Setzen wird ignoriert. Env-Vars ganz oben in der Setup-Cell, vor allen Imports setzen.
+
+```python
+#@title 🔧 Umgebung einrichten{ display-mode: "form" }
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+
+import os
+
+# ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"]    = "m13_langsmith_setup"  # Konvention: "m##_snake_case"
+os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
+
+# Erst danach: genai_lib und weitere Imports
+from genai_lib.utilities import check_environment, get_ipinfo, setup_api_keys, mprint
+
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
+print()
+check_environment()
+print()
+get_ipinfo()
+```
+
+**Wichtig:**
+- Env-Vars stehen **vor** dem `genai_lib`-Import – das ist Pflicht laut Best Practices
+- **LangSmith-Namenskonvention:** Modulbezogene Projekt-, Run-, Experiment- und Dataset-Namen tragen das Modul-ID-Prefix `m##_`; `show_trace(...)` verwendet denselben Projektnamen. Tags und Metadaten bleiben sprechende Labels ohne Modul-ID. Beispiel: `LANGSMITH_PROJECT="m04_structured_output"`.
+- `create_globals=False` verhindert globale Variablen (Best Practice)
+- Unterstützte LangChain-/LangGraph-Aufrufe werden bei aktivem Tracing erfasst. Eigene Funktionen können gezielt instrumentiert werden.
+
+---
+
+## Grundaufbau: Das kleinstmögliche funktionierende Beispiel
+
+Ein einfacher LLM-Call zeigt das Tracing, sofern die LangSmith-Variablen gesetzt und die Integration aktiv ist.
+
+```python
+from langchain.chat_models import init_chat_model
+
+# Normaler LLM-Setup (wie gewohnt)
+llm = init_chat_model("openai:gpt-6-luna")
+
+# Einfacher Aufruf: Bei aktiviertem Tracing erscheint ein Trace.
+response = llm.invoke("Erkläre LangSmith in einem Satz.")
+print(response.text)
+```
+
+**Was passiert im Hintergrund:**
+1. Die Integration übermittelt die für diesen Run verfügbaren Daten.
+2. LangSmith ordnet den Run einem Trace zu, der in der Web-UI angezeigt werden kann.
+3. Eigene Funktionen benötigen gegebenenfalls zusätzliche Instrumentierung (Einbau von Mess- und Protokollpunkten).
+
+**Nächster Schritt:** LangSmith-Dashboard öffnen und den Trace inspizieren
+- URL: [eu.smith.langchain.com/projects](https://eu.smith.langchain.com/projects) (in der *Classic Experience*; steht oben links statt des LangSmith-Logos der Workspace-Name, liegen über `LANGSMITH_PROJECT` gesendete Traces im Agent-Picker unter `Production` oder nach Umschaltung über Settings → General → **Switch to classic experience** unter `Projects`)
+- Projekt auswählen: `LANGSMITH_PROJECT="m13_langsmith_setup"`
+- Ersten Trace anklicken → vollständige Details sehen
+
+---
+
+## Traces verstehen: Die Grundstruktur
+
+LangSmith organisiert alle Daten in einer klaren Hierarchie:
+
+```mermaid
+flowchart TB
+    PROJECT["Project<br>Container für alle Traces<br>z.B. 'RAG-Chain'"]
+    THREAD["Thread<br>Gesprächs-Sequenz<br>session_id / conversation_id"]
+    TRACE["Trace<br>Eine vollständige Anfrage<br>z.B. RAG-Ausführung"]
+    RUN["Run<br>Einzelne Operation<br>llm · chain · tool · ..."]
+    TAGS["Tags<br>Filterbare Labels"]
+    META["Metadata<br>Key-Value-Paare"]
+    FEEDBACK["Feedback<br>Score 0.0 – 1.0"]
+
+    PROJECT --> THREAD
+    THREAD --> TRACE
+    TRACE --> RUN
+    RUN -.-> TAGS
+    RUN -.-> META
+    RUN -.-> FEEDBACK
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class PROJECT input;
+    class THREAD metric;
+    class RUN output;
+```
+
+| Konzept | Bedeutung |
+|---------|-----------|
+| **Project** | Container für alle zusammengehörigen Traces (z.B. ein Kursmodul) |
+| **Thread** | Sequenz mehrerer Traces für ein Gespräch — verknüpft via `session_id` |
+| **Trace** | Vollständige Aufzeichnung einer einzelnen Anfrage |
+| **Run** | Einzelner Schritt innerhalb eines Trace (`llm`, `chain`, `tool` …) |
+| **Tags** | Labels zur Filterung und Kategorisierung von Runs |
+| **Metadata** | Zusätzliche Key-Value-Daten pro Run (z.B. User-ID, Version) |
+| **Feedback** | Bewertung eines Runs — manuell oder automatisch (Score 0.0–1.0) |
+
+---
+
+### Run-Typen
+
+LangSmith kennt 7 Run-Typen (Werte immer **lowercase**):
+
+| Run-Typ         | Bedeutung                                 | Typisches Beispiel                             |
+| --------------- | ----------------------------------------- | ---------------------------------------------- |
+| **`llm`**       | Direkte LLM-Aufrufe (Chat, Completion)    | `llm.invoke()`                                 |
+| **`chain`**     | Verkettungen, Workflows, Agenten-Schritte | `prompt` \| `llm` \| `parser`, LangGraph-Nodes |
+| **`tool`**      | Tool-/Funktionsaufrufe                    | `@tool` Decorator                              |
+| **`retriever`** | Dokumentenabruf aus Vektordatenbanken     | `vectorstore.as_retriever()`                   |
+| **`embedding`** | Embedding-Berechnungen                    | `embeddings.embed_query()`                     |
+| **`prompt`**    | Prompt-Template-Verarbeitung              | `ChatPromptTemplate.format_messages()`         |
+| **`parser`**    | Output-Parser                             | `StrOutputParser()`                            |
+
+**Wichtige Hinweise:**
+
+- **`chain` ist der häufigste Typ** — er deckt alles ab, was kein direkter LLM-Call, kein Tool etc. ist. RAG-Pipelines und LCEL-Chains erscheinen typischerweise als `chain`.
+- **Default-Fallback:** Unbekannte oder falsch geschriebene `run_type`-Werte (z.B. `"LLM"` statt `"llm"`) fallen automatisch auf `"chain"` zurück.
+- **Kosten-Tracking (ab 2026):** LangSmith bietet eine einheitliche Kostenübersicht über den gesamten Workflow — nicht nur für `llm`-Runs. Custom Cost Metadata kann für beliebige Run-Typen übergeben werden.
+
+### Beispiel: Chain mit mehreren Runs
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+# LCEL-Chain (aus LangChain-Anleitung bekannt)
+prompt = ChatPromptTemplate.from_template("Erkläre {topic} für Einsteiger.")
+chain = prompt | llm | StrOutputParser()
+
+result = chain.invoke({"topic": "Vektordatenbanken"})
+```
+
+**Im LangSmith-Trace sichtbar:**
+
+```mermaid
+graph TB
+    CHAIN[Chain Run - Gesamt<br/>Latenz: 1.5s]
+    PROMPT[Prompt Run<br/>Template-Formatierung<br/>0.1s]
+    LLM[LLM Run - gpt-6.1-terra<br/>Input: 'Erkläre Vektordatenbanken...'<br/>Output: 'Vektordatenbanken speichern...'<br/>Tokens: 245 in=12, out=233<br/>Latenz: 1.2s]
+    PARSER[Parser Run<br/>String-Extraktion<br/>0.2s]
+
+    CHAIN --> PROMPT
+    CHAIN --> LLM
+    CHAIN --> PARSER
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef input fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#1e1b4b;
+    classDef metric fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    class CHAIN input;
+    class PROMPT metric;
+    class LLM output;
+```
+
+**ASCII-Darstellung:**
+```
+Chain Run (Gesamt)
+├─ Prompt Run (Template-Formatierung)
+├─ LLM Run (gpt-6.1-terra Call)
+│  ├─ Input: "Erkläre Vektordatenbanken für Einsteiger."
+│  ├─ Output: "Vektordatenbanken speichern..."
+│  ├─ Tokens: 245 (Input: 12, Output: 233)
+│  └─ Latenz: 1.2s
+└─ Parser Run (String-Extraktion)
+```
+
+### Threads: Gespräche über mehrere Traces hinweg
+
+Ein **Thread** verknüpft mehrere Traces zu einer Gesprächs-Sequenz — z.B. alle Nachrichten einer Chat-Session. Die Verknüpfung erfolgt über `session_id` oder `conversation_id` in den Metadaten.
+
+```python
+# Thread-ID in den Metadaten setzen
+config = {
+    "configurable": {"thread_id": "session-42"},
+    "metadata": {"session_id": "session-42"},  # → LangSmith gruppiert Traces als Thread
+}
+
+response = agent.invoke(
+    {"messages": [{"role": "human", "content": "Hallo!"}]},
+    config=config,
+)
+```
+
+**Im LangSmith-Dashboard:** Threads-Ansicht zeigt den vollständigen Gesprächsverlauf über alle Traces hinweg — ideal für Debugging von Multi-Turn-Gesprächen.
+
+
+---
+
+## Typische Workflows: Agenten tracken und evaluieren
+
+Tools und Agents profitieren besonders von LangSmith, da ihre Entscheidungswege oft komplex sind.
+
+```python
+from langchain_core.tools import tool
+from langchain.agents import create_agent
+
+# Tool definieren (wie in LangChain-Anleitung)
+@tool
+def multiply(a: int, b: int) -> int:
+    """Multipliziert zwei Zahlen."""
+    return a * b
+
+@tool
+def add(a: int, b: int) -> int:
+    """Addiert zwei Zahlen."""
+    return a + b
+
+# Agent erstellen
+tools = [multiply, add]
+agent = create_agent(
+    model=llm,
+    tools=tools,
+    system_prompt="Du bist ein Rechen-Agent. Nutze Tools für Berechnungen.",
+)
+
+# Agent ausführen - komplexe Frage
+response = agent.invoke({
+    "messages": [{"role": "human", "content": "Berechne (5 * 8) + 3"}]
+})
+```
+
+**Im LangSmith-Trace wird sichtbar:**
+
+```mermaid
+sequenceDiagram
+	autonumber
+    participant User
+    participant Agent
+    participant LLM
+    participant multiply as Tool: multiply
+    participant add as Tool: add
+    participant LangSmith
+
+    User->>Agent: "Berechne (5 * 8) + 3"
+    Agent->>LangSmith: Trace Start
+    Agent->>LLM: Process request with tools
+    LLM->>LLM: Decide: Need multiply(5, 8)
+    LLM-->>Agent: Tool call: multiply(5, 8)
+    Agent->>multiply: Execute multiply(5, 8)
+    multiply-->>Agent: Result: 40
+    Agent->>LangSmith: Log: Tool Run (multiply)
+    Agent->>LLM: Tool result: 40
+    LLM->>LLM: Decide: Need add(40, 3)
+    LLM-->>Agent: Tool call: add(40, 3)
+    Agent->>add: Execute add(40, 3)
+    add-->>Agent: Result: 43
+    Agent->>LangSmith: Log: Tool Run (add)
+    Agent->>LLM: Tool result: 43
+    LLM-->>Agent: Final answer
+    Agent-->>User: "Das Ergebnis ist 43"
+    Agent->>LangSmith: Trace Complete
+
+    Note over LangSmith: Every step logged:<br/>Inputs, Outputs,<br/>Latency, Tokens
+```
+
+**Wichtig:** Jeder Schritt ist einzeln inspizierbar – Input, Output, Latenz, Fehler.
+
+---
+
+## Datasets: Systematisches Testen
+
+Datasets ermöglichen wiederholbare Tests mit definierten Inputs und erwarteten Outputs.
+
+### Dataset erstellen (UI oder Code)
+
+**Variante A: Über UI**
+1. LangSmith → Datasets → Create Dataset
+2. Beispiele hinzufügen (Input/Output-Paare)
+
+**Variante B: Programmatisch**
+
+```python
+from langsmith import Client
+
+client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
+
+# Dataset mit Beispielen
+examples = [
+    {"inputs": {"question": "Was ist 5 * 8?"}, "outputs": {"answer": "40"}},
+    {"inputs": {"question": "Addiere 10 und 15"}, "outputs": {"answer": "25"}},
+    {"inputs": {"question": "Was ist die Hauptstadt von Frankreich?"}, "outputs": {"answer": "Paris"}},
+]
+
+dataset_name = "m13_rechen_agent_tests"
+dataset = client.create_dataset(dataset_name=dataset_name)
+
+client.create_examples(
+    inputs=[e["inputs"] for e in examples],
+    outputs=[e["outputs"] for e in examples],
+    dataset_id=dataset.id,
+)
+```
+
+### Agent gegen Dataset evaluieren
+
+```python
+from langsmith.evaluation import evaluate
+
+def predict(inputs: dict) -> dict:
+    """Wrapper für Agent-Aufruf"""
+    response = agent.invoke({
+        "messages": [{"role": "human", "content": inputs["question"]}]
+    })
+    # Antwort aus letzter Message extrahieren
+    return {"answer": response["messages"][-1].text}
+
+# Evaluierung starten
+results = evaluate(
+    predict,
+    data=dataset_name,
+    experiment_prefix="m13_agent_v1",
+)
+```
+
+**Ergebnis:**
+- Jeder Test-Case wird einzeln ausgeführt
+- Runs, die vom aktiven Tracing erfasst werden, lassen sich in LangSmith vergleichen
+- Vergleich über UI: Welche Fragen wurden korrekt beantwortet?
+
+---
+
+## Feedback: Qualität messen
+
+Feedback ermöglicht es, die Qualität von Antworten zu bewerten – manuell oder automatisch.
+
+### Manuelles Feedback (UI)
+
+In der LangSmith-UI kann jeder Run bewertet werden:
+- Daumen hoch/runter
+- Sterne (1-5)
+- Freitext-Kommentar
+
+### Programmatisches Feedback
+
+Run-IDs über `@traceable` mit `run_tree`-Injection ermitteln – der moderne Weg (kein `response["__run"].id` mehr, da veraltet und unzuverlässig):
+
+```python
+from langsmith import traceable, Client
+
+client = Client(api_url=os.environ["LANGSMITH_ENDPOINT"])
+
+@traceable(run_type="chain", name="AgentRun")
+def agent_ausfuehren(frage: str, run_tree=None) -> str:
+    """Agent-Ausführung – run_tree wird automatisch injiziert."""
+    response = agent.invoke({
+        "messages": [{"role": "human", "content": frage}]
+    })
+    return response["messages"][-1].text
+
+# Agent ausführen
+antwort = agent_ausfuehren("Was ist 5 * 8?")
+
+# Run-ID über den letzten Run im Projekt ermitteln (Notebook mit top-level await)
+from datetime import datetime, timedelta, timezone
+
+project = await client.aread_project(project_name=os.environ["LANGSMITH_PROJECT"])
+async for run in client.runs.query(
+    project_ids=[str(project.id)],
+    min_start_time=datetime.now(timezone.utc) - timedelta(days=7),
+    selects=["ID"], page_size=1,
+):
+    client.create_feedback(
+        run_id=run.id,
+        key="user_satisfaction",
+        score=1.0,   # 0.0 = schlecht, 1.0 = gut
+        comment="Antwort war präzise und korrekt.",
+    )
+    break  # page_size begrenzt nur eine Seite, nicht die Gesamtzahl.
+```
+
+Die SmithDB-Abfrage benötigt `langsmith>=0.10.15`. Projekt-UUID, Zeitfenster
+und benötigte Felder werden explizit angegeben. In Anwendungen mit parallelen
+Runs die ID des eigenen Runs festhalten, damit Feedback dem richtigen Run zugeordnet wird.
+
+
+### Automatische Evaluierung mit LLM-as-Judge
+
+`LangChainStringEvaluator` ist deprecated. Modernes Pattern: **function-based Evaluators** — einfache Python-Funktionen mit Signatur `(run, example) -> dict`:
+
+```python
+from langsmith.evaluation import evaluate
+from langsmith import traceable
+
+# Einfacher Evaluator: exakter Vergleich
+def korrektheit_evaluator(run, example) -> dict:
+    predicted = run.outputs.get("answer", "").strip().lower()
+    expected  = example.outputs.get("answer", "").strip().lower()
+    return {"key": "correctness", "score": 1.0 if predicted == expected else 0.0}
+
+# LLM-as-Judge Evaluator
+@traceable
+def llm_judge(run, example) -> dict:
+    predicted = run.outputs.get("answer", "")
+    expected  = example.outputs.get("answer", "")
+    prompt = (
+        f"Bewerte die Antwort auf einer Skala von 0 bis 1.<br>"
+        f"Erwartete Antwort: {expected}<br>"
+        f"Tatsächliche Antwort: {predicted}<br>"
+        f"Antworte nur mit einer Zahl zwischen 0 und 1."
+    )
+    try:
+        score = float(llm.invoke(prompt).text.strip())
+    except ValueError:
+        score = 0.0
+    return {"key": "quality", "score": score}
+
+# Evaluierung ausführen
+results = evaluate(
+    predict,
+    data=dataset_name,
+    evaluators=[korrektheit_evaluator, llm_judge],
+    experiment_prefix="m13_agent_v1_auto_eval",
+)
+```
+
+**Vorteile:**
+- Auch größere Datasets lassen sich automatisiert auswerten; Laufzeit und Kosten hängen vom Dataset und den Evaluatoren ab
+- Konsistent: Gleiche Bewertungskriterien
+- Nachvollziehbar: LLM-Begründungen werden gespeichert
+
+---
+
+## Integration in LangGraph-Workflows
+
+Bei aktiviertem Tracing werden unterstützte LangGraph-Runs ebenfalls erfasst.
+
+```python
+from langgraph.graph import StateGraph, START, END
+from langgraph.checkpoint.memory import InMemorySaver
+from typing import TypedDict, Annotated
+from langgraph.graph.message import add_messages
+
+class ChatState(TypedDict):
+    messages: Annotated[list, add_messages]
+
+def agent_node(state: ChatState):
+    response = llm.invoke(state["messages"])
+    return {"messages": [response]}
+
+# Graph bauen
+agent_builder = StateGraph(ChatState)
+agent_builder.add_node("agent", agent_node)
+agent_builder.add_edge(START, "agent")
+agent_builder.add_edge("agent", END)
+
+# Mit Checkpointer kompilieren
+checkpointer = InMemorySaver()
+agent = agent_builder.compile(checkpointer=checkpointer)
+
+# Ausführen: Bei aktiviertem Tracing erscheint ein Trace.
+config = {"configurable": {"thread_id": "demo-session"}}
+result = agent.invoke(
+    {"messages": [{"role": "human", "content": "Hallo!"}]},
+    config=config,
+)
+```
+
+**Im LangSmith-Trace:**
+- Vollständiger Graph-Ablauf sichtbar
+- Jeden Node-Durchlauf einzeln inspizierbar
+- State-Änderungen nachvollziehbar
+- Checkpointing-Events protokolliert
+
+---
+
+## Best Practices
+
+
+### Projekt-Organisation
+
+**Konvention: Modulname direkt in der Setup-Cell setzen**
+
+```python
+# ✅ Modulname in der Setup-Cell – vor allen Imports!
+os.environ["LANGSMITH_PROJECT"] = "m04_structured_output"
+```
+
+**Wichtig:** `LANGSMITH_PROJECT` wird beim ersten Trace via `lru_cache` eingefroren. Spätere `os.environ`-Änderungen haben keinen Effekt. Daher den Modulnamen **einmal korrekt in der Setup-Cell** setzen – dann funktioniert es zuverlässig.
+
+**Standard-Setup im Notebook-Header**
+```python
+#@title 🔧 Umgebung einrichten{ display-mode: "form" }
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+
+import os
+
+# ✅ LangSmith Env-Vars ZUERST – vor allen Imports!
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"]    = "m04_structured_output"  # Modulname anpassen
+os.environ["LANGSMITH_ENDPOINT"]   = "https://eu.api.smith.langchain.com"
+
+# Erst danach: genai_lib und weitere Imports
+from genai_lib.utilities import setup_api_keys, check_environment, get_ipinfo
+
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
+check_environment()
+get_ipinfo()
+```
+
+**Modulspezifischer Abschnitt im Notebook (nach dem Setup):**
+```python
+# LangSmith: Aktives Projekt für diesen Abschnitt
+import os
+print(f"📊 LangSmith-Projekt: {os.environ['LANGSMITH_PROJECT']}")
+
+# invoke() direkt – Projekt bereits korrekt in Setup-Cell gesetzt
+run_cfg = {"run_name": "m04_kap6_structured_trace", "tags": ["structured_output"]}
+result = llm.with_structured_output(MyModel).with_config(**run_cfg).invoke("...")
+```
+
+**Konventionen:**
+
+| LangSmith-Feld | Kontext | Beispiel |
+| --- | --- | --- |
+| `LANGSMITH_PROJECT` | Kurs-Notebook | `"m04_structured_output"` |
+| `run_name` | Kurs-Notebook | `"m04_kap6_structured_trace"` |
+| `LANGSMITH_PROJECT` | Produktion (Beispiel) | `"m24_chatbot_production"` |
+| `experiment_prefix` | RAG-Evaluation (Beispiel) | `"m11_rag_experiment_2026_03"` |
+
+> 💡 **Selektives Tracing:** Wenn mehrere `invoke()`-Aufrufe im Notebook nicht alle erfasst werden sollen, `LANGSMITH_TRACING` in der Setup-Cell zunächst auf `"false"` setzen und den gewünschten Referenzlauf mit `tracing_context(enabled=True)` umschließen. Das vollständige Muster steht in [LangSmith Best Practices](langsmith-best-practices.md#selektives-tracing). Das Umschalten der Env-Variable nach der Agent-Erstellung ist unzuverlässig.
+
+```python
+from langsmith import tracing_context
+
+with tracing_context(enabled=True):
+    result = agent.with_config(
+        run_name="m02_kap5_agenttrace",
+        tags=["agent", "langsmith"],
+    ).invoke({"messages": [...]})
+```
+
+### Tags für bessere Organisation
+
+```python
+from langsmith import traceable
+
+@traceable(
+    run_type="chain",
+    tags=["rag", "produktiv", "version_2_0"],
+)
+def my_rag_chain(question: str):
+    # RAG-Logik hier
+    pass
+```
+
+### Fehler debuggen
+
+```mermaid
+flowchart LR
+    FAIL[Chain fails<br/>Wrong answer]
+    OPEN[Open LangSmith UI<br/>Find failed run]
+    INSPECT[Inspect Trace<br/>Identify issue]
+    FIX[Fix Code<br/>Prompt or<br/>Retrieval config]
+    RETEST[Re-run Chain<br/>New trace created]
+    COMPARE[Compare in UI<br/>Before vs After]
+    SUCCESS{Fixed?}
+
+    FAIL --> OPEN
+    OPEN --> INSPECT
+    INSPECT --> FIX
+    FIX --> RETEST
+    RETEST --> COMPARE
+    COMPARE --> SUCCESS
+    SUCCESS -->|No| INSPECT
+    SUCCESS -->|Yes| END([Done])
+
+    classDef default fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e;
+    classDef output fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef stop fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+    class FAIL stop;
+    class SUCCESS output;
+```
+
+**Typischer Workflow:**
+1. Chain liefert falsche Antwort
+2. LangSmith öffnen → Run finden
+3. Trace inspizieren: An welcher Stelle ging es schief?
+4. Prompt oder Retrieval-Konfiguration anpassen
+5. Erneut testen → Vergleichen im UI
+
+**Vorteil:** Direkter Vorher/Nachher-Vergleich im LangSmith-UI.
+
+### Performance-Monitoring
+
+```python
+# Metadaten hinzufügen für Filterung
+from langsmith import traceable
+
+@traceable(metadata={"user_id": "student_42", "environment": "colab"})
+def process_query(query: str):
+    return chain.invoke({"question": query})
+```
+
+**Nutzen:**
+- Langsame Runs identifizieren (Latenz > 5s)
+- Token-Verbrauch pro Student analysieren
+- Fehlerraten nach Umgebung filtern
+
+### Einzelne Chains und Runs benennen mit `.with_config()`
+
+Bei aktiviertem Tracing werden unterstützte Runs erfasst. Ohne explizite Namen sind sie im Dashboard schwer zu unterscheiden. `.with_config()` versieht einzelne Chains, LLM-Aufrufe und Structured-Output-Chains mit einem Namen und Tags.
+
+**Prinzip: Config-Parameter vorab in einer separaten Variable festlegen**
+
+```python
+# Config-Parameter in einer eigenen Variable definieren
+run_cfg = {
+    "run_name": "m06_kap3_lcel_grundchain",  # Konvention: m##_kap##_typ
+    "tags":     ["lcel", "chain"],     # Filterbar im LangSmith-Dashboard
+}
+
+chain = (
+    ChatPromptTemplate.from_template("Erkläre {topic} für Einsteiger.")
+    | llm
+    | StrOutputParser()
+).with_config(**run_cfg)
+
+result = chain.invoke({"topic": "Vektordatenbanken"})
+```
+
+**`invoke(..., config=...)` vs. `.with_config(...)`**
+
+Beide Varianten setzen Tracing- und Laufzeitkonfiguration, wirken aber unterschiedlich breit:
+
+| Variante | Wirkung | Wann nutzen? |
+|---|---|---|
+| `chain.invoke(..., config=run_cfg)` | Gilt nur für diesen einen Aufruf. Die Chain bleibt unverändert. | Einzelne Experimente, Testfälle oder Notebook-Runs unterschiedlich markieren. |
+| `chain.with_config(**run_cfg)` | Erzeugt eine neue konfigurierte Chain-Instanz. Spätere Aufrufe nutzen diese Basis-Konfiguration automatisch. | Wiederverwendbare Pipeline mit festem Trace-Namen, Tags oder Metadaten. |
+
+```python
+# Nur dieser eine Run bekommt Name und Tags.
+antwort = chain.invoke(
+    {"topic": "Vektordatenbanken"},
+    config={"run_name": "m06_kap3_einzelrun", "tags": ["test"]},
+)
+
+# Diese Chain-Variante trägt Name und Tags bei jedem späteren Aufruf.
+traced_chain = chain.with_config(
+    run_name="m06_kap3_grundchain",
+    tags=["lcel", "chain"],
+)
+antwort = traced_chain.invoke({"topic": "Embeddings"})
+```
+
+Für Lehr-Notebooks ist `invoke(..., config=...)` oft flexibler, wenn einzelne Versuche verglichen werden. `.with_config(...)` ist übersichtlicher, wenn dieselbe Pipeline mehrfach mit derselben Trace-Struktur verwendet wird.
+
+**Auf LLM-Aufrufe anwenden**
+
+```python
+run_cfg = {
+    "run_name": "m06_kap1_llm_basis",
+    "tags":     ["llm"],
+}
+
+named_llm = llm.with_config(**run_cfg)
+response  = named_llm.invoke("Was ist ein Sprachmodell?")
+```
+
+**Auf `with_structured_output()` anwenden**
+
+```python
+from pydantic import BaseModel, Field
+
+class PersonResult(BaseModel):
+    name: str = Field(description="Vollständiger Name")
+    alter: int = Field(description="Alter in Jahren")
+
+run_cfg = {
+    "run_name": "m04_kap3_personextraktion",
+    "tags":     ["structured_output"],
+}
+
+structured_llm = llm.with_structured_output(PersonResult).with_config(**run_cfg)
+ergebnis = structured_llm.invoke("Emma Müller ist 34 Jahre alt.")
+```
+
+**Regeln für `run_cfg`:**
+
+| Parameter | Konvention | Beispiel |
+|-----------|-----------|---------|
+| `run_name` | `m##_kap##_typ` (Modul, Kapitel, Kurzname) | `m04_kap3_personextraktion` |
+| `tags` | Fachliche Labels ohne Modul-ID | `["structured_output", "person"]` |
+
+> ⚠️ **Regel:** `.with_config()` gehört in den Abschnitt, der Tracing *erklärt* – nicht pauschal auf jede Chain im Notebook. In Lehr-Notebooks einmalig pro Kapitel demonstrieren.
+
+### Tool-Tests ohne Tracing: `.func()`
+
+Beim Testen einzelner `@tool`-Funktionen entsteht mit `.invoke()` immer ein Trace. Für isolierte Unit-Tests die Python-Funktion direkt über `.func()` aufrufen – komplett am Runnable-Framework vorbei.
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def tage_bis_termin(tage_bis_stichtag: int, vorlauf: int) -> int:
+    """Berechnet die verbleibenden Tage nach Abzug des Vorlaufs."""
+    return tage_bis_stichtag - vorlauf
+
+# ✅ Kein Trace – direkte Python-Funktion
+ergebnis = tage_bis_termin.func(tage_bis_stichtag=21, vorlauf=7)
+print(ergebnis)  # 14
+
+# ⚠️ Mit Trace – geht durch das Runnable-Framework
+ergebnis = tage_bis_termin.invoke({"tage_bis_stichtag": 21, "vorlauf": 7})
+```
+
+**Wann `.func()` einsetzen:**
+- ✅ Isolierte Unit-Tests von Tool-Funktionen (Kapitel vor der LangSmith-Demo)
+- ✅ Wenn Tracing-Unterdrückung via Context Manager nicht zuverlässig funktioniert
+- ❌ Nicht verwenden, wenn das Runnable-Verhalten (Schema-Validierung, Callbacks) getestet werden soll
+
+> 💡 **Didaktischer Mehrwert:** Der Kontrast `.func()` vs. `.invoke()` macht sichtbar, was das Runnable-Framework zusätzlich leistet – ideal für Lehr-Notebooks.
+
+---
+
+
+### Trace-Patterns erkennen
+
+Traces sind mehr als ein Debug-Log — sie machen systematische Verhaltensmuster sichtbar.
+Die folgenden Patterns treten immer wieder auf, quer durch alle Chain- und RAG-Typen:
+
+| Pattern | Erkennungszeichen im Trace | Ursache / Gegenmittel |
+|---------|---------------------------|----------------------|
+| **Over-Retrieval** | Retriever läuft bei Fragen, die kein Dokument benötigen (z.B. reine Wissensfragen) | RAG-Routing zu pauschal → Conditional-Routing vor Retriever einbauen |
+| **Retry-Loop** | Gleicher LLM-Call mit identischen Inputs wiederholt, jeweils `error` | Fehlende Fehlerbehandlung in der Chain → Error-Handling ergänzen |
+| **Token-Akkumulation** | LLM-Input wächst mit jedem Schritt stark an | Kein Context-Management → Sliding-Window oder Summarization |
+| **Missing Tool Use** | Agent antwortet direkt ohne Tools, obwohl passende Tools verfügbar | Tool-Beschreibung unklar → Tool-Docstring verbessern |
+| **Langsamer Retriever** | `retriever`-Run dominiert die Gesamtlatenz | Zu viele `k` Dokumente oder langsamer Vectorstore → `k` reduzieren |
+| **Leere Retrieval-Ergebnisse** | `retriever`-Run liefert 0 Dokumente | Query-Formulierung passt nicht zu Chunk-Stil → Query-Rewriting oder MMR |
+
+**Reales Beispiel — Over-Retrieval in einer RAG-Chain:**
+
+```
+User: "Was ist LangSmith?"
+→ Retriever: retrieve_documents(query="LangSmith")   ← unnötig bei Wissensfrage
+→ Tool: 0 relevante Dokumente gefunden
+→ LLM: antwortet aus Modell-Wissen                  ← hätte direkt funktioniert
+```
+
+Ohne LangSmith-Trace wäre der Grund für die erhöhte Latenz nicht erkennbar gewesen.
+**Gegenmittel:** Routing-Schritt vor dem Retriever — nur bei dokumentenspezifischen Fragen retrieven.
+
+**Programmatische Pattern-Analyse mit `show_trace()`:**
+
+```python
+from genai_lib.utilities import show_trace
+
+# Letzte 3 Runs anzeigen
+show_trace("m11_rag_chain", limit=3)
+
+# Mit Step-Analyse des letzten Runs (zeigt alle Retrieval-Schritte)
+show_trace("m11_rag_chain", show_steps=True)
+```
+
+`show_steps=True` listet alle Child-Runs (Typ, Name, Status, Dauer) — ideal um
+Over-Retrieval und leere Retrieval-Ergebnisse direkt im Notebook sichtbar zu machen.
+
+### Problembereiche systematisch finden (Quick Workflow)
+
+Wenn eine Chain "irgendwie schlecht" wirkt, hilft eine feste Reihenfolge statt Ad-hoc-Debugging:
+
+1. **Failed/Slow/Expensive Runs filtern** (Projekt + Tags + Zeitraum)
+2. **Top-Pattern clustern** (z.B. Over-Retrieval, Token-Akkumulation, leere Ergebnisse — siehe 9.7)
+3. **Einen Fix pro Pattern** umsetzen (Prompt, Retrieval-Konfiguration, Routing)
+4. **Vorher/Nachher vergleichen** (gleiche Testfragen oder Dataset-Evals)
+
+**Für den Einstieg** reichen Schritte 1–4 vollständig aus. Alerts und Production-Monitoring
+(p95-Latenz, Kostenbudgets, automatische Schwellwerte) sind für Production-Deployments relevant.
+
+### Web-UI Filter: Traces gezielt finden
+
+Die LangSmith-Oberfläche unter [eu.smith.langchain.com](https://eu.smith.langchain.com/) bietet
+leistungsstarke Filter — besonders nützlich, wenn das Projekt viele Runs enthält.
+
+**Nützlichste Filter-Kombinationen für den Einstieg:**
+
+| Szenario | Filter | Wert |
+|----------|--------|-------|
+| Nur Fehler anzeigen | `Status` | `Error` |
+| Langsame Runs finden | `Latency` | `> 10s` |
+| Viele Child-Runs | `Child Runs` | `> 5` |
+| Spezifische Chain | `Name` | `contains "rag"` |
+| Experiment A vs. B | `Tags` | `experiment_a` / `experiment_b` |
+| Zeitraum eingrenzen | `Start Time` | `Last 1 hour` / `Last 24 hours` |
+
+**Drei Kern-Views für den Einstieg:**
+
+```
+1. Debugging:    Status = Error  +  Project = M##-...
+2. Latenz:       Latency > 5s   +  Child Runs > 3
+3. Experiment:   Tag "experiment_a" vs. Tag "experiment_b" (Compare-View)
+```
+
+**Weitere Web-UI-Tipps:**
+
+- **Playground direkt aus Trace:** Trace öffnen → *"Open in Playground"* — Prompt live editieren, Modell wechseln, sofort testen
+- **Compare-Ansicht:** Zwei Runs auswählen → *"Compare"* — zeigt Input/Output/Latenz/Tokens nebeneinander; ideal für Vorher/Nachher nach einem Fix
+- **Trace-Baum navigieren:** Linke Seitenleiste zeigt verschachtelte Child-Runs; Klick auf einen Child-Run öffnet Input/Output/Latenz direkt
+- **Export:** Run-Tabelle (gefiltert) → *"Export"* → CSV (nur Tabellen-Spalten); einzelne Traces → JSON (natives Format, nicht änderbar). Für programmatische Exporte: `client.runs.query()` mit Projekt-UUID, explizitem Zeitfenster und benötigten Feldern in `selects` per `async for` vollständig durchlaufen und die Daten anschließend mit `pandas.DataFrame.to_csv()` speichern.
+
+> 💡 **Tipp:** LangSmith-UI im zweiten Browser-Tab öffnen — so sind Traces direkt während der Entwicklung sichtbar, ohne den Notebook-Tab zu wechseln.
+
+---
+
+## Erweiterungen / Fortgeschrittene Themen
+
+### Ausblick auf Best Practices
+
+Diese Konzepte werden erst wichtig, wenn Tracing und Evaluation regelmäßig genutzt werden:
+
+| Konzept | Kurz erklärt |
+|---|---|
+| Baseline-Experiment | Ein Experiment wird als Vergleichsstand festgelegt. Neue Evaluationen lassen sich dann systematisch gegen diesen Stand prüfen. |
+| Prompt Hub | Prompts werden versioniert und wiederverwendbar abgelegt, statt sie in mehreren Notebooks oder Dateien zu kopieren. |
+| `LANGSMITH_SAMPLING_RATE` | Sampling reduziert die Menge der getrackten Runs, etwa wenn in produktionsnahen Tests nicht jede Anfrage gespeichert werden soll. |
+
+---
+
+### Vergleich: LangSmith vs. Alternatives
+
+| Aspekt | LangSmith | Print/Logs | LangGraph Debug |
+|--------|-----------|-----------|-----------------|
+| **Setup** | 3 Zeilen Code | Immer verfügbar | Graph-spezifisch |
+| **Visualisierung** | Interaktive UI | Terminal-Output | Stream-Modus |
+| **Historie** | Persistent | Verloren nach Neustart | Session-basiert |
+| **Datasets** | Integriert | Manuell verwalten | Nicht verfügbar |
+| **Team-Kollaboration** | URL-Sharing | Screenshots | Nicht verfügbar |
+| **Produktion** | Monitoring | Nicht skalierbar | Nur Development |
+
+**Fazit für den Einstieg:**
+- **Woche 1:** LangSmith parallel zu Print-Debugging einführen
+- **Woche 2:** LangSmith als primäres Debug-Tool etablieren
+- **Ab Woche 3:** LangSmith für RAG-Evaluation und Chain-Optimierung nutzen
+
+---
+
+## Troubleshooting
+
+### "Werden alle Daten an LangSmith gesendet?"
+
+**Ja**, standardmäßig:
+- Alle Inputs und Outputs
+- Metadaten (Latenz, Tokens, etc.)
+- Fehler und Stack-Traces
+
+**Kontrolle:**
+- Sensitive Daten vorher filtern/anonymisieren
+- Für einzelne Referenzläufe: `tracing_context(enabled=True)` verwenden
+- `@traceable(enabled=False)` nur für einzelne, funktionsbezogene Ausnahmen
+- Self-Hosted LangSmith für vollständige Kontrolle
+
+### "Kostet LangSmith extra?"
+
+**Free Tier:** Kostenloser Einstieg verfügbar (ausreichend für erstes Ausprobieren)
+**Paid Tiers:** Verschiedene Pläne für Production-Nutzung
+
+
+### "Wie lange werden Traces gespeichert?"
+
+Die geltende Aufbewahrungsfrist ist im jeweiligen LangSmith-Workspace und den aktuellen Planbedingungen zu prüfen.
+
+Ein Dataset kann ausgewählte Runs für wiederholbare Evaluationen enthalten. Es ersetzt keine geprüfte Archivierungs- oder Aufbewahrungslösung.
+
+```python
+# Run für wiederholbare Evaluation in ein Dataset übernehmen
+client.create_example_from_run(run_id=run_id, dataset_name="m05_wichtige_runs")
+```
+
+### "Wie deaktiviere ich Tracing?"
+
+```python
+# Global für das Notebook deaktivieren; für einzelne Referenzläufe
+# anschließend tracing_context(enabled=True) verwenden.
+os.environ["LANGSMITH_TRACING"] = "false"
+
+# Für einzelne Funktionen
+from langsmith import traceable
+
+@traceable(enabled=False)
+def nicht_getrackt():
+    pass
+```
+
+### "Kann ich LangSmith ohne LangChain nutzen?"
+
+**Ja**, mit dem `@traceable` Decorator:
+```python
+from langsmith import traceable
+
+@traceable
+def custom_function(input_data):
+    # Beliebiger Python-Code
+    return result
+```
+
+### "Was passiert, wenn ich den API-Key vergesse?"
+
+```python
+# Setup prüft automatisch, ob Keys vorhanden sind
+setup_api_keys(['OPENAI_API_KEY', 'LANGSMITH_API_KEY'], create_globals=False)
+
+# Falls Key fehlt: Klare Fehlermeldung mit Hinweis auf Colab Secrets
+```
+
+**Best Practice:** Alle benötigten Keys zu Beginn im Setup-Block definieren.
+
+
+> 🔑 **Wichtig:** Alle API-Keys werden sicher in Google Colab Secrets hinterlegt und niemals im Code sichtbar!
+
+## Zusammenfassung
+
+LangSmith macht Agentenläufe nachvollziehbar. Traces zeigen einzelne Schritte, Datasets ermöglichen wiederholbare Tests und Feedback ergänzt die Qualitätssicherung. So lassen sich Tool-Aufrufe, Routing-Entscheidungen und Fehlerpfade untersuchen.
+
+
+## Abgrenzung zu verwandten Dokumenten
+
+| Dokument | Frage |
+|---|---|
+| [LangSmith Best Practices](langsmith-best-practices.html) | Welche Tracing- und Evaluationsmuster gelten in produktionsnahen Projekten? |
+| [Evaluation & Observability](../../05-qualitaet-sicherheit/evaluation-observability.html) | Welche Qualitätsfragen werden mit Traces und Testsets beantwortet? |
+
+---
+
+**Version:** 1.5<br>
+**Stand:** November 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

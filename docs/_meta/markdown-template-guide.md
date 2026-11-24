@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Markdown Template Guide
 nav_exclude: true
@@ -234,14 +234,14 @@ In Inhaltsseiten steht eine H1 (`#`) für den Seitentitel; Kapitel beginnen mit 
 In Index-Dokumenten wie `concepts.md` oder `frameworks.md` werden absolute URLs verwendet:
 
 ```markdown
-[Digitale Souveränität]({{ '/09-regulatorik-verantwortung/digitale-souveraenitaet.html' | relative_url }})
+[Digitale Souveränität]({{ '/07-verantwortung/digitale-souveraenitaet.html' | relative_url }})
 ```
 
 Innerhalb inhaltlicher Dokumente werden relative `.html`-Links verwendet:
 
 ```markdown
-[Agent-Architekturen]({{ '/04-agenten-implementierung/entwurf/agent-architekturen.html' | relative_url }})
-[Modellauswahl]({{ '/03-modelle-provider-anpassung/modellauswahl.html' | relative_url }})
+[Agent-Architekturen]({{ '/02-architekturen/agent-architekturen.html' | relative_url }})
+[Modellauswahl]({{ '/03-entwicklung/modelle-zugang/modellauswahl.html' | relative_url }})
 ```
 
 Regeln:
@@ -313,8 +313,8 @@ Kurze Einordnung des Bereichs in einem Absatz.
 
 ## Grundlagen
 
-- **[Checkpointing & Persistenz]({{ '/04-agenten-implementierung/ablauf-zustand/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
-- **[Agent Security]({{ '/07-qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
+- **[Checkpointing & Persistenz]({{ '/03-entwicklung/state-checkpoints/checkpointing-persistenz.html' | relative_url }})** – *Wie werden Sitzungen gespeichert?* Zustandsspeicherung und Session-Persistenz in LangGraph.
+- **[Agent Security]({{ '/05-qualitaet-sicherheit/agent-security.html' | relative_url }})** – *Wie wird ein Agent abgesichert?* Sicherheitsrisiken und Schutzprinzipien für KI-Agenten.
 ````
 
 Listen sind auf Kategorie-Seiten sinnvoll, weil dort tatsächlich eine Sammlung gleichartiger Einträge vorliegt. Auch dort gilt: keine ausufernden Unterlisten ohne Mehrwert.

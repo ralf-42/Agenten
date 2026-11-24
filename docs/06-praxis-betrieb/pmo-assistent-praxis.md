@@ -1,0 +1,588 @@
+---
+layout: default
+title: PMO-Assistent in der Praxis
+parent: "Praxis & Betrieb"
+nav_order: 1
+description: "Praxisprojekt: PMO-Assistent für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting"
+has_toc: true
+redirect_from: ["/08-deployment-betrieb/pmo-assistent-praxis.html"]
+---
+
+# PMO-Assistent – Praxisworkshop
+{: .no_toc }
+
+> [!NOTE] Kernfrage<br>
+> Wie entsteht ein PMO-Assistent, der Meetings vorbereitet, Aufgaben verfolgt und Statusberichte aus Protokollen, Entscheidungen und Projektdokumenten erstellt, Aussagen belegt, Unsicherheit sichtbar macht und bei Bedarf menschliche Freigabe einholt?
+
+---
+
+# Inhaltsverzeichnis
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Projektübersicht
+
+In diesem Praxisprojekt entsteht schrittweise ein **PMO-Assistent**. Ausgangspunkt ist Mara Vogt, Projektleiterin des internen Vorhabens "Projekt Kompass": Sie muss regelmäßig Protokolle, Risikolisten und Projektdokumente sichten, Meetings vorbereiten, Aufgabenstände verfolgen und geprüfte Briefings und Statusübersichten erhalten, statt einem vollautomatischen System blind zu vertrauen.
+
+> [!NOTE] Dateiname und URL<br>
+> Diese Seite liegt unter `pmo-assistent-praxis.md`. Der frühere Dateiname wurde abgelöst, damit URL, Titel und Leitprojekt wieder zusammenpassen.
+
+Der Agent lädt einen Projektkorpus aus Besprechungs- und Projektunterlagen in unterstützten Dateiformaten mit Meeting-Protokollen, Entscheidungen, Aufgaben- und Risikolisten sowie optionalen Hintergrundquellen, sucht semantisch nach relevanten Passagen, formuliert Meeting-Briefings, Aufgabenstände und Statusübersichten mit Quellenangaben, erkennt Out-of-Corpus-Fragen und pausiert bei Unsicherheit für menschliche Prüfung. Er ersetzt kein vollständiges PMO-System und trifft keine verbindlichen Projektentscheidungen.
+
+Das Zielbild ist in [PMO-Assistent]({{ '/01-einstieg/pmo-assistent.html' | relative_url }}) beschrieben.
+
+**Lernziele:**
+- LangGraph State Machines für kontrollierte Antwortpfade einsetzen
+- einen Projektkorpus (Protokolle, Entscheidungen, Risiken, Aufgaben) laden, strukturieren und durchsuchen
+- Retrieval-Ergebnisse in belegte Antworten überführen
+- Projektinformationen für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting strukturieren
+- Out-of-Corpus-Fragen sicher stoppen
+- Sessions mit Checkpointing speichern
+- Human-in-the-Loop für unsichere oder folgenreiche Antworten einbauen
+- optional eine kleine Gradio-Oberfläche bereitstellen
+
+**Arbeitsumgebung:** Google Colab, Jupyter Notebook oder lokales Python
+
+**Voraussetzung:** Grundlagen zu Tool Use, LangGraph, RAG, State, HITL und Evaluation
+
+---
+
+## Zielprodukt
+
+Am Ende steht ein Agent, der:
+
+1. einen Projektkorpus in unterstützten Formaten reproduzierbar lädt,
+2. Dokumente in Chunks zerlegt und optional in ChromaDB einbettet,
+3. Fragen in natürlicher Sprache beantwortet und Meeting-, Aufgaben- oder Statusinformationen aufbereitet,
+4. jede fachliche Antwort mit Dokumenttitel und Passagen-Zitat belegt,
+5. bei fehlendem Beleg "Nicht im Korpus" ausgibt,
+6. vor unsicheren finalen Antworten einen HITL-Schritt auslöst,
+7. optional als Supervisor-System mit Tabellen-Worker und Fließtext-Worker arbeitet.
+
+Der Assistent unterstützt ausgewählte PMO-nahe Informationsaufgaben. Er trifft keine verbindlichen Projektentscheidungen und schreibt nicht ohne Freigabe in operative Systeme.
+
+Nicht erforderlich ist ein produktionsreifes Deployment. UI, LangSmith, Hugging Face Spaces und Multi-Agent-Ausbau sind Erweiterungen.
+
+---
+
+## Leitplanken
+
+Der PMO-Assistent ist ein Assistenzsystem und kein vollständiges PMO-System oder autonomes Entscheidungssystem. Verbindlich sind die [Leitplanken der Leitaufgabe]({{ '/01-einstieg/pmo-assistent.html' | relative_url }}#leitplanken). Für den Workshop gilt vor allem:
+
+- **Quellenpflicht und Out-of-Corpus-Regel:** Fachliche Antworten brauchen Quellenangaben oder den Hinweis „Nicht im Korpus“; fehlendes Wissen wird nicht erfunden.
+- **HITL bei Unsicherheit:** Niedrige Sicherheit oder folgenreiche Aussagen werden vor der finalen Ausgabe geprüft.
+- **Datenschutz und Logging:** Öffentliche Fachtexte oder synthetische Daten nutzen; sensible Inhalte nicht unbedacht protokollieren.
+- **Entscheidungsverantwortung:** Verbindliche Projektentscheidungen bleiben beim Menschen.
+
+---|---|
+| Quellenpflicht | Fachliche Antworten brauchen Quellenangaben oder den Hinweis "Nicht im Korpus". |
+| Out-of-Corpus-Regel | Fehlendes Wissen wird nicht frei erfunden. |
+| HITL bei Unsicherheit | Niedrige Sicherheit oder folgenreiche Aussagen werden vor der finalen Ausgabe geprüft. |
+| Tool-Grenzen | Tools laden, suchen, zitieren oder formatieren; offene Seiteneffekte brauchen Freigabe. |
+| Datenschutz | Beispiele nutzen öffentliche Fachtexte oder synthetische Daten. |
+| Logging bewusst einsetzen | Tracing hilft beim Debugging, sensible Inhalte werden aber nicht unbedacht protokolliert. |
+| PMO-Abgrenzung | Der Assistent bereitet Informationen auf und verfolgt Aufgabenstände; verbindliche Projektentscheidungen bleiben beim Menschen. |
+
+---
+
+## Notebook-Struktur
+
+Zu erstellen ist **ein Notebook** mit **6 aufbauenden Kapiteln**:
+
+```text
+   ├── Kapitel 1: StateGraph Basics
+   ├── Kapitel 2: Intent Routing
+   ├── Kapitel 3: Projektkorpus & Retrieval
+   ├── Kapitel 4: Checkpointing & Sessions
+   ├── Kapitel 5: Synthese, Quellen und Freigabe
+   └── Kapitel 6: UI, Evaluation und Ausbau
+```
+
+| Kapitel | Schwerpunkt | Ergebnis |
+|---|---|---|
+| 1 | StateGraph Basics | Ein minimaler Graph mit State und Fallback |
+| 2 | Intent Routing | Fragen werden nach Typ geroutet |
+| 3 | Korpus & Retrieval | Relevante Passagen werden aus Protokollen, Entscheidungen, Risiken und Aufgabenlisten geholt |
+| 4 | Sessions | Verlauf bleibt über Checkpointing erhalten |
+| 5 | Synthese & HITL | Antworten sind strukturiert, belegt und kontrollierbar |
+| 6 | Ausbau | UI, Evaluation oder Multi-Agent-Variante |
+
+---
+
+## Vorbereitung
+
+### API-Key speichern
+
+Beim Arbeiten mit einem externen Modell den `OPENAI_API_KEY` in Colab Secrets oder lokal in einer `.env` speichern.
+
+### Basis-Pakete installieren
+
+```python
+!uv pip install --system -q git+https://github.com/ralf-42/Agenten.git#subdirectory=04_modul
+!uv pip install --system -q langgraph>=1.0.0 langgraph-checkpoint-sqlite langchain-chroma gradio pypdf markitdown[all]
+```
+
+### API-Key laden und Umgebung prüfen
+
+```python
+from genai_lib.utilities import setup_api_keys, check_environment
+
+setup_api_keys(["OPENAI_API_KEY"])
+check_environment()
+```
+
+---
+
+## Kapitel 1: StateGraph Basics
+
+**Lernziel:** Einen kleinen Graphen mit TypedDict-State und sicheren Fallbacks aufbauen.
+
+Beispielfragen:
+
+- "Welche Entscheidung wurde am 17.03. zur Vektordatenbank getroffen?"
+- "Vergleiche die Aussagen aus zwei Steuerkreis-Protokollen."
+- "Welchen Status hat Risiko R2 aktuell?"
+
+### Aufgabe 1.1: State definieren
+
+```python
+from typing import Literal, TypedDict
+from langgraph.graph import END, START, StateGraph
+
+class BriefingState(TypedDict):
+    user_query: str
+    intent: Literal["factual", "comparison", "summary", "out_of_scope", "fallback"] | None
+    retrieved_context: str
+    sources: list[dict]
+    confidence: Literal["hoch", "mittel", "niedrig"] | None
+    needs_approval: bool
+    answer: str
+```
+
+### Aufgabe 1.2: Minimal-Nodes erstellen
+
+```python
+def classify_intent_node(state: BriefingState) -> BriefingState:
+    """Erkennt den Fragetyp."""
+    query = state["user_query"].lower()
+    # einfache Heuristik (Faustregel) oder LLM-Klassifikation ergänzen
+    return state
+
+def fallback_answer_node(state: BriefingState) -> BriefingState:
+    """Gibt eine sichere Fallback-Antwort zurück."""
+    state["answer"] = "Ich kann diese Frage noch nicht zuverlässig aus dem Korpus beantworten."
+    return state
+```
+
+### Aufgabe 1.3: Minimalen Graphen bauen
+
+```python
+agent_builder = StateGraph(BriefingState)
+agent_builder.add_node("classify_intent_node", classify_intent_node)
+agent_builder.add_node("fallback_answer_node", fallback_answer_node)
+
+agent_builder.add_edge(START, "classify_intent_node")
+agent_builder.add_edge("classify_intent_node", "fallback_answer_node")
+agent_builder.add_edge("fallback_answer_node", END)
+
+agent = agent_builder.compile()
+```
+
+**Erfolgskriterium:**
+- Der Graph läuft fehlerfrei.
+- Der State wird korrekt befüllt.
+- Unklare Fragen erhalten eine sichere Antwort.
+
+---
+
+## Kapitel 2: Intent Routing
+
+**Lernziel:** Verschiedene Fragetypen über Conditional Edges zu spezialisierten Nodes leiten.
+
+### Aufgabe 2.1: Router-Funktion definieren
+
+```python
+from typing import Literal
+
+def pmo_router(
+    state: BriefingState,
+) -> Literal[
+    "answer_factual_question_node",
+    "compare_sources_node",
+    "summarize_findings_node",
+    "handle_out_of_scope_node",
+    "fallback_answer_node",
+]:
+    routes = {
+        "factual": "answer_factual_question_node",
+        "comparison": "compare_sources_node",
+        "summary": "summarize_findings_node",
+        "out_of_scope": "handle_out_of_scope_node",
+    }
+    return routes.get(state["intent"], "fallback_answer_node")
+```
+
+### Aufgabe 2.2: Antwort-Nodes anlegen
+
+```python
+def answer_factual_question_node(state: BriefingState) -> BriefingState:
+    """Beantwortet faktische Fragen mit Quellenbezug."""
+    ...
+
+def compare_sources_node(state: BriefingState) -> BriefingState:
+    """Vergleicht Aussagen aus mehreren Quellen."""
+    ...
+
+def summarize_findings_node(state: BriefingState) -> BriefingState:
+    """Fasst relevante Passagen aus dem Korpus zusammen."""
+    ...
+
+def handle_out_of_scope_node(state: BriefingState) -> BriefingState:
+    """Stoppt Antworten, die nicht aus dem Korpus belegbar sind."""
+    state["answer"] = "Nicht im Korpus."
+    state["confidence"] = "niedrig"
+    return state
+```
+
+### Aufgabe 2.3: Conditional Edges einbauen
+
+```python
+agent_builder.add_node("answer_factual_question_node", answer_factual_question_node)
+agent_builder.add_node("compare_sources_node", compare_sources_node)
+agent_builder.add_node("summarize_findings_node", summarize_findings_node)
+agent_builder.add_node("handle_out_of_scope_node", handle_out_of_scope_node)
+
+agent_builder.add_conditional_edges(
+    "classify_intent_node",
+    pmo_router,
+    {
+        "answer_factual_question_node": "answer_factual_question_node",
+        "compare_sources_node": "compare_sources_node",
+        "summarize_findings_node": "summarize_findings_node",
+        "handle_out_of_scope_node": "handle_out_of_scope_node",
+        "fallback_answer_node": "fallback_answer_node",
+    },
+)
+```
+
+**Erfolgskriterium:**
+- Faktische Fragen, Vergleichsfragen, Zusammenfassungen und Out-of-Corpus-Fragen landen in unterschiedlichen Pfaden.
+- Der Graph endet deterministisch.
+
+---
+
+## Kapitel 3: Projektkorpus & Retrieval
+
+**Lernziel:** Protokolle, Entscheidungen, Aufgaben- und Risikolisten sowie ausgewählte Hintergrundquellen laden, in Passagen strukturieren und als belegbaren Kontext für Meeting-Briefings, Aufgabenverfolgung und Statusreporting in den Graphen einbinden.
+
+### Aufgabe 3.1: Korpus laden
+
+Der Beispielkorpus liegt im Repository unter `02_daten/01_text/korpus_pmo_assistent/`. Im Notebook kann er reproduzierbar geladen werden:
+
+```python
+from genai_lib.github import copy_from_github
+
+KORPUS_QUELLE = "ralf-42/Agenten/02_daten/01_text/korpus_pmo_assistent"
+KORPUS_MASKE = "*"
+KORPUS_TARGET = "/content/files"
+
+copy_from_github(KORPUS_QUELLE, KORPUS_TARGET, mask=KORPUS_MASKE)
+```
+
+Der zentrale Mehrformat-Lader `genai_lib.pmo_rag.load_documents_from_directory` verarbeitet PDFs, Markdown/Text, CSV, XLSX, JSON, XML, HTML und Word-Dokumente. README, Qualitätsbeschreibung und Metadaten werden im PMO-Korpus als Verwaltungsdateien erkannt und nicht indexiert.
+
+Jedes Dokument braucht mindestens:
+
+- Dateiname oder Titel
+- extrahierten Text
+- Chunk-ID oder Seitenhinweis
+- zitierfähige Passage
+
+### Aufgabe 3.2: Retrieval implementieren
+
+Für eine Basisversion reicht Retrieval-Light mit einfacher Chunk-Suche. Die bessere Variante nutzt Embeddings, ChromaDB und Score-Thresholds. Der Aufbau von Vectorstore und Suchtool steht mit `genai_lib.pmo_rag` (`get_pmo_vectorstore`, `index_pmo_corpus`, `make_search_knowledge_base_tool`) als fertiger Baustein bereit.
+
+**Typischer Fehler:** zwei Skalen vermischen. Chroma liefert bei `similarity_search_with_score` eine **Distanz** (kleiner = ähnlicher). Ein `score_threshold` im Retriever arbeitet mit einem **Relevanz-Score** (höher = besser).
+
+```python
+def retrieve_context_node(state: BriefingState) -> BriefingState:
+    """Sucht passende Passagen im Projektkorpus."""
+    query = state["user_query"]
+    # Chunks suchen, Scores prüfen, Quellen speichern
+    ...
+    return state
+```
+
+### Aufgabe 3.3: Retrieval in den Graphen einbauen
+
+```python
+agent_builder.add_node("retrieve_context_node", retrieve_context_node)
+
+agent_builder.add_edge(START, "classify_intent_node")
+agent_builder.add_edge("classify_intent_node", "retrieve_context_node")
+agent_builder.add_conditional_edges("retrieve_context_node", pmo_router, ...)
+```
+
+**Erfolgskriterium:**
+- Antworten nutzen belegte Passagen aus dem Korpus.
+- Quellen enthalten Dokumenttitel und Textausschnitt.
+- Bei schwachem Retrieval wird keine freie Antwort erfunden.
+
+---
+
+## Kapitel 4: Checkpointing & Sessions
+
+**Lernziel:** Verlauf und Sitzungen für wiederholte Recherchefragen speichern.
+
+### Aufgabe 4.1: Checkpointer einrichten
+
+```python
+from langgraph.checkpoint.sqlite import SqliteSaver
+
+checkpointer = SqliteSaver.from_conn_string("briefing_agent_sessions.db")
+agent = agent_builder.compile(checkpointer=checkpointer)
+```
+
+### Aufgabe 4.2: Session-basierte Interaktion
+
+```python
+config = {"configurable": {"thread_id": "mara_001"}}
+
+result1 = agent.invoke(
+    {
+        "user_query": "Welche Entscheidungen wurden zur Vektordatenbank getroffen?",
+        "intent": None,
+        "retrieved_context": "",
+        "sources": [],
+        "confidence": None,
+        "needs_approval": False,
+        "answer": "",
+    },
+    config=config,
+)
+
+result2 = agent.invoke(
+    {
+        "user_query": "Welche Quelle war dafür am wichtigsten?",
+        "intent": None,
+        "retrieved_context": "",
+        "sources": [],
+        "confidence": None,
+        "needs_approval": False,
+        "answer": "",
+    },
+    config=config,
+)
+```
+
+**Erfolgskriterium:**
+- Mehrere Anfragen gehören zur gleichen Session.
+- Verlauf kann eingesehen oder zurückgesetzt werden.
+- Der Assistant kann Folgefragen auf vorherige Recherche beziehen.
+
+---
+
+## Kapitel 5: Synthese, Quellen und Freigabe
+
+**Lernziel:** Antworten strukturieren, Quellenpflicht erzwingen und unsichere Ergebnisse zur Freigabe markieren.
+
+### Aufgabe 5.1: Antwortschema definieren
+
+```python
+from pydantic import BaseModel, Field
+
+class Quellenangabe(BaseModel):
+    dokument: str = Field(description="Dateiname oder Titel der Quelle")
+    passage: str = Field(description="Zitierter Textausschnitt, maximal 2 Sätze")
+
+class BriefingAntwortResult(BaseModel):
+    antwort: str = Field(description="Synthese-Antwort auf die Frage")
+    quellen: list[Quellenangabe] = Field(description="Mindestens eine Quellenangabe")
+    sicherheit: str = Field(description="hoch / mittel / niedrig")
+    hinweis: str = Field(description="'Nicht im Korpus' wenn out-of-scope")
+```
+
+Je nach PMO-Kernfunktion ergänzt oder ersetzt ein eigenes Ergebnisformat dieses Schema: `GateOutputResult` (Meeting-Briefing, DeepAgents Skill PMO-Assistent), `ActionItemResult` (offene Aufgaben, Structured Output/DeepAgents Skill PMO-Assistent) und `RiskReviewResult` (Risikoübersicht, Structured Output). Felder und Beispiele stehen unter [Ergebnisformate des PMO-Assistenten]({{ '/01-einstieg/pmo-assistent.html' | relative_url }}#ergebnisformate-des-pmo-assistenten).
+
+### Aufgabe 5.2: Qualitäts-Gate ergänzen
+
+```python
+def quality_gate_node(state: BriefingState) -> BriefingState:
+    """Markiert unsichere oder unbelegte Antworten für menschliche Prüfung."""
+    if state["confidence"] == "niedrig" or not state["sources"]:
+        state["needs_approval"] = True
+        state["answer"] = "Freigabe erforderlich: Antwort ist nicht ausreichend belegt."
+    return state
+```
+
+Der HITL-Schritt liegt nach der Synthese und vor der finalen Ausgabe.
+
+### Aufgabe 5.3: Testfragen definieren
+
+Mindestens diese fünf Fälle testen:
+
+- Faktische Frage mit direkter Antwort im Korpus
+- Inferenzfrage, die mehrere Passagen zusammenführt
+- Vergleichsfrage zu zwei Quellen
+- Tabellen- oder Statistikfrage für einen spezialisierten Worker
+- Out-of-Corpus-Frage mit Antwort: "Nicht im Korpus"
+- Statusbericht-Fall: Bericht aus Tracker, Risikoliste und Entscheidungsprotokoll mit Datum und Quelle je Aussage
+
+Das Eval-Set sollte außerdem mindestens je einen Fall für Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting enthalten.
+
+**Erfolgskriterium:**
+- Antworten bleiben beim belegten Korpus.
+- Quellenangaben sind nachvollziehbar.
+- Out-of-Corpus-Fragen werden gestoppt.
+- HITL wird bei niedriger Sicherheit ausgelöst.
+- Testfragen laufen reproduzierbar durch.
+
+---
+
+## Kapitel 6: UI, Evaluation und Ausbau
+
+**Lernziel:** Den Assistant nutzbar machen und die Qualität systematisch prüfen.
+
+### Option A: Gradio UI
+
+```python
+import gradio as gr
+
+def chat_with_briefing_agent(message, history, thread_id):
+    config = {"configurable": {"thread_id": thread_id}}
+    result = agent.invoke(
+        {
+            "user_query": message,
+            "intent": None,
+            "retrieved_context": "",
+            "sources": [],
+            "confidence": None,
+            "needs_approval": False,
+            "answer": "",
+        },
+        config=config,
+    )
+    return "", history + [(message, result["answer"])]
+
+with gr.Blocks() as demo:
+    gr.Markdown("# PMO-Assistent")
+    thread_id = gr.Textbox(label="Session ID", value="mara_001")
+    chatbot = gr.Chatbot(height=450)
+    msg = gr.Textbox(placeholder="Frage zum Projektkorpus stellen ...")
+    msg.submit(chat_with_briefing_agent, [msg, chatbot, thread_id], [msg, chatbot])
+```
+
+### Option B: Eval-Set
+
+Ein kleines Eval-Set prüft Retrieval und Quellenbindung:
+
+```json
+{
+  "id": "q01",
+  "frage": "Welche Methode wird in Dokument X zur Chunking-Optimierung vorgeschlagen?",
+  "erwartete_passage": "...exakter Textausschnitt...",
+  "quelle": "dateiname.<format>",
+  "typ": "faktisch"
+}
+```
+
+Sinnvolle Fragetypen:
+
+- faktische Fragen
+- Inferenzfragen
+- Vergleichsfragen
+- Negativbeispiele mit "Nicht im Korpus"
+
+### Option C: Multi-Agent-Ausbau
+
+Ein Supervisor analysiert den Fragetyp und delegiert an einen Tabellen-Worker (Werte, strukturierte Abschnitte) oder einen Fließtext-Worker (Prosa, Zusammenfassungen). Bei Unsicherheit geht die Antwort nach der Synthese in die menschliche Freigabe. Das Architekturbild steht in der Leitaufgabe unter [Vom Einzelagenten zum Multi-Agent-System]({{ '/01-einstieg/pmo-assistent.html' | relative_url }}#vom-einzelagenten-zum-multi-agent-system).
+
+---
+
+## Bewertungskriterien
+
+| Kriterium | Mindestanforderung |
+|---|---|
+| Korpus | Projektkorpus in unterstützten Formaten wird reproduzierbar geladen oder dokumentiert eingebunden. |
+| Retrieval | Relevante Passagen werden besser gefunden als mit reinem Stichwortabgleich. |
+| Antwortformat | Ausgabe folgt einem strukturierten Schema mit Antwort, Quellen, Sicherheit und Hinweis. |
+| Quellenbindung | Mindestens eine Antwort enthält nachvollziehbare Quellenangaben. |
+| Kontrolle | HITL oder eine vergleichbare Freigabelogik ist erkennbar. |
+| Sessions | Checkpointing speichert mindestens eine wiederaufnehmbare Session. |
+| Reflexion | Grenzen, Risiken und nächste Verbesserungen werden benannt; mindestens eine der [Ausbaustufen]({{ '/01-einstieg/pmo-assistent.html' | relative_url }}#ausbaustufen-vom-prototyp-zum-einsatz) (Datenbasis, Zugriffsrechte, Datenschutz, Nutzenmessung, Betrieb, Aktionen) wird als erster Ausbauschritt begründet. |
+| PMO-Abgrenzung | Der Assistent unterstützt ausgewählte PMO-nahe Aufgaben und trifft keine verbindlichen Projektentscheidungen. |
+
+**Bestanden:** Der Assistant beantwortet belegbare Fragen aus dem Korpus, verweigert unbelegte Fragen kontrolliert und zeigt den Kontrollpunkt für unsichere Antworten.
+
+---
+
+## Abgabe
+
+**Pflicht:**
+- mindestens fünf dokumentierte Testfragen mit Ergebnissen
+- kurze Architekturübersicht, gern als Mermaid-Diagramm
+- kurze Reflexion zu Quellenbindung, Unsicherheit und Grenzen, einschließlich des ersten sinnvollen Ausbauschritts
+
+**Optional:**
+- `briefing_agent_sessions.db`
+- `app.py` für Gradio
+- kleines Eval-Set als JSON
+- Hugging Face Space oder anderes Demo-Deployment
+
+### Checkliste
+
+- [ ] Notebook läuft von oben bis unten fehlerfrei durch
+- [ ] StateGraph ist definiert
+- [ ] Intent-Routing funktioniert
+- [ ] Korpus oder ChromaDB ist eingebunden
+- [ ] Antworten enthalten Quellen
+- [ ] Out-of-Corpus-Fragen werden gestoppt
+- [ ] HITL oder Freigabelogik ist sichtbar
+- [ ] mindestens fünf Testfragen wurden ausgeführt
+
+---
+
+## Hilfreiche Ressourcen
+
+**LangGraph:**
+- [StateGraph Guide](https://langchain-ai.github.io/langgraph/concepts/low_level/)
+- [Checkpointing](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
+- [Human-in-the-Loop](https://docs.langchain.com/oss/python/langgraph/interrupts)
+
+**Projektinterne Dokumente:**
+- [PMO-Assistent – Leitaufgabe]({{ '/01-einstieg/pmo-assistent.html' | relative_url }})
+- [State Management]({{ '/03-entwicklung/state-checkpoints/state-management.html' | relative_url }})
+- [Checkpointing & Persistenz]({{ '/03-entwicklung/state-checkpoints/checkpointing-persistenz.html' | relative_url }})
+- [LangGraph Guide]({{ '/04-frameworks/langgraph/einsteiger-langgraph.html' | relative_url }})
+
+---
+
+## FAQ
+
+**Brauche ich vollständiges RAG?**  
+Nein. Eine Basisversion darf mit Retrieval-Light starten. Für eine stärkere Lösung sind Embeddings, ChromaDB und Score-Thresholds sinnvoll.
+
+**Muss ich eine UI bauen?**  
+Nein. Eine kleine Gradio-UI ist ein sinnvoller Ausbau, aber der Kern ist der kontrollierte Graph des PMO-Assistenten.
+
+**Muss ich Multi-Agent implementieren?**  
+Nein. Für den Workshop reicht ein klarer Graph. Für die Challenge ist Supervisor plus zwei Worker die empfohlene Ausbauvariante.
+
+**Kann ich einen eigenen Korpus verwenden?**  
+Ja. Der Korpus muss reproduzierbar geladen werden und genügend belegbare Fragen ermöglichen.
+
+**Was ist der wichtigste Qualitätsmaßstab?**  
+Der Agent darf fachliche Aussagen nur mit Quellenbezug ausgeben und muss fehlendes Wissen sichtbar begrenzen.
+
+**Ist der Agent ein vollständiges PMO-System?**  
+Nein. Er unterstützt ausgewählte PMO-nahe Informationsaufgaben wie Meeting-Vorbereitung, Aufgabenverfolgung und Statusreporting. Verbindliche Projektentscheidungen und Freigaben bleiben bei verantwortlichen Personen.
+
+---
+
+**Version:** 2.1<br>
+**Stand:** Oktober 2026<br>
+**Kurs:** KI-Agenten. Planen. Handeln. Prüfen.

@@ -1,3 +1,61 @@
+// Kursbereiche stehen unter Suche und Repository-Link in einer eigenen Zeile.
+.main-header,
+.side-bar + .main .main-header,
+.side-bar + .main .main-header.nav-open {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 3.75rem;
+}
+
+.course-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  order: 3;
+  flex: 0 0 100%;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.course-navigation-link {
+  display: inline-block;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.4rem;
+  color: #334155;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.course-navigation-link:hover,
+.course-navigation-link.is-current {
+  color: #3730a3;
+  background: #eef2ff;
+  text-decoration: none;
+}
+
+.course-navigation-link:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+.course-navigation-lab {
+  font-weight: 600;
+}
+
+@media (max-width: 49.99rem) {
+  .course-navigation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+}
+
+@media print {
+  .course-navigation { display: none; }
+}
+
 // Custom styles for KI-Agenten GitHub Pages
 // Override just-the-docs default styles to increase content width
 // Target: ~130 characters per line (instead of ~100)

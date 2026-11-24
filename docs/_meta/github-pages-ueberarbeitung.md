@@ -41,8 +41,8 @@ Die Hauptnavigation wurde auf kurze, gut lesbare Bezeichnungen reduziert:
 | Navigation | Verzeichnis |
 |---|---|
 | Start | `index.md` |
-| Zuerst lesen | `01-start-navigation/zuerst-lesen.md` |
-| Lernpfad | `01-start-navigation/lernpfad.md` |
+| Zuerst lesen | `01-start-navigation/01-einstieg/zuerst-lesen.md` |
+| Lernpfad | `01-start-navigation/01-einstieg/lernpfad.md` |
 | Orientierung & Entscheidung | `02-orientierung-entscheidung/` |
 | Modelle & Provider | `03-modelle-provider-anpassung/` |
 | Agenten-Implementierung | `04-agenten-implementierung/` |

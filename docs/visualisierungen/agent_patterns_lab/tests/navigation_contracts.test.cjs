@@ -51,7 +51,7 @@ for (const match of lab.matchAll(/<button class="nav-tab[^"\n]*" data-view="([^"
 }
 console.log('PASS Alle Lab-Reiter stehen unter identischen Namen auf Ebene 1 oder 2');
 
-for (const page of pages.filter(page => ['Agenten-Architekturen', 'Loop Engineering', 'Agent Harness', 'Evaluation'].includes(page.title))) {
-  assert.match(fs.readFileSync(page.file, 'utf8'), /agent_patterns_lab\/#(?:augmented|loops|harness|evaluation)/, page.title);
+for (const page of pages.filter(page => ['Agenten-Architekturen', 'Kontext & Wissen', 'Loop Engineering', 'Agent Harness', 'Evaluation'].includes(page.title))) {
+  assert.match(fs.readFileSync(page.file, 'utf8'), /agent_patterns_lab\/#(?:augmented|context|loops|harness|evaluation)/, page.title);
 }
 console.log('PASS Arbeitsreiter: direkte Rücklinks von den Fachartikeln ins Lab');

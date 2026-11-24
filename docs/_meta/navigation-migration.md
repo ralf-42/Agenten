@@ -16,7 +16,8 @@ Die Dokumentation wird nach sieben Themenbereichen gegliedert. Die Dateistruktur
 - [x] Bestehende Fachartikel den sieben Hauptbereichen zuordnen.
 - [x] Bereichsübersichten und Startseite anpassen, ohne Fachartikel umfassend umzuschreiben.
 - [x] Die sechs Arbeitsreiter des Agent Labs mit identischen Namen auf Ebene 2 verorten.
-- [x] Obere Bereichsnavigation und wechselseitige Links zwischen Dokumentation und Lab ergänzen.
+- [x] Themen über die Seitenleiste erschließen und wechselseitige Links zwischen Dokumentation und Lab ergänzen.
+- [x] Auf zusätzliche Bereichsleiste verzichten; Suche und „Agent Lab öffnen ↗“ oben beibehalten.
 - [x] Dateien in passende Haupt- und Unterverzeichnisse verschieben.
 - [x] Interne Verweise auf die neuen Ziele umstellen; historische HTML-Adressen mit `redirect_from` erhalten.
 - [x] Navigationshierarchie, Weiterleitungen, interne Links und unveränderte Ressourcen-/Rechtsseiten prüfen.
@@ -63,7 +64,7 @@ docs/
 | Agent Harness | Qualität & Sicherheit | Agent Harness |
 | Evaluation | Qualität & Sicherheit | Evaluation |
 
-Die Hauptbereiche werden für den Dokumentationsheader in `_data/course_navigation.yml` gepflegt. Der Startbereich des Labs bietet dieselben sieben Einstiegspunkte. Änderungen an diesen Bezeichnungen müssen an beiden Stellen nachgeführt werden.
+Die Themen stehen in der Seitenleiste; eine zusätzliche Bereichsleiste im Dokumentationsheader entfällt. Oben bleiben die Suche und die Zusatzlinks zum Agent Lab und zum Repository. `_data/course_navigation.yml` hält die sieben Bereiche als Referenz für die Navigationsprüfung fest. Der Startbereich des Labs bietet dieselben sieben Einstiegspunkte. Änderungen an diesen Bezeichnungen müssen an beiden Stellen nachgeführt werden.
 
 ## Regeln für weitere Umgliederungen
 

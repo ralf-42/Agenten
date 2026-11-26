@@ -220,6 +220,16 @@ Die ausführliche Lizenzzuordnung für die Kurs-Website steht unter [Rechtliches
 > [!NOTE]
 > **Hinweis zur Entstehung:** Bei der Erstellung dieser Unterlagen wurden KI-Werkzeuge unterstützend eingesetzt, unter anderem für Recherche, Strukturierung, Formulierung und einzelne Medien. Die Inhalte wurden anschließend fachlich geprüft, eingeordnet und redaktionell überarbeitet.
 
+## Mitarbeit
+
+`AGENTS.md` und `CLAUDE.md` richten sich an KI-Agenten, sind aber auch für menschliche Mitarbeit die verbindliche Referenz:
+
+- Dort steht, welches Verhalten im Repository erwartet wird.
+- Änderungen an den Projektkonventionen gehören in diese Dateien.
+- Für Code-Reviews dienen die Quality Gates in `AGENTS.md` als Prüfliste.
+
+Fragen zum Projektaufbau klärt `CLAUDE.md`.
+
 ---
 
 **Stand:** November 2026     

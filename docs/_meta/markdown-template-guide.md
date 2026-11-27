@@ -273,7 +273,7 @@ Callouts heben einzelne Hinweise hervor, die sich sinnvoll vom Lesefluss absetze
 
 Mermaid wird nur eingesetzt, wenn ein Zusammenhang visuell klarer wird als im Fließtext oder in einer Tabelle. Geeignet sind Entscheidungslogik, Zustandswechsel, Sequenzen und Architekturübersichten. `sequenceDiagram` kann mit `autonumber` nummeriert werden, wenn die Nummern den Ablauf leichter referenzierbar machen.
 
-Das Farbschema (`theme: base` mit `themeVariables`) ist global in `_includes/head_custom.html` gesetzt, ein Init-Block pro Diagramm entfällt. Flowcharts färben Knoten ausschließlich über `classDef` und `class` (`default`, `input`, `metric`, `output`, `target`, `stop`), nie über einzelne `style`-Zeilen. `sequenceDiagram`, `stateDiagram-v2` und `mindmap` kommen ohne `classDef` aus. Ausnahme: Ein Vergleich zweier Subgraphen darf `style` mit Palette-Hexwerten nutzen. Subgraph-Titel werden mit `<b>` gesetzt, z. B. `subgraph ID["<b>Titel</b>"]`. Palette und Begründung: `_docs/Mermaid_Best_Practices.md`.
+Das Farbschema (`theme: base` mit `themeVariables`) und die weiße Autonummerierung für `sequenceDiagram` (`themeCSS` mit `.sequenceNumber { fill: #ffffff !important; }`) sind global in `_includes/head_custom.html` gesetzt, ein Init-Block pro Diagramm entfällt. Flowcharts färben Knoten ausschließlich über `classDef` und `class` (`default`, `input`, `metric`, `output`, `target`, `stop`), nie über einzelne `style`-Zeilen. `sequenceDiagram`, `stateDiagram-v2` und `mindmap` kommen ohne `classDef` aus. Ausnahme: Ein Vergleich zweier Subgraphen darf `style` mit Palette-Hexwerten nutzen. Subgraph-Titel werden mit `<b>` gesetzt, z. B. `subgraph ID["<b>Titel</b>"]`. Palette und Begründung: `_docs/Mermaid_Best_Practices.md`.
 
 ````markdown
 ```mermaid
@@ -401,8 +401,8 @@ Sachtexte bleiben in der Regel unpersönlich. Bei Anleitungen ist direkte Anspra
 
 ---
 
-**Version:** 2.0<br>
-**Stand:** Oktober 2026<br>
+**Version:** 2.1<br>
+**Stand:** November 2026<br>
 **Kurs:** KI-Agenten. Planen. Handeln. Prüfen.
 
 
